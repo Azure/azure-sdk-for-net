@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
@@ -105,7 +103,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -145,7 +143,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -185,7 +183,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,7 +225,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -269,7 +267,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -283,10 +281,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorRuleResource>> UpdateAsync(WaitUntil waitUntil, FrontDoorRulePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _frontDoorRuleClientDiagnostics.CreateScope("FrontDoorRuleResource.Update");
             scope.Start();
@@ -318,7 +313,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -332,10 +327,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<FrontDoorRuleResource> Update(WaitUntil waitUntil, FrontDoorRulePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _frontDoorRuleClientDiagnostics.CreateScope("FrontDoorRuleResource.Update");
             scope.Start();

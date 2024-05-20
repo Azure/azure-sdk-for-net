@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -79,6 +78,14 @@ namespace Azure.Monitor.Query.Models
                 @namespace,
                 resourceregion,
                 value);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricsQueryResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricsQueryResult(document.RootElement);
         }
     }
 }

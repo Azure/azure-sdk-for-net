@@ -12,10 +12,8 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -1079,10 +1077,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<DevTestLabResource>> UpdateAsync(DevTestLabPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.Update");
             scope.Start();
@@ -1124,10 +1119,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<DevTestLabResource> Update(DevTestLabPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.Update");
             scope.Start();
@@ -1254,10 +1246,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> CreateEnvironmentAsync(WaitUntil waitUntil, DevTestLabVmCreationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.CreateEnvironment");
             scope.Start();
@@ -1303,10 +1292,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation CreateEnvironment(WaitUntil waitUntil, DevTestLabVmCreationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.CreateEnvironment");
             scope.Start();
@@ -1352,10 +1338,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> ExportResourceUsageAsync(WaitUntil waitUntil, DevTestLabExportResourceUsageContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.ExportResourceUsage");
             scope.Start();
@@ -1401,10 +1384,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation ExportResourceUsage(WaitUntil waitUntil, DevTestLabExportResourceUsageContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.ExportResourceUsage");
             scope.Start();
@@ -1449,10 +1429,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DevTestLabGenerateUploadUriResult>> GenerateUploadUriAsync(DevTestLabGenerateUploadUriContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.GenerateUploadUri");
             scope.Start();
@@ -1494,10 +1471,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DevTestLabGenerateUploadUriResult> GenerateUploadUri(DevTestLabGenerateUploadUriContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.GenerateUploadUri");
             scope.Start();
@@ -1540,10 +1514,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> ImportVmAsync(WaitUntil waitUntil, DevTestLabImportVmContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.ImportVm");
             scope.Start();
@@ -1589,10 +1560,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation ImportVm(WaitUntil waitUntil, DevTestLabImportVmContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.ImportVm");
             scope.Start();
@@ -1755,18 +1723,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DevTestLabEvaluatePoliciesResult>> EvaluatePoliciesAsync(string name, DevTestLabEvaluatePoliciesContent content, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _policySetsClientDiagnostics.CreateScope("DevTestLabResource.EvaluatePolicies");
             scope.Start();
@@ -1806,18 +1764,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         public virtual Response<DevTestLabEvaluatePoliciesResult> EvaluatePolicies(string name, DevTestLabEvaluatePoliciesContent content, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _policySetsClientDiagnostics.CreateScope("DevTestLabResource.EvaluatePolicies");
             scope.Start();
@@ -1860,14 +1808,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<DevTestLabResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.AddTag");
             scope.Start();
@@ -1928,14 +1870,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DevTestLabResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.AddTag");
             scope.Start();
@@ -1995,10 +1931,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DevTestLabResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.SetTags");
             scope.Start();
@@ -2055,10 +1988,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DevTestLabResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.SetTags");
             scope.Start();
@@ -2115,10 +2045,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<DevTestLabResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.RemoveTag");
             scope.Start();
@@ -2178,10 +2105,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DevTestLabResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabResource.RemoveTag");
             scope.Start();

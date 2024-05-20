@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningDataVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string version, MachineLearningDataVersionData data, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _machineLearningDataVersionDataVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningDataVersionResource>(Response.FromValue(new MachineLearningDataVersionResource(Client, response), response.GetRawResponse()));
+                var uri = _machineLearningDataVersionDataVersionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MachineLearningArmOperation<MachineLearningDataVersionResource>(Response.FromValue(new MachineLearningDataVersionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningDataVersionResource> CreateOrUpdate(WaitUntil waitUntil, string version, MachineLearningDataVersionData data, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _machineLearningDataVersionDataVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningDataVersionResource>(Response.FromValue(new MachineLearningDataVersionResource(Client, response), response.GetRawResponse()));
+                var uri = _machineLearningDataVersionDataVersionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MachineLearningArmOperation<MachineLearningDataVersionResource>(Response.FromValue(new MachineLearningDataVersionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual async Task<Response<MachineLearningDataVersionResource>> GetAsync(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual Response<MachineLearningDataVersionResource> Get(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.Get");
             scope.Start();
@@ -369,14 +337,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.Exists");
             scope.Start();
@@ -419,14 +380,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual Response<bool> Exists(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.Exists");
             scope.Start();
@@ -469,14 +423,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual async Task<NullableResponse<MachineLearningDataVersionResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.GetIfExists");
             scope.Start();
@@ -521,14 +468,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public virtual NullableResponse<MachineLearningDataVersionResource> GetIfExists(string version, CancellationToken cancellationToken = default)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.GetIfExists");
             scope.Start();

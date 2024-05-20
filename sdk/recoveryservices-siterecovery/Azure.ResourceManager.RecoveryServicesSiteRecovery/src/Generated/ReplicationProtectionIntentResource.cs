@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 using Azure.ResourceManager.Resources;
 
@@ -199,17 +197,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplicationProtectionIntentResource>> UpdateAsync(WaitUntil waitUntil, ReplicationProtectionIntentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentResource.Update");
             scope.Start();
             try
             {
                 var response = await _replicationProtectionIntentRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionIntentResource>(Response.FromValue(new ReplicationProtectionIntentResource(Client, response), response.GetRawResponse()));
+                var uri = _replicationProtectionIntentRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionIntentResource>(Response.FromValue(new ReplicationProtectionIntentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -248,17 +245,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReplicationProtectionIntentResource> Update(WaitUntil waitUntil, ReplicationProtectionIntentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _replicationProtectionIntentClientDiagnostics.CreateScope("ReplicationProtectionIntentResource.Update");
             scope.Start();
             try
             {
                 var response = _replicationProtectionIntentRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionIntentResource>(Response.FromValue(new ReplicationProtectionIntentResource(Client, response), response.GetRawResponse()));
+                var uri = _replicationProtectionIntentRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ReplicationProtectionIntentResource>(Response.FromValue(new ReplicationProtectionIntentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

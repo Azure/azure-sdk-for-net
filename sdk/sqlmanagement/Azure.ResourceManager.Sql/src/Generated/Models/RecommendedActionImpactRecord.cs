@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Gets the name of the impact dimension. e.g., CPUChange, DiskSpaceChange, NumberOfQueriesAffected. </summary>
+        [WirePath("dimensionName")]
         public string DimensionName { get; }
         /// <summary> Gets the name of the impact dimension. e.g., CPUChange, DiskSpaceChange, NumberOfQueriesAffected. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
         /// <summary> Gets the absolute value of this dimension if applicable. e.g., Number of Queries affected. </summary>
+        [WirePath("absoluteValue")]
         public double? AbsoluteValue { get; }
         /// <summary> Gets the absolute change in the value of this dimension. e.g., Absolute Disk space change in Megabytes. </summary>
+        [WirePath("changeValueAbsolute")]
         public double? ChangeValueAbsolute { get; }
         /// <summary> Gets the relative change in the value of this dimension. e.g., Relative Disk space change in Percentage. </summary>
+        [WirePath("changeValueRelative")]
         public double? ChangeValueRelative { get; }
     }
 }

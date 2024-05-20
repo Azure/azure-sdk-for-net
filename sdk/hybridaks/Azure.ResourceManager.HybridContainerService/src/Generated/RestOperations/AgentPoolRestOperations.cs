@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.HybridContainerService.Models;
@@ -35,6 +34,18 @@ namespace Azure.ResourceManager.HybridContainerService
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string connectedClusterResourceUri, string agentPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(connectedClusterResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/", false);
+            uri.AppendPath(agentPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string connectedClusterResourceUri, string agentPoolName)
@@ -63,18 +74,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HybridContainerServiceAgentPoolData>> GetAsync(string connectedClusterResourceUri, string agentPoolName, CancellationToken cancellationToken = default)
         {
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
             using var message = CreateGetRequest(connectedClusterResourceUri, agentPoolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,18 +103,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HybridContainerServiceAgentPoolData> Get(string connectedClusterResourceUri, string agentPoolName, CancellationToken cancellationToken = default)
         {
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
             using var message = CreateGetRequest(connectedClusterResourceUri, agentPoolName);
             _pipeline.Send(message, cancellationToken);
@@ -133,6 +124,18 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string connectedClusterResourceUri, string agentPoolName, HybridContainerServiceAgentPoolData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(connectedClusterResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/", false);
+            uri.AppendPath(agentPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string connectedClusterResourceUri, string agentPoolName, HybridContainerServiceAgentPoolData data)
         {
             var message = _pipeline.CreateMessage();
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.HybridContainerService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -164,22 +167,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string connectedClusterResourceUri, string agentPoolName, HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
         {
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(connectedClusterResourceUri, agentPoolName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -202,22 +192,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string connectedClusterResourceUri, string agentPoolName, HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
         {
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(connectedClusterResourceUri, agentPoolName, data);
             _pipeline.Send(message, cancellationToken);
@@ -229,6 +206,18 @@ namespace Azure.ResourceManager.HybridContainerService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string connectedClusterResourceUri, string agentPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(connectedClusterResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/", false);
+            uri.AppendPath(agentPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string connectedClusterResourceUri, string agentPoolName)
@@ -257,18 +246,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string connectedClusterResourceUri, string agentPoolName, CancellationToken cancellationToken = default)
         {
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
             using var message = CreateDeleteRequest(connectedClusterResourceUri, agentPoolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -290,18 +269,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string connectedClusterResourceUri, string agentPoolName, CancellationToken cancellationToken = default)
         {
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
             using var message = CreateDeleteRequest(connectedClusterResourceUri, agentPoolName);
             _pipeline.Send(message, cancellationToken);
@@ -313,6 +282,17 @@ namespace Azure.ResourceManager.HybridContainerService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByProvisionedClusterRequestUri(string connectedClusterResourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(connectedClusterResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByProvisionedClusterRequest(string connectedClusterResourceUri)
@@ -338,10 +318,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public async Task<Response<AgentPoolListResult>> ListByProvisionedClusterAsync(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
             using var message = CreateListByProvisionedClusterRequest(connectedClusterResourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -365,10 +342,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public Response<AgentPoolListResult> ListByProvisionedCluster(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
             using var message = CreateListByProvisionedClusterRequest(connectedClusterResourceUri);
             _pipeline.Send(message, cancellationToken);
@@ -384,6 +358,14 @@ namespace Azure.ResourceManager.HybridContainerService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByProvisionedClusterNextPageRequestUri(string nextLink, string connectedClusterResourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByProvisionedClusterNextPageRequest(string nextLink, string connectedClusterResourceUri)
@@ -407,14 +389,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public async Task<Response<AgentPoolListResult>> ListByProvisionedClusterNextPageAsync(string nextLink, string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
             using var message = CreateListByProvisionedClusterNextPageRequest(nextLink, connectedClusterResourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -439,14 +415,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public Response<AgentPoolListResult> ListByProvisionedClusterNextPage(string nextLink, string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (connectedClusterResourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(connectedClusterResourceUri));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
             using var message = CreateListByProvisionedClusterNextPageRequest(nextLink, connectedClusterResourceUri);
             _pipeline.Send(message, cancellationToken);

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
 using Azure.ResourceManager.Resources;
 
@@ -349,10 +347,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<ReportResource>> UpdateAsync(WaitUntil waitUntil, ReportResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _reportResourceReportClientDiagnostics.CreateScope("ReportResource.Update");
             scope.Start();
@@ -398,10 +393,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<ReportResource> Update(WaitUntil waitUntil, ReportResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _reportResourceReportClientDiagnostics.CreateScope("ReportResource.Update");
             scope.Start();

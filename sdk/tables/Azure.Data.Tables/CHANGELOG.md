@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue where custom models decorated with the `DataMemberAttribute` that didn't explicitly set a name caused the query filter to be malformed.
 
 ### Other Changes
 

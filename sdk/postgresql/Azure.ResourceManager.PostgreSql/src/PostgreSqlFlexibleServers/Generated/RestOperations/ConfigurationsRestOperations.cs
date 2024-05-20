@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByServerRequestUri(string subscriptionId, string resourceGroupName, string serverName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/configurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByServerRequest(string subscriptionId, string resourceGroupName, string serverName)
@@ -67,30 +81,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PostgreSqlFlexibleServerConfigurationListResult>> ListByServerAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var message = CreateListByServerRequest(subscriptionId, resourceGroupName, serverName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +110,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PostgreSqlFlexibleServerConfigurationListResult> ListByServer(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var message = CreateListByServerRequest(subscriptionId, resourceGroupName, serverName);
             _pipeline.Send(message, cancellationToken);
@@ -156,6 +128,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serverName, string configurationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/configurations/", false);
+            uri.AppendPath(configurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, string configurationName)
@@ -190,38 +178,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PostgreSqlFlexibleServerConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string configurationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, configurationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -251,38 +211,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PostgreSqlFlexibleServerConfigurationData> Get(string subscriptionId, string resourceGroupName, string serverName, string configurationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, configurationName);
             _pipeline.Send(message, cancellationToken);
@@ -300,6 +232,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string serverName, string configurationName, PostgreSqlFlexibleServerConfigurationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/configurations/", false);
+            uri.AppendPath(configurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string configurationName, PostgreSqlFlexibleServerConfigurationData data)
@@ -322,7 +270,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -339,42 +287,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string configurationName, PostgreSqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serverName, configurationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -400,42 +317,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string serverName, string configurationName, PostgreSqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serverName, configurationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -448,6 +334,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, string resourceGroupName, string serverName, string configurationName, PostgreSqlFlexibleServerConfigurationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/configurations/", false);
+            uri.AppendPath(configurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string serverName, string configurationName, PostgreSqlFlexibleServerConfigurationData data)
@@ -470,7 +372,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -487,42 +389,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> PutAsync(string subscriptionId, string resourceGroupName, string serverName, string configurationName, PostgreSqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreatePutRequest(subscriptionId, resourceGroupName, serverName, configurationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -548,42 +419,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Put(string subscriptionId, string resourceGroupName, string serverName, string configurationName, PostgreSqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreatePutRequest(subscriptionId, resourceGroupName, serverName, configurationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -596,6 +436,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByServerNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serverName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByServerNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName)
@@ -622,34 +470,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PostgreSqlFlexibleServerConfigurationListResult>> ListByServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var message = CreateListByServerNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -677,34 +501,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PostgreSqlFlexibleServerConfigurationListResult> ListByServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             using var message = CreateListByServerNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName);
             _pipeline.Send(message, cancellationToken);

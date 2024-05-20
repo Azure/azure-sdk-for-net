@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="failoverPolicies"/> is null. </exception>
         public CosmosDBFailoverPolicies(IEnumerable<CosmosDBFailoverPolicy> failoverPolicies)
         {
-            if (failoverPolicies == null)
-            {
-                throw new ArgumentNullException(nameof(failoverPolicies));
-            }
+            Argument.AssertNotNull(failoverPolicies, nameof(failoverPolicies));
 
             FailoverPolicies = failoverPolicies.ToList();
         }
@@ -74,6 +71,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of failover policies. </summary>
+        [WirePath("failoverPolicies")]
         public IList<CosmosDBFailoverPolicy> FailoverPolicies { get; }
     }
 }

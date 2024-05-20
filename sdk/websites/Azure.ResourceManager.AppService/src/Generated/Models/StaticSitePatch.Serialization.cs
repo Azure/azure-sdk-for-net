@@ -8,23 +8,24 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class StaticSitePatch : IUtf8JsonSerializable, IJsonModel<StaticSitePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSitePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSitePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StaticSitePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StaticSitePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSitePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSitePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(BuildProperties))
             {
                 writer.WritePropertyName("buildProperties"u8);
-                writer.WriteObjectValue(BuildProperties);
+                writer.WriteObjectValue(BuildProperties, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(TemplateProperties))
             {
                 writer.WritePropertyName("templateProperties"u8);
-                writer.WriteObjectValue(TemplateProperties);
+                writer.WriteObjectValue(TemplateProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ContentDistributionEndpoint))
             {
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProvidedFunctionApps)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticSitePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSitePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSitePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StaticSitePatch DeserializeStaticSitePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
             IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default;
             string provider = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -362,10 +363,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StaticSitePatch(
                 id,
                 name,
@@ -389,6 +390,396 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultHostname), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    defaultHostname: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultHostname))
+                {
+                    builder.Append("    defaultHostname: ");
+                    if (DefaultHostname.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DefaultHostname}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DefaultHostname}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RepositoryUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    repositoryUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RepositoryUri))
+                {
+                    builder.Append("    repositoryUrl: ");
+                    builder.AppendLine($"'{RepositoryUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Branch), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    branch: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Branch))
+                {
+                    builder.Append("    branch: ");
+                    if (Branch.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Branch}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Branch}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomDomains), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    customDomains: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CustomDomains))
+                {
+                    if (CustomDomains.Any())
+                    {
+                        builder.Append("    customDomains: ");
+                        builder.AppendLine("[");
+                        foreach (var item in CustomDomains)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RepositoryToken), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    repositoryToken: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RepositoryToken))
+                {
+                    builder.Append("    repositoryToken: ");
+                    if (RepositoryToken.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RepositoryToken}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RepositoryToken}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BuildProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    buildProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BuildProperties))
+                {
+                    builder.Append("    buildProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BuildProperties, options, 4, false, "    buildProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateEndpointConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    if (PrivateEndpointConnections.Any())
+                    {
+                        builder.Append("    privateEndpointConnections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PrivateEndpointConnections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StagingEnvironmentPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    stagingEnvironmentPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StagingEnvironmentPolicy))
+                {
+                    builder.Append("    stagingEnvironmentPolicy: ");
+                    builder.AppendLine($"'{StagingEnvironmentPolicy.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowConfigFileUpdates), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    allowConfigFileUpdates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowConfigFileUpdates))
+                {
+                    builder.Append("    allowConfigFileUpdates: ");
+                    var boolValue = AllowConfigFileUpdates.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    templateProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TemplateProperties))
+                {
+                    builder.Append("    templateProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TemplateProperties, options, 4, false, "    templateProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentDistributionEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    contentDistributionEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContentDistributionEndpoint))
+                {
+                    builder.Append("    contentDistributionEndpoint: ");
+                    if (ContentDistributionEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContentDistributionEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContentDistributionEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultReferenceIdentity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    keyVaultReferenceIdentity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyVaultReferenceIdentity))
+                {
+                    builder.Append("    keyVaultReferenceIdentity: ");
+                    if (KeyVaultReferenceIdentity.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KeyVaultReferenceIdentity}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KeyVaultReferenceIdentity}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserProvidedFunctionApps), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    userProvidedFunctionApps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(UserProvidedFunctionApps))
+                {
+                    if (UserProvidedFunctionApps.Any())
+                    {
+                        builder.Append("    userProvidedFunctionApps: ");
+                        builder.AppendLine("[");
+                        foreach (var item in UserProvidedFunctionApps)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    userProvidedFunctionApps: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Provider), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provider: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Provider))
+                {
+                    builder.Append("    provider: ");
+                    if (Provider.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Provider}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Provider}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<StaticSitePatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StaticSitePatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -397,8 +788,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StaticSitePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSitePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -414,7 +807,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeStaticSitePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StaticSitePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSitePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

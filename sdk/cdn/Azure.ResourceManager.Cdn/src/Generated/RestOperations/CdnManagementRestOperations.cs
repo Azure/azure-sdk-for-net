@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Cdn.Models;
@@ -33,8 +32,21 @@ namespace Azure.ResourceManager.Cdn
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-06-01";
+            _apiVersion = apiVersion ?? "2024-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCheckEndpointNameAvailabilityRequestUri(string subscriptionId, string resourceGroupName, EndpointNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/checkEndpointNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckEndpointNameAvailabilityRequest(string subscriptionId, string resourceGroupName, EndpointNameAvailabilityContent content)
@@ -54,7 +66,7 @@ namespace Azure.ResourceManager.Cdn
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -69,26 +81,9 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityAsync(string subscriptionId, string resourceGroupName, EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckEndpointNameAvailabilityRequest(subscriptionId, resourceGroupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -115,26 +110,9 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<EndpointNameAvailabilityResult> CheckEndpointNameAvailability(string subscriptionId, string resourceGroupName, EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckEndpointNameAvailabilityRequest(subscriptionId, resourceGroupName, content);
             _pipeline.Send(message, cancellationToken);
@@ -152,6 +130,15 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(CdnNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Cdn/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckNameAvailabilityRequest(CdnNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -165,7 +152,7 @@ namespace Azure.ResourceManager.Cdn
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -177,10 +164,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public async Task<Response<CdnNameAvailabilityResult>> CheckNameAvailabilityAsync(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckNameAvailabilityRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -204,10 +188,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public Response<CdnNameAvailabilityResult> CheckNameAvailability(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckNameAvailabilityRequest(content);
             _pipeline.Send(message, cancellationToken);
@@ -225,6 +206,17 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
+        internal RequestUriBuilder CreateCheckNameAvailabilityWithSubscriptionRequestUri(string subscriptionId, CdnNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckNameAvailabilityWithSubscriptionRequest(string subscriptionId, CdnNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -240,7 +232,7 @@ namespace Azure.ResourceManager.Cdn
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -254,18 +246,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CdnNameAvailabilityResult>> CheckNameAvailabilityWithSubscriptionAsync(string subscriptionId, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckNameAvailabilityWithSubscriptionRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -291,18 +273,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CdnNameAvailabilityResult> CheckNameAvailabilityWithSubscription(string subscriptionId, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckNameAvailabilityWithSubscriptionRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
@@ -320,6 +292,17 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
+        internal RequestUriBuilder CreateValidateProbeRequestUri(string subscriptionId, ValidateProbeContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/validateProbe", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateValidateProbeRequest(string subscriptionId, ValidateProbeContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -335,7 +318,7 @@ namespace Azure.ResourceManager.Cdn
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -349,18 +332,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ValidateProbeResult>> ValidateProbeAsync(string subscriptionId, ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateValidateProbeRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -386,18 +359,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ValidateProbeResult> ValidateProbe(string subscriptionId, ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateValidateProbeRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);

@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ElasticPoolPerDatabaseSettings : IUtf8JsonSerializable, IJsonModel<ElasticPoolPerDatabaseSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticPoolPerDatabaseSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticPoolPerDatabaseSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ElasticPoolPerDatabaseSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPerDatabaseSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPerDatabaseSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ElasticPoolPerDatabaseSettings DeserializeElasticPoolPerDatabaseSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Sql.Models
             double? minCapacity = default;
             double? maxCapacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minCapacity"u8))
@@ -101,11 +101,56 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ElasticPoolPerDatabaseSettings(minCapacity, maxCapacity, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinCapacity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minCapacity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinCapacity))
+                {
+                    builder.Append("  minCapacity: ");
+                    builder.AppendLine($"'{MinCapacity.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxCapacity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxCapacity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxCapacity))
+                {
+                    builder.Append("  maxCapacity: ");
+                    builder.AppendLine($"'{MaxCapacity.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ElasticPoolPerDatabaseSettings>.Write(ModelReaderWriterOptions options)
@@ -116,8 +161,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +180,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeElasticPoolPerDatabaseSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

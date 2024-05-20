@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CosmosDBBaseUsage : IUtf8JsonSerializable, IJsonModel<CosmosDBBaseUsage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBBaseUsage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBBaseUsage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBBaseUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBBaseUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBBaseUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBBaseUsage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue(Name, options);
             }
             if (options.Format != "W" && Optional.IsDefined(QuotaPeriod))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBBaseUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBBaseUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBBaseUsage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBBaseUsage DeserializeCosmosDBBaseUsage(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             long? limit = default;
             long? currentValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"u8))
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CosmosDBBaseUsage(
                 unit,
                 name,
@@ -153,6 +153,104 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 limit,
                 currentValue,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  unit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Unit))
+                {
+                    builder.Append("  unit: ");
+                    builder.AppendLine($"'{Unit.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Name, options, 2, false, "  name: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuotaPeriod), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  quotaPeriod: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QuotaPeriod))
+                {
+                    builder.Append("  quotaPeriod: ");
+                    if (QuotaPeriod.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{QuotaPeriod}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{QuotaPeriod}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Limit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  limit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Limit))
+                {
+                    builder.Append("  limit: ");
+                    builder.AppendLine($"'{Limit.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  currentValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CurrentValue))
+                {
+                    builder.Append("  currentValue: ");
+                    builder.AppendLine($"'{CurrentValue.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CosmosDBBaseUsage>.Write(ModelReaderWriterOptions options)
@@ -163,8 +261,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBBaseUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBBaseUsage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +280,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCosmosDBBaseUsage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBBaseUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBBaseUsage)} does not support reading '{options.Format}' format.");
             }
         }
 

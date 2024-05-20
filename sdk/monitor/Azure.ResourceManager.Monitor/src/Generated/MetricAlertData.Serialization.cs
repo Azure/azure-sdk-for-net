@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class MetricAlertData : IUtf8JsonSerializable, IJsonModel<MetricAlertData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricAlertData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricAlertData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MetricAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MetricAlertData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricAlertData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricAlertData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Monitor
             if (Criteria != null)
             {
                 writer.WritePropertyName("criteria"u8);
-                writer.WriteObjectValue(Criteria);
+                writer.WriteObjectValue(Criteria, options);
             }
             else
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<MetricAlertData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricAlertData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricAlertData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Monitor
 
         internal static MetricAlertData DeserializeMetricAlertData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Monitor
             DateTimeOffset? lastUpdatedTime = default;
             bool? isMigrated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -350,10 +350,10 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MetricAlertData(
                 id,
                 name,
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Monitor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricAlertData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricAlertData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Monitor
                         return DeserializeMetricAlertData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricAlertData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricAlertData)} does not support reading '{options.Format}' format.");
             }
         }
 

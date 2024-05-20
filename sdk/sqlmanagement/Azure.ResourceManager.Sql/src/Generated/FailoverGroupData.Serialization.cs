@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,14 +19,14 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class FailoverGroupData : IUtf8JsonSerializable, IJsonModel<FailoverGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FailoverGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FailoverGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FailoverGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FailoverGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FailoverGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FailoverGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,12 +71,12 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(ReadWriteEndpoint))
             {
                 writer.WritePropertyName("readWriteEndpoint"u8);
-                writer.WriteObjectValue(ReadWriteEndpoint);
+                writer.WriteObjectValue(ReadWriteEndpoint, options);
             }
             if (Optional.IsDefined(ReadOnlyEndpoint))
             {
                 writer.WritePropertyName("readOnlyEndpoint"u8);
-                writer.WriteObjectValue(ReadOnlyEndpoint);
+                writer.WriteObjectValue(ReadOnlyEndpoint, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReplicationRole))
             {
@@ -92,7 +94,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in PartnerServers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +137,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<FailoverGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FailoverGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FailoverGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +146,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static FailoverGroupData DeserializeFailoverGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -163,7 +165,7 @@ namespace Azure.ResourceManager.Sql
             IList<PartnerServerInfo> partnerServers = default;
             IList<ResourceIdentifier> databases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -294,10 +296,10 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FailoverGroupData(
                 id,
                 name,
@@ -314,6 +316,248 @@ namespace Azure.ResourceManager.Sql
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    builder.Append("  location: ");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    if (Tags.Any())
+                    {
+                        builder.Append("  tags: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReadWriteEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    readWriteEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReadWriteEndpoint))
+                {
+                    builder.Append("    readWriteEndpoint: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ReadWriteEndpoint, options, 4, false, "    readWriteEndpoint: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReadOnlyEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    readOnlyEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReadOnlyEndpoint))
+                {
+                    builder.Append("    readOnlyEndpoint: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ReadOnlyEndpoint, options, 4, false, "    readOnlyEndpoint: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicationRole), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    replicationRole: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReplicationRole))
+                {
+                    builder.Append("    replicationRole: ");
+                    builder.AppendLine($"'{ReplicationRole.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicationState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    replicationState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReplicationState))
+                {
+                    builder.Append("    replicationState: ");
+                    if (ReplicationState.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ReplicationState}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ReplicationState}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerServers), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    partnerServers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PartnerServers))
+                {
+                    if (PartnerServers.Any())
+                    {
+                        builder.Append("    partnerServers: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PartnerServers)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    partnerServers: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverDatabases), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    databases: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(FailoverDatabases))
+                {
+                    if (FailoverDatabases.Any())
+                    {
+                        builder.Append("    databases: ");
+                        builder.AppendLine("[");
+                        foreach (var item in FailoverDatabases)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"      '{item.ToString()}'");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FailoverGroupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FailoverGroupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -322,8 +566,10 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(FailoverGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FailoverGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -339,7 +585,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeFailoverGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FailoverGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FailoverGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -269,7 +267,9 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningEnvironmentContainerEnvironmentContainersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation(response);
+                var uri = _machineLearningEnvironmentContainerEnvironmentContainersRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MachineLearningArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -311,7 +311,9 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningEnvironmentContainerEnvironmentContainersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MachineLearningArmOperation(response);
+                var uri = _machineLearningEnvironmentContainerEnvironmentContainersRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MachineLearningArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -350,17 +352,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningEnvironmentContainerResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningEnvironmentContainerData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningEnvironmentContainerEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningEnvironmentContainerResource.Update");
             scope.Start();
             try
             {
                 var response = await _machineLearningEnvironmentContainerEnvironmentContainersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningEnvironmentContainerResource>(Response.FromValue(new MachineLearningEnvironmentContainerResource(Client, response), response.GetRawResponse()));
+                var uri = _machineLearningEnvironmentContainerEnvironmentContainersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MachineLearningArmOperation<MachineLearningEnvironmentContainerResource>(Response.FromValue(new MachineLearningEnvironmentContainerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -399,17 +400,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningEnvironmentContainerResource> Update(WaitUntil waitUntil, MachineLearningEnvironmentContainerData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningEnvironmentContainerEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningEnvironmentContainerResource.Update");
             scope.Start();
             try
             {
                 var response = _machineLearningEnvironmentContainerEnvironmentContainersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningEnvironmentContainerResource>(Response.FromValue(new MachineLearningEnvironmentContainerResource(Client, response), response.GetRawResponse()));
+                var uri = _machineLearningEnvironmentContainerEnvironmentContainersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MachineLearningArmOperation<MachineLearningEnvironmentContainerResource>(Response.FromValue(new MachineLearningEnvironmentContainerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

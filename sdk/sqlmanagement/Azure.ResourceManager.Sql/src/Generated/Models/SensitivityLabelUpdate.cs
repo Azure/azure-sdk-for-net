@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -75,14 +74,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Gets or sets the op. </summary>
+        [WirePath("properties.op")]
         public SensitivityLabelUpdateKind? Op { get; set; }
         /// <summary> Schema name of the column to update. </summary>
+        [WirePath("properties.schema")]
         public string Schema { get; set; }
         /// <summary> Table name of the column to update. </summary>
+        [WirePath("properties.table")]
         public string Table { get; set; }
         /// <summary> Column name to update. </summary>
+        [WirePath("properties.column")]
         public string Column { get; set; }
         /// <summary> The sensitivity label information to apply on a column. </summary>
+        [WirePath("properties.sensitivityLabel")]
         public SensitivityLabelData SensitivityLabel { get; set; }
     }
 }

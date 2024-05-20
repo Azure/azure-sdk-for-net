@@ -46,16 +46,8 @@ namespace Azure.ResourceManager.Support.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ChatTranscriptMessageProperties"/>. </summary>
-        /// <param name="body"> Body of the communication. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ChatTranscriptMessageProperties(string body)
+        public ChatTranscriptMessageProperties()
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            Body = body;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChatTranscriptMessageProperties"/>. </summary>
@@ -73,11 +65,6 @@ namespace Azure.ResourceManager.Support.Models
             Body = body;
             CreatedOn = createdOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ChatTranscriptMessageProperties"/> for deserialization. </summary>
-        internal ChatTranscriptMessageProperties()
-        {
         }
 
         /// <summary> Content type. </summary>

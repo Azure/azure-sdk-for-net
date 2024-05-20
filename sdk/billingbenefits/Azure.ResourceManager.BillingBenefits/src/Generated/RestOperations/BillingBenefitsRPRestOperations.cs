@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.BillingBenefits.Models;
@@ -37,6 +36,15 @@ namespace Azure.ResourceManager.BillingBenefits
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateValidatePurchaseRequestUri(SavingsPlanPurchaseValidateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateValidatePurchaseRequest(SavingsPlanPurchaseValidateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -50,7 +58,7 @@ namespace Azure.ResourceManager.BillingBenefits
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -62,10 +70,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public async Task<Response<SavingsPlanValidateResponse>> ValidatePurchaseAsync(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateValidatePurchaseRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -89,10 +94,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public Response<SavingsPlanValidateResponse> ValidatePurchase(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateValidatePurchaseRequest(content);
             _pipeline.Send(message, cancellationToken);
@@ -108,6 +110,14 @@ namespace Azure.ResourceManager.BillingBenefits
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateValidatePurchaseNextPageRequestUri(string nextLink, SavingsPlanPurchaseValidateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateValidatePurchaseNextPageRequest(string nextLink, SavingsPlanPurchaseValidateContent content)
@@ -131,14 +141,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="content"/> is null. </exception>
         public async Task<Response<SavingsPlanValidateResponse>> ValidatePurchaseNextPageAsync(string nextLink, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateValidatePurchaseNextPageRequest(nextLink, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -163,14 +167,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="content"/> is null. </exception>
         public Response<SavingsPlanValidateResponse> ValidatePurchaseNextPage(string nextLink, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateValidatePurchaseNextPageRequest(nextLink, content);
             _pipeline.Send(message, cancellationToken);

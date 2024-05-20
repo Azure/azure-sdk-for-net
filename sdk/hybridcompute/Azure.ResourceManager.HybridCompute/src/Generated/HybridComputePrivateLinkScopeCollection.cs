@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridCompute
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HybridComputePrivateLinkScopeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scopeName, HybridComputePrivateLinkScopeData data, CancellationToken cancellationToken = default)
         {
-            if (scopeName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeName));
-            }
-            if (scopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation<HybridComputePrivateLinkScopeResource>(Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response), response.GetRawResponse()));
+                var uri = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HybridComputeArmOperation<HybridComputePrivateLinkScopeResource>(Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HybridComputePrivateLinkScopeResource> CreateOrUpdate(WaitUntil waitUntil, string scopeName, HybridComputePrivateLinkScopeData data, CancellationToken cancellationToken = default)
         {
-            if (scopeName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeName));
-            }
-            if (scopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data, cancellationToken);
-                var operation = new HybridComputeArmOperation<HybridComputePrivateLinkScopeResource>(Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response), response.GetRawResponse()));
+                var uri = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HybridComputeArmOperation<HybridComputePrivateLinkScopeResource>(Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
         public virtual async Task<Response<HybridComputePrivateLinkScopeResource>> GetAsync(string scopeName, CancellationToken cancellationToken = default)
         {
-            if (scopeName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeName));
-            }
-            if (scopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
-            }
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
             using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
         public virtual Response<HybridComputePrivateLinkScopeResource> Get(string scopeName, CancellationToken cancellationToken = default)
         {
-            if (scopeName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeName));
-            }
-            if (scopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
-            }
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
             using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scopeName, CancellationToken cancellationToken = default)
         {
-            if (scopeName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeName));
-            }
-            if (scopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
-            }
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
             using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
         public virtual Response<bool> Exists(string scopeName, CancellationToken cancellationToken = default)
         {
-            if (scopeName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeName));
-            }
-            if (scopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
-            }
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
             using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
         public virtual async Task<NullableResponse<HybridComputePrivateLinkScopeResource>> GetIfExistsAsync(string scopeName, CancellationToken cancellationToken = default)
         {
-            if (scopeName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeName));
-            }
-            if (scopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
-            }
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
             using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
         public virtual NullableResponse<HybridComputePrivateLinkScopeResource> GetIfExists(string scopeName, CancellationToken cancellationToken = default)
         {
-            if (scopeName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeName));
-            }
-            if (scopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
-            }
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
             using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.GetIfExists");
             scope.Start();

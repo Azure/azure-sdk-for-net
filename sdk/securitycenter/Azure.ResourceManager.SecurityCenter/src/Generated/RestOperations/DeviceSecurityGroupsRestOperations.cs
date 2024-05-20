@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -37,6 +36,17 @@ namespace Azure.ResourceManager.SecurityCenter
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string resourceId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.Security/deviceSecurityGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string resourceId)
         {
             var message = _pipeline.CreateMessage();
@@ -60,10 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public async Task<Response<DeviceSecurityGroupList>> ListAsync(string resourceId, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             using var message = CreateListRequest(resourceId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -87,10 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public Response<DeviceSecurityGroupList> List(string resourceId, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             using var message = CreateListRequest(resourceId);
             _pipeline.Send(message, cancellationToken);
@@ -106,6 +110,18 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string resourceId, string deviceSecurityGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.Security/deviceSecurityGroups/", false);
+            uri.AppendPath(deviceSecurityGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string resourceId, string deviceSecurityGroupName)
@@ -134,18 +150,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DeviceSecurityGroupData>> GetAsync(string resourceId, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (deviceSecurityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceSecurityGroupName));
-            }
-            if (deviceSecurityGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceSecurityGroupName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
 
             using var message = CreateGetRequest(resourceId, deviceSecurityGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -173,18 +179,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DeviceSecurityGroupData> Get(string resourceId, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (deviceSecurityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceSecurityGroupName));
-            }
-            if (deviceSecurityGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceSecurityGroupName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
 
             using var message = CreateGetRequest(resourceId, deviceSecurityGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -204,6 +200,18 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceId, string deviceSecurityGroupName, DeviceSecurityGroupData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.Security/deviceSecurityGroups/", false);
+            uri.AppendPath(deviceSecurityGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string resourceId, string deviceSecurityGroupName, DeviceSecurityGroupData data)
         {
             var message = _pipeline.CreateMessage();
@@ -220,7 +228,7 @@ namespace Azure.ResourceManager.SecurityCenter
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -235,22 +243,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DeviceSecurityGroupData>> CreateOrUpdateAsync(string resourceId, string deviceSecurityGroupName, DeviceSecurityGroupData data, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (deviceSecurityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceSecurityGroupName));
-            }
-            if (deviceSecurityGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceSecurityGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(resourceId, deviceSecurityGroupName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -278,22 +273,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DeviceSecurityGroupData> CreateOrUpdate(string resourceId, string deviceSecurityGroupName, DeviceSecurityGroupData data, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (deviceSecurityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceSecurityGroupName));
-            }
-            if (deviceSecurityGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceSecurityGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(resourceId, deviceSecurityGroupName, data);
             _pipeline.Send(message, cancellationToken);
@@ -310,6 +292,18 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string resourceId, string deviceSecurityGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.Security/deviceSecurityGroups/", false);
+            uri.AppendPath(deviceSecurityGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string resourceId, string deviceSecurityGroupName)
@@ -338,18 +332,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string resourceId, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (deviceSecurityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceSecurityGroupName));
-            }
-            if (deviceSecurityGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceSecurityGroupName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
 
             using var message = CreateDeleteRequest(resourceId, deviceSecurityGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -371,18 +355,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="deviceSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string resourceId, string deviceSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (deviceSecurityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceSecurityGroupName));
-            }
-            if (deviceSecurityGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceSecurityGroupName));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(deviceSecurityGroupName, nameof(deviceSecurityGroupName));
 
             using var message = CreateDeleteRequest(resourceId, deviceSecurityGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -394,6 +368,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceId)
@@ -417,14 +399,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
         public async Task<Response<DeviceSecurityGroupList>> ListNextPageAsync(string nextLink, string resourceId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             using var message = CreateListNextPageRequest(nextLink, resourceId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -449,14 +425,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
         public Response<DeviceSecurityGroupList> ListNextPage(string nextLink, string resourceId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             using var message = CreateListNextPageRequest(nextLink, resourceId);
             _pipeline.Send(message, cancellationToken);

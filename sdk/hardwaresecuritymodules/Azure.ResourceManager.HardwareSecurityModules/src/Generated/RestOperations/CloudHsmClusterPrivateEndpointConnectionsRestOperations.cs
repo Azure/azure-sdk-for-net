@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -36,6 +35,22 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, HardwareSecurityModulesPrivateEndpointConnectionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
+            uri.AppendPath(cloudHsmClusterName, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(peConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, HardwareSecurityModulesPrivateEndpointConnectionData data)
         {
             var message = _pipeline.CreateMessage();
@@ -56,7 +71,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -73,42 +88,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HardwareSecurityModulesPrivateEndpointConnectionData>> CreateAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, HardwareSecurityModulesPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudHsmClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudHsmClusterName));
-            }
-            if (cloudHsmClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudHsmClusterName));
-            }
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, peConnectionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -137,42 +121,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HardwareSecurityModulesPrivateEndpointConnectionData> Create(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, HardwareSecurityModulesPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudHsmClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudHsmClusterName));
-            }
-            if (cloudHsmClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudHsmClusterName));
-            }
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, peConnectionName, data);
             _pipeline.Send(message, cancellationToken);
@@ -188,6 +141,22 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
+            uri.AppendPath(cloudHsmClusterName, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(peConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName)
@@ -222,38 +191,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudHsmClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudHsmClusterName));
-            }
-            if (cloudHsmClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudHsmClusterName));
-            }
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, peConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -278,38 +219,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudHsmClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudHsmClusterName));
-            }
-            if (cloudHsmClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudHsmClusterName));
-            }
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, peConnectionName);
             _pipeline.Send(message, cancellationToken);
@@ -322,6 +235,22 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
+            uri.AppendPath(cloudHsmClusterName, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(peConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName)
@@ -356,38 +285,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HardwareSecurityModulesPrivateEndpointConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudHsmClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudHsmClusterName));
-            }
-            if (cloudHsmClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudHsmClusterName));
-            }
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, peConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -417,38 +318,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HardwareSecurityModulesPrivateEndpointConnectionData> Get(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudHsmClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudHsmClusterName));
-            }
-            if (cloudHsmClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudHsmClusterName));
-            }
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, peConnectionName);
             _pipeline.Send(message, cancellationToken);

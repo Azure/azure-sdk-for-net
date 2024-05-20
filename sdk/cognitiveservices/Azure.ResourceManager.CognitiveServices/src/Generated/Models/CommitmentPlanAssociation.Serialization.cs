@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CommitmentPlanAssociation : IUtf8JsonSerializable, IJsonModel<CommitmentPlanAssociation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentPlanAssociation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentPlanAssociation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommitmentPlanAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CommitmentPlanAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommitmentPlanAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CommitmentPlanAssociation DeserializeCommitmentPlanAssociation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             ResourceIdentifier commitmentPlanId = default;
             string commitmentPlanLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commitmentPlanId"u8))
@@ -97,11 +97,64 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CommitmentPlanAssociation(commitmentPlanId, commitmentPlanLocation, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommitmentPlanId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  commitmentPlanId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CommitmentPlanId))
+                {
+                    builder.Append("  commitmentPlanId: ");
+                    builder.AppendLine($"'{CommitmentPlanId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommitmentPlanLocation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  commitmentPlanLocation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CommitmentPlanLocation))
+                {
+                    builder.Append("  commitmentPlanLocation: ");
+                    if (CommitmentPlanLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CommitmentPlanLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CommitmentPlanLocation}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CommitmentPlanAssociation>.Write(ModelReaderWriterOptions options)
@@ -112,8 +165,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +184,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCommitmentPlanAssociation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataMigration
 {
@@ -203,7 +201,9 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = await _serviceServiceTaskServiceTasksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deleteRunningTasks, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation(response);
+                var uri = _serviceServiceTaskServiceTasksRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deleteRunningTasks);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataMigrationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -246,7 +246,9 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = _serviceServiceTaskServiceTasksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deleteRunningTasks, cancellationToken);
-                var operation = new DataMigrationArmOperation(response);
+                var uri = _serviceServiceTaskServiceTasksRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deleteRunningTasks);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataMigrationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -284,10 +286,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<ServiceServiceTaskResource>> UpdateAsync(ProjectTaskData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceServiceTaskServiceTasksClientDiagnostics.CreateScope("ServiceServiceTaskResource.Update");
             scope.Start();
@@ -329,10 +328,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<ServiceServiceTaskResource> Update(ProjectTaskData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceServiceTaskServiceTasksClientDiagnostics.CreateScope("ServiceServiceTaskResource.Update");
             scope.Start();

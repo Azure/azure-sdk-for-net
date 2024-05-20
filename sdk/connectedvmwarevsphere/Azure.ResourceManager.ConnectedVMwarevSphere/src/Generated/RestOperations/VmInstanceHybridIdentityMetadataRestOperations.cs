@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -37,6 +36,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/default/hybridIdentityMetadata/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string resourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -60,10 +70,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<VmInstanceHybridIdentityMetadataData>> GetAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateGetRequest(resourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -89,10 +96,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public Response<VmInstanceHybridIdentityMetadataData> Get(string resourceUri, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateGetRequest(resourceUri);
             _pipeline.Send(message, cancellationToken);
@@ -110,6 +114,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/default/hybridIdentityMetadata", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string resourceUri)
@@ -135,10 +150,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<VmInstanceHybridIdentityMetadataList>> ListAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListRequest(resourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -162,10 +174,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public Response<VmInstanceHybridIdentityMetadataList> List(string resourceUri, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListRequest(resourceUri);
             _pipeline.Send(message, cancellationToken);
@@ -181,6 +190,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceUri)
@@ -204,14 +221,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<VmInstanceHybridIdentityMetadataList>> ListNextPageAsync(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListNextPageRequest(nextLink, resourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -236,14 +247,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
         public Response<VmInstanceHybridIdentityMetadataList> ListNextPage(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListNextPageRequest(nextLink, resourceUri);
             _pipeline.Send(message, cancellationToken);

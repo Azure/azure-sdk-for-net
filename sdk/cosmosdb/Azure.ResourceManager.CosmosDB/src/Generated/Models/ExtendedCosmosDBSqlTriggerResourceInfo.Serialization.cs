@@ -8,23 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class ExtendedCosmosDBSqlTriggerResourceInfo : IUtf8JsonSerializable, IJsonModel<ExtendedCosmosDBSqlTriggerResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedCosmosDBSqlTriggerResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedCosmosDBSqlTriggerResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExtendedCosmosDBSqlTriggerResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExtendedCosmosDBSqlTriggerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtendedCosmosDBSqlTriggerResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtendedCosmosDBSqlTriggerResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtendedCosmosDBSqlTriggerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtendedCosmosDBSqlTriggerResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtendedCosmosDBSqlTriggerResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ExtendedCosmosDBSqlTriggerResourceInfo DeserializeExtendedCosmosDBSqlTriggerResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CosmosDBSqlTriggerType? triggerType = default;
             CosmosDBSqlTriggerOperation? triggerOperation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -162,10 +161,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ExtendedCosmosDBSqlTriggerResourceInfo(
                 id,
                 body,
@@ -177,6 +176,150 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 etag);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rid), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  _rid: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Rid))
+                {
+                    builder.Append("  _rid: ");
+                    if (Rid.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Rid}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Rid}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  _ts: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Timestamp))
+                {
+                    builder.Append("  _ts: ");
+                    builder.AppendLine($"'{Timestamp.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  _etag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    builder.Append("  _etag: ");
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TriggerName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TriggerName))
+                {
+                    builder.Append("  id: ");
+                    if (TriggerName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TriggerName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TriggerName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Body), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  body: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Body))
+                {
+                    builder.Append("  body: ");
+                    if (Body.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Body}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Body}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TriggerType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  triggerType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TriggerType))
+                {
+                    builder.Append("  triggerType: ");
+                    builder.AppendLine($"'{TriggerType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TriggerOperation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  triggerOperation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TriggerOperation))
+                {
+                    builder.Append("  triggerOperation: ");
+                    builder.AppendLine($"'{TriggerOperation.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ExtendedCosmosDBSqlTriggerResourceInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExtendedCosmosDBSqlTriggerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -185,8 +328,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ExtendedCosmosDBSqlTriggerResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtendedCosmosDBSqlTriggerResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +347,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeExtendedCosmosDBSqlTriggerResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExtendedCosmosDBSqlTriggerResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtendedCosmosDBSqlTriggerResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Peering
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ConnectionMonitorTestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionMonitorTestName, ConnectionMonitorTestData data, CancellationToken cancellationToken = default)
         {
-            if (connectionMonitorTestName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionMonitorTestName));
-            }
-            if (connectionMonitorTestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorTestName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _connectionMonitorTestRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PeeringArmOperation<ConnectionMonitorTestResource>(Response.FromValue(new ConnectionMonitorTestResource(Client, response), response.GetRawResponse()));
+                var uri = _connectionMonitorTestRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PeeringArmOperation<ConnectionMonitorTestResource>(Response.FromValue(new ConnectionMonitorTestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ConnectionMonitorTestResource> CreateOrUpdate(WaitUntil waitUntil, string connectionMonitorTestName, ConnectionMonitorTestData data, CancellationToken cancellationToken = default)
         {
-            if (connectionMonitorTestName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionMonitorTestName));
-            }
-            if (connectionMonitorTestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorTestName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _connectionMonitorTestRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, data, cancellationToken);
-                var operation = new PeeringArmOperation<ConnectionMonitorTestResource>(Response.FromValue(new ConnectionMonitorTestResource(Client, response), response.GetRawResponse()));
+                var uri = _connectionMonitorTestRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PeeringArmOperation<ConnectionMonitorTestResource>(Response.FromValue(new ConnectionMonitorTestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual async Task<Response<ConnectionMonitorTestResource>> GetAsync(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
-            if (connectionMonitorTestName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionMonitorTestName));
-            }
-            if (connectionMonitorTestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorTestName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
 
             using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual Response<ConnectionMonitorTestResource> Get(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
-            if (connectionMonitorTestName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionMonitorTestName));
-            }
-            if (connectionMonitorTestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorTestName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
 
             using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.Get");
             scope.Start();
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
-            if (connectionMonitorTestName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionMonitorTestName));
-            }
-            if (connectionMonitorTestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorTestName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
 
             using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.Exists");
             scope.Start();
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual Response<bool> Exists(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
-            if (connectionMonitorTestName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionMonitorTestName));
-            }
-            if (connectionMonitorTestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorTestName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
 
             using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.Exists");
             scope.Start();
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual async Task<NullableResponse<ConnectionMonitorTestResource>> GetIfExistsAsync(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
-            if (connectionMonitorTestName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionMonitorTestName));
-            }
-            if (connectionMonitorTestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorTestName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
 
             using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.GetIfExists");
             scope.Start();
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual NullableResponse<ConnectionMonitorTestResource> GetIfExists(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
-            if (connectionMonitorTestName == null)
-            {
-                throw new ArgumentNullException(nameof(connectionMonitorTestName));
-            }
-            if (connectionMonitorTestName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionMonitorTestName));
-            }
+            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
 
             using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.GetIfExists");
             scope.Start();

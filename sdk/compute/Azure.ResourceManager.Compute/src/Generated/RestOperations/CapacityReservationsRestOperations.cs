@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
@@ -33,8 +32,24 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/capacityReservationGroups/", false);
+            uri.AppendPath(capacityReservationGroupName, true);
+            uri.AppendPath("/capacityReservations/", false);
+            uri.AppendPath(capacityReservationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationData data)
@@ -57,7 +72,7 @@ namespace Azure.ResourceManager.Compute
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -74,42 +89,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/> or <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationName));
-            }
-            if (capacityReservationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -134,42 +118,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/> or <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationName));
-            }
-            if (capacityReservationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -181,6 +134,22 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/capacityReservationGroups/", false);
+            uri.AppendPath(capacityReservationGroupName, true);
+            uri.AppendPath("/capacityReservations/", false);
+            uri.AppendPath(capacityReservationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationPatch patch)
@@ -203,7 +172,7 @@ namespace Azure.ResourceManager.Compute
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -220,42 +189,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/> or <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationName));
-            }
-            if (capacityReservationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -280,42 +218,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/> or <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationName));
-            }
-            if (capacityReservationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -327,6 +234,22 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/capacityReservationGroups/", false);
+            uri.AppendPath(capacityReservationGroupName, true);
+            uri.AppendPath("/capacityReservations/", false);
+            uri.AppendPath(capacityReservationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName)
@@ -361,38 +284,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/> or <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationName));
-            }
-            if (capacityReservationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -417,38 +312,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/> or <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationName));
-            }
-            if (capacityReservationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName);
             _pipeline.Send(message, cancellationToken);
@@ -461,6 +328,26 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationInstanceViewType? expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/capacityReservationGroups/", false);
+            uri.AppendPath(capacityReservationGroupName, true);
+            uri.AppendPath("/capacityReservations/", false);
+            uri.AppendPath(capacityReservationName, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationInstanceViewType? expand)
@@ -500,38 +387,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/> or <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CapacityReservationData>> GetAsync(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationInstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationName));
-            }
-            if (capacityReservationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -562,38 +421,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="capacityReservationGroupName"/> or <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CapacityReservationData> Get(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, string capacityReservationName, CapacityReservationInstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationName));
-            }
-            if (capacityReservationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, capacityReservationGroupName, capacityReservationName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -611,6 +442,21 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByCapacityReservationGroupRequestUri(string subscriptionId, string resourceGroupName, string capacityReservationGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/capacityReservationGroups/", false);
+            uri.AppendPath(capacityReservationGroupName, true);
+            uri.AppendPath("/capacityReservations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByCapacityReservationGroupRequest(string subscriptionId, string resourceGroupName, string capacityReservationGroupName)
@@ -643,30 +489,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CapacityReservationListResult>> ListByCapacityReservationGroupAsync(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
             using var message = CreateListByCapacityReservationGroupRequest(subscriptionId, resourceGroupName, capacityReservationGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -693,30 +518,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CapacityReservationListResult> ListByCapacityReservationGroup(string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
             using var message = CreateListByCapacityReservationGroupRequest(subscriptionId, resourceGroupName, capacityReservationGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -732,6 +536,14 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByCapacityReservationGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string capacityReservationGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByCapacityReservationGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string capacityReservationGroupName)
@@ -758,34 +570,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CapacityReservationListResult>> ListByCapacityReservationGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
             using var message = CreateListByCapacityReservationGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, capacityReservationGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -813,34 +601,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CapacityReservationListResult> ListByCapacityReservationGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string capacityReservationGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
             using var message = CreateListByCapacityReservationGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, capacityReservationGroupName);
             _pipeline.Send(message, cancellationToken);

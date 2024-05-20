@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -79,25 +77,17 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WebSitePremierAddonResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string premierAddOnName, PremierAddOnData data, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
-            if (premierAddOnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(premierAddOnName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webSitePremierAddonWebAppsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _webSitePremierAddonWebAppsRestClient.AddPremierAddOnAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSitePremierAddonResource>(Response.FromValue(new WebSitePremierAddonResource(Client, response), response.GetRawResponse()));
+                var uri = _webSitePremierAddonWebAppsRestClient.CreateAddPremierAddOnRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<WebSitePremierAddonResource>(Response.FromValue(new WebSitePremierAddonResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -138,25 +128,17 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WebSitePremierAddonResource> CreateOrUpdate(WaitUntil waitUntil, string premierAddOnName, PremierAddOnData data, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
-            if (premierAddOnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(premierAddOnName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webSitePremierAddonWebAppsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _webSitePremierAddonWebAppsRestClient.AddPremierAddOn(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSitePremierAddonResource>(Response.FromValue(new WebSitePremierAddonResource(Client, response), response.GetRawResponse()));
+                var uri = _webSitePremierAddonWebAppsRestClient.CreateAddPremierAddOnRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<WebSitePremierAddonResource>(Response.FromValue(new WebSitePremierAddonResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -195,14 +177,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public virtual async Task<Response<WebSitePremierAddonResource>> GetAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
-            if (premierAddOnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _webSitePremierAddonWebAppsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.Get");
             scope.Start();
@@ -247,14 +222,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public virtual Response<WebSitePremierAddonResource> Get(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
-            if (premierAddOnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _webSitePremierAddonWebAppsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.Get");
             scope.Start();
@@ -299,14 +267,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
-            if (premierAddOnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _webSitePremierAddonWebAppsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.Exists");
             scope.Start();
@@ -349,14 +310,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public virtual Response<bool> Exists(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
-            if (premierAddOnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _webSitePremierAddonWebAppsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.Exists");
             scope.Start();
@@ -399,14 +353,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public virtual async Task<NullableResponse<WebSitePremierAddonResource>> GetIfExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
-            if (premierAddOnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _webSitePremierAddonWebAppsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.GetIfExists");
             scope.Start();
@@ -451,14 +398,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public virtual NullableResponse<WebSitePremierAddonResource> GetIfExists(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
-            if (premierAddOnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _webSitePremierAddonWebAppsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.GetIfExists");
             scope.Start();

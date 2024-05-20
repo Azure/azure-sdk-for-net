@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EncryptionScopeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string encryptionScopeName, EncryptionScopeData data, CancellationToken cancellationToken = default)
         {
-            if (encryptionScopeName == null)
-            {
-                throw new ArgumentNullException(nameof(encryptionScopeName));
-            }
-            if (encryptionScopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(encryptionScopeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _encryptionScopeRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<EncryptionScopeResource>(Response.FromValue(new EncryptionScopeResource(Client, response), response.GetRawResponse()));
+                var uri = _encryptionScopeRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<EncryptionScopeResource>(Response.FromValue(new EncryptionScopeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EncryptionScopeResource> CreateOrUpdate(WaitUntil waitUntil, string encryptionScopeName, EncryptionScopeData data, CancellationToken cancellationToken = default)
         {
-            if (encryptionScopeName == null)
-            {
-                throw new ArgumentNullException(nameof(encryptionScopeName));
-            }
-            if (encryptionScopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(encryptionScopeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _encryptionScopeRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, data, cancellationToken);
-                var operation = new StorageArmOperation<EncryptionScopeResource>(Response.FromValue(new EncryptionScopeResource(Client, response), response.GetRawResponse()));
+                var uri = _encryptionScopeRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<EncryptionScopeResource>(Response.FromValue(new EncryptionScopeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
         public virtual async Task<Response<EncryptionScopeResource>> GetAsync(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
-            if (encryptionScopeName == null)
-            {
-                throw new ArgumentNullException(nameof(encryptionScopeName));
-            }
-            if (encryptionScopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(encryptionScopeName));
-            }
+            Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
 
             using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
         public virtual Response<EncryptionScopeResource> Get(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
-            if (encryptionScopeName == null)
-            {
-                throw new ArgumentNullException(nameof(encryptionScopeName));
-            }
-            if (encryptionScopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(encryptionScopeName));
-            }
+            Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
 
             using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.Get");
             scope.Start();
@@ -369,14 +337,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
-            if (encryptionScopeName == null)
-            {
-                throw new ArgumentNullException(nameof(encryptionScopeName));
-            }
-            if (encryptionScopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(encryptionScopeName));
-            }
+            Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
 
             using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.Exists");
             scope.Start();
@@ -419,14 +380,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
         public virtual Response<bool> Exists(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
-            if (encryptionScopeName == null)
-            {
-                throw new ArgumentNullException(nameof(encryptionScopeName));
-            }
-            if (encryptionScopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(encryptionScopeName));
-            }
+            Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
 
             using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.Exists");
             scope.Start();
@@ -469,14 +423,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
         public virtual async Task<NullableResponse<EncryptionScopeResource>> GetIfExistsAsync(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
-            if (encryptionScopeName == null)
-            {
-                throw new ArgumentNullException(nameof(encryptionScopeName));
-            }
-            if (encryptionScopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(encryptionScopeName));
-            }
+            Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
 
             using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.GetIfExists");
             scope.Start();
@@ -521,14 +468,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="encryptionScopeName"/> is null. </exception>
         public virtual NullableResponse<EncryptionScopeResource> GetIfExists(string encryptionScopeName, CancellationToken cancellationToken = default)
         {
-            if (encryptionScopeName == null)
-            {
-                throw new ArgumentNullException(nameof(encryptionScopeName));
-            }
-            if (encryptionScopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(encryptionScopeName));
-            }
+            Argument.AssertNotNullOrEmpty(encryptionScopeName, nameof(encryptionScopeName));
 
             using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.GetIfExists");
             scope.Start();

@@ -54,22 +54,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="scriptActionProfileType"/>, <paramref name="name"/>, <paramref name="uriString"/> or <paramref name="services"/> is null. </exception>
         public ScriptActionProfile(string scriptActionProfileType, string name, string uriString, IEnumerable<string> services)
         {
-            if (scriptActionProfileType == null)
-            {
-                throw new ArgumentNullException(nameof(scriptActionProfileType));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (uriString == null)
-            {
-                throw new ArgumentNullException(nameof(uriString));
-            }
-            if (services == null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
+            Argument.AssertNotNull(scriptActionProfileType, nameof(scriptActionProfileType));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(uriString, nameof(uriString));
+            Argument.AssertNotNull(services, nameof(services));
 
             ScriptActionProfileType = scriptActionProfileType;
             Name = name;

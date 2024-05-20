@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Relay
 {
@@ -196,17 +194,16 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RelayNetworkRuleSetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, RelayNetworkRuleSetData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _relayNetworkRuleSetNamespacesClientDiagnostics.CreateScope("RelayNetworkRuleSetResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _relayNetworkRuleSetNamespacesRestClient.CreateOrUpdateNetworkRuleSetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RelayArmOperation<RelayNetworkRuleSetResource>(Response.FromValue(new RelayNetworkRuleSetResource(Client, response), response.GetRawResponse()));
+                var uri = _relayNetworkRuleSetNamespacesRestClient.CreateCreateOrUpdateNetworkRuleSetRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RelayArmOperation<RelayNetworkRuleSetResource>(Response.FromValue(new RelayNetworkRuleSetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -245,17 +242,16 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RelayNetworkRuleSetResource> CreateOrUpdate(WaitUntil waitUntil, RelayNetworkRuleSetData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _relayNetworkRuleSetNamespacesClientDiagnostics.CreateScope("RelayNetworkRuleSetResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _relayNetworkRuleSetNamespacesRestClient.CreateOrUpdateNetworkRuleSet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new RelayArmOperation<RelayNetworkRuleSetResource>(Response.FromValue(new RelayNetworkRuleSetResource(Client, response), response.GetRawResponse()));
+                var uri = _relayNetworkRuleSetNamespacesRestClient.CreateCreateOrUpdateNetworkRuleSetRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RelayArmOperation<RelayNetworkRuleSetResource>(Response.FromValue(new RelayNetworkRuleSetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

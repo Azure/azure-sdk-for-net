@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ResourceGraph;
 using Azure.ResourceManager.ResourceGraph.Models;
 
 namespace Azure.ResourceManager.ResourceGraph.Mocking
@@ -66,10 +63,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ResourceQueryResult>> GetResourcesAsync(ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableResourceGraphTenantResource.GetResources");
             scope.Start();
@@ -107,10 +101,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ResourceQueryResult> GetResources(ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableResourceGraphTenantResource.GetResources");
             scope.Start();
@@ -148,10 +139,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<BinaryData>> GetResourceHistoryAsync(ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableResourceGraphTenantResource.GetResourceHistory");
             scope.Start();
@@ -189,10 +177,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<BinaryData> GetResourceHistory(ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableResourceGraphTenantResource.GetResourceHistory");
             scope.Start();

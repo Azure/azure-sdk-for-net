@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
@@ -35,6 +34,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string filter, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(vaultName, true);
+            uri.AppendPath("/backupFabrics/", false);
+            uri.AppendPath(fabricName, true);
+            uri.AppendPath("/protectionContainers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/items", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string filter, string skipToken)
@@ -86,46 +112,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadItemResourceList>> ListAsync(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, filter, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -159,46 +150,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadItemResourceList> List(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, filter, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -214,6 +170,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string filter, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string filter, string skipToken)
@@ -247,50 +211,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WorkloadItemResourceList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, vaultName, fabricName, containerName, filter, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -325,50 +251,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WorkloadItemResourceList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, vaultName, fabricName, containerName, filter, skipToken);
             _pipeline.Send(message, cancellationToken);

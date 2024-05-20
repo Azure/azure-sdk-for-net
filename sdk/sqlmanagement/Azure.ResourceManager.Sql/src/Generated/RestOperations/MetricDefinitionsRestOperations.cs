@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Sql.Models;
@@ -35,6 +34,23 @@ namespace Azure.ResourceManager.Sql
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2014-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListDatabaseRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/metricDefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListDatabaseRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
@@ -70,38 +86,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MetricDefinitionListResult>> ListDatabaseAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var message = CreateListDatabaseRequest(subscriptionId, resourceGroupName, serverName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -129,38 +117,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MetricDefinitionListResult> ListDatabase(string subscriptionId, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var message = CreateListDatabaseRequest(subscriptionId, resourceGroupName, serverName, databaseName);
             _pipeline.Send(message, cancellationToken);
@@ -176,6 +136,23 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListElasticPoolRequestUri(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/elasticPools/", false);
+            uri.AppendPath(elasticPoolName, true);
+            uri.AppendPath("/metricDefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListElasticPoolRequest(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName)
@@ -211,38 +188,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MetricDefinitionListResult>> ListElasticPoolAsync(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
-            if (elasticPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
             using var message = CreateListElasticPoolRequest(subscriptionId, resourceGroupName, serverName, elasticPoolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -270,38 +219,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MetricDefinitionListResult> ListElasticPool(string subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
-            if (elasticPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
             using var message = CreateListElasticPoolRequest(subscriptionId, resourceGroupName, serverName, elasticPoolName);
             _pipeline.Send(message, cancellationToken);

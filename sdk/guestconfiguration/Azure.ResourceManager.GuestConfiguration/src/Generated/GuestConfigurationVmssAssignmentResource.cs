@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.GuestConfiguration.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
@@ -206,7 +204,9 @@ namespace Azure.ResourceManager.GuestConfiguration
             try
             {
                 var response = await _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new GuestConfigurationArmOperation<GuestConfigurationVmssAssignmentResource>(Response.FromValue(new GuestConfigurationVmssAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new GuestConfigurationArmOperation<GuestConfigurationVmssAssignmentResource>(Response.FromValue(new GuestConfigurationVmssAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -248,7 +248,9 @@ namespace Azure.ResourceManager.GuestConfiguration
             try
             {
                 var response = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new GuestConfigurationArmOperation<GuestConfigurationVmssAssignmentResource>(Response.FromValue(new GuestConfigurationVmssAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new GuestConfigurationArmOperation<GuestConfigurationVmssAssignmentResource>(Response.FromValue(new GuestConfigurationVmssAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -333,14 +335,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual async Task<Response<GuestConfigurationAssignmentReport>> GetReportAsync(string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReport");
             scope.Start();
@@ -379,14 +374,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual Response<GuestConfigurationAssignmentReport> GetReport(string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReport");
             scope.Start();

@@ -8,22 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmApplicationManagedIdentity : IUtf8JsonSerializable, IJsonModel<ArmApplicationManagedIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationManagedIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationManagedIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmApplicationManagedIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationManagedIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmApplicationManagedIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmApplicationManagedIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationManagedIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmApplicationManagedIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmApplicationManagedIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationManagedIdentity DeserializeArmApplicationManagedIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Resources.Models
             ArmApplicationManagedIdentityType? type = default;
             IDictionary<string, ArmApplicationUserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -142,11 +143,95 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ArmApplicationManagedIdentity(principalId, tenantId, type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, ArmApplicationUserAssignedIdentity>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  principalId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrincipalId))
+                {
+                    builder.Append("  principalId: ");
+                    builder.AppendLine($"'{PrincipalId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tenantId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    builder.Append("  tenantId: ");
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IdentityType))
+                {
+                    builder.Append("  type: ");
+                    builder.AppendLine($"'{IdentityType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserAssignedIdentities), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userAssignedIdentities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(UserAssignedIdentities))
+                {
+                    if (UserAssignedIdentities.Any())
+                    {
+                        builder.Append("  userAssignedIdentities: ");
+                        builder.AppendLine("{");
+                        foreach (var item in UserAssignedIdentities)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  userAssignedIdentities: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ArmApplicationManagedIdentity>.Write(ModelReaderWriterOptions options)
@@ -157,8 +242,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmApplicationManagedIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmApplicationManagedIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +261,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeArmApplicationManagedIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmApplicationManagedIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmApplicationManagedIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

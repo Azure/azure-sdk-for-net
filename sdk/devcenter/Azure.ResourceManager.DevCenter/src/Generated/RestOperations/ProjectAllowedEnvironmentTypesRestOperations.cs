@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DevCenter.Models;
@@ -35,6 +34,25 @@ namespace Azure.ResourceManager.DevCenter
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string projectName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/allowedEnvironmentTypes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string projectName, int? top)
@@ -72,30 +90,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AllowedEnvironmentTypeListResult>> ListAsync(string subscriptionId, string resourceGroupName, string projectName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, projectName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -123,30 +120,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AllowedEnvironmentTypeListResult> List(string subscriptionId, string resourceGroupName, string projectName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, projectName, top);
             _pipeline.Send(message, cancellationToken);
@@ -162,6 +138,22 @@ namespace Azure.ResourceManager.DevCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/allowedEnvironmentTypes/", false);
+            uri.AppendPath(environmentTypeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName)
@@ -196,38 +188,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AllowedEnvironmentTypeData>> GetAsync(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (environmentTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentTypeName));
-            }
-            if (environmentTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, projectName, environmentTypeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -257,38 +221,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AllowedEnvironmentTypeData> Get(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (environmentTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentTypeName));
-            }
-            if (environmentTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, projectName, environmentTypeName);
             _pipeline.Send(message, cancellationToken);
@@ -306,6 +242,14 @@ namespace Azure.ResourceManager.DevCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string projectName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string projectName, int? top)
@@ -333,34 +277,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AllowedEnvironmentTypeListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string projectName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, projectName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -389,34 +309,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AllowedEnvironmentTypeListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string projectName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, projectName, top);
             _pipeline.Send(message, cancellationToken);

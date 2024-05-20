@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<UpdateRunResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string updateRunName, UpdateRunData data, CancellationToken cancellationToken = default)
         {
-            if (updateRunName == null)
-            {
-                throw new ArgumentNullException(nameof(updateRunName));
-            }
-            if (updateRunName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(updateRunName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _updateRunClientDiagnostics.CreateScope("UpdateRunCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _updateRunRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation<UpdateRunResource>(Response.FromValue(new UpdateRunResource(Client, response), response.GetRawResponse()));
+                var uri = _updateRunRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HciArmOperation<UpdateRunResource>(Response.FromValue(new UpdateRunResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<UpdateRunResource> CreateOrUpdate(WaitUntil waitUntil, string updateRunName, UpdateRunData data, CancellationToken cancellationToken = default)
         {
-            if (updateRunName == null)
-            {
-                throw new ArgumentNullException(nameof(updateRunName));
-            }
-            if (updateRunName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(updateRunName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _updateRunClientDiagnostics.CreateScope("UpdateRunCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _updateRunRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, data, cancellationToken);
-                var operation = new HciArmOperation<UpdateRunResource>(Response.FromValue(new UpdateRunResource(Client, response), response.GetRawResponse()));
+                var uri = _updateRunRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateRunName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HciArmOperation<UpdateRunResource>(Response.FromValue(new UpdateRunResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         public virtual async Task<Response<UpdateRunResource>> GetAsync(string updateRunName, CancellationToken cancellationToken = default)
         {
-            if (updateRunName == null)
-            {
-                throw new ArgumentNullException(nameof(updateRunName));
-            }
-            if (updateRunName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(updateRunName));
-            }
+            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
             using var scope = _updateRunClientDiagnostics.CreateScope("UpdateRunCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         public virtual Response<UpdateRunResource> Get(string updateRunName, CancellationToken cancellationToken = default)
         {
-            if (updateRunName == null)
-            {
-                throw new ArgumentNullException(nameof(updateRunName));
-            }
-            if (updateRunName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(updateRunName));
-            }
+            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
             using var scope = _updateRunClientDiagnostics.CreateScope("UpdateRunCollection.Get");
             scope.Start();
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string updateRunName, CancellationToken cancellationToken = default)
         {
-            if (updateRunName == null)
-            {
-                throw new ArgumentNullException(nameof(updateRunName));
-            }
-            if (updateRunName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(updateRunName));
-            }
+            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
             using var scope = _updateRunClientDiagnostics.CreateScope("UpdateRunCollection.Exists");
             scope.Start();
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         public virtual Response<bool> Exists(string updateRunName, CancellationToken cancellationToken = default)
         {
-            if (updateRunName == null)
-            {
-                throw new ArgumentNullException(nameof(updateRunName));
-            }
-            if (updateRunName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(updateRunName));
-            }
+            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
             using var scope = _updateRunClientDiagnostics.CreateScope("UpdateRunCollection.Exists");
             scope.Start();
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         public virtual async Task<NullableResponse<UpdateRunResource>> GetIfExistsAsync(string updateRunName, CancellationToken cancellationToken = default)
         {
-            if (updateRunName == null)
-            {
-                throw new ArgumentNullException(nameof(updateRunName));
-            }
-            if (updateRunName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(updateRunName));
-            }
+            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
             using var scope = _updateRunClientDiagnostics.CreateScope("UpdateRunCollection.GetIfExists");
             scope.Start();
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         public virtual NullableResponse<UpdateRunResource> GetIfExists(string updateRunName, CancellationToken cancellationToken = default)
         {
-            if (updateRunName == null)
-            {
-                throw new ArgumentNullException(nameof(updateRunName));
-            }
-            if (updateRunName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(updateRunName));
-            }
+            Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
             using var scope = _updateRunClientDiagnostics.CreateScope("UpdateRunCollection.GetIfExists");
             scope.Start();

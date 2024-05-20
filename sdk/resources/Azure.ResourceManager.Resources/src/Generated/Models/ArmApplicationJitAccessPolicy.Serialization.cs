@@ -8,22 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmApplicationJitAccessPolicy : IUtf8JsonSerializable, IJsonModel<ArmApplicationJitAccessPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationJitAccessPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationJitAccessPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmApplicationJitAccessPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationJitAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in JitApprovers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationJitAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationJitAccessPolicy DeserializeArmApplicationJitAccessPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Resources.Models
             IList<JitApprover> jitApprovers = default;
             TimeSpan? maximumJitAccessDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jitAccessEnabled"u8))
@@ -134,11 +135,93 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ArmApplicationJitAccessPolicy(jitAccessEnabled, jitApprovalMode, jitApprovers ?? new ChangeTrackingList<JitApprover>(), maximumJitAccessDuration, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JitAccessEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jitAccessEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  jitAccessEnabled: ");
+                var boolValue = JitAccessEnabled == true ? "true" : "false";
+                builder.AppendLine($"{boolValue}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JitApprovalMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jitApprovalMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JitApprovalMode))
+                {
+                    builder.Append("  jitApprovalMode: ");
+                    builder.AppendLine($"'{JitApprovalMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JitApprovers), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jitApprovers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(JitApprovers))
+                {
+                    if (JitApprovers.Any())
+                    {
+                        builder.Append("  jitApprovers: ");
+                        builder.AppendLine("[");
+                        foreach (var item in JitApprovers)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  jitApprovers: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumJitAccessDuration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maximumJitAccessDuration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaximumJitAccessDuration))
+                {
+                    builder.Append("  maximumJitAccessDuration: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(MaximumJitAccessDuration.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ArmApplicationJitAccessPolicy>.Write(ModelReaderWriterOptions options)
@@ -149,8 +232,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -166,7 +251,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeArmApplicationJitAccessPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

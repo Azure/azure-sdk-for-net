@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -120,8 +121,8 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// Determines whether the client is able to generate a SAS.
-        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// Indicates whether the client is able to generate a SAS uri.
+        /// Client can generate a SAS url if it is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
         public virtual bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
 
@@ -189,6 +190,7 @@ namespace Azure.Storage.Files.Shares
             string directoryPath,
             ShareClientOptions options)
         {
+            Argument.AssertNotNullOrWhiteSpace(shareName, nameof(shareName));
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
             ShareUriBuilder uriBuilder =

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,14 +18,14 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class OperationalInsightsTableData : IUtf8JsonSerializable, IJsonModel<OperationalInsightsTableData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsTableData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsTableData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OperationalInsightsTableData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsTableData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsTableData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,17 +69,17 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(SearchResults))
             {
                 writer.WritePropertyName("searchResults"u8);
-                writer.WriteObjectValue(SearchResults);
+                writer.WriteObjectValue(SearchResults, options);
             }
             if (Optional.IsDefined(RestoredLogs))
             {
                 writer.WritePropertyName("restoredLogs"u8);
-                writer.WriteObjectValue(RestoredLogs);
+                writer.WriteObjectValue(RestoredLogs, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResultStatistics))
             {
                 writer.WritePropertyName("resultStatistics"u8);
-                writer.WriteObjectValue(ResultStatistics);
+                writer.WriteObjectValue(ResultStatistics, options);
             }
             if (Optional.IsDefined(Plan))
             {
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue(Schema);
+                writer.WriteObjectValue(Schema, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.OperationalInsights
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsTableData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsTableData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static OperationalInsightsTableData DeserializeOperationalInsightsTableData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.OperationalInsights
             bool? retentionInDaysAsDefault = default;
             bool? totalRetentionInDaysAsDefault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -311,10 +312,10 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OperationalInsightsTableData(
                 id,
                 name,
@@ -335,6 +336,267 @@ namespace Azure.ResourceManager.OperationalInsights
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionInDays), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    retentionInDays: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetentionInDays))
+                {
+                    builder.Append("    retentionInDays: ");
+                    builder.AppendLine($"{RetentionInDays.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalRetentionInDays), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    totalRetentionInDays: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TotalRetentionInDays))
+                {
+                    builder.Append("    totalRetentionInDays: ");
+                    builder.AppendLine($"{TotalRetentionInDays.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArchiveRetentionInDays), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    archiveRetentionInDays: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArchiveRetentionInDays))
+                {
+                    builder.Append("    archiveRetentionInDays: ");
+                    builder.AppendLine($"{ArchiveRetentionInDays.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SearchResults), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    searchResults: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SearchResults))
+                {
+                    builder.Append("    searchResults: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SearchResults, options, 4, false, "    searchResults: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoredLogs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    restoredLogs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RestoredLogs))
+                {
+                    builder.Append("    restoredLogs: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RestoredLogs, options, 4, false, "    restoredLogs: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResultStatistics), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    resultStatistics: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResultStatistics))
+                {
+                    builder.Append("    resultStatistics: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ResultStatistics, options, 4, false, "    resultStatistics: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Plan), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    plan: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Plan))
+                {
+                    builder.Append("    plan: ");
+                    builder.AppendLine($"'{Plan.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastPlanModifiedDate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lastPlanModifiedDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastPlanModifiedDate))
+                {
+                    builder.Append("    lastPlanModifiedDate: ");
+                    if (LastPlanModifiedDate.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LastPlanModifiedDate}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LastPlanModifiedDate}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Schema), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    schema: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Schema))
+                {
+                    builder.Append("    schema: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Schema, options, 4, false, "    schema: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRetentionInDaysAsDefault), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    retentionInDaysAsDefault: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRetentionInDaysAsDefault))
+                {
+                    builder.Append("    retentionInDaysAsDefault: ");
+                    var boolValue = IsRetentionInDaysAsDefault.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsTotalRetentionInDaysAsDefault), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    totalRetentionInDaysAsDefault: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsTotalRetentionInDaysAsDefault))
+                {
+                    builder.Append("    totalRetentionInDaysAsDefault: ");
+                    var boolValue = IsTotalRetentionInDaysAsDefault.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<OperationalInsightsTableData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableData>)this).GetFormatFromOptions(options) : options.Format;
@@ -343,8 +605,10 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsTableData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsTableData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -360,7 +624,7 @@ namespace Azure.ResourceManager.OperationalInsights
                         return DeserializeOperationalInsightsTableData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsTableData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsTableData)} does not support reading '{options.Format}' format.");
             }
         }
 

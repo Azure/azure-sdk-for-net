@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.StreamAnalytics.Models;
@@ -35,6 +34,19 @@ namespace Azure.ResourceManager.StreamAnalytics
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-10-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListQuotasRequestUri(string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/quotas", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListQuotasRequest(string subscriptionId, AzureLocation location)
@@ -64,14 +76,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StreamAnalyticsSubscriptionQuotasListResult>> ListQuotasAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListQuotasRequest(subscriptionId, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -97,14 +102,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StreamAnalyticsSubscriptionQuotasListResult> ListQuotas(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListQuotasRequest(subscriptionId, location);
             _pipeline.Send(message, cancellationToken);
@@ -120,6 +118,19 @@ namespace Azure.ResourceManager.StreamAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateTestQueryRequestUri(string subscriptionId, AzureLocation location, StreamAnalyticsTestQuery testQuery)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/testQuery", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateTestQueryRequest(string subscriptionId, AzureLocation location, StreamAnalyticsTestQuery testQuery)
@@ -139,7 +150,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(testQuery);
+            content.JsonWriter.WriteObjectValue(testQuery, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -154,18 +165,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> TestQueryAsync(string subscriptionId, AzureLocation location, StreamAnalyticsTestQuery testQuery, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (testQuery == null)
-            {
-                throw new ArgumentNullException(nameof(testQuery));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(testQuery, nameof(testQuery));
 
             using var message = CreateTestQueryRequest(subscriptionId, location, testQuery);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -188,18 +189,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response TestQuery(string subscriptionId, AzureLocation location, StreamAnalyticsTestQuery testQuery, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (testQuery == null)
-            {
-                throw new ArgumentNullException(nameof(testQuery));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(testQuery, nameof(testQuery));
 
             using var message = CreateTestQueryRequest(subscriptionId, location, testQuery);
             _pipeline.Send(message, cancellationToken);
@@ -211,6 +202,19 @@ namespace Azure.ResourceManager.StreamAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCompileQueryRequestUri(string subscriptionId, AzureLocation location, StreamAnalyticsCompileQuery compileQuery)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/compileQuery", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCompileQueryRequest(string subscriptionId, AzureLocation location, StreamAnalyticsCompileQuery compileQuery)
@@ -230,7 +234,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(compileQuery);
+            content.JsonWriter.WriteObjectValue(compileQuery, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -245,18 +249,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StreamAnalyticsQueryCompilationResult>> CompileQueryAsync(string subscriptionId, AzureLocation location, StreamAnalyticsCompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (compileQuery == null)
-            {
-                throw new ArgumentNullException(nameof(compileQuery));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(compileQuery, nameof(compileQuery));
 
             using var message = CreateCompileQueryRequest(subscriptionId, location, compileQuery);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -283,18 +277,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StreamAnalyticsQueryCompilationResult> CompileQuery(string subscriptionId, AzureLocation location, StreamAnalyticsCompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (compileQuery == null)
-            {
-                throw new ArgumentNullException(nameof(compileQuery));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(compileQuery, nameof(compileQuery));
 
             using var message = CreateCompileQueryRequest(subscriptionId, location, compileQuery);
             _pipeline.Send(message, cancellationToken);
@@ -310,6 +294,19 @@ namespace Azure.ResourceManager.StreamAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSampleInputRequestUri(string subscriptionId, AzureLocation location, StreamAnalyticsSampleInputContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/sampleInput", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSampleInputRequest(string subscriptionId, AzureLocation location, StreamAnalyticsSampleInputContent content)
@@ -329,7 +326,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -344,18 +341,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> SampleInputAsync(string subscriptionId, AzureLocation location, StreamAnalyticsSampleInputContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateSampleInputRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -377,18 +364,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response SampleInput(string subscriptionId, AzureLocation location, StreamAnalyticsSampleInputContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateSampleInputRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
@@ -399,6 +376,19 @@ namespace Azure.ResourceManager.StreamAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateTestInputRequestUri(string subscriptionId, AzureLocation location, StreamAnalyticsTestContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/testInput", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateTestInputRequest(string subscriptionId, AzureLocation location, StreamAnalyticsTestContent content)
@@ -418,7 +408,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -433,18 +423,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> TestInputAsync(string subscriptionId, AzureLocation location, StreamAnalyticsTestContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateTestInputRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -466,18 +446,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response TestInput(string subscriptionId, AzureLocation location, StreamAnalyticsTestContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateTestInputRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
@@ -488,6 +458,19 @@ namespace Azure.ResourceManager.StreamAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateTestOutputRequestUri(string subscriptionId, AzureLocation location, StreamAnalyticsTestOutput testOutput)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/testOutput", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateTestOutputRequest(string subscriptionId, AzureLocation location, StreamAnalyticsTestOutput testOutput)
@@ -507,7 +490,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(testOutput);
+            content.JsonWriter.WriteObjectValue(testOutput, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -522,18 +505,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> TestOutputAsync(string subscriptionId, AzureLocation location, StreamAnalyticsTestOutput testOutput, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (testOutput == null)
-            {
-                throw new ArgumentNullException(nameof(testOutput));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(testOutput, nameof(testOutput));
 
             using var message = CreateTestOutputRequest(subscriptionId, location, testOutput);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -555,18 +528,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response TestOutput(string subscriptionId, AzureLocation location, StreamAnalyticsTestOutput testOutput, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (testOutput == null)
-            {
-                throw new ArgumentNullException(nameof(testOutput));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(testOutput, nameof(testOutput));
 
             using var message = CreateTestOutputRequest(subscriptionId, location, testOutput);
             _pipeline.Send(message, cancellationToken);

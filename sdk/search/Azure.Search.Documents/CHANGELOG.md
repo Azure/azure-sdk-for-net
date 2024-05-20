@@ -1,5 +1,23 @@
 # Release History
 
+## 11.6.0-beta.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 11.6.0-beta.4 (2024-05-06)
+
+### Features Added
+- Added support for new embedding models `text-embedding-3-small` and `text-embedding-3-large`, as part of our existing `AzureOpenAIVectorizer` and `AzureOpenAIEmbeddingSkill` features. 
+- Added support for `AIServicesVisionVectorizer` and `VisionVectorizeSkill` to generate embeddings for an image or text using the Azure AI Services Vision Vectorize API.
+- Added support for `AzureMachineLearningVectorizer`, allowing users to specify an Azure Machine Learning endpoint deployed via the Azure AI Studio Model Catalog to generate vector embeddings of query strings.
+- Added support for `byte` to `SearchFieldDataType`.
+
 ## 11.6.0-beta.3 (2024-03-05)
 
 ### Features Added

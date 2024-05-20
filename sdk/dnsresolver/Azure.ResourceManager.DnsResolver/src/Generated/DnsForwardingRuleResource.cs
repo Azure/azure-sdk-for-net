@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DnsResolver.Models;
 
 namespace Azure.ResourceManager.DnsResolver
@@ -202,7 +200,9 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = await _dnsForwardingRuleForwardingRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation(response);
+                var uri = _dnsForwardingRuleForwardingRulesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DnsResolverArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -245,7 +245,9 @@ namespace Azure.ResourceManager.DnsResolver
             try
             {
                 var response = _dnsForwardingRuleForwardingRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation(response);
+                var uri = _dnsForwardingRuleForwardingRulesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DnsResolverArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -284,10 +286,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<DnsForwardingRuleResource>> UpdateAsync(DnsForwardingRulePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _dnsForwardingRuleForwardingRulesClientDiagnostics.CreateScope("DnsForwardingRuleResource.Update");
             scope.Start();
@@ -330,10 +329,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<DnsForwardingRuleResource> Update(DnsForwardingRulePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _dnsForwardingRuleForwardingRulesClientDiagnostics.CreateScope("DnsForwardingRuleResource.Update");
             scope.Start();

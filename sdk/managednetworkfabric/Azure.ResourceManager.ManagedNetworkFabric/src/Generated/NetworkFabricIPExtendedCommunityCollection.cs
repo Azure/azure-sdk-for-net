@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkFabricIPExtendedCommunityResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipExtendedCommunityName, NetworkFabricIPExtendedCommunityData data, CancellationToken cancellationToken = default)
         {
-            if (ipExtendedCommunityName == null)
-            {
-                throw new ArgumentNullException(nameof(ipExtendedCommunityName));
-            }
-            if (ipExtendedCommunityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipExtendedCommunityName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFabricIPExtendedCommunityIPExtendedCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPExtendedCommunityCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkFabricIPExtendedCommunityResource> CreateOrUpdate(WaitUntil waitUntil, string ipExtendedCommunityName, NetworkFabricIPExtendedCommunityData data, CancellationToken cancellationToken = default)
         {
-            if (ipExtendedCommunityName == null)
-            {
-                throw new ArgumentNullException(nameof(ipExtendedCommunityName));
-            }
-            if (ipExtendedCommunityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipExtendedCommunityName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFabricIPExtendedCommunityIPExtendedCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPExtendedCommunityCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
         public virtual async Task<Response<NetworkFabricIPExtendedCommunityResource>> GetAsync(string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
-            if (ipExtendedCommunityName == null)
-            {
-                throw new ArgumentNullException(nameof(ipExtendedCommunityName));
-            }
-            if (ipExtendedCommunityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipExtendedCommunityName));
-            }
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
 
             using var scope = _networkFabricIPExtendedCommunityIPExtendedCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPExtendedCommunityCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
         public virtual Response<NetworkFabricIPExtendedCommunityResource> Get(string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
-            if (ipExtendedCommunityName == null)
-            {
-                throw new ArgumentNullException(nameof(ipExtendedCommunityName));
-            }
-            if (ipExtendedCommunityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipExtendedCommunityName));
-            }
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
 
             using var scope = _networkFabricIPExtendedCommunityIPExtendedCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPExtendedCommunityCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
-            if (ipExtendedCommunityName == null)
-            {
-                throw new ArgumentNullException(nameof(ipExtendedCommunityName));
-            }
-            if (ipExtendedCommunityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipExtendedCommunityName));
-            }
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
 
             using var scope = _networkFabricIPExtendedCommunityIPExtendedCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPExtendedCommunityCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
         public virtual Response<bool> Exists(string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
-            if (ipExtendedCommunityName == null)
-            {
-                throw new ArgumentNullException(nameof(ipExtendedCommunityName));
-            }
-            if (ipExtendedCommunityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipExtendedCommunityName));
-            }
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
 
             using var scope = _networkFabricIPExtendedCommunityIPExtendedCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPExtendedCommunityCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkFabricIPExtendedCommunityResource>> GetIfExistsAsync(string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
-            if (ipExtendedCommunityName == null)
-            {
-                throw new ArgumentNullException(nameof(ipExtendedCommunityName));
-            }
-            if (ipExtendedCommunityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipExtendedCommunityName));
-            }
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
 
             using var scope = _networkFabricIPExtendedCommunityIPExtendedCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPExtendedCommunityCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
         public virtual NullableResponse<NetworkFabricIPExtendedCommunityResource> GetIfExists(string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
-            if (ipExtendedCommunityName == null)
-            {
-                throw new ArgumentNullException(nameof(ipExtendedCommunityName));
-            }
-            if (ipExtendedCommunityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipExtendedCommunityName));
-            }
+            Argument.AssertNotNullOrEmpty(ipExtendedCommunityName, nameof(ipExtendedCommunityName));
 
             using var scope = _networkFabricIPExtendedCommunityIPExtendedCommunitiesClientDiagnostics.CreateScope("NetworkFabricIPExtendedCommunityCollection.GetIfExists");
             scope.Start();

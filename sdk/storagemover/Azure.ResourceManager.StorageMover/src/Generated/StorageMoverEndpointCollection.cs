@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageMover
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageMoverEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, StorageMoverEndpointData data, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (endpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _storageMoverEndpointEndpointsClientDiagnostics.CreateScope("StorageMoverEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _storageMoverEndpointEndpointsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageMoverArmOperation<StorageMoverEndpointResource>(Response.FromValue(new StorageMoverEndpointResource(Client, response), response.GetRawResponse()));
+                var uri = _storageMoverEndpointEndpointsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageMoverArmOperation<StorageMoverEndpointResource>(Response.FromValue(new StorageMoverEndpointResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StorageMoverEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string endpointName, StorageMoverEndpointData data, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (endpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _storageMoverEndpointEndpointsClientDiagnostics.CreateScope("StorageMoverEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _storageMoverEndpointEndpointsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken);
-                var operation = new StorageMoverArmOperation<StorageMoverEndpointResource>(Response.FromValue(new StorageMoverEndpointResource(Client, response), response.GetRawResponse()));
+                var uri = _storageMoverEndpointEndpointsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageMoverArmOperation<StorageMoverEndpointResource>(Response.FromValue(new StorageMoverEndpointResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<Response<StorageMoverEndpointResource>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (endpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
-            }
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var scope = _storageMoverEndpointEndpointsClientDiagnostics.CreateScope("StorageMoverEndpointCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual Response<StorageMoverEndpointResource> Get(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (endpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
-            }
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var scope = _storageMoverEndpointEndpointsClientDiagnostics.CreateScope("StorageMoverEndpointCollection.Get");
             scope.Start();
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (endpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
-            }
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var scope = _storageMoverEndpointEndpointsClientDiagnostics.CreateScope("StorageMoverEndpointCollection.Exists");
             scope.Start();
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (endpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
-            }
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var scope = _storageMoverEndpointEndpointsClientDiagnostics.CreateScope("StorageMoverEndpointCollection.Exists");
             scope.Start();
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<NullableResponse<StorageMoverEndpointResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (endpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
-            }
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var scope = _storageMoverEndpointEndpointsClientDiagnostics.CreateScope("StorageMoverEndpointCollection.GetIfExists");
             scope.Start();
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual NullableResponse<StorageMoverEndpointResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (endpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
-            }
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var scope = _storageMoverEndpointEndpointsClientDiagnostics.CreateScope("StorageMoverEndpointCollection.GetIfExists");
             scope.Start();

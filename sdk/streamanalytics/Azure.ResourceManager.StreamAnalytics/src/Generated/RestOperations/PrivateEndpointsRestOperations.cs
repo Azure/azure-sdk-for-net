@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.StreamAnalytics.Models;
@@ -35,6 +34,22 @@ namespace Azure.ResourceManager.StreamAnalytics
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointName, StreamAnalyticsPrivateEndpointData data, string ifMatch, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/privateEndpoints/", false);
+            uri.AppendPath(privateEndpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointName, StreamAnalyticsPrivateEndpointData data, string ifMatch, string ifNoneMatch)
@@ -65,7 +80,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -84,42 +99,11 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StreamAnalyticsPrivateEndpointData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointName, StreamAnalyticsPrivateEndpointData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
-            if (privateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, privateEndpointName, data, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -151,42 +135,11 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StreamAnalyticsPrivateEndpointData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointName, StreamAnalyticsPrivateEndpointData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
-            if (privateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, privateEndpointName, data, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
@@ -203,6 +156,22 @@ namespace Azure.ResourceManager.StreamAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/privateEndpoints/", false);
+            uri.AppendPath(privateEndpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointName)
@@ -237,38 +206,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StreamAnalyticsPrivateEndpointData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
-            if (privateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, privateEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -298,38 +239,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StreamAnalyticsPrivateEndpointData> Get(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
-            if (privateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, privateEndpointName);
             _pipeline.Send(message, cancellationToken);
@@ -347,6 +260,22 @@ namespace Azure.ResourceManager.StreamAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/privateEndpoints/", false);
+            uri.AppendPath(privateEndpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointName)
@@ -381,38 +310,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
-            if (privateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, privateEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -437,38 +338,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (privateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointName));
-            }
-            if (privateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, privateEndpointName);
             _pipeline.Send(message, cancellationToken);
@@ -481,6 +354,21 @@ namespace Azure.ResourceManager.StreamAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByClusterRequestUri(string subscriptionId, string resourceGroupName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/privateEndpoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByClusterRequest(string subscriptionId, string resourceGroupName, string clusterName)
@@ -513,30 +401,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StreamAnalyticsPrivateEndpointListResult>> ListByClusterAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var message = CreateListByClusterRequest(subscriptionId, resourceGroupName, clusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -563,30 +430,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StreamAnalyticsPrivateEndpointListResult> ListByCluster(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var message = CreateListByClusterRequest(subscriptionId, resourceGroupName, clusterName);
             _pipeline.Send(message, cancellationToken);
@@ -602,6 +448,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByClusterNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByClusterNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string clusterName)
@@ -628,34 +482,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StreamAnalyticsPrivateEndpointListResult>> ListByClusterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var message = CreateListByClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -683,34 +513,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StreamAnalyticsPrivateEndpointListResult> ListByClusterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var message = CreateListByClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName);
             _pipeline.Send(message, cancellationToken);

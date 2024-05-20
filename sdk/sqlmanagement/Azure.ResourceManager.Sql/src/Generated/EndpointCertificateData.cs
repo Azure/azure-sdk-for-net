@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The certificate public blob. </summary>
+        [WirePath("properties.publicBlob")]
         public string PublicBlob { get; set; }
     }
 }

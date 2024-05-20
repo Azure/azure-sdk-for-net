@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 
@@ -68,7 +66,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -86,18 +84,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vmName, VirtualMachineData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (vmName == null)
-            {
-                throw new ArgumentNullException(nameof(vmName));
-            }
-            if (vmName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.CreateOrUpdate");
             scope.Start();
@@ -129,7 +117,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -147,18 +135,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string vmName, VirtualMachineData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (vmName == null)
-            {
-                throw new ArgumentNullException(nameof(vmName));
-            }
-            if (vmName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.CreateOrUpdate");
             scope.Start();
@@ -190,7 +168,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -205,14 +183,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
         public virtual async Task<Response<VirtualMachineResource>> GetAsync(string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (vmName == null)
-            {
-                throw new ArgumentNullException(nameof(vmName));
-            }
-            if (vmName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmName));
-            }
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.Get");
             scope.Start();
@@ -243,7 +214,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -258,14 +229,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
         public virtual Response<VirtualMachineResource> Get(string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (vmName == null)
-            {
-                throw new ArgumentNullException(nameof(vmName));
-            }
-            if (vmName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmName));
-            }
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.Get");
             scope.Start();
@@ -296,7 +260,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,7 +292,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,7 +324,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -375,14 +339,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (vmName == null)
-            {
-                throw new ArgumentNullException(nameof(vmName));
-            }
-            if (vmName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmName));
-            }
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.Exists");
             scope.Start();
@@ -411,7 +368,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -426,14 +383,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
         public virtual Response<bool> Exists(string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (vmName == null)
-            {
-                throw new ArgumentNullException(nameof(vmName));
-            }
-            if (vmName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmName));
-            }
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.Exists");
             scope.Start();
@@ -462,7 +412,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -477,14 +427,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualMachineResource>> GetIfExistsAsync(string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (vmName == null)
-            {
-                throw new ArgumentNullException(nameof(vmName));
-            }
-            if (vmName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmName));
-            }
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.GetIfExists");
             scope.Start();
@@ -515,7 +458,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -530,14 +473,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
         public virtual NullableResponse<VirtualMachineResource> GetIfExists(string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (vmName == null)
-            {
-                throw new ArgumentNullException(nameof(vmName));
-            }
-            if (vmName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmName));
-            }
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
             using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.GetIfExists");
             scope.Start();

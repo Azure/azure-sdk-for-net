@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Synapse.Models;
@@ -35,6 +34,29 @@ namespace Azure.ResourceManager.Synapse
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySchemaRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Synapse/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/sqlPools/", false);
+            uri.AppendPath(sqlPoolName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendPath("/tables", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListBySchemaRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string filter)
@@ -78,46 +100,11 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SqlPoolTableListResult>> ListBySchemaAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (sqlPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlPoolName));
-            }
-            if (sqlPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlPoolName));
-            }
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var message = CreateListBySchemaRequest(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, schemaName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -147,46 +134,11 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SqlPoolTableListResult> ListBySchema(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (sqlPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlPoolName));
-            }
-            if (sqlPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlPoolName));
-            }
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var message = CreateListBySchemaRequest(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, schemaName, filter);
             _pipeline.Send(message, cancellationToken);
@@ -202,6 +154,26 @@ namespace Azure.ResourceManager.Synapse
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Synapse/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/sqlPools/", false);
+            uri.AppendPath(sqlPoolName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendPath("/tables/", false);
+            uri.AppendPath(tableName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName)
@@ -242,54 +214,12 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="schemaName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SynapseSqlPoolTableData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (sqlPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlPoolName));
-            }
-            if (sqlPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlPoolName));
-            }
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, schemaName, tableName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -321,54 +251,12 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="schemaName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SynapseSqlPoolTableData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (sqlPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlPoolName));
-            }
-            if (sqlPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlPoolName));
-            }
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, schemaName, tableName);
             _pipeline.Send(message, cancellationToken);
@@ -386,6 +274,14 @@ namespace Azure.ResourceManager.Synapse
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySchemaNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySchemaNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string filter)
@@ -415,50 +311,12 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SqlPoolTableListResult>> ListBySchemaNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (sqlPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlPoolName));
-            }
-            if (sqlPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlPoolName));
-            }
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var message = CreateListBySchemaNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, sqlPoolName, schemaName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -489,50 +347,12 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SqlPoolTableListResult> ListBySchemaNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (sqlPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlPoolName));
-            }
-            if (sqlPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlPoolName));
-            }
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var message = CreateListBySchemaNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, sqlPoolName, schemaName, filter);
             _pipeline.Send(message, cancellationToken);

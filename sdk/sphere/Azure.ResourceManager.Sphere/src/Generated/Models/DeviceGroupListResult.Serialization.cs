@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
     internal partial class DeviceGroupListResult : IUtf8JsonSerializable, IJsonModel<DeviceGroupListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceGroupListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceGroupListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeviceGroupListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeviceGroupListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceGroupListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceGroupListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,10 +30,10 @@ namespace Azure.ResourceManager.Sphere.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.Sphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceGroupListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceGroupListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceGroupListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         internal static DeviceGroupListResult DeserializeDeviceGroupListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Sphere.Models
             IReadOnlyList<SphereDeviceGroupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -104,10 +103,10 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DeviceGroupListResult(value, nextLink, serializedAdditionalRawData);
         }
 
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceGroupListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceGroupListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Sphere.Models
                         return DeserializeDeviceGroupListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceGroupListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceGroupListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

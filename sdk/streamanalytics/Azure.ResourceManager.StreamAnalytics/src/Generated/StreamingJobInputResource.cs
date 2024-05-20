@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
@@ -201,7 +199,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = await _streamingJobInputInputsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation(response);
+                var uri = _streamingJobInputInputsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StreamAnalyticsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -243,7 +243,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = _streamingJobInputInputsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation(response);
+                var uri = _streamingJobInputInputsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StreamAnalyticsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -282,10 +284,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual async Task<Response<StreamingJobInputResource>> UpdateAsync(StreamingJobInputData input, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNull(input, nameof(input));
 
             using var scope = _streamingJobInputInputsClientDiagnostics.CreateScope("StreamingJobInputResource.Update");
             scope.Start();
@@ -328,10 +327,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual Response<StreamingJobInputResource> Update(StreamingJobInputData input, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNull(input, nameof(input));
 
             using var scope = _streamingJobInputInputsClientDiagnostics.CreateScope("StreamingJobInputResource.Update");
             scope.Start();

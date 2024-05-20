@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Authorization.Models;
@@ -35,6 +34,20 @@ namespace Azure.ResourceManager.Authorization
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string resourceProviderNamespace, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Authorization/providerOperations/", false);
+            uri.AppendPath(resourceProviderNamespace, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string resourceProviderNamespace, string expand)
@@ -64,10 +77,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public async Task<Response<AuthorizationProviderOperationsMetadataData>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (resourceProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(resourceProviderNamespace));
-            }
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
             using var message = CreateGetRequest(resourceProviderNamespace, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -94,10 +104,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public Response<AuthorizationProviderOperationsMetadataData> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (resourceProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(resourceProviderNamespace));
-            }
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
             using var message = CreateGetRequest(resourceProviderNamespace, expand);
             _pipeline.Send(message, cancellationToken);
@@ -115,6 +122,19 @@ namespace Azure.ResourceManager.Authorization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Authorization/providerOperations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string expand)
@@ -178,6 +198,14 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string expand)
         {
             var message = _pipeline.CreateMessage();
@@ -199,10 +227,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<AuthorizationProviderOperationsMetadataListResult>> ListNextPageAsync(string nextLink, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -227,10 +252,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<AuthorizationProviderOperationsMetadataListResult> ListNextPage(string nextLink, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, expand);
             _pipeline.Send(message, cancellationToken);

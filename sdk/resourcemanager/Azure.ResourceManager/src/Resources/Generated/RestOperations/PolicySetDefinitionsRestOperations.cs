@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources.Models;
@@ -37,6 +36,18 @@ namespace Azure.ResourceManager.Resources
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string policySetDefinitionName, PolicySetDefinitionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions/", false);
+            uri.AppendPath(policySetDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string policySetDefinitionName, PolicySetDefinitionData data)
         {
             var message = _pipeline.CreateMessage();
@@ -53,7 +64,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -68,26 +79,9 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicySetDefinitionData>> CreateOrUpdateAsync(string subscriptionId, string policySetDefinitionName, PolicySetDefinitionData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, policySetDefinitionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -115,26 +109,9 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicySetDefinitionData> CreateOrUpdate(string subscriptionId, string policySetDefinitionName, PolicySetDefinitionData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, policySetDefinitionName, data);
             _pipeline.Send(message, cancellationToken);
@@ -151,6 +128,18 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string policySetDefinitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions/", false);
+            uri.AppendPath(policySetDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string policySetDefinitionName)
@@ -179,22 +168,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             using var message = CreateDeleteRequest(subscriptionId, policySetDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -216,22 +191,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             using var message = CreateDeleteRequest(subscriptionId, policySetDefinitionName);
             _pipeline.Send(message, cancellationToken);
@@ -243,6 +204,18 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string policySetDefinitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions/", false);
+            uri.AppendPath(policySetDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string policySetDefinitionName)
@@ -271,22 +244,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicySetDefinitionData>> GetAsync(string subscriptionId, string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             using var message = CreateGetRequest(subscriptionId, policySetDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -314,22 +273,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicySetDefinitionData> Get(string subscriptionId, string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             using var message = CreateGetRequest(subscriptionId, policySetDefinitionName);
             _pipeline.Send(message, cancellationToken);
@@ -347,6 +292,16 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetBuiltInRequestUri(string policySetDefinitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions/", false);
+            uri.AppendPath(policySetDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetBuiltInRequest(string policySetDefinitionName)
@@ -372,14 +327,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicySetDefinitionData>> GetBuiltInAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             using var message = CreateGetBuiltInRequest(policySetDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -406,14 +354,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicySetDefinitionData> GetBuiltIn(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             using var message = CreateGetBuiltInRequest(policySetDefinitionName);
             _pipeline.Send(message, cancellationToken);
@@ -431,6 +372,25 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, false);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string filter, int? top)
@@ -467,14 +427,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicySetDefinitionListResult>> ListAsync(string subscriptionId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -501,14 +454,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicySetDefinitionListResult> List(string subscriptionId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId, filter, top);
             _pipeline.Send(message, cancellationToken);
@@ -524,6 +470,23 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBuiltInRequestUri(string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, false);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListBuiltInRequest(string filter, int? top)
@@ -593,6 +556,18 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateAtManagementGroupRequestUri(string managementGroupId, string policySetDefinitionName, PolicySetDefinitionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions/", false);
+            uri.AppendPath(policySetDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName, PolicySetDefinitionData data)
         {
             var message = _pipeline.CreateMessage();
@@ -609,7 +584,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -624,26 +599,9 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicySetDefinitionData>> CreateOrUpdateAtManagementGroupAsync(string managementGroupId, string policySetDefinitionName, PolicySetDefinitionData data, CancellationToken cancellationToken = default)
         {
-            if (managementGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupId));
-            }
-            if (managementGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupId));
-            }
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateAtManagementGroupRequest(managementGroupId, policySetDefinitionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -671,26 +629,9 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicySetDefinitionData> CreateOrUpdateAtManagementGroup(string managementGroupId, string policySetDefinitionName, PolicySetDefinitionData data, CancellationToken cancellationToken = default)
         {
-            if (managementGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupId));
-            }
-            if (managementGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupId));
-            }
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateAtManagementGroupRequest(managementGroupId, policySetDefinitionName, data);
             _pipeline.Send(message, cancellationToken);
@@ -707,6 +648,18 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteAtManagementGroupRequestUri(string managementGroupId, string policySetDefinitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions/", false);
+            uri.AppendPath(policySetDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName)
@@ -735,22 +688,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAtManagementGroupAsync(string managementGroupId, string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (managementGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupId));
-            }
-            if (managementGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupId));
-            }
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             using var message = CreateDeleteAtManagementGroupRequest(managementGroupId, policySetDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -772,22 +711,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteAtManagementGroup(string managementGroupId, string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (managementGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupId));
-            }
-            if (managementGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupId));
-            }
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             using var message = CreateDeleteAtManagementGroupRequest(managementGroupId, policySetDefinitionName);
             _pipeline.Send(message, cancellationToken);
@@ -799,6 +724,18 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAtManagementGroupRequestUri(string managementGroupId, string policySetDefinitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions/", false);
+            uri.AppendPath(policySetDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAtManagementGroupRequest(string managementGroupId, string policySetDefinitionName)
@@ -827,22 +764,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicySetDefinitionData>> GetAtManagementGroupAsync(string managementGroupId, string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (managementGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupId));
-            }
-            if (managementGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupId));
-            }
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             using var message = CreateGetAtManagementGroupRequest(managementGroupId, policySetDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -870,22 +793,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicySetDefinitionData> GetAtManagementGroup(string managementGroupId, string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (managementGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupId));
-            }
-            if (managementGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupId));
-            }
-            if (policySetDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policySetDefinitionName));
-            }
-            if (policySetDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policySetDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
+            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             using var message = CreateGetAtManagementGroupRequest(managementGroupId, policySetDefinitionName);
             _pipeline.Send(message, cancellationToken);
@@ -903,6 +812,25 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByManagementGroupRequestUri(string managementGroupId, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/policySetDefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, false);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByManagementGroupRequest(string managementGroupId, string filter, int? top)
@@ -939,14 +867,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicySetDefinitionListResult>> ListByManagementGroupAsync(string managementGroupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (managementGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupId));
-            }
-            if (managementGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupId));
-            }
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
 
             using var message = CreateListByManagementGroupRequest(managementGroupId, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -973,14 +894,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicySetDefinitionListResult> ListByManagementGroup(string managementGroupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (managementGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupId));
-            }
-            if (managementGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupId));
-            }
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
 
             using var message = CreateListByManagementGroupRequest(managementGroupId, filter, top);
             _pipeline.Send(message, cancellationToken);
@@ -996,6 +910,14 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string filter, int? top)
@@ -1022,18 +944,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicySetDefinitionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1061,18 +973,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicySetDefinitionListResult> ListNextPage(string nextLink, string subscriptionId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, filter, top);
             _pipeline.Send(message, cancellationToken);
@@ -1088,6 +990,14 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBuiltInNextPageRequestUri(string nextLink, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBuiltInNextPageRequest(string nextLink, string filter, int? top)
@@ -1112,10 +1022,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<PolicySetDefinitionListResult>> ListBuiltInNextPageAsync(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListBuiltInNextPageRequest(nextLink, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1141,10 +1048,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<PolicySetDefinitionListResult> ListBuiltInNextPage(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListBuiltInNextPageRequest(nextLink, filter, top);
             _pipeline.Send(message, cancellationToken);
@@ -1160,6 +1064,14 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByManagementGroupNextPageRequestUri(string nextLink, string managementGroupId, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByManagementGroupNextPageRequest(string nextLink, string managementGroupId, string filter, int? top)
@@ -1186,18 +1098,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PolicySetDefinitionListResult>> ListByManagementGroupNextPageAsync(string nextLink, string managementGroupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (managementGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupId));
-            }
-            if (managementGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
 
             using var message = CreateListByManagementGroupNextPageRequest(nextLink, managementGroupId, filter, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1225,18 +1127,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PolicySetDefinitionListResult> ListByManagementGroupNextPage(string nextLink, string managementGroupId, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (managementGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupId));
-            }
-            if (managementGroupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managementGroupId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
 
             using var message = CreateListByManagementGroupNextPageRequest(nextLink, managementGroupId, filter, top);
             _pipeline.Send(message, cancellationToken);

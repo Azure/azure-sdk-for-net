@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,14 +18,14 @@ namespace Azure.ResourceManager.WebPubSub
 {
     public partial class WebPubSubSharedPrivateLinkData : IUtf8JsonSerializable, IJsonModel<WebPubSubSharedPrivateLinkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebPubSubSharedPrivateLinkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebPubSubSharedPrivateLinkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebPubSubSharedPrivateLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubSharedPrivateLinkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebPubSubSharedPrivateLinkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubSharedPrivateLinkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.WebPubSub
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubSharedPrivateLinkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebPubSubSharedPrivateLinkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubSharedPrivateLinkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         internal static WebPubSubSharedPrivateLinkData DeserializeWebPubSubSharedPrivateLinkData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.WebPubSub
             string requestMessage = default;
             WebPubSubSharedPrivateLinkStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -202,10 +203,10 @@ namespace Azure.ResourceManager.WebPubSub
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebPubSubSharedPrivateLinkData(
                 id,
                 name,
@@ -219,6 +220,168 @@ namespace Azure.ResourceManager.WebPubSub
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    groupId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GroupId))
+                {
+                    builder.Append("    groupId: ");
+                    if (GroupId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GroupId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GroupId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateLinkResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateLinkResourceId))
+                {
+                    builder.Append("    privateLinkResourceId: ");
+                    builder.AppendLine($"'{PrivateLinkResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestMessage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestMessage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestMessage))
+                {
+                    builder.Append("    requestMessage: ");
+                    if (RequestMessage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RequestMessage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RequestMessage}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("    status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<WebPubSubSharedPrivateLinkData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubSharedPrivateLinkData>)this).GetFormatFromOptions(options) : options.Format;
@@ -227,8 +390,10 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(WebPubSubSharedPrivateLinkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubSharedPrivateLinkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -244,7 +409,7 @@ namespace Azure.ResourceManager.WebPubSub
                         return DeserializeWebPubSubSharedPrivateLinkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebPubSubSharedPrivateLinkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubSharedPrivateLinkData)} does not support reading '{options.Format}' format.");
             }
         }
 

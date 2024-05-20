@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="name"/> is null. </exception>
         public WebPubSubNameAvailabilityContent(string resourceType, string name)
         {
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            Argument.AssertNotNull(name, nameof(name));
 
             ResourceType = resourceType;
             Name = name;
@@ -81,8 +75,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </summary>
+        [WirePath("type")]
         public string ResourceType { get; }
         /// <summary> The resource name to validate. e.g."my-resource-name". </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

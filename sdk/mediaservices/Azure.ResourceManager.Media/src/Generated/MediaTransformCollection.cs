@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Media
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MediaTransformResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string transformName, MediaTransformData data, CancellationToken cancellationToken = default)
         {
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _mediaTransformTransformsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaTransformResource>(Response.FromValue(new MediaTransformResource(Client, response), response.GetRawResponse()));
+                var uri = _mediaTransformTransformsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation<MediaTransformResource>(Response.FromValue(new MediaTransformResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MediaTransformResource> CreateOrUpdate(WaitUntil waitUntil, string transformName, MediaTransformData data, CancellationToken cancellationToken = default)
         {
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _mediaTransformTransformsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaTransformResource>(Response.FromValue(new MediaTransformResource(Client, response), response.GetRawResponse()));
+                var uri = _mediaTransformTransformsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation<MediaTransformResource>(Response.FromValue(new MediaTransformResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> is null. </exception>
         public virtual async Task<Response<MediaTransformResource>> GetAsync(string transformName, CancellationToken cancellationToken = default)
         {
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
 
             using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> is null. </exception>
         public virtual Response<MediaTransformResource> Get(string transformName, CancellationToken cancellationToken = default)
         {
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
 
             using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformCollection.Get");
             scope.Start();
@@ -366,14 +334,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string transformName, CancellationToken cancellationToken = default)
         {
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
 
             using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformCollection.Exists");
             scope.Start();
@@ -416,14 +377,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> is null. </exception>
         public virtual Response<bool> Exists(string transformName, CancellationToken cancellationToken = default)
         {
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
 
             using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformCollection.Exists");
             scope.Start();
@@ -466,14 +420,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> is null. </exception>
         public virtual async Task<NullableResponse<MediaTransformResource>> GetIfExistsAsync(string transformName, CancellationToken cancellationToken = default)
         {
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
 
             using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformCollection.GetIfExists");
             scope.Start();
@@ -518,14 +465,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> is null. </exception>
         public virtual NullableResponse<MediaTransformResource> GetIfExists(string transformName, CancellationToken cancellationToken = default)
         {
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
 
             using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformCollection.GetIfExists");
             scope.Start();

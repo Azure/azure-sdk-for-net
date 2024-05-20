@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppService.Models;
@@ -37,6 +36,19 @@ namespace Azure.ResourceManager.AppService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreatePreviewWorkflowRequestUri(string subscriptionId, AzureLocation location, StaticSitesWorkflowPreviewContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Web/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/previewStaticSiteWorkflowFile", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePreviewWorkflowRequest(string subscriptionId, AzureLocation location, StaticSitesWorkflowPreviewContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -54,7 +66,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -69,18 +81,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSitesWorkflowPreview>> PreviewWorkflowAsync(string subscriptionId, AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreatePreviewWorkflowRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -107,18 +109,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSitesWorkflowPreview> PreviewWorkflow(string subscriptionId, AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreatePreviewWorkflowRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
@@ -134,6 +126,17 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId)
@@ -160,14 +163,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -192,14 +188,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -215,6 +204,19 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStaticSitesByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetStaticSitesByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -244,22 +246,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteListResult>> GetStaticSitesByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateGetStaticSitesByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -285,22 +273,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteListResult> GetStaticSitesByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateGetStaticSitesByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -316,6 +290,20 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetStaticSiteRequest(string subscriptionId, string resourceGroupName, string name)
@@ -347,30 +335,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteData>> GetStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetStaticSiteRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -399,30 +366,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteData> GetStaticSite(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetStaticSiteRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -440,6 +386,20 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name, StaticSiteData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteData data)
@@ -460,7 +420,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -476,34 +436,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateStaticSiteRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -527,34 +463,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdateStaticSite(string subscriptionId, string resourceGroupName, string name, StaticSiteData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateStaticSiteRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
@@ -566,6 +478,20 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteStaticSiteRequest(string subscriptionId, string resourceGroupName, string name)
@@ -597,30 +523,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateDeleteStaticSiteRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -643,30 +548,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteStaticSite(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateDeleteStaticSiteRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -678,6 +562,20 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name, StaticSitePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, StaticSitePatch patch)
@@ -698,7 +596,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -714,34 +612,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteData>> UpdateStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, StaticSitePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateStaticSiteRequest(subscriptionId, resourceGroupName, name, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -770,34 +644,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteData> UpdateStaticSite(string subscriptionId, string resourceGroupName, string name, StaticSitePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateStaticSiteRequest(subscriptionId, resourceGroupName, name, patch);
             _pipeline.Send(message, cancellationToken);
@@ -814,6 +664,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteUsersRequestUri(string subscriptionId, string resourceGroupName, string name, string authprovider)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/authproviders/", false);
+            uri.AppendPath(authprovider, true);
+            uri.AppendPath("/listUsers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteUsersRequest(string subscriptionId, string resourceGroupName, string name, string authprovider)
@@ -849,38 +716,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="authprovider"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteUserListResult>> ListStaticSiteUsersAsync(string subscriptionId, string resourceGroupName, string name, string authprovider, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (authprovider == null)
-            {
-                throw new ArgumentNullException(nameof(authprovider));
-            }
-            if (authprovider.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authprovider));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
 
             using var message = CreateListStaticSiteUsersRequest(subscriptionId, resourceGroupName, name, authprovider);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -908,38 +747,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="authprovider"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteUserListResult> ListStaticSiteUsers(string subscriptionId, string resourceGroupName, string name, string authprovider, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (authprovider == null)
-            {
-                throw new ArgumentNullException(nameof(authprovider));
-            }
-            if (authprovider.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authprovider));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
 
             using var message = CreateListStaticSiteUsersRequest(subscriptionId, resourceGroupName, name, authprovider);
             _pipeline.Send(message, cancellationToken);
@@ -955,6 +766,24 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteStaticSiteUserRequestUri(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/authproviders/", false);
+            uri.AppendPath(authprovider, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userid, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteStaticSiteUserRequest(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid)
@@ -992,46 +821,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="authprovider"/> or <paramref name="userid"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteStaticSiteUserAsync(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (authprovider == null)
-            {
-                throw new ArgumentNullException(nameof(authprovider));
-            }
-            if (authprovider.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authprovider));
-            }
-            if (userid == null)
-            {
-                throw new ArgumentNullException(nameof(userid));
-            }
-            if (userid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userid));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
+            Argument.AssertNotNullOrEmpty(userid, nameof(userid));
 
             using var message = CreateDeleteStaticSiteUserRequest(subscriptionId, resourceGroupName, name, authprovider, userid);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1055,46 +849,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="authprovider"/> or <paramref name="userid"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteStaticSiteUser(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (authprovider == null)
-            {
-                throw new ArgumentNullException(nameof(authprovider));
-            }
-            if (authprovider.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authprovider));
-            }
-            if (userid == null)
-            {
-                throw new ArgumentNullException(nameof(userid));
-            }
-            if (userid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userid));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
+            Argument.AssertNotNullOrEmpty(userid, nameof(userid));
 
             using var message = CreateDeleteStaticSiteUserRequest(subscriptionId, resourceGroupName, name, authprovider, userid);
             _pipeline.Send(message, cancellationToken);
@@ -1105,6 +864,24 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateStaticSiteUserRequestUri(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid, StaticSiteUser staticSiteUserEnvelope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/authproviders/", false);
+            uri.AppendPath(authprovider, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userid, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateStaticSiteUserRequest(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid, StaticSiteUser staticSiteUserEnvelope)
@@ -1129,7 +906,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(staticSiteUserEnvelope);
+            content.JsonWriter.WriteObjectValue(staticSiteUserEnvelope, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1147,50 +924,12 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="authprovider"/> or <paramref name="userid"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteUser>> UpdateStaticSiteUserAsync(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid, StaticSiteUser staticSiteUserEnvelope, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (authprovider == null)
-            {
-                throw new ArgumentNullException(nameof(authprovider));
-            }
-            if (authprovider.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authprovider));
-            }
-            if (userid == null)
-            {
-                throw new ArgumentNullException(nameof(userid));
-            }
-            if (userid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userid));
-            }
-            if (staticSiteUserEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(staticSiteUserEnvelope));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
+            Argument.AssertNotNullOrEmpty(userid, nameof(userid));
+            Argument.AssertNotNull(staticSiteUserEnvelope, nameof(staticSiteUserEnvelope));
 
             using var message = CreateUpdateStaticSiteUserRequest(subscriptionId, resourceGroupName, name, authprovider, userid, staticSiteUserEnvelope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1220,50 +959,12 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="authprovider"/> or <paramref name="userid"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteUser> UpdateStaticSiteUser(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid, StaticSiteUser staticSiteUserEnvelope, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (authprovider == null)
-            {
-                throw new ArgumentNullException(nameof(authprovider));
-            }
-            if (authprovider.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authprovider));
-            }
-            if (userid == null)
-            {
-                throw new ArgumentNullException(nameof(userid));
-            }
-            if (userid.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userid));
-            }
-            if (staticSiteUserEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(staticSiteUserEnvelope));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
+            Argument.AssertNotNullOrEmpty(userid, nameof(userid));
+            Argument.AssertNotNull(staticSiteUserEnvelope, nameof(staticSiteUserEnvelope));
 
             using var message = CreateUpdateStaticSiteUserRequest(subscriptionId, resourceGroupName, name, authprovider, userid, staticSiteUserEnvelope);
             _pipeline.Send(message, cancellationToken);
@@ -1279,6 +980,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStaticSiteBuildsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetStaticSiteBuildsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -1311,30 +1027,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteBuildListResult>> GetStaticSiteBuildsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetStaticSiteBuildsRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1361,30 +1056,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteBuildListResult> GetStaticSiteBuilds(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetStaticSiteBuildsRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -1400,6 +1074,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStaticSiteBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName)
@@ -1434,38 +1124,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteBuildData>> GetStaticSiteBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateGetStaticSiteBuildRequest(subscriptionId, resourceGroupName, name, environmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1495,38 +1157,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteBuildData> GetStaticSiteBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateGetStaticSiteBuildRequest(subscriptionId, resourceGroupName, name, environmentName);
             _pipeline.Send(message, cancellationToken);
@@ -1544,6 +1178,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteStaticSiteBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName)
@@ -1578,38 +1228,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteStaticSiteBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateDeleteStaticSiteBuildRequest(subscriptionId, resourceGroupName, name, environmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1634,38 +1256,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteStaticSiteBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateDeleteStaticSiteBuildRequest(subscriptionId, resourceGroupName, name, environmentName);
             _pipeline.Send(message, cancellationToken);
@@ -1678,6 +1272,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateStaticSiteBuildAppSettingsRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/config/appsettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateStaticSiteBuildAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings)
@@ -1701,7 +1312,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appSettings);
+            content.JsonWriter.WriteObjectValue(appSettings, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1718,42 +1329,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceConfigurationDictionary>> CreateOrUpdateStaticSiteBuildAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var message = CreateCreateOrUpdateStaticSiteBuildAppSettingsRequest(subscriptionId, resourceGroupName, name, environmentName, appSettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1782,42 +1362,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceConfigurationDictionary> CreateOrUpdateStaticSiteBuildAppSettings(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var message = CreateCreateOrUpdateStaticSiteBuildAppSettingsRequest(subscriptionId, resourceGroupName, name, environmentName, appSettings);
             _pipeline.Send(message, cancellationToken);
@@ -1833,6 +1382,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateStaticSiteBuildFunctionAppSettingsRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/config/functionappsettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateStaticSiteBuildFunctionAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings)
@@ -1856,7 +1422,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appSettings);
+            content.JsonWriter.WriteObjectValue(appSettings, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1873,42 +1439,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceConfigurationDictionary>> CreateOrUpdateStaticSiteBuildFunctionAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var message = CreateCreateOrUpdateStaticSiteBuildFunctionAppSettingsRequest(subscriptionId, resourceGroupName, name, environmentName, appSettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1937,42 +1472,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceConfigurationDictionary> CreateOrUpdateStaticSiteBuildFunctionAppSettings(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var message = CreateCreateOrUpdateStaticSiteBuildFunctionAppSettingsRequest(subscriptionId, resourceGroupName, name, environmentName, appSettings);
             _pipeline.Send(message, cancellationToken);
@@ -1988,6 +1492,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteBuildFunctionsRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/functions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteBuildFunctionsRequest(string subscriptionId, string resourceGroupName, string name, string environmentName)
@@ -2023,38 +1544,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteFunctionOverviewListResult>> ListStaticSiteBuildFunctionsAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateListStaticSiteBuildFunctionsRequest(subscriptionId, resourceGroupName, name, environmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2082,38 +1575,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteFunctionOverviewListResult> ListStaticSiteBuildFunctions(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateListStaticSiteBuildFunctionsRequest(subscriptionId, resourceGroupName, name, environmentName);
             _pipeline.Send(message, cancellationToken);
@@ -2129,6 +1594,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteBuildAppSettingsRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/listAppSettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteBuildAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, string environmentName)
@@ -2164,38 +1646,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceConfigurationDictionary>> ListStaticSiteBuildAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateListStaticSiteBuildAppSettingsRequest(subscriptionId, resourceGroupName, name, environmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2223,38 +1677,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceConfigurationDictionary> ListStaticSiteBuildAppSettings(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateListStaticSiteBuildAppSettingsRequest(subscriptionId, resourceGroupName, name, environmentName);
             _pipeline.Send(message, cancellationToken);
@@ -2270,6 +1696,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteBuildFunctionAppSettingsRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/listFunctionAppSettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteBuildFunctionAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, string environmentName)
@@ -2305,38 +1748,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceConfigurationDictionary>> ListStaticSiteBuildFunctionAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateListStaticSiteBuildFunctionAppSettingsRequest(subscriptionId, resourceGroupName, name, environmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2364,38 +1779,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceConfigurationDictionary> ListStaticSiteBuildFunctionAppSettings(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateListStaticSiteBuildFunctionAppSettingsRequest(subscriptionId, resourceGroupName, name, environmentName);
             _pipeline.Send(message, cancellationToken);
@@ -2411,6 +1798,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUserProvidedFunctionAppsForStaticSiteBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/userProvidedFunctionApps", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetUserProvidedFunctionAppsForStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName)
@@ -2446,38 +1850,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteUserProvidedFunctionAppsListResult>> GetUserProvidedFunctionAppsForStaticSiteBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateGetUserProvidedFunctionAppsForStaticSiteBuildRequest(subscriptionId, resourceGroupName, name, environmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2505,38 +1881,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteUserProvidedFunctionAppsListResult> GetUserProvidedFunctionAppsForStaticSiteBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateGetUserProvidedFunctionAppsForStaticSiteBuildRequest(subscriptionId, resourceGroupName, name, environmentName);
             _pipeline.Send(message, cancellationToken);
@@ -2552,6 +1900,24 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUserProvidedFunctionAppForStaticSiteBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/userProvidedFunctionApps/", false);
+            uri.AppendPath(functionAppName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetUserProvidedFunctionAppForStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName)
@@ -2589,46 +1955,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteUserProvidedFunctionAppData>> GetUserProvidedFunctionAppForStaticSiteBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
             using var message = CreateGetUserProvidedFunctionAppForStaticSiteBuildRequest(subscriptionId, resourceGroupName, name, environmentName, functionAppName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2659,46 +1990,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteUserProvidedFunctionAppData> GetUserProvidedFunctionAppForStaticSiteBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
             using var message = CreateGetUserProvidedFunctionAppForStaticSiteBuildRequest(subscriptionId, resourceGroupName, name, environmentName, functionAppName);
             _pipeline.Send(message, cancellationToken);
@@ -2716,6 +2012,28 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRegisterUserProvidedFunctionAppWithStaticSiteBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/userProvidedFunctionApps/", false);
+            uri.AppendPath(functionAppName, true);
+            if (isForced != null)
+            {
+                uri.AppendQuery("isForced", isForced.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRegisterUserProvidedFunctionAppWithStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced)
@@ -2744,7 +2062,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -2763,50 +2081,12 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RegisterUserProvidedFunctionAppWithStaticSiteBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateRegisterUserProvidedFunctionAppWithStaticSiteBuildRequest(subscriptionId, resourceGroupName, name, environmentName, functionAppName, data, isForced);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2833,50 +2113,12 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response RegisterUserProvidedFunctionAppWithStaticSiteBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateRegisterUserProvidedFunctionAppWithStaticSiteBuildRequest(subscriptionId, resourceGroupName, name, environmentName, functionAppName, data, isForced);
             _pipeline.Send(message, cancellationToken);
@@ -2888,6 +2130,24 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDetachUserProvidedFunctionAppFromStaticSiteBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/userProvidedFunctionApps/", false);
+            uri.AppendPath(functionAppName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDetachUserProvidedFunctionAppFromStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName)
@@ -2925,46 +2185,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DetachUserProvidedFunctionAppFromStaticSiteBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
             using var message = CreateDetachUserProvidedFunctionAppFromStaticSiteBuildRequest(subscriptionId, resourceGroupName, name, environmentName, functionAppName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2989,46 +2214,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DetachUserProvidedFunctionAppFromStaticSiteBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
             using var message = CreateDetachUserProvidedFunctionAppFromStaticSiteBuildRequest(subscriptionId, resourceGroupName, name, environmentName, functionAppName);
             _pipeline.Send(message, cancellationToken);
@@ -3040,6 +2230,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateZipDeploymentForStaticSiteBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, StaticSiteZipDeployment staticSiteZipDeploymentEnvelope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/zipdeploy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateZipDeploymentForStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, StaticSiteZipDeployment staticSiteZipDeploymentEnvelope)
@@ -3063,7 +2270,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(staticSiteZipDeploymentEnvelope);
+            content.JsonWriter.WriteObjectValue(staticSiteZipDeploymentEnvelope, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -3080,42 +2287,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateZipDeploymentForStaticSiteBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, StaticSiteZipDeployment staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
-            if (staticSiteZipDeploymentEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(staticSiteZipDeploymentEnvelope));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            Argument.AssertNotNull(staticSiteZipDeploymentEnvelope, nameof(staticSiteZipDeploymentEnvelope));
 
             using var message = CreateCreateZipDeploymentForStaticSiteBuildRequest(subscriptionId, resourceGroupName, name, environmentName, staticSiteZipDeploymentEnvelope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3140,42 +2316,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateZipDeploymentForStaticSiteBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, StaticSiteZipDeployment staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
-            if (staticSiteZipDeploymentEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(staticSiteZipDeploymentEnvelope));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            Argument.AssertNotNull(staticSiteZipDeploymentEnvelope, nameof(staticSiteZipDeploymentEnvelope));
 
             using var message = CreateCreateZipDeploymentForStaticSiteBuildRequest(subscriptionId, resourceGroupName, name, environmentName, staticSiteZipDeploymentEnvelope);
             _pipeline.Send(message, cancellationToken);
@@ -3187,6 +2332,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateStaticSiteAppSettingsRequestUri(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/config/appsettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateStaticSiteAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings)
@@ -3208,7 +2368,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appSettings);
+            content.JsonWriter.WriteObjectValue(appSettings, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -3224,34 +2384,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceConfigurationDictionary>> CreateOrUpdateStaticSiteAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var message = CreateCreateOrUpdateStaticSiteAppSettingsRequest(subscriptionId, resourceGroupName, name, appSettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3279,34 +2415,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceConfigurationDictionary> CreateOrUpdateStaticSiteAppSettings(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var message = CreateCreateOrUpdateStaticSiteAppSettingsRequest(subscriptionId, resourceGroupName, name, appSettings);
             _pipeline.Send(message, cancellationToken);
@@ -3322,6 +2434,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateStaticSiteFunctionAppSettingsRequestUri(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/config/functionappsettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateStaticSiteFunctionAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings)
@@ -3343,7 +2470,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appSettings);
+            content.JsonWriter.WriteObjectValue(appSettings, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -3359,34 +2486,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceConfigurationDictionary>> CreateOrUpdateStaticSiteFunctionAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var message = CreateCreateOrUpdateStaticSiteFunctionAppSettingsRequest(subscriptionId, resourceGroupName, name, appSettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3414,34 +2517,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceConfigurationDictionary> CreateOrUpdateStaticSiteFunctionAppSettings(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var message = CreateCreateOrUpdateStaticSiteFunctionAppSettingsRequest(subscriptionId, resourceGroupName, name, appSettings);
             _pipeline.Send(message, cancellationToken);
@@ -3457,6 +2536,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateUserRolesInvitationLinkRequestUri(string subscriptionId, string resourceGroupName, string name, StaticSiteUserInvitationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/createUserInvitation", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateUserRolesInvitationLinkRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteUserInvitationContent content)
@@ -3478,7 +2572,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -3494,34 +2588,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteUserInvitationResult>> CreateUserRolesInvitationLinkAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteUserInvitationContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateUserRolesInvitationLinkRequest(subscriptionId, resourceGroupName, name, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3549,34 +2619,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteUserInvitationResult> CreateUserRolesInvitationLink(string subscriptionId, string resourceGroupName, string name, StaticSiteUserInvitationContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateUserRolesInvitationLinkRequest(subscriptionId, resourceGroupName, name, content);
             _pipeline.Send(message, cancellationToken);
@@ -3592,6 +2638,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteCustomDomainsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/customDomains", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteCustomDomainsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -3624,30 +2685,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteCustomDomainOverviewListResult>> ListStaticSiteCustomDomainsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListStaticSiteCustomDomainsRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3674,30 +2714,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteCustomDomainOverviewListResult> ListStaticSiteCustomDomains(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListStaticSiteCustomDomainsRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -3713,6 +2732,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStaticSiteCustomDomainRequestUri(string subscriptionId, string resourceGroupName, string name, string domainName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetStaticSiteCustomDomainRequest(string subscriptionId, string resourceGroupName, string name, string domainName)
@@ -3747,38 +2782,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteCustomDomainOverviewData>> GetStaticSiteCustomDomainAsync(string subscriptionId, string resourceGroupName, string name, string domainName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var message = CreateGetStaticSiteCustomDomainRequest(subscriptionId, resourceGroupName, name, domainName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3808,38 +2815,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteCustomDomainOverviewData> GetStaticSiteCustomDomain(string subscriptionId, string resourceGroupName, string name, string domainName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var message = CreateGetStaticSiteCustomDomainRequest(subscriptionId, resourceGroupName, name, domainName);
             _pipeline.Send(message, cancellationToken);
@@ -3857,6 +2836,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateStaticSiteCustomDomainRequestUri(string subscriptionId, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateStaticSiteCustomDomainRequest(string subscriptionId, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainContent content)
@@ -3879,7 +2874,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -3896,42 +2891,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateStaticSiteCustomDomainAsync(string subscriptionId, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateOrUpdateStaticSiteCustomDomainRequest(subscriptionId, resourceGroupName, name, domainName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3956,42 +2920,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdateStaticSiteCustomDomain(string subscriptionId, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateOrUpdateStaticSiteCustomDomainRequest(subscriptionId, resourceGroupName, name, domainName, content);
             _pipeline.Send(message, cancellationToken);
@@ -4003,6 +2936,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteStaticSiteCustomDomainRequestUri(string subscriptionId, string resourceGroupName, string name, string domainName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteStaticSiteCustomDomainRequest(string subscriptionId, string resourceGroupName, string name, string domainName)
@@ -4037,38 +2986,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteStaticSiteCustomDomainAsync(string subscriptionId, string resourceGroupName, string name, string domainName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var message = CreateDeleteStaticSiteCustomDomainRequest(subscriptionId, resourceGroupName, name, domainName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4092,38 +3013,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteStaticSiteCustomDomain(string subscriptionId, string resourceGroupName, string name, string domainName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var message = CreateDeleteStaticSiteCustomDomainRequest(subscriptionId, resourceGroupName, name, domainName);
             _pipeline.Send(message, cancellationToken);
@@ -4135,6 +3028,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateValidateCustomDomainCanBeAddedToStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateValidateCustomDomainCanBeAddedToStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainContent content)
@@ -4158,7 +3068,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -4175,42 +3085,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ValidateCustomDomainCanBeAddedToStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateValidateCustomDomainCanBeAddedToStaticSiteRequest(subscriptionId, resourceGroupName, name, domainName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4235,42 +3114,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ValidateCustomDomainCanBeAddedToStaticSite(string subscriptionId, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateValidateCustomDomainCanBeAddedToStaticSiteRequest(subscriptionId, resourceGroupName, name, domainName, content);
             _pipeline.Send(message, cancellationToken);
@@ -4282,6 +3130,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDetachStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/detach", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDetachStaticSiteRequest(string subscriptionId, string resourceGroupName, string name)
@@ -4314,30 +3177,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DetachStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateDetachStaticSiteRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4360,30 +3202,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DetachStaticSite(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateDetachStaticSiteRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -4395,6 +3216,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteFunctionsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/functions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteFunctionsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -4427,30 +3263,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteFunctionOverviewListResult>> ListStaticSiteFunctionsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListStaticSiteFunctionsRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4477,30 +3292,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteFunctionOverviewListResult> ListStaticSiteFunctions(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListStaticSiteFunctionsRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -4516,6 +3310,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteAppSettingsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/listAppSettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteAppSettingsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -4548,30 +3357,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceConfigurationDictionary>> ListStaticSiteAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListStaticSiteAppSettingsRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4598,30 +3386,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceConfigurationDictionary> ListStaticSiteAppSettings(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListStaticSiteAppSettingsRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -4637,6 +3404,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteConfiguredRolesRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/listConfiguredRoles", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteConfiguredRolesRequest(string subscriptionId, string resourceGroupName, string name)
@@ -4669,30 +3451,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteStringList>> ListStaticSiteConfiguredRolesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListStaticSiteConfiguredRolesRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4719,30 +3480,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteStringList> ListStaticSiteConfiguredRoles(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListStaticSiteConfiguredRolesRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -4758,6 +3498,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteFunctionAppSettingsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/listFunctionAppSettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteFunctionAppSettingsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -4790,30 +3545,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceConfigurationDictionary>> ListStaticSiteFunctionAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListStaticSiteFunctionAppSettingsRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4840,30 +3574,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceConfigurationDictionary> ListStaticSiteFunctionAppSettings(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListStaticSiteFunctionAppSettingsRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -4879,6 +3592,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteSecretsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/listSecrets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteSecretsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -4911,30 +3639,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceConfigurationDictionary>> ListStaticSiteSecretsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListStaticSiteSecretsRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4961,30 +3668,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceConfigurationDictionary> ListStaticSiteSecrets(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListStaticSiteSecretsRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -5000,6 +3686,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPrivateEndpointConnectionListRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateEndpointConnections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPrivateEndpointConnectionListRequest(string subscriptionId, string resourceGroupName, string name)
@@ -5032,30 +3733,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RemotePrivateEndpointConnectionListResult>> GetPrivateEndpointConnectionListAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetPrivateEndpointConnectionListRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -5082,30 +3762,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RemotePrivateEndpointConnectionListResult> GetPrivateEndpointConnectionList(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetPrivateEndpointConnectionListRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -5121,6 +3780,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPrivateEndpointConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
@@ -5155,38 +3830,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RemotePrivateEndpointConnectionARMResourceData>> GetPrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var message = CreateGetPrivateEndpointConnectionRequest(subscriptionId, resourceGroupName, name, privateEndpointConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -5216,38 +3863,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RemotePrivateEndpointConnectionARMResourceData> GetPrivateEndpointConnection(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var message = CreateGetPrivateEndpointConnectionRequest(subscriptionId, resourceGroupName, name, privateEndpointConnectionName);
             _pipeline.Send(message, cancellationToken);
@@ -5265,6 +3884,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateApproveOrRejectPrivateEndpointConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateApproveOrRejectPrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info)
@@ -5287,7 +3922,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
+            content.JsonWriter.WriteObjectValue(info, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -5304,42 +3939,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ApproveOrRejectPrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var message = CreateApproveOrRejectPrivateEndpointConnectionRequest(subscriptionId, resourceGroupName, name, privateEndpointConnectionName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -5364,42 +3968,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ApproveOrRejectPrivateEndpointConnection(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var message = CreateApproveOrRejectPrivateEndpointConnectionRequest(subscriptionId, resourceGroupName, name, privateEndpointConnectionName, info);
             _pipeline.Send(message, cancellationToken);
@@ -5411,6 +3984,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeletePrivateEndpointConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeletePrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
@@ -5445,38 +4034,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeletePrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var message = CreateDeletePrivateEndpointConnectionRequest(subscriptionId, resourceGroupName, name, privateEndpointConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -5501,38 +4062,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeletePrivateEndpointConnection(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var message = CreateDeletePrivateEndpointConnectionRequest(subscriptionId, resourceGroupName, name, privateEndpointConnectionName);
             _pipeline.Send(message, cancellationToken);
@@ -5545,6 +4078,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPrivateLinkResourcesRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPrivateLinkResourcesRequest(string subscriptionId, string resourceGroupName, string name)
@@ -5577,30 +4125,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PrivateLinkResourcesWrapper>> GetPrivateLinkResourcesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetPrivateLinkResourcesRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -5627,30 +4154,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PrivateLinkResourcesWrapper> GetPrivateLinkResources(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetPrivateLinkResourcesRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -5666,6 +4172,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateResetStaticSiteApiKeyRequestUri(string subscriptionId, string resourceGroupName, string name, StaticSiteResetContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/resetapikey", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateResetStaticSiteApiKeyRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteResetContent content)
@@ -5687,7 +4208,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -5703,34 +4224,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ResetStaticSiteApiKeyAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteResetContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateResetStaticSiteApiKeyRequest(subscriptionId, resourceGroupName, name, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -5753,34 +4250,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ResetStaticSiteApiKey(string subscriptionId, string resourceGroupName, string name, StaticSiteResetContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateResetStaticSiteApiKeyRequest(subscriptionId, resourceGroupName, name, content);
             _pipeline.Send(message, cancellationToken);
@@ -5791,6 +4264,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUserProvidedFunctionAppsForStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/userProvidedFunctionApps", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetUserProvidedFunctionAppsForStaticSiteRequest(string subscriptionId, string resourceGroupName, string name)
@@ -5823,30 +4311,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteUserProvidedFunctionAppsListResult>> GetUserProvidedFunctionAppsForStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetUserProvidedFunctionAppsForStaticSiteRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -5873,30 +4340,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteUserProvidedFunctionAppsListResult> GetUserProvidedFunctionAppsForStaticSite(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetUserProvidedFunctionAppsForStaticSiteRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -5912,6 +4358,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUserProvidedFunctionAppForStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name, string functionAppName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/userProvidedFunctionApps/", false);
+            uri.AppendPath(functionAppName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetUserProvidedFunctionAppForStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, string functionAppName)
@@ -5946,38 +4408,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteUserProvidedFunctionAppData>> GetUserProvidedFunctionAppForStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, string functionAppName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
             using var message = CreateGetUserProvidedFunctionAppForStaticSiteRequest(subscriptionId, resourceGroupName, name, functionAppName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -6007,38 +4441,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteUserProvidedFunctionAppData> GetUserProvidedFunctionAppForStaticSite(string subscriptionId, string resourceGroupName, string name, string functionAppName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
             using var message = CreateGetUserProvidedFunctionAppForStaticSiteRequest(subscriptionId, resourceGroupName, name, functionAppName);
             _pipeline.Send(message, cancellationToken);
@@ -6056,6 +4462,26 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRegisterUserProvidedFunctionAppWithStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/userProvidedFunctionApps/", false);
+            uri.AppendPath(functionAppName, true);
+            if (isForced != null)
+            {
+                uri.AppendQuery("isForced", isForced.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced)
@@ -6082,7 +4508,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -6100,42 +4526,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RegisterUserProvidedFunctionAppWithStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(subscriptionId, resourceGroupName, name, functionAppName, data, isForced);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -6161,42 +4556,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response RegisterUserProvidedFunctionAppWithStaticSite(string subscriptionId, string resourceGroupName, string name, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(subscriptionId, resourceGroupName, name, functionAppName, data, isForced);
             _pipeline.Send(message, cancellationToken);
@@ -6208,6 +4572,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDetachUserProvidedFunctionAppFromStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name, string functionAppName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/userProvidedFunctionApps/", false);
+            uri.AppendPath(functionAppName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDetachUserProvidedFunctionAppFromStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, string functionAppName)
@@ -6242,38 +4622,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DetachUserProvidedFunctionAppFromStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, string functionAppName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
             using var message = CreateDetachUserProvidedFunctionAppFromStaticSiteRequest(subscriptionId, resourceGroupName, name, functionAppName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -6297,38 +4649,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DetachUserProvidedFunctionAppFromStaticSite(string subscriptionId, string resourceGroupName, string name, string functionAppName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (functionAppName == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppName));
-            }
-            if (functionAppName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionAppName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(functionAppName, nameof(functionAppName));
 
             using var message = CreateDetachUserProvidedFunctionAppFromStaticSiteRequest(subscriptionId, resourceGroupName, name, functionAppName);
             _pipeline.Send(message, cancellationToken);
@@ -6340,6 +4664,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateZipDeploymentForStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name, StaticSiteZipDeployment staticSiteZipDeploymentEnvelope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/zipdeploy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateZipDeploymentForStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteZipDeployment staticSiteZipDeploymentEnvelope)
@@ -6361,7 +4700,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(staticSiteZipDeploymentEnvelope);
+            content.JsonWriter.WriteObjectValue(staticSiteZipDeploymentEnvelope, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -6377,34 +4716,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateZipDeploymentForStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteZipDeployment staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (staticSiteZipDeploymentEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(staticSiteZipDeploymentEnvelope));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(staticSiteZipDeploymentEnvelope, nameof(staticSiteZipDeploymentEnvelope));
 
             using var message = CreateCreateZipDeploymentForStaticSiteRequest(subscriptionId, resourceGroupName, name, staticSiteZipDeploymentEnvelope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -6428,34 +4743,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateZipDeploymentForStaticSite(string subscriptionId, string resourceGroupName, string name, StaticSiteZipDeployment staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (staticSiteZipDeploymentEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(staticSiteZipDeploymentEnvelope));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(staticSiteZipDeploymentEnvelope, nameof(staticSiteZipDeploymentEnvelope));
 
             using var message = CreateCreateZipDeploymentForStaticSiteRequest(subscriptionId, resourceGroupName, name, staticSiteZipDeploymentEnvelope);
             _pipeline.Send(message, cancellationToken);
@@ -6467,6 +4758,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
@@ -6491,18 +4790,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -6528,18 +4817,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -6555,6 +4834,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStaticSitesByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetStaticSitesByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -6580,26 +4867,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteListResult>> GetStaticSitesByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateGetStaticSitesByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -6626,26 +4896,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteListResult> GetStaticSitesByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateGetStaticSitesByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -6661,6 +4914,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteUsersNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string authprovider)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteUsersNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string authprovider)
@@ -6688,42 +4949,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="authprovider"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteUserListResult>> ListStaticSiteUsersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string authprovider, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (authprovider == null)
-            {
-                throw new ArgumentNullException(nameof(authprovider));
-            }
-            if (authprovider.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authprovider));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
 
             using var message = CreateListStaticSiteUsersNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, authprovider);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -6752,42 +4982,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="authprovider"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteUserListResult> ListStaticSiteUsersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string authprovider, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (authprovider == null)
-            {
-                throw new ArgumentNullException(nameof(authprovider));
-            }
-            if (authprovider.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authprovider));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
 
             using var message = CreateListStaticSiteUsersNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, authprovider);
             _pipeline.Send(message, cancellationToken);
@@ -6803,6 +5002,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStaticSiteBuildsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetStaticSiteBuildsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -6829,34 +5036,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteBuildListResult>> GetStaticSiteBuildsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetStaticSiteBuildsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -6884,34 +5067,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteBuildListResult> GetStaticSiteBuildsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetStaticSiteBuildsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -6927,6 +5086,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteBuildFunctionsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteBuildFunctionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string environmentName)
@@ -6954,42 +5121,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteFunctionOverviewListResult>> ListStaticSiteBuildFunctionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateListStaticSiteBuildFunctionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, environmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -7018,42 +5154,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteFunctionOverviewListResult> ListStaticSiteBuildFunctionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateListStaticSiteBuildFunctionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, environmentName);
             _pipeline.Send(message, cancellationToken);
@@ -7069,6 +5174,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUserProvidedFunctionAppsForStaticSiteBuildNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetUserProvidedFunctionAppsForStaticSiteBuildNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string environmentName)
@@ -7096,42 +5209,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteUserProvidedFunctionAppsListResult>> GetUserProvidedFunctionAppsForStaticSiteBuildNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateGetUserProvidedFunctionAppsForStaticSiteBuildNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, environmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -7160,42 +5242,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteUserProvidedFunctionAppsListResult> GetUserProvidedFunctionAppsForStaticSiteBuildNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateGetUserProvidedFunctionAppsForStaticSiteBuildNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, environmentName);
             _pipeline.Send(message, cancellationToken);
@@ -7211,6 +5262,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteCustomDomainsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteCustomDomainsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -7237,34 +5296,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteCustomDomainOverviewListResult>> ListStaticSiteCustomDomainsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListStaticSiteCustomDomainsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -7292,34 +5327,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteCustomDomainOverviewListResult> ListStaticSiteCustomDomainsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListStaticSiteCustomDomainsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -7335,6 +5346,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteFunctionsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteFunctionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -7361,34 +5380,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteFunctionOverviewListResult>> ListStaticSiteFunctionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListStaticSiteFunctionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -7416,34 +5411,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteFunctionOverviewListResult> ListStaticSiteFunctionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListStaticSiteFunctionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -7459,6 +5430,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPrivateEndpointConnectionListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetPrivateEndpointConnectionListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -7485,34 +5464,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RemotePrivateEndpointConnectionListResult>> GetPrivateEndpointConnectionListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetPrivateEndpointConnectionListNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -7540,34 +5495,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RemotePrivateEndpointConnectionListResult> GetPrivateEndpointConnectionListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetPrivateEndpointConnectionListNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -7583,6 +5514,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUserProvidedFunctionAppsForStaticSiteNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetUserProvidedFunctionAppsForStaticSiteNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -7609,34 +5548,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StaticSiteUserProvidedFunctionAppsListResult>> GetUserProvidedFunctionAppsForStaticSiteNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetUserProvidedFunctionAppsForStaticSiteNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -7664,34 +5579,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StaticSiteUserProvidedFunctionAppsListResult> GetUserProvidedFunctionAppsForStaticSiteNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetUserProvidedFunctionAppsForStaticSiteNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);

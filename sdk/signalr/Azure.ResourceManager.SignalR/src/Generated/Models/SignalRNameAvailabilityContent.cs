@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SignalRNameAvailabilityContent(ResourceType resourceType, string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             ResourceType = resourceType;
             Name = name;
@@ -78,8 +75,10 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </summary>
+        [WirePath("type")]
         public ResourceType ResourceType { get; }
         /// <summary> The resource name to validate. e.g."my-resource-name". </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

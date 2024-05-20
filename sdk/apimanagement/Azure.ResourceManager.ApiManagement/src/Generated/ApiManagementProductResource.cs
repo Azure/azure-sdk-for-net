@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
@@ -352,7 +350,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementProductProductRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation(response);
+                var uri = _apiManagementProductProductRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -396,7 +396,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementProductProductRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions, cancellationToken);
-                var operation = new ApiManagementArmOperation(response);
+                var uri = _apiManagementProductProductRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -435,10 +437,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ApiManagementProductResource>> UpdateAsync(ETag ifMatch, ApiManagementProductPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductResource.Update");
             scope.Start();
@@ -481,10 +480,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ApiManagementProductResource> Update(ETag ifMatch, ApiManagementProductPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductResource.Update");
             scope.Start();
@@ -581,14 +577,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual async Task<Response<bool>> CheckProductApiEntityExistsAsync(string apiId, CancellationToken cancellationToken = default)
         {
-            if (apiId == null)
-            {
-                throw new ArgumentNullException(nameof(apiId));
-            }
-            if (apiId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
-            }
+            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
             using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.CheckProductApiEntityExists");
             scope.Start();
@@ -627,14 +616,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual Response<bool> CheckProductApiEntityExists(string apiId, CancellationToken cancellationToken = default)
         {
-            if (apiId == null)
-            {
-                throw new ArgumentNullException(nameof(apiId));
-            }
-            if (apiId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
-            }
+            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
             using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.CheckProductApiEntityExists");
             scope.Start();
@@ -673,14 +655,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual async Task<Response<ProductApiData>> CreateOrUpdateProductApiAsync(string apiId, CancellationToken cancellationToken = default)
         {
-            if (apiId == null)
-            {
-                throw new ArgumentNullException(nameof(apiId));
-            }
-            if (apiId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
-            }
+            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
             using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.CreateOrUpdateProductApi");
             scope.Start();
@@ -719,14 +694,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual Response<ProductApiData> CreateOrUpdateProductApi(string apiId, CancellationToken cancellationToken = default)
         {
-            if (apiId == null)
-            {
-                throw new ArgumentNullException(nameof(apiId));
-            }
-            if (apiId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
-            }
+            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
             using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.CreateOrUpdateProductApi");
             scope.Start();
@@ -765,14 +733,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual async Task<Response> DeleteProductApiAsync(string apiId, CancellationToken cancellationToken = default)
         {
-            if (apiId == null)
-            {
-                throw new ArgumentNullException(nameof(apiId));
-            }
-            if (apiId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
-            }
+            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
             using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.DeleteProductApi");
             scope.Start();
@@ -811,14 +772,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual Response DeleteProductApi(string apiId, CancellationToken cancellationToken = default)
         {
-            if (apiId == null)
-            {
-                throw new ArgumentNullException(nameof(apiId));
-            }
-            if (apiId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
-            }
+            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
             using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.DeleteProductApi");
             scope.Start();
@@ -915,14 +869,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual async Task<Response<bool>> CheckProductGroupEntityExistsAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _productGroupClientDiagnostics.CreateScope("ApiManagementProductResource.CheckProductGroupEntityExists");
             scope.Start();
@@ -961,14 +908,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<bool> CheckProductGroupEntityExists(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _productGroupClientDiagnostics.CreateScope("ApiManagementProductResource.CheckProductGroupEntityExists");
             scope.Start();
@@ -1007,14 +947,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual async Task<Response<ProductGroupData>> CreateOrUpdateProductGroupAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _productGroupClientDiagnostics.CreateScope("ApiManagementProductResource.CreateOrUpdateProductGroup");
             scope.Start();
@@ -1053,14 +986,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<ProductGroupData> CreateOrUpdateProductGroup(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _productGroupClientDiagnostics.CreateScope("ApiManagementProductResource.CreateOrUpdateProductGroup");
             scope.Start();
@@ -1099,14 +1025,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual async Task<Response> DeleteProductGroupAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _productGroupClientDiagnostics.CreateScope("ApiManagementProductResource.DeleteProductGroup");
             scope.Start();
@@ -1145,14 +1064,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response DeleteProductGroup(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _productGroupClientDiagnostics.CreateScope("ApiManagementProductResource.DeleteProductGroup");
             scope.Start();

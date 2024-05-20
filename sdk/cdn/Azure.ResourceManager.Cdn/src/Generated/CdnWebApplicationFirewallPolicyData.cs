@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
@@ -59,13 +58,11 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public CdnWebApplicationFirewallPolicyData(AzureLocation location, CdnSku sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
             EndpointLinks = new ChangeTrackingList<SubResource>();
+            ExtendedProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyData"/>. </summary>
@@ -82,10 +79,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customSettings"> Describes custom rules inside the policy. </param>
         /// <param name="managedRules"> Describes managed rules inside the policy. </param>
         /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
+        /// <param name="extendedProperties"> Key-Value pair representing additional properties for Web Application Firewall policy. </param>
         /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSku sku, WafPolicySettings policySettings, RateLimitRuleList rateLimitSettings, CustomRuleList customSettings, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSku sku, WafPolicySettings policySettings, RateLimitRuleList rateLimitSettings, CustomRuleList customSettings, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, IDictionary<string, string> extendedProperties, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Sku = sku;
@@ -94,6 +92,7 @@ namespace Azure.ResourceManager.Cdn
             CustomSettings = customSettings;
             ManagedRules = managedRules;
             EndpointLinks = endpointLinks;
+            ExtendedProperties = extendedProperties;
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -163,6 +162,8 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </summary>
         public IReadOnlyList<SubResource> EndpointLinks { get; }
+        /// <summary> Key-Value pair representing additional properties for Web Application Firewall policy. </summary>
+        public IDictionary<string, string> ExtendedProperties { get; }
         /// <summary> Provisioning state of the WebApplicationFirewallPolicy. </summary>
         public WebApplicationFirewallPolicyProvisioningState? ProvisioningState { get; }
         /// <summary> Resource status of the policy. </summary>

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Automation.Models;
@@ -37,6 +36,22 @@ namespace Azure.ResourceManager.Automation
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, AutomationWatcherData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/watchers/", false);
+            uri.AppendPath(watcherName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, AutomationWatcherData data)
         {
             var message = _pipeline.CreateMessage();
@@ -57,7 +72,7 @@ namespace Azure.ResourceManager.Automation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -74,42 +89,11 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AutomationWatcherData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, AutomationWatcherData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, automationAccountName, watcherName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -139,42 +123,11 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AutomationWatcherData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, AutomationWatcherData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, automationAccountName, watcherName, data);
             _pipeline.Send(message, cancellationToken);
@@ -191,6 +144,22 @@ namespace Azure.ResourceManager.Automation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/watchers/", false);
+            uri.AppendPath(watcherName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName)
@@ -225,38 +194,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AutomationWatcherData>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, automationAccountName, watcherName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -286,38 +227,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AutomationWatcherData> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, automationAccountName, watcherName);
             _pipeline.Send(message, cancellationToken);
@@ -335,6 +248,22 @@ namespace Azure.ResourceManager.Automation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, AutomationWatcherPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/watchers/", false);
+            uri.AppendPath(watcherName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, AutomationWatcherPatch patch)
@@ -357,7 +286,7 @@ namespace Azure.ResourceManager.Automation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -374,42 +303,11 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AutomationWatcherData>> UpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, AutomationWatcherPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, automationAccountName, watcherName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -438,42 +336,11 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AutomationWatcherData> Update(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, AutomationWatcherPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, automationAccountName, watcherName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -489,6 +356,22 @@ namespace Azure.ResourceManager.Automation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/watchers/", false);
+            uri.AppendPath(watcherName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName)
@@ -523,38 +406,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, automationAccountName, watcherName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -577,38 +432,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, automationAccountName, watcherName);
             _pipeline.Send(message, cancellationToken);
@@ -619,6 +446,23 @@ namespace Azure.ResourceManager.Automation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStartRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/watchers/", false);
+            uri.AppendPath(watcherName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStartRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName)
@@ -654,38 +498,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> StartAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
 
             using var message = CreateStartRequest(subscriptionId, resourceGroupName, automationAccountName, watcherName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -708,38 +524,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Start(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
 
             using var message = CreateStartRequest(subscriptionId, resourceGroupName, automationAccountName, watcherName);
             _pipeline.Send(message, cancellationToken);
@@ -750,6 +538,23 @@ namespace Azure.ResourceManager.Automation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStopRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/watchers/", false);
+            uri.AppendPath(watcherName, true);
+            uri.AppendPath("/stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStopRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName)
@@ -785,38 +590,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> StopAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
 
             using var message = CreateStopRequest(subscriptionId, resourceGroupName, automationAccountName, watcherName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -839,38 +616,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Stop(string subscriptionId, string resourceGroupName, string automationAccountName, string watcherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
 
             using var message = CreateStopRequest(subscriptionId, resourceGroupName, automationAccountName, watcherName);
             _pipeline.Send(message, cancellationToken);
@@ -881,6 +630,25 @@ namespace Azure.ResourceManager.Automation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByAutomationAccountRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/watchers", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByAutomationAccountRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string filter)
@@ -918,30 +686,9 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AutomationWatcherListResult>> ListByAutomationAccountAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
 
             using var message = CreateListByAutomationAccountRequest(subscriptionId, resourceGroupName, automationAccountName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -969,30 +716,9 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AutomationWatcherListResult> ListByAutomationAccount(string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
 
             using var message = CreateListByAutomationAccountRequest(subscriptionId, resourceGroupName, automationAccountName, filter);
             _pipeline.Send(message, cancellationToken);
@@ -1008,6 +734,14 @@ namespace Azure.ResourceManager.Automation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByAutomationAccountNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByAutomationAccountNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string filter)
@@ -1035,34 +769,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AutomationWatcherListResult>> ListByAutomationAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
 
             using var message = CreateListByAutomationAccountNextPageRequest(nextLink, subscriptionId, resourceGroupName, automationAccountName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1091,34 +801,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AutomationWatcherListResult> ListByAutomationAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
 
             using var message = CreateListByAutomationAccountNextPageRequest(nextLink, subscriptionId, resourceGroupName, automationAccountName, filter);
             _pipeline.Send(message, cancellationToken);

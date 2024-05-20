@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -19,10 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public ExtendedMongoDBDatabaseResourceInfo(string databaseName) : base(databaseName)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedMongoDBDatabaseResourceInfo"/>. </summary>
@@ -46,10 +42,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>
+        [WirePath("_rid")]
         public string Rid { get; }
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
+        [WirePath("_ts")]
         public float? Timestamp { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
+        [WirePath("_etag")]
         public ETag? ETag { get; }
     }
 }

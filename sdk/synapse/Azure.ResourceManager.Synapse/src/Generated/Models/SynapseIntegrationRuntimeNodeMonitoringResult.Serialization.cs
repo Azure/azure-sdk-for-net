@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseIntegrationRuntimeNodeMonitoringResult : IUtf8JsonSerializable, IJsonModel<SynapseIntegrationRuntimeNodeMonitoringResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeNodeMonitoringResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeNodeMonitoringResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseIntegrationRuntimeNodeMonitoringResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeNodeMonitoringResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeNodeMonitoringResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeNodeMonitoringResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeNodeMonitoringResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeNodeMonitoringResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeNodeMonitoringResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseIntegrationRuntimeNodeMonitoringResult DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeNodeMonitoringResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeNodeMonitoringResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -222,7 +221,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeNodeMonitoringResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeNodeMonitoringResult)} does not support reading '{options.Format}' format.");
             }
         }
 

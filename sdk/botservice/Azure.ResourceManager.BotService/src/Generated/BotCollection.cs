@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.BotService
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BotResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, BotData data, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _botClientDiagnostics.CreateScope("BotCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _botRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BotServiceArmOperation<BotResource>(Response.FromValue(new BotResource(Client, response), response.GetRawResponse()));
+                var uri = _botRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BotServiceArmOperation<BotResource>(Response.FromValue(new BotResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BotResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, BotData data, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _botClientDiagnostics.CreateScope("BotCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _botRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
-                var operation = new BotServiceArmOperation<BotResource>(Response.FromValue(new BotResource(Client, response), response.GetRawResponse()));
+                var uri = _botRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BotServiceArmOperation<BotResource>(Response.FromValue(new BotResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<Response<BotResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _botClientDiagnostics.CreateScope("BotCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<BotResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _botClientDiagnostics.CreateScope("BotCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _botClientDiagnostics.CreateScope("BotCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _botClientDiagnostics.CreateScope("BotCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<BotResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _botClientDiagnostics.CreateScope("BotCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual NullableResponse<BotResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _botClientDiagnostics.CreateScope("BotCollection.GetIfExists");
             scope.Start();

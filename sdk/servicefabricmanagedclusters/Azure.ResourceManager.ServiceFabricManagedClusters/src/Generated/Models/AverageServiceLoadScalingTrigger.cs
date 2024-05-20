@@ -22,14 +22,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="metricName"/> or <paramref name="scaleInterval"/> is null. </exception>
         public AverageServiceLoadScalingTrigger(string metricName, double lowerLoadThreshold, double upperLoadThreshold, string scaleInterval, bool useOnlyPrimaryLoad)
         {
-            if (metricName == null)
-            {
-                throw new ArgumentNullException(nameof(metricName));
-            }
-            if (scaleInterval == null)
-            {
-                throw new ArgumentNullException(nameof(scaleInterval));
-            }
+            Argument.AssertNotNull(metricName, nameof(metricName));
+            Argument.AssertNotNull(scaleInterval, nameof(scaleInterval));
 
             MetricName = metricName;
             LowerLoadThreshold = lowerLoadThreshold;

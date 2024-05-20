@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DevCenter.Models;
@@ -35,6 +34,27 @@ namespace Azure.ResourceManager.DevCenter
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByPoolRequestUri(string subscriptionId, string resourceGroupName, string projectName, string poolName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/pools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/schedules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByPoolRequest(string subscriptionId, string resourceGroupName, string projectName, string poolName, int? top)
@@ -75,38 +95,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ScheduleListResult>> ListByPoolAsync(string subscriptionId, string resourceGroupName, string projectName, string poolName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var message = CreateListByPoolRequest(subscriptionId, resourceGroupName, projectName, poolName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -135,38 +127,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ScheduleListResult> ListByPool(string subscriptionId, string resourceGroupName, string projectName, string poolName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var message = CreateListByPoolRequest(subscriptionId, resourceGroupName, projectName, poolName, top);
             _pipeline.Send(message, cancellationToken);
@@ -182,6 +146,28 @@ namespace Azure.ResourceManager.DevCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/pools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/schedules/", false);
+            uri.AppendPath(scheduleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName, int? top)
@@ -224,46 +210,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DevCenterScheduleData>> GetAsync(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleName));
-            }
-            if (scheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, projectName, poolName, scheduleName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -295,46 +246,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DevCenterScheduleData> Get(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleName));
-            }
-            if (scheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, projectName, poolName, scheduleName, top);
             _pipeline.Send(message, cancellationToken);
@@ -352,6 +268,28 @@ namespace Azure.ResourceManager.DevCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName, DevCenterScheduleData data, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/pools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/schedules/", false);
+            uri.AppendPath(scheduleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName, DevCenterScheduleData data, int? top)
@@ -380,7 +318,7 @@ namespace Azure.ResourceManager.DevCenter
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -399,50 +337,12 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName, DevCenterScheduleData data, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleName));
-            }
-            if (scheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, projectName, poolName, scheduleName, data, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -469,50 +369,12 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName, DevCenterScheduleData data, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleName));
-            }
-            if (scheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, projectName, poolName, scheduleName, data, top);
             _pipeline.Send(message, cancellationToken);
@@ -524,6 +386,28 @@ namespace Azure.ResourceManager.DevCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName, DevCenterSchedulePatch patch, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/pools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/schedules/", false);
+            uri.AppendPath(scheduleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName, DevCenterSchedulePatch patch, int? top)
@@ -552,7 +436,7 @@ namespace Azure.ResourceManager.DevCenter
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -571,50 +455,12 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName, DevCenterSchedulePatch patch, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleName));
-            }
-            if (scheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, projectName, poolName, scheduleName, patch, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -641,50 +487,12 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName, DevCenterSchedulePatch patch, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleName));
-            }
-            if (scheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, projectName, poolName, scheduleName, patch, top);
             _pipeline.Send(message, cancellationToken);
@@ -696,6 +504,28 @@ namespace Azure.ResourceManager.DevCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/pools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/schedules/", false);
+            uri.AppendPath(scheduleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName, int? top)
@@ -738,46 +568,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleName));
-            }
-            if (scheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, projectName, poolName, scheduleName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -804,46 +599,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string projectName, string poolName, string scheduleName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (scheduleName == null)
-            {
-                throw new ArgumentNullException(nameof(scheduleName));
-            }
-            if (scheduleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scheduleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, projectName, poolName, scheduleName, top);
             _pipeline.Send(message, cancellationToken);
@@ -856,6 +616,14 @@ namespace Azure.ResourceManager.DevCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByPoolNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string projectName, string poolName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByPoolNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string projectName, string poolName, int? top)
@@ -884,42 +652,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ScheduleListResult>> ListByPoolNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string projectName, string poolName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var message = CreateListByPoolNextPageRequest(nextLink, subscriptionId, resourceGroupName, projectName, poolName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -949,42 +686,11 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ScheduleListResult> ListByPoolNextPage(string nextLink, string subscriptionId, string resourceGroupName, string projectName, string poolName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (projectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
-            }
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var message = CreateListByPoolNextPageRequest(nextLink, subscriptionId, resourceGroupName, projectName, poolName, top);
             _pipeline.Send(message, cancellationToken);

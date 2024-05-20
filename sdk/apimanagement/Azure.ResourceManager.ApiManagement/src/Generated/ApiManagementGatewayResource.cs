@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
@@ -345,7 +343,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementGatewayGatewayRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation(response);
+                var uri = _apiManagementGatewayGatewayRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -388,7 +388,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementGatewayGatewayRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation(response);
+                var uri = _apiManagementGatewayGatewayRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -427,10 +429,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<ApiManagementGatewayResource>> UpdateAsync(ETag ifMatch, ApiManagementGatewayData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementGatewayGatewayClientDiagnostics.CreateScope("ApiManagementGatewayResource.Update");
             scope.Start();
@@ -473,10 +472,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<ApiManagementGatewayResource> Update(ETag ifMatch, ApiManagementGatewayData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementGatewayGatewayClientDiagnostics.CreateScope("ApiManagementGatewayResource.Update");
             scope.Start();
@@ -594,10 +590,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> RegenerateKeyAsync(GatewayKeyRegenerateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementGatewayGatewayClientDiagnostics.CreateScope("ApiManagementGatewayResource.RegenerateKey");
             scope.Start();
@@ -639,10 +632,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response RegenerateKey(GatewayKeyRegenerateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementGatewayGatewayClientDiagnostics.CreateScope("ApiManagementGatewayResource.RegenerateKey");
             scope.Start();
@@ -684,10 +674,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayTokenRequestContract"/> is null. </exception>
         public virtual async Task<Response<GatewayTokenContract>> GenerateTokenAsync(GatewayTokenRequestContract gatewayTokenRequestContract, CancellationToken cancellationToken = default)
         {
-            if (gatewayTokenRequestContract == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayTokenRequestContract));
-            }
+            Argument.AssertNotNull(gatewayTokenRequestContract, nameof(gatewayTokenRequestContract));
 
             using var scope = _apiManagementGatewayGatewayClientDiagnostics.CreateScope("ApiManagementGatewayResource.GenerateToken");
             scope.Start();
@@ -729,10 +716,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayTokenRequestContract"/> is null. </exception>
         public virtual Response<GatewayTokenContract> GenerateToken(GatewayTokenRequestContract gatewayTokenRequestContract, CancellationToken cancellationToken = default)
         {
-            if (gatewayTokenRequestContract == null)
-            {
-                throw new ArgumentNullException(nameof(gatewayTokenRequestContract));
-            }
+            Argument.AssertNotNull(gatewayTokenRequestContract, nameof(gatewayTokenRequestContract));
 
             using var scope = _apiManagementGatewayGatewayClientDiagnostics.CreateScope("ApiManagementGatewayResource.GenerateToken");
             scope.Start();
@@ -829,14 +813,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual async Task<Response<bool>> GetGatewayApiEntityTagAsync(string apiId, CancellationToken cancellationToken = default)
         {
-            if (apiId == null)
-            {
-                throw new ArgumentNullException(nameof(apiId));
-            }
-            if (apiId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
-            }
+            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
             using var scope = _gatewayApiClientDiagnostics.CreateScope("ApiManagementGatewayResource.GetGatewayApiEntityTag");
             scope.Start();
@@ -875,14 +852,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual Response<bool> GetGatewayApiEntityTag(string apiId, CancellationToken cancellationToken = default)
         {
-            if (apiId == null)
-            {
-                throw new ArgumentNullException(nameof(apiId));
-            }
-            if (apiId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
-            }
+            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
             using var scope = _gatewayApiClientDiagnostics.CreateScope("ApiManagementGatewayResource.GetGatewayApiEntityTag");
             scope.Start();
@@ -922,14 +892,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual async Task<Response<GatewayApiData>> CreateOrUpdateGatewayApiAsync(string apiId, AssociationContract associationContract = null, CancellationToken cancellationToken = default)
         {
-            if (apiId == null)
-            {
-                throw new ArgumentNullException(nameof(apiId));
-            }
-            if (apiId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
-            }
+            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
             using var scope = _gatewayApiClientDiagnostics.CreateScope("ApiManagementGatewayResource.CreateOrUpdateGatewayApi");
             scope.Start();
@@ -969,14 +932,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual Response<GatewayApiData> CreateOrUpdateGatewayApi(string apiId, AssociationContract associationContract = null, CancellationToken cancellationToken = default)
         {
-            if (apiId == null)
-            {
-                throw new ArgumentNullException(nameof(apiId));
-            }
-            if (apiId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
-            }
+            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
             using var scope = _gatewayApiClientDiagnostics.CreateScope("ApiManagementGatewayResource.CreateOrUpdateGatewayApi");
             scope.Start();
@@ -1015,14 +971,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual async Task<Response> DeleteGatewayApiAsync(string apiId, CancellationToken cancellationToken = default)
         {
-            if (apiId == null)
-            {
-                throw new ArgumentNullException(nameof(apiId));
-            }
-            if (apiId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
-            }
+            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
             using var scope = _gatewayApiClientDiagnostics.CreateScope("ApiManagementGatewayResource.DeleteGatewayApi");
             scope.Start();
@@ -1061,14 +1010,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         public virtual Response DeleteGatewayApi(string apiId, CancellationToken cancellationToken = default)
         {
-            if (apiId == null)
-            {
-                throw new ArgumentNullException(nameof(apiId));
-            }
-            if (apiId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiId));
-            }
+            Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
             using var scope = _gatewayApiClientDiagnostics.CreateScope("ApiManagementGatewayResource.DeleteGatewayApi");
             scope.Start();

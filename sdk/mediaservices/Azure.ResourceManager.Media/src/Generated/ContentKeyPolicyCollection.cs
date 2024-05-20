@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Media
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContentKeyPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string contentKeyPolicyName, ContentKeyPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (contentKeyPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(contentKeyPolicyName));
-            }
-            if (contentKeyPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentKeyPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _contentKeyPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentKeyPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<ContentKeyPolicyResource>(Response.FromValue(new ContentKeyPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _contentKeyPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentKeyPolicyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation<ContentKeyPolicyResource>(Response.FromValue(new ContentKeyPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContentKeyPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string contentKeyPolicyName, ContentKeyPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (contentKeyPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(contentKeyPolicyName));
-            }
-            if (contentKeyPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentKeyPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _contentKeyPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentKeyPolicyName, data, cancellationToken);
-                var operation = new MediaArmOperation<ContentKeyPolicyResource>(Response.FromValue(new ContentKeyPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _contentKeyPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentKeyPolicyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation<ContentKeyPolicyResource>(Response.FromValue(new ContentKeyPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> is null. </exception>
         public virtual async Task<Response<ContentKeyPolicyResource>> GetAsync(string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
-            if (contentKeyPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(contentKeyPolicyName));
-            }
-            if (contentKeyPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentKeyPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
 
             using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> is null. </exception>
         public virtual Response<ContentKeyPolicyResource> Get(string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
-            if (contentKeyPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(contentKeyPolicyName));
-            }
-            if (contentKeyPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentKeyPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
 
             using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.Get");
             scope.Start();
@@ -368,14 +336,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
-            if (contentKeyPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(contentKeyPolicyName));
-            }
-            if (contentKeyPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentKeyPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
 
             using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.Exists");
             scope.Start();
@@ -418,14 +379,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
-            if (contentKeyPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(contentKeyPolicyName));
-            }
-            if (contentKeyPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentKeyPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
 
             using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.Exists");
             scope.Start();
@@ -468,14 +422,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContentKeyPolicyResource>> GetIfExistsAsync(string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
-            if (contentKeyPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(contentKeyPolicyName));
-            }
-            if (contentKeyPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentKeyPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
 
             using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.GetIfExists");
             scope.Start();
@@ -520,14 +467,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyPolicyName"/> is null. </exception>
         public virtual NullableResponse<ContentKeyPolicyResource> GetIfExists(string contentKeyPolicyName, CancellationToken cancellationToken = default)
         {
-            if (contentKeyPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(contentKeyPolicyName));
-            }
-            if (contentKeyPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentKeyPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(contentKeyPolicyName, nameof(contentKeyPolicyName));
 
             using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.GetIfExists");
             scope.Start();

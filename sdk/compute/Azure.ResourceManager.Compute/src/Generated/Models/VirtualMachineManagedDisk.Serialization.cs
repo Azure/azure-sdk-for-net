@@ -10,21 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineManagedDisk : IUtf8JsonSerializable, IJsonModel<VirtualMachineManagedDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineManagedDisk>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineManagedDisk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineManagedDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineManagedDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineManagedDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineManagedDisk)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue(SecurityProfile, options);
             }
             if (Optional.IsDefined(Id))
             {
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineManagedDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineManagedDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineManagedDisk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineManagedDisk DeserializeVirtualMachineManagedDisk(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineDiskSecurityProfile securityProfile = default;
             ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountType"u8))
@@ -132,10 +131,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineManagedDisk(id, serializedAdditionalRawData, storageAccountType, diskEncryptionSet, securityProfile);
         }
 
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineManagedDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineManagedDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineManagedDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineManagedDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineManagedDisk)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,14 +19,14 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class LogAnalyticsQueryData : IUtf8JsonSerializable, IJsonModel<LogAnalyticsQueryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsQueryData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsQueryData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogAnalyticsQueryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQueryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsQueryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsQueryData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(Related))
             {
                 writer.WritePropertyName("related"u8);
-                writer.WriteObjectValue(Related);
+                writer.WriteObjectValue(Related, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -147,7 +149,7 @@ namespace Azure.ResourceManager.OperationalInsights
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQueryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsQueryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsQueryData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +158,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static LogAnalyticsQueryData DeserializeLogAnalyticsQueryData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -177,7 +179,7 @@ namespace Azure.ResourceManager.OperationalInsights
             IDictionary<string, IList<string>> tags = default;
             BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -309,10 +311,10 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LogAnalyticsQueryData(
                 id,
                 name,
@@ -331,6 +333,293 @@ namespace Azure.ResourceManager.OperationalInsights
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApplicationId))
+                {
+                    builder.Append("    id: ");
+                    builder.AppendLine($"'{ApplicationId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    displayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    builder.Append("    displayName: ");
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    timeCreated: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    builder.Append("    timeCreated: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModifiedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    timeModified: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ModifiedOn))
+                {
+                    builder.Append("    timeModified: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(ModifiedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Author), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    author: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Author))
+                {
+                    builder.Append("    author: ");
+                    if (Author.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Author}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Author}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("    description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Body), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    body: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Body))
+                {
+                    builder.Append("    body: ");
+                    if (Body.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Body}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Body}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Related), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    related: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Related))
+                {
+                    builder.Append("    related: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Related, options, 4, false, "    related: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    if (Tags.Any())
+                    {
+                        builder.Append("    tags: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"        '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine("[");
+                            foreach (var item0 in item.Value)
+                            {
+                                if (item0 == null)
+                                {
+                                    builder.Append("null");
+                                    continue;
+                                }
+                                if (item0.Contains(Environment.NewLine))
+                                {
+                                    builder.AppendLine("        '''");
+                                    builder.AppendLine($"{item0}'''");
+                                }
+                                else
+                                {
+                                    builder.AppendLine($"        '{item0}'");
+                                }
+                            }
+                            builder.AppendLine("      ]");
+                        }
+                        builder.AppendLine("    }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    properties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Properties))
+                {
+                    builder.Append("    properties: ");
+                    builder.AppendLine($"'{Properties.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<LogAnalyticsQueryData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQueryData>)this).GetFormatFromOptions(options) : options.Format;
@@ -339,8 +628,10 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsQueryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsQueryData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -356,7 +647,7 @@ namespace Azure.ResourceManager.OperationalInsights
                         return DeserializeLogAnalyticsQueryData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsQueryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsQueryData)} does not support reading '{options.Format}' format.");
             }
         }
 

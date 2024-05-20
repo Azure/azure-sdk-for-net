@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Hci.Models;
@@ -35,6 +34,27 @@ namespace Azure.ResourceManager.Hci
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByPublisherRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/offers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByPublisherRequest(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string expand)
@@ -75,38 +95,10 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HciOfferList>> ListByPublisherAsync(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             using var message = CreateListByPublisherRequest(subscriptionId, resourceGroupName, clusterName, publisherName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -135,38 +127,10 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HciOfferList> ListByPublisher(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             using var message = CreateListByPublisherRequest(subscriptionId, resourceGroupName, clusterName, publisherName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -182,6 +146,25 @@ namespace Azure.ResourceManager.Hci
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByClusterRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/offers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByClusterRequest(string subscriptionId, string resourceGroupName, string clusterName, string expand)
@@ -219,30 +202,9 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HciOfferList>> ListByClusterAsync(string subscriptionId, string resourceGroupName, string clusterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var message = CreateListByClusterRequest(subscriptionId, resourceGroupName, clusterName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -270,30 +232,9 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HciOfferList> ListByCluster(string subscriptionId, string resourceGroupName, string clusterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var message = CreateListByClusterRequest(subscriptionId, resourceGroupName, clusterName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -309,6 +250,28 @@ namespace Azure.ResourceManager.Hci
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureStackHCI/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName, string expand)
@@ -351,46 +314,11 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="publisherName"/> or <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OfferData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (offerName == null)
-            {
-                throw new ArgumentNullException(nameof(offerName));
-            }
-            if (offerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offerName, nameof(offerName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, publisherName, offerName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -422,46 +350,11 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="publisherName"/> or <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OfferData> Get(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (offerName == null)
-            {
-                throw new ArgumentNullException(nameof(offerName));
-            }
-            if (offerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(offerName, nameof(offerName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, publisherName, offerName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -479,6 +372,14 @@ namespace Azure.ResourceManager.Hci
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByPublisherNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByPublisherNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string expand)
@@ -507,42 +408,11 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HciOfferList>> ListByPublisherNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             using var message = CreateListByPublisherNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName, publisherName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -572,42 +442,11 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HciOfferList> ListByPublisherNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             using var message = CreateListByPublisherNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName, publisherName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -623,6 +462,14 @@ namespace Azure.ResourceManager.Hci
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByClusterNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByClusterNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string expand)
@@ -650,34 +497,10 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HciOfferList>> ListByClusterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var message = CreateListByClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -706,34 +529,10 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HciOfferList> ListByClusterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var message = CreateListByClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName, expand);
             _pipeline.Send(message, cancellationToken);

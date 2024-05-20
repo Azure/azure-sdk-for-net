@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -66,6 +65,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsRouterCommunicationError(code, message, target, innererror, details ?? new ChangeTrackingList<AcsRouterCommunicationError>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsRouterCommunicationError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterCommunicationError(document.RootElement);
         }
     }
 }

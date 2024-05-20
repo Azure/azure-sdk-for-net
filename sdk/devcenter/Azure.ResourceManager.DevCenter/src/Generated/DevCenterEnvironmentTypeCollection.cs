@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DevCenterEnvironmentTypeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string environmentTypeName, DevCenterEnvironmentTypeData data, CancellationToken cancellationToken = default)
         {
-            if (environmentTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentTypeName));
-            }
-            if (environmentTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentTypeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _devCenterEnvironmentTypeEnvironmentTypesClientDiagnostics.CreateScope("DevCenterEnvironmentTypeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _devCenterEnvironmentTypeEnvironmentTypesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevCenterEnvironmentTypeResource>(Response.FromValue(new DevCenterEnvironmentTypeResource(Client, response), response.GetRawResponse()));
+                var uri = _devCenterEnvironmentTypeEnvironmentTypesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DevCenterArmOperation<DevCenterEnvironmentTypeResource>(Response.FromValue(new DevCenterEnvironmentTypeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DevCenterEnvironmentTypeResource> CreateOrUpdate(WaitUntil waitUntil, string environmentTypeName, DevCenterEnvironmentTypeData data, CancellationToken cancellationToken = default)
         {
-            if (environmentTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentTypeName));
-            }
-            if (environmentTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentTypeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _devCenterEnvironmentTypeEnvironmentTypesClientDiagnostics.CreateScope("DevCenterEnvironmentTypeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _devCenterEnvironmentTypeEnvironmentTypesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, data, cancellationToken);
-                var operation = new DevCenterArmOperation<DevCenterEnvironmentTypeResource>(Response.FromValue(new DevCenterEnvironmentTypeResource(Client, response), response.GetRawResponse()));
+                var uri = _devCenterEnvironmentTypeEnvironmentTypesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DevCenterArmOperation<DevCenterEnvironmentTypeResource>(Response.FromValue(new DevCenterEnvironmentTypeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
         public virtual async Task<Response<DevCenterEnvironmentTypeResource>> GetAsync(string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            if (environmentTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentTypeName));
-            }
-            if (environmentTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
 
             using var scope = _devCenterEnvironmentTypeEnvironmentTypesClientDiagnostics.CreateScope("DevCenterEnvironmentTypeCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
         public virtual Response<DevCenterEnvironmentTypeResource> Get(string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            if (environmentTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentTypeName));
-            }
-            if (environmentTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
 
             using var scope = _devCenterEnvironmentTypeEnvironmentTypesClientDiagnostics.CreateScope("DevCenterEnvironmentTypeCollection.Get");
             scope.Start();
@@ -364,14 +332,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            if (environmentTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentTypeName));
-            }
-            if (environmentTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
 
             using var scope = _devCenterEnvironmentTypeEnvironmentTypesClientDiagnostics.CreateScope("DevCenterEnvironmentTypeCollection.Exists");
             scope.Start();
@@ -414,14 +375,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
         public virtual Response<bool> Exists(string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            if (environmentTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentTypeName));
-            }
-            if (environmentTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
 
             using var scope = _devCenterEnvironmentTypeEnvironmentTypesClientDiagnostics.CreateScope("DevCenterEnvironmentTypeCollection.Exists");
             scope.Start();
@@ -464,14 +418,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
         public virtual async Task<NullableResponse<DevCenterEnvironmentTypeResource>> GetIfExistsAsync(string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            if (environmentTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentTypeName));
-            }
-            if (environmentTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
 
             using var scope = _devCenterEnvironmentTypeEnvironmentTypesClientDiagnostics.CreateScope("DevCenterEnvironmentTypeCollection.GetIfExists");
             scope.Start();
@@ -516,14 +463,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
         public virtual NullableResponse<DevCenterEnvironmentTypeResource> GetIfExists(string environmentTypeName, CancellationToken cancellationToken = default)
         {
-            if (environmentTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentTypeName));
-            }
-            if (environmentTypeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentTypeName));
-            }
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
 
             using var scope = _devCenterEnvironmentTypeEnvironmentTypesClientDiagnostics.CreateScope("DevCenterEnvironmentTypeCollection.GetIfExists");
             scope.Start();

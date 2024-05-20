@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,14 +19,14 @@ namespace Azure.ResourceManager.ServiceBus
 {
     public partial class ServiceBusNetworkRuleSetData : IUtf8JsonSerializable, IJsonModel<ServiceBusNetworkRuleSetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNetworkRuleSetData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNetworkRuleSetData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceBusNetworkRuleSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNetworkRuleSetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +73,7 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +83,7 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +116,7 @@ namespace Azure.ResourceManager.ServiceBus
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNetworkRuleSetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +125,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static ServiceBusNetworkRuleSetData DeserializeServiceBusNetworkRuleSetData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -140,7 +142,7 @@ namespace Azure.ResourceManager.ServiceBus
             IList<ServiceBusNetworkRuleSetIPRules> ipRules = default;
             ServiceBusPublicNetworkAccessFlag? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -245,10 +247,10 @@ namespace Azure.ResourceManager.ServiceBus
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceBusNetworkRuleSetData(
                 id,
                 name,
@@ -263,6 +265,184 @@ namespace Azure.ResourceManager.ServiceBus
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    builder.Append("  location: ");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsTrustedServiceAccessEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    trustedServiceAccessEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsTrustedServiceAccessEnabled))
+                {
+                    builder.Append("    trustedServiceAccessEnabled: ");
+                    var boolValue = IsTrustedServiceAccessEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultAction), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    defaultAction: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultAction))
+                {
+                    builder.Append("    defaultAction: ");
+                    builder.AppendLine($"'{DefaultAction.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualNetworkRules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    virtualNetworkRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(VirtualNetworkRules))
+                {
+                    if (VirtualNetworkRules.Any())
+                    {
+                        builder.Append("    virtualNetworkRules: ");
+                        builder.AppendLine("[");
+                        foreach (var item in VirtualNetworkRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    virtualNetworkRules: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPRules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    ipRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IPRules))
+                {
+                    if (IPRules.Any())
+                    {
+                        builder.Append("    ipRules: ");
+                        builder.AppendLine("[");
+                        foreach (var item in IPRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    ipRules: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    publicNetworkAccess: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetworkAccess))
+                {
+                    builder.Append("    publicNetworkAccess: ");
+                    builder.AppendLine($"'{PublicNetworkAccess.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ServiceBusNetworkRuleSetData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNetworkRuleSetData>)this).GetFormatFromOptions(options) : options.Format;
@@ -271,8 +451,10 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -288,7 +470,7 @@ namespace Azure.ResourceManager.ServiceBus
                         return DeserializeServiceBusNetworkRuleSetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetData)} does not support reading '{options.Format}' format.");
             }
         }
 

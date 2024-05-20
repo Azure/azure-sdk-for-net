@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -37,6 +36,17 @@ namespace Azure.ResourceManager.SecurityCenter
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/pricings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -61,14 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PricingList>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -93,14 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PricingList> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -116,6 +112,18 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string pricingName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/pricings/", false);
+            uri.AppendPath(pricingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string pricingName)
@@ -144,22 +152,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityCenterPricingData>> GetAsync(string subscriptionId, string pricingName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (pricingName == null)
-            {
-                throw new ArgumentNullException(nameof(pricingName));
-            }
-            if (pricingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(pricingName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
 
             using var message = CreateGetRequest(subscriptionId, pricingName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -187,22 +181,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityCenterPricingData> Get(string subscriptionId, string pricingName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (pricingName == null)
-            {
-                throw new ArgumentNullException(nameof(pricingName));
-            }
-            if (pricingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(pricingName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
 
             using var message = CreateGetRequest(subscriptionId, pricingName);
             _pipeline.Send(message, cancellationToken);
@@ -222,6 +202,18 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string pricingName, SecurityCenterPricingData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/pricings/", false);
+            uri.AppendPath(pricingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string pricingName, SecurityCenterPricingData data)
         {
             var message = _pipeline.CreateMessage();
@@ -238,7 +230,7 @@ namespace Azure.ResourceManager.SecurityCenter
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -253,26 +245,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityCenterPricingData>> UpdateAsync(string subscriptionId, string pricingName, SecurityCenterPricingData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (pricingName == null)
-            {
-                throw new ArgumentNullException(nameof(pricingName));
-            }
-            if (pricingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(pricingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateRequest(subscriptionId, pricingName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -299,26 +274,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="pricingName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityCenterPricingData> Update(string subscriptionId, string pricingName, SecurityCenterPricingData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (pricingName == null)
-            {
-                throw new ArgumentNullException(nameof(pricingName));
-            }
-            if (pricingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(pricingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(pricingName, nameof(pricingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateRequest(subscriptionId, pricingName, data);
             _pipeline.Send(message, cancellationToken);

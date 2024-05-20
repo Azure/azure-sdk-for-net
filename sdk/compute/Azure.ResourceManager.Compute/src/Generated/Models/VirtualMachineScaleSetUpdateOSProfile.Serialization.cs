@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineScaleSetUpdateOSProfile : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetUpdateOSProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetUpdateOSProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetUpdateOSProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineScaleSetUpdateOSProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateOSProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateOSProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,12 +34,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
-                writer.WriteObjectValue(WindowsConfiguration);
+                writer.WriteObjectValue(WindowsConfiguration, options);
             }
             if (Optional.IsDefined(LinuxConfiguration))
             {
                 writer.WritePropertyName("linuxConfiguration"u8);
-                writer.WriteObjectValue(LinuxConfiguration);
+                writer.WriteObjectValue(LinuxConfiguration, options);
             }
             if (Optional.IsCollectionDefined(Secrets))
             {
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateOSProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateOSProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetUpdateOSProfile DeserializeVirtualMachineScaleSetUpdateOSProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
             LinuxConfiguration linuxConfiguration = default;
             IList<VaultSecretGroup> secrets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customData"u8))
@@ -137,10 +136,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineScaleSetUpdateOSProfile(customData, windowsConfiguration, linuxConfiguration, secrets ?? new ChangeTrackingList<VaultSecretGroup>(), serializedAdditionalRawData);
         }
 
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateOSProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateOSProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +168,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineScaleSetUpdateOSProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateOSProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateOSProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

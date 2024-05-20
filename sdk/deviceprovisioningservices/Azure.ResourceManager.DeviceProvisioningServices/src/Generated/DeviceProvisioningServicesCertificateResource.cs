@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
@@ -200,17 +198,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, DeviceProvisioningServicesCertificateResourceDeleteOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Delete");
             scope.Start();
             try
             {
                 var response = await _deviceProvisioningServicesCertificateDpsCertificateRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, options.CertificateCommonName, options.CertificateRawBytes, options.CertificateIsVerified, options.CertificatePurpose, options.CertificateCreatedOn, options.CertificateLastUpdatedOn, options.CertificateHasPrivateKey, options.CertificateNonce, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceProvisioningServicesArmOperation(response);
+                var uri = _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, options.CertificateCommonName, options.CertificateRawBytes, options.CertificateIsVerified, options.CertificatePurpose, options.CertificateCreatedOn, options.CertificateLastUpdatedOn, options.CertificateHasPrivateKey, options.CertificateNonce);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DeviceProvisioningServicesArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -249,17 +246,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual ArmOperation Delete(WaitUntil waitUntil, DeviceProvisioningServicesCertificateResourceDeleteOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Delete");
             scope.Start();
             try
             {
                 var response = _deviceProvisioningServicesCertificateDpsCertificateRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, options.CertificateCommonName, options.CertificateRawBytes, options.CertificateIsVerified, options.CertificatePurpose, options.CertificateCreatedOn, options.CertificateLastUpdatedOn, options.CertificateHasPrivateKey, options.CertificateNonce, cancellationToken);
-                var operation = new DeviceProvisioningServicesArmOperation(response);
+                var uri = _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, options.CertificateCommonName, options.CertificateRawBytes, options.CertificateIsVerified, options.CertificatePurpose, options.CertificateCreatedOn, options.CertificateLastUpdatedOn, options.CertificateHasPrivateKey, options.CertificateNonce);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DeviceProvisioningServicesArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -299,17 +295,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DeviceProvisioningServicesCertificateResource>> UpdateAsync(WaitUntil waitUntil, DeviceProvisioningServicesCertificateData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Update");
             scope.Start();
             try
             {
                 var response = await _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response), response.GetRawResponse()));
+                var uri = _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -349,17 +344,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DeviceProvisioningServicesCertificateResource> Update(WaitUntil waitUntil, DeviceProvisioningServicesCertificateData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Update");
             scope.Start();
             try
             {
                 var response = _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response), response.GetRawResponse()));
+                var uri = _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -397,10 +391,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<CertificateVerificationCodeResult>> GenerateVerificationCodeAsync(DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.GenerateVerificationCode");
             scope.Start();
@@ -442,10 +433,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<CertificateVerificationCodeResult> GenerateVerificationCode(DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.GenerateVerificationCode");
             scope.Start();
@@ -487,10 +475,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<DeviceProvisioningServicesCertificateResource>> VerifyCertificateAsync(DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.VerifyCertificate");
             scope.Start();
@@ -532,10 +517,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<DeviceProvisioningServicesCertificateResource> VerifyCertificate(DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.VerifyCertificate");
             scope.Start();

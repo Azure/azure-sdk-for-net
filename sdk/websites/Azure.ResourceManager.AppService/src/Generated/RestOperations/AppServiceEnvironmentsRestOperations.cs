@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppService.Models;
@@ -38,6 +37,17 @@ namespace Azure.ResourceManager.AppService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -62,14 +72,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceEnvironmentListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -94,14 +97,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceEnvironmentListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -117,6 +113,19 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -146,22 +155,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceEnvironmentListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -187,22 +182,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceEnvironmentListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -218,6 +199,20 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string name)
@@ -249,30 +244,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceEnvironmentData>> GetAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -301,30 +275,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceEnvironmentData> Get(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -342,6 +295,20 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentData data)
@@ -362,7 +329,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -378,34 +345,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -430,34 +373,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
@@ -470,6 +389,24 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string name, bool? forceDelete)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            if (forceDelete != null)
+            {
+                uri.AppendQuery("forceDelete", forceDelete.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string name, bool? forceDelete)
@@ -506,30 +443,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string name, bool? forceDelete = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name, forceDelete);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -553,30 +469,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string name, bool? forceDelete = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, name, forceDelete);
             _pipeline.Send(message, cancellationToken);
@@ -588,6 +483,20 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentPatch patch)
@@ -608,7 +517,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -624,34 +533,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceEnvironmentData>> UpdateAsync(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -681,34 +566,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceEnvironmentData> Update(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, patch);
             _pipeline.Send(message, cancellationToken);
@@ -726,6 +587,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListCapacitiesRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/capacities/compute", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListCapacitiesRequest(string subscriptionId, string resourceGroupName, string name)
@@ -758,30 +634,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StampCapacityListResult>> ListCapacitiesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListCapacitiesRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -808,30 +663,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StampCapacityListResult> ListCapacities(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListCapacitiesRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -847,6 +681,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetVipInfoRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/capacities/virtualip", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetVipInfoRequest(string subscriptionId, string resourceGroupName, string name)
@@ -879,30 +728,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceEnvironmentAddressResult>> GetVipInfoAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetVipInfoRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -929,30 +757,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceEnvironmentAddressResult> GetVipInfo(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetVipInfoRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -968,6 +775,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAseV3NetworkingConfigurationRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/configurations/networking", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAseV3NetworkingConfigurationRequest(string subscriptionId, string resourceGroupName, string name)
@@ -1000,30 +822,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AseV3NetworkingConfigurationData>> GetAseV3NetworkingConfigurationAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetAseV3NetworkingConfigurationRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1052,30 +853,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AseV3NetworkingConfigurationData> GetAseV3NetworkingConfiguration(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetAseV3NetworkingConfigurationRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -1093,6 +873,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateAseNetworkingConfigurationRequestUri(string subscriptionId, string resourceGroupName, string name, AseV3NetworkingConfigurationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/configurations/networking", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateAseNetworkingConfigurationRequest(string subscriptionId, string resourceGroupName, string name, AseV3NetworkingConfigurationData data)
@@ -1114,7 +909,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1130,34 +925,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AseV3NetworkingConfigurationData>> UpdateAseNetworkingConfigurationAsync(string subscriptionId, string resourceGroupName, string name, AseV3NetworkingConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateAseNetworkingConfigurationRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1185,34 +956,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AseV3NetworkingConfigurationData> UpdateAseNetworkingConfiguration(string subscriptionId, string resourceGroupName, string name, AseV3NetworkingConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateAseNetworkingConfigurationRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
@@ -1228,6 +975,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListDiagnosticsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/diagnostics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListDiagnosticsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -1260,30 +1022,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IReadOnlyList<HostingEnvironmentDiagnostics>>> ListDiagnosticsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListDiagnosticsRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1315,30 +1056,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IReadOnlyList<HostingEnvironmentDiagnostics>> ListDiagnostics(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListDiagnosticsRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -1359,6 +1079,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDiagnosticsItemRequestUri(string subscriptionId, string resourceGroupName, string name, string diagnosticsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/diagnostics/", false);
+            uri.AppendPath(diagnosticsName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDiagnosticsItemRequest(string subscriptionId, string resourceGroupName, string name, string diagnosticsName)
@@ -1393,38 +1129,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="diagnosticsName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HostingEnvironmentDiagnostics>> GetDiagnosticsItemAsync(string subscriptionId, string resourceGroupName, string name, string diagnosticsName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (diagnosticsName == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticsName));
-            }
-            if (diagnosticsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(diagnosticsName, nameof(diagnosticsName));
 
             using var message = CreateGetDiagnosticsItemRequest(subscriptionId, resourceGroupName, name, diagnosticsName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1452,38 +1160,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="diagnosticsName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HostingEnvironmentDiagnostics> GetDiagnosticsItem(string subscriptionId, string resourceGroupName, string name, string diagnosticsName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (diagnosticsName == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticsName));
-            }
-            if (diagnosticsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(diagnosticsName, nameof(diagnosticsName));
 
             using var message = CreateGetDiagnosticsItemRequest(subscriptionId, resourceGroupName, name, diagnosticsName);
             _pipeline.Send(message, cancellationToken);
@@ -1499,6 +1179,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetInboundNetworkDependenciesEndpointsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/inboundNetworkDependenciesEndpoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetInboundNetworkDependenciesEndpointsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -1531,30 +1226,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<InboundEnvironmentEndpointListResult>> GetInboundNetworkDependenciesEndpointsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetInboundNetworkDependenciesEndpointsRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1581,30 +1255,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<InboundEnvironmentEndpointListResult> GetInboundNetworkDependenciesEndpoints(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetInboundNetworkDependenciesEndpointsRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -1620,6 +1273,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMultiRolePoolsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/multiRolePools", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListMultiRolePoolsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -1652,30 +1320,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceWorkerPoolListResult>> ListMultiRolePoolsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListMultiRolePoolsRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1702,30 +1349,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceWorkerPoolListResult> ListMultiRolePools(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListMultiRolePoolsRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -1741,6 +1367,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetMultiRolePoolRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/multiRolePools/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetMultiRolePoolRequest(string subscriptionId, string resourceGroupName, string name)
@@ -1773,30 +1414,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceWorkerPoolData>> GetMultiRolePoolAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetMultiRolePoolRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1825,30 +1445,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceWorkerPoolData> GetMultiRolePool(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetMultiRolePoolRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -1866,6 +1465,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateMultiRolePoolRequestUri(string subscriptionId, string resourceGroupName, string name, AppServiceWorkerPoolData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/multiRolePools/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateMultiRolePoolRequest(string subscriptionId, string resourceGroupName, string name, AppServiceWorkerPoolData data)
@@ -1887,7 +1501,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1903,34 +1517,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateMultiRolePoolAsync(string subscriptionId, string resourceGroupName, string name, AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateMultiRolePoolRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1954,34 +1544,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdateMultiRolePool(string subscriptionId, string resourceGroupName, string name, AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateMultiRolePoolRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
@@ -1993,6 +1559,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateMultiRolePoolRequestUri(string subscriptionId, string resourceGroupName, string name, AppServiceWorkerPoolData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/multiRolePools/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateMultiRolePoolRequest(string subscriptionId, string resourceGroupName, string name, AppServiceWorkerPoolData data)
@@ -2014,7 +1595,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -2030,34 +1611,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceWorkerPoolData>> UpdateMultiRolePoolAsync(string subscriptionId, string resourceGroupName, string name, AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateMultiRolePoolRequest(subscriptionId, resourceGroupName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2086,34 +1643,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceWorkerPoolData> UpdateMultiRolePool(string subscriptionId, string resourceGroupName, string name, AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateMultiRolePoolRequest(subscriptionId, resourceGroupName, name, data);
             _pipeline.Send(message, cancellationToken);
@@ -2130,6 +1663,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMultiRolePoolInstanceMetricDefinitionsRequestUri(string subscriptionId, string resourceGroupName, string name, string instance)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/multiRolePools/default/instances/", false);
+            uri.AppendPath(instance, true);
+            uri.AppendPath("/metricdefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListMultiRolePoolInstanceMetricDefinitionsRequest(string subscriptionId, string resourceGroupName, string name, string instance)
@@ -2165,38 +1715,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instance"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceMetricDefinitionListResult>> ListMultiRolePoolInstanceMetricDefinitionsAsync(string subscriptionId, string resourceGroupName, string name, string instance, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
-            if (instance.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instance));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(instance, nameof(instance));
 
             using var message = CreateListMultiRolePoolInstanceMetricDefinitionsRequest(subscriptionId, resourceGroupName, name, instance);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2224,38 +1746,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instance"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceMetricDefinitionListResult> ListMultiRolePoolInstanceMetricDefinitions(string subscriptionId, string resourceGroupName, string name, string instance, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
-            if (instance.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instance));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(instance, nameof(instance));
 
             using var message = CreateListMultiRolePoolInstanceMetricDefinitionsRequest(subscriptionId, resourceGroupName, name, instance);
             _pipeline.Send(message, cancellationToken);
@@ -2271,6 +1765,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMultiRoleMetricDefinitionsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/multiRolePools/default/metricdefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListMultiRoleMetricDefinitionsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -2303,30 +1812,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceMetricDefinitionListResult>> ListMultiRoleMetricDefinitionsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListMultiRoleMetricDefinitionsRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2353,30 +1841,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceMetricDefinitionListResult> ListMultiRoleMetricDefinitions(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListMultiRoleMetricDefinitionsRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -2392,6 +1859,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMultiRolePoolSkusRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/multiRolePools/default/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListMultiRolePoolSkusRequest(string subscriptionId, string resourceGroupName, string name)
@@ -2424,30 +1906,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServicePoolSkuInfoListResult>> ListMultiRolePoolSkusAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListMultiRolePoolSkusRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2474,30 +1935,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServicePoolSkuInfoListResult> ListMultiRolePoolSkus(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListMultiRolePoolSkusRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -2513,6 +1953,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMultiRoleUsagesRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/multiRolePools/default/usages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListMultiRoleUsagesRequest(string subscriptionId, string resourceGroupName, string name)
@@ -2545,30 +2000,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceUsageListResult>> ListMultiRoleUsagesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListMultiRoleUsagesRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2595,30 +2029,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceUsageListResult> ListMultiRoleUsages(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListMultiRoleUsagesRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -2634,6 +2047,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOperationsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/operations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListOperationsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -2666,30 +2094,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IReadOnlyList<AppServiceOperation>>> ListOperationsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListOperationsRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2721,30 +2128,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IReadOnlyList<AppServiceOperation>> ListOperations(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListOperationsRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -2765,6 +2151,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetOutboundNetworkDependenciesEndpointsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetOutboundNetworkDependenciesEndpointsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -2797,30 +2198,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OutboundEnvironmentEndpointListResult>> GetOutboundNetworkDependenciesEndpointsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetOutboundNetworkDependenciesEndpointsRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2847,30 +2227,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OutboundEnvironmentEndpointListResult> GetOutboundNetworkDependenciesEndpoints(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetOutboundNetworkDependenciesEndpointsRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -2886,6 +2245,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPrivateEndpointConnectionListRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateEndpointConnections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPrivateEndpointConnectionListRequest(string subscriptionId, string resourceGroupName, string name)
@@ -2918,30 +2292,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RemotePrivateEndpointConnectionListResult>> GetPrivateEndpointConnectionListAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetPrivateEndpointConnectionListRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2968,30 +2321,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RemotePrivateEndpointConnectionListResult> GetPrivateEndpointConnectionList(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetPrivateEndpointConnectionListRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -3007,6 +2339,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPrivateEndpointConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
@@ -3041,38 +2389,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RemotePrivateEndpointConnectionARMResourceData>> GetPrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var message = CreateGetPrivateEndpointConnectionRequest(subscriptionId, resourceGroupName, name, privateEndpointConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3102,38 +2422,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RemotePrivateEndpointConnectionARMResourceData> GetPrivateEndpointConnection(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var message = CreateGetPrivateEndpointConnectionRequest(subscriptionId, resourceGroupName, name, privateEndpointConnectionName);
             _pipeline.Send(message, cancellationToken);
@@ -3151,6 +2443,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateApproveOrRejectPrivateEndpointConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateApproveOrRejectPrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info)
@@ -3173,7 +2481,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
+            content.JsonWriter.WriteObjectValue(info, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -3190,42 +2498,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ApproveOrRejectPrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var message = CreateApproveOrRejectPrivateEndpointConnectionRequest(subscriptionId, resourceGroupName, name, privateEndpointConnectionName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3250,42 +2527,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ApproveOrRejectPrivateEndpointConnection(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var message = CreateApproveOrRejectPrivateEndpointConnectionRequest(subscriptionId, resourceGroupName, name, privateEndpointConnectionName, info);
             _pipeline.Send(message, cancellationToken);
@@ -3297,6 +2543,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeletePrivateEndpointConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeletePrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
@@ -3331,38 +2593,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeletePrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var message = CreateDeletePrivateEndpointConnectionRequest(subscriptionId, resourceGroupName, name, privateEndpointConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3387,38 +2621,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeletePrivateEndpointConnection(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var message = CreateDeletePrivateEndpointConnectionRequest(subscriptionId, resourceGroupName, name, privateEndpointConnectionName);
             _pipeline.Send(message, cancellationToken);
@@ -3431,6 +2637,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPrivateLinkResourcesRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPrivateLinkResourcesRequest(string subscriptionId, string resourceGroupName, string name)
@@ -3463,30 +2684,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PrivateLinkResourcesWrapper>> GetPrivateLinkResourcesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetPrivateLinkResourcesRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3513,30 +2713,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PrivateLinkResourcesWrapper> GetPrivateLinkResources(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetPrivateLinkResourcesRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -3552,6 +2731,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRebootRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/reboot", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRebootRequest(string subscriptionId, string resourceGroupName, string name)
@@ -3584,30 +2778,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RebootAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateRebootRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3629,30 +2802,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Reboot(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateRebootRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -3663,6 +2815,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAppServicePlansRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/serverfarms", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListAppServicePlansRequest(string subscriptionId, string resourceGroupName, string name)
@@ -3695,30 +2862,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServicePlanListResult>> ListAppServicePlansAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListAppServicePlansRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3745,30 +2891,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServicePlanListResult> ListAppServicePlans(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListAppServicePlansRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -3784,6 +2909,25 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWebAppsRequestUri(string subscriptionId, string resourceGroupName, string name, string propertiesToInclude)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/sites", false);
+            if (propertiesToInclude != null)
+            {
+                uri.AppendQuery("propertiesToInclude", propertiesToInclude, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListWebAppsRequest(string subscriptionId, string resourceGroupName, string name, string propertiesToInclude)
@@ -3821,30 +2965,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WebAppListResult>> ListWebAppsAsync(string subscriptionId, string resourceGroupName, string name, string propertiesToInclude = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListWebAppsRequest(subscriptionId, resourceGroupName, name, propertiesToInclude);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3872,30 +2995,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WebAppListResult> ListWebApps(string subscriptionId, string resourceGroupName, string name, string propertiesToInclude = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListWebAppsRequest(subscriptionId, resourceGroupName, name, propertiesToInclude);
             _pipeline.Send(message, cancellationToken);
@@ -3911,6 +3013,25 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListUsagesRequestUri(string subscriptionId, string resourceGroupName, string name, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/usages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, false);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListUsagesRequest(string subscriptionId, string resourceGroupName, string name, string filter)
@@ -3948,30 +3069,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CsmUsageQuotaListResult>> ListUsagesAsync(string subscriptionId, string resourceGroupName, string name, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListUsagesRequest(subscriptionId, resourceGroupName, name, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3999,30 +3099,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CsmUsageQuotaListResult> ListUsages(string subscriptionId, string resourceGroupName, string name, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListUsagesRequest(subscriptionId, resourceGroupName, name, filter);
             _pipeline.Send(message, cancellationToken);
@@ -4038,6 +3117,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWorkerPoolsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/workerPools", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListWorkerPoolsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -4070,30 +3164,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceWorkerPoolListResult>> ListWorkerPoolsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListWorkerPoolsRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4120,30 +3193,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceWorkerPoolListResult> ListWorkerPools(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListWorkerPoolsRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -4159,6 +3211,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetWorkerPoolRequestUri(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/workerPools/", false);
+            uri.AppendPath(workerPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetWorkerPoolRequest(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
@@ -4193,38 +3261,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceWorkerPoolData>> GetWorkerPoolAsync(string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
 
             using var message = CreateGetWorkerPoolRequest(subscriptionId, resourceGroupName, name, workerPoolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4254,38 +3294,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceWorkerPoolData> GetWorkerPool(string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
 
             using var message = CreateGetWorkerPoolRequest(subscriptionId, resourceGroupName, name, workerPoolName);
             _pipeline.Send(message, cancellationToken);
@@ -4303,6 +3315,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateWorkerPoolRequestUri(string subscriptionId, string resourceGroupName, string name, string workerPoolName, AppServiceWorkerPoolData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/workerPools/", false);
+            uri.AppendPath(workerPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateWorkerPoolRequest(string subscriptionId, string resourceGroupName, string name, string workerPoolName, AppServiceWorkerPoolData data)
@@ -4325,7 +3353,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -4342,42 +3370,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateWorkerPoolAsync(string subscriptionId, string resourceGroupName, string name, string workerPoolName, AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateWorkerPoolRequest(subscriptionId, resourceGroupName, name, workerPoolName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4402,42 +3399,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdateWorkerPool(string subscriptionId, string resourceGroupName, string name, string workerPoolName, AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateWorkerPoolRequest(subscriptionId, resourceGroupName, name, workerPoolName, data);
             _pipeline.Send(message, cancellationToken);
@@ -4449,6 +3415,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateWorkerPoolRequestUri(string subscriptionId, string resourceGroupName, string name, string workerPoolName, AppServiceWorkerPoolData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/workerPools/", false);
+            uri.AppendPath(workerPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateWorkerPoolRequest(string subscriptionId, string resourceGroupName, string name, string workerPoolName, AppServiceWorkerPoolData data)
@@ -4471,7 +3453,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -4488,42 +3470,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceWorkerPoolData>> UpdateWorkerPoolAsync(string subscriptionId, string resourceGroupName, string name, string workerPoolName, AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateWorkerPoolRequest(subscriptionId, resourceGroupName, name, workerPoolName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4553,42 +3504,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceWorkerPoolData> UpdateWorkerPool(string subscriptionId, string resourceGroupName, string name, string workerPoolName, AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateWorkerPoolRequest(subscriptionId, resourceGroupName, name, workerPoolName, data);
             _pipeline.Send(message, cancellationToken);
@@ -4605,6 +3525,25 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWorkerPoolInstanceMetricDefinitionsRequestUri(string subscriptionId, string resourceGroupName, string name, string workerPoolName, string instance)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/workerPools/", false);
+            uri.AppendPath(workerPoolName, true);
+            uri.AppendPath("/instances/", false);
+            uri.AppendPath(instance, true);
+            uri.AppendPath("/metricdefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListWorkerPoolInstanceMetricDefinitionsRequest(string subscriptionId, string resourceGroupName, string name, string workerPoolName, string instance)
@@ -4643,46 +3582,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/> or <paramref name="instance"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceMetricDefinitionListResult>> ListWorkerPoolInstanceMetricDefinitionsAsync(string subscriptionId, string resourceGroupName, string name, string workerPoolName, string instance, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
-            if (instance.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instance));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
+            Argument.AssertNotNullOrEmpty(instance, nameof(instance));
 
             using var message = CreateListWorkerPoolInstanceMetricDefinitionsRequest(subscriptionId, resourceGroupName, name, workerPoolName, instance);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4711,46 +3615,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/> or <paramref name="instance"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceMetricDefinitionListResult> ListWorkerPoolInstanceMetricDefinitions(string subscriptionId, string resourceGroupName, string name, string workerPoolName, string instance, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
-            if (instance.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instance));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
+            Argument.AssertNotNullOrEmpty(instance, nameof(instance));
 
             using var message = CreateListWorkerPoolInstanceMetricDefinitionsRequest(subscriptionId, resourceGroupName, name, workerPoolName, instance);
             _pipeline.Send(message, cancellationToken);
@@ -4766,6 +3635,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWebWorkerMetricDefinitionsRequestUri(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/workerPools/", false);
+            uri.AppendPath(workerPoolName, true);
+            uri.AppendPath("/metricdefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListWebWorkerMetricDefinitionsRequest(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
@@ -4801,38 +3687,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceMetricDefinitionListResult>> ListWebWorkerMetricDefinitionsAsync(string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
 
             using var message = CreateListWebWorkerMetricDefinitionsRequest(subscriptionId, resourceGroupName, name, workerPoolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -4860,38 +3718,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceMetricDefinitionListResult> ListWebWorkerMetricDefinitions(string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
 
             using var message = CreateListWebWorkerMetricDefinitionsRequest(subscriptionId, resourceGroupName, name, workerPoolName);
             _pipeline.Send(message, cancellationToken);
@@ -4907,6 +3737,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWorkerPoolSkusRequestUri(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/workerPools/", false);
+            uri.AppendPath(workerPoolName, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListWorkerPoolSkusRequest(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
@@ -4942,38 +3789,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServicePoolSkuInfoListResult>> ListWorkerPoolSkusAsync(string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
 
             using var message = CreateListWorkerPoolSkusRequest(subscriptionId, resourceGroupName, name, workerPoolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -5001,38 +3820,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServicePoolSkuInfoListResult> ListWorkerPoolSkus(string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
 
             using var message = CreateListWorkerPoolSkusRequest(subscriptionId, resourceGroupName, name, workerPoolName);
             _pipeline.Send(message, cancellationToken);
@@ -5048,6 +3839,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWebWorkerUsagesRequestUri(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/workerPools/", false);
+            uri.AppendPath(workerPoolName, true);
+            uri.AppendPath("/usages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListWebWorkerUsagesRequest(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
@@ -5083,38 +3891,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceUsageListResult>> ListWebWorkerUsagesAsync(string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
 
             using var message = CreateListWebWorkerUsagesRequest(subscriptionId, resourceGroupName, name, workerPoolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -5142,38 +3922,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceUsageListResult> ListWebWorkerUsages(string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
 
             using var message = CreateListWebWorkerUsagesRequest(subscriptionId, resourceGroupName, name, workerPoolName);
             _pipeline.Send(message, cancellationToken);
@@ -5189,6 +3941,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
@@ -5213,18 +3973,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceEnvironmentListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -5250,18 +4000,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceEnvironmentListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -5277,6 +4017,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -5302,26 +4050,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceEnvironmentListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -5348,26 +4079,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceEnvironmentListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -5383,6 +4097,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListCapacitiesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListCapacitiesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -5409,34 +4131,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StampCapacityListResult>> ListCapacitiesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListCapacitiesNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -5464,34 +4162,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StampCapacityListResult> ListCapacitiesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListCapacitiesNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -5507,6 +4181,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetInboundNetworkDependenciesEndpointsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetInboundNetworkDependenciesEndpointsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -5533,34 +4215,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<InboundEnvironmentEndpointListResult>> GetInboundNetworkDependenciesEndpointsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetInboundNetworkDependenciesEndpointsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -5588,34 +4246,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<InboundEnvironmentEndpointListResult> GetInboundNetworkDependenciesEndpointsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetInboundNetworkDependenciesEndpointsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -5631,6 +4265,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMultiRolePoolsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListMultiRolePoolsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -5657,34 +4299,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceWorkerPoolListResult>> ListMultiRolePoolsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListMultiRolePoolsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -5712,34 +4330,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceWorkerPoolListResult> ListMultiRolePoolsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListMultiRolePoolsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -5755,6 +4349,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMultiRolePoolInstanceMetricDefinitionsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string instance)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListMultiRolePoolInstanceMetricDefinitionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string instance)
@@ -5782,42 +4384,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instance"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceMetricDefinitionListResult>> ListMultiRolePoolInstanceMetricDefinitionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string instance, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
-            if (instance.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instance));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(instance, nameof(instance));
 
             using var message = CreateListMultiRolePoolInstanceMetricDefinitionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, instance);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -5846,42 +4417,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instance"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceMetricDefinitionListResult> ListMultiRolePoolInstanceMetricDefinitionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string instance, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
-            if (instance.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instance));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(instance, nameof(instance));
 
             using var message = CreateListMultiRolePoolInstanceMetricDefinitionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, instance);
             _pipeline.Send(message, cancellationToken);
@@ -5897,6 +4437,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMultiRoleMetricDefinitionsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListMultiRoleMetricDefinitionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -5923,34 +4471,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceMetricDefinitionListResult>> ListMultiRoleMetricDefinitionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListMultiRoleMetricDefinitionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -5978,34 +4502,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceMetricDefinitionListResult> ListMultiRoleMetricDefinitionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListMultiRoleMetricDefinitionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -6021,6 +4521,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMultiRolePoolSkusNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListMultiRolePoolSkusNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -6047,34 +4555,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServicePoolSkuInfoListResult>> ListMultiRolePoolSkusNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListMultiRolePoolSkusNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -6102,34 +4586,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServicePoolSkuInfoListResult> ListMultiRolePoolSkusNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListMultiRolePoolSkusNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -6145,6 +4605,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMultiRoleUsagesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListMultiRoleUsagesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -6171,34 +4639,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceUsageListResult>> ListMultiRoleUsagesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListMultiRoleUsagesNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -6226,34 +4670,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceUsageListResult> ListMultiRoleUsagesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListMultiRoleUsagesNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -6269,6 +4689,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetOutboundNetworkDependenciesEndpointsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetOutboundNetworkDependenciesEndpointsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -6295,34 +4723,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OutboundEnvironmentEndpointListResult>> GetOutboundNetworkDependenciesEndpointsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -6350,34 +4754,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OutboundEnvironmentEndpointListResult> GetOutboundNetworkDependenciesEndpointsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -6393,6 +4773,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPrivateEndpointConnectionListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetPrivateEndpointConnectionListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -6419,34 +4807,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RemotePrivateEndpointConnectionListResult>> GetPrivateEndpointConnectionListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetPrivateEndpointConnectionListNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -6474,34 +4838,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RemotePrivateEndpointConnectionListResult> GetPrivateEndpointConnectionListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetPrivateEndpointConnectionListNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -6517,6 +4857,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAppServicePlansNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAppServicePlansNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -6543,34 +4891,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServicePlanListResult>> ListAppServicePlansNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListAppServicePlansNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -6598,34 +4922,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServicePlanListResult> ListAppServicePlansNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListAppServicePlansNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -6641,6 +4941,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWebAppsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string propertiesToInclude)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListWebAppsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string propertiesToInclude)
@@ -6668,34 +4976,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<WebAppListResult>> ListWebAppsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string propertiesToInclude = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListWebAppsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, propertiesToInclude);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -6724,34 +5008,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<WebAppListResult> ListWebAppsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string propertiesToInclude = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListWebAppsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, propertiesToInclude);
             _pipeline.Send(message, cancellationToken);
@@ -6767,6 +5027,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListUsagesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListUsagesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter)
@@ -6794,34 +5062,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CsmUsageQuotaListResult>> ListUsagesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListUsagesNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -6850,34 +5094,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CsmUsageQuotaListResult> ListUsagesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListUsagesNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, filter);
             _pipeline.Send(message, cancellationToken);
@@ -6893,6 +5113,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWorkerPoolsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListWorkerPoolsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -6919,34 +5147,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceWorkerPoolListResult>> ListWorkerPoolsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListWorkerPoolsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -6974,34 +5178,10 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceWorkerPoolListResult> ListWorkerPoolsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateListWorkerPoolsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
@@ -7017,6 +5197,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWorkerPoolInstanceMetricDefinitionsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, string instance)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListWorkerPoolInstanceMetricDefinitionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, string instance)
@@ -7045,50 +5233,12 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/> or <paramref name="instance"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceMetricDefinitionListResult>> ListWorkerPoolInstanceMetricDefinitionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, string instance, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
-            if (instance.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instance));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
+            Argument.AssertNotNullOrEmpty(instance, nameof(instance));
 
             using var message = CreateListWorkerPoolInstanceMetricDefinitionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, workerPoolName, instance);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -7118,50 +5268,12 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="workerPoolName"/> or <paramref name="instance"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceMetricDefinitionListResult> ListWorkerPoolInstanceMetricDefinitionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, string instance, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
-            if (instance.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(instance));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
+            Argument.AssertNotNullOrEmpty(instance, nameof(instance));
 
             using var message = CreateListWorkerPoolInstanceMetricDefinitionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, workerPoolName, instance);
             _pipeline.Send(message, cancellationToken);
@@ -7177,6 +5289,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWebWorkerMetricDefinitionsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListWebWorkerMetricDefinitionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName)
@@ -7204,42 +5324,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ResourceMetricDefinitionListResult>> ListWebWorkerMetricDefinitionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
 
             using var message = CreateListWebWorkerMetricDefinitionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, workerPoolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -7268,42 +5357,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ResourceMetricDefinitionListResult> ListWebWorkerMetricDefinitionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
 
             using var message = CreateListWebWorkerMetricDefinitionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, workerPoolName);
             _pipeline.Send(message, cancellationToken);
@@ -7319,6 +5377,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWorkerPoolSkusNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListWorkerPoolSkusNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName)
@@ -7346,42 +5412,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServicePoolSkuInfoListResult>> ListWorkerPoolSkusNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
 
             using var message = CreateListWorkerPoolSkusNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, workerPoolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -7410,42 +5445,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServicePoolSkuInfoListResult> ListWorkerPoolSkusNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
 
             using var message = CreateListWorkerPoolSkusNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, workerPoolName);
             _pipeline.Send(message, cancellationToken);
@@ -7461,6 +5465,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWebWorkerUsagesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListWebWorkerUsagesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName)
@@ -7488,42 +5500,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceUsageListResult>> ListWebWorkerUsagesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
 
             using var message = CreateListWebWorkerUsagesNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, workerPoolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -7552,42 +5533,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceUsageListResult> ListWebWorkerUsagesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (workerPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(workerPoolName));
-            }
-            if (workerPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workerPoolName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
 
             using var message = CreateListWebWorkerUsagesNextPageRequest(nextLink, subscriptionId, resourceGroupName, name, workerPoolName);
             _pipeline.Send(message, cancellationToken);

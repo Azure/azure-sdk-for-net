@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Maps.Models;
 
 namespace Azure.ResourceManager.Maps
@@ -202,7 +200,9 @@ namespace Azure.ResourceManager.Maps
             try
             {
                 var response = await _mapsCreatorCreatorsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MapsArmOperation(response);
+                var uri = _mapsCreatorCreatorsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MapsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -244,7 +244,9 @@ namespace Azure.ResourceManager.Maps
             try
             {
                 var response = _mapsCreatorCreatorsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MapsArmOperation(response);
+                var uri = _mapsCreatorCreatorsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MapsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -282,10 +284,7 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<MapsCreatorResource>> UpdateAsync(MapsCreatorPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorResource.Update");
             scope.Start();
@@ -327,10 +326,7 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<MapsCreatorResource> Update(MapsCreatorPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorResource.Update");
             scope.Start();
@@ -373,14 +369,8 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<MapsCreatorResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorResource.AddTag");
             scope.Start();
@@ -441,14 +431,8 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<MapsCreatorResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorResource.AddTag");
             scope.Start();
@@ -508,10 +492,7 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<MapsCreatorResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorResource.SetTags");
             scope.Start();
@@ -568,10 +549,7 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<MapsCreatorResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorResource.SetTags");
             scope.Start();
@@ -628,10 +606,7 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<MapsCreatorResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorResource.RemoveTag");
             scope.Start();
@@ -691,10 +666,7 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<MapsCreatorResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorResource.RemoveTag");
             scope.Start();

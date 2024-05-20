@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
     public partial class TrialMatcherData : IUtf8JsonSerializable, IJsonModel<TrialMatcherData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrialMatcherData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrialMatcherData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TrialMatcherData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TrialMatcherData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrialMatcherData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrialMatcherData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,13 +30,13 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartArray();
             foreach (var item in Patients)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue(Configuration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -62,7 +61,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<TrialMatcherData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrialMatcherData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrialMatcherData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +70,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         internal static TrialMatcherData DeserializeTrialMatcherData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,7 +79,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             IList<PatientRecord> patients = default;
             TrialMatcherModelConfiguration configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patients"u8))
@@ -104,10 +103,10 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TrialMatcherData(patients, configuration, serializedAdditionalRawData);
         }
 
@@ -120,7 +119,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrialMatcherData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrialMatcherData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +135,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                         return DeserializeTrialMatcherData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrialMatcherData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrialMatcherData)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -150,11 +149,11 @@ namespace Azure.Health.Insights.ClinicalMatching
             return DeserializeTrialMatcherData(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SpringAppDiscovery
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="springbootsitesName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SpringBootSiteResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string springbootsitesName, SpringBootSiteData data, CancellationToken cancellationToken = default)
         {
-            if (springbootsitesName == null)
-            {
-                throw new ArgumentNullException(nameof(springbootsitesName));
-            }
-            if (springbootsitesName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(springbootsitesName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(springbootsitesName, nameof(springbootsitesName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _springBootSitespringbootsitesClientDiagnostics.CreateScope("SpringBootSiteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _springBootSitespringbootsitesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, springbootsitesName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SpringAppDiscoveryArmOperation<SpringBootSiteResource>(Response.FromValue(new SpringBootSiteResource(Client, response), response.GetRawResponse()));
+                var uri = _springBootSitespringbootsitesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, springbootsitesName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SpringAppDiscoveryArmOperation<SpringBootSiteResource>(Response.FromValue(new SpringBootSiteResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="springbootsitesName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SpringBootSiteResource> CreateOrUpdate(WaitUntil waitUntil, string springbootsitesName, SpringBootSiteData data, CancellationToken cancellationToken = default)
         {
-            if (springbootsitesName == null)
-            {
-                throw new ArgumentNullException(nameof(springbootsitesName));
-            }
-            if (springbootsitesName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(springbootsitesName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(springbootsitesName, nameof(springbootsitesName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _springBootSitespringbootsitesClientDiagnostics.CreateScope("SpringBootSiteCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _springBootSitespringbootsitesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, springbootsitesName, data, cancellationToken);
-                var operation = new SpringAppDiscoveryArmOperation<SpringBootSiteResource>(Response.FromValue(new SpringBootSiteResource(Client, response), response.GetRawResponse()));
+                var uri = _springBootSitespringbootsitesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, springbootsitesName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SpringAppDiscoveryArmOperation<SpringBootSiteResource>(Response.FromValue(new SpringBootSiteResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="springbootsitesName"/> is null. </exception>
         public virtual async Task<Response<SpringBootSiteResource>> GetAsync(string springbootsitesName, CancellationToken cancellationToken = default)
         {
-            if (springbootsitesName == null)
-            {
-                throw new ArgumentNullException(nameof(springbootsitesName));
-            }
-            if (springbootsitesName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(springbootsitesName));
-            }
+            Argument.AssertNotNullOrEmpty(springbootsitesName, nameof(springbootsitesName));
 
             using var scope = _springBootSitespringbootsitesClientDiagnostics.CreateScope("SpringBootSiteCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="springbootsitesName"/> is null. </exception>
         public virtual Response<SpringBootSiteResource> Get(string springbootsitesName, CancellationToken cancellationToken = default)
         {
-            if (springbootsitesName == null)
-            {
-                throw new ArgumentNullException(nameof(springbootsitesName));
-            }
-            if (springbootsitesName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(springbootsitesName));
-            }
+            Argument.AssertNotNullOrEmpty(springbootsitesName, nameof(springbootsitesName));
 
             using var scope = _springBootSitespringbootsitesClientDiagnostics.CreateScope("SpringBootSiteCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="springbootsitesName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string springbootsitesName, CancellationToken cancellationToken = default)
         {
-            if (springbootsitesName == null)
-            {
-                throw new ArgumentNullException(nameof(springbootsitesName));
-            }
-            if (springbootsitesName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(springbootsitesName));
-            }
+            Argument.AssertNotNullOrEmpty(springbootsitesName, nameof(springbootsitesName));
 
             using var scope = _springBootSitespringbootsitesClientDiagnostics.CreateScope("SpringBootSiteCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="springbootsitesName"/> is null. </exception>
         public virtual Response<bool> Exists(string springbootsitesName, CancellationToken cancellationToken = default)
         {
-            if (springbootsitesName == null)
-            {
-                throw new ArgumentNullException(nameof(springbootsitesName));
-            }
-            if (springbootsitesName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(springbootsitesName));
-            }
+            Argument.AssertNotNullOrEmpty(springbootsitesName, nameof(springbootsitesName));
 
             using var scope = _springBootSitespringbootsitesClientDiagnostics.CreateScope("SpringBootSiteCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="springbootsitesName"/> is null. </exception>
         public virtual async Task<NullableResponse<SpringBootSiteResource>> GetIfExistsAsync(string springbootsitesName, CancellationToken cancellationToken = default)
         {
-            if (springbootsitesName == null)
-            {
-                throw new ArgumentNullException(nameof(springbootsitesName));
-            }
-            if (springbootsitesName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(springbootsitesName));
-            }
+            Argument.AssertNotNullOrEmpty(springbootsitesName, nameof(springbootsitesName));
 
             using var scope = _springBootSitespringbootsitesClientDiagnostics.CreateScope("SpringBootSiteCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="springbootsitesName"/> is null. </exception>
         public virtual NullableResponse<SpringBootSiteResource> GetIfExists(string springbootsitesName, CancellationToken cancellationToken = default)
         {
-            if (springbootsitesName == null)
-            {
-                throw new ArgumentNullException(nameof(springbootsitesName));
-            }
-            if (springbootsitesName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(springbootsitesName));
-            }
+            Argument.AssertNotNullOrEmpty(springbootsitesName, nameof(springbootsitesName));
 
             using var scope = _springBootSitespringbootsitesClientDiagnostics.CreateScope("SpringBootSiteCollection.GetIfExists");
             scope.Start();

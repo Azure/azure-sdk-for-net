@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Automation.Models;
@@ -35,6 +34,29 @@ namespace Azure.ResourceManager.Automation
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-01-13-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySyncJobRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/sourceControls/", false);
+            uri.AppendPath(sourceControlName, true);
+            uri.AppendPath("/sourceControlSyncJobs/", false);
+            uri.AppendPath(sourceControlSyncJobId, true);
+            uri.AppendPath("/streams", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListBySyncJobRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter)
@@ -78,38 +100,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SourceControlSyncJobStreamListResult>> ListBySyncJobAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (sourceControlName == null)
-            {
-                throw new ArgumentNullException(nameof(sourceControlName));
-            }
-            if (sourceControlName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
 
             using var message = CreateListBySyncJobRequest(subscriptionId, resourceGroupName, automationAccountName, sourceControlName, sourceControlSyncJobId, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -139,38 +133,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SourceControlSyncJobStreamListResult> ListBySyncJob(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (sourceControlName == null)
-            {
-                throw new ArgumentNullException(nameof(sourceControlName));
-            }
-            if (sourceControlName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
 
             using var message = CreateListBySyncJobRequest(subscriptionId, resourceGroupName, automationAccountName, sourceControlName, sourceControlSyncJobId, filter);
             _pipeline.Send(message, cancellationToken);
@@ -186,6 +152,26 @@ namespace Azure.ResourceManager.Automation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string streamId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/sourceControls/", false);
+            uri.AppendPath(sourceControlName, true);
+            uri.AppendPath("/sourceControlSyncJobs/", false);
+            uri.AppendPath(sourceControlSyncJobId, true);
+            uri.AppendPath("/streams/", false);
+            uri.AppendPath(streamId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string streamId)
@@ -226,46 +212,11 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="sourceControlName"/> or <paramref name="streamId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SourceControlSyncJobStreamResult>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string streamId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (sourceControlName == null)
-            {
-                throw new ArgumentNullException(nameof(sourceControlName));
-            }
-            if (sourceControlName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
-            }
-            if (streamId == null)
-            {
-                throw new ArgumentNullException(nameof(streamId));
-            }
-            if (streamId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(streamId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+            Argument.AssertNotNullOrEmpty(streamId, nameof(streamId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, automationAccountName, sourceControlName, sourceControlSyncJobId, streamId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -295,46 +246,11 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="sourceControlName"/> or <paramref name="streamId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SourceControlSyncJobStreamResult> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string streamId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (sourceControlName == null)
-            {
-                throw new ArgumentNullException(nameof(sourceControlName));
-            }
-            if (sourceControlName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
-            }
-            if (streamId == null)
-            {
-                throw new ArgumentNullException(nameof(streamId));
-            }
-            if (streamId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(streamId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+            Argument.AssertNotNullOrEmpty(streamId, nameof(streamId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, automationAccountName, sourceControlName, sourceControlSyncJobId, streamId);
             _pipeline.Send(message, cancellationToken);
@@ -350,6 +266,14 @@ namespace Azure.ResourceManager.Automation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySyncJobNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySyncJobNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter)
@@ -379,42 +303,11 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SourceControlSyncJobStreamListResult>> ListBySyncJobNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (sourceControlName == null)
-            {
-                throw new ArgumentNullException(nameof(sourceControlName));
-            }
-            if (sourceControlName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
 
             using var message = CreateListBySyncJobNextPageRequest(nextLink, subscriptionId, resourceGroupName, automationAccountName, sourceControlName, sourceControlSyncJobId, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -445,42 +338,11 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SourceControlSyncJobStreamListResult> ListBySyncJobNextPage(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (sourceControlName == null)
-            {
-                throw new ArgumentNullException(nameof(sourceControlName));
-            }
-            if (sourceControlName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
 
             using var message = CreateListBySyncJobNextPageRequest(nextLink, subscriptionId, resourceGroupName, automationAccountName, sourceControlName, sourceControlSyncJobId, filter);
             _pipeline.Send(message, cancellationToken);

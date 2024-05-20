@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -33,8 +32,26 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string publisherName, string type, string version)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmextension/types/", false);
+            uri.AppendPath(type, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string publisherName, string type, string version)
@@ -72,38 +89,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VirtualMachineExtensionImageData>> GetAsync(string subscriptionId, AzureLocation location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-            if (type.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(type));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(type, nameof(type));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var message = CreateGetRequest(subscriptionId, location, publisherName, type, version);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -134,38 +123,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VirtualMachineExtensionImageData> Get(string subscriptionId, AzureLocation location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-            if (type.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(type));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (version.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(version));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(type, nameof(type));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using var message = CreateGetRequest(subscriptionId, location, publisherName, type, version);
             _pipeline.Send(message, cancellationToken);
@@ -183,6 +144,21 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListTypesRequestUri(string subscriptionId, AzureLocation location, string publisherName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmextension/types", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListTypesRequest(string subscriptionId, AzureLocation location, string publisherName)
@@ -215,22 +191,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IReadOnlyList<VirtualMachineExtensionImageData>>> ListTypesAsync(string subscriptionId, AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             using var message = CreateListTypesRequest(subscriptionId, location, publisherName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -262,22 +224,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IReadOnlyList<VirtualMachineExtensionImageData>> ListTypes(string subscriptionId, AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             using var message = CreateListTypesRequest(subscriptionId, location, publisherName);
             _pipeline.Send(message, cancellationToken);
@@ -298,6 +246,35 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListVersionsRequestUri(string subscriptionId, AzureLocation location, string publisherName, string type, string filter, int? top, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmextension/types/", false);
+            uri.AppendPath(type, true);
+            uri.AppendPath("/versions", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListVersionsRequest(string subscriptionId, AzureLocation location, string publisherName, string type, string filter, int? top, string orderby)
@@ -348,30 +325,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/> or <paramref name="type"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IReadOnlyList<VirtualMachineExtensionImageData>>> ListVersionsAsync(string subscriptionId, AzureLocation location, string publisherName, string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-            if (type.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(type));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(type, nameof(type));
 
             using var message = CreateListVersionsRequest(subscriptionId, location, publisherName, type, filter, top, orderby);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -407,30 +363,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/> or <paramref name="type"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IReadOnlyList<VirtualMachineExtensionImageData>> ListVersions(string subscriptionId, AzureLocation location, string publisherName, string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-            if (type.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(type));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(type, nameof(type));
 
             using var message = CreateListVersionsRequest(subscriptionId, location, publisherName, type, filter, top, orderby);
             _pipeline.Send(message, cancellationToken);

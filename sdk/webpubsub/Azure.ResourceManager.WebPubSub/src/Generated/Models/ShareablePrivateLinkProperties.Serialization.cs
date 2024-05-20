@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     public partial class ShareablePrivateLinkProperties : IUtf8JsonSerializable, IJsonModel<ShareablePrivateLinkProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareablePrivateLinkProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareablePrivateLinkProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ShareablePrivateLinkProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ShareablePrivateLinkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareablePrivateLinkProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareablePrivateLinkProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ShareablePrivateLinkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareablePrivateLinkProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareablePrivateLinkProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static ShareablePrivateLinkProperties DeserializeShareablePrivateLinkProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             string groupId = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -104,11 +104,95 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ShareablePrivateLinkProperties(description, groupId, type, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  groupId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GroupId))
+                {
+                    builder.Append("  groupId: ");
+                    if (GroupId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GroupId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GroupId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShareablePrivateLinkPropertiesType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ShareablePrivateLinkPropertiesType))
+                {
+                    builder.Append("  type: ");
+                    if (ShareablePrivateLinkPropertiesType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ShareablePrivateLinkPropertiesType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ShareablePrivateLinkPropertiesType}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ShareablePrivateLinkProperties>.Write(ModelReaderWriterOptions options)
@@ -119,8 +203,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ShareablePrivateLinkProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareablePrivateLinkProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +222,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         return DeserializeShareablePrivateLinkProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ShareablePrivateLinkProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareablePrivateLinkProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

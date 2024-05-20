@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected EventHubsApplicationGroupPolicy(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
@@ -79,6 +76,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The Name of this policy. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Application Group Policy types. </summary>
         internal ApplicationGroupPolicyType ApplicationGroupPolicyType { get; set; }

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Redis.Models;
 using Azure.ResourceManager.Resources;
 
@@ -84,18 +82,8 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<RedisResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, RedisCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisCollection.CreateOrUpdate");
             scope.Start();
@@ -143,18 +131,8 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<RedisResource> CreateOrUpdate(WaitUntil waitUntil, string name, RedisCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +178,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<RedisResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisCollection.Get");
             scope.Start();
@@ -252,14 +223,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<RedisResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisCollection.Get");
             scope.Start();
@@ -364,14 +328,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisCollection.Exists");
             scope.Start();
@@ -414,14 +371,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisCollection.Exists");
             scope.Start();
@@ -464,14 +414,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<NullableResponse<RedisResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisCollection.GetIfExists");
             scope.Start();
@@ -516,14 +459,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual NullableResponse<RedisResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _redisClientDiagnostics.CreateScope("RedisCollection.GetIfExists");
             scope.Start();

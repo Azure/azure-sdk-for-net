@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppConfiguration.Models;
@@ -35,6 +34,25 @@ namespace Azure.ResourceManager.AppConfiguration
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByConfigurationStoreRequestUri(string subscriptionId, string resourceGroupName, string configStoreName, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AppConfiguration/configurationStores/", false);
+            uri.AppendPath(configStoreName, true);
+            uri.AppendPath("/replicas", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByConfigurationStoreRequest(string subscriptionId, string resourceGroupName, string configStoreName, string skipToken)
@@ -72,30 +90,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ReplicaListResult>> ListByConfigurationStoreAsync(string subscriptionId, string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
-            if (configStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
             using var message = CreateListByConfigurationStoreRequest(subscriptionId, resourceGroupName, configStoreName, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -123,30 +120,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ReplicaListResult> ListByConfigurationStore(string subscriptionId, string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
-            if (configStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
             using var message = CreateListByConfigurationStoreRequest(subscriptionId, resourceGroupName, configStoreName, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -162,6 +138,22 @@ namespace Azure.ResourceManager.AppConfiguration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string configStoreName, string replicaName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AppConfiguration/configurationStores/", false);
+            uri.AppendPath(configStoreName, true);
+            uri.AppendPath("/replicas/", false);
+            uri.AppendPath(replicaName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string configStoreName, string replicaName)
@@ -196,38 +188,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppConfigurationReplicaData>> GetAsync(string subscriptionId, string resourceGroupName, string configStoreName, string replicaName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
-            if (configStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configStoreName));
-            }
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, configStoreName, replicaName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -257,38 +221,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppConfigurationReplicaData> Get(string subscriptionId, string resourceGroupName, string configStoreName, string replicaName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
-            if (configStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configStoreName));
-            }
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, configStoreName, replicaName);
             _pipeline.Send(message, cancellationToken);
@@ -306,6 +242,22 @@ namespace Azure.ResourceManager.AppConfiguration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string configStoreName, string replicaName, AppConfigurationReplicaData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AppConfiguration/configurationStores/", false);
+            uri.AppendPath(configStoreName, true);
+            uri.AppendPath("/replicas/", false);
+            uri.AppendPath(replicaName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string configStoreName, string replicaName, AppConfigurationReplicaData data)
@@ -328,7 +280,7 @@ namespace Azure.ResourceManager.AppConfiguration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -345,42 +297,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string configStoreName, string replicaName, AppConfigurationReplicaData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
-            if (configStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configStoreName));
-            }
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, configStoreName, replicaName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -405,42 +326,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string configStoreName, string replicaName, AppConfigurationReplicaData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
-            if (configStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configStoreName));
-            }
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, configStoreName, replicaName, data);
             _pipeline.Send(message, cancellationToken);
@@ -452,6 +342,22 @@ namespace Azure.ResourceManager.AppConfiguration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string configStoreName, string replicaName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AppConfiguration/configurationStores/", false);
+            uri.AppendPath(configStoreName, true);
+            uri.AppendPath("/replicas/", false);
+            uri.AppendPath(replicaName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string configStoreName, string replicaName)
@@ -486,38 +392,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string configStoreName, string replicaName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
-            if (configStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configStoreName));
-            }
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, configStoreName, replicaName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -542,38 +420,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string configStoreName, string replicaName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
-            if (configStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configStoreName));
-            }
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, configStoreName, replicaName);
             _pipeline.Send(message, cancellationToken);
@@ -586,6 +436,14 @@ namespace Azure.ResourceManager.AppConfiguration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByConfigurationStoreNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string configStoreName, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByConfigurationStoreNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string configStoreName, string skipToken)
@@ -613,34 +471,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ReplicaListResult>> ListByConfigurationStoreNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
-            if (configStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configStoreName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
             using var message = CreateListByConfigurationStoreNextPageRequest(nextLink, subscriptionId, resourceGroupName, configStoreName, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -669,34 +503,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ReplicaListResult> ListByConfigurationStoreNextPage(string nextLink, string subscriptionId, string resourceGroupName, string configStoreName, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (configStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(configStoreName));
-            }
-            if (configStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configStoreName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
             using var message = CreateListByConfigurationStoreNextPageRequest(nextLink, subscriptionId, resourceGroupName, configStoreName, skipToken);
             _pipeline.Send(message, cancellationToken);

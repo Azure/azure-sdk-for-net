@@ -53,10 +53,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ports"/> is null. </exception>
         public ContainerGroupIPAddress(IEnumerable<ContainerGroupPort> ports, ContainerGroupIPAddressType addressType)
         {
-            if (ports == null)
-            {
-                throw new ArgumentNullException(nameof(ports));
-            }
+            Argument.AssertNotNull(ports, nameof(ports));
 
             Ports = ports.ToList();
             AddressType = addressType;

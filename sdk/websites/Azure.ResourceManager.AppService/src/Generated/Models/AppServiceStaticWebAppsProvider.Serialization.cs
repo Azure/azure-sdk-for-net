@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceStaticWebAppsProvider : IUtf8JsonSerializable, IJsonModel<AppServiceStaticWebAppsProvider>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceStaticWebAppsProvider>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceStaticWebAppsProvider>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceStaticWebAppsProvider>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceStaticWebAppsProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceStaticWebAppsProvider)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceStaticWebAppsProvider)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration);
+                writer.WriteObjectValue(Registration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceStaticWebAppsProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceStaticWebAppsProvider)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceStaticWebAppsProvider)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceStaticWebAppsProvider DeserializeAppServiceStaticWebAppsProvider(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
             bool? enabled = default;
             AppServiceStaticWebAppsRegistration registration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -101,11 +101,60 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppServiceStaticWebAppsProvider(enabled, registration, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsEnabled))
+                {
+                    builder.Append("  enabled: ");
+                    var boolValue = IsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RegistrationClientId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  registration: ");
+                builder.AppendLine("{");
+                builder.Append("    clientId: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Registration))
+                {
+                    builder.Append("  registration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Registration, options, 2, false, "  registration: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<AppServiceStaticWebAppsProvider>.Write(ModelReaderWriterOptions options)
@@ -116,8 +165,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceStaticWebAppsProvider)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceStaticWebAppsProvider)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +184,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceStaticWebAppsProvider(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceStaticWebAppsProvider)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceStaticWebAppsProvider)} does not support reading '{options.Format}' format.");
             }
         }
 

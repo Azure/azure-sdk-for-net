@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DesktopVirtualization.Models;
@@ -35,6 +34,37 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-09-05";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByHostPoolRequestUri(string subscriptionId, string resourceGroupName, string hostPoolName, string filter, int? pageSize, bool? isDescending, int? initialSkip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools/", false);
+            uri.AppendPath(hostPoolName, true);
+            uri.AppendPath("/userSessions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", pageSize.Value, true);
+            }
+            if (isDescending != null)
+            {
+                uri.AppendQuery("isDescending", isDescending.Value, true);
+            }
+            if (initialSkip != null)
+            {
+                uri.AppendQuery("initialSkip", initialSkip.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByHostPoolRequest(string subscriptionId, string resourceGroupName, string hostPoolName, string filter, int? pageSize, bool? isDescending, int? initialSkip)
@@ -87,30 +117,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UserSessionList>> ListByHostPoolAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string filter = null, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
             using var message = CreateListByHostPoolRequest(subscriptionId, resourceGroupName, hostPoolName, filter, pageSize, isDescending, initialSkip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -141,30 +150,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UserSessionList> ListByHostPool(string subscriptionId, string resourceGroupName, string hostPoolName, string filter = null, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
             using var message = CreateListByHostPoolRequest(subscriptionId, resourceGroupName, hostPoolName, filter, pageSize, isDescending, initialSkip);
             _pipeline.Send(message, cancellationToken);
@@ -180,6 +168,24 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools/", false);
+            uri.AppendPath(hostPoolName, true);
+            uri.AppendPath("/sessionHosts/", false);
+            uri.AppendPath(sessionHostName, true);
+            uri.AppendPath("/userSessions/", false);
+            uri.AppendPath(userSessionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId)
@@ -217,46 +223,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UserSessionData>> GetAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (sessionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionHostName));
-            }
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
-            if (userSessionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, userSessionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -287,46 +258,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UserSessionData> Get(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (sessionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionHostName));
-            }
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
-            if (userSessionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, userSessionId);
             _pipeline.Send(message, cancellationToken);
@@ -344,6 +280,28 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, bool? force)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools/", false);
+            uri.AppendPath(hostPoolName, true);
+            uri.AppendPath("/sessionHosts/", false);
+            uri.AppendPath(sessionHostName, true);
+            uri.AppendPath("/userSessions/", false);
+            uri.AppendPath(userSessionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (force != null)
+            {
+                uri.AppendQuery("force", force.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, bool? force)
@@ -386,46 +344,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, bool? force = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (sessionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionHostName));
-            }
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
-            if (userSessionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, userSessionId, force);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -451,46 +374,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, bool? force = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (sessionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionHostName));
-            }
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
-            if (userSessionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, userSessionId, force);
             _pipeline.Send(message, cancellationToken);
@@ -502,6 +390,35 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, int? pageSize, bool? isDescending, int? initialSkip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools/", false);
+            uri.AppendPath(hostPoolName, true);
+            uri.AppendPath("/sessionHosts/", false);
+            uri.AppendPath(sessionHostName, true);
+            uri.AppendPath("/userSessions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", pageSize.Value, true);
+            }
+            if (isDescending != null)
+            {
+                uri.AppendQuery("isDescending", isDescending.Value, true);
+            }
+            if (initialSkip != null)
+            {
+                uri.AppendQuery("initialSkip", initialSkip.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, int? pageSize, bool? isDescending, int? initialSkip)
@@ -552,38 +469,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UserSessionList>> ListAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (sessionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, pageSize, isDescending, initialSkip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -614,38 +503,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UserSessionList> List(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (sessionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, pageSize, isDescending, initialSkip);
             _pipeline.Send(message, cancellationToken);
@@ -661,6 +522,25 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDisconnectRequestUri(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools/", false);
+            uri.AppendPath(hostPoolName, true);
+            uri.AppendPath("/sessionHosts/", false);
+            uri.AppendPath(sessionHostName, true);
+            uri.AppendPath("/userSessions/", false);
+            uri.AppendPath(userSessionId, true);
+            uri.AppendPath("/disconnect", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDisconnectRequest(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId)
@@ -699,46 +579,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DisconnectAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (sessionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionHostName));
-            }
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
-            if (userSessionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var message = CreateDisconnectRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, userSessionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -762,46 +607,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Disconnect(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (sessionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionHostName));
-            }
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
-            if (userSessionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var message = CreateDisconnectRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, userSessionId);
             _pipeline.Send(message, cancellationToken);
@@ -812,6 +622,25 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSendMessageRequestUri(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, UserSessionMessage sendMessage)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools/", false);
+            uri.AppendPath(hostPoolName, true);
+            uri.AppendPath("/sessionHosts/", false);
+            uri.AppendPath(sessionHostName, true);
+            uri.AppendPath("/userSessions/", false);
+            uri.AppendPath(userSessionId, true);
+            uri.AppendPath("/sendMessage", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSendMessageRequest(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, UserSessionMessage sendMessage)
@@ -839,7 +668,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(sendMessage);
+                content.JsonWriter.WriteObjectValue(sendMessage, ModelSerializationExtensions.WireOptions);
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -858,46 +687,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> SendMessageAsync(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, UserSessionMessage sendMessage = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (sessionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionHostName));
-            }
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
-            if (userSessionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var message = CreateSendMessageRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, userSessionId, sendMessage);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -922,46 +716,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/>, <paramref name="sessionHostName"/> or <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response SendMessage(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId, UserSessionMessage sendMessage = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (sessionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionHostName));
-            }
-            if (userSessionId == null)
-            {
-                throw new ArgumentNullException(nameof(userSessionId));
-            }
-            if (userSessionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userSessionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
             using var message = CreateSendMessageRequest(subscriptionId, resourceGroupName, hostPoolName, sessionHostName, userSessionId, sendMessage);
             _pipeline.Send(message, cancellationToken);
@@ -972,6 +731,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByHostPoolNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, string filter, int? pageSize, bool? isDescending, int? initialSkip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByHostPoolNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, string filter, int? pageSize, bool? isDescending, int? initialSkip)
@@ -1002,34 +769,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UserSessionList>> ListByHostPoolNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, string filter = null, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
             using var message = CreateListByHostPoolNextPageRequest(nextLink, subscriptionId, resourceGroupName, hostPoolName, filter, pageSize, isDescending, initialSkip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1061,34 +804,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UserSessionList> ListByHostPoolNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, string filter = null, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
             using var message = CreateListByHostPoolNextPageRequest(nextLink, subscriptionId, resourceGroupName, hostPoolName, filter, pageSize, isDescending, initialSkip);
             _pipeline.Send(message, cancellationToken);
@@ -1104,6 +823,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, int? pageSize, bool? isDescending, int? initialSkip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, int? pageSize, bool? isDescending, int? initialSkip)
@@ -1134,42 +861,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UserSessionList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (sessionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionHostName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, hostPoolName, sessionHostName, pageSize, isDescending, initialSkip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1201,42 +897,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostPoolName"/> or <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UserSessionList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (sessionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(sessionHostName));
-            }
-            if (sessionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sessionHostName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, hostPoolName, sessionHostName, pageSize, isDescending, initialSkip);
             _pipeline.Send(message, cancellationToken);

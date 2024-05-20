@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Attestation.Models;
 using Azure.ResourceManager.Resources;
 
@@ -84,25 +82,17 @@ namespace Azure.ResourceManager.Attestation
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AttestationProviderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string providerName, AttestationProviderCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (providerName == null)
-            {
-                throw new ArgumentNullException(nameof(providerName));
-            }
-            if (providerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _attestationProviderClientDiagnostics.CreateScope("AttestationProviderCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _attestationProviderRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, providerName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AttestationArmOperation<AttestationProviderResource>(Response.FromValue(new AttestationProviderResource(Client, response), response.GetRawResponse()));
+                var uri = _attestationProviderRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, providerName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AttestationArmOperation<AttestationProviderResource>(Response.FromValue(new AttestationProviderResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -143,25 +133,17 @@ namespace Azure.ResourceManager.Attestation
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AttestationProviderResource> CreateOrUpdate(WaitUntil waitUntil, string providerName, AttestationProviderCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (providerName == null)
-            {
-                throw new ArgumentNullException(nameof(providerName));
-            }
-            if (providerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _attestationProviderClientDiagnostics.CreateScope("AttestationProviderCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _attestationProviderRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, providerName, content, cancellationToken);
-                var operation = new AttestationArmOperation<AttestationProviderResource>(Response.FromValue(new AttestationProviderResource(Client, response), response.GetRawResponse()));
+                var uri = _attestationProviderRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, providerName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AttestationArmOperation<AttestationProviderResource>(Response.FromValue(new AttestationProviderResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -200,14 +182,7 @@ namespace Azure.ResourceManager.Attestation
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
         public virtual async Task<Response<AttestationProviderResource>> GetAsync(string providerName, CancellationToken cancellationToken = default)
         {
-            if (providerName == null)
-            {
-                throw new ArgumentNullException(nameof(providerName));
-            }
-            if (providerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
-            }
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
 
             using var scope = _attestationProviderClientDiagnostics.CreateScope("AttestationProviderCollection.Get");
             scope.Start();
@@ -252,14 +227,7 @@ namespace Azure.ResourceManager.Attestation
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
         public virtual Response<AttestationProviderResource> Get(string providerName, CancellationToken cancellationToken = default)
         {
-            if (providerName == null)
-            {
-                throw new ArgumentNullException(nameof(providerName));
-            }
-            if (providerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
-            }
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
 
             using var scope = _attestationProviderClientDiagnostics.CreateScope("AttestationProviderCollection.Get");
             scope.Start();
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.Attestation
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string providerName, CancellationToken cancellationToken = default)
         {
-            if (providerName == null)
-            {
-                throw new ArgumentNullException(nameof(providerName));
-            }
-            if (providerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
-            }
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
 
             using var scope = _attestationProviderClientDiagnostics.CreateScope("AttestationProviderCollection.Exists");
             scope.Start();
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.Attestation
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
         public virtual Response<bool> Exists(string providerName, CancellationToken cancellationToken = default)
         {
-            if (providerName == null)
-            {
-                throw new ArgumentNullException(nameof(providerName));
-            }
-            if (providerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
-            }
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
 
             using var scope = _attestationProviderClientDiagnostics.CreateScope("AttestationProviderCollection.Exists");
             scope.Start();
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.Attestation
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
         public virtual async Task<NullableResponse<AttestationProviderResource>> GetIfExistsAsync(string providerName, CancellationToken cancellationToken = default)
         {
-            if (providerName == null)
-            {
-                throw new ArgumentNullException(nameof(providerName));
-            }
-            if (providerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
-            }
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
 
             using var scope = _attestationProviderClientDiagnostics.CreateScope("AttestationProviderCollection.GetIfExists");
             scope.Start();
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.Attestation
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
         public virtual NullableResponse<AttestationProviderResource> GetIfExists(string providerName, CancellationToken cancellationToken = default)
         {
-            if (providerName == null)
-            {
-                throw new ArgumentNullException(nameof(providerName));
-            }
-            if (providerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
-            }
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
 
             using var scope = _attestationProviderClientDiagnostics.CreateScope("AttestationProviderCollection.GetIfExists");
             scope.Start();

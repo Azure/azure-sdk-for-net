@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class KpiAlias : IUtf8JsonSerializable, IJsonModel<KpiAlias>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KpiAlias>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KpiAlias>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KpiAlias>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KpiAlias>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiAlias)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiAlias)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<KpiAlias>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiAlias)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiAlias)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static KpiAlias DeserializeKpiAlias(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             string aliasName = default;
             string expression = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aliasName"u8))
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KpiAlias(aliasName, expression, serializedAdditionalRawData);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KpiAlias)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiAlias)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeKpiAlias(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KpiAlias)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiAlias)} does not support reading '{options.Format}' format.");
             }
         }
 

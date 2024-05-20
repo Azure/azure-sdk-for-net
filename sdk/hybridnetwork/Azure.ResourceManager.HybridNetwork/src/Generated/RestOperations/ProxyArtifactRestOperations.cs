@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.HybridNetwork.Models;
@@ -35,6 +34,23 @@ namespace Azure.ResourceManager.HybridNetwork
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifactStores/", false);
+            uri.AppendPath(artifactStoreName, true);
+            uri.AppendPath("/artifacts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName)
@@ -70,38 +86,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProxyArtifactOverviewListResult>> ListAsync(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, publisherName, artifactStoreName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -129,38 +117,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProxyArtifactOverviewListResult> List(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, publisherName, artifactStoreName);
             _pipeline.Send(message, cancellationToken);
@@ -176,6 +136,24 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifactStores/", false);
+            uri.AppendPath(artifactStoreName, true);
+            uri.AppendPath("/artifactVersions", false);
+            uri.AppendQuery("artifactName", artifactName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName)
@@ -213,42 +191,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProxyArtifactVersionsOverviewListResult>> GetAsync(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
-            if (artifactName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+            Argument.AssertNotNull(artifactName, nameof(artifactName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -277,42 +224,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProxyArtifactVersionsOverviewListResult> Get(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
-            if (artifactName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+            Argument.AssertNotNull(artifactName, nameof(artifactName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactName);
             _pipeline.Send(message, cancellationToken);
@@ -328,6 +244,25 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateStateRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifactStores/", false);
+            uri.AppendPath(artifactStoreName, true);
+            uri.AppendPath("/artifactVersions/", false);
+            uri.AppendPath(artifactVersionName, true);
+            uri.AppendQuery("artifactName", artifactName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateStateRequest(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState)
@@ -353,7 +288,7 @@ namespace Azure.ResourceManager.HybridNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(artifactChangeState);
+            content.JsonWriter.WriteObjectValue(artifactChangeState, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -372,54 +307,13 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/> or <paramref name="artifactVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateStateAsync(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
-            if (artifactVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactVersionName));
-            }
-            if (artifactVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactVersionName));
-            }
-            if (artifactName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactName));
-            }
-            if (artifactChangeState == null)
-            {
-                throw new ArgumentNullException(nameof(artifactChangeState));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+            Argument.AssertNotNullOrEmpty(artifactVersionName, nameof(artifactVersionName));
+            Argument.AssertNotNull(artifactName, nameof(artifactName));
+            Argument.AssertNotNull(artifactChangeState, nameof(artifactChangeState));
 
             using var message = CreateUpdateStateRequest(subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactVersionName, artifactName, artifactChangeState);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -446,54 +340,13 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="artifactStoreName"/> or <paramref name="artifactVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateState(string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactVersionName, string artifactName, ArtifactChangeState artifactChangeState, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
-            if (artifactVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactVersionName));
-            }
-            if (artifactVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactVersionName));
-            }
-            if (artifactName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactName));
-            }
-            if (artifactChangeState == null)
-            {
-                throw new ArgumentNullException(nameof(artifactChangeState));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+            Argument.AssertNotNullOrEmpty(artifactVersionName, nameof(artifactVersionName));
+            Argument.AssertNotNull(artifactName, nameof(artifactName));
+            Argument.AssertNotNull(artifactChangeState, nameof(artifactChangeState));
 
             using var message = CreateUpdateStateRequest(subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactVersionName, artifactName, artifactChangeState);
             _pipeline.Send(message, cancellationToken);
@@ -505,6 +358,14 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName)
@@ -532,42 +393,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProxyArtifactOverviewListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, publisherName, artifactStoreName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -596,42 +426,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProxyArtifactOverviewListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, publisherName, artifactStoreName);
             _pipeline.Send(message, cancellationToken);
@@ -647,6 +446,14 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName)
@@ -675,46 +482,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProxyArtifactVersionsOverviewListResult>> GetNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
-            if (artifactName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+            Argument.AssertNotNull(artifactName, nameof(artifactName));
 
             using var message = CreateGetNextPageRequest(nextLink, subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -744,46 +517,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProxyArtifactVersionsOverviewListResult> GetNextPage(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string artifactStoreName, string artifactName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (artifactStoreName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactStoreName));
-            }
-            if (artifactStoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactStoreName));
-            }
-            if (artifactName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+            Argument.AssertNotNull(artifactName, nameof(artifactName));
 
             using var message = CreateGetNextPageRequest(nextLink, subscriptionId, resourceGroupName, publisherName, artifactStoreName, artifactName);
             _pipeline.Send(message, cancellationToken);

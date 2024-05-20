@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PartnerTopicResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string partnerTopicName, PartnerTopicData data, CancellationToken cancellationToken = default)
         {
-            if (partnerTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerTopicName));
-            }
-            if (partnerTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerTopicName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _partnerTopicRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<PartnerTopicResource>(Response.FromValue(new PartnerTopicResource(Client, response), response.GetRawResponse()));
+                var uri = _partnerTopicRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new EventGridArmOperation<PartnerTopicResource>(Response.FromValue(new PartnerTopicResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PartnerTopicResource> CreateOrUpdate(WaitUntil waitUntil, string partnerTopicName, PartnerTopicData data, CancellationToken cancellationToken = default)
         {
-            if (partnerTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerTopicName));
-            }
-            if (partnerTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerTopicName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _partnerTopicRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, data, cancellationToken);
-                var operation = new EventGridArmOperation<PartnerTopicResource>(Response.FromValue(new PartnerTopicResource(Client, response), response.GetRawResponse()));
+                var uri = _partnerTopicRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new EventGridArmOperation<PartnerTopicResource>(Response.FromValue(new PartnerTopicResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
         public virtual async Task<Response<PartnerTopicResource>> GetAsync(string partnerTopicName, CancellationToken cancellationToken = default)
         {
-            if (partnerTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerTopicName));
-            }
-            if (partnerTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
 
             using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
         public virtual Response<PartnerTopicResource> Get(string partnerTopicName, CancellationToken cancellationToken = default)
         {
-            if (partnerTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerTopicName));
-            }
-            if (partnerTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
 
             using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.Get");
             scope.Start();
@@ -367,14 +335,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string partnerTopicName, CancellationToken cancellationToken = default)
         {
-            if (partnerTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerTopicName));
-            }
-            if (partnerTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
 
             using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.Exists");
             scope.Start();
@@ -417,14 +378,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
         public virtual Response<bool> Exists(string partnerTopicName, CancellationToken cancellationToken = default)
         {
-            if (partnerTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerTopicName));
-            }
-            if (partnerTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
 
             using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.Exists");
             scope.Start();
@@ -467,14 +421,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
         public virtual async Task<NullableResponse<PartnerTopicResource>> GetIfExistsAsync(string partnerTopicName, CancellationToken cancellationToken = default)
         {
-            if (partnerTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerTopicName));
-            }
-            if (partnerTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
 
             using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.GetIfExists");
             scope.Start();
@@ -519,14 +466,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
         public virtual NullableResponse<PartnerTopicResource> GetIfExists(string partnerTopicName, CancellationToken cancellationToken = default)
         {
-            if (partnerTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerTopicName));
-            }
-            if (partnerTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
 
             using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.GetIfExists");
             scope.Start();

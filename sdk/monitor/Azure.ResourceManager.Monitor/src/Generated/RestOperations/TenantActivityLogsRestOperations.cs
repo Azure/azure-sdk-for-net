@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Monitor.Models;
@@ -35,6 +34,23 @@ namespace Azure.ResourceManager.Monitor
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2015-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string filter, string select)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Insights/eventtypes/management/values", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string filter, string select)
@@ -104,6 +120,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string filter, string select)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string filter, string select)
         {
             var message = _pipeline.CreateMessage();
@@ -126,10 +150,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<EventDataCollection>> ListNextPageAsync(string nextLink, string filter = null, string select = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, filter, select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -155,10 +176,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<EventDataCollection> ListNextPage(string nextLink, string filter = null, string select = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, filter, select);
             _pipeline.Send(message, cancellationToken);

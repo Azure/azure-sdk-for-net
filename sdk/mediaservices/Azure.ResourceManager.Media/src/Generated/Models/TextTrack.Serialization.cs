@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
     public partial class TextTrack : IUtf8JsonSerializable, IJsonModel<TextTrack>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextTrack>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextTrack>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TextTrack>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TextTrack>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TextTrack)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TextTrack)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(HlsSettings))
             {
                 writer.WritePropertyName("hlsSettings"u8);
-                writer.WriteObjectValue(HlsSettings);
+                writer.WriteObjectValue(HlsSettings, options);
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<TextTrack>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TextTrack)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TextTrack)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static TextTrack DeserializeTextTrack(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.Media.Models
             HlsSettings hlsSettings = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileName"u8))
@@ -142,10 +141,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TextTrack(
                 odataType,
                 serializedAdditionalRawData,
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TextTrack)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TextTrack)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -181,7 +180,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeTextTrack(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TextTrack)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TextTrack)} does not support reading '{options.Format}' format.");
             }
         }
 

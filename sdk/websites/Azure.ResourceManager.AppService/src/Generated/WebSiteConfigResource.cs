@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
@@ -271,10 +269,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<WebSiteConfigResource>> UpdateAsync(SiteConfigData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.Update");
             scope.Start();
@@ -316,10 +311,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<WebSiteConfigResource> Update(SiteConfigData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.Update");
             scope.Start();
@@ -362,17 +354,16 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WebSiteConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteConfigData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _webSiteConfigWebAppsRestClient.CreateOrUpdateConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteConfigResource>(Response.FromValue(new WebSiteConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _webSiteConfigWebAppsRestClient.CreateCreateOrUpdateConfigurationRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<WebSiteConfigResource>(Response.FromValue(new WebSiteConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -411,17 +402,16 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WebSiteConfigResource> CreateOrUpdate(WaitUntil waitUntil, SiteConfigData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _webSiteConfigWebAppsRestClient.CreateOrUpdateConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteConfigResource>(Response.FromValue(new WebSiteConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _webSiteConfigWebAppsRestClient.CreateCreateOrUpdateConfigurationRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<WebSiteConfigResource>(Response.FromValue(new WebSiteConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

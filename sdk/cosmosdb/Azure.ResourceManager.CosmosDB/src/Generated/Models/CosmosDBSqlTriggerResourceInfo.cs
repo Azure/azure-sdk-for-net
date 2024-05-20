@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public CosmosDBSqlTriggerResourceInfo(string triggerName)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
+            Argument.AssertNotNull(triggerName, nameof(triggerName));
 
             TriggerName = triggerName;
         }
@@ -79,12 +76,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB SQL trigger. </summary>
+        [WirePath("id")]
         public string TriggerName { get; set; }
         /// <summary> Body of the Trigger. </summary>
+        [WirePath("body")]
         public string Body { get; set; }
         /// <summary> Type of the Trigger. </summary>
+        [WirePath("triggerType")]
         public CosmosDBSqlTriggerType? TriggerType { get; set; }
         /// <summary> The operation the trigger is associated with. </summary>
+        [WirePath("triggerOperation")]
         public CosmosDBSqlTriggerOperation? TriggerOperation { get; set; }
     }
 }

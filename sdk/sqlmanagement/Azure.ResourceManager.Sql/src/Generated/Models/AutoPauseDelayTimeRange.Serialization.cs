@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class AutoPauseDelayTimeRange : IUtf8JsonSerializable, IJsonModel<AutoPauseDelayTimeRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoPauseDelayTimeRange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoPauseDelayTimeRange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutoPauseDelayTimeRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutoPauseDelayTimeRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoPauseDelayTimeRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static AutoPauseDelayTimeRange DeserializeAutoPauseDelayTimeRange(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql.Models
             PauseDelayTimeUnit? unit = default;
             int? doNotPauseValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minValue"u8))
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AutoPauseDelayTimeRange(
                 minValue,
                 maxValue,
@@ -175,6 +175,111 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinValue))
+                {
+                    builder.Append("  minValue: ");
+                    builder.AppendLine($"{MinValue.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxValue))
+                {
+                    builder.Append("  maxValue: ");
+                    builder.AppendLine($"{MaxValue.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  stepSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StepSize))
+                {
+                    builder.Append("  stepSize: ");
+                    builder.AppendLine($"{StepSize.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Default), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  default: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Default))
+                {
+                    builder.Append("  default: ");
+                    builder.AppendLine($"{Default.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  unit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Unit))
+                {
+                    builder.Append("  unit: ");
+                    builder.AppendLine($"'{Unit.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DoNotPauseValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  doNotPauseValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DoNotPauseValue))
+                {
+                    builder.Append("  doNotPauseValue: ");
+                    builder.AppendLine($"{DoNotPauseValue.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AutoPauseDelayTimeRange>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutoPauseDelayTimeRange>)this).GetFormatFromOptions(options) : options.Format;
@@ -183,8 +288,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +307,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeAutoPauseDelayTimeRange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support reading '{options.Format}' format.");
             }
         }
 

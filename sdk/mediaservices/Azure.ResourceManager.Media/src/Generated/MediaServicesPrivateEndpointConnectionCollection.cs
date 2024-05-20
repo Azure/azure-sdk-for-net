@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Media
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MediaServicesPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, MediaServicesPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MediaServicesPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaServicesPrivateEndpointConnectionResource>(Response.FromValue(new MediaServicesPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation<MediaServicesPrivateEndpointConnectionResource>(Response.FromValue(new MediaServicesPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MediaServicesPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string name, MediaServicesPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MediaServicesPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaServicesPrivateEndpointConnectionResource>(Response.FromValue(new MediaServicesPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation<MediaServicesPrivateEndpointConnectionResource>(Response.FromValue(new MediaServicesPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<MediaServicesPrivateEndpointConnectionResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MediaServicesPrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<MediaServicesPrivateEndpointConnectionResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MediaServicesPrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -360,14 +328,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MediaServicesPrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -410,14 +371,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MediaServicesPrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -460,14 +414,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<NullableResponse<MediaServicesPrivateEndpointConnectionResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MediaServicesPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
@@ -512,14 +459,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual NullableResponse<MediaServicesPrivateEndpointConnectionResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _mediaServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MediaServicesPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();

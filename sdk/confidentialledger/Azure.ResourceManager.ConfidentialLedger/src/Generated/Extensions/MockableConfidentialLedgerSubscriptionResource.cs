@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ConfidentialLedger;
 using Azure.ResourceManager.ConfidentialLedger.Models;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Mocking
@@ -66,7 +63,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2023-06-28-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,10 +72,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ConfidentialLedgerNameAvailabilityResult>> CheckConfidentialLedgerNameAvailabilityAsync(ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableConfidentialLedgerSubscriptionResource.CheckConfidentialLedgerNameAvailability");
             scope.Start();
@@ -107,7 +101,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2023-06-28-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,10 +110,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ConfidentialLedgerNameAvailabilityResult> CheckConfidentialLedgerNameAvailability(ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableConfidentialLedgerSubscriptionResource.CheckConfidentialLedgerNameAvailability");
             scope.Start();
@@ -148,7 +139,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2023-06-28-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +170,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2023-06-28-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,7 +201,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2023-06-28-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -241,7 +232,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-01-26-preview</description>
+        /// <description>2023-06-28-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

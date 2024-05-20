@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementSkuRestrictionInfo : IUtf8JsonSerializable, IJsonModel<ApiManagementSkuRestrictionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementSkuRestrictionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementSkuRestrictionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiManagementSkuRestrictionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSkuRestrictionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementSkuRestrictionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementSkuRestrictionInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSkuRestrictionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementSkuRestrictionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementSkuRestrictionInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementSkuRestrictionInfo DeserializeApiManagementSkuRestrictionInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<string> zones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locations"u8))
@@ -121,10 +120,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApiManagementSkuRestrictionInfo(locations ?? new ChangeTrackingList<AzureLocation>(), zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementSkuRestrictionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementSkuRestrictionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiManagementSkuRestrictionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementSkuRestrictionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementSkuRestrictionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

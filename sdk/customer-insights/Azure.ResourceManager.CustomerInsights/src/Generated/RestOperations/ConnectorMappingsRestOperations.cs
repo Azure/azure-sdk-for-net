@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CustomerInsights.Models;
@@ -37,6 +36,24 @@ namespace Azure.ResourceManager.CustomerInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string hubName, string connectorName, string mappingName, ConnectorMappingResourceFormatData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CustomerInsights/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/connectors/", false);
+            uri.AppendPath(connectorName, true);
+            uri.AppendPath("/mappings/", false);
+            uri.AppendPath(mappingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string hubName, string connectorName, string mappingName, ConnectorMappingResourceFormatData data)
         {
             var message = _pipeline.CreateMessage();
@@ -59,7 +76,7 @@ namespace Azure.ResourceManager.CustomerInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -77,50 +94,12 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hubName"/>, <paramref name="connectorName"/> or <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConnectorMappingResourceFormatData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string hubName, string connectorName, string mappingName, ConnectorMappingResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
-            if (mappingName == null)
-            {
-                throw new ArgumentNullException(nameof(mappingName));
-            }
-            if (mappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, hubName, connectorName, mappingName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -151,50 +130,12 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hubName"/>, <paramref name="connectorName"/> or <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConnectorMappingResourceFormatData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string hubName, string connectorName, string mappingName, ConnectorMappingResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
-            if (mappingName == null)
-            {
-                throw new ArgumentNullException(nameof(mappingName));
-            }
-            if (mappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, hubName, connectorName, mappingName, data);
             _pipeline.Send(message, cancellationToken);
@@ -211,6 +152,24 @@ namespace Azure.ResourceManager.CustomerInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string hubName, string connectorName, string mappingName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CustomerInsights/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/connectors/", false);
+            uri.AppendPath(connectorName, true);
+            uri.AppendPath("/mappings/", false);
+            uri.AppendPath(mappingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string hubName, string connectorName, string mappingName)
@@ -248,46 +207,11 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hubName"/>, <paramref name="connectorName"/> or <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConnectorMappingResourceFormatData>> GetAsync(string subscriptionId, string resourceGroupName, string hubName, string connectorName, string mappingName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
-            if (mappingName == null)
-            {
-                throw new ArgumentNullException(nameof(mappingName));
-            }
-            if (mappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, hubName, connectorName, mappingName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -318,46 +242,11 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hubName"/>, <paramref name="connectorName"/> or <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConnectorMappingResourceFormatData> Get(string subscriptionId, string resourceGroupName, string hubName, string connectorName, string mappingName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
-            if (mappingName == null)
-            {
-                throw new ArgumentNullException(nameof(mappingName));
-            }
-            if (mappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, hubName, connectorName, mappingName);
             _pipeline.Send(message, cancellationToken);
@@ -375,6 +264,24 @@ namespace Azure.ResourceManager.CustomerInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string hubName, string connectorName, string mappingName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CustomerInsights/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/connectors/", false);
+            uri.AppendPath(connectorName, true);
+            uri.AppendPath("/mappings/", false);
+            uri.AppendPath(mappingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string hubName, string connectorName, string mappingName)
@@ -411,46 +318,11 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hubName"/>, <paramref name="connectorName"/> or <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string hubName, string connectorName, string mappingName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
-            if (mappingName == null)
-            {
-                throw new ArgumentNullException(nameof(mappingName));
-            }
-            if (mappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, hubName, connectorName, mappingName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -475,46 +347,11 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hubName"/>, <paramref name="connectorName"/> or <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string hubName, string connectorName, string mappingName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
-            if (mappingName == null)
-            {
-                throw new ArgumentNullException(nameof(mappingName));
-            }
-            if (mappingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(mappingName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, hubName, connectorName, mappingName);
             _pipeline.Send(message, cancellationToken);
@@ -526,6 +363,23 @@ namespace Azure.ResourceManager.CustomerInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByConnectorRequestUri(string subscriptionId, string resourceGroupName, string hubName, string connectorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CustomerInsights/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/connectors/", false);
+            uri.AppendPath(connectorName, true);
+            uri.AppendPath("/mappings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByConnectorRequest(string subscriptionId, string resourceGroupName, string hubName, string connectorName)
@@ -561,38 +415,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hubName"/> or <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConnectorMappingListResult>> ListByConnectorAsync(string subscriptionId, string resourceGroupName, string hubName, string connectorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
             using var message = CreateListByConnectorRequest(subscriptionId, resourceGroupName, hubName, connectorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -620,38 +446,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hubName"/> or <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConnectorMappingListResult> ListByConnector(string subscriptionId, string resourceGroupName, string hubName, string connectorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
             using var message = CreateListByConnectorRequest(subscriptionId, resourceGroupName, hubName, connectorName);
             _pipeline.Send(message, cancellationToken);
@@ -667,6 +465,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByConnectorNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string hubName, string connectorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByConnectorNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string hubName, string connectorName)
@@ -694,42 +500,11 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hubName"/> or <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConnectorMappingListResult>> ListByConnectorNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hubName, string connectorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
             using var message = CreateListByConnectorNextPageRequest(nextLink, subscriptionId, resourceGroupName, hubName, connectorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -758,42 +533,11 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hubName"/> or <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConnectorMappingListResult> ListByConnectorNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hubName, string connectorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
-            if (connectorName == null)
-            {
-                throw new ArgumentNullException(nameof(connectorName));
-            }
-            if (connectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
             using var message = CreateListByConnectorNextPageRequest(nextLink, subscriptionId, resourceGroupName, hubName, connectorName);
             _pipeline.Send(message, cancellationToken);

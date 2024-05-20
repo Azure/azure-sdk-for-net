@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreAccountName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string dataLakeStoreAccountName, DataLakeStoreAccountInformationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (dataLakeStoreAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(dataLakeStoreAccountName));
-            }
-            if (dataLakeStoreAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataLakeStoreAccountName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(dataLakeStoreAccountName, nameof(dataLakeStoreAccountName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataLakeStoreAccountInformationDataLakeStoreAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountInformationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient.AddAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataLakeStoreAccountName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataLakeAnalyticsArmOperation(response);
+                var uri = _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient.CreateAddRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataLakeStoreAccountName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataLakeAnalyticsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreAccountName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string dataLakeStoreAccountName, DataLakeStoreAccountInformationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (dataLakeStoreAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(dataLakeStoreAccountName));
-            }
-            if (dataLakeStoreAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataLakeStoreAccountName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(dataLakeStoreAccountName, nameof(dataLakeStoreAccountName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataLakeStoreAccountInformationDataLakeStoreAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountInformationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient.Add(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataLakeStoreAccountName, content, cancellationToken);
-                var operation = new DataLakeAnalyticsArmOperation(response);
+                var uri = _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient.CreateAddRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataLakeStoreAccountName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataLakeAnalyticsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreAccountName"/> is null. </exception>
         public virtual async Task<Response<DataLakeStoreAccountInformationResource>> GetAsync(string dataLakeStoreAccountName, CancellationToken cancellationToken = default)
         {
-            if (dataLakeStoreAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(dataLakeStoreAccountName));
-            }
-            if (dataLakeStoreAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataLakeStoreAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(dataLakeStoreAccountName, nameof(dataLakeStoreAccountName));
 
             using var scope = _dataLakeStoreAccountInformationDataLakeStoreAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountInformationCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreAccountName"/> is null. </exception>
         public virtual Response<DataLakeStoreAccountInformationResource> Get(string dataLakeStoreAccountName, CancellationToken cancellationToken = default)
         {
-            if (dataLakeStoreAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(dataLakeStoreAccountName));
-            }
-            if (dataLakeStoreAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataLakeStoreAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(dataLakeStoreAccountName, nameof(dataLakeStoreAccountName));
 
             using var scope = _dataLakeStoreAccountInformationDataLakeStoreAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountInformationCollection.Get");
             scope.Start();
@@ -369,14 +337,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreAccountName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataLakeStoreAccountName, CancellationToken cancellationToken = default)
         {
-            if (dataLakeStoreAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(dataLakeStoreAccountName));
-            }
-            if (dataLakeStoreAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataLakeStoreAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(dataLakeStoreAccountName, nameof(dataLakeStoreAccountName));
 
             using var scope = _dataLakeStoreAccountInformationDataLakeStoreAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountInformationCollection.Exists");
             scope.Start();
@@ -419,14 +380,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreAccountName"/> is null. </exception>
         public virtual Response<bool> Exists(string dataLakeStoreAccountName, CancellationToken cancellationToken = default)
         {
-            if (dataLakeStoreAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(dataLakeStoreAccountName));
-            }
-            if (dataLakeStoreAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataLakeStoreAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(dataLakeStoreAccountName, nameof(dataLakeStoreAccountName));
 
             using var scope = _dataLakeStoreAccountInformationDataLakeStoreAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountInformationCollection.Exists");
             scope.Start();
@@ -469,14 +423,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreAccountName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataLakeStoreAccountInformationResource>> GetIfExistsAsync(string dataLakeStoreAccountName, CancellationToken cancellationToken = default)
         {
-            if (dataLakeStoreAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(dataLakeStoreAccountName));
-            }
-            if (dataLakeStoreAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataLakeStoreAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(dataLakeStoreAccountName, nameof(dataLakeStoreAccountName));
 
             using var scope = _dataLakeStoreAccountInformationDataLakeStoreAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountInformationCollection.GetIfExists");
             scope.Start();
@@ -521,14 +468,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreAccountName"/> is null. </exception>
         public virtual NullableResponse<DataLakeStoreAccountInformationResource> GetIfExists(string dataLakeStoreAccountName, CancellationToken cancellationToken = default)
         {
-            if (dataLakeStoreAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(dataLakeStoreAccountName));
-            }
-            if (dataLakeStoreAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataLakeStoreAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(dataLakeStoreAccountName, nameof(dataLakeStoreAccountName));
 
             using var scope = _dataLakeStoreAccountInformationDataLakeStoreAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountInformationCollection.GetIfExists");
             scope.Start();

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityMLAnalyticsSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string settingsResourceName, SecurityMLAnalyticsSettingData data, CancellationToken cancellationToken = default)
         {
-            if (settingsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(settingsResourceName));
-            }
-            if (settingsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(settingsResourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityMLAnalyticsSettingClientDiagnostics.CreateScope("SecurityMLAnalyticsSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _securityMLAnalyticsSettingRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsResourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation<SecurityMLAnalyticsSettingResource>(Response.FromValue(new SecurityMLAnalyticsSettingResource(Client, response), response.GetRawResponse()));
+                var uri = _securityMLAnalyticsSettingRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsResourceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation<SecurityMLAnalyticsSettingResource>(Response.FromValue(new SecurityMLAnalyticsSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityMLAnalyticsSettingResource> CreateOrUpdate(WaitUntil waitUntil, string settingsResourceName, SecurityMLAnalyticsSettingData data, CancellationToken cancellationToken = default)
         {
-            if (settingsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(settingsResourceName));
-            }
-            if (settingsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(settingsResourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityMLAnalyticsSettingClientDiagnostics.CreateScope("SecurityMLAnalyticsSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _securityMLAnalyticsSettingRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsResourceName, data, cancellationToken);
-                var operation = new SecurityInsightsArmOperation<SecurityMLAnalyticsSettingResource>(Response.FromValue(new SecurityMLAnalyticsSettingResource(Client, response), response.GetRawResponse()));
+                var uri = _securityMLAnalyticsSettingRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsResourceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation<SecurityMLAnalyticsSettingResource>(Response.FromValue(new SecurityMLAnalyticsSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
         public virtual async Task<Response<SecurityMLAnalyticsSettingResource>> GetAsync(string settingsResourceName, CancellationToken cancellationToken = default)
         {
-            if (settingsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(settingsResourceName));
-            }
-            if (settingsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(settingsResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
 
             using var scope = _securityMLAnalyticsSettingClientDiagnostics.CreateScope("SecurityMLAnalyticsSettingCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
         public virtual Response<SecurityMLAnalyticsSettingResource> Get(string settingsResourceName, CancellationToken cancellationToken = default)
         {
-            if (settingsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(settingsResourceName));
-            }
-            if (settingsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(settingsResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
 
             using var scope = _securityMLAnalyticsSettingClientDiagnostics.CreateScope("SecurityMLAnalyticsSettingCollection.Get");
             scope.Start();
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string settingsResourceName, CancellationToken cancellationToken = default)
         {
-            if (settingsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(settingsResourceName));
-            }
-            if (settingsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(settingsResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
 
             using var scope = _securityMLAnalyticsSettingClientDiagnostics.CreateScope("SecurityMLAnalyticsSettingCollection.Exists");
             scope.Start();
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string settingsResourceName, CancellationToken cancellationToken = default)
         {
-            if (settingsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(settingsResourceName));
-            }
-            if (settingsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(settingsResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
 
             using var scope = _securityMLAnalyticsSettingClientDiagnostics.CreateScope("SecurityMLAnalyticsSettingCollection.Exists");
             scope.Start();
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityMLAnalyticsSettingResource>> GetIfExistsAsync(string settingsResourceName, CancellationToken cancellationToken = default)
         {
-            if (settingsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(settingsResourceName));
-            }
-            if (settingsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(settingsResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
 
             using var scope = _securityMLAnalyticsSettingClientDiagnostics.CreateScope("SecurityMLAnalyticsSettingCollection.GetIfExists");
             scope.Start();
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
         public virtual NullableResponse<SecurityMLAnalyticsSettingResource> GetIfExists(string settingsResourceName, CancellationToken cancellationToken = default)
         {
-            if (settingsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(settingsResourceName));
-            }
-            if (settingsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(settingsResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
 
             using var scope = _securityMLAnalyticsSettingClientDiagnostics.CreateScope("SecurityMLAnalyticsSettingCollection.GetIfExists");
             scope.Start();

@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Resources;
 
@@ -121,7 +119,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,7 +150,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -190,7 +188,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -221,7 +219,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -259,7 +257,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -290,7 +288,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,7 +326,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -359,7 +357,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -397,7 +395,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -428,7 +426,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -466,7 +464,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -497,7 +495,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -535,7 +533,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -566,7 +564,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -597,7 +595,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -637,7 +635,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -677,7 +675,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -719,7 +717,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -761,7 +759,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -775,10 +773,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<ProfileResource>> UpdateAsync(WaitUntil waitUntil, ProfilePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.Update");
             scope.Start();
@@ -810,7 +805,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -824,10 +819,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<ProfileResource> Update(WaitUntil waitUntil, ProfilePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.Update");
             scope.Start();
@@ -847,7 +839,83 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of AzureFrontDoor endpoints under the given CDN profile.
+        /// Check the availability of an afdx endpoint name, and return the globally unique endpoint host name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkEndpointNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorProfiles_CheckEndpointNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityFrontDoorProfileAsync(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckEndpointNameAvailabilityFrontDoorProfile");
+            scope.Start();
+            try
+            {
+                var response = await _frontDoorProfilesRestClient.CheckEndpointNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of an afdx endpoint name, and return the globally unique endpoint host name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkEndpointNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorProfiles_CheckEndpointNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<EndpointNameAvailabilityResult> CheckEndpointNameAvailabilityFrontDoorProfile(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckEndpointNameAvailabilityFrontDoorProfile");
+            scope.Start();
+            try
+            {
+                var response = _frontDoorProfilesRestClient.CheckEndpointNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks the quota and actual usage of endpoints under the given Azure Front Door profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -859,7 +927,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -873,7 +941,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of AzureFrontDoor endpoints under the given CDN profile.
+        /// Checks the quota and actual usage of endpoints under the given Azure Front Door profile.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -885,7 +953,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -899,7 +967,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Check the name availability of a host name.
+        /// Validates the custom domain mapping to ensure it maps to the correct Azure Front Door endpoint in DNS.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -911,7 +979,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -920,10 +988,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CdnNameAvailabilityResult>> CheckFrontDoorProfileHostNameAvailabilityAsync(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckFrontDoorProfileHostNameAvailability");
             scope.Start();
@@ -940,7 +1005,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Check the name availability of a host name.
+        /// Validates the custom domain mapping to ensure it maps to the correct Azure Front Door endpoint in DNS.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -952,7 +1017,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -961,10 +1026,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CdnNameAvailabilityResult> CheckFrontDoorProfileHostNameAvailability(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckFrontDoorProfileHostNameAvailability");
             scope.Start();
@@ -972,6 +1034,166 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _frontDoorProfilesRestClient.CheckHostNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validate a Secret in the profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/validateSecret</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorProfiles_ValidateSecret</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The Secret source. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ValidateSecretResult>> ValidateSecretFrontDoorProfileAsync(ValidateSecretContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.ValidateSecretFrontDoorProfile");
+            scope.Start();
+            try
+            {
+                var response = await _frontDoorProfilesRestClient.ValidateSecretAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validate a Secret in the profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/validateSecret</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorProfiles_ValidateSecret</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The Secret source. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ValidateSecretResult> ValidateSecretFrontDoorProfile(ValidateSecretContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.ValidateSecretFrontDoorProfile");
+            scope.Start();
+            try
+            {
+                var response = _frontDoorProfilesRestClient.ValidateSecret(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Upgrade a profile from Standard_AzureFrontDoor to Premium_AzureFrontDoor.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/upgrade</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorProfiles_Upgrade</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Profile upgrade input parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ProfileResource>> UpgradeFrontDoorProfileAsync(WaitUntil waitUntil, ProfileUpgradeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.UpgradeFrontDoorProfile");
+            scope.Start();
+            try
+            {
+                var response = await _frontDoorProfilesRestClient.UpgradeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<ProfileResource>(new ProfileOperationSource(Client), _frontDoorProfilesClientDiagnostics, Pipeline, _frontDoorProfilesRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Upgrade a profile from Standard_AzureFrontDoor to Premium_AzureFrontDoor.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/upgrade</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorProfiles_Upgrade</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Profile upgrade input parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ProfileResource> UpgradeFrontDoorProfile(WaitUntil waitUntil, ProfileUpgradeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.UpgradeFrontDoorProfile");
+            scope.Start();
+            try
+            {
+                var response = _frontDoorProfilesRestClient.Upgrade(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new CdnArmOperation<ProfileResource>(new ProfileOperationSource(Client), _frontDoorProfilesClientDiagnostics, Pipeline, _frontDoorProfilesRestClient.CreateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -993,7 +1215,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1002,10 +1224,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAsync(ProfileResourceGetLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsMetrics");
             scope.Start();
@@ -1034,7 +1253,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1043,10 +1262,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<MetricsResponse> GetLogAnalyticsMetrics(ProfileResourceGetLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsMetrics");
             scope.Start();
@@ -1075,7 +1291,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1084,10 +1300,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAsync(ProfileResourceGetLogAnalyticsRankingsOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsRankings");
             scope.Start();
@@ -1116,7 +1329,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1125,10 +1338,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<RankingsResponse> GetLogAnalyticsRankings(ProfileResourceGetLogAnalyticsRankingsOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsRankings");
             scope.Start();
@@ -1157,7 +1367,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1191,7 +1401,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1225,7 +1435,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1259,7 +1469,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1293,7 +1503,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1302,10 +1512,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(ProfileResourceGetWafLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsMetrics");
             scope.Start();
@@ -1334,7 +1541,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1343,10 +1550,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<WafMetricsResponse> GetWafLogAnalyticsMetrics(ProfileResourceGetWafLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsMetrics");
             scope.Start();
@@ -1375,7 +1579,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1384,10 +1588,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAsync(ProfileResourceGetWafLogAnalyticsRankingsOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsRankings");
             scope.Start();
@@ -1416,7 +1617,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1425,10 +1626,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<WafRankingsResponse> GetWafLogAnalyticsRankings(ProfileResourceGetWafLogAnalyticsRankingsOptions options, CancellationToken cancellationToken = default)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsRankings");
             scope.Start();
@@ -1436,6 +1634,90 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _logAnalyticsRestClient.GetWafLogAnalyticsRankings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Metrics, options.DateTimeBegin, options.DateTimeEnd, options.MaxRanking, options.Rankings, options.Actions, options.RuleTypes, cancellationToken);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Commit the migrated Azure Frontdoor(Standard/Premium) profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/migrationCommit</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_MigrationCommit</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> MigrationCommitAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.MigrationCommit");
+            scope.Start();
+            try
+            {
+                var response = await _profileRestClient.MigrationCommitAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateMigrationCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Commit the migrated Azure Frontdoor(Standard/Premium) profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/migrationCommit</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_MigrationCommit</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation MigrationCommit(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.MigrationCommit");
+            scope.Start();
+            try
+            {
+                var response = _profileRestClient.MigrationCommit(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new CdnArmOperation(_profileClientDiagnostics, Pipeline, _profileRestClient.CreateMigrationCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -1457,7 +1739,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1495,7 +1777,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1533,7 +1815,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1571,7 +1853,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1609,7 +1891,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1639,7 +1921,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1669,7 +1951,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1683,14 +1965,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ProfileResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.AddTag");
             scope.Start();
@@ -1737,7 +2013,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1751,14 +2027,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ProfileResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.AddTag");
             scope.Start();
@@ -1805,7 +2075,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1818,10 +2088,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ProfileResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.SetTags");
             scope.Start();
@@ -1865,7 +2132,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1878,10 +2145,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ProfileResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.SetTags");
             scope.Start();
@@ -1925,7 +2189,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1938,10 +2202,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ProfileResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.RemoveTag");
             scope.Start();
@@ -1988,7 +2249,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2001,10 +2262,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ProfileResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.RemoveTag");
             scope.Start();

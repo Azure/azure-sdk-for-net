@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs
@@ -202,7 +200,9 @@ namespace Azure.ResourceManager.NotificationHubs
             try
             {
                 var response = await _notificationHubAuthorizationRuleNotificationHubsRestClient.DeleteAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NotificationHubsArmOperation(response);
+                var uri = _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateDeleteAuthorizationRuleRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NotificationHubsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -244,7 +244,9 @@ namespace Azure.ResourceManager.NotificationHubs
             try
             {
                 var response = _notificationHubAuthorizationRuleNotificationHubsRestClient.DeleteAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NotificationHubsArmOperation(response);
+                var uri = _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateDeleteAuthorizationRuleRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NotificationHubsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -283,17 +285,16 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<NotificationHubAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _notificationHubAuthorizationRuleNotificationHubsClientDiagnostics.CreateScope("NotificationHubAuthorizationRuleResource.Update");
             scope.Start();
             try
             {
                 var response = await _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateOrUpdateAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NotificationHubsArmOperation<NotificationHubAuthorizationRuleResource>(Response.FromValue(new NotificationHubAuthorizationRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateCreateOrUpdateAuthorizationRuleRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NotificationHubsArmOperation<NotificationHubAuthorizationRuleResource>(Response.FromValue(new NotificationHubAuthorizationRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -332,17 +333,16 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<NotificationHubAuthorizationRuleResource> Update(WaitUntil waitUntil, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _notificationHubAuthorizationRuleNotificationHubsClientDiagnostics.CreateScope("NotificationHubAuthorizationRuleResource.Update");
             scope.Start();
             try
             {
                 var response = _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateOrUpdateAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new NotificationHubsArmOperation<NotificationHubAuthorizationRuleResource>(Response.FromValue(new NotificationHubAuthorizationRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateCreateOrUpdateAuthorizationRuleRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NotificationHubsArmOperation<NotificationHubAuthorizationRuleResource>(Response.FromValue(new NotificationHubAuthorizationRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -456,10 +456,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="notificationHubPolicyKey"/> is null. </exception>
         public virtual async Task<Response<NotificationHubResourceKeys>> RegenerateKeysAsync(NotificationHubPolicyKey notificationHubPolicyKey, CancellationToken cancellationToken = default)
         {
-            if (notificationHubPolicyKey == null)
-            {
-                throw new ArgumentNullException(nameof(notificationHubPolicyKey));
-            }
+            Argument.AssertNotNull(notificationHubPolicyKey, nameof(notificationHubPolicyKey));
 
             using var scope = _notificationHubAuthorizationRuleNotificationHubsClientDiagnostics.CreateScope("NotificationHubAuthorizationRuleResource.RegenerateKeys");
             scope.Start();
@@ -501,10 +498,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="notificationHubPolicyKey"/> is null. </exception>
         public virtual Response<NotificationHubResourceKeys> RegenerateKeys(NotificationHubPolicyKey notificationHubPolicyKey, CancellationToken cancellationToken = default)
         {
-            if (notificationHubPolicyKey == null)
-            {
-                throw new ArgumentNullException(nameof(notificationHubPolicyKey));
-            }
+            Argument.AssertNotNull(notificationHubPolicyKey, nameof(notificationHubPolicyKey));
 
             using var scope = _notificationHubAuthorizationRuleNotificationHubsClientDiagnostics.CreateScope("NotificationHubAuthorizationRuleResource.RegenerateKeys");
             scope.Start();

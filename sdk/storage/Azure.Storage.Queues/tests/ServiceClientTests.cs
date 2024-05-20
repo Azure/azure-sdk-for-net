@@ -21,8 +21,8 @@ namespace Azure.Storage.Queues.Test
     [NonParallelizable]
     public class ServiceClientTests : QueueTestBase
     {
-        public ServiceClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ServiceClientTests(bool async, QueueClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
         [RecordedTest]

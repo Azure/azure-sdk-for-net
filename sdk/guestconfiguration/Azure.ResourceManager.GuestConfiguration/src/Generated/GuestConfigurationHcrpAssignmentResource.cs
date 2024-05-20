@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.GuestConfiguration.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
@@ -206,7 +204,9 @@ namespace Azure.ResourceManager.GuestConfiguration
             try
             {
                 var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new GuestConfigurationArmOperation(response);
+                var uri = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new GuestConfigurationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -248,7 +248,9 @@ namespace Azure.ResourceManager.GuestConfiguration
             try
             {
                 var response = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new GuestConfigurationArmOperation(response);
+                var uri = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new GuestConfigurationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -287,17 +289,16 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<GuestConfigurationHcrpAssignmentResource>> UpdateAsync(WaitUntil waitUntil, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.Update");
             scope.Start();
             try
             {
                 var response = await _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new GuestConfigurationArmOperation<GuestConfigurationHcrpAssignmentResource>(Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new GuestConfigurationArmOperation<GuestConfigurationHcrpAssignmentResource>(Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -336,17 +337,16 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<GuestConfigurationHcrpAssignmentResource> Update(WaitUntil waitUntil, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.Update");
             scope.Start();
             try
             {
                 var response = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new GuestConfigurationArmOperation<GuestConfigurationHcrpAssignmentResource>(Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _guestConfigurationHcrpAssignmentGuestConfigurationHcrpAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new GuestConfigurationArmOperation<GuestConfigurationHcrpAssignmentResource>(Response.FromValue(new GuestConfigurationHcrpAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -431,14 +431,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
         public virtual async Task<Response<GuestConfigurationAssignmentReport>> GetReportAsync(string reportId, CancellationToken cancellationToken = default)
         {
-            if (reportId == null)
-            {
-                throw new ArgumentNullException(nameof(reportId));
-            }
-            if (reportId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportId));
-            }
+            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
 
             using var scope = _guestConfigurationHcrpAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.GetReport");
             scope.Start();
@@ -477,14 +470,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
         public virtual Response<GuestConfigurationAssignmentReport> GetReport(string reportId, CancellationToken cancellationToken = default)
         {
-            if (reportId == null)
-            {
-                throw new ArgumentNullException(nameof(reportId));
-            }
-            if (reportId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportId));
-            }
+            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
 
             using var scope = _guestConfigurationHcrpAssignmentReportsClientDiagnostics.CreateScope("GuestConfigurationHcrpAssignmentResource.GetReport");
             scope.Start();

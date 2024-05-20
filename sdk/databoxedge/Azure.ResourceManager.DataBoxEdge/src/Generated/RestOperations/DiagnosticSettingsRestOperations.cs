@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -34,6 +33,21 @@ namespace Azure.ResourceManager.DataBoxEdge
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetDiagnosticProactiveLogCollectionSettingsRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/diagnosticProactiveLogCollectionSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDiagnosticProactiveLogCollectionSettingsRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -66,30 +80,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DiagnosticProactiveLogCollectionSettingData>> GetDiagnosticProactiveLogCollectionSettingsAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateGetDiagnosticProactiveLogCollectionSettingsRequest(subscriptionId, resourceGroupName, deviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -118,30 +111,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DiagnosticProactiveLogCollectionSettingData> GetDiagnosticProactiveLogCollectionSettings(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateGetDiagnosticProactiveLogCollectionSettingsRequest(subscriptionId, resourceGroupName, deviceName);
             _pipeline.Send(message, cancellationToken);
@@ -159,6 +131,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateDiagnosticProactiveLogCollectionSettingsRequestUri(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticProactiveLogCollectionSettingData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/diagnosticProactiveLogCollectionSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticProactiveLogCollectionSettingData data)
@@ -180,7 +167,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -196,34 +183,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateDiagnosticProactiveLogCollectionSettingsAsync(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticProactiveLogCollectionSettingData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(subscriptionId, resourceGroupName, deviceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -247,34 +210,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateDiagnosticProactiveLogCollectionSettings(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticProactiveLogCollectionSettingData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(subscriptionId, resourceGroupName, deviceName, data);
             _pipeline.Send(message, cancellationToken);
@@ -286,6 +225,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDiagnosticRemoteSupportSettingsRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/diagnosticRemoteSupportSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDiagnosticRemoteSupportSettingsRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -318,30 +272,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DiagnosticRemoteSupportSettingData>> GetDiagnosticRemoteSupportSettingsAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateGetDiagnosticRemoteSupportSettingsRequest(subscriptionId, resourceGroupName, deviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -370,30 +303,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DiagnosticRemoteSupportSettingData> GetDiagnosticRemoteSupportSettings(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateGetDiagnosticRemoteSupportSettingsRequest(subscriptionId, resourceGroupName, deviceName);
             _pipeline.Send(message, cancellationToken);
@@ -411,6 +323,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateDiagnosticRemoteSupportSettingsRequestUri(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticRemoteSupportSettingData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/diagnosticRemoteSupportSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateDiagnosticRemoteSupportSettingsRequest(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticRemoteSupportSettingData data)
@@ -432,7 +359,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -448,34 +375,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateDiagnosticRemoteSupportSettingsAsync(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticRemoteSupportSettingData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateDiagnosticRemoteSupportSettingsRequest(subscriptionId, resourceGroupName, deviceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -499,34 +402,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateDiagnosticRemoteSupportSettings(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticRemoteSupportSettingData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateDiagnosticRemoteSupportSettingsRequest(subscriptionId, resourceGroupName, deviceName, data);
             _pipeline.Send(message, cancellationToken);

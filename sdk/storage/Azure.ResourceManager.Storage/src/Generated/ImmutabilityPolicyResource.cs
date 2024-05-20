@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -203,7 +201,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _immutabilityPolicyBlobContainersRestClient.DeleteImmutabilityPolicyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<ImmutabilityPolicyResource>(Response.FromValue(new ImmutabilityPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _immutabilityPolicyBlobContainersRestClient.CreateDeleteImmutabilityPolicyRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<ImmutabilityPolicyResource>(Response.FromValue(new ImmutabilityPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -246,7 +246,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _immutabilityPolicyBlobContainersRestClient.DeleteImmutabilityPolicy(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch, cancellationToken);
-                var operation = new StorageArmOperation<ImmutabilityPolicyResource>(Response.FromValue(new ImmutabilityPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _immutabilityPolicyBlobContainersRestClient.CreateDeleteImmutabilityPolicyRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<ImmutabilityPolicyResource>(Response.FromValue(new ImmutabilityPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -286,17 +288,16 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ImmutabilityPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ImmutabilityPolicyData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _immutabilityPolicyBlobContainersClientDiagnostics.CreateScope("ImmutabilityPolicyResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _immutabilityPolicyBlobContainersRestClient.CreateOrUpdateImmutabilityPolicyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<ImmutabilityPolicyResource>(Response.FromValue(new ImmutabilityPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _immutabilityPolicyBlobContainersRestClient.CreateCreateOrUpdateImmutabilityPolicyRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<ImmutabilityPolicyResource>(Response.FromValue(new ImmutabilityPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -336,17 +337,16 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ImmutabilityPolicyResource> CreateOrUpdate(WaitUntil waitUntil, ImmutabilityPolicyData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _immutabilityPolicyBlobContainersClientDiagnostics.CreateScope("ImmutabilityPolicyResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _immutabilityPolicyBlobContainersRestClient.CreateOrUpdateImmutabilityPolicy(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, data, ifMatch, cancellationToken);
-                var operation = new StorageArmOperation<ImmutabilityPolicyResource>(Response.FromValue(new ImmutabilityPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _immutabilityPolicyBlobContainersRestClient.CreateCreateOrUpdateImmutabilityPolicyRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<ImmutabilityPolicyResource>(Response.FromValue(new ImmutabilityPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

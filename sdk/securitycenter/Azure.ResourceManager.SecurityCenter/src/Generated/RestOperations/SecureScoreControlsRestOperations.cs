@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -35,6 +34,23 @@ namespace Azure.ResourceManager.SecurityCenter
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySecureScoreRequestUri(string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/secureScores/", false);
+            uri.AppendPath(secureScoreName, true);
+            uri.AppendPath("/secureScoreControls", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListBySecureScoreRequest(string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand)
@@ -69,22 +85,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecureScoreControlList>> ListBySecureScoreAsync(string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (secureScoreName == null)
-            {
-                throw new ArgumentNullException(nameof(secureScoreName));
-            }
-            if (secureScoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secureScoreName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
 
             using var message = CreateListBySecureScoreRequest(subscriptionId, secureScoreName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -111,22 +113,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecureScoreControlList> ListBySecureScore(string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (secureScoreName == null)
-            {
-                throw new ArgumentNullException(nameof(secureScoreName));
-            }
-            if (secureScoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secureScoreName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
 
             using var message = CreateListBySecureScoreRequest(subscriptionId, secureScoreName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -142,6 +130,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, SecurityScoreODataExpand? expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/secureScoreControls", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, SecurityScoreODataExpand? expand)
@@ -173,14 +176,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecureScoreControlList>> ListAsync(string subscriptionId, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -206,14 +202,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecureScoreControlList> List(string subscriptionId, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId, expand);
             _pipeline.Send(message, cancellationToken);
@@ -229,6 +218,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySecureScoreNextPageRequestUri(string nextLink, string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySecureScoreNextPageRequest(string nextLink, string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand)
@@ -255,26 +252,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecureScoreControlList>> ListBySecureScoreNextPageAsync(string nextLink, string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (secureScoreName == null)
-            {
-                throw new ArgumentNullException(nameof(secureScoreName));
-            }
-            if (secureScoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secureScoreName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
 
             using var message = CreateListBySecureScoreNextPageRequest(nextLink, subscriptionId, secureScoreName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -302,26 +282,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecureScoreControlList> ListBySecureScoreNextPage(string nextLink, string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (secureScoreName == null)
-            {
-                throw new ArgumentNullException(nameof(secureScoreName));
-            }
-            if (secureScoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(secureScoreName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
 
             using var message = CreateListBySecureScoreNextPageRequest(nextLink, subscriptionId, secureScoreName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -337,6 +300,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, SecurityScoreODataExpand? expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, SecurityScoreODataExpand? expand)
@@ -362,18 +333,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecureScoreControlList>> ListNextPageAsync(string nextLink, string subscriptionId, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -400,18 +361,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecureScoreControlList> ListNextPage(string nextLink, string subscriptionId, SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, expand);
             _pipeline.Send(message, cancellationToken);

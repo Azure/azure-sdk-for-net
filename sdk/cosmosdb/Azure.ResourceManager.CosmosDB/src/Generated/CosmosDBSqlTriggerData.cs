@@ -80,8 +80,10 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets or sets the resource. </summary>
+        [WirePath("properties.resource")]
         public ExtendedCosmosDBSqlTriggerResourceInfo Resource { get; set; }
         /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

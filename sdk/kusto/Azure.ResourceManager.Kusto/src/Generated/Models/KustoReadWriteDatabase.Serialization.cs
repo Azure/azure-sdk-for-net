@@ -10,21 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     public partial class KustoReadWriteDatabase : IUtf8JsonSerializable, IJsonModel<KustoReadWriteDatabase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoReadWriteDatabase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoReadWriteDatabase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KustoReadWriteDatabase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KustoReadWriteDatabase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoReadWriteDatabase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoReadWriteDatabase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                writer.WriteObjectValue(Statistics, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsFollowed))
             {
@@ -85,12 +84,12 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                writer.WriteObjectValue(KeyVaultProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SuspensionDetails))
             {
                 writer.WritePropertyName("suspensionDetails"u8);
-                writer.WriteObjectValue(SuspensionDetails);
+                writer.WriteObjectValue(SuspensionDetails, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoReadWriteDatabase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoReadWriteDatabase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoReadWriteDatabase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoReadWriteDatabase DeserializeKustoReadWriteDatabase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.Kusto.Models
             KustoKeyVaultProperties keyVaultProperties = default;
             SuspensionDetails suspensionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -263,10 +262,10 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KustoReadWriteDatabase(
                 id,
                 name,
@@ -293,7 +292,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoReadWriteDatabase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoReadWriteDatabase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -309,7 +308,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeKustoReadWriteDatabase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoReadWriteDatabase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoReadWriteDatabase)} does not support reading '{options.Format}' format.");
             }
         }
 

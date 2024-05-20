@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
@@ -272,10 +270,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<WebSiteSlotConfigResource>> UpdateAsync(SiteConfigData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webSiteSlotConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigResource.Update");
             scope.Start();
@@ -317,10 +312,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<WebSiteSlotConfigResource> Update(SiteConfigData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webSiteSlotConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigResource.Update");
             scope.Start();
@@ -363,17 +355,16 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WebSiteSlotConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteConfigData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webSiteSlotConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _webSiteSlotConfigWebAppsRestClient.CreateOrUpdateConfigurationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteSlotConfigResource>(Response.FromValue(new WebSiteSlotConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _webSiteSlotConfigWebAppsRestClient.CreateCreateOrUpdateConfigurationSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<WebSiteSlotConfigResource>(Response.FromValue(new WebSiteSlotConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -412,17 +403,16 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WebSiteSlotConfigResource> CreateOrUpdate(WaitUntil waitUntil, SiteConfigData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webSiteSlotConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _webSiteSlotConfigWebAppsRestClient.CreateOrUpdateConfigurationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteSlotConfigResource>(Response.FromValue(new WebSiteSlotConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _webSiteSlotConfigWebAppsRestClient.CreateCreateOrUpdateConfigurationSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<WebSiteSlotConfigResource>(Response.FromValue(new WebSiteSlotConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

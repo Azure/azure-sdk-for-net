@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DesktopVirtualization.Models;
@@ -37,6 +36,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateExpandRequestUri(string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools/", false);
+            uri.AppendPath(hostPoolName, true);
+            uri.AppendPath("/expandMsixImage", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateExpandRequest(string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageUri)
         {
             var message = _pipeline.CreateMessage();
@@ -56,7 +70,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(msixImageUri);
+            content.JsonWriter.WriteObjectValue(msixImageUri, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -72,34 +86,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExpandMsixImageList>> ExpandAsync(string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (msixImageUri == null)
-            {
-                throw new ArgumentNullException(nameof(msixImageUri));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
 
             using var message = CreateExpandRequest(subscriptionId, resourceGroupName, hostPoolName, msixImageUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -127,34 +117,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExpandMsixImageList> Expand(string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (msixImageUri == null)
-            {
-                throw new ArgumentNullException(nameof(msixImageUri));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
 
             using var message = CreateExpandRequest(subscriptionId, resourceGroupName, hostPoolName, msixImageUri);
             _pipeline.Send(message, cancellationToken);
@@ -170,6 +136,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateExpandNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateExpandNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageUri)
@@ -197,38 +171,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExpandMsixImageList>> ExpandNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (msixImageUri == null)
-            {
-                throw new ArgumentNullException(nameof(msixImageUri));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
 
             using var message = CreateExpandNextPageRequest(nextLink, subscriptionId, resourceGroupName, hostPoolName, msixImageUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -257,38 +204,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExpandMsixImageList> ExpandNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (msixImageUri == null)
-            {
-                throw new ArgumentNullException(nameof(msixImageUri));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
 
             using var message = CreateExpandNextPageRequest(nextLink, subscriptionId, resourceGroupName, hostPoolName, msixImageUri);
             _pipeline.Send(message, cancellationToken);

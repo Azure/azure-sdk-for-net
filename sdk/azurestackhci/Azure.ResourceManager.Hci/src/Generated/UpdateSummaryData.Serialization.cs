@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Hci
 {
     public partial class UpdateSummaryData : IUtf8JsonSerializable, IJsonModel<UpdateSummaryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateSummaryData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateSummaryData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UpdateSummaryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UpdateSummaryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateSummaryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateSummaryData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in PackageVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in HealthCheckResult)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Hci
             var format = options.Format == "W" ? ((IPersistableModel<UpdateSummaryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateSummaryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateSummaryData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Hci
 
         internal static UpdateSummaryData DeserializeUpdateSummaryData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Hci
             DateTimeOffset? healthCheckDate = default;
             UpdateSummariesPropertiesState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -323,10 +323,10 @@ namespace Azure.ResourceManager.Hci
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UpdateSummaryData(
                 id,
                 name,
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Hci
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateSummaryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateSummaryData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Hci
                         return DeserializeUpdateSummaryData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateSummaryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateSummaryData)} does not support reading '{options.Format}' format.");
             }
         }
 

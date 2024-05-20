@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -34,18 +33,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="metricThresholds"/>, <paramref name="productionData"/> or <paramref name="referenceData"/> is null. </exception>
         public DataQualityMonitoringSignal(IEnumerable<DataQualityMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData)
         {
-            if (metricThresholds == null)
-            {
-                throw new ArgumentNullException(nameof(metricThresholds));
-            }
-            if (productionData == null)
-            {
-                throw new ArgumentNullException(nameof(productionData));
-            }
-            if (referenceData == null)
-            {
-                throw new ArgumentNullException(nameof(referenceData));
-            }
+            Argument.AssertNotNull(metricThresholds, nameof(metricThresholds));
+            Argument.AssertNotNull(productionData, nameof(productionData));
+            Argument.AssertNotNull(referenceData, nameof(referenceData));
 
             FeatureDataTypeOverride = new ChangeTrackingDictionary<string, MonitoringFeatureDataType>();
             MetricThresholds = metricThresholds.ToList();

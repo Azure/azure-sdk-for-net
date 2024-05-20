@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
@@ -201,7 +199,9 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _devTestLabServiceRunnerServiceRunnersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation(response);
+                var uri = _devTestLabServiceRunnerServiceRunnersRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DevTestLabsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -243,7 +243,9 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _devTestLabServiceRunnerServiceRunnersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevTestLabsArmOperation(response);
+                var uri = _devTestLabServiceRunnerServiceRunnersRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DevTestLabsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -282,17 +284,16 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DevTestLabServiceRunnerResource>> UpdateAsync(WaitUntil waitUntil, DevTestLabServiceRunnerData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerResource.Update");
             scope.Start();
             try
             {
                 var response = await _devTestLabServiceRunnerServiceRunnersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation<DevTestLabServiceRunnerResource>(Response.FromValue(new DevTestLabServiceRunnerResource(Client, response), response.GetRawResponse()));
+                var uri = _devTestLabServiceRunnerServiceRunnersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DevTestLabsArmOperation<DevTestLabServiceRunnerResource>(Response.FromValue(new DevTestLabServiceRunnerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -331,17 +332,16 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DevTestLabServiceRunnerResource> Update(WaitUntil waitUntil, DevTestLabServiceRunnerData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerResource.Update");
             scope.Start();
             try
             {
                 var response = _devTestLabServiceRunnerServiceRunnersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new DevTestLabsArmOperation<DevTestLabServiceRunnerResource>(Response.FromValue(new DevTestLabServiceRunnerResource(Client, response), response.GetRawResponse()));
+                var uri = _devTestLabServiceRunnerServiceRunnersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DevTestLabsArmOperation<DevTestLabServiceRunnerResource>(Response.FromValue(new DevTestLabServiceRunnerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -380,14 +380,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<DevTestLabServiceRunnerResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerResource.AddTag");
             scope.Start();
@@ -443,14 +437,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DevTestLabServiceRunnerResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerResource.AddTag");
             scope.Start();
@@ -505,10 +493,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DevTestLabServiceRunnerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerResource.SetTags");
             scope.Start();
@@ -564,10 +549,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DevTestLabServiceRunnerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerResource.SetTags");
             scope.Start();
@@ -623,10 +605,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<DevTestLabServiceRunnerResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerResource.RemoveTag");
             scope.Start();
@@ -681,10 +660,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DevTestLabServiceRunnerResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerResource.RemoveTag");
             scope.Start();

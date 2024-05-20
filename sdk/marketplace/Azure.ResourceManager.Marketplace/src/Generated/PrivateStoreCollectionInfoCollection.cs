@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Marketplace
 {
@@ -81,17 +79,16 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<ArmOperation<PrivateStoreCollectionInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, Guid collectionId, PrivateStoreCollectionInfoData info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateOrUpdateAsync(Guid.Parse(Id.Name), collectionId, info, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()));
+                var uri = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateCreateOrUpdateRequestUri(Guid.Parse(Id.Name), collectionId, info);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -131,17 +128,16 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual ArmOperation<PrivateStoreCollectionInfoResource> CreateOrUpdate(WaitUntil waitUntil, Guid collectionId, PrivateStoreCollectionInfoData info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateOrUpdate(Guid.Parse(Id.Name), collectionId, info, cancellationToken);
-                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()));
+                var uri = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateCreateOrUpdateRequestUri(Guid.Parse(Id.Name), collectionId, info);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

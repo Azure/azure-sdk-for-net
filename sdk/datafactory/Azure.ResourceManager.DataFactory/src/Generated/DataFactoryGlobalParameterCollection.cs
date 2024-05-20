@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataFactory
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="globalParameterName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryGlobalParameterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string globalParameterName, DataFactoryGlobalParameterData data, CancellationToken cancellationToken = default)
         {
-            if (globalParameterName == null)
-            {
-                throw new ArgumentNullException(nameof(globalParameterName));
-            }
-            if (globalParameterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalParameterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(globalParameterName, nameof(globalParameterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryGlobalParameterGlobalParametersClientDiagnostics.CreateScope("DataFactoryGlobalParameterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _dataFactoryGlobalParameterGlobalParametersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalParameterName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DataFactoryGlobalParameterResource>(Response.FromValue(new DataFactoryGlobalParameterResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryGlobalParameterGlobalParametersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalParameterName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation<DataFactoryGlobalParameterResource>(Response.FromValue(new DataFactoryGlobalParameterResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="globalParameterName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataFactoryGlobalParameterResource> CreateOrUpdate(WaitUntil waitUntil, string globalParameterName, DataFactoryGlobalParameterData data, CancellationToken cancellationToken = default)
         {
-            if (globalParameterName == null)
-            {
-                throw new ArgumentNullException(nameof(globalParameterName));
-            }
-            if (globalParameterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalParameterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(globalParameterName, nameof(globalParameterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryGlobalParameterGlobalParametersClientDiagnostics.CreateScope("DataFactoryGlobalParameterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _dataFactoryGlobalParameterGlobalParametersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalParameterName, data, cancellationToken);
-                var operation = new DataFactoryArmOperation<DataFactoryGlobalParameterResource>(Response.FromValue(new DataFactoryGlobalParameterResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryGlobalParameterGlobalParametersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, globalParameterName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation<DataFactoryGlobalParameterResource>(Response.FromValue(new DataFactoryGlobalParameterResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="globalParameterName"/> is null. </exception>
         public virtual async Task<Response<DataFactoryGlobalParameterResource>> GetAsync(string globalParameterName, CancellationToken cancellationToken = default)
         {
-            if (globalParameterName == null)
-            {
-                throw new ArgumentNullException(nameof(globalParameterName));
-            }
-            if (globalParameterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalParameterName));
-            }
+            Argument.AssertNotNullOrEmpty(globalParameterName, nameof(globalParameterName));
 
             using var scope = _dataFactoryGlobalParameterGlobalParametersClientDiagnostics.CreateScope("DataFactoryGlobalParameterCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="globalParameterName"/> is null. </exception>
         public virtual Response<DataFactoryGlobalParameterResource> Get(string globalParameterName, CancellationToken cancellationToken = default)
         {
-            if (globalParameterName == null)
-            {
-                throw new ArgumentNullException(nameof(globalParameterName));
-            }
-            if (globalParameterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalParameterName));
-            }
+            Argument.AssertNotNullOrEmpty(globalParameterName, nameof(globalParameterName));
 
             using var scope = _dataFactoryGlobalParameterGlobalParametersClientDiagnostics.CreateScope("DataFactoryGlobalParameterCollection.Get");
             scope.Start();
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="globalParameterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string globalParameterName, CancellationToken cancellationToken = default)
         {
-            if (globalParameterName == null)
-            {
-                throw new ArgumentNullException(nameof(globalParameterName));
-            }
-            if (globalParameterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalParameterName));
-            }
+            Argument.AssertNotNullOrEmpty(globalParameterName, nameof(globalParameterName));
 
             using var scope = _dataFactoryGlobalParameterGlobalParametersClientDiagnostics.CreateScope("DataFactoryGlobalParameterCollection.Exists");
             scope.Start();
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="globalParameterName"/> is null. </exception>
         public virtual Response<bool> Exists(string globalParameterName, CancellationToken cancellationToken = default)
         {
-            if (globalParameterName == null)
-            {
-                throw new ArgumentNullException(nameof(globalParameterName));
-            }
-            if (globalParameterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalParameterName));
-            }
+            Argument.AssertNotNullOrEmpty(globalParameterName, nameof(globalParameterName));
 
             using var scope = _dataFactoryGlobalParameterGlobalParametersClientDiagnostics.CreateScope("DataFactoryGlobalParameterCollection.Exists");
             scope.Start();
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="globalParameterName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataFactoryGlobalParameterResource>> GetIfExistsAsync(string globalParameterName, CancellationToken cancellationToken = default)
         {
-            if (globalParameterName == null)
-            {
-                throw new ArgumentNullException(nameof(globalParameterName));
-            }
-            if (globalParameterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalParameterName));
-            }
+            Argument.AssertNotNullOrEmpty(globalParameterName, nameof(globalParameterName));
 
             using var scope = _dataFactoryGlobalParameterGlobalParametersClientDiagnostics.CreateScope("DataFactoryGlobalParameterCollection.GetIfExists");
             scope.Start();
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="globalParameterName"/> is null. </exception>
         public virtual NullableResponse<DataFactoryGlobalParameterResource> GetIfExists(string globalParameterName, CancellationToken cancellationToken = default)
         {
-            if (globalParameterName == null)
-            {
-                throw new ArgumentNullException(nameof(globalParameterName));
-            }
-            if (globalParameterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalParameterName));
-            }
+            Argument.AssertNotNullOrEmpty(globalParameterName, nameof(globalParameterName));
 
             using var scope = _dataFactoryGlobalParameterGlobalParametersClientDiagnostics.CreateScope("DataFactoryGlobalParameterCollection.GetIfExists");
             scope.Start();

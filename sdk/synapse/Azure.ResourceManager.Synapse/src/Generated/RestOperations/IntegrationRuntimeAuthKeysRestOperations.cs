@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Synapse.Models;
@@ -37,6 +36,23 @@ namespace Azure.ResourceManager.Synapse
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateRegenerateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeRegenerateKeyContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Synapse/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/regenerateAuthKey", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRegenerateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeRegenerateKeyContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -58,7 +74,7 @@ namespace Azure.ResourceManager.Synapse
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -75,42 +91,11 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SynapseIntegrationRuntimeAuthKeys>> RegenerateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateRegenerateRequest(subscriptionId, resourceGroupName, workspaceName, integrationRuntimeName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -139,42 +124,11 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SynapseIntegrationRuntimeAuthKeys> Regenerate(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateRegenerateRequest(subscriptionId, resourceGroupName, workspaceName, integrationRuntimeName, content);
             _pipeline.Send(message, cancellationToken);
@@ -190,6 +144,23 @@ namespace Azure.ResourceManager.Synapse
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Synapse/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/listAuthKeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName)
@@ -225,38 +196,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SynapseIntegrationRuntimeAuthKeys>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, integrationRuntimeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -284,38 +227,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SynapseIntegrationRuntimeAuthKeys> List(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, integrationRuntimeName);
             _pipeline.Send(message, cancellationToken);

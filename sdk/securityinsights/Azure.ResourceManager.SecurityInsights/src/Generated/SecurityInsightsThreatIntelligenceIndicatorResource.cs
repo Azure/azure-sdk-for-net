@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
@@ -201,7 +199,9 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = await _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation(response);
+                var uri = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -243,7 +243,9 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SecurityInsightsArmOperation(response);
+                var uri = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -281,10 +283,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="threatIntelligenceAppendTags"/> is null. </exception>
         public virtual async Task<Response> AppendTagsAsync(ThreatIntelligenceAppendTags threatIntelligenceAppendTags, CancellationToken cancellationToken = default)
         {
-            if (threatIntelligenceAppendTags == null)
-            {
-                throw new ArgumentNullException(nameof(threatIntelligenceAppendTags));
-            }
+            Argument.AssertNotNull(threatIntelligenceAppendTags, nameof(threatIntelligenceAppendTags));
 
             using var scope = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsClientDiagnostics.CreateScope("SecurityInsightsThreatIntelligenceIndicatorResource.AppendTags");
             scope.Start();
@@ -326,10 +325,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="threatIntelligenceAppendTags"/> is null. </exception>
         public virtual Response AppendTags(ThreatIntelligenceAppendTags threatIntelligenceAppendTags, CancellationToken cancellationToken = default)
         {
-            if (threatIntelligenceAppendTags == null)
-            {
-                throw new ArgumentNullException(nameof(threatIntelligenceAppendTags));
-            }
+            Argument.AssertNotNull(threatIntelligenceAppendTags, nameof(threatIntelligenceAppendTags));
 
             using var scope = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsClientDiagnostics.CreateScope("SecurityInsightsThreatIntelligenceIndicatorResource.AppendTags");
             scope.Start();

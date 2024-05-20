@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -18,14 +19,14 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class PolicyAssignmentData : IUtf8JsonSerializable, IJsonModel<PolicyAssignmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyAssignmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyAssignmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicyAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAssignmentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Resources
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in NonComplianceMessages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in ResourceSelectors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Overrides)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAssignmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.Resources
 
         internal static PolicyAssignmentData DeserializePolicyAssignmentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.Resources
             IList<ResourceSelector> resourceSelectors = default;
             IList<PolicyOverride> overrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -373,10 +374,10 @@ namespace Azure.ResourceManager.Resources
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PolicyAssignmentData(
                 id,
                 name,
@@ -398,6 +399,358 @@ namespace Azure.ResourceManager.Resources
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    builder.Append("  location: ");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedIdentity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedIdentity))
+                {
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ManagedIdentity, options, 2, false, "  identity: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    displayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    builder.Append("    displayName: ");
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyDefinitionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    policyDefinitionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PolicyDefinitionId))
+                {
+                    builder.Append("    policyDefinitionId: ");
+                    if (PolicyDefinitionId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PolicyDefinitionId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PolicyDefinitionId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scope), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    scope: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Scope))
+                {
+                    builder.Append("    scope: ");
+                    if (Scope.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Scope}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Scope}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExcludedScopes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    notScopes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ExcludedScopes))
+                {
+                    if (ExcludedScopes.Any())
+                    {
+                        builder.Append("    notScopes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ExcludedScopes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameters), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    parameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Parameters))
+                {
+                    if (Parameters.Any())
+                    {
+                        builder.Append("    parameters: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Parameters)
+                        {
+                            builder.Append($"        '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 6, false, "    parameters: ");
+                        }
+                        builder.AppendLine("    }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("    description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metadata), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    metadata: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Metadata))
+                {
+                    builder.Append("    metadata: ");
+                    builder.AppendLine($"'{Metadata.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnforcementMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enforcementMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnforcementMode))
+                {
+                    builder.Append("    enforcementMode: ");
+                    builder.AppendLine($"'{EnforcementMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NonComplianceMessages), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    nonComplianceMessages: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NonComplianceMessages))
+                {
+                    if (NonComplianceMessages.Any())
+                    {
+                        builder.Append("    nonComplianceMessages: ");
+                        builder.AppendLine("[");
+                        foreach (var item in NonComplianceMessages)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    nonComplianceMessages: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceSelectors), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    resourceSelectors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ResourceSelectors))
+                {
+                    if (ResourceSelectors.Any())
+                    {
+                        builder.Append("    resourceSelectors: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ResourceSelectors)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    resourceSelectors: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Overrides), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    overrides: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Overrides))
+                {
+                    if (Overrides.Any())
+                    {
+                        builder.Append("    overrides: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Overrides)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    overrides: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PolicyAssignmentData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
@@ -406,8 +759,10 @@ namespace Azure.ResourceManager.Resources
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAssignmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -423,7 +778,7 @@ namespace Azure.ResourceManager.Resources
                         return DeserializePolicyAssignmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAssignmentData)} does not support reading '{options.Format}' format.");
             }
         }
 

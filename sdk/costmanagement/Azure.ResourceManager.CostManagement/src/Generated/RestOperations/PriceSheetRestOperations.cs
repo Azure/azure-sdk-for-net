@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -33,6 +32,21 @@ namespace Azure.ResourceManager.CostManagement
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateDownloadRequestUri(string billingAccountName, string billingProfileName, string invoiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileName, true);
+            uri.AppendPath("/invoices/", false);
+            uri.AppendPath(invoiceName, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/pricesheets/default/download", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDownloadRequest(string billingAccountName, string billingProfileName, string invoiceName)
@@ -65,30 +79,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DownloadAsync(string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
         {
-            if (billingAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountName));
-            }
-            if (billingAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountName));
-            }
-            if (billingProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileName));
-            }
-            if (billingProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileName));
-            }
-            if (invoiceName == null)
-            {
-                throw new ArgumentNullException(nameof(invoiceName));
-            }
-            if (invoiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(invoiceName));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
+            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
+            Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
 
             using var message = CreateDownloadRequest(billingAccountName, billingProfileName, invoiceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -111,30 +104,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Download(string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
         {
-            if (billingAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountName));
-            }
-            if (billingAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountName));
-            }
-            if (billingProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileName));
-            }
-            if (billingProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileName));
-            }
-            if (invoiceName == null)
-            {
-                throw new ArgumentNullException(nameof(invoiceName));
-            }
-            if (invoiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(invoiceName));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
+            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
+            Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
 
             using var message = CreateDownloadRequest(billingAccountName, billingProfileName, invoiceName);
             _pipeline.Send(message, cancellationToken);
@@ -146,6 +118,19 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDownloadByBillingProfileRequestUri(string billingAccountName, string billingProfileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileName, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/pricesheets/default/download", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDownloadByBillingProfileRequest(string billingAccountName, string billingProfileName)
@@ -175,22 +160,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DownloadByBillingProfileAsync(string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
         {
-            if (billingAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountName));
-            }
-            if (billingAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountName));
-            }
-            if (billingProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileName));
-            }
-            if (billingProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
+            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
 
             using var message = CreateDownloadByBillingProfileRequest(billingAccountName, billingProfileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -212,22 +183,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DownloadByBillingProfile(string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
         {
-            if (billingAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountName));
-            }
-            if (billingAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountName));
-            }
-            if (billingProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileName));
-            }
-            if (billingProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
+            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
 
             using var message = CreateDownloadByBillingProfileRequest(billingAccountName, billingProfileName);
             _pipeline.Send(message, cancellationToken);

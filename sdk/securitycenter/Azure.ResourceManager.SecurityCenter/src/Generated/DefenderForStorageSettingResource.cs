@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -199,17 +197,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DefenderForStorageSettingResource>> UpdateAsync(WaitUntil waitUntil, DefenderForStorageSettingName settingName, DefenderForStorageSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _defenderForStorageSettingDefenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingResource.Update");
             scope.Start();
             try
             {
                 var response = await _defenderForStorageSettingDefenderForStorageRestClient.CreateAsync(Id.Parent, settingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<DefenderForStorageSettingResource>(Response.FromValue(new DefenderForStorageSettingResource(Client, response), response.GetRawResponse()));
+                var uri = _defenderForStorageSettingDefenderForStorageRestClient.CreateCreateRequestUri(Id.Parent, settingName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<DefenderForStorageSettingResource>(Response.FromValue(new DefenderForStorageSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -249,17 +246,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DefenderForStorageSettingResource> Update(WaitUntil waitUntil, DefenderForStorageSettingName settingName, DefenderForStorageSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _defenderForStorageSettingDefenderForStorageClientDiagnostics.CreateScope("DefenderForStorageSettingResource.Update");
             scope.Start();
             try
             {
                 var response = _defenderForStorageSettingDefenderForStorageRestClient.Create(Id.Parent, settingName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<DefenderForStorageSettingResource>(Response.FromValue(new DefenderForStorageSettingResource(Client, response), response.GetRawResponse()));
+                var uri = _defenderForStorageSettingDefenderForStorageRestClient.CreateCreateRequestUri(Id.Parent, settingName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<DefenderForStorageSettingResource>(Response.FromValue(new DefenderForStorageSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -11,10 +11,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -72,25 +70,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<GovernanceRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleId, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _governanceRuleRestClient.CreateOrUpdateAsync(Id, ruleId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(new GovernanceRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _governanceRuleRestClient.CreateCreateOrUpdateRequestUri(Id, ruleId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(new GovernanceRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -131,25 +121,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<GovernanceRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleId, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _governanceRuleRestClient.CreateOrUpdate(Id, ruleId, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(new GovernanceRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _governanceRuleRestClient.CreateCreateOrUpdateRequestUri(Id, ruleId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<GovernanceRuleResource>(Response.FromValue(new GovernanceRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -188,14 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public virtual async Task<Response<GovernanceRuleResource>> GetAsync(string ruleId, CancellationToken cancellationToken = default)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleCollection.Get");
             scope.Start();
@@ -240,14 +215,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public virtual Response<GovernanceRuleResource> Get(string ruleId, CancellationToken cancellationToken = default)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleCollection.Get");
             scope.Start();
@@ -352,14 +320,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleId, CancellationToken cancellationToken = default)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleCollection.Exists");
             scope.Start();
@@ -402,14 +363,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleId, CancellationToken cancellationToken = default)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleCollection.Exists");
             scope.Start();
@@ -452,14 +406,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public virtual async Task<NullableResponse<GovernanceRuleResource>> GetIfExistsAsync(string ruleId, CancellationToken cancellationToken = default)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleCollection.GetIfExists");
             scope.Start();
@@ -504,14 +451,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public virtual NullableResponse<GovernanceRuleResource> GetIfExists(string ruleId, CancellationToken cancellationToken = default)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var scope = _governanceRuleClientDiagnostics.CreateScope("GovernanceRuleCollection.GetIfExists");
             scope.Start();

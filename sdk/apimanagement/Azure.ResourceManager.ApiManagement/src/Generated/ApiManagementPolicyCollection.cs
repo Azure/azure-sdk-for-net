@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
@@ -83,17 +81,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PolicyName policyId, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _apiManagementPolicyPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementPolicyResource>(Response.FromValue(new ApiManagementPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementPolicyPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementPolicyResource>(Response.FromValue(new ApiManagementPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -134,17 +131,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiManagementPolicyResource> CreateOrUpdate(WaitUntil waitUntil, PolicyName policyId, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _apiManagementPolicyPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyId, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementPolicyResource>(Response.FromValue(new ApiManagementPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementPolicyPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementPolicyResource>(Response.FromValue(new ApiManagementPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

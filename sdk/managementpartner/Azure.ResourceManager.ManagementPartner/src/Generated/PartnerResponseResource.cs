@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagementPartner
@@ -198,7 +196,9 @@ namespace Azure.ResourceManager.ManagementPartner
             try
             {
                 var response = await _partnerResponsePartnerRestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementPartnerArmOperation(response);
+                var uri = _partnerResponsePartnerRestClient.CreateDeleteRequestUri(Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ManagementPartnerArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -240,7 +240,9 @@ namespace Azure.ResourceManager.ManagementPartner
             try
             {
                 var response = _partnerResponsePartnerRestClient.Delete(Id.Name, cancellationToken);
-                var operation = new ManagementPartnerArmOperation(response);
+                var uri = _partnerResponsePartnerRestClient.CreateDeleteRequestUri(Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ManagementPartnerArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

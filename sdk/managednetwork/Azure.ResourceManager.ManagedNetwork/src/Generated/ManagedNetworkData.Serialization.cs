@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetwork.Models;
 using Azure.ResourceManager.Models;
@@ -18,14 +17,14 @@ namespace Azure.ResourceManager.ManagedNetwork
 {
     public partial class ManagedNetworkData : IUtf8JsonSerializable, IJsonModel<ManagedNetworkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedNetworkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedNetworkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedNetworkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,12 +76,12 @@ namespace Azure.ResourceManager.ManagedNetwork
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope);
+                writer.WriteObjectValue(Scope, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Connectivity))
             {
                 writer.WritePropertyName("connectivity"u8);
-                writer.WriteObjectValue(Connectivity);
+                writer.WriteObjectValue(Connectivity, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedNetworkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         internal static ManagedNetworkData DeserializeManagedNetworkData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -134,7 +133,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             Scope scope = default;
             ConnectivityCollection connectivity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -230,10 +229,10 @@ namespace Azure.ResourceManager.ManagedNetwork
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedNetworkData(
                 id,
                 name,
@@ -257,7 +256,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedNetworkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -273,7 +272,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                         return DeserializeManagedNetworkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedNetworkData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SyncAgentKeyProperties : IUtf8JsonSerializable, IJsonModel<SyncAgentKeyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncAgentKeyProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncAgentKeyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SyncAgentKeyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SyncAgentKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncAgentKeyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncAgentKeyProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SyncAgentKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncAgentKeyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncAgentKeyProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SyncAgentKeyProperties DeserializeSyncAgentKeyProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             string syncAgentKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("syncAgentKey"u8))
@@ -82,11 +82,49 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SyncAgentKeyProperties(syncAgentKey, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SyncAgentKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  syncAgentKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SyncAgentKey))
+                {
+                    builder.Append("  syncAgentKey: ");
+                    if (SyncAgentKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SyncAgentKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SyncAgentKey}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SyncAgentKeyProperties>.Write(ModelReaderWriterOptions options)
@@ -97,8 +135,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SyncAgentKeyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncAgentKeyProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -114,7 +154,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSyncAgentKeyProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SyncAgentKeyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncAgentKeyProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI;
@@ -54,6 +55,30 @@ public partial class AudioTranscriptionOptions
     /// </para>
     /// </remarks>
     public string DeploymentName { get; set; }
+
+    // CUSTOM CODE NOTE:
+    // The specification-level array of strings for timestamp granularities (["word","segment"]) is replaced by a
+    // [Flags] enum.
+
+    /// <summary>
+    /// The bitwise-aggregated timestamp granularity types that should be requested on an audio transcription
+    /// operation.
+    /// </summary>
+    /// <remarks>
+    /// <para>Transcription timing information requires the <see cref="AudioTranscriptionFormat.Verbose"/> setting
+    /// for <see cref="ResponseFormat"/>.</para>
+    /// <para>If no explicit value is set for <see cref="TimestampGranularityFlags"/>, segment-level timing
+    /// information will be provided by default.</para>
+    /// <para>Multiple timestamp granularities may be requested via joining values with the single-pipe |
+    /// operator, with e.g. the following requesting both word- and segment-level timing:
+    /// <code>
+    /// TimestampGranularityFlags = <see cref="AudioTimestampGranularity.Word"/> | <see cref="AudioTimestampGranularity.Segment"/>
+    /// </code>
+    /// </para>
+    /// </remarks>
+    public AudioTimestampGranularity TimestampGranularityFlags { get; set; }
+
+    internal IList<AudioTranscriptionTimestampGranularity> TimestampGranularities { get; set; }
 
     // CUSTOM CODE NOTE:
     // Add a parameterized constructor that receives the deployment name as a parameter in addition

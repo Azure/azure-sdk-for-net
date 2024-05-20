@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Network.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.Network
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2018-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListNetworkInterfacesRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/networkInterfaces", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListNetworkInterfacesRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
@@ -67,30 +81,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkInterfaceListResult>> ListNetworkInterfacesAsync(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
             using var message = CreateListNetworkInterfacesRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +110,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkInterfaceListResult> ListNetworkInterfaces(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
             using var message = CreateListNetworkInterfacesRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             _pipeline.Send(message, cancellationToken);
@@ -156,6 +128,28 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetNetworkInterfaceRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/virtualMachines/", false);
+            uri.AppendPath(virtualmachineIndex, true);
+            uri.AppendPath("/networkInterfaces/", false);
+            uri.AppendPath(networkInterfaceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetNetworkInterfaceRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand)
@@ -198,46 +192,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkInterfaceData>> GetNetworkInterfaceAsync(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (virtualmachineIndex == null)
-            {
-                throw new ArgumentNullException(nameof(virtualmachineIndex));
-            }
-            if (virtualmachineIndex.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualmachineIndex));
-            }
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (networkInterfaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(virtualmachineIndex, nameof(virtualmachineIndex));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
             using var message = CreateGetNetworkInterfaceRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -267,46 +226,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkInterfaceData> GetNetworkInterface(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (virtualmachineIndex == null)
-            {
-                throw new ArgumentNullException(nameof(virtualmachineIndex));
-            }
-            if (virtualmachineIndex.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualmachineIndex));
-            }
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (networkInterfaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(virtualmachineIndex, nameof(virtualmachineIndex));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
             using var message = CreateGetNetworkInterfaceRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -322,6 +246,29 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListIPConfigurationsRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/virtualMachines/", false);
+            uri.AppendPath(virtualmachineIndex, true);
+            uri.AppendPath("/networkInterfaces/", false);
+            uri.AppendPath(networkInterfaceName, true);
+            uri.AppendPath("/ipConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListIPConfigurationsRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand)
@@ -365,46 +312,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkInterfaceIPConfigurationListResult>> ListIPConfigurationsAsync(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (virtualmachineIndex == null)
-            {
-                throw new ArgumentNullException(nameof(virtualmachineIndex));
-            }
-            if (virtualmachineIndex.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualmachineIndex));
-            }
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (networkInterfaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(virtualmachineIndex, nameof(virtualmachineIndex));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
             using var message = CreateListIPConfigurationsRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -434,46 +346,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkInterfaceIPConfigurationListResult> ListIPConfigurations(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (virtualmachineIndex == null)
-            {
-                throw new ArgumentNullException(nameof(virtualmachineIndex));
-            }
-            if (virtualmachineIndex.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualmachineIndex));
-            }
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (networkInterfaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(virtualmachineIndex, nameof(virtualmachineIndex));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
             using var message = CreateListIPConfigurationsRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -489,6 +366,30 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetIPConfigurationRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/virtualMachines/", false);
+            uri.AppendPath(virtualmachineIndex, true);
+            uri.AppendPath("/networkInterfaces/", false);
+            uri.AppendPath(networkInterfaceName, true);
+            uri.AppendPath("/ipConfigurations/", false);
+            uri.AppendPath(ipConfigurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetIPConfigurationRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string expand)
@@ -534,54 +435,12 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/> or <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkInterfaceIPConfigurationData>> GetIPConfigurationAsync(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (virtualmachineIndex == null)
-            {
-                throw new ArgumentNullException(nameof(virtualmachineIndex));
-            }
-            if (virtualmachineIndex.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualmachineIndex));
-            }
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (networkInterfaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
-            }
-            if (ipConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigurationName));
-            }
-            if (ipConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(virtualmachineIndex, nameof(virtualmachineIndex));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
 
             using var message = CreateGetIPConfigurationRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -612,54 +471,12 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/> or <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkInterfaceIPConfigurationData> GetIPConfiguration(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (virtualmachineIndex == null)
-            {
-                throw new ArgumentNullException(nameof(virtualmachineIndex));
-            }
-            if (virtualmachineIndex.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualmachineIndex));
-            }
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (networkInterfaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
-            }
-            if (ipConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigurationName));
-            }
-            if (ipConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(virtualmachineIndex, nameof(virtualmachineIndex));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
 
             using var message = CreateGetIPConfigurationRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -675,6 +492,21 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListPublicIPAddressesRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/publicipaddresses", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListPublicIPAddressesRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
@@ -707,30 +539,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PublicIPAddressListResult>> ListPublicIPAddressesAsync(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
             using var message = CreateListPublicIPAddressesRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -757,30 +568,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PublicIPAddressListResult> ListPublicIPAddresses(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
             using var message = CreateListPublicIPAddressesRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             _pipeline.Send(message, cancellationToken);
@@ -796,6 +586,32 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPublicIPAddressRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIPAddressName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/virtualMachines/", false);
+            uri.AppendPath(virtualmachineIndex, true);
+            uri.AppendPath("/networkInterfaces/", false);
+            uri.AppendPath(networkInterfaceName, true);
+            uri.AppendPath("/ipconfigurations/", false);
+            uri.AppendPath(ipConfigurationName, true);
+            uri.AppendPath("/publicipaddresses/", false);
+            uri.AppendPath(publicIPAddressName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetPublicIPAddressRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIPAddressName, string expand)
@@ -844,62 +660,13 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/>, <paramref name="ipConfigurationName"/> or <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PublicIPAddressData>> GetPublicIPAddressAsync(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (virtualmachineIndex == null)
-            {
-                throw new ArgumentNullException(nameof(virtualmachineIndex));
-            }
-            if (virtualmachineIndex.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualmachineIndex));
-            }
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (networkInterfaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
-            }
-            if (ipConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigurationName));
-            }
-            if (ipConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigurationName));
-            }
-            if (publicIPAddressName == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPAddressName));
-            }
-            if (publicIPAddressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPAddressName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(virtualmachineIndex, nameof(virtualmachineIndex));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
 
             using var message = CreateGetPublicIPAddressRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, publicIPAddressName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -931,62 +698,13 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/>, <paramref name="networkInterfaceName"/>, <paramref name="ipConfigurationName"/> or <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PublicIPAddressData> GetPublicIPAddress(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (virtualmachineIndex == null)
-            {
-                throw new ArgumentNullException(nameof(virtualmachineIndex));
-            }
-            if (virtualmachineIndex.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualmachineIndex));
-            }
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (networkInterfaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
-            }
-            if (ipConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigurationName));
-            }
-            if (ipConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipConfigurationName));
-            }
-            if (publicIPAddressName == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPAddressName));
-            }
-            if (publicIPAddressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPAddressName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(virtualmachineIndex, nameof(virtualmachineIndex));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
 
             using var message = CreateGetPublicIPAddressRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, ipConfigurationName, publicIPAddressName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -1002,6 +720,14 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNetworkInterfacesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNetworkInterfacesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
@@ -1028,34 +754,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkInterfaceListResult>> ListNetworkInterfacesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
             using var message = CreateListNetworkInterfacesNextPageRequest(nextLink, subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1083,34 +785,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkInterfaceListResult> ListNetworkInterfacesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
             using var message = CreateListNetworkInterfacesNextPageRequest(nextLink, subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             _pipeline.Send(message, cancellationToken);
@@ -1126,6 +804,14 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListIPConfigurationsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListIPConfigurationsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand)
@@ -1155,50 +841,12 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkInterfaceIPConfigurationListResult>> ListIPConfigurationsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (virtualmachineIndex == null)
-            {
-                throw new ArgumentNullException(nameof(virtualmachineIndex));
-            }
-            if (virtualmachineIndex.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualmachineIndex));
-            }
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (networkInterfaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(virtualmachineIndex, nameof(virtualmachineIndex));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
             using var message = CreateListIPConfigurationsNextPageRequest(nextLink, subscriptionId, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1229,50 +877,12 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkInterfaceIPConfigurationListResult> ListIPConfigurationsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
-            if (virtualmachineIndex == null)
-            {
-                throw new ArgumentNullException(nameof(virtualmachineIndex));
-            }
-            if (virtualmachineIndex.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualmachineIndex));
-            }
-            if (networkInterfaceName == null)
-            {
-                throw new ArgumentNullException(nameof(networkInterfaceName));
-            }
-            if (networkInterfaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkInterfaceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(virtualmachineIndex, nameof(virtualmachineIndex));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
             using var message = CreateListIPConfigurationsNextPageRequest(nextLink, subscriptionId, resourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -1288,6 +898,14 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListPublicIPAddressesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListPublicIPAddressesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
@@ -1314,34 +932,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PublicIPAddressListResult>> ListPublicIPAddressesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
             using var message = CreateListPublicIPAddressesNextPageRequest(nextLink, subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1369,34 +963,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PublicIPAddressListResult> ListPublicIPAddressesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
             using var message = CreateListPublicIPAddressesNextPageRequest(nextLink, subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             _pipeline.Send(message, cancellationToken);

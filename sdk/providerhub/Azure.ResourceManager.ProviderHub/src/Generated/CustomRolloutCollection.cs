@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ProviderHub
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CustomRolloutResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string rolloutName, CustomRolloutData data, CancellationToken cancellationToken = default)
         {
-            if (rolloutName == null)
-            {
-                throw new ArgumentNullException(nameof(rolloutName));
-            }
-            if (rolloutName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rolloutName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _customRolloutRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Name, rolloutName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<CustomRolloutResource>(Response.FromValue(new CustomRolloutResource(Client, response), response.GetRawResponse()));
+                var uri = _customRolloutRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Name, rolloutName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation<CustomRolloutResource>(Response.FromValue(new CustomRolloutResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CustomRolloutResource> CreateOrUpdate(WaitUntil waitUntil, string rolloutName, CustomRolloutData data, CancellationToken cancellationToken = default)
         {
-            if (rolloutName == null)
-            {
-                throw new ArgumentNullException(nameof(rolloutName));
-            }
-            if (rolloutName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rolloutName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _customRolloutRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Name, rolloutName, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<CustomRolloutResource>(Response.FromValue(new CustomRolloutResource(Client, response), response.GetRawResponse()));
+                var uri = _customRolloutRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Name, rolloutName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation<CustomRolloutResource>(Response.FromValue(new CustomRolloutResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
         public virtual async Task<Response<CustomRolloutResource>> GetAsync(string rolloutName, CancellationToken cancellationToken = default)
         {
-            if (rolloutName == null)
-            {
-                throw new ArgumentNullException(nameof(rolloutName));
-            }
-            if (rolloutName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rolloutName));
-            }
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
 
             using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
         public virtual Response<CustomRolloutResource> Get(string rolloutName, CancellationToken cancellationToken = default)
         {
-            if (rolloutName == null)
-            {
-                throw new ArgumentNullException(nameof(rolloutName));
-            }
-            if (rolloutName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rolloutName));
-            }
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
 
             using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutCollection.Get");
             scope.Start();
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string rolloutName, CancellationToken cancellationToken = default)
         {
-            if (rolloutName == null)
-            {
-                throw new ArgumentNullException(nameof(rolloutName));
-            }
-            if (rolloutName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rolloutName));
-            }
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
 
             using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutCollection.Exists");
             scope.Start();
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
         public virtual Response<bool> Exists(string rolloutName, CancellationToken cancellationToken = default)
         {
-            if (rolloutName == null)
-            {
-                throw new ArgumentNullException(nameof(rolloutName));
-            }
-            if (rolloutName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rolloutName));
-            }
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
 
             using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutCollection.Exists");
             scope.Start();
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
         public virtual async Task<NullableResponse<CustomRolloutResource>> GetIfExistsAsync(string rolloutName, CancellationToken cancellationToken = default)
         {
-            if (rolloutName == null)
-            {
-                throw new ArgumentNullException(nameof(rolloutName));
-            }
-            if (rolloutName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rolloutName));
-            }
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
 
             using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutCollection.GetIfExists");
             scope.Start();
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
         public virtual NullableResponse<CustomRolloutResource> GetIfExists(string rolloutName, CancellationToken cancellationToken = default)
         {
-            if (rolloutName == null)
-            {
-                throw new ArgumentNullException(nameof(rolloutName));
-            }
-            if (rolloutName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rolloutName));
-            }
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
 
             using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutCollection.GetIfExists");
             scope.Start();

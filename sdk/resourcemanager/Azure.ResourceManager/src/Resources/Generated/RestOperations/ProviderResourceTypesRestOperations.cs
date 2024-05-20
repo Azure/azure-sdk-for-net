@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources.Models;
@@ -35,6 +34,23 @@ namespace Azure.ResourceManager.Resources
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceProviderNamespace, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(resourceProviderNamespace, true);
+            uri.AppendPath("/resourceTypes", false);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceProviderNamespace, string expand)
@@ -69,22 +85,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProviderResourceTypeListResult>> ListAsync(string subscriptionId, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(resourceProviderNamespace));
-            }
-            if (resourceProviderNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceProviderNamespace));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
             using var message = CreateListRequest(subscriptionId, resourceProviderNamespace, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -111,22 +113,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProviderResourceTypeListResult> List(string subscriptionId, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(resourceProviderNamespace));
-            }
-            if (resourceProviderNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceProviderNamespace));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
             using var message = CreateListRequest(subscriptionId, resourceProviderNamespace, expand);
             _pipeline.Send(message, cancellationToken);

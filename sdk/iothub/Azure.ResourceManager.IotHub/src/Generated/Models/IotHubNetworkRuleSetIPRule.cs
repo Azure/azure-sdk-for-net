@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="ipMask"/> is null. </exception>
         public IotHubNetworkRuleSetIPRule(string filterName, string ipMask)
         {
-            if (filterName == null)
-            {
-                throw new ArgumentNullException(nameof(filterName));
-            }
-            if (ipMask == null)
-            {
-                throw new ArgumentNullException(nameof(ipMask));
-            }
+            Argument.AssertNotNull(filterName, nameof(filterName));
+            Argument.AssertNotNull(ipMask, nameof(ipMask));
 
             FilterName = filterName;
             IPMask = ipMask;

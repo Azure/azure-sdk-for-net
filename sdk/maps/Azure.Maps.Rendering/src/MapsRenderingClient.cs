@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Rendering
 {
@@ -63,7 +64,7 @@ namespace Azure.Maps.Rendering
 
         /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Maps Render Service. </param>
-        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
         public MapsRenderingClient(TokenCredential credential, string clientId)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -78,7 +79,7 @@ namespace Azure.Maps.Rendering
 
         /// <summary> Initializes a new instance of MapsRenderingClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Maps Render Service. </param>
-        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public MapsRenderingClient(TokenCredential credential, string clientId, MapsRenderingClientOptions options)
         {
@@ -125,7 +126,7 @@ namespace Azure.Maps.Rendering
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
         internal MapsRenderingClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, MapsRenderingClientOptions.ServiceVersion apiVersion = MapsRenderingClientOptions.LatestVersion)
@@ -181,7 +182,7 @@ namespace Azure.Maps.Rendering
                 List<string> paths = null;
                 if (options?.ImagePathStyles != null)
                 {
-                    pushpins = new List<string>();
+                    paths = new List<string>();
                     foreach (var path in options?.ImagePathStyles)
                     {
                         paths.Add(path.ToQueryString());
@@ -417,7 +418,7 @@ namespace Azure.Maps.Rendering
         /// <summary>
         /// The Get Map Attribution API allows users to request map copyright attribution information for a section of a tileset.
         /// </summary>
-        /// <param name="tileSetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset zoom levels. Every tileset has a <see cref="MapTileSetId"/> to use when making requests. The <see cref="MapTileSetId"/> for tilesets created using <see href="https://aka.ms/amcreator">Azure Maps Creator</see> are generated through the <see href="https://docs.microsoft.com/en-us/rest/api/maps/tileset">Tileset Create API</see>. The ready-to-use tilesets supplied by Azure Maps are listed below. For example, <c>microsoft.base</c>. </param>
+        /// <param name="tileSetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset zoom levels. Every tileset has a <see cref="MapTileSetId"/> to use when making requests. The <see cref="MapTileSetId"/> for tilesets created using <see href="https://aka.ms/amcreator">Azure Maps Creator</see> are generated through the <see href="https://docs.microsoft.com/rest/api/maps-creator/tileset">Tileset Create API</see>. The ready-to-use tilesets supplied by Azure Maps are listed below. For example, <c>microsoft.base</c>. </param>
         /// <param name="zoom"> Zoom level for the desired map attribution. Available values are 0 to 22. </param>
         /// <param name="boundingBox"> The <see cref="GeoBoundingBox"/> that represents the rectangular area of a bounding box. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -453,7 +454,7 @@ namespace Azure.Maps.Rendering
         /// <summary>
         /// The Get Map Attribution API allows users to request map copyright attribution information for a section of a tileset.
         /// </summary>
-        /// <param name="tileSetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset zoom levels. Every tileset has a <see cref="MapTileSetId"/> to use when making requests. The <see cref="MapTileSetId"/> for tilesets created using <see href="https://aka.ms/amcreator">Azure Maps Creator</see> are generated through the <see href="https://docs.microsoft.com/en-us/rest/api/maps/tileset">Tileset Create API</see>. The ready-to-use tilesets supplied by Azure Maps are listed below. For example, <c>microsoft.base</c>. </param>
+        /// <param name="tileSetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset zoom levels. Every tileset has a <see cref="MapTileSetId"/> to use when making requests. The <see cref="MapTileSetId"/> for tilesets created using <see href="https://aka.ms/amcreator">Azure Maps Creator</see> are generated through the <see href="https://docs.microsoft.com/rest/api/maps-creator/tileset">Tileset Create API</see>. The ready-to-use tilesets supplied by Azure Maps are listed below. For example, <c>microsoft.base</c>. </param>
         /// <param name="zoom"> Zoom level for the desired map attribution. Available values are 0 to 22. </param>
         /// <param name="boundingBox"> The <see cref="GeoBoundingBox"/> that represents the rectangular area of a bounding box. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -488,7 +489,7 @@ namespace Azure.Maps.Rendering
         /// <summary>
         /// The Get Map Tileset API allows users to request metadata for a tileset.
         /// </summary>
-        /// <param name="tileSetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset zoom levels. Every tileset has a <see cref="MapTileSetId"/> to use when making requests. The <see cref="MapTileSetId"/> for tilesets created using <see href="https://aka.ms/amcreator">Azure Maps Creator</see> are generated through the <see href="https://docs.microsoft.com/en-us/rest/api/maps/tileset">Tileset Create API</see>. The ready-to-use tilesets supplied by Azure Maps are listed below. For example, <c>microsoft.base</c>. </param>
+        /// <param name="tileSetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset zoom levels. Every tileset has a <see cref="MapTileSetId"/> to use when making requests. The <see cref="MapTileSetId"/> for tilesets created using <see href="https://aka.ms/amcreator">Azure Maps Creator</see> are generated through the <see href="https://docs.microsoft.com/rest/api/maps-creator/tileset">Tileset Create API</see>. The ready-to-use tilesets supplied by Azure Maps are listed below. For example, <c>microsoft.base</c>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tileSetId"/> is null. </exception>
         public virtual async Task<Response<MapTileSet>> GetMapTileSetAsync(MapTileSetId tileSetId, CancellationToken cancellationToken = default)
@@ -513,7 +514,7 @@ namespace Azure.Maps.Rendering
         /// <summary>
         /// The Get Map Tileset API allows users to request metadata for a tileset.
         /// </summary>
-        /// <param name="tileSetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset zoom levels. Every tileset has a <see cref="MapTileSetId"/> to use when making requests. The <see cref="MapTileSetId"/> for tilesets created using <see href="https://aka.ms/amcreator">Azure Maps Creator</see> are generated through the <see href="https://docs.microsoft.com/en-us/rest/api/maps/tileset">Tileset Create API</see>. The ready-to-use tilesets supplied by Azure Maps are listed below. For example, <c>microsoft.base</c>. </param>
+        /// <param name="tileSetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset zoom levels. Every tileset has a <see cref="MapTileSetId"/> to use when making requests. The <see cref="MapTileSetId"/> for tilesets created using <see href="https://aka.ms/amcreator">Azure Maps Creator</see> are generated through the <see href="https://docs.microsoft.com/rest/api/maps-creator/tileset">Tileset Create API</see>. The ready-to-use tilesets supplied by Azure Maps are listed below. For example, <c>microsoft.base</c>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tileSetId"/> is null. </exception>
         public virtual Response<MapTileSet> GetMapTileSet(MapTileSetId tileSetId, CancellationToken cancellationToken = default)

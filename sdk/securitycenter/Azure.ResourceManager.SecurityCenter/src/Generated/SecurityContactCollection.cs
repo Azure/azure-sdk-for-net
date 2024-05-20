@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityContactResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string securityContactName, SecurityContactData data, CancellationToken cancellationToken = default)
         {
-            if (securityContactName == null)
-            {
-                throw new ArgumentNullException(nameof(securityContactName));
-            }
-            if (securityContactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityContactName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(securityContactName, nameof(securityContactName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityContactClientDiagnostics.CreateScope("SecurityContactCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _securityContactRestClient.CreateAsync(Id.SubscriptionId, securityContactName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecurityContactResource>(Response.FromValue(new SecurityContactResource(Client, response), response.GetRawResponse()));
+                var uri = _securityContactRestClient.CreateCreateRequestUri(Id.SubscriptionId, securityContactName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityContactResource>(Response.FromValue(new SecurityContactResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityContactResource> CreateOrUpdate(WaitUntil waitUntil, string securityContactName, SecurityContactData data, CancellationToken cancellationToken = default)
         {
-            if (securityContactName == null)
-            {
-                throw new ArgumentNullException(nameof(securityContactName));
-            }
-            if (securityContactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityContactName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(securityContactName, nameof(securityContactName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityContactClientDiagnostics.CreateScope("SecurityContactCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _securityContactRestClient.Create(Id.SubscriptionId, securityContactName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecurityContactResource>(Response.FromValue(new SecurityContactResource(Client, response), response.GetRawResponse()));
+                var uri = _securityContactRestClient.CreateCreateRequestUri(Id.SubscriptionId, securityContactName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityContactResource>(Response.FromValue(new SecurityContactResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
         public virtual async Task<Response<SecurityContactResource>> GetAsync(string securityContactName, CancellationToken cancellationToken = default)
         {
-            if (securityContactName == null)
-            {
-                throw new ArgumentNullException(nameof(securityContactName));
-            }
-            if (securityContactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityContactName));
-            }
+            Argument.AssertNotNullOrEmpty(securityContactName, nameof(securityContactName));
 
             using var scope = _securityContactClientDiagnostics.CreateScope("SecurityContactCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
         public virtual Response<SecurityContactResource> Get(string securityContactName, CancellationToken cancellationToken = default)
         {
-            if (securityContactName == null)
-            {
-                throw new ArgumentNullException(nameof(securityContactName));
-            }
-            if (securityContactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityContactName));
-            }
+            Argument.AssertNotNullOrEmpty(securityContactName, nameof(securityContactName));
 
             using var scope = _securityContactClientDiagnostics.CreateScope("SecurityContactCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string securityContactName, CancellationToken cancellationToken = default)
         {
-            if (securityContactName == null)
-            {
-                throw new ArgumentNullException(nameof(securityContactName));
-            }
-            if (securityContactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityContactName));
-            }
+            Argument.AssertNotNullOrEmpty(securityContactName, nameof(securityContactName));
 
             using var scope = _securityContactClientDiagnostics.CreateScope("SecurityContactCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
         public virtual Response<bool> Exists(string securityContactName, CancellationToken cancellationToken = default)
         {
-            if (securityContactName == null)
-            {
-                throw new ArgumentNullException(nameof(securityContactName));
-            }
-            if (securityContactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityContactName));
-            }
+            Argument.AssertNotNullOrEmpty(securityContactName, nameof(securityContactName));
 
             using var scope = _securityContactClientDiagnostics.CreateScope("SecurityContactCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityContactResource>> GetIfExistsAsync(string securityContactName, CancellationToken cancellationToken = default)
         {
-            if (securityContactName == null)
-            {
-                throw new ArgumentNullException(nameof(securityContactName));
-            }
-            if (securityContactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityContactName));
-            }
+            Argument.AssertNotNullOrEmpty(securityContactName, nameof(securityContactName));
 
             using var scope = _securityContactClientDiagnostics.CreateScope("SecurityContactCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="securityContactName"/> is null. </exception>
         public virtual NullableResponse<SecurityContactResource> GetIfExists(string securityContactName, CancellationToken cancellationToken = default)
         {
-            if (securityContactName == null)
-            {
-                throw new ArgumentNullException(nameof(securityContactName));
-            }
-            if (securityContactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securityContactName));
-            }
+            Argument.AssertNotNullOrEmpty(securityContactName, nameof(securityContactName));
 
             using var scope = _securityContactClientDiagnostics.CreateScope("SecurityContactCollection.GetIfExists");
             scope.Start();

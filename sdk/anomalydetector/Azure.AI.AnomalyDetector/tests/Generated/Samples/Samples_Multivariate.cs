@@ -8,8 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
-using Azure.AI.AnomalyDetector;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -181,8 +179,8 @@ namespace Azure.AI.AnomalyDetector.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 dataSource = "http://localhost:3000",
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
             });
             Response response = client.TrainMultivariateModel(content);
 
@@ -203,8 +201,8 @@ namespace Azure.AI.AnomalyDetector.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 dataSource = "http://localhost:3000",
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
             });
             Response response = await client.TrainMultivariateModelAsync(content);
 
@@ -222,7 +220,7 @@ namespace Azure.AI.AnomalyDetector.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient(apiVersion: "v1.1");
 
-            ModelInfo modelInfo = new ModelInfo(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+            ModelInfo modelInfo = new ModelInfo(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
             Response<AnomalyDetectionModel> response = client.TrainMultivariateModel(modelInfo);
         }
 
@@ -234,7 +232,7 @@ namespace Azure.AI.AnomalyDetector.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient(apiVersion: "v1.1");
 
-            ModelInfo modelInfo = new ModelInfo(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+            ModelInfo modelInfo = new ModelInfo(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
             Response<AnomalyDetectionModel> response = await client.TrainMultivariateModelAsync(modelInfo);
         }
 
@@ -250,8 +248,8 @@ namespace Azure.AI.AnomalyDetector.Samples
             {
                 dataSource = "http://localhost:3000",
                 dataSchema = "OneTable",
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
                 displayName = "<displayName>",
                 slidingWindow = 1234,
                 alignPolicy = new
@@ -302,8 +300,8 @@ namespace Azure.AI.AnomalyDetector.Samples
             {
                 dataSource = "http://localhost:3000",
                 dataSchema = "OneTable",
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
                 displayName = "<displayName>",
                 slidingWindow = 1234,
                 alignPolicy = new
@@ -350,7 +348,7 @@ namespace Azure.AI.AnomalyDetector.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient(apiVersion: "v1.1");
 
-            ModelInfo modelInfo = new ModelInfo(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"))
+            ModelInfo modelInfo = new ModelInfo(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"))
             {
                 DataSchema = DataSchema.OneTable,
                 DisplayName = "<displayName>",
@@ -373,7 +371,7 @@ namespace Azure.AI.AnomalyDetector.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient(apiVersion: "v1.1");
 
-            ModelInfo modelInfo = new ModelInfo(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"))
+            ModelInfo modelInfo = new ModelInfo(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"))
             {
                 DataSchema = DataSchema.OneTable,
                 DisplayName = "<displayName>",
@@ -601,8 +599,8 @@ namespace Azure.AI.AnomalyDetector.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 dataSource = "http://localhost:3000",
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
             });
             Response response = client.DetectMultivariateBatchAnomaly("<modelId>", content);
 
@@ -626,8 +624,8 @@ namespace Azure.AI.AnomalyDetector.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 dataSource = "http://localhost:3000",
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
             });
             Response response = await client.DetectMultivariateBatchAnomalyAsync("<modelId>", content);
 
@@ -648,7 +646,7 @@ namespace Azure.AI.AnomalyDetector.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient(apiVersion: "v1.1");
 
-            MultivariateBatchDetectionOptions options = new MultivariateBatchDetectionOptions(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+            MultivariateBatchDetectionOptions options = new MultivariateBatchDetectionOptions(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
             Response<MultivariateDetectionResult> response = client.DetectMultivariateBatchAnomaly("<modelId>", options);
         }
 
@@ -660,7 +658,7 @@ namespace Azure.AI.AnomalyDetector.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient(apiVersion: "v1.1");
 
-            MultivariateBatchDetectionOptions options = new MultivariateBatchDetectionOptions(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
+            MultivariateBatchDetectionOptions options = new MultivariateBatchDetectionOptions(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"));
             Response<MultivariateDetectionResult> response = await client.DetectMultivariateBatchAnomalyAsync("<modelId>", options);
         }
 
@@ -676,8 +674,8 @@ namespace Azure.AI.AnomalyDetector.Samples
             {
                 dataSource = "http://localhost:3000",
                 topContributorCount = 1234,
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
             });
             Response response = client.DetectMultivariateBatchAnomaly("<modelId>", content);
 
@@ -718,8 +716,8 @@ namespace Azure.AI.AnomalyDetector.Samples
             {
                 dataSource = "http://localhost:3000",
                 topContributorCount = 1234,
-                startTime = "2022-05-10T14:57:31.2311892-04:00",
-                endTime = "2022-05-10T14:57:31.2311892-04:00",
+                startTime = "2022-05-10T18:57:31.2311892Z",
+                endTime = "2022-05-10T18:57:31.2311892Z",
             });
             Response response = await client.DetectMultivariateBatchAnomalyAsync("<modelId>", content);
 
@@ -756,7 +754,7 @@ namespace Azure.AI.AnomalyDetector.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient(apiVersion: "v1.1");
 
-            MultivariateBatchDetectionOptions options = new MultivariateBatchDetectionOptions(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"))
+            MultivariateBatchDetectionOptions options = new MultivariateBatchDetectionOptions(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"))
             {
                 TopContributorCount = 1234,
             };
@@ -771,7 +769,7 @@ namespace Azure.AI.AnomalyDetector.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             Multivariate client = new AnomalyDetectorClient(endpoint, credential).GetMultivariateClient(apiVersion: "v1.1");
 
-            MultivariateBatchDetectionOptions options = new MultivariateBatchDetectionOptions(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"))
+            MultivariateBatchDetectionOptions options = new MultivariateBatchDetectionOptions(new Uri("http://localhost:3000"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"))
             {
                 TopContributorCount = 1234,
             };

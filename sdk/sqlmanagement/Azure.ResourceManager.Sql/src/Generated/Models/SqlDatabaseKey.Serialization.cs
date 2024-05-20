@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SqlDatabaseKey : IUtf8JsonSerializable, IJsonModel<SqlDatabaseKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabaseKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabaseKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlDatabaseKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SqlDatabaseKey DeserializeSqlDatabaseKey(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sql.Models
             DateTimeOffset? creationDate = default;
             string subregion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -123,11 +123,103 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlDatabaseKey(type, thumbprint, creationDate, subregion, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyType))
+                {
+                    builder.Append("  type: ");
+                    builder.AppendLine($"'{KeyType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Thumbprint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  thumbprint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Thumbprint))
+                {
+                    builder.Append("  thumbprint: ");
+                    if (Thumbprint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Thumbprint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Thumbprint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  creationDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    builder.Append("  creationDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subregion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  subregion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Subregion))
+                {
+                    builder.Append("  subregion: ");
+                    if (Subregion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Subregion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Subregion}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SqlDatabaseKey>.Write(ModelReaderWriterOptions options)
@@ -138,8 +230,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +249,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSqlDatabaseKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support reading '{options.Format}' format.");
             }
         }
 

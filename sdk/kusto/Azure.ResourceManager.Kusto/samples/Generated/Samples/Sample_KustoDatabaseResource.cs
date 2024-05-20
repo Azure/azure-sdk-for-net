@@ -8,11 +8,8 @@
 using System;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Kusto.Models;
 
 namespace Azure.ResourceManager.Kusto.Samples

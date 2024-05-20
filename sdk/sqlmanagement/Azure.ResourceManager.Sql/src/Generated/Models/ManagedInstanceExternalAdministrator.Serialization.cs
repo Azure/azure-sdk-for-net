@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ManagedInstanceExternalAdministrator : IUtf8JsonSerializable, IJsonModel<ManagedInstanceExternalAdministrator>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceExternalAdministrator>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceExternalAdministrator>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedInstanceExternalAdministrator>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceExternalAdministrator>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceExternalAdministrator)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceExternalAdministrator)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceExternalAdministrator>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceExternalAdministrator)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceExternalAdministrator)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedInstanceExternalAdministrator DeserializeManagedInstanceExternalAdministrator(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql.Models
             Guid? tenantId = default;
             bool? azureADOnlyAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("administratorType"u8))
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedInstanceExternalAdministrator(
                 administratorType,
                 principalType,
@@ -171,6 +171,120 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdministratorType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  administratorType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdministratorType))
+                {
+                    builder.Append("  administratorType: ");
+                    builder.AppendLine($"'{AdministratorType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  principalType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrincipalType))
+                {
+                    builder.Append("  principalType: ");
+                    builder.AppendLine($"'{PrincipalType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Login), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  login: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Login))
+                {
+                    builder.Append("  login: ");
+                    if (Login.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Login}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Login}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sid), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sid: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sid))
+                {
+                    builder.Append("  sid: ");
+                    builder.AppendLine($"'{Sid.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tenantId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    builder.Append("  tenantId: ");
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAzureADOnlyAuthenticationEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureADOnlyAuthentication: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAzureADOnlyAuthenticationEnabled))
+                {
+                    builder.Append("  azureADOnlyAuthentication: ");
+                    var boolValue = IsAzureADOnlyAuthenticationEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedInstanceExternalAdministrator>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceExternalAdministrator>)this).GetFormatFromOptions(options) : options.Format;
@@ -179,8 +293,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceExternalAdministrator)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceExternalAdministrator)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +312,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedInstanceExternalAdministrator(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceExternalAdministrator)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceExternalAdministrator)} does not support reading '{options.Format}' format.");
             }
         }
 

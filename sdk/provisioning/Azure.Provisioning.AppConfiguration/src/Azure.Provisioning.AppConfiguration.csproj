@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Azure.Provisioning.AppConfiguration simplifies declarative resource provisioning in .NET for Azure App Configuration.</Description>
+    <Version>0.2.0</Version>
+    <ApiCompatVersion>0.1.0</ApiCompatVersion>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.AppConfiguration" />
+  </ItemGroup>
+
+</Project>

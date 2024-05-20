@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataShare
 {
@@ -282,17 +280,16 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ShareDataSetResource>> UpdateAsync(WaitUntil waitUntil, ShareDataSetData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetResource.Update");
             scope.Start();
             try
             {
                 var response = await _shareDataSetDataSetsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<ShareDataSetResource>(Response.FromValue(new ShareDataSetResource(Client, response), response.GetRawResponse()));
+                var uri = _shareDataSetDataSetsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataShareArmOperation<ShareDataSetResource>(Response.FromValue(new ShareDataSetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -331,17 +328,16 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ShareDataSetResource> Update(WaitUntil waitUntil, ShareDataSetData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetResource.Update");
             scope.Start();
             try
             {
                 var response = _shareDataSetDataSetsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new DataShareArmOperation<ShareDataSetResource>(Response.FromValue(new ShareDataSetResource(Client, response), response.GetRawResponse()));
+                var uri = _shareDataSetDataSetsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataShareArmOperation<ShareDataSetResource>(Response.FromValue(new ShareDataSetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

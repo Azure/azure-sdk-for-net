@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Sql.Models;
@@ -35,6 +34,51 @@ namespace Azure.ResourceManager.Sql
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByAgentRequestUri(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/jobAgents/", false);
+            uri.AppendPath(jobAgentName, true);
+            uri.AppendPath("/executions", false);
+            if (createTimeMin != null)
+            {
+                uri.AppendQuery("createTimeMin", createTimeMin.Value, "O", true);
+            }
+            if (createTimeMax != null)
+            {
+                uri.AppendQuery("createTimeMax", createTimeMax.Value, "O", true);
+            }
+            if (endTimeMin != null)
+            {
+                uri.AppendQuery("endTimeMin", endTimeMin.Value, "O", true);
+            }
+            if (endTimeMax != null)
+            {
+                uri.AppendQuery("endTimeMax", endTimeMax.Value, "O", true);
+            }
+            if (isActive != null)
+            {
+                uri.AppendQuery("isActive", isActive.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByAgentRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top)
@@ -105,38 +149,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<JobExecutionListResult>> ListByAgentAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var message = CreateListByAgentRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -171,38 +187,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<JobExecutionListResult> ListByAgent(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var message = CreateListByAgentRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
             _pipeline.Send(message, cancellationToken);
@@ -218,6 +206,27 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCancelRequestUri(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/jobAgents/", false);
+            uri.AppendPath(jobAgentName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/executions/", false);
+            uri.AppendPath(jobExecutionId, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCancelRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId)
@@ -258,46 +267,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CancelAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateCancelRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobExecutionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -322,46 +296,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Cancel(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateCancelRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobExecutionId);
             _pipeline.Send(message, cancellationToken);
@@ -372,6 +311,25 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/jobAgents/", false);
+            uri.AppendPath(jobAgentName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName)
@@ -410,46 +368,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -474,46 +397,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName);
             _pipeline.Send(message, cancellationToken);
@@ -525,6 +413,53 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByJobRequestUri(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/jobAgents/", false);
+            uri.AppendPath(jobAgentName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/executions", false);
+            if (createTimeMin != null)
+            {
+                uri.AppendQuery("createTimeMin", createTimeMin.Value, "O", true);
+            }
+            if (createTimeMax != null)
+            {
+                uri.AppendQuery("createTimeMax", createTimeMax.Value, "O", true);
+            }
+            if (endTimeMin != null)
+            {
+                uri.AppendQuery("endTimeMin", endTimeMin.Value, "O", true);
+            }
+            if (endTimeMax != null)
+            {
+                uri.AppendQuery("endTimeMax", endTimeMax.Value, "O", true);
+            }
+            if (isActive != null)
+            {
+                uri.AppendQuery("isActive", isActive.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByJobRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top)
@@ -598,46 +533,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<JobExecutionListResult>> ListByJobAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateListByJobRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -673,46 +573,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<JobExecutionListResult> ListByJob(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateListByJobRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
             _pipeline.Send(message, cancellationToken);
@@ -728,6 +593,26 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/jobAgents/", false);
+            uri.AppendPath(jobAgentName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/executions/", false);
+            uri.AppendPath(jobExecutionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId)
@@ -768,46 +653,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SqlServerJobExecutionData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobExecutionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -839,46 +689,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SqlServerJobExecutionData> Get(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobExecutionId);
             _pipeline.Send(message, cancellationToken);
@@ -896,6 +711,26 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/jobAgents/", false);
+            uri.AppendPath(jobAgentName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/executions/", false);
+            uri.AppendPath(jobExecutionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId)
@@ -936,46 +771,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobExecutionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1002,46 +802,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobExecutionId);
             _pipeline.Send(message, cancellationToken);
@@ -1054,6 +819,14 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByAgentNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByAgentNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top)
@@ -1088,42 +861,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<JobExecutionListResult>> ListByAgentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var message = CreateListByAgentNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, jobAgentName, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1159,42 +901,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<JobExecutionListResult> ListByAgentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var message = CreateListByAgentNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, jobAgentName, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
             _pipeline.Send(message, cancellationToken);
@@ -1210,6 +921,14 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByJobNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByJobNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top)
@@ -1245,50 +964,12 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<JobExecutionListResult>> ListByJobNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateListByJobNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1325,50 +1006,12 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<JobExecutionListResult> ListByJobNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateListByJobNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top);
             _pipeline.Send(message, cancellationToken);

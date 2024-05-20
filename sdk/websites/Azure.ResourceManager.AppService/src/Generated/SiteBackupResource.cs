@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
@@ -201,7 +199,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteBackupWebAppsRestClient.DeleteBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(response);
+                var uri = _siteBackupWebAppsRestClient.CreateDeleteBackupRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -243,7 +243,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteBackupWebAppsRestClient.DeleteBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppServiceArmOperation(response);
+                var uri = _siteBackupWebAppsRestClient.CreateDeleteBackupRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -281,10 +283,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<Response<SiteBackupResource>> GetBackupStatusSecretsAsync(WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupResource.GetBackupStatusSecrets");
             scope.Start();
@@ -326,10 +325,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual Response<SiteBackupResource> GetBackupStatusSecrets(WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupResource.GetBackupStatusSecrets");
             scope.Start();
@@ -372,10 +368,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<ArmOperation> RestoreAsync(WaitUntil waitUntil, RestoreRequestInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupResource.Restore");
             scope.Start();
@@ -421,10 +414,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual ArmOperation Restore(WaitUntil waitUntil, RestoreRequestInfo info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupResource.Restore");
             scope.Start();

@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -360,7 +358,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="applicationGatewayBackendAddressPools"> The reference to ApplicationGatewayBackendAddressPool resource. </param>
         /// <param name="loadBalancerBackendAddressPools"> The reference to LoadBalancerBackendAddressPool resource. </param>
         /// <param name="loadBalancerInboundNatRules"> A list of references of LoadBalancerInboundNatRules. </param>
-        /// <param name="privateIPAddress"> Private IP address of the IP configuration. </param>
+        /// <param name="privateIPAddress"> Private IP address of the IP configuration. It can be a single IP address or a CIDR block in the format &lt;address&gt;/&lt;prefix-length&gt;. </param>
+        /// <param name="privateIPAddressPrefixLength"> The private IP address prefix length. If specified and the allocation method is dynamic, the service will allocate a CIDR block instead of a single IP address. </param>
         /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
         /// <param name="privateIPAddressVersion"> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </param>
         /// <param name="subnet"> Subnet bound to the IP configuration. </param>
@@ -370,7 +369,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the network interface IP configuration. </param>
         /// <param name="privateLinkConnectionProperties"> PrivateLinkConnection properties for the network interface. </param>
         /// <returns> A new <see cref="Network.NetworkInterfaceIPConfigurationData"/> instance for mocking. </returns>
-        public static NetworkInterfaceIPConfigurationData NetworkInterfaceIPConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier gatewayLoadBalancerId = null, IEnumerable<VirtualNetworkTapData> virtualNetworkTaps = null, IEnumerable<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = null, IEnumerable<BackendAddressPoolData> loadBalancerBackendAddressPools = null, IEnumerable<InboundNatRuleData> loadBalancerInboundNatRules = null, string privateIPAddress = null, NetworkIPAllocationMethod? privateIPAllocationMethod = null, NetworkIPVersion? privateIPAddressVersion = null, SubnetData subnet = null, bool? primary = null, PublicIPAddressData publicIPAddress = null, IEnumerable<ApplicationSecurityGroupData> applicationSecurityGroups = null, NetworkProvisioningState? provisioningState = null, NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties = null)
+        public static NetworkInterfaceIPConfigurationData NetworkInterfaceIPConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier gatewayLoadBalancerId = null, IEnumerable<VirtualNetworkTapData> virtualNetworkTaps = null, IEnumerable<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = null, IEnumerable<BackendAddressPoolData> loadBalancerBackendAddressPools = null, IEnumerable<InboundNatRuleData> loadBalancerInboundNatRules = null, string privateIPAddress = null, int? privateIPAddressPrefixLength = null, NetworkIPAllocationMethod? privateIPAllocationMethod = null, NetworkIPVersion? privateIPAddressVersion = null, SubnetData subnet = null, bool? primary = null, PublicIPAddressData publicIPAddress = null, IEnumerable<ApplicationSecurityGroupData> applicationSecurityGroups = null, NetworkProvisioningState? provisioningState = null, NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties = null)
         {
             virtualNetworkTaps ??= new List<VirtualNetworkTapData>();
             applicationGatewayBackendAddressPools ??= new List<ApplicationGatewayBackendAddressPool>();
@@ -390,6 +389,7 @@ namespace Azure.ResourceManager.Network.Models
                 loadBalancerBackendAddressPools?.ToList(),
                 loadBalancerInboundNatRules?.ToList(),
                 privateIPAddress,
+                privateIPAddressPrefixLength,
                 privateIPAllocationMethod,
                 privateIPAddressVersion,
                 subnet,
@@ -527,9 +527,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="privateEndpointNetworkPolicy"> Enable or Disable apply network policies on private end point in the subnet. </param>
         /// <param name="privateLinkServiceNetworkPolicy"> Enable or Disable apply network policies on private link service in the subnet. </param>
         /// <param name="applicationGatewayIPConfigurations"> Application gateway IP configurations of virtual network resource. </param>
+        /// <param name="sharingScope"> Set this property to Tenant to allow sharing subnet with other subscriptions in your AAD tenant. This property can only be set if defaultOutboundAccess is set to false, both properties can only be set if subnet is empty. </param>
         /// <param name="defaultOutboundAccess"> Set this property to false to disable default outbound connectivity for all VMs in the subnet. This property can only be set at the time of subnet creation and cannot be updated for an existing subnet. </param>
         /// <returns> A new <see cref="Network.SubnetData"/> instance for mocking. </returns>
-        public static SubnetData SubnetData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string addressPrefix = null, IEnumerable<string> addressPrefixes = null, NetworkSecurityGroupData networkSecurityGroup = null, RouteTableData routeTable = null, ResourceIdentifier natGatewayId = null, IEnumerable<ServiceEndpointProperties> serviceEndpoints = null, IEnumerable<ServiceEndpointPolicyData> serviceEndpointPolicies = null, IEnumerable<PrivateEndpointData> privateEndpoints = null, IEnumerable<NetworkIPConfiguration> ipConfigurations = null, IEnumerable<NetworkIPConfigurationProfile> ipConfigurationProfiles = null, IEnumerable<WritableSubResource> ipAllocations = null, IEnumerable<ResourceNavigationLink> resourceNavigationLinks = null, IEnumerable<ServiceAssociationLink> serviceAssociationLinks = null, IEnumerable<ServiceDelegation> delegations = null, string purpose = null, NetworkProvisioningState? provisioningState = null, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy = null, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy = null, IEnumerable<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations = null, bool? defaultOutboundAccess = null)
+        public static SubnetData SubnetData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string addressPrefix = null, IEnumerable<string> addressPrefixes = null, NetworkSecurityGroupData networkSecurityGroup = null, RouteTableData routeTable = null, ResourceIdentifier natGatewayId = null, IEnumerable<ServiceEndpointProperties> serviceEndpoints = null, IEnumerable<ServiceEndpointPolicyData> serviceEndpointPolicies = null, IEnumerable<PrivateEndpointData> privateEndpoints = null, IEnumerable<NetworkIPConfiguration> ipConfigurations = null, IEnumerable<NetworkIPConfigurationProfile> ipConfigurationProfiles = null, IEnumerable<WritableSubResource> ipAllocations = null, IEnumerable<ResourceNavigationLink> resourceNavigationLinks = null, IEnumerable<ServiceAssociationLink> serviceAssociationLinks = null, IEnumerable<ServiceDelegation> delegations = null, string purpose = null, NetworkProvisioningState? provisioningState = null, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy = null, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy = null, IEnumerable<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations = null, SharingScope? sharingScope = null, bool? defaultOutboundAccess = null)
         {
             addressPrefixes ??= new List<string>();
             serviceEndpoints ??= new List<ServiceEndpointProperties>();
@@ -568,6 +569,7 @@ namespace Azure.ResourceManager.Network.Models
                 privateEndpointNetworkPolicy,
                 privateLinkServiceNetworkPolicy,
                 applicationGatewayIPConfigurations?.ToList(),
+                sharingScope,
                 defaultOutboundAccess);
         }
 
@@ -1015,6 +1017,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="identity"> FlowLog resource Managed Identity. </param>
         /// <param name="targetResourceId"> ID of network security group to which flow log will be applied. </param>
         /// <param name="targetResourceGuid"> Guid of network security group to which flow log will be applied. </param>
         /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
@@ -1024,7 +1027,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="trafficAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="provisioningState"> The provisioning state of the flow log. </param>
         /// <returns> A new <see cref="Network.FlowLogData"/> instance for mocking. </returns>
-        public static FlowLogData FlowLogData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, ResourceIdentifier targetResourceId = null, Guid? targetResourceGuid = null, ResourceIdentifier storageId = null, bool? enabled = null, RetentionPolicyParameters retentionPolicy = null, FlowLogProperties format = null, TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration = null, NetworkProvisioningState? provisioningState = null)
+        public static FlowLogData FlowLogData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, ManagedServiceIdentity identity = null, ResourceIdentifier targetResourceId = null, Guid? targetResourceGuid = null, ResourceIdentifier storageId = null, bool? enabled = null, RetentionPolicyParameters retentionPolicy = null, FlowLogProperties format = null, TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration = null, NetworkProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -1036,6 +1039,7 @@ namespace Azure.ResourceManager.Network.Models
                 tags,
                 serializedAdditionalRawData: null,
                 etag,
+                identity,
                 targetResourceId,
                 targetResourceGuid,
                 storageId,
@@ -2975,8 +2979,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="globalReachEnabled"> Flag denoting global reach status. </param>
         /// <param name="authorizationKey"> The authorizationKey. </param>
         /// <param name="authorizationStatus"> The authorization status of the Circuit. </param>
+        /// <param name="enableDirectPortRateLimit"> Flag denoting rate-limiting status of the ExpressRoute direct-port circuit. </param>
         /// <returns> A new <see cref="Network.ExpressRouteCircuitData"/> instance for mocking. </returns>
-        public static ExpressRouteCircuitData ExpressRouteCircuitData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ExpressRouteCircuitSku sku = null, ETag? etag = null, bool? allowClassicOperations = null, string circuitProvisioningState = null, ServiceProviderProvisioningState? serviceProviderProvisioningState = null, IEnumerable<ExpressRouteCircuitAuthorizationData> authorizations = null, IEnumerable<ExpressRouteCircuitPeeringData> peerings = null, string serviceKey = null, string serviceProviderNotes = null, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = null, ResourceIdentifier expressRoutePortId = null, float? bandwidthInGbps = null, int? stag = null, NetworkProvisioningState? provisioningState = null, string gatewayManagerETag = null, bool? globalReachEnabled = null, string authorizationKey = null, string authorizationStatus = null)
+        public static ExpressRouteCircuitData ExpressRouteCircuitData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ExpressRouteCircuitSku sku = null, ETag? etag = null, bool? allowClassicOperations = null, string circuitProvisioningState = null, ServiceProviderProvisioningState? serviceProviderProvisioningState = null, IEnumerable<ExpressRouteCircuitAuthorizationData> authorizations = null, IEnumerable<ExpressRouteCircuitPeeringData> peerings = null, string serviceKey = null, string serviceProviderNotes = null, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = null, ResourceIdentifier expressRoutePortId = null, float? bandwidthInGbps = null, int? stag = null, NetworkProvisioningState? provisioningState = null, string gatewayManagerETag = null, bool? globalReachEnabled = null, string authorizationKey = null, string authorizationStatus = null, bool? enableDirectPortRateLimit = null)
         {
             tags ??= new Dictionary<string, string>();
             authorizations ??= new List<ExpressRouteCircuitAuthorizationData>();
@@ -3006,7 +3011,8 @@ namespace Azure.ResourceManager.Network.Models
                 gatewayManagerETag,
                 globalReachEnabled,
                 authorizationKey,
-                authorizationStatus);
+                authorizationStatus,
+                enableDirectPortRateLimit);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExpressRouteCircuitsArpTableListResult"/>. </summary>
@@ -3563,6 +3569,70 @@ namespace Azure.ResourceManager.Network.Models
             filterValues ??= new List<string>();
 
             return new SignatureOverridesFilterValuesResult(filterValues?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.FirewallPolicyDraftData"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="basePolicyId"> The parent firewall policy from which rules are inherited. </param>
+        /// <param name="threatIntelMode"> The operation mode for Threat Intelligence. </param>
+        /// <param name="threatIntelWhitelist"> ThreatIntel Whitelist for Firewall Policy. </param>
+        /// <param name="insights"> Insights on Firewall Policy. </param>
+        /// <param name="snat"> The private IP addresses/IP ranges to which traffic will not be SNAT. </param>
+        /// <param name="allowSqlRedirect"> SQL Settings definition. </param>
+        /// <param name="dnsSettings"> DNS Proxy Settings definition. </param>
+        /// <param name="explicitProxy"> Explicit Proxy Settings definition. </param>
+        /// <param name="intrusionDetection"> The configuration for Intrusion detection. </param>
+        /// <returns> A new <see cref="Network.FirewallPolicyDraftData"/> instance for mocking. </returns>
+        public static FirewallPolicyDraftData FirewallPolicyDraftData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ResourceIdentifier basePolicyId = null, AzureFirewallThreatIntelMode? threatIntelMode = null, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = null, FirewallPolicyInsights insights = null, FirewallPolicySnat snat = null, bool? allowSqlRedirect = null, DnsSettings dnsSettings = null, FirewallPolicyExplicitProxy explicitProxy = null, FirewallPolicyIntrusionDetection intrusionDetection = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new FirewallPolicyDraftData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags,
+                serializedAdditionalRawData: null,
+                basePolicyId != null ? ResourceManagerModelFactory.WritableSubResource(basePolicyId) : null,
+                threatIntelMode,
+                threatIntelWhitelist,
+                insights,
+                snat,
+                allowSqlRedirect != null ? new FirewallPolicySQL(allowSqlRedirect, serializedAdditionalRawData: null) : null,
+                dnsSettings,
+                explicitProxy,
+                intrusionDetection);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.FirewallPolicyRuleCollectionGroupDraftData"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="size"> A read-only string that represents the size of the FirewallPolicyRuleCollectionGroupProperties in MB. (ex 1.2MB). </param>
+        /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
+        /// <param name="ruleCollections">
+        /// Group of Firewall Policy rule collections.
+        /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/> and <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
+        /// </param>
+        /// <returns> A new <see cref="Network.FirewallPolicyRuleCollectionGroupDraftData"/> instance for mocking. </returns>
+        public static FirewallPolicyRuleCollectionGroupDraftData FirewallPolicyRuleCollectionGroupDraftData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string size = null, int? priority = null, IEnumerable<FirewallPolicyRuleCollectionInfo> ruleCollections = null)
+        {
+            ruleCollections ??= new List<FirewallPolicyRuleCollectionInfo>();
+
+            return new FirewallPolicyRuleCollectionGroupDraftData(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                size,
+                priority,
+                ruleCollections?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.IPAllocationData"/>. </summary>
@@ -4166,7 +4236,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleGroups"> Effective configuration groups. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
         /// <returns> A new <see cref="Models.ActiveBaseSecurityAdminRule"/> instance for mocking. </returns>
-        public static ActiveBaseSecurityAdminRule ActiveBaseSecurityAdminRule(string id = null, DateTimeOffset? commitOn = null, string region = null, string configurationDescription = null, string ruleCollectionDescription = null, IEnumerable<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = null, IEnumerable<NetworkConfigurationGroup> ruleGroups = null, string kind = "Unknown")
+        public static ActiveBaseSecurityAdminRule ActiveBaseSecurityAdminRule(string id = null, DateTimeOffset? commitOn = null, string region = null, string configurationDescription = null, string ruleCollectionDescription = null, IEnumerable<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = null, IEnumerable<NetworkConfigurationGroup> ruleGroups = null, string kind = null)
         {
             ruleCollectionAppliesToGroups ??= new List<NetworkManagerSecurityGroupItem>();
             ruleGroups ??= new List<NetworkConfigurationGroup>();
@@ -4179,7 +4249,7 @@ namespace Azure.ResourceManager.Network.Models
                 ruleCollectionDescription,
                 ruleCollectionAppliesToGroups?.ToList(),
                 ruleGroups?.ToList(),
-                kind,
+                kind == null ? default : new EffectiveAdminRuleKind(kind),
                 serializedAdditionalRawData: null);
         }
 
@@ -4252,7 +4322,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleGroups"> Effective configuration groups. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
         /// <returns> A new <see cref="Models.EffectiveBaseSecurityAdminRule"/> instance for mocking. </returns>
-        public static EffectiveBaseSecurityAdminRule EffectiveBaseSecurityAdminRule(ResourceIdentifier resourceId = null, string configurationDescription = null, string ruleCollectionDescription = null, IEnumerable<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = null, IEnumerable<NetworkConfigurationGroup> ruleGroups = null, string kind = "Unknown")
+        public static EffectiveBaseSecurityAdminRule EffectiveBaseSecurityAdminRule(ResourceIdentifier resourceId = null, string configurationDescription = null, string ruleCollectionDescription = null, IEnumerable<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = null, IEnumerable<NetworkConfigurationGroup> ruleGroups = null, string kind = null)
         {
             ruleCollectionAppliesToGroups ??= new List<NetworkManagerSecurityGroupItem>();
             ruleGroups ??= new List<NetworkConfigurationGroup>();
@@ -4263,7 +4333,7 @@ namespace Azure.ResourceManager.Network.Models
                 ruleCollectionDescription,
                 ruleCollectionAppliesToGroups?.ToList(),
                 ruleGroups?.ToList(),
-                kind,
+                kind == null ? default : new EffectiveAdminRuleKind(kind),
                 serializedAdditionalRawData: null);
         }
 
@@ -4405,14 +4475,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="kind"> Whether the rule is custom or default. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.BaseAdminRuleData"/> instance for mocking. </returns>
-        public static BaseAdminRuleData BaseAdminRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
+        public static BaseAdminRuleData BaseAdminRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
         {
             return new BaseAdminRuleData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new AdminRuleKind(kind),
                 etag,
                 serializedAdditionalRawData: null);
         }
@@ -4528,6 +4598,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="virtualApplianceAsn"> VirtualAppliance ASN. Microsoft private, public and IANA reserved ASN are not supported. </param>
         /// <param name="sshPublicKey"> Public key for SSH login. </param>
         /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
+        /// <param name="networkInterfaceConfigurations"> Network Profile containing configurations for Public and Private NIC. </param>
         /// <param name="additionalNics"> Details required for Additional Network Interface. </param>
         /// <param name="internetIngressPublicIPs"> List of Resource Uri of Public IPs for Internet Ingress Scenario. </param>
         /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
@@ -4538,12 +4609,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="delegation"> The delegation for the Virtual Appliance. </param>
         /// <param name="partnerManagedResource"> The delegation for the Virtual Appliance. </param>
         /// <returns> A new <see cref="Network.NetworkVirtualApplianceData"/> instance for mocking. </returns>
-        public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, ETag? etag = null, VirtualApplianceSkuProperties nvaSku = null, string addressPrefix = null, IEnumerable<string> bootStrapConfigurationBlobs = null, ResourceIdentifier virtualHubId = null, IEnumerable<string> cloudInitConfigurationBlobs = null, string cloudInitConfiguration = null, long? virtualApplianceAsn = null, string sshPublicKey = null, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics = null, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics = null, IEnumerable<WritableSubResource> internetIngressPublicIPs = null, IEnumerable<WritableSubResource> virtualApplianceSites = null, IEnumerable<WritableSubResource> virtualApplianceConnections = null, IEnumerable<WritableSubResource> inboundSecurityRules = null, NetworkProvisioningState? provisioningState = null, string deploymentType = null, VirtualApplianceDelegationProperties delegation = null, PartnerManagedResourceProperties partnerManagedResource = null)
+        public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, ETag? etag = null, VirtualApplianceSkuProperties nvaSku = null, string addressPrefix = null, IEnumerable<string> bootStrapConfigurationBlobs = null, ResourceIdentifier virtualHubId = null, IEnumerable<string> cloudInitConfigurationBlobs = null, string cloudInitConfiguration = null, long? virtualApplianceAsn = null, string sshPublicKey = null, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics = null, IEnumerable<VirtualApplianceNetworkInterfaceConfiguration> networkInterfaceConfigurations = null, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics = null, IEnumerable<WritableSubResource> internetIngressPublicIPs = null, IEnumerable<WritableSubResource> virtualApplianceSites = null, IEnumerable<WritableSubResource> virtualApplianceConnections = null, IEnumerable<WritableSubResource> inboundSecurityRules = null, NetworkProvisioningState? provisioningState = null, string deploymentType = null, VirtualApplianceDelegationProperties delegation = null, PartnerManagedResourceProperties partnerManagedResource = null)
         {
             tags ??= new Dictionary<string, string>();
             bootStrapConfigurationBlobs ??= new List<string>();
             cloudInitConfigurationBlobs ??= new List<string>();
             virtualApplianceNics ??= new List<VirtualApplianceNicProperties>();
+            networkInterfaceConfigurations ??= new List<VirtualApplianceNetworkInterfaceConfiguration>();
             additionalNics ??= new List<VirtualApplianceAdditionalNicProperties>();
             internetIngressPublicIPs ??= new List<WritableSubResource>();
             virtualApplianceSites ??= new List<WritableSubResource>();
@@ -4568,6 +4640,7 @@ namespace Azure.ResourceManager.Network.Models
                 virtualApplianceAsn,
                 sshPublicKey,
                 virtualApplianceNics?.ToList(),
+                networkInterfaceConfigurations != null ? new NetworkVirtualAppliancePropertiesFormatNetworkProfile(networkInterfaceConfigurations?.ToList(), serializedAdditionalRawData: null) : null,
                 additionalNics?.ToList(),
                 internetIngressPublicIPs?.ToList(),
                 virtualApplianceSites?.ToList(),
@@ -4580,14 +4653,21 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualApplianceNicProperties"/>. </summary>
+        /// <param name="nicType"> NIC type - PublicNic, PrivateNic, or AdditionalNic. </param>
         /// <param name="name"> NIC name. </param>
         /// <param name="publicIPAddress"> Public IP address. </param>
         /// <param name="privateIPAddress"> Private IP address. </param>
         /// <param name="instanceName"> Instance on which nic is attached. </param>
         /// <returns> A new <see cref="Models.VirtualApplianceNicProperties"/> instance for mocking. </returns>
-        public static VirtualApplianceNicProperties VirtualApplianceNicProperties(string name = null, string publicIPAddress = null, string privateIPAddress = null, string instanceName = null)
+        public static VirtualApplianceNicProperties VirtualApplianceNicProperties(NicTypeInResponse? nicType = null, string name = null, string publicIPAddress = null, string privateIPAddress = null, string instanceName = null)
         {
-            return new VirtualApplianceNicProperties(name, publicIPAddress, privateIPAddress, instanceName, serializedAdditionalRawData: null);
+            return new VirtualApplianceNicProperties(
+                nicType,
+                name,
+                publicIPAddress,
+                privateIPAddress,
+                instanceName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualApplianceDelegationProperties"/>. </summary>
@@ -4675,10 +4755,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="ruleType"> Rule Type. This should be either AutoExpire or Permanent. Auto Expire Rule only creates NSG rules. Permanent Rule creates NSG rule and SLB LB Rule. </param>
         /// <param name="rules"> List of allowed rules. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.InboundSecurityRule"/> instance for mocking. </returns>
-        public static InboundSecurityRule InboundSecurityRule(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, IEnumerable<InboundSecurityRules> rules = null, NetworkProvisioningState? provisioningState = null)
+        public static InboundSecurityRule InboundSecurityRule(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, InboundSecurityRuleType? ruleType = null, IEnumerable<InboundSecurityRules> rules = null, NetworkProvisioningState? provisioningState = null)
         {
             rules ??= new List<InboundSecurityRules>();
 
@@ -4688,6 +4769,7 @@ namespace Azure.ResourceManager.Network.Models
                 resourceType,
                 serializedAdditionalRawData: null,
                 etag,
+                ruleType,
                 rules?.ToList(),
                 provisioningState);
         }
@@ -4870,8 +4952,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
         /// <param name="storageLocation"> The storage location for a packet capture session. </param>
         /// <param name="filters"> A list of packet capture filters. </param>
+        /// <param name="isContinuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
+        /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
         /// <returns> A new <see cref="Models.PacketCaptureCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static PacketCaptureCreateOrUpdateContent PacketCaptureCreateOrUpdateContent(string target = null, PacketCaptureMachineScope scope = null, PacketCaptureTargetType? targetType = null, long? bytesToCapturePerPacket = null, long? totalBytesPerSession = null, int? timeLimitInSeconds = null, PacketCaptureStorageLocation storageLocation = null, IEnumerable<PacketCaptureFilter> filters = null)
+        public static PacketCaptureCreateOrUpdateContent PacketCaptureCreateOrUpdateContent(string target = null, PacketCaptureMachineScope scope = null, PacketCaptureTargetType? targetType = null, long? bytesToCapturePerPacket = null, long? totalBytesPerSession = null, int? timeLimitInSeconds = null, PacketCaptureStorageLocation storageLocation = null, IEnumerable<PacketCaptureFilter> filters = null, bool? isContinuousCapture = null, PacketCaptureSettings captureSettings = null)
         {
             filters ??= new List<PacketCaptureFilter>();
 
@@ -4884,6 +4968,8 @@ namespace Azure.ResourceManager.Network.Models
                 timeLimitInSeconds,
                 storageLocation,
                 filters?.ToList(),
+                isContinuousCapture,
+                captureSettings,
                 serializedAdditionalRawData: null);
         }
 
@@ -4901,9 +4987,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
         /// <param name="storageLocation"> The storage location for a packet capture session. </param>
         /// <param name="filters"> A list of packet capture filters. </param>
+        /// <param name="isContinuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
+        /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
         /// <param name="provisioningState"> The provisioning state of the packet capture session. </param>
         /// <returns> A new <see cref="Network.PacketCaptureData"/> instance for mocking. </returns>
-        public static PacketCaptureData PacketCaptureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string target = null, PacketCaptureMachineScope scope = null, PacketCaptureTargetType? targetType = null, long? bytesToCapturePerPacket = null, long? totalBytesPerSession = null, int? timeLimitInSeconds = null, PacketCaptureStorageLocation storageLocation = null, IEnumerable<PacketCaptureFilter> filters = null, NetworkProvisioningState? provisioningState = null)
+        public static PacketCaptureData PacketCaptureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string target = null, PacketCaptureMachineScope scope = null, PacketCaptureTargetType? targetType = null, long? bytesToCapturePerPacket = null, long? totalBytesPerSession = null, int? timeLimitInSeconds = null, PacketCaptureStorageLocation storageLocation = null, IEnumerable<PacketCaptureFilter> filters = null, bool? isContinuousCapture = null, PacketCaptureSettings captureSettings = null, NetworkProvisioningState? provisioningState = null)
         {
             filters ??= new List<PacketCaptureFilter>();
 
@@ -4921,6 +5009,8 @@ namespace Azure.ResourceManager.Network.Models
                 timeLimitInSeconds,
                 storageLocation,
                 filters?.ToList(),
+                isContinuousCapture,
+                captureSettings,
                 provisioningState,
                 serializedAdditionalRawData: null);
         }
@@ -5816,6 +5906,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="allowGatewayTransit"> If gateway links can be used in remote virtual networking to link to this virtual network. </param>
         /// <param name="useRemoteGateways"> If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering is also true, virtual network will use gateways of remote virtual network for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a gateway. </param>
         /// <param name="remoteVirtualNetworkId"> The reference to the remote virtual network. The remote virtual network can be in the same or different region (preview). See here to register for the preview and learn more (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering). </param>
+        /// <param name="localAddressPrefixes"> The local address space of the local virtual network that is peered. </param>
+        /// <param name="localVirtualNetworkAddressPrefixes"> The current local address space of the local virtual network that is peered. </param>
         /// <param name="remoteAddressPrefixes"> The reference to the address space peered with the remote virtual network. </param>
         /// <param name="remoteVirtualNetworkAddressPrefixes"> The reference to the current address space of the remote virtual network. </param>
         /// <param name="remoteBgpCommunities"> The reference to the remote virtual network's Bgp Communities. </param>
@@ -5825,11 +5917,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the virtual network peering resource. </param>
         /// <param name="doNotVerifyRemoteGateways"> If we need to verify the provisioning state of the remote gateway. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network peering resource. </param>
+        /// <param name="areCompleteVnetsPeered"> Whether complete virtual network address space is peered. </param>
+        /// <param name="enableOnlyIPv6Peering"> Whether only Ipv6 address space is peered for subnet peering. </param>
+        /// <param name="localSubnetNames"> List of local subnet names that are subnet peered with remote virtual network. </param>
+        /// <param name="remoteSubnetNames"> List of remote subnet names from remote virtual network that are subnet peered. </param>
         /// <returns> A new <see cref="Network.VirtualNetworkPeeringData"/> instance for mocking. </returns>
-        public static VirtualNetworkPeeringData VirtualNetworkPeeringData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, bool? allowVirtualNetworkAccess = null, bool? allowForwardedTraffic = null, bool? allowGatewayTransit = null, bool? useRemoteGateways = null, ResourceIdentifier remoteVirtualNetworkId = null, IEnumerable<string> remoteAddressPrefixes = null, IEnumerable<string> remoteVirtualNetworkAddressPrefixes = null, VirtualNetworkBgpCommunities remoteBgpCommunities = null, VirtualNetworkEncryption remoteVirtualNetworkEncryption = null, VirtualNetworkPeeringState? peeringState = null, VirtualNetworkPeeringLevel? peeringSyncLevel = null, NetworkProvisioningState? provisioningState = null, bool? doNotVerifyRemoteGateways = null, Guid? resourceGuid = null)
+        public static VirtualNetworkPeeringData VirtualNetworkPeeringData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, bool? allowVirtualNetworkAccess = null, bool? allowForwardedTraffic = null, bool? allowGatewayTransit = null, bool? useRemoteGateways = null, ResourceIdentifier remoteVirtualNetworkId = null, IEnumerable<string> localAddressPrefixes = null, IEnumerable<string> localVirtualNetworkAddressPrefixes = null, IEnumerable<string> remoteAddressPrefixes = null, IEnumerable<string> remoteVirtualNetworkAddressPrefixes = null, VirtualNetworkBgpCommunities remoteBgpCommunities = null, VirtualNetworkEncryption remoteVirtualNetworkEncryption = null, VirtualNetworkPeeringState? peeringState = null, VirtualNetworkPeeringLevel? peeringSyncLevel = null, NetworkProvisioningState? provisioningState = null, bool? doNotVerifyRemoteGateways = null, Guid? resourceGuid = null, bool? areCompleteVnetsPeered = null, bool? enableOnlyIPv6Peering = null, IEnumerable<string> localSubnetNames = null, IEnumerable<string> remoteSubnetNames = null)
         {
+            localAddressPrefixes ??= new List<string>();
+            localVirtualNetworkAddressPrefixes ??= new List<string>();
             remoteAddressPrefixes ??= new List<string>();
             remoteVirtualNetworkAddressPrefixes ??= new List<string>();
+            localSubnetNames ??= new List<string>();
+            remoteSubnetNames ??= new List<string>();
 
             return new VirtualNetworkPeeringData(
                 id,
@@ -5842,6 +5942,8 @@ namespace Azure.ResourceManager.Network.Models
                 allowGatewayTransit,
                 useRemoteGateways,
                 remoteVirtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(remoteVirtualNetworkId) : null,
+                localAddressPrefixes != null ? new AddressSpace(localAddressPrefixes?.ToList(), serializedAdditionalRawData: null) : null,
+                localVirtualNetworkAddressPrefixes != null ? new AddressSpace(localVirtualNetworkAddressPrefixes?.ToList(), serializedAdditionalRawData: null) : null,
                 remoteAddressPrefixes != null ? new AddressSpace(remoteAddressPrefixes?.ToList(), serializedAdditionalRawData: null) : null,
                 remoteVirtualNetworkAddressPrefixes != null ? new AddressSpace(remoteVirtualNetworkAddressPrefixes?.ToList(), serializedAdditionalRawData: null) : null,
                 remoteBgpCommunities,
@@ -5850,7 +5952,11 @@ namespace Azure.ResourceManager.Network.Models
                 peeringSyncLevel,
                 provisioningState,
                 doNotVerifyRemoteGateways,
-                resourceGuid);
+                resourceGuid,
+                areCompleteVnetsPeered,
+                enableOnlyIPv6Peering,
+                localSubnetNames?.ToList(),
+                remoteSubnetNames?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkBgpCommunities"/>. </summary>
@@ -7168,8 +7274,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the VPN site link connection resource. </param>
         /// <param name="ingressNatRules"> List of ingress NatRules. </param>
         /// <param name="egressNatRules"> List of egress NatRules. </param>
+        /// <param name="dpdTimeoutSeconds"> Dead Peer Detection timeout in seconds for VpnLink connection. </param>
         /// <returns> A new <see cref="Network.VpnSiteLinkConnectionData"/> instance for mocking. </returns>
-        public static VpnSiteLinkConnectionData VpnSiteLinkConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier vpnSiteLinkId = null, int? routingWeight = null, VpnLinkConnectionMode? vpnLinkConnectionMode = null, VpnConnectionStatus? connectionStatus = null, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType = null, long? ingressBytesTransferred = null, long? egressBytesTransferred = null, int? connectionBandwidth = null, string sharedKey = null, bool? enableBgp = null, IEnumerable<GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses = null, bool? usePolicyBasedTrafficSelectors = null, IEnumerable<IPsecPolicy> ipsecPolicies = null, bool? enableRateLimiting = null, bool? useLocalAzureIPAddress = null, NetworkProvisioningState? provisioningState = null, IEnumerable<WritableSubResource> ingressNatRules = null, IEnumerable<WritableSubResource> egressNatRules = null)
+        public static VpnSiteLinkConnectionData VpnSiteLinkConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier vpnSiteLinkId = null, int? routingWeight = null, VpnLinkConnectionMode? vpnLinkConnectionMode = null, VpnConnectionStatus? connectionStatus = null, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType = null, long? ingressBytesTransferred = null, long? egressBytesTransferred = null, int? connectionBandwidth = null, string sharedKey = null, bool? enableBgp = null, IEnumerable<GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses = null, bool? usePolicyBasedTrafficSelectors = null, IEnumerable<IPsecPolicy> ipsecPolicies = null, bool? enableRateLimiting = null, bool? useLocalAzureIPAddress = null, NetworkProvisioningState? provisioningState = null, IEnumerable<WritableSubResource> ingressNatRules = null, IEnumerable<WritableSubResource> egressNatRules = null, int? dpdTimeoutSeconds = null)
         {
             vpnGatewayCustomBgpAddresses ??= new List<GatewayCustomBgpIPAddressIPConfiguration>();
             ipsecPolicies ??= new List<IPsecPolicy>();
@@ -7199,7 +7306,8 @@ namespace Azure.ResourceManager.Network.Models
                 useLocalAzureIPAddress,
                 provisioningState,
                 ingressNatRules?.ToList(),
-                egressNatRules?.ToList());
+                egressNatRules?.ToList(),
+                dpdTimeoutSeconds);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VpnGatewayIPConfiguration"/>. </summary>
@@ -7915,6 +8023,270 @@ namespace Azure.ResourceManager.Network.Models
                 direction,
                 provisioningState,
                 resourceGuid);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="gatewayLoadBalancerId"> The reference to gateway load balancer frontend IP. </param>
+        /// <param name="virtualNetworkTaps"> The reference to Virtual Network Taps. </param>
+        /// <param name="applicationGatewayBackendAddressPools"> The reference to ApplicationGatewayBackendAddressPool resource. </param>
+        /// <param name="loadBalancerBackendAddressPools"> The reference to LoadBalancerBackendAddressPool resource. </param>
+        /// <param name="loadBalancerInboundNatRules"> A list of references of LoadBalancerInboundNatRules. </param>
+        /// <param name="privateIPAddress"> Private IP address of the IP configuration. </param>
+        /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
+        /// <param name="privateIPAddressVersion"> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </param>
+        /// <param name="subnet"> Subnet bound to the IP configuration. </param>
+        /// <param name="primary"> Whether this is a primary customer address on the network interface. </param>
+        /// <param name="publicIPAddress"> Public IP address bound to the IP configuration. </param>
+        /// <param name="applicationSecurityGroups"> Application security groups in which the IP configuration is included. </param>
+        /// <param name="provisioningState"> The provisioning state of the network interface IP configuration. </param>
+        /// <param name="privateLinkConnectionProperties"> PrivateLinkConnection properties for the network interface. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkInterfaceIPConfigurationData NetworkInterfaceIPConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ResourceIdentifier gatewayLoadBalancerId, IEnumerable<VirtualNetworkTapData> virtualNetworkTaps, IEnumerable<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools, IEnumerable<BackendAddressPoolData> loadBalancerBackendAddressPools, IEnumerable<InboundNatRuleData> loadBalancerInboundNatRules, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkIPVersion? privateIPAddressVersion, SubnetData subnet, bool? primary, PublicIPAddressData publicIPAddress, IEnumerable<ApplicationSecurityGroupData> applicationSecurityGroups, NetworkProvisioningState? provisioningState, NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties)
+        {
+            return NetworkInterfaceIPConfigurationData(id: id, name: name, resourceType: resourceType, etag: etag, gatewayLoadBalancerId: gatewayLoadBalancerId, virtualNetworkTaps: virtualNetworkTaps, applicationGatewayBackendAddressPools: applicationGatewayBackendAddressPools, loadBalancerBackendAddressPools: loadBalancerBackendAddressPools, loadBalancerInboundNatRules: loadBalancerInboundNatRules, privateIPAddress: privateIPAddress, privateIPAddressPrefixLength: default, privateIPAllocationMethod: privateIPAllocationMethod, privateIPAddressVersion: privateIPAddressVersion, subnet: subnet, primary: primary, publicIPAddress: publicIPAddress, applicationSecurityGroups: applicationSecurityGroups, provisioningState: provisioningState, privateLinkConnectionProperties: privateLinkConnectionProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.SubnetData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="addressPrefix"> The address prefix for the subnet. </param>
+        /// <param name="addressPrefixes"> List of address prefixes for the subnet. </param>
+        /// <param name="networkSecurityGroup"> The reference to the NetworkSecurityGroup resource. </param>
+        /// <param name="routeTable"> The reference to the RouteTable resource. </param>
+        /// <param name="natGatewayId"> Nat gateway associated with this subnet. </param>
+        /// <param name="serviceEndpoints"> An array of service endpoints. </param>
+        /// <param name="serviceEndpointPolicies"> An array of service endpoint policies. </param>
+        /// <param name="privateEndpoints"> An array of references to private endpoints. </param>
+        /// <param name="ipConfigurations"> An array of references to the network interface IP configurations using subnet. </param>
+        /// <param name="ipConfigurationProfiles"> Array of IP configuration profiles which reference this subnet. </param>
+        /// <param name="ipAllocations"> Array of IpAllocation which reference this subnet. </param>
+        /// <param name="resourceNavigationLinks"> An array of references to the external resources using subnet. </param>
+        /// <param name="serviceAssociationLinks"> An array of references to services injecting into this subnet. </param>
+        /// <param name="delegations"> An array of references to the delegations on the subnet. </param>
+        /// <param name="purpose"> A read-only string identifying the intention of use for this subnet based on delegations and other user-defined properties. </param>
+        /// <param name="provisioningState"> The provisioning state of the subnet resource. </param>
+        /// <param name="privateEndpointNetworkPolicy"> Enable or Disable apply network policies on private end point in the subnet. </param>
+        /// <param name="privateLinkServiceNetworkPolicy"> Enable or Disable apply network policies on private link service in the subnet. </param>
+        /// <param name="applicationGatewayIPConfigurations"> Application gateway IP configurations of virtual network resource. </param>
+        /// <param name="defaultOutboundAccess"> Set this property to false to disable default outbound connectivity for all VMs in the subnet. This property can only be set at the time of subnet creation and cannot be updated for an existing subnet. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.SubnetData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SubnetData SubnetData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string addressPrefix, IEnumerable<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, ResourceIdentifier natGatewayId, IEnumerable<ServiceEndpointProperties> serviceEndpoints, IEnumerable<ServiceEndpointPolicyData> serviceEndpointPolicies, IEnumerable<PrivateEndpointData> privateEndpoints, IEnumerable<NetworkIPConfiguration> ipConfigurations, IEnumerable<NetworkIPConfigurationProfile> ipConfigurationProfiles, IEnumerable<WritableSubResource> ipAllocations, IEnumerable<ResourceNavigationLink> resourceNavigationLinks, IEnumerable<ServiceAssociationLink> serviceAssociationLinks, IEnumerable<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy, IEnumerable<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, bool? defaultOutboundAccess)
+        {
+            return SubnetData(id: id, name: name, resourceType: resourceType, etag: etag, addressPrefix: addressPrefix, addressPrefixes: addressPrefixes, networkSecurityGroup: networkSecurityGroup, routeTable: routeTable, natGatewayId: natGatewayId, serviceEndpoints: serviceEndpoints, serviceEndpointPolicies: serviceEndpointPolicies, privateEndpoints: privateEndpoints, ipConfigurations: ipConfigurations, ipConfigurationProfiles: ipConfigurationProfiles, ipAllocations: ipAllocations, resourceNavigationLinks: resourceNavigationLinks, serviceAssociationLinks: serviceAssociationLinks, delegations: delegations, purpose: purpose, provisioningState: provisioningState, privateEndpointNetworkPolicy: privateEndpointNetworkPolicy, privateLinkServiceNetworkPolicy: privateLinkServiceNetworkPolicy, applicationGatewayIPConfigurations: applicationGatewayIPConfigurations, sharingScope: default, defaultOutboundAccess: defaultOutboundAccess);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.FlowLogData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="targetResourceId"> ID of network security group to which flow log will be applied. </param>
+        /// <param name="targetResourceGuid"> Guid of network security group to which flow log will be applied. </param>
+        /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
+        /// <param name="enabled"> Flag to enable/disable flow logging. </param>
+        /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
+        /// <param name="format"> Parameters that define the flow log format. </param>
+        /// <param name="trafficAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
+        /// <param name="provisioningState"> The provisioning state of the flow log. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.FlowLogData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FlowLogData FlowLogData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ResourceIdentifier targetResourceId, Guid? targetResourceGuid, ResourceIdentifier storageId, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format, TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration, NetworkProvisioningState? provisioningState)
+        {
+            return FlowLogData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, etag: etag, identity: default, targetResourceId: targetResourceId, targetResourceGuid: targetResourceGuid, storageId: storageId, enabled: enabled, retentionPolicy: retentionPolicy, format: format, trafficAnalyticsConfiguration: trafficAnalyticsConfiguration, provisioningState: provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.ExpressRouteCircuitData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="allowClassicOperations"> Allow classic operations. </param>
+        /// <param name="circuitProvisioningState"> The CircuitProvisioningState state of the resource. </param>
+        /// <param name="serviceProviderProvisioningState"> The ServiceProviderProvisioningState state of the resource. </param>
+        /// <param name="authorizations"> The list of authorizations. </param>
+        /// <param name="peerings"> The list of peerings. </param>
+        /// <param name="serviceKey"> The ServiceKey. </param>
+        /// <param name="serviceProviderNotes"> The ServiceProviderNotes. </param>
+        /// <param name="serviceProviderProperties"> The ServiceProviderProperties. </param>
+        /// <param name="expressRoutePortId"> The reference to the ExpressRoutePort resource when the circuit is provisioned on an ExpressRoutePort resource. </param>
+        /// <param name="bandwidthInGbps"> The bandwidth of the circuit when the circuit is provisioned on an ExpressRoutePort resource. </param>
+        /// <param name="stag"> The identifier of the circuit traffic. Outer tag for QinQ encapsulation. </param>
+        /// <param name="provisioningState"> The provisioning state of the express route circuit resource. </param>
+        /// <param name="gatewayManagerETag"> The GatewayManager Etag. </param>
+        /// <param name="globalReachEnabled"> Flag denoting global reach status. </param>
+        /// <param name="authorizationKey"> The authorizationKey. </param>
+        /// <param name="authorizationStatus"> The authorization status of the Circuit. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.ExpressRouteCircuitData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExpressRouteCircuitData ExpressRouteCircuitData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExpressRouteCircuitSku sku, ETag? etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IEnumerable<ExpressRouteCircuitAuthorizationData> authorizations, IEnumerable<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, ResourceIdentifier expressRoutePortId, float? bandwidthInGbps, int? stag, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus)
+        {
+            return ExpressRouteCircuitData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, sku: sku, etag: etag, allowClassicOperations: allowClassicOperations, circuitProvisioningState: circuitProvisioningState, serviceProviderProvisioningState: serviceProviderProvisioningState, authorizations: authorizations, peerings: peerings, serviceKey: serviceKey, serviceProviderNotes: serviceProviderNotes, serviceProviderProperties: serviceProviderProperties, expressRoutePortId: expressRoutePortId, bandwidthInGbps: bandwidthInGbps, stag: stag, provisioningState: provisioningState, gatewayManagerETag: gatewayManagerETag, globalReachEnabled: globalReachEnabled, authorizationKey: authorizationKey, authorizationStatus: authorizationStatus, enableDirectPortRateLimit: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.NetworkVirtualApplianceData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The service principal that has read access to cloud-init and config blob. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="nvaSku"> Network Virtual Appliance SKU. </param>
+        /// <param name="addressPrefix"> Address Prefix. </param>
+        /// <param name="bootStrapConfigurationBlobs"> BootStrapConfigurationBlobs storage URLs. </param>
+        /// <param name="virtualHubId"> The Virtual Hub where Network Virtual Appliance is being deployed. </param>
+        /// <param name="cloudInitConfigurationBlobs"> CloudInitConfigurationBlob storage URLs. </param>
+        /// <param name="cloudInitConfiguration"> CloudInitConfiguration string in plain text. </param>
+        /// <param name="virtualApplianceAsn"> VirtualAppliance ASN. Microsoft private, public and IANA reserved ASN are not supported. </param>
+        /// <param name="sshPublicKey"> Public key for SSH login. </param>
+        /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
+        /// <param name="additionalNics"> Details required for Additional Network Interface. </param>
+        /// <param name="internetIngressPublicIPs"> List of Resource Uri of Public IPs for Internet Ingress Scenario. </param>
+        /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
+        /// <param name="virtualApplianceConnections"> List of references to VirtualApplianceConnections. </param>
+        /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="deploymentType"> The deployment type. PartnerManaged for the SaaS NVA. </param>
+        /// <param name="delegation"> The delegation for the Virtual Appliance. </param>
+        /// <param name="partnerManagedResource"> The delegation for the Virtual Appliance. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.NetworkVirtualApplianceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IEnumerable<string> bootStrapConfigurationBlobs, ResourceIdentifier virtualHubId, IEnumerable<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics, IEnumerable<WritableSubResource> internetIngressPublicIPs, IEnumerable<WritableSubResource> virtualApplianceSites, IEnumerable<WritableSubResource> virtualApplianceConnections, IEnumerable<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource)
+        {
+            return NetworkVirtualApplianceData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, identity: identity, etag: etag, nvaSku: nvaSku, addressPrefix: addressPrefix, bootStrapConfigurationBlobs: bootStrapConfigurationBlobs, virtualHubId: virtualHubId, cloudInitConfigurationBlobs: cloudInitConfigurationBlobs, cloudInitConfiguration: cloudInitConfiguration, virtualApplianceAsn: virtualApplianceAsn, sshPublicKey: sshPublicKey, virtualApplianceNics: virtualApplianceNics, networkInterfaceConfigurations: default, additionalNics: additionalNics, internetIngressPublicIPs: internetIngressPublicIPs, virtualApplianceSites: virtualApplianceSites, virtualApplianceConnections: virtualApplianceConnections, inboundSecurityRules: inboundSecurityRules, provisioningState: provisioningState, deploymentType: deploymentType, delegation: delegation, partnerManagedResource: partnerManagedResource);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.Models.VirtualApplianceNicProperties" />. </summary>
+        /// <param name="name"> NIC name. </param>
+        /// <param name="publicIPAddress"> Public IP address. </param>
+        /// <param name="privateIPAddress"> Private IP address. </param>
+        /// <param name="instanceName"> Instance on which nic is attached. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.Models.VirtualApplianceNicProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualApplianceNicProperties VirtualApplianceNicProperties(string name, string publicIPAddress, string privateIPAddress, string instanceName)
+        {
+            return VirtualApplianceNicProperties(nicType: default, name: name, publicIPAddress: publicIPAddress, privateIPAddress: privateIPAddress, instanceName: instanceName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.Models.InboundSecurityRule" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="rules"> List of allowed rules. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.Models.InboundSecurityRule" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InboundSecurityRule InboundSecurityRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IEnumerable<InboundSecurityRules> rules, NetworkProvisioningState? provisioningState)
+        {
+            return InboundSecurityRule(id: id, name: name, resourceType: resourceType, etag: etag, ruleType: default, rules: rules, provisioningState: provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.Models.PacketCaptureCreateOrUpdateContent" />. </summary>
+        /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
+        /// <param name="scope"> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </param>
+        /// <param name="targetType"> Target type of the resource provided. </param>
+        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
+        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
+        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
+        /// <param name="storageLocation"> The storage location for a packet capture session. </param>
+        /// <param name="filters"> A list of packet capture filters. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.Models.PacketCaptureCreateOrUpdateContent" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PacketCaptureCreateOrUpdateContent PacketCaptureCreateOrUpdateContent(string target, PacketCaptureMachineScope scope, PacketCaptureTargetType? targetType, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IEnumerable<PacketCaptureFilter> filters)
+        {
+            return PacketCaptureCreateOrUpdateContent(target: target, scope: scope, targetType: targetType, bytesToCapturePerPacket: bytesToCapturePerPacket, totalBytesPerSession: totalBytesPerSession, timeLimitInSeconds: timeLimitInSeconds, storageLocation: storageLocation, filters: filters, isContinuousCapture: default, captureSettings: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.PacketCaptureData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
+        /// <param name="scope"> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </param>
+        /// <param name="targetType"> Target type of the resource provided. </param>
+        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
+        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
+        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
+        /// <param name="storageLocation"> The storage location for a packet capture session. </param>
+        /// <param name="filters"> A list of packet capture filters. </param>
+        /// <param name="provisioningState"> The provisioning state of the packet capture session. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.PacketCaptureData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PacketCaptureData PacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string target, PacketCaptureMachineScope scope, PacketCaptureTargetType? targetType, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IEnumerable<PacketCaptureFilter> filters, NetworkProvisioningState? provisioningState)
+        {
+            return PacketCaptureData(id: id, name: name, resourceType: resourceType, systemData: systemData, etag: etag, target: target, scope: scope, targetType: targetType, bytesToCapturePerPacket: bytesToCapturePerPacket, totalBytesPerSession: totalBytesPerSession, timeLimitInSeconds: timeLimitInSeconds, storageLocation: storageLocation, filters: filters, isContinuousCapture: default, captureSettings: default, provisioningState: provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.VirtualNetworkPeeringData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="allowVirtualNetworkAccess"> Whether the VMs in the local virtual network space would be able to access the VMs in remote virtual network space. </param>
+        /// <param name="allowForwardedTraffic"> Whether the forwarded traffic from the VMs in the local virtual network will be allowed/disallowed in remote virtual network. </param>
+        /// <param name="allowGatewayTransit"> If gateway links can be used in remote virtual networking to link to this virtual network. </param>
+        /// <param name="useRemoteGateways"> If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering is also true, virtual network will use gateways of remote virtual network for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a gateway. </param>
+        /// <param name="remoteVirtualNetworkId"> The reference to the remote virtual network. The remote virtual network can be in the same or different region (preview). See here to register for the preview and learn more (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering). </param>
+        /// <param name="remoteAddressPrefixes"> The reference to the address space peered with the remote virtual network. </param>
+        /// <param name="remoteVirtualNetworkAddressPrefixes"> The reference to the current address space of the remote virtual network. </param>
+        /// <param name="remoteBgpCommunities"> The reference to the remote virtual network's Bgp Communities. </param>
+        /// <param name="remoteVirtualNetworkEncryption"> The reference to the remote virtual network's encryption. </param>
+        /// <param name="peeringState"> The status of the virtual network peering. </param>
+        /// <param name="peeringSyncLevel"> The peering sync status of the virtual network peering. </param>
+        /// <param name="provisioningState"> The provisioning state of the virtual network peering resource. </param>
+        /// <param name="doNotVerifyRemoteGateways"> If we need to verify the provisioning state of the remote gateway. </param>
+        /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network peering resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.VirtualNetworkPeeringData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualNetworkPeeringData VirtualNetworkPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, ResourceIdentifier remoteVirtualNetworkId, IEnumerable<string> remoteAddressPrefixes, IEnumerable<string> remoteVirtualNetworkAddressPrefixes, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkEncryption remoteVirtualNetworkEncryption, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid)
+        {
+            return VirtualNetworkPeeringData(id: id, name: name, resourceType: resourceType, etag: etag, allowVirtualNetworkAccess: allowVirtualNetworkAccess, allowForwardedTraffic: allowForwardedTraffic, allowGatewayTransit: allowGatewayTransit, useRemoteGateways: useRemoteGateways, remoteVirtualNetworkId: remoteVirtualNetworkId, localAddressPrefixes: default, localVirtualNetworkAddressPrefixes: default, remoteAddressPrefixes: remoteAddressPrefixes, remoteVirtualNetworkAddressPrefixes: remoteVirtualNetworkAddressPrefixes, remoteBgpCommunities: remoteBgpCommunities, remoteVirtualNetworkEncryption: remoteVirtualNetworkEncryption, peeringState: peeringState, peeringSyncLevel: peeringSyncLevel, provisioningState: provisioningState, doNotVerifyRemoteGateways: doNotVerifyRemoteGateways, resourceGuid: resourceGuid, areCompleteVnetsPeered: default, enableOnlyIPv6Peering: default, localSubnetNames: default, remoteSubnetNames: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.VpnSiteLinkConnectionData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="vpnSiteLinkId"> Id of the connected vpn site link. </param>
+        /// <param name="routingWeight"> Routing weight for vpn connection. </param>
+        /// <param name="vpnLinkConnectionMode"> Vpn link connection mode. </param>
+        /// <param name="connectionStatus"> The connection status. </param>
+        /// <param name="vpnConnectionProtocolType"> Connection protocol used for this connection. </param>
+        /// <param name="ingressBytesTransferred"> Ingress bytes transferred. </param>
+        /// <param name="egressBytesTransferred"> Egress bytes transferred. </param>
+        /// <param name="connectionBandwidth"> Expected bandwidth in MBPS. </param>
+        /// <param name="sharedKey"> SharedKey for the vpn connection. </param>
+        /// <param name="enableBgp"> EnableBgp flag. </param>
+        /// <param name="vpnGatewayCustomBgpAddresses"> vpnGatewayCustomBgpAddresses used by this connection. </param>
+        /// <param name="usePolicyBasedTrafficSelectors"> Enable policy-based traffic selectors. </param>
+        /// <param name="ipsecPolicies"> The IPSec Policies to be considered by this connection. </param>
+        /// <param name="enableRateLimiting"> EnableBgp flag. </param>
+        /// <param name="useLocalAzureIPAddress"> Use local azure ip to initiate connection. </param>
+        /// <param name="provisioningState"> The provisioning state of the VPN site link connection resource. </param>
+        /// <param name="ingressNatRules"> List of ingress NatRules. </param>
+        /// <param name="egressNatRules"> List of egress NatRules. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.VpnSiteLinkConnectionData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VpnSiteLinkConnectionData VpnSiteLinkConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ResourceIdentifier vpnSiteLinkId, int? routingWeight, VpnLinkConnectionMode? vpnLinkConnectionMode, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, IEnumerable<GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses, bool? usePolicyBasedTrafficSelectors, IEnumerable<IPsecPolicy> ipsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIPAddress, NetworkProvisioningState? provisioningState, IEnumerable<WritableSubResource> ingressNatRules, IEnumerable<WritableSubResource> egressNatRules)
+        {
+            return VpnSiteLinkConnectionData(id: id, name: name, resourceType: resourceType, etag: etag, vpnSiteLinkId: vpnSiteLinkId, routingWeight: routingWeight, vpnLinkConnectionMode: vpnLinkConnectionMode, connectionStatus: connectionStatus, vpnConnectionProtocolType: vpnConnectionProtocolType, ingressBytesTransferred: ingressBytesTransferred, egressBytesTransferred: egressBytesTransferred, connectionBandwidth: connectionBandwidth, sharedKey: sharedKey, enableBgp: enableBgp, vpnGatewayCustomBgpAddresses: vpnGatewayCustomBgpAddresses, usePolicyBasedTrafficSelectors: usePolicyBasedTrafficSelectors, ipsecPolicies: ipsecPolicies, enableRateLimiting: enableRateLimiting, useLocalAzureIPAddress: useLocalAzureIPAddress, provisioningState: provisioningState, ingressNatRules: ingressNatRules, egressNatRules: egressNatRules, dpdTimeoutSeconds: default);
         }
     }
 }

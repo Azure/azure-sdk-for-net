@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityAutomationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string automationName, SecurityAutomationData data, CancellationToken cancellationToken = default)
         {
-            if (automationName == null)
-            {
-                throw new ArgumentNullException(nameof(automationName));
-            }
-            if (automationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _securityAutomationAutomationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, automationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecurityAutomationResource>(Response.FromValue(new SecurityAutomationResource(Client, response), response.GetRawResponse()));
+                var uri = _securityAutomationAutomationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, automationName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityAutomationResource>(Response.FromValue(new SecurityAutomationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityAutomationResource> CreateOrUpdate(WaitUntil waitUntil, string automationName, SecurityAutomationData data, CancellationToken cancellationToken = default)
         {
-            if (automationName == null)
-            {
-                throw new ArgumentNullException(nameof(automationName));
-            }
-            if (automationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _securityAutomationAutomationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, automationName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecurityAutomationResource>(Response.FromValue(new SecurityAutomationResource(Client, response), response.GetRawResponse()));
+                var uri = _securityAutomationAutomationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, automationName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityAutomationResource>(Response.FromValue(new SecurityAutomationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
         public virtual async Task<Response<SecurityAutomationResource>> GetAsync(string automationName, CancellationToken cancellationToken = default)
         {
-            if (automationName == null)
-            {
-                throw new ArgumentNullException(nameof(automationName));
-            }
-            if (automationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationName));
-            }
+            Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
 
             using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
         public virtual Response<SecurityAutomationResource> Get(string automationName, CancellationToken cancellationToken = default)
         {
-            if (automationName == null)
-            {
-                throw new ArgumentNullException(nameof(automationName));
-            }
-            if (automationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationName));
-            }
+            Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
 
             using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string automationName, CancellationToken cancellationToken = default)
         {
-            if (automationName == null)
-            {
-                throw new ArgumentNullException(nameof(automationName));
-            }
-            if (automationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationName));
-            }
+            Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
 
             using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
         public virtual Response<bool> Exists(string automationName, CancellationToken cancellationToken = default)
         {
-            if (automationName == null)
-            {
-                throw new ArgumentNullException(nameof(automationName));
-            }
-            if (automationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationName));
-            }
+            Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
 
             using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityAutomationResource>> GetIfExistsAsync(string automationName, CancellationToken cancellationToken = default)
         {
-            if (automationName == null)
-            {
-                throw new ArgumentNullException(nameof(automationName));
-            }
-            if (automationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationName));
-            }
+            Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
 
             using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
         public virtual NullableResponse<SecurityAutomationResource> GetIfExists(string automationName, CancellationToken cancellationToken = default)
         {
-            if (automationName == null)
-            {
-                throw new ArgumentNullException(nameof(automationName));
-            }
-            if (automationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationName));
-            }
+            Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
 
             using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.GetIfExists");
             scope.Start();

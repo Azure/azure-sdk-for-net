@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataCollectionRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataCollectionRuleName, DataCollectionRuleData data, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionRuleName));
-            }
-            if (dataCollectionRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _dataCollectionRuleRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<DataCollectionRuleResource>(Response.FromValue(new DataCollectionRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _dataCollectionRuleRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionRuleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MonitorArmOperation<DataCollectionRuleResource>(Response.FromValue(new DataCollectionRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataCollectionRuleResource> CreateOrUpdate(WaitUntil waitUntil, string dataCollectionRuleName, DataCollectionRuleData data, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionRuleName));
-            }
-            if (dataCollectionRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _dataCollectionRuleRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionRuleName, data, cancellationToken);
-                var operation = new MonitorArmOperation<DataCollectionRuleResource>(Response.FromValue(new DataCollectionRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _dataCollectionRuleRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, dataCollectionRuleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MonitorArmOperation<DataCollectionRuleResource>(Response.FromValue(new DataCollectionRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
         public virtual async Task<Response<DataCollectionRuleResource>> GetAsync(string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionRuleName));
-            }
-            if (dataCollectionRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
 
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
         public virtual Response<DataCollectionRuleResource> Get(string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionRuleName));
-            }
-            if (dataCollectionRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
 
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionRuleName));
-            }
-            if (dataCollectionRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
 
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionRuleName));
-            }
-            if (dataCollectionRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
 
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataCollectionRuleResource>> GetIfExistsAsync(string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionRuleName));
-            }
-            if (dataCollectionRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
 
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionRuleName"/> is null. </exception>
         public virtual NullableResponse<DataCollectionRuleResource> GetIfExists(string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionRuleName));
-            }
-            if (dataCollectionRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionRuleName, nameof(dataCollectionRuleName));
 
             using var scope = _dataCollectionRuleClientDiagnostics.CreateScope("DataCollectionRuleCollection.GetIfExists");
             scope.Start();

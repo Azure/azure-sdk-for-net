@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class LogAnalyticsConfiguration : IUtf8JsonSerializable, IJsonModel<LogAnalyticsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogAnalyticsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static LogAnalyticsConfiguration DeserializeLogAnalyticsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
             string customerId = default;
             string sharedKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customerId"u8))
@@ -93,11 +93,72 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LogAnalyticsConfiguration(customerId, sharedKey, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomerId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customerId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomerId))
+                {
+                    builder.Append("  customerId: ");
+                    if (CustomerId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CustomerId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CustomerId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sharedKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SharedKey))
+                {
+                    builder.Append("  sharedKey: ");
+                    if (SharedKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SharedKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SharedKey}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<LogAnalyticsConfiguration>.Write(ModelReaderWriterOptions options)
@@ -108,8 +169,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +188,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeLogAnalyticsConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

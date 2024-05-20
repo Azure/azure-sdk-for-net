@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     [PersistableModelProxy(typeof(UnknownProtectedItem))]
     public partial class BackupGenericProtectedItem : IUtf8JsonSerializable, IJsonModel<BackupGenericProtectedItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupGenericProtectedItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupGenericProtectedItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupGenericProtectedItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupGenericProtectedItem DeserializeBackupGenericProtectedItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,8 +169,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureIaaSVMProtectedItem": return IaasVmProtectedItem.DeserializeIaasVmProtectedItem(element, options);
                     case "AzureVmWorkloadProtectedItem": return VmWorkloadProtectedItem.DeserializeVmWorkloadProtectedItem(element, options);
                     case "AzureVmWorkloadSAPAseDatabase": return VmWorkloadSapAseDatabaseProtectedItem.DeserializeVmWorkloadSapAseDatabaseProtectedItem(element, options);
-                    case "AzureVmWorkloadSAPHanaDBInstance": return VmWorkloadSapHanaDBInstanceProtectedItem.DeserializeVmWorkloadSapHanaDBInstanceProtectedItem(element, options);
                     case "AzureVmWorkloadSAPHanaDatabase": return VmWorkloadSapHanaDatabaseProtectedItem.DeserializeVmWorkloadSapHanaDatabaseProtectedItem(element, options);
+                    case "AzureVmWorkloadSAPHanaDBInstance": return VmWorkloadSapHanaDBInstanceProtectedItem.DeserializeVmWorkloadSapHanaDBInstanceProtectedItem(element, options);
                     case "AzureVmWorkloadSQLDatabase": return VmWorkloadSqlDatabaseProtectedItem.DeserializeVmWorkloadSqlDatabaseProtectedItem(element, options);
                     case "DPMProtectedItem": return DpmProtectedItem.DeserializeDpmProtectedItem(element, options);
                     case "GenericProtectedItem": return GenericProtectedItem.DeserializeGenericProtectedItem(element, options);
@@ -193,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupGenericProtectedItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support reading '{options.Format}' format.");
             }
         }
 

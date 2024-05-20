@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
@@ -18,14 +17,14 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsIncidentCommentData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsIncidentCommentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIncidentCommentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIncidentCommentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsIncidentCommentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentCommentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsIncidentCommentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsIncidentCommentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (options.Format != "W" && Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
-                writer.WriteObjectValue(Author);
+                writer.WriteObjectValue(Author, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.SecurityInsights
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentCommentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsIncidentCommentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsIncidentCommentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static SecurityInsightsIncidentCommentData DeserializeSecurityInsightsIncidentCommentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.SecurityInsights
             string message = default;
             SecurityInsightsClientInfo author = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -207,10 +206,10 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsIncidentCommentData(
                 id,
                 name,
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentCommentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentCommentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -249,7 +248,7 @@ namespace Azure.ResourceManager.SecurityInsights
                         return DeserializeSecurityInsightsIncidentCommentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentCommentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentCommentData)} does not support reading '{options.Format}' format.");
             }
         }
 

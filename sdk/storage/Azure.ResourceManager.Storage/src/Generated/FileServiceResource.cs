@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -269,17 +267,16 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FileServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, FileServiceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _fileServiceClientDiagnostics.CreateScope("FileServiceResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _fileServiceRestClient.SetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<FileServiceResource>(Response.FromValue(new FileServiceResource(Client, response), response.GetRawResponse()));
+                var uri = _fileServiceRestClient.CreateSetServicePropertiesRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<FileServiceResource>(Response.FromValue(new FileServiceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -318,17 +315,16 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FileServiceResource> CreateOrUpdate(WaitUntil waitUntil, FileServiceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _fileServiceClientDiagnostics.CreateScope("FileServiceResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _fileServiceRestClient.SetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new StorageArmOperation<FileServiceResource>(Response.FromValue(new FileServiceResource(Client, response), response.GetRawResponse()));
+                var uri = _fileServiceRestClient.CreateSetServicePropertiesRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<FileServiceResource>(Response.FromValue(new FileServiceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

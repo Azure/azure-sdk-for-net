@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerService
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerServicePrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, ContainerServicePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerServicePrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation<ContainerServicePrivateEndpointConnectionResource>(Response.FromValue(new ContainerServicePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ContainerServiceArmOperation<ContainerServicePrivateEndpointConnectionResource>(Response.FromValue(new ContainerServicePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerServicePrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, ContainerServicePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerServicePrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new ContainerServiceArmOperation<ContainerServicePrivateEndpointConnectionResource>(Response.FromValue(new ContainerServicePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ContainerServiceArmOperation<ContainerServicePrivateEndpointConnectionResource>(Response.FromValue(new ContainerServicePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<Response<ContainerServicePrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerServicePrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<ContainerServicePrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerServicePrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -360,14 +328,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerServicePrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -410,14 +371,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerServicePrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -460,14 +414,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerServicePrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerServicePrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
@@ -512,14 +459,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual NullableResponse<ContainerServicePrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("ContainerServicePrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();

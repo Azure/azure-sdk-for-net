@@ -11,20 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SnowflakeV2LinkedService : IUtf8JsonSerializable, IJsonModel<SnowflakeV2LinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnowflakeV2LinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnowflakeV2LinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SnowflakeV2LinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SnowflakeV2LinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnowflakeV2LinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnowflakeV2LinkedService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue(ConnectVia, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnowflakeV2LinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnowflakeV2LinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnowflakeV2LinkedService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SnowflakeV2LinkedService DeserializeSnowflakeV2LinkedService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -174,16 +173,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> accountIdentifier = default;
             DataFactoryElement<string> user = default;
-            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> database = default;
             DataFactoryElement<string> warehouse = default;
             SnowflakeAuthenticationType? authenticationType = default;
             DataFactoryElement<string> clientId = default;
-            DataFactorySecretBaseDefinition clientSecret = default;
+            DataFactorySecret clientSecret = default;
             DataFactoryElement<string> tenantId = default;
             DataFactoryElement<string> scope = default;
-            DataFactorySecretBaseDefinition privateKey = default;
-            DataFactorySecretBaseDefinition privateKeyPassphrase = default;
+            DataFactorySecret privateKey = default;
+            DataFactorySecret privateKeyPassphrase = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -272,7 +271,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("database"u8))
@@ -309,7 +308,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            clientSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenantId"u8))
@@ -336,7 +335,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            privateKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            privateKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("privateKeyPassphrase"u8))
@@ -345,7 +344,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            privateKeyPassphrase = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            privateKeyPassphrase = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
@@ -390,7 +389,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnowflakeV2LinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnowflakeV2LinkedService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -406,7 +405,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSnowflakeV2LinkedService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnowflakeV2LinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnowflakeV2LinkedService)} does not support reading '{options.Format}' format.");
             }
         }
 

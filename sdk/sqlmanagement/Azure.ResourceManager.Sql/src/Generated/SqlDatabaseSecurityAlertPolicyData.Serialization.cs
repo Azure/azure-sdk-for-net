@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,14 +19,14 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlDatabaseSecurityAlertPolicyData : IUtf8JsonSerializable, IJsonModel<SqlDatabaseSecurityAlertPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabaseSecurityAlertPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabaseSecurityAlertPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlDatabaseSecurityAlertPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseSecurityAlertPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDatabaseSecurityAlertPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDatabaseSecurityAlertPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -124,7 +126,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseSecurityAlertPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDatabaseSecurityAlertPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDatabaseSecurityAlertPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +135,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlDatabaseSecurityAlertPolicyData DeserializeSqlDatabaseSecurityAlertPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -152,7 +154,7 @@ namespace Azure.ResourceManager.Sql
             int? retentionDays = default;
             DateTimeOffset? creationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -267,10 +269,10 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlDatabaseSecurityAlertPolicyData(
                 id,
                 name,
@@ -287,6 +289,257 @@ namespace Azure.ResourceManager.Sql
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("    state: ");
+                    builder.AppendLine($"'{State.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisabledAlerts), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    disabledAlerts: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DisabledAlerts))
+                {
+                    if (DisabledAlerts.Any())
+                    {
+                        builder.Append("    disabledAlerts: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DisabledAlerts)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EmailAddresses), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    emailAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EmailAddresses))
+                {
+                    if (EmailAddresses.Any())
+                    {
+                        builder.Append("    emailAddresses: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EmailAddresses)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SendToEmailAccountAdmins), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    emailAccountAdmins: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SendToEmailAccountAdmins))
+                {
+                    builder.Append("    emailAccountAdmins: ");
+                    var boolValue = SendToEmailAccountAdmins.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageEndpoint))
+                {
+                    builder.Append("    storageEndpoint: ");
+                    if (StorageEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StorageEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StorageEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountAccessKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageAccountAccessKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageAccountAccessKey))
+                {
+                    builder.Append("    storageAccountAccessKey: ");
+                    if (StorageAccountAccessKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StorageAccountAccessKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StorageAccountAccessKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionDays), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    retentionDays: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetentionDays))
+                {
+                    builder.Append("    retentionDays: ");
+                    builder.AppendLine($"{RetentionDays.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    creationTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    builder.Append("    creationTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SqlDatabaseSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseSecurityAlertPolicyData>)this).GetFormatFromOptions(options) : options.Format;
@@ -295,8 +548,10 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlDatabaseSecurityAlertPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDatabaseSecurityAlertPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -312,7 +567,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeSqlDatabaseSecurityAlertPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlDatabaseSecurityAlertPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDatabaseSecurityAlertPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

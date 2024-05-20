@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DscConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationName, DscConfigurationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dscConfigurationClientDiagnostics.CreateScope("DscConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _dscConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<DscConfigurationResource>(Response.FromValue(new DscConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _dscConfigurationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<DscConfigurationResource>(Response.FromValue(new DscConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DscConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string configurationName, DscConfigurationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dscConfigurationClientDiagnostics.CreateScope("DscConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _dscConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content, cancellationToken);
-                var operation = new AutomationArmOperation<DscConfigurationResource>(Response.FromValue(new DscConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _dscConfigurationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<DscConfigurationResource>(Response.FromValue(new DscConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual async Task<Response<DscConfigurationResource>> GetAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _dscConfigurationClientDiagnostics.CreateScope("DscConfigurationCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual Response<DscConfigurationResource> Get(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _dscConfigurationClientDiagnostics.CreateScope("DscConfigurationCollection.Get");
             scope.Start();
@@ -371,14 +339,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _dscConfigurationClientDiagnostics.CreateScope("DscConfigurationCollection.Exists");
             scope.Start();
@@ -421,14 +382,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _dscConfigurationClientDiagnostics.CreateScope("DscConfigurationCollection.Exists");
             scope.Start();
@@ -471,14 +425,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<DscConfigurationResource>> GetIfExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _dscConfigurationClientDiagnostics.CreateScope("DscConfigurationCollection.GetIfExists");
             scope.Start();
@@ -523,14 +470,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual NullableResponse<DscConfigurationResource> GetIfExists(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _dscConfigurationClientDiagnostics.CreateScope("DscConfigurationCollection.GetIfExists");
             scope.Start();

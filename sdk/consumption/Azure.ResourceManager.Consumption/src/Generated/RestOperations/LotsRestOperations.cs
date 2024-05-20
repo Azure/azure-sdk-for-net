@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Consumption.Models;
@@ -35,6 +34,19 @@ namespace Azure.ResourceManager.Consumption
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByBillingProfileRequestUri(string billingAccountId, string billingProfileId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileId, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/lots", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByBillingProfileRequest(string billingAccountId, string billingProfileId)
@@ -64,22 +76,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<Lots>> ListByBillingProfileAsync(string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (billingProfileId == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileId));
-            }
-            if (billingProfileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileId));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
 
             using var message = CreateListByBillingProfileRequest(billingAccountId, billingProfileId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -105,22 +103,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<Lots> ListByBillingProfile(string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (billingProfileId == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileId));
-            }
-            if (billingProfileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileId));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
 
             using var message = CreateListByBillingProfileRequest(billingAccountId, billingProfileId);
             _pipeline.Send(message, cancellationToken);
@@ -136,6 +120,21 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByBillingAccountRequestUri(string billingAccountId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/lots", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByBillingAccountRequest(string billingAccountId, string filter)
@@ -167,14 +166,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<Lots>> ListByBillingAccountAsync(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
             using var message = CreateListByBillingAccountRequest(billingAccountId, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -200,14 +192,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<Lots> ListByBillingAccount(string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
             using var message = CreateListByBillingAccountRequest(billingAccountId, filter);
             _pipeline.Send(message, cancellationToken);
@@ -223,6 +208,23 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByCustomerRequestUri(string billingAccountId, string customerId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/customers/", false);
+            uri.AppendPath(customerId, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/lots", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByCustomerRequest(string billingAccountId, string customerId, string filter)
@@ -257,22 +259,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="customerId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<Lots>> ListByCustomerAsync(string billingAccountId, string customerId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (customerId == null)
-            {
-                throw new ArgumentNullException(nameof(customerId));
-            }
-            if (customerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customerId));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(customerId, nameof(customerId));
 
             using var message = CreateListByCustomerRequest(billingAccountId, customerId, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -299,22 +287,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="customerId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<Lots> ListByCustomer(string billingAccountId, string customerId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (customerId == null)
-            {
-                throw new ArgumentNullException(nameof(customerId));
-            }
-            if (customerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customerId));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(customerId, nameof(customerId));
 
             using var message = CreateListByCustomerRequest(billingAccountId, customerId, filter);
             _pipeline.Send(message, cancellationToken);
@@ -330,6 +304,14 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByBillingProfileNextPageRequestUri(string nextLink, string billingAccountId, string billingProfileId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByBillingProfileNextPageRequest(string nextLink, string billingAccountId, string billingProfileId)
@@ -355,26 +337,9 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<Lots>> ListByBillingProfileNextPageAsync(string nextLink, string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (billingProfileId == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileId));
-            }
-            if (billingProfileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
 
             using var message = CreateListByBillingProfileNextPageRequest(nextLink, billingAccountId, billingProfileId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -401,26 +366,9 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<Lots> ListByBillingProfileNextPage(string nextLink, string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (billingProfileId == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileId));
-            }
-            if (billingProfileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
 
             using var message = CreateListByBillingProfileNextPageRequest(nextLink, billingAccountId, billingProfileId);
             _pipeline.Send(message, cancellationToken);
@@ -436,6 +384,14 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByBillingAccountNextPageRequestUri(string nextLink, string billingAccountId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByBillingAccountNextPageRequest(string nextLink, string billingAccountId, string filter)
@@ -461,18 +417,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<Lots>> ListByBillingAccountNextPageAsync(string nextLink, string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
             using var message = CreateListByBillingAccountNextPageRequest(nextLink, billingAccountId, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -499,18 +445,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<Lots> ListByBillingAccountNextPage(string nextLink, string billingAccountId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
             using var message = CreateListByBillingAccountNextPageRequest(nextLink, billingAccountId, filter);
             _pipeline.Send(message, cancellationToken);
@@ -526,6 +462,14 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByCustomerNextPageRequestUri(string nextLink, string billingAccountId, string customerId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByCustomerNextPageRequest(string nextLink, string billingAccountId, string customerId, string filter)
@@ -552,26 +496,9 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="customerId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<Lots>> ListByCustomerNextPageAsync(string nextLink, string billingAccountId, string customerId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (customerId == null)
-            {
-                throw new ArgumentNullException(nameof(customerId));
-            }
-            if (customerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customerId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(customerId, nameof(customerId));
 
             using var message = CreateListByCustomerNextPageRequest(nextLink, billingAccountId, customerId, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -599,26 +526,9 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="customerId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<Lots> ListByCustomerNextPage(string nextLink, string billingAccountId, string customerId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (customerId == null)
-            {
-                throw new ArgumentNullException(nameof(customerId));
-            }
-            if (customerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customerId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(customerId, nameof(customerId));
 
             using var message = CreateListByCustomerNextPageRequest(nextLink, billingAccountId, customerId, filter);
             _pipeline.Send(message, cancellationToken);

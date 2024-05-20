@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.HybridCompute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -324,7 +322,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="sku"> SKU number. </param>
         /// <param name="licenseStatus"> The current status of the license profile key. </param>
         /// <returns> A new <see cref="Models.EsuKey"/> instance for mocking. </returns>
-        public static EsuKey EsuKey(string sku = null, string licenseStatus = null)
+        public static EsuKey EsuKey(string sku = null, int? licenseStatus = null)
         {
             return new EsuKey(sku, licenseStatus, serializedAdditionalRawData: null);
         }

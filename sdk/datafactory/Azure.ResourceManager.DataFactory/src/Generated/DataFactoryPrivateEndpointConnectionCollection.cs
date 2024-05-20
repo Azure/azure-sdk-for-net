@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory
@@ -89,25 +87,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, DataFactoryPrivateEndpointConnectionCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataFactoryPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("DataFactoryPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _dataFactoryPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, content, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DataFactoryPrivateEndpointConnectionResource>(Response.FromValue(new DataFactoryPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, content, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation<DataFactoryPrivateEndpointConnectionResource>(Response.FromValue(new DataFactoryPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -149,25 +139,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DataFactoryPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, DataFactoryPrivateEndpointConnectionCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataFactoryPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("DataFactoryPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _dataFactoryPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, content, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<DataFactoryPrivateEndpointConnectionResource>(Response.FromValue(new DataFactoryPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, content, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataFactoryArmOperation<DataFactoryPrivateEndpointConnectionResource>(Response.FromValue(new DataFactoryPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -207,14 +189,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<Response<DataFactoryPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _dataFactoryPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("DataFactoryPrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -260,14 +235,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<DataFactoryPrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _dataFactoryPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("DataFactoryPrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -373,14 +341,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateEndpointConnectionName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _dataFactoryPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("DataFactoryPrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -424,14 +385,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateEndpointConnectionName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _dataFactoryPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("DataFactoryPrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -475,14 +429,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataFactoryPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _dataFactoryPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("DataFactoryPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
@@ -528,14 +475,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual NullableResponse<DataFactoryPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _dataFactoryPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("DataFactoryPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();

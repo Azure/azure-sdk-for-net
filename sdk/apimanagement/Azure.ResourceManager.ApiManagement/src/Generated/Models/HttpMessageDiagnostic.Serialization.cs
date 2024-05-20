@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class HttpMessageDiagnostic : IUtf8JsonSerializable, IJsonModel<HttpMessageDiagnostic>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HttpMessageDiagnostic>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HttpMessageDiagnostic>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HttpMessageDiagnostic>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HttpMessageDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HttpMessageDiagnostic)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HttpMessageDiagnostic)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,12 +39,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
-                writer.WriteObjectValue(Body);
+                writer.WriteObjectValue(Body, options);
             }
             if (Optional.IsDefined(DataMasking))
             {
                 writer.WritePropertyName("dataMasking"u8);
-                writer.WriteObjectValue(DataMasking);
+                writer.WriteObjectValue(DataMasking, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<HttpMessageDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HttpMessageDiagnostic)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HttpMessageDiagnostic)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static HttpMessageDiagnostic DeserializeHttpMessageDiagnostic(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             BodyDiagnosticSettings body = default;
             DataMasking dataMasking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("headers"u8))
@@ -126,10 +125,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HttpMessageDiagnostic(headers ?? new ChangeTrackingList<string>(), body, dataMasking, serializedAdditionalRawData);
         }
 
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HttpMessageDiagnostic)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HttpMessageDiagnostic)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeHttpMessageDiagnostic(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HttpMessageDiagnostic)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HttpMessageDiagnostic)} does not support reading '{options.Format}' format.");
             }
         }
 

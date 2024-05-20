@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Blueprint
 {
@@ -268,7 +266,9 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = await _publishedBlueprintRestClient.DeleteAsync(Id.Parent.Parent, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BlueprintArmOperation<PublishedBlueprintResource>(Response.FromValue(new PublishedBlueprintResource(Client, response), response.GetRawResponse()));
+                var uri = _publishedBlueprintRestClient.CreateDeleteRequestUri(Id.Parent.Parent, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BlueprintArmOperation<PublishedBlueprintResource>(Response.FromValue(new PublishedBlueprintResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -310,7 +310,9 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = _publishedBlueprintRestClient.Delete(Id.Parent.Parent, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BlueprintArmOperation<PublishedBlueprintResource>(Response.FromValue(new PublishedBlueprintResource(Client, response), response.GetRawResponse()));
+                var uri = _publishedBlueprintRestClient.CreateDeleteRequestUri(Id.Parent.Parent, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BlueprintArmOperation<PublishedBlueprintResource>(Response.FromValue(new PublishedBlueprintResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -349,17 +351,16 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PublishedBlueprintResource>> UpdateAsync(WaitUntil waitUntil, PublishedBlueprintData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _publishedBlueprintClientDiagnostics.CreateScope("PublishedBlueprintResource.Update");
             scope.Start();
             try
             {
                 var response = await _publishedBlueprintRestClient.CreateAsync(Id.Parent.Parent, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BlueprintArmOperation<PublishedBlueprintResource>(Response.FromValue(new PublishedBlueprintResource(Client, response), response.GetRawResponse()));
+                var uri = _publishedBlueprintRestClient.CreateCreateRequestUri(Id.Parent.Parent, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BlueprintArmOperation<PublishedBlueprintResource>(Response.FromValue(new PublishedBlueprintResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -398,17 +399,16 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PublishedBlueprintResource> Update(WaitUntil waitUntil, PublishedBlueprintData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _publishedBlueprintClientDiagnostics.CreateScope("PublishedBlueprintResource.Update");
             scope.Start();
             try
             {
                 var response = _publishedBlueprintRestClient.Create(Id.Parent.Parent, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new BlueprintArmOperation<PublishedBlueprintResource>(Response.FromValue(new PublishedBlueprintResource(Client, response), response.GetRawResponse()));
+                var uri = _publishedBlueprintRestClient.CreateCreateRequestUri(Id.Parent.Parent, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BlueprintArmOperation<PublishedBlueprintResource>(Response.FromValue(new PublishedBlueprintResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

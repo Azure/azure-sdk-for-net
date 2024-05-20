@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Monitor.Models;
@@ -37,6 +36,18 @@ namespace Azure.ResourceManager.Monitor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string logProfileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/logprofiles/", false);
+            uri.AppendPath(logProfileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string logProfileName)
         {
             var message = _pipeline.CreateMessage();
@@ -62,22 +73,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string logProfileName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (logProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
 
             using var message = CreateDeleteRequest(subscriptionId, logProfileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -98,22 +95,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string logProfileName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (logProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
 
             using var message = CreateDeleteRequest(subscriptionId, logProfileName);
             _pipeline.Send(message, cancellationToken);
@@ -124,6 +107,18 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string logProfileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/logprofiles/", false);
+            uri.AppendPath(logProfileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string logProfileName)
@@ -152,22 +147,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LogProfileData>> GetAsync(string subscriptionId, string logProfileName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (logProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
 
             using var message = CreateGetRequest(subscriptionId, logProfileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -195,22 +176,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LogProfileData> Get(string subscriptionId, string logProfileName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (logProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logProfileName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
 
             using var message = CreateGetRequest(subscriptionId, logProfileName);
             _pipeline.Send(message, cancellationToken);
@@ -230,6 +197,18 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string logProfileName, LogProfileData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/logprofiles/", false);
+            uri.AppendPath(logProfileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string logProfileName, LogProfileData data)
         {
             var message = _pipeline.CreateMessage();
@@ -246,7 +225,7 @@ namespace Azure.ResourceManager.Monitor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -261,26 +240,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LogProfileData>> CreateOrUpdateAsync(string subscriptionId, string logProfileName, LogProfileData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (logProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logProfileName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, logProfileName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -307,26 +269,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LogProfileData> CreateOrUpdate(string subscriptionId, string logProfileName, LogProfileData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (logProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logProfileName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, logProfileName, data);
             _pipeline.Send(message, cancellationToken);
@@ -342,6 +287,18 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string logProfileName, LogProfilePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/logprofiles/", false);
+            uri.AppendPath(logProfileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string logProfileName, LogProfilePatch patch)
@@ -360,7 +317,7 @@ namespace Azure.ResourceManager.Monitor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -375,26 +332,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LogProfileData>> UpdateAsync(string subscriptionId, string logProfileName, LogProfilePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (logProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logProfileName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, logProfileName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -421,26 +361,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LogProfileData> Update(string subscriptionId, string logProfileName, LogProfilePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (logProfileName == null)
-            {
-                throw new ArgumentNullException(nameof(logProfileName));
-            }
-            if (logProfileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(logProfileName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, logProfileName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -456,6 +379,17 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/logprofiles", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId)
@@ -482,14 +416,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<Models.LogProfileCollection>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -514,14 +441,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<Models.LogProfileCollection> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);

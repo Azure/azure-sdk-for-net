@@ -14,6 +14,8 @@ using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.MySql.FlexibleServers;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage;
+using Azure.ResourceManager.Storage.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -24,17 +26,41 @@ namespace Azure.ResourceManager.MySql.Tests
     public class MySqlFlexibleServerBackupTests: MySqlManagementTestBase
     {
         public MySqlFlexibleServerBackupTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//,RecordedTestMode.Record)
         {
-            BodyKeySanitizers.Add(new BodyKeySanitizer(SanitizeValue) { JsonPath = "targetDetails.sasUriList[0]" });
+        }
+
+        private async Task<StorageAccountResource> CreateStorageAccount(ResourceGroupResource resourceGroup)
+        {
+            var storageAccountCollection = resourceGroup.GetStorageAccounts();
+            var accountName = Recording.GenerateAssetName("storagetest3");
+            var sku = new StorageSku(StorageSkuName.StandardRagrs);
+            var kind = StorageKind.StorageV2;
+            var accountContent = new StorageAccountCreateOrUpdateContent(sku, kind, AzureLocation.EastUS)
+            {
+                AccessTier = StorageAccountAccessTier.Cool
+            };
+            var storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, accountContent)).Value;
+            return storageAccount;
+        }
+
+        private async Task<BlobContainerResource> CreateBlobContainer(StorageAccountResource storageAccount,ResourceGroupResource resourceGroup)
+        {
+            var blobService = storageAccount.GetBlobService();
+            var blobContainersCollection = blobService.GetBlobContainers();
+            var containerName = Recording.GenerateAssetName("container");
+            var containerData = new BlobContainerData() { };
+            var blobContainer = (await blobContainersCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, containerData)).Value;
+            return blobContainer;
         }
 
         [TestCase]
-        [RecordedTest]
         public async Task CreateBackupAndExport()
         {
             // Create a server
-            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "mysqlflexrg", AzureLocation.CentralUS);
+            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "mysqlflexrg", AzureLocation.EastUS);
+            var storageAccount = await CreateStorageAccount(rg);
+            var blobContainer = await CreateBlobContainer(storageAccount, rg);
             MySqlFlexibleServerCollection serverCollection = rg.GetMySqlFlexibleServers();
             string serverName = Recording.GenerateAssetName("mysqlflexserver");
             var serverData = new MySqlFlexibleServerData(rg.Data.Location)
@@ -43,7 +69,7 @@ namespace Azure.ResourceManager.MySql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = "5.7",
-                Storage = new MySqlFlexibleServerStorage() { StorageSizeInGB = 20 },
+                Storage = new MySqlFlexibleServerStorage() { StorageSizeInGB = 512 },
                 CreateMode = MySqlFlexibleServerCreateMode.Default,
                 Backup = new MySqlFlexibleServerBackupProperties()
                 {
@@ -52,13 +78,15 @@ namespace Azure.ResourceManager.MySql.Tests
                 Network = new MySqlFlexibleServerNetwork(),
                 HighAvailability = new MySqlFlexibleServerHighAvailability() { Mode = MySqlFlexibleServerHighAvailabilityMode.Disabled },
             };
-            var lroCreateServer = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, serverData);
-            MySqlFlexibleServerResource server1 = lroCreateServer.Value;
+            var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, serverData);
+            MySqlFlexibleServerResource server1 = lro.Value;
             Assert.AreEqual(serverName, server1.Data.Name);
 
             //create backup
             List<string> list1 = new List<string>();
-            list1.Add(SanitizeValue);
+            var aSascontent = new AccountSasContent(StorageAccountSasSignedService.B, StorageAccountSasSignedResourceType.O, "rwd", Recording.UtcNow.AddHours(1));
+            var sas = (await storageAccount.GetAccountSasAsync(aSascontent)).Value.AccountSasToken;
+            list1.Add($"https://{storageAccount.Data.Name}.blob.core.windows.net/{blobContainer.Data.Name}?{sas}");
             MySqlFlexibleServerBackupAndExportContent backupAndExportContent = new MySqlFlexibleServerBackupAndExportContent
             (
                 new MySqlFlexibleServerBackupSettings("customer-backup-sdktest-1"),

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Reservations.Models;
@@ -37,6 +36,19 @@ namespace Azure.ResourceManager.Reservations
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateAvailableScopesRequestUri(Guid reservationOrderId, Guid reservationId, AvailableScopesContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/availableScopes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateAvailableScopesRequest(Guid reservationOrderId, Guid reservationId, AvailableScopesContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -54,7 +66,7 @@ namespace Azure.ResourceManager.Reservations
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -71,10 +83,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public async Task<Response> AvailableScopesAsync(Guid reservationOrderId, Guid reservationId, AvailableScopesContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateAvailableScopesRequest(reservationOrderId, reservationId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -98,10 +107,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public Response AvailableScopes(Guid reservationOrderId, Guid reservationId, AvailableScopesContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateAvailableScopesRequest(reservationOrderId, reservationId, content);
             _pipeline.Send(message, cancellationToken);
@@ -112,6 +118,17 @@ namespace Azure.ResourceManager.Reservations
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSplitRequestUri(Guid reservationOrderId, SplitContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/split", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSplitRequest(Guid reservationOrderId, SplitContent content)
@@ -129,7 +146,7 @@ namespace Azure.ResourceManager.Reservations
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -142,10 +159,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public async Task<Response> SplitAsync(Guid reservationOrderId, SplitContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateSplitRequest(reservationOrderId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -166,10 +180,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public Response Split(Guid reservationOrderId, SplitContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateSplitRequest(reservationOrderId, content);
             _pipeline.Send(message, cancellationToken);
@@ -181,6 +192,17 @@ namespace Azure.ResourceManager.Reservations
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateMergeRequestUri(Guid reservationOrderId, MergeContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/merge", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateMergeRequest(Guid reservationOrderId, MergeContent content)
@@ -198,7 +220,7 @@ namespace Azure.ResourceManager.Reservations
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -211,10 +233,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public async Task<Response> MergeAsync(Guid reservationOrderId, MergeContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateMergeRequest(reservationOrderId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -235,10 +254,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public Response Merge(Guid reservationOrderId, MergeContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateMergeRequest(reservationOrderId, content);
             _pipeline.Send(message, cancellationToken);
@@ -250,6 +266,17 @@ namespace Azure.ResourceManager.Reservations
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(Guid reservationOrderId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(Guid reservationOrderId)
@@ -309,6 +336,22 @@ namespace Azure.ResourceManager.Reservations
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(Guid reservationOrderId, Guid reservationId, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(Guid reservationOrderId, Guid reservationId, string expand)
@@ -383,6 +426,18 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(Guid reservationOrderId, Guid reservationId, ReservationDetailPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(Guid reservationOrderId, Guid reservationId, ReservationDetailPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -399,7 +454,7 @@ namespace Azure.ResourceManager.Reservations
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -413,10 +468,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public async Task<Response> UpdateAsync(Guid reservationOrderId, Guid reservationId, ReservationDetailPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(reservationOrderId, reservationId, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -438,10 +490,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public Response Update(Guid reservationOrderId, Guid reservationId, ReservationDetailPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(reservationOrderId, reservationId, patch);
             _pipeline.Send(message, cancellationToken);
@@ -453,6 +502,19 @@ namespace Azure.ResourceManager.Reservations
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateArchiveRequestUri(Guid reservationOrderId, Guid reservationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/archive", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateArchiveRequest(Guid reservationOrderId, Guid reservationId)
@@ -506,6 +568,19 @@ namespace Azure.ResourceManager.Reservations
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUnarchiveRequestUri(Guid reservationOrderId, Guid reservationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/unarchive", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUnarchiveRequest(Guid reservationOrderId, Guid reservationId)
@@ -565,6 +640,19 @@ namespace Azure.ResourceManager.Reservations
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRevisionsRequestUri(Guid reservationOrderId, Guid reservationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/revisions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRevisionsRequest(Guid reservationOrderId, Guid reservationId)
@@ -628,6 +716,39 @@ namespace Azure.ResourceManager.Reservations
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAllRequestUri(string filter, string orderby, string refreshSummary, float? skiptoken, string selectedState, float? take)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            if (refreshSummary != null)
+            {
+                uri.AppendQuery("refreshSummary", refreshSummary, true);
+            }
+            if (skiptoken != null)
+            {
+                uri.AppendQuery("$skiptoken", skiptoken.Value, true);
+            }
+            if (selectedState != null)
+            {
+                uri.AppendQuery("selectedState", selectedState, true);
+            }
+            if (take != null)
+            {
+                uri.AppendQuery("take", take.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListAllRequest(string filter, string orderby, string refreshSummary, float? skiptoken, string selectedState, float? take)
@@ -721,6 +842,14 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, Guid reservationOrderId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, Guid reservationOrderId)
         {
             var message = _pipeline.CreateMessage();
@@ -742,10 +871,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ReservationList>> ListNextPageAsync(string nextLink, Guid reservationOrderId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, reservationOrderId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -770,10 +896,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ReservationList> ListNextPage(string nextLink, Guid reservationOrderId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, reservationOrderId);
             _pipeline.Send(message, cancellationToken);
@@ -789,6 +912,14 @@ namespace Azure.ResourceManager.Reservations
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRevisionsNextPageRequestUri(string nextLink, Guid reservationOrderId, Guid reservationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListRevisionsNextPageRequest(string nextLink, Guid reservationOrderId, Guid reservationId)
@@ -813,10 +944,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ReservationList>> ListRevisionsNextPageAsync(string nextLink, Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListRevisionsNextPageRequest(nextLink, reservationOrderId, reservationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -842,10 +970,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ReservationList> ListRevisionsNextPage(string nextLink, Guid reservationOrderId, Guid reservationId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListRevisionsNextPageRequest(nextLink, reservationOrderId, reservationId);
             _pipeline.Send(message, cancellationToken);
@@ -861,6 +986,14 @@ namespace Azure.ResourceManager.Reservations
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAllNextPageRequestUri(string nextLink, string filter, string orderby, string refreshSummary, float? skiptoken, string selectedState, float? take)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAllNextPageRequest(string nextLink, string filter, string orderby, string refreshSummary, float? skiptoken, string selectedState, float? take)
@@ -889,10 +1022,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ReservationsListResult>> ListAllNextPageAsync(string nextLink, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListAllNextPageRequest(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -922,10 +1052,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ReservationsListResult> ListAllNextPage(string nextLink, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListAllNextPageRequest(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take);
             _pipeline.Send(message, cancellationToken);

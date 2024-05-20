@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -208,7 +206,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _blobContainerRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation(response);
+                var uri = _blobContainerRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -250,7 +250,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _blobContainerRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
-                var operation = new StorageArmOperation(response);
+                var uri = _blobContainerRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -288,10 +290,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<BlobContainerResource>> UpdateAsync(BlobContainerData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerResource.Update");
             scope.Start();
@@ -333,10 +332,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<BlobContainerResource> Update(BlobContainerData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerResource.Update");
             scope.Start();
@@ -378,10 +374,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="legalHold"/> is null. </exception>
         public virtual async Task<Response<LegalHold>> SetLegalHoldAsync(LegalHold legalHold, CancellationToken cancellationToken = default)
         {
-            if (legalHold == null)
-            {
-                throw new ArgumentNullException(nameof(legalHold));
-            }
+            Argument.AssertNotNull(legalHold, nameof(legalHold));
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerResource.SetLegalHold");
             scope.Start();
@@ -423,10 +416,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="legalHold"/> is null. </exception>
         public virtual Response<LegalHold> SetLegalHold(LegalHold legalHold, CancellationToken cancellationToken = default)
         {
-            if (legalHold == null)
-            {
-                throw new ArgumentNullException(nameof(legalHold));
-            }
+            Argument.AssertNotNull(legalHold, nameof(legalHold));
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerResource.SetLegalHold");
             scope.Start();
@@ -468,10 +458,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="legalHold"/> is null. </exception>
         public virtual async Task<Response<LegalHold>> ClearLegalHoldAsync(LegalHold legalHold, CancellationToken cancellationToken = default)
         {
-            if (legalHold == null)
-            {
-                throw new ArgumentNullException(nameof(legalHold));
-            }
+            Argument.AssertNotNull(legalHold, nameof(legalHold));
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerResource.ClearLegalHold");
             scope.Start();
@@ -513,10 +500,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="legalHold"/> is null. </exception>
         public virtual Response<LegalHold> ClearLegalHold(LegalHold legalHold, CancellationToken cancellationToken = default)
         {
-            if (legalHold == null)
-            {
-                throw new ArgumentNullException(nameof(legalHold));
-            }
+            Argument.AssertNotNull(legalHold, nameof(legalHold));
 
             using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerResource.ClearLegalHold");
             scope.Start();

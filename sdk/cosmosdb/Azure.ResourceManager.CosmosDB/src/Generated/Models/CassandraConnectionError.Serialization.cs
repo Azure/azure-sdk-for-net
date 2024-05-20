@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CassandraConnectionError : IUtf8JsonSerializable, IJsonModel<CassandraConnectionError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraConnectionError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraConnectionError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CassandraConnectionError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraConnectionError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraConnectionError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraConnectionError DeserializeCassandraConnectionError(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             int? port = default;
             string exception = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionState"u8))
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CassandraConnectionError(
                 connectionState,
                 ipFrom,
@@ -145,6 +145,120 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 port,
                 exception,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  connectionState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectionState))
+                {
+                    builder.Append("  connectionState: ");
+                    builder.AppendLine($"'{ConnectionState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPFrom), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  iPFrom: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPFrom))
+                {
+                    builder.Append("  iPFrom: ");
+                    if (IPFrom.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IPFrom}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IPFrom}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPTo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  iPTo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPTo))
+                {
+                    builder.Append("  iPTo: ");
+                    if (IPTo.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IPTo}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IPTo}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  port: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Port))
+                {
+                    builder.Append("  port: ");
+                    builder.AppendLine($"{Port.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Exception), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  exception: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Exception))
+                {
+                    builder.Append("  exception: ");
+                    if (Exception.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Exception}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Exception}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CassandraConnectionError>.Write(ModelReaderWriterOptions options)
@@ -155,8 +269,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +288,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCassandraConnectionError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support reading '{options.Format}' format.");
             }
         }
 

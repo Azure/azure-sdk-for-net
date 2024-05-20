@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Subscription.Models;
 
@@ -199,7 +197,9 @@ namespace Azure.ResourceManager.Subscription
             try
             {
                 var response = await _subscriptionAliasAliasRestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SubscriptionArmOperation(response);
+                var uri = _subscriptionAliasAliasRestClient.CreateDeleteRequestUri(Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SubscriptionArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -241,7 +241,9 @@ namespace Azure.ResourceManager.Subscription
             try
             {
                 var response = _subscriptionAliasAliasRestClient.Delete(Id.Name, cancellationToken);
-                var operation = new SubscriptionArmOperation(response);
+                var uri = _subscriptionAliasAliasRestClient.CreateDeleteRequestUri(Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SubscriptionArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -280,10 +282,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SubscriptionAliasResource>> UpdateAsync(WaitUntil waitUntil, SubscriptionAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _subscriptionAliasAliasClientDiagnostics.CreateScope("SubscriptionAliasResource.Update");
             scope.Start();
@@ -329,10 +328,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SubscriptionAliasResource> Update(WaitUntil waitUntil, SubscriptionAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _subscriptionAliasAliasClientDiagnostics.CreateScope("SubscriptionAliasResource.Update");
             scope.Start();

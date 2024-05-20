@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Logic
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IntegrationAccountCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, IntegrationAccountCertificateData data, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountCertificateClientDiagnostics.CreateScope("IntegrationAccountCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _integrationAccountCertificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LogicArmOperation<IntegrationAccountCertificateResource>(Response.FromValue(new IntegrationAccountCertificateResource(Client, response), response.GetRawResponse()));
+                var uri = _integrationAccountCertificateRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new LogicArmOperation<IntegrationAccountCertificateResource>(Response.FromValue(new IntegrationAccountCertificateResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IntegrationAccountCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, IntegrationAccountCertificateData data, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountCertificateClientDiagnostics.CreateScope("IntegrationAccountCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _integrationAccountCertificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken);
-                var operation = new LogicArmOperation<IntegrationAccountCertificateResource>(Response.FromValue(new IntegrationAccountCertificateResource(Client, response), response.GetRawResponse()));
+                var uri = _integrationAccountCertificateRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new LogicArmOperation<IntegrationAccountCertificateResource>(Response.FromValue(new IntegrationAccountCertificateResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual async Task<Response<IntegrationAccountCertificateResource>> GetAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _integrationAccountCertificateClientDiagnostics.CreateScope("IntegrationAccountCertificateCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual Response<IntegrationAccountCertificateResource> Get(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _integrationAccountCertificateClientDiagnostics.CreateScope("IntegrationAccountCertificateCollection.Get");
             scope.Start();
@@ -364,14 +332,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _integrationAccountCertificateClientDiagnostics.CreateScope("IntegrationAccountCertificateCollection.Exists");
             scope.Start();
@@ -414,14 +375,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual Response<bool> Exists(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _integrationAccountCertificateClientDiagnostics.CreateScope("IntegrationAccountCertificateCollection.Exists");
             scope.Start();
@@ -464,14 +418,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual async Task<NullableResponse<IntegrationAccountCertificateResource>> GetIfExistsAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _integrationAccountCertificateClientDiagnostics.CreateScope("IntegrationAccountCertificateCollection.GetIfExists");
             scope.Start();
@@ -516,14 +463,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual NullableResponse<IntegrationAccountCertificateResource> GetIfExists(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _integrationAccountCertificateClientDiagnostics.CreateScope("IntegrationAccountCertificateCollection.GetIfExists");
             scope.Start();

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -79,12 +78,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new OperationResult(status, code, message, target, details ?? new ChangeTrackingList<CloudError>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OperationResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOperationResult(document.RootElement);
+        }
+
         internal partial class OperationResultConverter : JsonConverter<OperationResult>
         {
             public override void Write(Utf8JsonWriter writer, OperationResult model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override OperationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -9,9 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -80,7 +78,7 @@ namespace Azure.ResourceManager.Cdn
                 data.HostName,
                 data.Origins,
                 data.OriginGroups,
-                data.CustomDomains,
+                data.DeepCreatedCustomDomains,
                 data.ResourceState,
                 data.ProvisioningState,
                 null);

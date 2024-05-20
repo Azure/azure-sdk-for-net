@@ -8,23 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class StaticSitesWorkflowPreviewContent : IUtf8JsonSerializable, IJsonModel<StaticSitesWorkflowPreviewContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSitesWorkflowPreviewContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSitesWorkflowPreviewContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StaticSitesWorkflowPreviewContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StaticSitesWorkflowPreviewContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSitesWorkflowPreviewContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSitesWorkflowPreviewContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(BuildProperties))
             {
                 writer.WritePropertyName("buildProperties"u8);
-                writer.WriteObjectValue(BuildProperties);
+                writer.WriteObjectValue(BuildProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticSitesWorkflowPreviewContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSitesWorkflowPreviewContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSitesWorkflowPreviewContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StaticSitesWorkflowPreviewContent DeserializeStaticSitesWorkflowPreviewContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
             string branch = default;
             StaticSiteBuildProperties buildProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -187,10 +187,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StaticSitesWorkflowPreviewContent(
                 id,
                 name,
@@ -203,6 +203,153 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RepositoryUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    repositoryUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RepositoryUri))
+                {
+                    builder.Append("    repositoryUrl: ");
+                    builder.AppendLine($"'{RepositoryUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Branch), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    branch: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Branch))
+                {
+                    builder.Append("    branch: ");
+                    if (Branch.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Branch}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Branch}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BuildProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    buildProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BuildProperties))
+                {
+                    builder.Append("    buildProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BuildProperties, options, 4, false, "    buildProperties: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<StaticSitesWorkflowPreviewContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StaticSitesWorkflowPreviewContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -211,8 +358,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StaticSitesWorkflowPreviewContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSitesWorkflowPreviewContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +377,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeStaticSitesWorkflowPreviewContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StaticSitesWorkflowPreviewContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSitesWorkflowPreviewContent)} does not support reading '{options.Format}' format.");
             }
         }
 

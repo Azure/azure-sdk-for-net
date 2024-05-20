@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -270,7 +268,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotVirtualNetworkConnectionWebAppsRestClient.DeleteVnetConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(response);
+                var uri = _siteSlotVirtualNetworkConnectionWebAppsRestClient.CreateDeleteVnetConnectionSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -312,7 +312,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotVirtualNetworkConnectionWebAppsRestClient.DeleteVnetConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppServiceArmOperation(response);
+                var uri = _siteSlotVirtualNetworkConnectionWebAppsRestClient.CreateDeleteVnetConnectionSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -350,10 +352,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<SiteSlotVirtualNetworkConnectionResource>> UpdateAsync(AppServiceVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionResource.Update");
             scope.Start();
@@ -395,10 +394,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<SiteSlotVirtualNetworkConnectionResource> Update(AppServiceVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionResource.Update");
             scope.Start();

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
@@ -200,7 +198,9 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = await _linkResourceFormatLinksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation(response);
+                var uri = _linkResourceFormatLinksRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CustomerInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -242,7 +242,9 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = _linkResourceFormatLinksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CustomerInsightsArmOperation(response);
+                var uri = _linkResourceFormatLinksRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CustomerInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -281,10 +283,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LinkResourceFormatResource>> UpdateAsync(WaitUntil waitUntil, LinkResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatResource.Update");
             scope.Start();
@@ -330,10 +329,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LinkResourceFormatResource> Update(WaitUntil waitUntil, LinkResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatResource.Update");
             scope.Start();

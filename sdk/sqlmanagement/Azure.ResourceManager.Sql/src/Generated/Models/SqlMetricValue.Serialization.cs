@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SqlMetricValue : IUtf8JsonSerializable, IJsonModel<SqlMetricValue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlMetricValue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlMetricValue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlMetricValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlMetricValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlMetricValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlMetricValue)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlMetricValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlMetricValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlMetricValue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SqlMetricValue DeserializeSqlMetricValue(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql.Models
             DateTimeOffset? timestamp = default;
             double? total = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlMetricValue(
                 count,
                 average,
@@ -175,6 +175,112 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Count), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  count: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Count))
+                {
+                    builder.Append("  count: ");
+                    builder.AppendLine($"{Count.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Average), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  average: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Average))
+                {
+                    builder.Append("  average: ");
+                    builder.AppendLine($"'{Average.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Maximum), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maximum: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Maximum))
+                {
+                    builder.Append("  maximum: ");
+                    builder.AppendLine($"'{Maximum.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Minimum), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minimum: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Minimum))
+                {
+                    builder.Append("  minimum: ");
+                    builder.AppendLine($"'{Minimum.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timestamp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Timestamp))
+                {
+                    builder.Append("  timestamp: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Total), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  total: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Total))
+                {
+                    builder.Append("  total: ");
+                    builder.AppendLine($"'{Total.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SqlMetricValue>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlMetricValue>)this).GetFormatFromOptions(options) : options.Format;
@@ -183,8 +289,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlMetricValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlMetricValue)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +308,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSqlMetricValue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlMetricValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlMetricValue)} does not support reading '{options.Format}' format.");
             }
         }
 

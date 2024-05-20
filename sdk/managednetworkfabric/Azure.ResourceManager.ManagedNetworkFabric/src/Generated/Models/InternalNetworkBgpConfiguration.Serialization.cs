@@ -10,27 +10,26 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class InternalNetworkBgpConfiguration : IUtf8JsonSerializable, IJsonModel<InternalNetworkBgpConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalNetworkBgpConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalNetworkBgpConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InternalNetworkBgpConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkBgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalNetworkBgpConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalNetworkBgpConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
-                writer.WriteObjectValue(BfdConfiguration);
+                writer.WriteObjectValue(BfdConfiguration, options);
             }
             if (Optional.IsDefined(DefaultRouteOriginate))
             {
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv4NeighborAddress)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv6NeighborAddress)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkBgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalNetworkBgpConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalNetworkBgpConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +133,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static InternalNetworkBgpConfiguration DeserializeInternalNetworkBgpConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IList<NeighborAddress> ipv6NeighborAddress = default;
             string annotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bfdConfiguration"u8))
@@ -272,10 +271,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new InternalNetworkBgpConfiguration(
                 annotation,
                 serializedAdditionalRawData,
@@ -300,7 +299,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InternalNetworkBgpConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalNetworkBgpConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeInternalNetworkBgpConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalNetworkBgpConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalNetworkBgpConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

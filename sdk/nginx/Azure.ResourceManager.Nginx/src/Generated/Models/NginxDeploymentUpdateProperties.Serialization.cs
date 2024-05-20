@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
     public partial class NginxDeploymentUpdateProperties : IUtf8JsonSerializable, IJsonModel<NginxDeploymentUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentUpdateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NginxDeploymentUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,17 +34,22 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(Logging))
             {
                 writer.WritePropertyName("logging"u8);
-                writer.WriteObjectValue(Logging);
+                writer.WriteObjectValue(Logging, options);
             }
             if (Optional.IsDefined(ScalingProperties))
             {
                 writer.WritePropertyName("scalingProperties"u8);
-                writer.WriteObjectValue(ScalingProperties);
+                writer.WriteObjectValue(ScalingProperties, options);
             }
             if (Optional.IsDefined(UserProfile))
             {
                 writer.WritePropertyName("userProfile"u8);
-                writer.WriteObjectValue(UserProfile);
+                writer.WriteObjectValue(UserProfile, options);
+            }
+            if (Optional.IsDefined(AutoUpgradeProfile))
+            {
+                writer.WritePropertyName("autoUpgradeProfile"u8);
+                writer.WriteObjectValue(AutoUpgradeProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxDeploymentUpdateProperties DeserializeNginxDeploymentUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,8 +93,9 @@ namespace Azure.ResourceManager.Nginx.Models
             NginxLogging logging = default;
             NginxDeploymentScalingProperties scalingProperties = default;
             NginxDeploymentUserProfile userProfile = default;
+            AutoUpgradeProfile autoUpgradeProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableDiagnosticsSupport"u8))
@@ -129,13 +134,28 @@ namespace Azure.ResourceManager.Nginx.Models
                     userProfile = NginxDeploymentUserProfile.DeserializeNginxDeploymentUserProfile(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("autoUpgradeProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoUpgradeProfile = AutoUpgradeProfile.DeserializeAutoUpgradeProfile(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxDeploymentUpdateProperties(enableDiagnosticsSupport, logging, scalingProperties, userProfile, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NginxDeploymentUpdateProperties(
+                enableDiagnosticsSupport,
+                logging,
+                scalingProperties,
+                userProfile,
+                autoUpgradeProfile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxDeploymentUpdateProperties>.Write(ModelReaderWriterOptions options)
@@ -147,7 +167,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +183,7 @@ namespace Azure.ResourceManager.Nginx.Models
                         return DeserializeNginxDeploymentUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

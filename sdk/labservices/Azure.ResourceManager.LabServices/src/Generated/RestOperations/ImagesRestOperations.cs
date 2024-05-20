@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.LabServices.Models;
@@ -35,6 +34,25 @@ namespace Azure.ResourceManager.LabServices
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByLabPlanRequestUri(string subscriptionId, string resourceGroupName, string labPlanName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/labPlans/", false);
+            uri.AppendPath(labPlanName, true);
+            uri.AppendPath("/images", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByLabPlanRequest(string subscriptionId, string resourceGroupName, string labPlanName, string filter)
@@ -72,30 +90,9 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PagedImages>> ListByLabPlanAsync(string subscriptionId, string resourceGroupName, string labPlanName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(labPlanName));
-            }
-            if (labPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
 
             using var message = CreateListByLabPlanRequest(subscriptionId, resourceGroupName, labPlanName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -123,30 +120,9 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PagedImages> ListByLabPlan(string subscriptionId, string resourceGroupName, string labPlanName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(labPlanName));
-            }
-            if (labPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
 
             using var message = CreateListByLabPlanRequest(subscriptionId, resourceGroupName, labPlanName, filter);
             _pipeline.Send(message, cancellationToken);
@@ -162,6 +138,22 @@ namespace Azure.ResourceManager.LabServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string labPlanName, string imageName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/labPlans/", false);
+            uri.AppendPath(labPlanName, true);
+            uri.AppendPath("/images/", false);
+            uri.AppendPath(imageName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string labPlanName, string imageName)
@@ -196,38 +188,10 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LabVirtualMachineImageData>> GetAsync(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(labPlanName));
-            }
-            if (labPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
-            }
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, labPlanName, imageName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -257,38 +221,10 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LabVirtualMachineImageData> Get(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(labPlanName));
-            }
-            if (labPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
-            }
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, labPlanName, imageName);
             _pipeline.Send(message, cancellationToken);
@@ -306,6 +242,22 @@ namespace Azure.ResourceManager.LabServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabVirtualMachineImageData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/labPlans/", false);
+            uri.AppendPath(labPlanName, true);
+            uri.AppendPath("/images/", false);
+            uri.AppendPath(imageName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabVirtualMachineImageData data)
@@ -328,7 +280,7 @@ namespace Azure.ResourceManager.LabServices
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -345,42 +297,11 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LabVirtualMachineImageData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabVirtualMachineImageData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(labPlanName));
-            }
-            if (labPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
-            }
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, labPlanName, imageName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -409,42 +330,11 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LabVirtualMachineImageData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabVirtualMachineImageData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(labPlanName));
-            }
-            if (labPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
-            }
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, labPlanName, imageName, data);
             _pipeline.Send(message, cancellationToken);
@@ -460,6 +350,22 @@ namespace Azure.ResourceManager.LabServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabVirtualMachineImagePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/labPlans/", false);
+            uri.AppendPath(labPlanName, true);
+            uri.AppendPath("/images/", false);
+            uri.AppendPath(imageName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabVirtualMachineImagePatch patch)
@@ -482,7 +388,7 @@ namespace Azure.ResourceManager.LabServices
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -499,42 +405,11 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LabVirtualMachineImageData>> UpdateAsync(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabVirtualMachineImagePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(labPlanName));
-            }
-            if (labPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
-            }
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, labPlanName, imageName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -563,42 +438,11 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LabVirtualMachineImageData> Update(string subscriptionId, string resourceGroupName, string labPlanName, string imageName, LabVirtualMachineImagePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(labPlanName));
-            }
-            if (labPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
-            }
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, labPlanName, imageName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -614,6 +458,14 @@ namespace Azure.ResourceManager.LabServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByLabPlanNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string labPlanName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByLabPlanNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string labPlanName, string filter)
@@ -641,34 +493,10 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PagedImages>> ListByLabPlanNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string labPlanName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(labPlanName));
-            }
-            if (labPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
 
             using var message = CreateListByLabPlanNextPageRequest(nextLink, subscriptionId, resourceGroupName, labPlanName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -697,34 +525,10 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PagedImages> ListByLabPlanNextPage(string nextLink, string subscriptionId, string resourceGroupName, string labPlanName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labPlanName == null)
-            {
-                throw new ArgumentNullException(nameof(labPlanName));
-            }
-            if (labPlanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labPlanName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
 
             using var message = CreateListByLabPlanNextPageRequest(nextLink, subscriptionId, resourceGroupName, labPlanName, filter);
             _pipeline.Send(message, cancellationToken);

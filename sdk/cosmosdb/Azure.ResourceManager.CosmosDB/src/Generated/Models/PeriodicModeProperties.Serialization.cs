@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class PeriodicModeProperties : IUtf8JsonSerializable, IJsonModel<PeriodicModeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeriodicModeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeriodicModeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PeriodicModeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PeriodicModeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeriodicModeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static PeriodicModeProperties DeserializePeriodicModeProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             int? backupRetentionIntervalInHours = default;
             CosmosDBBackupStorageRedundancy? backupStorageRedundancy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupIntervalInMinutes"u8))
@@ -116,11 +116,71 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PeriodicModeProperties(backupIntervalInMinutes, backupRetentionIntervalInHours, backupStorageRedundancy, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupIntervalInMinutes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  backupIntervalInMinutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupIntervalInMinutes))
+                {
+                    builder.Append("  backupIntervalInMinutes: ");
+                    builder.AppendLine($"{BackupIntervalInMinutes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupRetentionIntervalInHours), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  backupRetentionIntervalInHours: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupRetentionIntervalInHours))
+                {
+                    builder.Append("  backupRetentionIntervalInHours: ");
+                    builder.AppendLine($"{BackupRetentionIntervalInHours.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStorageRedundancy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  backupStorageRedundancy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupStorageRedundancy))
+                {
+                    builder.Append("  backupStorageRedundancy: ");
+                    builder.AppendLine($"'{BackupStorageRedundancy.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<PeriodicModeProperties>.Write(ModelReaderWriterOptions options)
@@ -131,8 +191,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializePeriodicModeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

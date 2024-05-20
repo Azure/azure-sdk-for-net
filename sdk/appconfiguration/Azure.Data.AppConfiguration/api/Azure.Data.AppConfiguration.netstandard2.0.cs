@@ -64,6 +64,11 @@ namespace Azure.Data.AppConfiguration
         public override string ToString() { throw null; }
         public virtual void UpdateSyncToken(string token) { }
     }
+    public static partial class ConfigurationClientExtensions
+    {
+        public static System.Collections.Generic.IAsyncEnumerable<Azure.Page<Azure.Data.AppConfiguration.ConfigurationSetting>> AsPages(this Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> pageable, System.Collections.Generic.IEnumerable<Azure.MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = default(int?)) { throw null; }
+        public static System.Collections.Generic.IEnumerable<Azure.Page<Azure.Data.AppConfiguration.ConfigurationSetting>> AsPages(this Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> pageable, System.Collections.Generic.IEnumerable<Azure.MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = default(int?)) { throw null; }
+    }
     public partial class ConfigurationClientOptions : Azure.Core.ClientOptions
     {
         public ConfigurationClientOptions(Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion version = Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion.V2023_10_01) { }

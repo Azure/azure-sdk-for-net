@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SshPublicKeyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sshPublicKeyName, SshPublicKeyData data, CancellationToken cancellationToken = default)
         {
-            if (sshPublicKeyName == null)
-            {
-                throw new ArgumentNullException(nameof(sshPublicKeyName));
-            }
-            if (sshPublicKeyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sshPublicKeyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sshPublicKeyClientDiagnostics.CreateScope("SshPublicKeyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _sshPublicKeyRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<SshPublicKeyResource>(Response.FromValue(new SshPublicKeyResource(Client, response), response.GetRawResponse()));
+                var uri = _sshPublicKeyRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ComputeArmOperation<SshPublicKeyResource>(Response.FromValue(new SshPublicKeyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,7 +116,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SshPublicKeyResource> CreateOrUpdate(WaitUntil waitUntil, string sshPublicKeyName, SshPublicKeyData data, CancellationToken cancellationToken = default)
         {
-            if (sshPublicKeyName == null)
-            {
-                throw new ArgumentNullException(nameof(sshPublicKeyName));
-            }
-            if (sshPublicKeyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sshPublicKeyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sshPublicKeyClientDiagnostics.CreateScope("SshPublicKeyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _sshPublicKeyRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, data, cancellationToken);
-                var operation = new ComputeArmOperation<SshPublicKeyResource>(Response.FromValue(new SshPublicKeyResource(Client, response), response.GetRawResponse()));
+                var uri = _sshPublicKeyRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ComputeArmOperation<SshPublicKeyResource>(Response.FromValue(new SshPublicKeyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -185,7 +167,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> is null. </exception>
         public virtual async Task<Response<SshPublicKeyResource>> GetAsync(string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
-            if (sshPublicKeyName == null)
-            {
-                throw new ArgumentNullException(nameof(sshPublicKeyName));
-            }
-            if (sshPublicKeyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sshPublicKeyName));
-            }
+            Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
 
             using var scope = _sshPublicKeyClientDiagnostics.CreateScope("SshPublicKeyCollection.Get");
             scope.Start();
@@ -237,7 +212,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> is null. </exception>
         public virtual Response<SshPublicKeyResource> Get(string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
-            if (sshPublicKeyName == null)
-            {
-                throw new ArgumentNullException(nameof(sshPublicKeyName));
-            }
-            if (sshPublicKeyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sshPublicKeyName));
-            }
+            Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
 
             using var scope = _sshPublicKeyClientDiagnostics.CreateScope("SshPublicKeyCollection.Get");
             scope.Start();
@@ -289,7 +257,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -319,7 +287,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -349,7 +317,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
-            if (sshPublicKeyName == null)
-            {
-                throw new ArgumentNullException(nameof(sshPublicKeyName));
-            }
-            if (sshPublicKeyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sshPublicKeyName));
-            }
+            Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
 
             using var scope = _sshPublicKeyClientDiagnostics.CreateScope("SshPublicKeyCollection.Exists");
             scope.Start();
@@ -399,7 +360,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> is null. </exception>
         public virtual Response<bool> Exists(string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
-            if (sshPublicKeyName == null)
-            {
-                throw new ArgumentNullException(nameof(sshPublicKeyName));
-            }
-            if (sshPublicKeyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sshPublicKeyName));
-            }
+            Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
 
             using var scope = _sshPublicKeyClientDiagnostics.CreateScope("SshPublicKeyCollection.Exists");
             scope.Start();
@@ -449,7 +403,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> is null. </exception>
         public virtual async Task<NullableResponse<SshPublicKeyResource>> GetIfExistsAsync(string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
-            if (sshPublicKeyName == null)
-            {
-                throw new ArgumentNullException(nameof(sshPublicKeyName));
-            }
-            if (sshPublicKeyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sshPublicKeyName));
-            }
+            Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
 
             using var scope = _sshPublicKeyClientDiagnostics.CreateScope("SshPublicKeyCollection.GetIfExists");
             scope.Start();
@@ -501,7 +448,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> is null. </exception>
         public virtual NullableResponse<SshPublicKeyResource> GetIfExists(string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
-            if (sshPublicKeyName == null)
-            {
-                throw new ArgumentNullException(nameof(sshPublicKeyName));
-            }
-            if (sshPublicKeyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sshPublicKeyName));
-            }
+            Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
 
             using var scope = _sshPublicKeyClientDiagnostics.CreateScope("SshPublicKeyCollection.GetIfExists");
             scope.Start();

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -32,8 +31,23 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCancelRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/rollingUpgrades/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCancelRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
@@ -66,30 +80,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CancelAsync(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
             using var message = CreateCancelRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -112,30 +105,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Cancel(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
             using var message = CreateCancelRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             _pipeline.Send(message, cancellationToken);
@@ -147,6 +119,21 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStartOSUpgradeRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/osRollingUpgrade", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStartOSUpgradeRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
@@ -179,30 +166,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> StartOSUpgradeAsync(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
             using var message = CreateStartOSUpgradeRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -225,30 +191,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response StartOSUpgrade(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
             using var message = CreateStartOSUpgradeRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             _pipeline.Send(message, cancellationToken);
@@ -260,6 +205,21 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStartExtensionUpgradeRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/extensionRollingUpgrade", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStartExtensionUpgradeRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
@@ -292,30 +252,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> StartExtensionUpgradeAsync(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
             using var message = CreateStartExtensionUpgradeRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -338,30 +277,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response StartExtensionUpgrade(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
             using var message = CreateStartExtensionUpgradeRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             _pipeline.Send(message, cancellationToken);
@@ -373,6 +291,21 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetLatestRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/rollingUpgrades/latest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetLatestRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
@@ -405,30 +338,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VirtualMachineScaleSetRollingUpgradeData>> GetLatestAsync(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
             using var message = CreateGetLatestRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -457,30 +369,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VirtualMachineScaleSetRollingUpgradeData> GetLatest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineScaleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineScaleSetName));
-            }
-            if (virtualMachineScaleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineScaleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
             using var message = CreateGetLatestRequest(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             _pipeline.Send(message, cancellationToken);

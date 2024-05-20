@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
         public virtual async Task<Response<DiskRestorePointResource>> GetAsync(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
-            if (diskRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
             using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
         public virtual Response<DiskRestorePointResource> Get(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
-            if (diskRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
             using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointCollection.Get");
             scope.Start();
@@ -244,14 +228,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
-            if (diskRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
             using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointCollection.Exists");
             scope.Start();
@@ -294,14 +271,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
         public virtual Response<bool> Exists(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
-            if (diskRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
             using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointCollection.Exists");
             scope.Start();
@@ -344,14 +314,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
         public virtual async Task<NullableResponse<DiskRestorePointResource>> GetIfExistsAsync(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
-            if (diskRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
             using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointCollection.GetIfExists");
             scope.Start();
@@ -396,14 +359,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
         public virtual NullableResponse<DiskRestorePointResource> GetIfExists(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
-            if (diskRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
             using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointCollection.GetIfExists");
             scope.Start();

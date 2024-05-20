@@ -57,14 +57,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
         public PostgreSqlFlexibleServerFirewallRuleData(IPAddress startIPAddress, IPAddress endIPAddress)
         {
-            if (startIPAddress == null)
-            {
-                throw new ArgumentNullException(nameof(startIPAddress));
-            }
-            if (endIPAddress == null)
-            {
-                throw new ArgumentNullException(nameof(endIPAddress));
-            }
+            Argument.AssertNotNull(startIPAddress, nameof(startIPAddress));
+            Argument.AssertNotNull(endIPAddress, nameof(endIPAddress));
 
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;
@@ -91,8 +85,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> The start IP address of the server firewall rule. Must be IPv4 format. </summary>
+        [WirePath("properties.startIpAddress")]
         public IPAddress StartIPAddress { get; set; }
         /// <summary> The end IP address of the server firewall rule. Must be IPv4 format. </summary>
+        [WirePath("properties.endIpAddress")]
         public IPAddress EndIPAddress { get; set; }
     }
 }

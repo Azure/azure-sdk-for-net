@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ProviderHub
 {
@@ -199,7 +197,9 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _defaultRolloutRestClient.DeleteAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation(response);
+                var uri = _defaultRolloutRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -241,7 +241,9 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _defaultRolloutRestClient.Delete(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ProviderHubArmOperation(response);
+                var uri = _defaultRolloutRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -280,10 +282,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DefaultRolloutResource>> UpdateAsync(WaitUntil waitUntil, DefaultRolloutData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _defaultRolloutClientDiagnostics.CreateScope("DefaultRolloutResource.Update");
             scope.Start();
@@ -329,10 +328,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DefaultRolloutResource> Update(WaitUntil waitUntil, DefaultRolloutData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _defaultRolloutClientDiagnostics.CreateScope("DefaultRolloutResource.Update");
             scope.Start();

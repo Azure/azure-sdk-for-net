@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing
 {
@@ -99,7 +100,7 @@ namespace Azure.Maps.Routing
         public RouteType? RouteType { get; set; }
 
         /// <summary>
-        /// Types of cargo that may be classified as hazardous materials and restricted from some roads. Available VehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. VehicleLoadType can be specified multiple times. This parameter is currently only considered for <c>travelMode=truck</c>.
+        /// Types of cargo that may be classified as hazardous materials and restricted from some roads. Available VehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries/regions. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries/regions. VehicleLoadType can be specified multiple times. This parameter is currently only considered for <c>travelMode=truck</c>.
         /// Allowed values: <c>VehicleLoadType.USHazmatClass1</c>, <c>VehicleLoadType.USHazmatClass2</c>, <c>VehicleLoadType.USHazmatClass3</c>, <c>VehicleLoadType.USHazmatClass4</c>, <c>VehicleLoadType.USHazmatClass5</c>, <c>VehicleLoadType.USHazmatClass6</c>, <c>VehicleLoadType.USHazmatClass7</c>, <c>VehicleLoadType.USHazmatClass8</c>, <c>VehicleLoadType.USHazmatClass9</c>, <c>VehicleLoadType.OtherHazmatExplosive</c>, <c>VehicleLoadType.OtherHazmatGeneral</c>, or <c>VehicleLoadType.OtherHazmatHarmfulToWater</c>.
         /// </summary>
         public VehicleLoadType? VehicleLoadType { get; set; }

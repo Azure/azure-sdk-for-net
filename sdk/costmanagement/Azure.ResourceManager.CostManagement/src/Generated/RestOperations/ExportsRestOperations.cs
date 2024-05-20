@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CostManagement.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.CostManagement
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string scope, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/exports", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string scope, string expand)
@@ -65,10 +79,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<ExportListResult>> ListAsync(string scope, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -93,10 +104,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<ExportListResult> List(string scope, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope, expand);
             _pipeline.Send(message, cancellationToken);
@@ -112,6 +120,22 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string exportName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/exports/", false);
+            uri.AppendPath(exportName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string scope, string exportName, string expand)
@@ -145,18 +169,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CostManagementExportData>> GetAsync(string scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (exportName == null)
-            {
-                throw new ArgumentNullException(nameof(exportName));
-            }
-            if (exportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
 
             using var message = CreateGetRequest(scope, exportName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -185,18 +199,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CostManagementExportData> Get(string scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (exportName == null)
-            {
-                throw new ArgumentNullException(nameof(exportName));
-            }
-            if (exportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
 
             using var message = CreateGetRequest(scope, exportName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -216,6 +220,18 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string scope, string exportName, CostManagementExportData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/exports/", false);
+            uri.AppendPath(exportName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string scope, string exportName, CostManagementExportData data)
         {
             var message = _pipeline.CreateMessage();
@@ -232,7 +248,7 @@ namespace Azure.ResourceManager.CostManagement
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -247,22 +263,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CostManagementExportData>> CreateOrUpdateAsync(string scope, string exportName, CostManagementExportData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (exportName == null)
-            {
-                throw new ArgumentNullException(nameof(exportName));
-            }
-            if (exportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(scope, exportName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -290,22 +293,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CostManagementExportData> CreateOrUpdate(string scope, string exportName, CostManagementExportData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (exportName == null)
-            {
-                throw new ArgumentNullException(nameof(exportName));
-            }
-            if (exportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(scope, exportName, data);
             _pipeline.Send(message, cancellationToken);
@@ -322,6 +312,18 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string scope, string exportName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/exports/", false);
+            uri.AppendPath(exportName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string scope, string exportName)
@@ -350,18 +352,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string scope, string exportName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (exportName == null)
-            {
-                throw new ArgumentNullException(nameof(exportName));
-            }
-            if (exportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
 
             using var message = CreateDeleteRequest(scope, exportName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -382,18 +374,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string scope, string exportName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (exportName == null)
-            {
-                throw new ArgumentNullException(nameof(exportName));
-            }
-            if (exportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
 
             using var message = CreateDeleteRequest(scope, exportName);
             _pipeline.Send(message, cancellationToken);
@@ -404,6 +386,19 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateExecuteRequestUri(string scope, string exportName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/exports/", false);
+            uri.AppendPath(exportName, true);
+            uri.AppendPath("/run", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateExecuteRequest(string scope, string exportName)
@@ -433,18 +428,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ExecuteAsync(string scope, string exportName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (exportName == null)
-            {
-                throw new ArgumentNullException(nameof(exportName));
-            }
-            if (exportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
 
             using var message = CreateExecuteRequest(scope, exportName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -465,18 +450,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Execute(string scope, string exportName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (exportName == null)
-            {
-                throw new ArgumentNullException(nameof(exportName));
-            }
-            if (exportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
 
             using var message = CreateExecuteRequest(scope, exportName);
             _pipeline.Send(message, cancellationToken);
@@ -487,6 +462,19 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetExecutionHistoryRequestUri(string scope, string exportName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/exports/", false);
+            uri.AppendPath(exportName, true);
+            uri.AppendPath("/runHistory", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetExecutionHistoryRequest(string scope, string exportName)
@@ -516,18 +504,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExportExecutionListResult>> GetExecutionHistoryAsync(string scope, string exportName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (exportName == null)
-            {
-                throw new ArgumentNullException(nameof(exportName));
-            }
-            if (exportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
 
             using var message = CreateGetExecutionHistoryRequest(scope, exportName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -553,18 +531,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExportExecutionListResult> GetExecutionHistory(string scope, string exportName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (exportName == null)
-            {
-                throw new ArgumentNullException(nameof(exportName));
-            }
-            if (exportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(exportName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
 
             using var message = CreateGetExecutionHistoryRequest(scope, exportName);
             _pipeline.Send(message, cancellationToken);

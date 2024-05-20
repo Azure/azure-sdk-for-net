@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     internal partial class OperationalInsightsSearchCoreSummary : IUtf8JsonSerializable, IJsonModel<OperationalInsightsSearchCoreSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsSearchCoreSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsSearchCoreSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OperationalInsightsSearchCoreSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSearchCoreSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsSearchCoreSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsSearchCoreSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSearchCoreSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsSearchCoreSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsSearchCoreSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsSearchCoreSummary DeserializeOperationalInsightsSearchCoreSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             string status = default;
             long numberOfDocuments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -90,11 +90,61 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OperationalInsightsSearchCoreSummary(status, numberOfDocuments, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    if (Status.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Status}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Status}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfDocuments), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  numberOfDocuments: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  numberOfDocuments: ");
+                builder.AppendLine($"'{NumberOfDocuments.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<OperationalInsightsSearchCoreSummary>.Write(ModelReaderWriterOptions options)
@@ -105,8 +155,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsSearchCoreSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsSearchCoreSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -122,7 +174,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsSearchCoreSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsSearchCoreSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsSearchCoreSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

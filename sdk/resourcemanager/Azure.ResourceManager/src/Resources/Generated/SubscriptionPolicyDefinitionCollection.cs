@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SubscriptionPolicyDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyDefinitionName, PolicyDefinitionData data, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _subscriptionPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _subscriptionPolicyDefinitionPolicyDefinitionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, policyDefinitionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<SubscriptionPolicyDefinitionResource>(Response.FromValue(new SubscriptionPolicyDefinitionResource(Client, response), response.GetRawResponse()));
+                var uri = _subscriptionPolicyDefinitionPolicyDefinitionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, policyDefinitionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ResourcesArmOperation<SubscriptionPolicyDefinitionResource>(Response.FromValue(new SubscriptionPolicyDefinitionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SubscriptionPolicyDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string policyDefinitionName, PolicyDefinitionData data, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _subscriptionPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _subscriptionPolicyDefinitionPolicyDefinitionsRestClient.CreateOrUpdate(Id.SubscriptionId, policyDefinitionName, data, cancellationToken);
-                var operation = new ResourcesArmOperation<SubscriptionPolicyDefinitionResource>(Response.FromValue(new SubscriptionPolicyDefinitionResource(Client, response), response.GetRawResponse()));
+                var uri = _subscriptionPolicyDefinitionPolicyDefinitionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, policyDefinitionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ResourcesArmOperation<SubscriptionPolicyDefinitionResource>(Response.FromValue(new SubscriptionPolicyDefinitionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
         public virtual async Task<Response<SubscriptionPolicyDefinitionResource>> GetAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             using var scope = _subscriptionPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
         public virtual Response<SubscriptionPolicyDefinitionResource> Get(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             using var scope = _subscriptionPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.Get");
             scope.Start();
@@ -366,14 +334,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             using var scope = _subscriptionPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.Exists");
             scope.Start();
@@ -416,14 +377,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
         public virtual Response<bool> Exists(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             using var scope = _subscriptionPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.Exists");
             scope.Start();
@@ -466,14 +420,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
         public virtual async Task<NullableResponse<SubscriptionPolicyDefinitionResource>> GetIfExistsAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             using var scope = _subscriptionPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.GetIfExists");
             scope.Start();
@@ -518,14 +465,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
         public virtual NullableResponse<SubscriptionPolicyDefinitionResource> GetIfExists(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             using var scope = _subscriptionPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicyDefinitionCollection.GetIfExists");
             scope.Start();

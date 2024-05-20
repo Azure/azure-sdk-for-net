@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,14 +16,14 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SqlScheduleItem : IUtf8JsonSerializable, IJsonModel<SqlScheduleItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlScheduleItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlScheduleItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlScheduleItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlScheduleItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlScheduleItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlScheduleItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlScheduleItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlScheduleItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlScheduleItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SqlScheduleItem DeserializeSqlScheduleItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Sql.Models
             SqlDayOfWeek stopDay = default;
             string stopTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startDay"u8))
@@ -102,11 +103,96 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlScheduleItem(startDay, startTime, stopDay, stopTime, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartDay), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startDay: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  startDay: ");
+                builder.AppendLine($"'{StartDay.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartTime))
+                {
+                    builder.Append("  startTime: ");
+                    if (StartTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StartTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StartTime}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StopDay), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  stopDay: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  stopDay: ");
+                builder.AppendLine($"'{StopDay.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StopTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  stopTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StopTime))
+                {
+                    builder.Append("  stopTime: ");
+                    if (StopTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StopTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StopTime}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SqlScheduleItem>.Write(ModelReaderWriterOptions options)
@@ -117,8 +203,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlScheduleItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlScheduleItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -134,7 +222,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSqlScheduleItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlScheduleItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlScheduleItem)} does not support reading '{options.Format}' format.");
             }
         }
 

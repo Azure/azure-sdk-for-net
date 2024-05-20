@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataFactory.Models;
@@ -37,6 +36,23 @@ namespace Azure.ResourceManager.DataFactory
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateQueryByPipelineRunRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string runId, RunFilterContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/pipelineruns/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/queryActivityruns", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateQueryByPipelineRunRequest(string subscriptionId, string resourceGroupName, string factoryName, string runId, RunFilterContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -58,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -75,42 +91,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PipelineActivityRunsResult>> QueryByPipelineRunAsync(string subscriptionId, string resourceGroupName, string factoryName, string runId, RunFilterContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateQueryByPipelineRunRequest(subscriptionId, resourceGroupName, factoryName, runId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -139,42 +124,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PipelineActivityRunsResult> QueryByPipelineRun(string subscriptionId, string resourceGroupName, string factoryName, string runId, RunFilterContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateQueryByPipelineRunRequest(subscriptionId, resourceGroupName, factoryName, runId, content);
             _pipeline.Send(message, cancellationToken);

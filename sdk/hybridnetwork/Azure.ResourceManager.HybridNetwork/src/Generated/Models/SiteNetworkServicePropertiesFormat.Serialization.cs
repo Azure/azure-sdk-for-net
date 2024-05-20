@@ -10,21 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HybridNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class SiteNetworkServicePropertiesFormat : IUtf8JsonSerializable, IJsonModel<SiteNetworkServicePropertiesFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteNetworkServicePropertiesFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteNetworkServicePropertiesFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SiteNetworkServicePropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteNetworkServicePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
             }
             if (Optional.IsDefined(SiteReference))
             {
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(NetworkServiceDesignVersionResourceReference))
             {
                 writer.WritePropertyName("networkServiceDesignVersionResourceReference"u8);
-                writer.WriteObjectValue(NetworkServiceDesignVersionResourceReference);
+                writer.WriteObjectValue(NetworkServiceDesignVersionResourceReference, options);
             }
             if (Optional.IsCollectionDefined(DesiredStateConfigurationGroupValueReferences))
             {
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteNetworkServicePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static SiteNetworkServicePropertiesFormat DeserializeSiteNetworkServicePropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             string lastStateNetworkServiceDesignVersionName = default;
             IReadOnlyDictionary<string, WritableSubResource> lastStateConfigurationGroupValueReferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -254,10 +253,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SiteNetworkServicePropertiesFormat(
                 provisioningState,
                 managedResourceGroupConfiguration,
@@ -283,7 +282,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -299,7 +298,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeSiteNetworkServicePropertiesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

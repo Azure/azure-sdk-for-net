@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,14 +19,14 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class ArmApplicationDefinitionData : IUtf8JsonSerializable, IJsonModel<ArmApplicationDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationDefinitionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationDefinitionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmApplicationDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmApplicationDefinitionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmApplicationDefinitionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -91,7 +93,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +103,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -142,22 +144,22 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(NotificationPolicy))
             {
                 writer.WritePropertyName("notificationPolicy"u8);
-                writer.WriteObjectValue(NotificationPolicy);
+                writer.WriteObjectValue(NotificationPolicy, options);
             }
             if (Optional.IsDefined(LockingPolicy))
             {
                 writer.WritePropertyName("lockingPolicy"u8);
-                writer.WriteObjectValue(LockingPolicy);
+                writer.WriteObjectValue(LockingPolicy, options);
             }
             if (Optional.IsDefined(DeploymentPolicy))
             {
                 writer.WritePropertyName("deploymentPolicy"u8);
-                writer.WriteObjectValue(DeploymentPolicy);
+                writer.WriteObjectValue(DeploymentPolicy, options);
             }
             if (Optional.IsDefined(ManagementPolicy))
             {
                 writer.WritePropertyName("managementPolicy"u8);
-                writer.WriteObjectValue(ManagementPolicy);
+                writer.WriteObjectValue(ManagementPolicy, options);
             }
             if (Optional.IsCollectionDefined(Policies))
             {
@@ -165,7 +167,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Policies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -193,7 +195,7 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmApplicationDefinitionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmApplicationDefinitionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -202,7 +204,7 @@ namespace Azure.ResourceManager.Resources
 
         internal static ArmApplicationDefinitionData DeserializeArmApplicationDefinitionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -231,7 +233,7 @@ namespace Azure.ResourceManager.Resources
             ArmApplicationManagementPolicy managementPolicy = default;
             IList<ArmApplicationPolicy> policies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -434,10 +436,10 @@ namespace Azure.ResourceManager.Resources
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ArmApplicationDefinitionData(
                 id,
                 name,
@@ -464,6 +466,427 @@ namespace Azure.ResourceManager.Resources
                 policies ?? new ChangeTrackingList<ArmApplicationPolicy>());
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  location: ");
+                builder.AppendLine($"'{Location.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    if (Tags.Any())
+                    {
+                        builder.Append("  tags: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedBy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  managedBy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedBy))
+                {
+                    builder.Append("  managedBy: ");
+                    if (ManagedBy.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ManagedBy}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ManagedBy}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sku: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sku))
+                {
+                    builder.Append("  sku: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LockLevel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lockLevel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("    lockLevel: ");
+                builder.AppendLine($"'{LockLevel.ToSerialString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    displayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    builder.Append("    displayName: ");
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsEnabled))
+                {
+                    builder.Append("    isEnabled: ");
+                    var boolValue = IsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Authorizations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    authorizations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Authorizations))
+                {
+                    if (Authorizations.Any())
+                    {
+                        builder.Append("    authorizations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Authorizations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    authorizations: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Artifacts), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    artifacts: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Artifacts))
+                {
+                    if (Artifacts.Any())
+                    {
+                        builder.Append("    artifacts: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Artifacts)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    artifacts: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("    description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PackageFileUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    packageFileUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PackageFileUri))
+                {
+                    builder.Append("    packageFileUri: ");
+                    builder.AppendLine($"'{PackageFileUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MainTemplate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    mainTemplate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MainTemplate))
+                {
+                    builder.Append("    mainTemplate: ");
+                    builder.AppendLine($"'{MainTemplate.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreateUiDefinition), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    createUiDefinition: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreateUiDefinition))
+                {
+                    builder.Append("    createUiDefinition: ");
+                    builder.AppendLine($"'{CreateUiDefinition.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("NotificationEndpoints", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    notificationPolicy: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      notificationPolicy: {");
+                builder.Append("        notificationEndpoints: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(NotificationPolicy))
+                {
+                    builder.Append("    notificationPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NotificationPolicy, options, 4, false, "    notificationPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LockingPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lockingPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LockingPolicy))
+                {
+                    builder.Append("    lockingPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LockingPolicy, options, 4, false, "    lockingPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DeploymentMode", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    deploymentPolicy: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      deploymentPolicy: {");
+                builder.Append("        deploymentMode: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentPolicy))
+                {
+                    builder.Append("    deploymentPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DeploymentPolicy, options, 4, false, "    deploymentPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ManagementMode", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    managementPolicy: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      managementPolicy: {");
+                builder.Append("        mode: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagementPolicy))
+                {
+                    builder.Append("    managementPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ManagementPolicy, options, 4, false, "    managementPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Policies), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    policies: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Policies))
+                {
+                    if (Policies.Any())
+                    {
+                        builder.Append("    policies: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Policies)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    policies: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ArmApplicationDefinitionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -472,8 +895,10 @@ namespace Azure.ResourceManager.Resources
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmApplicationDefinitionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmApplicationDefinitionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -489,7 +914,7 @@ namespace Azure.ResourceManager.Resources
                         return DeserializeArmApplicationDefinitionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmApplicationDefinitionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmApplicationDefinitionData)} does not support reading '{options.Format}' format.");
             }
         }
 

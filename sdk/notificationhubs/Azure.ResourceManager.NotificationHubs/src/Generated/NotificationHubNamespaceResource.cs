@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NotificationHubs.Models;
 using Azure.ResourceManager.Resources;
 
@@ -424,10 +422,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<NotificationHubNamespaceResource>> UpdateAsync(NotificationHubNamespacePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.Update");
             scope.Start();
@@ -469,10 +464,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<NotificationHubNamespaceResource> Update(NotificationHubNamespacePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.Update");
             scope.Start();
@@ -510,10 +502,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NotificationHubAvailabilityResult>> CheckNotificationHubAvailabilityAsync(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _notificationHubsClientDiagnostics.CreateScope("NotificationHubNamespaceResource.CheckNotificationHubAvailability");
             scope.Start();
@@ -551,10 +540,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NotificationHubAvailabilityResult> CheckNotificationHubAvailability(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _notificationHubsClientDiagnostics.CreateScope("NotificationHubNamespaceResource.CheckNotificationHubAvailability");
             scope.Start();
@@ -597,14 +583,8 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<NotificationHubNamespaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.AddTag");
             scope.Start();
@@ -665,14 +645,8 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<NotificationHubNamespaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.AddTag");
             scope.Start();
@@ -732,10 +706,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<NotificationHubNamespaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.SetTags");
             scope.Start();
@@ -792,10 +763,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<NotificationHubNamespaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.SetTags");
             scope.Start();
@@ -852,10 +820,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<NotificationHubNamespaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.RemoveTag");
             scope.Start();
@@ -915,10 +880,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<NotificationHubNamespaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.RemoveTag");
             scope.Start();

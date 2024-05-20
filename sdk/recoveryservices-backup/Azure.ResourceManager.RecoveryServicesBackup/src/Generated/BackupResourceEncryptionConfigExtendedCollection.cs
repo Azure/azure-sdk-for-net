@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
 using Azure.ResourceManager.Resources;
 
@@ -81,25 +79,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, BackupResourceEncryptionConfigExtendedCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsClientDiagnostics.CreateScope("BackupResourceEncryptionConfigExtendedCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation(response);
+                var uri = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesBackupArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,25 +130,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string vaultName, BackupResourceEncryptionConfigExtendedCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsClientDiagnostics.CreateScope("BackupResourceEncryptionConfigExtendedCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation(response);
+                var uri = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesBackupArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -197,14 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual async Task<Response<BackupResourceEncryptionConfigExtendedResource>> GetAsync(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsClientDiagnostics.CreateScope("BackupResourceEncryptionConfigExtendedCollection.Get");
             scope.Start();
@@ -249,14 +224,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual Response<BackupResourceEncryptionConfigExtendedResource> Get(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsClientDiagnostics.CreateScope("BackupResourceEncryptionConfigExtendedCollection.Get");
             scope.Start();
@@ -301,14 +269,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsClientDiagnostics.CreateScope("BackupResourceEncryptionConfigExtendedCollection.Exists");
             scope.Start();
@@ -351,14 +312,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual Response<bool> Exists(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsClientDiagnostics.CreateScope("BackupResourceEncryptionConfigExtendedCollection.Exists");
             scope.Start();
@@ -401,14 +355,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual async Task<NullableResponse<BackupResourceEncryptionConfigExtendedResource>> GetIfExistsAsync(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsClientDiagnostics.CreateScope("BackupResourceEncryptionConfigExtendedCollection.GetIfExists");
             scope.Start();
@@ -453,14 +400,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual NullableResponse<BackupResourceEncryptionConfigExtendedResource> GetIfExists(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsClientDiagnostics.CreateScope("BackupResourceEncryptionConfigExtendedCollection.GetIfExists");
             scope.Start();

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FirmwareAnalysisWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, FirmwareAnalysisWorkspaceData data, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _firmwareAnalysisWorkspaceWorkspacesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new IotFirmwareDefenseArmOperation<FirmwareAnalysisWorkspaceResource>(Response.FromValue(new FirmwareAnalysisWorkspaceResource(Client, response), response.GetRawResponse()));
+                var uri = _firmwareAnalysisWorkspaceWorkspacesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotFirmwareDefenseArmOperation<FirmwareAnalysisWorkspaceResource>(Response.FromValue(new FirmwareAnalysisWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FirmwareAnalysisWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, FirmwareAnalysisWorkspaceData data, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _firmwareAnalysisWorkspaceWorkspacesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
-                var operation = new IotFirmwareDefenseArmOperation<FirmwareAnalysisWorkspaceResource>(Response.FromValue(new FirmwareAnalysisWorkspaceResource(Client, response), response.GetRawResponse()));
+                var uri = _firmwareAnalysisWorkspaceWorkspacesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotFirmwareDefenseArmOperation<FirmwareAnalysisWorkspaceResource>(Response.FromValue(new FirmwareAnalysisWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<Response<FirmwareAnalysisWorkspaceResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual Response<FirmwareAnalysisWorkspaceResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual Response<bool> Exists(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<NullableResponse<FirmwareAnalysisWorkspaceResource>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual NullableResponse<FirmwareAnalysisWorkspaceResource> GetIfExists(string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.GetIfExists");
             scope.Start();

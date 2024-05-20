@@ -10,27 +10,26 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class SiteRecoveryJobTaskDetails : IUtf8JsonSerializable, IJsonModel<SiteRecoveryJobTaskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryJobTaskDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryJobTaskDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SiteRecoveryJobTaskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryJobTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryJobTaskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(JobTask))
             {
                 writer.WritePropertyName("jobTask"u8);
-                writer.WriteObjectValue(JobTask);
+                writer.WriteObjectValue(JobTask, options);
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryJobTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryJobTaskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static SiteRecoveryJobTaskDetails DeserializeSiteRecoveryJobTaskDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SiteRecoveryJobEntity jobTask = default;
             string instanceType = "JobTaskDetails";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobTask"u8))
@@ -102,10 +101,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SiteRecoveryJobTaskDetails(instanceType, serializedAdditionalRawData, jobTask);
         }
 
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryJobTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobTaskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -134,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryJobTaskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryJobTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobTaskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

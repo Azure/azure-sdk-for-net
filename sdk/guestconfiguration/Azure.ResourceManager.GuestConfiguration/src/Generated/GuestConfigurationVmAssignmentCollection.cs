@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<GuestConfigurationVmAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (guestConfigurationAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(guestConfigurationAssignmentName));
-            }
-            if (guestConfigurationAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guestConfigurationAssignmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, guestConfigurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new GuestConfigurationArmOperation<GuestConfigurationVmAssignmentResource>(Response.FromValue(new GuestConfigurationVmAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, guestConfigurationAssignmentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new GuestConfigurationArmOperation<GuestConfigurationVmAssignmentResource>(Response.FromValue(new GuestConfigurationVmAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<GuestConfigurationVmAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (guestConfigurationAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(guestConfigurationAssignmentName));
-            }
-            if (guestConfigurationAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guestConfigurationAssignmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, guestConfigurationAssignmentName, data, cancellationToken);
-                var operation = new GuestConfigurationArmOperation<GuestConfigurationVmAssignmentResource>(Response.FromValue(new GuestConfigurationVmAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, guestConfigurationAssignmentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new GuestConfigurationArmOperation<GuestConfigurationVmAssignmentResource>(Response.FromValue(new GuestConfigurationVmAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
         public virtual async Task<Response<GuestConfigurationVmAssignmentResource>> GetAsync(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (guestConfigurationAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(guestConfigurationAssignmentName));
-            }
-            if (guestConfigurationAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guestConfigurationAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
             using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
         public virtual Response<GuestConfigurationVmAssignmentResource> Get(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (guestConfigurationAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(guestConfigurationAssignmentName));
-            }
-            if (guestConfigurationAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guestConfigurationAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
             using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentCollection.Get");
             scope.Start();
@@ -360,14 +328,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (guestConfigurationAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(guestConfigurationAssignmentName));
-            }
-            if (guestConfigurationAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guestConfigurationAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
             using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentCollection.Exists");
             scope.Start();
@@ -410,14 +371,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
         public virtual Response<bool> Exists(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (guestConfigurationAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(guestConfigurationAssignmentName));
-            }
-            if (guestConfigurationAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guestConfigurationAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
             using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentCollection.Exists");
             scope.Start();
@@ -460,14 +414,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
         public virtual async Task<NullableResponse<GuestConfigurationVmAssignmentResource>> GetIfExistsAsync(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (guestConfigurationAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(guestConfigurationAssignmentName));
-            }
-            if (guestConfigurationAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guestConfigurationAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
             using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentCollection.GetIfExists");
             scope.Start();
@@ -512,14 +459,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
         public virtual NullableResponse<GuestConfigurationVmAssignmentResource> GetIfExists(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (guestConfigurationAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(guestConfigurationAssignmentName));
-            }
-            if (guestConfigurationAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(guestConfigurationAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
             using var scope = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVmAssignmentCollection.GetIfExists");
             scope.Start();

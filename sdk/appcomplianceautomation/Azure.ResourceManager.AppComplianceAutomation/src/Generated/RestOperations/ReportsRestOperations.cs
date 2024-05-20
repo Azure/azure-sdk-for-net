@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
@@ -35,6 +34,35 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-11-16-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string skipToken, int? top, string select, string offerGuid, string reportCreatorTenantId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            if (offerGuid != null)
+            {
+                uri.AppendQuery("offerGuid", offerGuid, true);
+            }
+            if (reportCreatorTenantId != null)
+            {
+                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string skipToken, int? top, string select, string offerGuid, string reportCreatorTenantId)
@@ -122,6 +150,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string skipToken, int? top, string select, string offerGuid, string reportCreatorTenantId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string skipToken, int? top, string select, string offerGuid, string reportCreatorTenantId)
         {
             var message = _pipeline.CreateMessage();
@@ -147,10 +183,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ReportResourceList>> ListNextPageAsync(string nextLink, string skipToken = null, int? top = null, string select = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, skipToken, top, select, offerGuid, reportCreatorTenantId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -179,10 +212,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ReportResourceList> ListNextPage(string nextLink, string skipToken = null, int? top = null, string select = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, skipToken, top, select, offerGuid, reportCreatorTenantId);
             _pipeline.Send(message, cancellationToken);

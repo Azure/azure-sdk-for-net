@@ -11,10 +11,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -72,25 +70,17 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DiagnosticSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DiagnosticSettingData data, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _diagnosticSettingRestClient.CreateOrUpdateAsync(Id, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<DiagnosticSettingResource>(Response.FromValue(new DiagnosticSettingResource(Client, response), response.GetRawResponse()));
+                var uri = _diagnosticSettingRestClient.CreateCreateOrUpdateRequestUri(Id, name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MonitorArmOperation<DiagnosticSettingResource>(Response.FromValue(new DiagnosticSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -131,25 +121,17 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DiagnosticSettingResource> CreateOrUpdate(WaitUntil waitUntil, string name, DiagnosticSettingData data, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _diagnosticSettingRestClient.CreateOrUpdate(Id, name, data, cancellationToken);
-                var operation = new MonitorArmOperation<DiagnosticSettingResource>(Response.FromValue(new DiagnosticSettingResource(Client, response), response.GetRawResponse()));
+                var uri = _diagnosticSettingRestClient.CreateCreateOrUpdateRequestUri(Id, name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MonitorArmOperation<DiagnosticSettingResource>(Response.FromValue(new DiagnosticSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -188,14 +170,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<DiagnosticSettingResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingCollection.Get");
             scope.Start();
@@ -240,14 +215,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<DiagnosticSettingResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingCollection.Get");
             scope.Start();
@@ -350,14 +318,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingCollection.Exists");
             scope.Start();
@@ -400,14 +361,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingCollection.Exists");
             scope.Start();
@@ -450,14 +404,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<NullableResponse<DiagnosticSettingResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingCollection.GetIfExists");
             scope.Start();
@@ -502,14 +449,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual NullableResponse<DiagnosticSettingResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingCollection.GetIfExists");
             scope.Start();

@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceTokenStore : IUtf8JsonSerializable, IJsonModel<AppServiceTokenStore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceTokenStore>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceTokenStore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceTokenStore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceTokenStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceTokenStore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceTokenStore)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
-                writer.WriteObjectValue(FileSystem);
+                writer.WriteObjectValue(FileSystem, options);
             }
             if (Optional.IsDefined(AzureBlobStorage))
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
-                writer.WriteObjectValue(AzureBlobStorage);
+                writer.WriteObjectValue(AzureBlobStorage, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceTokenStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceTokenStore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceTokenStore)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceTokenStore DeserializeAppServiceTokenStore(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
             FileSystemTokenStore fileSystem = default;
             AppServiceBlobStorageTokenStore azureBlobStorage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -131,11 +131,93 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppServiceTokenStore(enabled, tokenRefreshExtensionHours, fileSystem, azureBlobStorage, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsEnabled))
+                {
+                    builder.Append("  enabled: ");
+                    var boolValue = IsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenRefreshExtensionHours), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tokenRefreshExtensionHours: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TokenRefreshExtensionHours))
+                {
+                    builder.Append("  tokenRefreshExtensionHours: ");
+                    builder.AppendLine($"'{TokenRefreshExtensionHours.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("FileSystemDirectory", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fileSystem: ");
+                builder.AppendLine("{");
+                builder.Append("    directory: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(FileSystem))
+                {
+                    builder.Append("  fileSystem: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FileSystem, options, 2, false, "  fileSystem: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AzureBlobStorageSasUrlSettingName", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureBlobStorage: ");
+                builder.AppendLine("{");
+                builder.Append("    sasUrlSettingName: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureBlobStorage))
+                {
+                    builder.Append("  azureBlobStorage: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AzureBlobStorage, options, 2, false, "  azureBlobStorage: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<AppServiceTokenStore>.Write(ModelReaderWriterOptions options)
@@ -146,8 +228,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceTokenStore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceTokenStore)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +247,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceTokenStore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceTokenStore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceTokenStore)} does not support reading '{options.Format}' format.");
             }
         }
 

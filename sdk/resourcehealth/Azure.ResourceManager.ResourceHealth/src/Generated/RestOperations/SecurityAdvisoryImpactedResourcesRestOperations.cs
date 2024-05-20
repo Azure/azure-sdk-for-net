@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ResourceHealth.Models;
@@ -35,6 +34,23 @@ namespace Azure.ResourceManager.ResourceHealth
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-10-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionIdAndEventIdRequestUri(string subscriptionId, string eventTrackingId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events/", false);
+            uri.AppendPath(eventTrackingId, true);
+            uri.AppendPath("/listSecurityAdvisoryImpactedResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionIdAndEventIdRequest(string subscriptionId, string eventTrackingId, string filter)
@@ -69,22 +85,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<EventImpactedResourceListResult>> ListBySubscriptionIdAndEventIdAsync(string subscriptionId, string eventTrackingId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (eventTrackingId == null)
-            {
-                throw new ArgumentNullException(nameof(eventTrackingId));
-            }
-            if (eventTrackingId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventTrackingId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
             using var message = CreateListBySubscriptionIdAndEventIdRequest(subscriptionId, eventTrackingId, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -111,22 +113,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<EventImpactedResourceListResult> ListBySubscriptionIdAndEventId(string subscriptionId, string eventTrackingId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (eventTrackingId == null)
-            {
-                throw new ArgumentNullException(nameof(eventTrackingId));
-            }
-            if (eventTrackingId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventTrackingId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
             using var message = CreateListBySubscriptionIdAndEventIdRequest(subscriptionId, eventTrackingId, filter);
             _pipeline.Send(message, cancellationToken);
@@ -142,6 +130,21 @@ namespace Azure.ResourceManager.ResourceHealth
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByTenantIdAndEventIdRequestUri(string eventTrackingId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events/", false);
+            uri.AppendPath(eventTrackingId, true);
+            uri.AppendPath("/listSecurityAdvisoryImpactedResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByTenantIdAndEventIdRequest(string eventTrackingId, string filter)
@@ -173,14 +176,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<EventImpactedResourceListResult>> ListByTenantIdAndEventIdAsync(string eventTrackingId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (eventTrackingId == null)
-            {
-                throw new ArgumentNullException(nameof(eventTrackingId));
-            }
-            if (eventTrackingId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventTrackingId));
-            }
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
             using var message = CreateListByTenantIdAndEventIdRequest(eventTrackingId, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -206,14 +202,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<EventImpactedResourceListResult> ListByTenantIdAndEventId(string eventTrackingId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (eventTrackingId == null)
-            {
-                throw new ArgumentNullException(nameof(eventTrackingId));
-            }
-            if (eventTrackingId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventTrackingId));
-            }
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
             using var message = CreateListByTenantIdAndEventIdRequest(eventTrackingId, filter);
             _pipeline.Send(message, cancellationToken);
@@ -229,6 +218,14 @@ namespace Azure.ResourceManager.ResourceHealth
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionIdAndEventIdNextPageRequestUri(string nextLink, string subscriptionId, string eventTrackingId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionIdAndEventIdNextPageRequest(string nextLink, string subscriptionId, string eventTrackingId, string filter)
@@ -255,26 +252,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<EventImpactedResourceListResult>> ListBySubscriptionIdAndEventIdNextPageAsync(string nextLink, string subscriptionId, string eventTrackingId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (eventTrackingId == null)
-            {
-                throw new ArgumentNullException(nameof(eventTrackingId));
-            }
-            if (eventTrackingId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventTrackingId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
             using var message = CreateListBySubscriptionIdAndEventIdNextPageRequest(nextLink, subscriptionId, eventTrackingId, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -302,26 +282,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<EventImpactedResourceListResult> ListBySubscriptionIdAndEventIdNextPage(string nextLink, string subscriptionId, string eventTrackingId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (eventTrackingId == null)
-            {
-                throw new ArgumentNullException(nameof(eventTrackingId));
-            }
-            if (eventTrackingId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventTrackingId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
             using var message = CreateListBySubscriptionIdAndEventIdNextPageRequest(nextLink, subscriptionId, eventTrackingId, filter);
             _pipeline.Send(message, cancellationToken);
@@ -337,6 +300,14 @@ namespace Azure.ResourceManager.ResourceHealth
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByTenantIdAndEventIdNextPageRequestUri(string nextLink, string eventTrackingId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByTenantIdAndEventIdNextPageRequest(string nextLink, string eventTrackingId, string filter)
@@ -362,18 +333,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<EventImpactedResourceListResult>> ListByTenantIdAndEventIdNextPageAsync(string nextLink, string eventTrackingId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (eventTrackingId == null)
-            {
-                throw new ArgumentNullException(nameof(eventTrackingId));
-            }
-            if (eventTrackingId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventTrackingId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
             using var message = CreateListByTenantIdAndEventIdNextPageRequest(nextLink, eventTrackingId, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -400,18 +361,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<EventImpactedResourceListResult> ListByTenantIdAndEventIdNextPage(string nextLink, string eventTrackingId, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (eventTrackingId == null)
-            {
-                throw new ArgumentNullException(nameof(eventTrackingId));
-            }
-            if (eventTrackingId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventTrackingId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
             using var message = CreateListByTenantIdAndEventIdNextPageRequest(nextLink, eventTrackingId, filter);
             _pipeline.Send(message, cancellationToken);

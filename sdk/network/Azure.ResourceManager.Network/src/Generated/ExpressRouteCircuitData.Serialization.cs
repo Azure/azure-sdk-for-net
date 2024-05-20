@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -18,21 +17,21 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ExpressRouteCircuitData : IUtf8JsonSerializable, IJsonModel<ExpressRouteCircuitData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCircuitData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCircuitData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExpressRouteCircuitData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Peerings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ServiceProviderProperties))
             {
                 writer.WritePropertyName("serviceProviderProperties"u8);
-                writer.WriteObjectValue(ServiceProviderProperties);
+                writer.WriteObjectValue(ServiceProviderProperties, options);
             }
             if (Optional.IsDefined(ExpressRoutePort))
             {
@@ -162,6 +161,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("authorizationStatus"u8);
                 writer.WriteStringValue(AuthorizationStatus);
             }
+            if (Optional.IsDefined(EnableDirectPortRateLimit))
+            {
+                writer.WritePropertyName("enableDirectPortRateLimit"u8);
+                writer.WriteBooleanValue(EnableDirectPortRateLimit.Value);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -186,7 +190,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -195,7 +199,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteCircuitData DeserializeExpressRouteCircuitData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -224,8 +228,9 @@ namespace Azure.ResourceManager.Network
             bool? globalReachEnabled = default;
             string authorizationKey = default;
             string authorizationStatus = default;
+            bool? enableDirectPortRateLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -431,15 +436,24 @@ namespace Azure.ResourceManager.Network
                             authorizationStatus = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("enableDirectPortRateLimit"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableDirectPortRateLimit = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ExpressRouteCircuitData(
                 id,
                 name,
@@ -464,7 +478,8 @@ namespace Azure.ResourceManager.Network
                 gatewayManagerETag,
                 globalReachEnabled,
                 authorizationKey,
-                authorizationStatus);
+                authorizationStatus,
+                enableDirectPortRateLimit);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitData>.Write(ModelReaderWriterOptions options)
@@ -476,7 +491,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -492,7 +507,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeExpressRouteCircuitData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support reading '{options.Format}' format.");
             }
         }
 

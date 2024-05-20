@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Subscription.Models;
 
@@ -195,17 +193,16 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<TenantPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TenantPolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _tenantPolicySubscriptionPolicyClientDiagnostics.CreateScope("TenantPolicyResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _tenantPolicySubscriptionPolicyRestClient.AddUpdatePolicyForTenantAsync(content, cancellationToken).ConfigureAwait(false);
-                var operation = new SubscriptionArmOperation<TenantPolicyResource>(Response.FromValue(new TenantPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _tenantPolicySubscriptionPolicyRestClient.CreateAddUpdatePolicyForTenantRequestUri(content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SubscriptionArmOperation<TenantPolicyResource>(Response.FromValue(new TenantPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -244,17 +241,16 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<TenantPolicyResource> CreateOrUpdate(WaitUntil waitUntil, TenantPolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _tenantPolicySubscriptionPolicyClientDiagnostics.CreateScope("TenantPolicyResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _tenantPolicySubscriptionPolicyRestClient.AddUpdatePolicyForTenant(content, cancellationToken);
-                var operation = new SubscriptionArmOperation<TenantPolicyResource>(Response.FromValue(new TenantPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _tenantPolicySubscriptionPolicyRestClient.CreateAddUpdatePolicyForTenantRequestUri(content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SubscriptionArmOperation<TenantPolicyResource>(Response.FromValue(new TenantPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

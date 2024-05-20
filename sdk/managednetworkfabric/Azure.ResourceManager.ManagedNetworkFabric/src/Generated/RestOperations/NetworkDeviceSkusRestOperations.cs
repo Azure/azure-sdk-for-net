@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -35,6 +34,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-06-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string networkDeviceSkuName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/", false);
+            uri.AppendPath(networkDeviceSkuName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string networkDeviceSkuName)
@@ -63,22 +74,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkDeviceSkuData>> GetAsync(string subscriptionId, string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (networkDeviceSkuName == null)
-            {
-                throw new ArgumentNullException(nameof(networkDeviceSkuName));
-            }
-            if (networkDeviceSkuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkDeviceSkuName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(networkDeviceSkuName, nameof(networkDeviceSkuName));
 
             using var message = CreateGetRequest(subscriptionId, networkDeviceSkuName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -106,22 +103,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkDeviceSkuData> Get(string subscriptionId, string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (networkDeviceSkuName == null)
-            {
-                throw new ArgumentNullException(nameof(networkDeviceSkuName));
-            }
-            if (networkDeviceSkuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkDeviceSkuName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(networkDeviceSkuName, nameof(networkDeviceSkuName));
 
             using var message = CreateGetRequest(subscriptionId, networkDeviceSkuName);
             _pipeline.Send(message, cancellationToken);
@@ -139,6 +122,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
@@ -165,14 +159,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkDeviceSkusListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -197,14 +184,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkDeviceSkusListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -220,6 +200,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
@@ -244,18 +232,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkDeviceSkusListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -281,18 +259,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkDeviceSkusListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);

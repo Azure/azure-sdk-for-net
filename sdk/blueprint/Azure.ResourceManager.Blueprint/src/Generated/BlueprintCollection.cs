@@ -11,10 +11,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Blueprint
 {
@@ -72,25 +70,17 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="blueprintName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BlueprintResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string blueprintName, BlueprintData data, CancellationToken cancellationToken = default)
         {
-            if (blueprintName == null)
-            {
-                throw new ArgumentNullException(nameof(blueprintName));
-            }
-            if (blueprintName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(blueprintName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _blueprintClientDiagnostics.CreateScope("BlueprintCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _blueprintRestClient.CreateOrUpdateAsync(Id, blueprintName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BlueprintArmOperation<BlueprintResource>(Response.FromValue(new BlueprintResource(Client, response), response.GetRawResponse()));
+                var uri = _blueprintRestClient.CreateCreateOrUpdateRequestUri(Id, blueprintName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BlueprintArmOperation<BlueprintResource>(Response.FromValue(new BlueprintResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -131,25 +121,17 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="blueprintName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BlueprintResource> CreateOrUpdate(WaitUntil waitUntil, string blueprintName, BlueprintData data, CancellationToken cancellationToken = default)
         {
-            if (blueprintName == null)
-            {
-                throw new ArgumentNullException(nameof(blueprintName));
-            }
-            if (blueprintName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(blueprintName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _blueprintClientDiagnostics.CreateScope("BlueprintCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _blueprintRestClient.CreateOrUpdate(Id, blueprintName, data, cancellationToken);
-                var operation = new BlueprintArmOperation<BlueprintResource>(Response.FromValue(new BlueprintResource(Client, response), response.GetRawResponse()));
+                var uri = _blueprintRestClient.CreateCreateOrUpdateRequestUri(Id, blueprintName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BlueprintArmOperation<BlueprintResource>(Response.FromValue(new BlueprintResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -188,14 +170,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="blueprintName"/> is null. </exception>
         public virtual async Task<Response<BlueprintResource>> GetAsync(string blueprintName, CancellationToken cancellationToken = default)
         {
-            if (blueprintName == null)
-            {
-                throw new ArgumentNullException(nameof(blueprintName));
-            }
-            if (blueprintName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(blueprintName));
-            }
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
 
             using var scope = _blueprintClientDiagnostics.CreateScope("BlueprintCollection.Get");
             scope.Start();
@@ -240,14 +215,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="blueprintName"/> is null. </exception>
         public virtual Response<BlueprintResource> Get(string blueprintName, CancellationToken cancellationToken = default)
         {
-            if (blueprintName == null)
-            {
-                throw new ArgumentNullException(nameof(blueprintName));
-            }
-            if (blueprintName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(blueprintName));
-            }
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
 
             using var scope = _blueprintClientDiagnostics.CreateScope("BlueprintCollection.Get");
             scope.Start();
@@ -352,14 +320,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="blueprintName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string blueprintName, CancellationToken cancellationToken = default)
         {
-            if (blueprintName == null)
-            {
-                throw new ArgumentNullException(nameof(blueprintName));
-            }
-            if (blueprintName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(blueprintName));
-            }
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
 
             using var scope = _blueprintClientDiagnostics.CreateScope("BlueprintCollection.Exists");
             scope.Start();
@@ -402,14 +363,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="blueprintName"/> is null. </exception>
         public virtual Response<bool> Exists(string blueprintName, CancellationToken cancellationToken = default)
         {
-            if (blueprintName == null)
-            {
-                throw new ArgumentNullException(nameof(blueprintName));
-            }
-            if (blueprintName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(blueprintName));
-            }
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
 
             using var scope = _blueprintClientDiagnostics.CreateScope("BlueprintCollection.Exists");
             scope.Start();
@@ -452,14 +406,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="blueprintName"/> is null. </exception>
         public virtual async Task<NullableResponse<BlueprintResource>> GetIfExistsAsync(string blueprintName, CancellationToken cancellationToken = default)
         {
-            if (blueprintName == null)
-            {
-                throw new ArgumentNullException(nameof(blueprintName));
-            }
-            if (blueprintName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(blueprintName));
-            }
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
 
             using var scope = _blueprintClientDiagnostics.CreateScope("BlueprintCollection.GetIfExists");
             scope.Start();
@@ -504,14 +451,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="blueprintName"/> is null. </exception>
         public virtual NullableResponse<BlueprintResource> GetIfExists(string blueprintName, CancellationToken cancellationToken = default)
         {
-            if (blueprintName == null)
-            {
-                throw new ArgumentNullException(nameof(blueprintName));
-            }
-            if (blueprintName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(blueprintName));
-            }
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
 
             using var scope = _blueprintClientDiagnostics.CreateScope("BlueprintCollection.GetIfExists");
             scope.Start();

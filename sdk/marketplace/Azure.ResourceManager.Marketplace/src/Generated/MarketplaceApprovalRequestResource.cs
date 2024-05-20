@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Marketplace.Models;
 
 namespace Azure.ResourceManager.Marketplace
@@ -196,17 +194,16 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MarketplaceApprovalRequestResource>> UpdateAsync(WaitUntil waitUntil, MarketplaceApprovalRequestData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestResource.Update");
             scope.Start();
             try
             {
                 var response = await _marketplaceApprovalRequestPrivateStoreRestClient.CreateApprovalRequestAsync(Guid.Parse(Id.Parent.Name), Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response), response.GetRawResponse()));
+                var uri = _marketplaceApprovalRequestPrivateStoreRestClient.CreateCreateApprovalRequestRequestUri(Guid.Parse(Id.Parent.Name), Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -245,17 +242,16 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MarketplaceApprovalRequestResource> Update(WaitUntil waitUntil, MarketplaceApprovalRequestData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestResource.Update");
             scope.Start();
             try
             {
                 var response = _marketplaceApprovalRequestPrivateStoreRestClient.CreateApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, data, cancellationToken);
-                var operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response), response.GetRawResponse()));
+                var uri = _marketplaceApprovalRequestPrivateStoreRestClient.CreateCreateApprovalRequestRequestUri(Guid.Parse(Id.Parent.Name), Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -4,13 +4,23 @@
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.1 (2024-04-29)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+### Bugs Fixed
+
+- Fix [issue#41377](https://github.com/Azure/azure-sdk-for-net/issues/41377), change the serialization for `MonitorConditionOperator`.
+- Fix [issue#43151](https://github.com/Azure/azure-sdk-for-net/issues/43151), change the deserialization for `TenantId`.
 
 ## 1.3.0 (2023-11-21)
 

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ProviderHub
 {
@@ -499,7 +497,9 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _resourceTypeRegistrationRestClient.DeleteAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation(response);
+                var uri = _resourceTypeRegistrationRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -541,7 +541,9 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _resourceTypeRegistrationRestClient.Delete(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ProviderHubArmOperation(response);
+                var uri = _resourceTypeRegistrationRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -580,10 +582,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ResourceTypeRegistrationResource>> UpdateAsync(WaitUntil waitUntil, ResourceTypeRegistrationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationResource.Update");
             scope.Start();
@@ -629,10 +628,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ResourceTypeRegistrationResource> Update(WaitUntil waitUntil, ResourceTypeRegistrationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationResource.Update");
             scope.Start();

@@ -1,8 +1,19 @@
 # Release History
 
-## 12.20.0-beta.2 (Unreleased)
+## 12.21.0-beta.1 (Unreleased)
+- Added support for service version 2024-08-04.
+- Added BlobContainerClient.GetAccountInfo(), .GetAccountInfoAsync(), BlobBaseClient.GetAccountInfo(), and .GetAccountInfoAsync() APIs.
+- Added more detailed messaging for blob copy operations resulting in an error.
+- Added more detailed messaging for authorization failure cases.
+
+## 12.20.0 (2024-05-13)
+- Includes all features from 12.20.0-beta.1 and 12.20.0-beta.2.
+- Fixed bug where `BlobContainerClient` and `BlobBaseClient` did not throw an exception on empty/null container names and blob names, respectively, when constructing a client. 
+
+## 12.20.0-beta.2 (2024-04-15)
 - Added support for service version 2024-05-04.
 - Fixed bug where BlockBlobClient.Upload() and .UploadAsync() would throw an exception if BlobUploadOptions was null.
+- Fixed a bug where some valid shared access signatures were improperly parsed, throwing an exception.
 
 ## 12.20.0-beta.1 (2023-12-05)
 - Added support for service version 2024-02-04.

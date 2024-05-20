@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="incidentId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsIncidentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string incidentId, SecurityInsightsIncidentData data, CancellationToken cancellationToken = default)
         {
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _securityInsightsIncidentIncidentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, incidentId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentResource>(Response.FromValue(new SecurityInsightsIncidentResource(Client, response), response.GetRawResponse()));
+                var uri = _securityInsightsIncidentIncidentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, incidentId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentResource>(Response.FromValue(new SecurityInsightsIncidentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="incidentId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityInsightsIncidentResource> CreateOrUpdate(WaitUntil waitUntil, string incidentId, SecurityInsightsIncidentData data, CancellationToken cancellationToken = default)
         {
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _securityInsightsIncidentIncidentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, incidentId, data, cancellationToken);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentResource>(Response.FromValue(new SecurityInsightsIncidentResource(Client, response), response.GetRawResponse()));
+                var uri = _securityInsightsIncidentIncidentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, incidentId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentResource>(Response.FromValue(new SecurityInsightsIncidentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="incidentId"/> is null. </exception>
         public virtual async Task<Response<SecurityInsightsIncidentResource>> GetAsync(string incidentId, CancellationToken cancellationToken = default)
         {
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="incidentId"/> is null. </exception>
         public virtual Response<SecurityInsightsIncidentResource> Get(string incidentId, CancellationToken cancellationToken = default)
         {
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCollection.Get");
             scope.Start();
@@ -370,14 +338,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="incidentId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string incidentId, CancellationToken cancellationToken = default)
         {
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCollection.Exists");
             scope.Start();
@@ -420,14 +381,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="incidentId"/> is null. </exception>
         public virtual Response<bool> Exists(string incidentId, CancellationToken cancellationToken = default)
         {
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCollection.Exists");
             scope.Start();
@@ -470,14 +424,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="incidentId"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsIncidentResource>> GetIfExistsAsync(string incidentId, CancellationToken cancellationToken = default)
         {
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCollection.GetIfExists");
             scope.Start();
@@ -522,14 +469,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="incidentId"/> is null. </exception>
         public virtual NullableResponse<SecurityInsightsIncidentResource> GetIfExists(string incidentId, CancellationToken cancellationToken = default)
         {
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCollection.GetIfExists");
             scope.Start();

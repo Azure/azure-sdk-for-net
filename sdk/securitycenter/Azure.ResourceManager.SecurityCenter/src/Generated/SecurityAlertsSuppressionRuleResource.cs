@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -199,7 +197,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation(response);
+                var uri = _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -241,7 +241,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.Delete(Id.SubscriptionId, Id.Name, cancellationToken);
-                var operation = new SecurityCenterArmOperation(response);
+                var uri = _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -280,17 +282,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityAlertsSuppressionRuleResource>> UpdateAsync(WaitUntil waitUntil, SecurityAlertsSuppressionRuleData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleResource.Update");
             scope.Start();
             try
             {
                 var response = await _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.UpdateAsync(Id.SubscriptionId, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SecurityAlertsSuppressionRuleResource>(Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityAlertsSuppressionRuleResource>(Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -329,17 +330,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityAlertsSuppressionRuleResource> Update(WaitUntil waitUntil, SecurityAlertsSuppressionRuleData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleResource.Update");
             scope.Start();
             try
             {
                 var response = _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.Update(Id.SubscriptionId, Id.Name, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SecurityAlertsSuppressionRuleResource>(Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SecurityAlertsSuppressionRuleResource>(Response.FromValue(new SecurityAlertsSuppressionRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

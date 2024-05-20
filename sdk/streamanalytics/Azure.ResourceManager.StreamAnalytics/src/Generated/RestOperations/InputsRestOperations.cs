@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.StreamAnalytics.Models;
@@ -35,6 +34,22 @@ namespace Azure.ResourceManager.StreamAnalytics
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-10-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCreateOrReplaceRequestUri(string subscriptionId, string resourceGroupName, string jobName, string inputName, StreamingJobInputData input, string ifMatch, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/streamingjobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/inputs/", false);
+            uri.AppendPath(inputName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrReplaceRequest(string subscriptionId, string resourceGroupName, string jobName, string inputName, StreamingJobInputData input, string ifMatch, string ifNoneMatch)
@@ -65,7 +80,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(input);
+            content.JsonWriter.WriteObjectValue(input, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -84,42 +99,11 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StreamingJobInputData>> CreateOrReplaceAsync(string subscriptionId, string resourceGroupName, string jobName, string inputName, StreamingJobInputData input, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
-            if (inputName == null)
-            {
-                throw new ArgumentNullException(nameof(inputName));
-            }
-            if (inputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inputName));
-            }
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
+            Argument.AssertNotNull(input, nameof(input));
 
             using var message = CreateCreateOrReplaceRequest(subscriptionId, resourceGroupName, jobName, inputName, input, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -151,42 +135,11 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StreamingJobInputData> CreateOrReplace(string subscriptionId, string resourceGroupName, string jobName, string inputName, StreamingJobInputData input, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
-            if (inputName == null)
-            {
-                throw new ArgumentNullException(nameof(inputName));
-            }
-            if (inputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inputName));
-            }
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
+            Argument.AssertNotNull(input, nameof(input));
 
             using var message = CreateCreateOrReplaceRequest(subscriptionId, resourceGroupName, jobName, inputName, input, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
@@ -203,6 +156,22 @@ namespace Azure.ResourceManager.StreamAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string jobName, string inputName, StreamingJobInputData input, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/streamingjobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/inputs/", false);
+            uri.AppendPath(inputName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string jobName, string inputName, StreamingJobInputData input, string ifMatch)
@@ -229,7 +198,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(input);
+            content.JsonWriter.WriteObjectValue(input, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -247,42 +216,11 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StreamingJobInputData>> UpdateAsync(string subscriptionId, string resourceGroupName, string jobName, string inputName, StreamingJobInputData input, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
-            if (inputName == null)
-            {
-                throw new ArgumentNullException(nameof(inputName));
-            }
-            if (inputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inputName));
-            }
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
+            Argument.AssertNotNull(input, nameof(input));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, jobName, inputName, input, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -312,42 +250,11 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StreamingJobInputData> Update(string subscriptionId, string resourceGroupName, string jobName, string inputName, StreamingJobInputData input, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
-            if (inputName == null)
-            {
-                throw new ArgumentNullException(nameof(inputName));
-            }
-            if (inputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inputName));
-            }
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
+            Argument.AssertNotNull(input, nameof(input));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, jobName, inputName, input, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -363,6 +270,22 @@ namespace Azure.ResourceManager.StreamAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string jobName, string inputName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/streamingjobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/inputs/", false);
+            uri.AppendPath(inputName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string jobName, string inputName)
@@ -397,38 +320,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
-            if (inputName == null)
-            {
-                throw new ArgumentNullException(nameof(inputName));
-            }
-            if (inputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inputName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, jobName, inputName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -452,38 +347,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
-            if (inputName == null)
-            {
-                throw new ArgumentNullException(nameof(inputName));
-            }
-            if (inputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inputName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, jobName, inputName);
             _pipeline.Send(message, cancellationToken);
@@ -495,6 +362,22 @@ namespace Azure.ResourceManager.StreamAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string jobName, string inputName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/streamingjobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/inputs/", false);
+            uri.AppendPath(inputName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string jobName, string inputName)
@@ -529,38 +412,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StreamingJobInputData>> GetAsync(string subscriptionId, string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
-            if (inputName == null)
-            {
-                throw new ArgumentNullException(nameof(inputName));
-            }
-            if (inputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inputName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, jobName, inputName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -590,38 +445,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StreamingJobInputData> Get(string subscriptionId, string resourceGroupName, string jobName, string inputName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
-            if (inputName == null)
-            {
-                throw new ArgumentNullException(nameof(inputName));
-            }
-            if (inputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inputName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, jobName, inputName);
             _pipeline.Send(message, cancellationToken);
@@ -639,6 +466,25 @@ namespace Azure.ResourceManager.StreamAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByStreamingJobRequestUri(string subscriptionId, string resourceGroupName, string jobName, string select)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/streamingjobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/inputs", false);
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByStreamingJobRequest(string subscriptionId, string resourceGroupName, string jobName, string select)
@@ -676,30 +522,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StreamingJobInputListResult>> ListByStreamingJobAsync(string subscriptionId, string resourceGroupName, string jobName, string select = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateListByStreamingJobRequest(subscriptionId, resourceGroupName, jobName, select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -727,30 +552,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StreamingJobInputListResult> ListByStreamingJob(string subscriptionId, string resourceGroupName, string jobName, string select = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateListByStreamingJobRequest(subscriptionId, resourceGroupName, jobName, select);
             _pipeline.Send(message, cancellationToken);
@@ -766,6 +570,23 @@ namespace Azure.ResourceManager.StreamAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateTestRequestUri(string subscriptionId, string resourceGroupName, string jobName, string inputName, StreamingJobInputData input)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/streamingjobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/inputs/", false);
+            uri.AppendPath(inputName, true);
+            uri.AppendPath("/test", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateTestRequest(string subscriptionId, string resourceGroupName, string jobName, string inputName, StreamingJobInputData input)
@@ -791,7 +612,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(input);
+                content.JsonWriter.WriteObjectValue(input, ModelSerializationExtensions.WireOptions);
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -809,38 +630,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> TestAsync(string subscriptionId, string resourceGroupName, string jobName, string inputName, StreamingJobInputData input = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
-            if (inputName == null)
-            {
-                throw new ArgumentNullException(nameof(inputName));
-            }
-            if (inputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inputName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
 
             using var message = CreateTestRequest(subscriptionId, resourceGroupName, jobName, inputName, input);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -865,38 +658,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Test(string subscriptionId, string resourceGroupName, string jobName, string inputName, StreamingJobInputData input = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
-            if (inputName == null)
-            {
-                throw new ArgumentNullException(nameof(inputName));
-            }
-            if (inputName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(inputName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
 
             using var message = CreateTestRequest(subscriptionId, resourceGroupName, jobName, inputName, input);
             _pipeline.Send(message, cancellationToken);
@@ -908,6 +673,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByStreamingJobNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string jobName, string select)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByStreamingJobNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string jobName, string select)
@@ -935,34 +708,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StreamingJobInputListResult>> ListByStreamingJobNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string jobName, string select = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateListByStreamingJobNextPageRequest(nextLink, subscriptionId, resourceGroupName, jobName, select);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -991,34 +740,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StreamingJobInputListResult> ListByStreamingJobNextPage(string nextLink, string subscriptionId, string resourceGroupName, string jobName, string select = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateListByStreamingJobNextPageRequest(nextLink, subscriptionId, resourceGroupName, jobName, select);
             _pipeline.Send(message, cancellationToken);

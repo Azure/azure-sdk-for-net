@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -36,6 +35,16 @@ namespace Azure.ResourceManager.BillingBenefits
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string savingsPlanOrderAliasName, BillingBenefitsSavingsPlanOrderAliasData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/", false);
+            uri.AppendPath(savingsPlanOrderAliasName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string savingsPlanOrderAliasName, BillingBenefitsSavingsPlanOrderAliasData data)
         {
             var message = _pipeline.CreateMessage();
@@ -50,7 +59,7 @@ namespace Azure.ResourceManager.BillingBenefits
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -64,18 +73,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string savingsPlanOrderAliasName, BillingBenefitsSavingsPlanOrderAliasData data, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderAliasName));
-            }
-            if (savingsPlanOrderAliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderAliasName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderAliasName, nameof(savingsPlanOrderAliasName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(savingsPlanOrderAliasName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -97,18 +96,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string savingsPlanOrderAliasName, BillingBenefitsSavingsPlanOrderAliasData data, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderAliasName));
-            }
-            if (savingsPlanOrderAliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderAliasName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderAliasName, nameof(savingsPlanOrderAliasName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(savingsPlanOrderAliasName, data);
             _pipeline.Send(message, cancellationToken);
@@ -120,6 +109,16 @@ namespace Azure.ResourceManager.BillingBenefits
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string savingsPlanOrderAliasName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/", false);
+            uri.AppendPath(savingsPlanOrderAliasName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string savingsPlanOrderAliasName)
@@ -145,14 +144,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BillingBenefitsSavingsPlanOrderAliasData>> GetAsync(string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderAliasName));
-            }
-            if (savingsPlanOrderAliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderAliasName, nameof(savingsPlanOrderAliasName));
 
             using var message = CreateGetRequest(savingsPlanOrderAliasName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -179,14 +171,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BillingBenefitsSavingsPlanOrderAliasData> Get(string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderAliasName));
-            }
-            if (savingsPlanOrderAliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderAliasName, nameof(savingsPlanOrderAliasName));
 
             using var message = CreateGetRequest(savingsPlanOrderAliasName);
             _pipeline.Send(message, cancellationToken);

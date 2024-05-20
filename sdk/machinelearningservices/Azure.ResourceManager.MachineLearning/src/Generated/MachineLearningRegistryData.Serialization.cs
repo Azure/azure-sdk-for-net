@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningRegistryData : IUtf8JsonSerializable, IJsonModel<MachineLearningRegistryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningRegistryData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningRegistryData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningRegistryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningRegistryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning
                 if (ManagedResourceGroup != null)
                 {
                     writer.WritePropertyName("managedResourceGroup"u8);
-                    writer.WriteObjectValue(ManagedResourceGroup);
+                    writer.WriteObjectValue(ManagedResourceGroup, options);
                 }
                 else
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteStartArray();
                     foreach (var item in PrivateEndpointConnections)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteStartArray();
                     foreach (var item in RegionDetails)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningRegistryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static MachineLearningRegistryData DeserializeMachineLearningRegistryData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning
             string publicNetworkAccess = default;
             IList<RegistryRegionArmDetails> regionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -393,10 +393,10 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningRegistryData(
                 id,
                 name,
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.MachineLearning
                         return DeserializeMachineLearningRegistryData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support reading '{options.Format}' format.");
             }
         }
 

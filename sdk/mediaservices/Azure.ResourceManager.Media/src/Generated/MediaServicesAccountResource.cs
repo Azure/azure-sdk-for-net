@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Media.Models;
 using Azure.ResourceManager.Resources;
 
@@ -892,7 +890,9 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaServicesAccountMediaservicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation(response);
+                var uri = _mediaServicesAccountMediaservicesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -934,7 +934,9 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaServicesAccountMediaservicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MediaArmOperation(response);
+                var uri = _mediaServicesAccountMediaservicesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -973,10 +975,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<MediaServicesAccountResource>> UpdateAsync(WaitUntil waitUntil, MediaServicesAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _mediaServicesAccountMediaservicesClientDiagnostics.CreateScope("MediaServicesAccountResource.Update");
             scope.Start();
@@ -1022,10 +1021,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<MediaServicesAccountResource> Update(WaitUntil waitUntil, MediaServicesAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _mediaServicesAccountMediaservicesClientDiagnostics.CreateScope("MediaServicesAccountResource.Update");
             scope.Start();
@@ -1070,10 +1066,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> SyncStorageKeysAsync(SyncStorageKeysContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mediaServicesAccountMediaservicesClientDiagnostics.CreateScope("MediaServicesAccountResource.SyncStorageKeys");
             scope.Start();
@@ -1115,10 +1108,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response SyncStorageKeys(SyncStorageKeysContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mediaServicesAccountMediaservicesClientDiagnostics.CreateScope("MediaServicesAccountResource.SyncStorageKeys");
             scope.Start();
@@ -1160,10 +1150,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<MediaServicesEdgePolicies>> GetEdgePoliciesAsync(EdgePoliciesRequestContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mediaServicesAccountMediaservicesClientDiagnostics.CreateScope("MediaServicesAccountResource.GetEdgePolicies");
             scope.Start();
@@ -1205,10 +1192,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<MediaServicesEdgePolicies> GetEdgePolicies(EdgePoliciesRequestContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mediaServicesAccountMediaservicesClientDiagnostics.CreateScope("MediaServicesAccountResource.GetEdgePolicies");
             scope.Start();
@@ -1251,14 +1235,8 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<MediaServicesAccountResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _mediaServicesAccountMediaservicesClientDiagnostics.CreateScope("MediaServicesAccountResource.AddTag");
             scope.Start();
@@ -1319,14 +1297,8 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<MediaServicesAccountResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _mediaServicesAccountMediaservicesClientDiagnostics.CreateScope("MediaServicesAccountResource.AddTag");
             scope.Start();
@@ -1386,10 +1358,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<MediaServicesAccountResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _mediaServicesAccountMediaservicesClientDiagnostics.CreateScope("MediaServicesAccountResource.SetTags");
             scope.Start();
@@ -1446,10 +1415,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<MediaServicesAccountResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _mediaServicesAccountMediaservicesClientDiagnostics.CreateScope("MediaServicesAccountResource.SetTags");
             scope.Start();
@@ -1506,10 +1472,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<MediaServicesAccountResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _mediaServicesAccountMediaservicesClientDiagnostics.CreateScope("MediaServicesAccountResource.RemoveTag");
             scope.Start();
@@ -1569,10 +1532,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<MediaServicesAccountResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _mediaServicesAccountMediaservicesClientDiagnostics.CreateScope("MediaServicesAccountResource.RemoveTag");
             scope.Start();

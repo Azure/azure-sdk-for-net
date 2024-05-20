@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -196,17 +194,16 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LogsSiteConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteLogsConfigData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _logsSiteConfigWebAppsRestClient.UpdateDiagnosticLogsConfigAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<LogsSiteConfigResource>(Response.FromValue(new LogsSiteConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _logsSiteConfigWebAppsRestClient.CreateUpdateDiagnosticLogsConfigRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<LogsSiteConfigResource>(Response.FromValue(new LogsSiteConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -245,17 +242,16 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LogsSiteConfigResource> CreateOrUpdate(WaitUntil waitUntil, SiteLogsConfigData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _logsSiteConfigWebAppsRestClient.UpdateDiagnosticLogsConfig(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<LogsSiteConfigResource>(Response.FromValue(new LogsSiteConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _logsSiteConfigWebAppsRestClient.CreateUpdateDiagnosticLogsConfigRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<LogsSiteConfigResource>(Response.FromValue(new LogsSiteConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -110,12 +109,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 tags ?? new ChangeTrackingDictionary<string, string>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsRouterWorkerRegisteredEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterWorkerRegisteredEventData(document.RootElement);
+        }
+
         internal partial class AcsRouterWorkerRegisteredEventDataConverter : JsonConverter<AcsRouterWorkerRegisteredEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRouterWorkerRegisteredEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AcsRouterWorkerRegisteredEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

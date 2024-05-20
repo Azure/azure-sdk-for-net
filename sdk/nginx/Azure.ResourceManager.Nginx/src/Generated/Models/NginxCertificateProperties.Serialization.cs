@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
     public partial class NginxCertificateProperties : IUtf8JsonSerializable, IJsonModel<NginxCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxCertificateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxCertificateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NginxCertificateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NginxCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxCertificateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,6 +45,26 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 writer.WritePropertyName("keyVaultSecretId"u8);
                 writer.WriteStringValue(KeyVaultSecretId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Sha1Thumbprint))
+            {
+                writer.WritePropertyName("sha1Thumbprint"u8);
+                writer.WriteStringValue(Sha1Thumbprint);
+            }
+            if (options.Format != "W" && Optional.IsDefined(KeyVaultSecretVersion))
+            {
+                writer.WritePropertyName("keyVaultSecretVersion"u8);
+                writer.WriteStringValue(KeyVaultSecretVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(KeyVaultSecretCreated))
+            {
+                writer.WritePropertyName("keyVaultSecretCreated"u8);
+                writer.WriteStringValue(KeyVaultSecretCreated.Value, "O");
+            }
+            if (Optional.IsDefined(CertificateError))
+            {
+                writer.WritePropertyName("certificateError"u8);
+                writer.WriteObjectValue(CertificateError, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +89,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxCertificateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +98,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxCertificateProperties DeserializeNginxCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,8 +108,12 @@ namespace Azure.ResourceManager.Nginx.Models
             string keyVirtualPath = default;
             string certificateVirtualPath = default;
             string keyVaultSecretId = default;
+            string sha1Thumbprint = default;
+            string keyVaultSecretVersion = default;
+            DateTimeOffset? keyVaultSecretCreated = default;
+            NginxCertificateError certificateError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -117,13 +140,50 @@ namespace Azure.ResourceManager.Nginx.Models
                     keyVaultSecretId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("sha1Thumbprint"u8))
+                {
+                    sha1Thumbprint = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("keyVaultSecretVersion"u8))
+                {
+                    keyVaultSecretVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("keyVaultSecretCreated"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultSecretCreated = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("certificateError"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    certificateError = NginxCertificateError.DeserializeNginxCertificateError(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxCertificateProperties(provisioningState, keyVirtualPath, certificateVirtualPath, keyVaultSecretId, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NginxCertificateProperties(
+                provisioningState,
+                keyVirtualPath,
+                certificateVirtualPath,
+                keyVaultSecretId,
+                sha1Thumbprint,
+                keyVaultSecretVersion,
+                keyVaultSecretCreated,
+                certificateError,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxCertificateProperties>.Write(ModelReaderWriterOptions options)
@@ -135,7 +195,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NginxCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxCertificateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +211,7 @@ namespace Azure.ResourceManager.Nginx.Models
                         return DeserializeNginxCertificateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxCertificateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

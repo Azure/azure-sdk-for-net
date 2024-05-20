@@ -7,12 +7,12 @@
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Describes whether the search service is compliant or not with respect to having non customer encrypted resources. If a service has more than one non customer encrypted resource and 'Enforcement' is 'enabled' then the service will be marked as 'nonCompliant'. </summary>
+    /// <summary> Returns the status of search service compliance with respect to non-CMK-encrypted objects. If a service has more than one unencrypted object, and enforcement is enabled, the service is marked as noncompliant. </summary>
     public enum SearchEncryptionComplianceStatus
     {
-        /// <summary> Indicates that the search service is compliant, either because number of non customer encrypted resources is zero or enforcement is disabled. </summary>
+        /// <summary> Indicates that the search service is compliant, either because the number of non-CMK-encrypted objects is zero or enforcement is disabled. </summary>
         Compliant,
-        /// <summary> Indicates that the search service has more than 1 non customer encrypted resources. </summary>
+        /// <summary> Indicates that the search service has more than one non-CMK-encrypted objects. </summary>
         NonCompliant
     }
 }

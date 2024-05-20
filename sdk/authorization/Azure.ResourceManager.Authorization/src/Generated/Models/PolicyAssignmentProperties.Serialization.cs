@@ -8,23 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     public partial class PolicyAssignmentProperties : IUtf8JsonSerializable, IJsonModel<PolicyAssignmentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyAssignmentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyAssignmentProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicyAssignmentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyAssignmentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAssignmentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Authorization.Models
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
-                writer.WriteObjectValue(LastModifiedBy);
+                writer.WriteObjectValue(LastModifiedBy, options);
             }
             if (Optional.IsDefined(LastModifiedOn))
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Authorization.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyAssignmentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAssignmentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static PolicyAssignmentProperties DeserializePolicyAssignmentProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Authorization.Models
             string displayName0 = default;
             RoleManagementScopeType? type1 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PolicyAssignmentProperties(
                 id,
                 name,
@@ -313,6 +313,235 @@ namespace Azure.ResourceManager.Authorization.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  policy:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PolicyId))
+                {
+                    builder.Append("    id: ");
+                    builder.AppendLine($"'{PolicyId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedBy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lastModifiedBy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastModifiedBy))
+                {
+                    builder.Append("    lastModifiedBy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LastModifiedBy, options, 4, false, "    lastModifiedBy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lastModifiedDateTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastModifiedOn))
+                {
+                    builder.Append("    lastModifiedDateTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.Append("  roleDefinition:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleDefinitionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoleDefinitionId))
+                {
+                    builder.Append("    id: ");
+                    builder.AppendLine($"'{RoleDefinitionId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleDefinitionDisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    displayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoleDefinitionDisplayName))
+                {
+                    builder.Append("    displayName: ");
+                    if (RoleDefinitionDisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RoleDefinitionDisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RoleDefinitionDisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoleType))
+                {
+                    builder.Append("    type: ");
+                    builder.AppendLine($"'{RoleType.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.Append("  scope:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScopeId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScopeId))
+                {
+                    builder.Append("    id: ");
+                    builder.AppendLine($"'{ScopeId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScopeDisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    displayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScopeDisplayName))
+                {
+                    builder.Append("    displayName: ");
+                    if (ScopeDisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ScopeDisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ScopeDisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScopeType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScopeType))
+                {
+                    builder.Append("    type: ");
+                    builder.AppendLine($"'{ScopeType.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PolicyAssignmentProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -321,8 +550,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyAssignmentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAssignmentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -338,7 +569,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         return DeserializePolicyAssignmentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyAssignmentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAssignmentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

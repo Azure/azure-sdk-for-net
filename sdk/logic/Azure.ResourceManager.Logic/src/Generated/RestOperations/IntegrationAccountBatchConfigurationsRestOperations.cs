@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Logic.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.Logic
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2019-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string integrationAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/integrationAccounts/", false);
+            uri.AppendPath(integrationAccountName, true);
+            uri.AppendPath("/batchConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string integrationAccountName)
@@ -67,30 +81,9 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BatchConfigurationCollection>> ListAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (integrationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationAccountName));
-            }
-            if (integrationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, integrationAccountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +110,9 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BatchConfigurationCollection> List(string subscriptionId, string resourceGroupName, string integrationAccountName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (integrationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationAccountName));
-            }
-            if (integrationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, integrationAccountName);
             _pipeline.Send(message, cancellationToken);
@@ -156,6 +128,22 @@ namespace Azure.ResourceManager.Logic
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/integrationAccounts/", false);
+            uri.AppendPath(integrationAccountName, true);
+            uri.AppendPath("/batchConfigurations/", false);
+            uri.AppendPath(batchConfigurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName)
@@ -190,38 +178,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="batchConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IntegrationAccountBatchConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (integrationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationAccountName));
-            }
-            if (integrationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationAccountName));
-            }
-            if (batchConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(batchConfigurationName));
-            }
-            if (batchConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(batchConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
+            Argument.AssertNotNullOrEmpty(batchConfigurationName, nameof(batchConfigurationName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, integrationAccountName, batchConfigurationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -251,38 +211,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="batchConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IntegrationAccountBatchConfigurationData> Get(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (integrationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationAccountName));
-            }
-            if (integrationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationAccountName));
-            }
-            if (batchConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(batchConfigurationName));
-            }
-            if (batchConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(batchConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
+            Argument.AssertNotNullOrEmpty(batchConfigurationName, nameof(batchConfigurationName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, integrationAccountName, batchConfigurationName);
             _pipeline.Send(message, cancellationToken);
@@ -300,6 +232,22 @@ namespace Azure.ResourceManager.Logic
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, IntegrationAccountBatchConfigurationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/integrationAccounts/", false);
+            uri.AppendPath(integrationAccountName, true);
+            uri.AppendPath("/batchConfigurations/", false);
+            uri.AppendPath(batchConfigurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, IntegrationAccountBatchConfigurationData data)
@@ -322,7 +270,7 @@ namespace Azure.ResourceManager.Logic
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -339,42 +287,11 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="batchConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IntegrationAccountBatchConfigurationData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, IntegrationAccountBatchConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (integrationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationAccountName));
-            }
-            if (integrationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationAccountName));
-            }
-            if (batchConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(batchConfigurationName));
-            }
-            if (batchConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(batchConfigurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
+            Argument.AssertNotNullOrEmpty(batchConfigurationName, nameof(batchConfigurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, integrationAccountName, batchConfigurationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -404,42 +321,11 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="batchConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IntegrationAccountBatchConfigurationData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, IntegrationAccountBatchConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (integrationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationAccountName));
-            }
-            if (integrationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationAccountName));
-            }
-            if (batchConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(batchConfigurationName));
-            }
-            if (batchConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(batchConfigurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
+            Argument.AssertNotNullOrEmpty(batchConfigurationName, nameof(batchConfigurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, integrationAccountName, batchConfigurationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -456,6 +342,22 @@ namespace Azure.ResourceManager.Logic
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Logic/integrationAccounts/", false);
+            uri.AppendPath(integrationAccountName, true);
+            uri.AppendPath("/batchConfigurations/", false);
+            uri.AppendPath(batchConfigurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName)
@@ -490,38 +392,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="batchConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (integrationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationAccountName));
-            }
-            if (integrationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationAccountName));
-            }
-            if (batchConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(batchConfigurationName));
-            }
-            if (batchConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(batchConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
+            Argument.AssertNotNullOrEmpty(batchConfigurationName, nameof(batchConfigurationName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, integrationAccountName, batchConfigurationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -545,38 +419,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="batchConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (integrationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationAccountName));
-            }
-            if (integrationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationAccountName));
-            }
-            if (batchConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(batchConfigurationName));
-            }
-            if (batchConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(batchConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
+            Argument.AssertNotNullOrEmpty(batchConfigurationName, nameof(batchConfigurationName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, integrationAccountName, batchConfigurationName);
             _pipeline.Send(message, cancellationToken);

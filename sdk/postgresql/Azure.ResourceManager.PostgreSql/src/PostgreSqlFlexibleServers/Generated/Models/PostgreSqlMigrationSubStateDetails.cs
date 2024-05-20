@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Migration sub state. </summary>
+        [WirePath("currentSubState")]
         public PostgreSqlMigrationSubState? CurrentSubState { get; }
     }
 }

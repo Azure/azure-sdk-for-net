@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,14 +18,14 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class DistributedAvailabilityGroupData : IUtf8JsonSerializable, IJsonModel<DistributedAvailabilityGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DistributedAvailabilityGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DistributedAvailabilityGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DistributedAvailabilityGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DistributedAvailabilityGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<DistributedAvailabilityGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static DistributedAvailabilityGroupData DeserializeDistributedAvailabilityGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.Sql
             string linkState = default;
             string lastHardenedLsn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -261,10 +262,10 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DistributedAvailabilityGroupData(
                 id,
                 name,
@@ -283,6 +284,275 @@ namespace Azure.ResourceManager.Sql
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetDatabase), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    targetDatabase: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetDatabase))
+                {
+                    builder.Append("    targetDatabase: ");
+                    if (TargetDatabase.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TargetDatabase}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TargetDatabase}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sourceEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceEndpoint))
+                {
+                    builder.Append("    sourceEndpoint: ");
+                    if (SourceEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryAvailabilityGroupName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    primaryAvailabilityGroupName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryAvailabilityGroupName))
+                {
+                    builder.Append("    primaryAvailabilityGroupName: ");
+                    if (PrimaryAvailabilityGroupName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryAvailabilityGroupName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryAvailabilityGroupName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryAvailabilityGroupName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    secondaryAvailabilityGroupName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondaryAvailabilityGroupName))
+                {
+                    builder.Append("    secondaryAvailabilityGroupName: ");
+                    if (SecondaryAvailabilityGroupName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecondaryAvailabilityGroupName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecondaryAvailabilityGroupName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicationMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    replicationMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReplicationMode))
+                {
+                    builder.Append("    replicationMode: ");
+                    builder.AppendLine($"'{ReplicationMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DistributedAvailabilityGroupId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    distributedAvailabilityGroupId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DistributedAvailabilityGroupId))
+                {
+                    builder.Append("    distributedAvailabilityGroupId: ");
+                    builder.AppendLine($"'{DistributedAvailabilityGroupId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceReplicaId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sourceReplicaId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceReplicaId))
+                {
+                    builder.Append("    sourceReplicaId: ");
+                    builder.AppendLine($"'{SourceReplicaId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetReplicaId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    targetReplicaId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetReplicaId))
+                {
+                    builder.Append("    targetReplicaId: ");
+                    builder.AppendLine($"'{TargetReplicaId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    linkState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinkState))
+                {
+                    builder.Append("    linkState: ");
+                    if (LinkState.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LinkState}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LinkState}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastHardenedLsn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lastHardenedLsn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastHardenedLsn))
+                {
+                    builder.Append("    lastHardenedLsn: ");
+                    if (LastHardenedLsn.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LastHardenedLsn}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LastHardenedLsn}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DistributedAvailabilityGroupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DistributedAvailabilityGroupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -291,8 +561,10 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +580,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeDistributedAvailabilityGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

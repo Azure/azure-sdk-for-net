@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataProtectionBackup
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataProtectionBackupVaultResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, DataProtectionBackupVaultData data, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataProtectionBackupVaultResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, DataProtectionBackupVaultData data, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual async Task<Response<DataProtectionBackupVaultResource>> GetAsync(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual Response<DataProtectionBackupVaultResource> Get(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual Response<bool> Exists(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataProtectionBackupVaultResource>> GetIfExistsAsync(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual NullableResponse<DataProtectionBackupVaultResource> GetIfExists(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultCollection.GetIfExists");
             scope.Start();

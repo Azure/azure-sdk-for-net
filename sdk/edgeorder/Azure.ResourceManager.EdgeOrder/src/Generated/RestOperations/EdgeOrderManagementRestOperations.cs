@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.EdgeOrder.Models;
@@ -35,6 +34,25 @@ namespace Azure.ResourceManager.EdgeOrder
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListAddressesAtSubscriptionLevelRequestUri(string subscriptionId, string filter, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListAddressesAtSubscriptionLevelRequest(string subscriptionId, string filter, string skipToken)
@@ -71,14 +89,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AddressResourceList>> ListAddressesAtSubscriptionLevelAsync(string subscriptionId, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListAddressesAtSubscriptionLevelRequest(subscriptionId, filter, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -105,14 +116,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AddressResourceList> ListAddressesAtSubscriptionLevel(string subscriptionId, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListAddressesAtSubscriptionLevelRequest(subscriptionId, filter, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -128,6 +132,25 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListProductFamiliesRequestUri(string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/listProductFamilies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListProductFamiliesRequest(string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
@@ -153,7 +176,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -169,18 +192,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProductFamilies>> ListProductFamiliesAsync(string subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListProductFamiliesRequest(subscriptionId, content, expand, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -208,18 +221,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProductFamilies> ListProductFamilies(string subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListProductFamiliesRequest(subscriptionId, content, expand, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -235,6 +238,21 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListConfigurationsRequestUri(string subscriptionId, ConfigurationsContent content, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/listConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListConfigurationsRequest(string subscriptionId, ConfigurationsContent content, string skipToken)
@@ -256,7 +274,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -271,18 +289,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProductConfigurations>> ListConfigurationsAsync(string subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListConfigurationsRequest(subscriptionId, content, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -309,18 +317,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProductConfigurations> ListConfigurations(string subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListConfigurationsRequest(subscriptionId, content, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -336,6 +334,21 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListProductFamiliesMetadataRequestUri(string subscriptionId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/productFamiliesMetadata", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListProductFamiliesMetadataRequest(string subscriptionId, string skipToken)
@@ -367,14 +380,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProductFamiliesMetadataListResult>> ListProductFamiliesMetadataAsync(string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListProductFamiliesMetadataRequest(subscriptionId, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -400,14 +406,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProductFamiliesMetadataListResult> ListProductFamiliesMetadata(string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListProductFamiliesMetadataRequest(subscriptionId, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -423,6 +422,21 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderAtSubscriptionLevelRequestUri(string subscriptionId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orders", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListOrderAtSubscriptionLevelRequest(string subscriptionId, string skipToken)
@@ -454,14 +468,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderResourceList>> ListOrderAtSubscriptionLevelAsync(string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListOrderAtSubscriptionLevelRequest(subscriptionId, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -487,14 +494,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderResourceList> ListOrderAtSubscriptionLevel(string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListOrderAtSubscriptionLevelRequest(subscriptionId, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -510,6 +510,29 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderItemsAtSubscriptionLevelRequestUri(string subscriptionId, string filter, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListOrderItemsAtSubscriptionLevelRequest(string subscriptionId, string filter, string expand, string skipToken)
@@ -551,14 +574,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderItemResourceList>> ListOrderItemsAtSubscriptionLevelAsync(string subscriptionId, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListOrderItemsAtSubscriptionLevelRequest(subscriptionId, filter, expand, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -586,14 +602,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderItemResourceList> ListOrderItemsAtSubscriptionLevel(string subscriptionId, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListOrderItemsAtSubscriptionLevelRequest(subscriptionId, filter, expand, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -609,6 +618,27 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAddressesAtResourceGroupLevelRequestUri(string subscriptionId, string resourceGroupName, string filter, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListAddressesAtResourceGroupLevelRequest(string subscriptionId, string resourceGroupName, string filter, string skipToken)
@@ -648,22 +678,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AddressResourceList>> ListAddressesAtResourceGroupLevelAsync(string subscriptionId, string resourceGroupName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListAddressesAtResourceGroupLevelRequest(subscriptionId, resourceGroupName, filter, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -691,22 +707,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AddressResourceList> ListAddressesAtResourceGroupLevel(string subscriptionId, string resourceGroupName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListAddressesAtResourceGroupLevelRequest(subscriptionId, resourceGroupName, filter, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -722,6 +724,20 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAddressByNameRequestUri(string subscriptionId, string resourceGroupName, string addressName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses/", false);
+            uri.AppendPath(addressName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAddressByNameRequest(string subscriptionId, string resourceGroupName, string addressName)
@@ -753,30 +769,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<EdgeOrderAddressData>> GetAddressByNameAsync(string subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-            if (addressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
             using var message = CreateGetAddressByNameRequest(subscriptionId, resourceGroupName, addressName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -805,30 +800,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<EdgeOrderAddressData> GetAddressByName(string subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-            if (addressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
             using var message = CreateGetAddressByNameRequest(subscriptionId, resourceGroupName, addressName);
             _pipeline.Send(message, cancellationToken);
@@ -846,6 +820,20 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateAddressRequestUri(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses/", false);
+            uri.AppendPath(addressName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressData data)
@@ -866,7 +854,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -882,34 +870,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-            if (addressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addressName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateAddressRequest(subscriptionId, resourceGroupName, addressName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -933,34 +897,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateAddress(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-            if (addressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addressName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateAddressRequest(subscriptionId, resourceGroupName, addressName, data);
             _pipeline.Send(message, cancellationToken);
@@ -972,6 +912,20 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteAddressByNameRequestUri(string subscriptionId, string resourceGroupName, string addressName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses/", false);
+            uri.AppendPath(addressName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteAddressByNameRequest(string subscriptionId, string resourceGroupName, string addressName)
@@ -1003,30 +957,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAddressByNameAsync(string subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-            if (addressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
             using var message = CreateDeleteAddressByNameRequest(subscriptionId, resourceGroupName, addressName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1050,30 +983,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteAddressByName(string subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-            if (addressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addressName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
             using var message = CreateDeleteAddressByNameRequest(subscriptionId, resourceGroupName, addressName);
             _pipeline.Send(message, cancellationToken);
@@ -1086,6 +998,20 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateAddressRequestUri(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressPatch patch, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses/", false);
+            uri.AppendPath(addressName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressPatch patch, string ifMatch)
@@ -1110,7 +1036,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1127,34 +1053,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-            if (addressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addressName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateAddressRequest(subscriptionId, resourceGroupName, addressName, patch, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1179,34 +1081,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateAddress(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (addressName == null)
-            {
-                throw new ArgumentNullException(nameof(addressName));
-            }
-            if (addressName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addressName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateAddressRequest(subscriptionId, resourceGroupName, addressName, patch, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -1218,6 +1096,23 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderAtResourceGroupLevelRequestUri(string subscriptionId, string resourceGroupName, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orders", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListOrderAtResourceGroupLevelRequest(string subscriptionId, string resourceGroupName, string skipToken)
@@ -1252,22 +1147,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderResourceList>> ListOrderAtResourceGroupLevelAsync(string subscriptionId, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListOrderAtResourceGroupLevelRequest(subscriptionId, resourceGroupName, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1294,22 +1175,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderResourceList> ListOrderAtResourceGroupLevel(string subscriptionId, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListOrderAtResourceGroupLevelRequest(subscriptionId, resourceGroupName, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -1325,6 +1192,22 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetOrderByNameRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/orders/", false);
+            uri.AppendPath(orderName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetOrderByNameRequest(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName)
@@ -1359,30 +1242,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<EdgeOrderData>> GetOrderByNameAsync(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (orderName == null)
-            {
-                throw new ArgumentNullException(nameof(orderName));
-            }
-            if (orderName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
 
             using var message = CreateGetOrderByNameRequest(subscriptionId, resourceGroupName, location, orderName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1412,30 +1274,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<EdgeOrderData> GetOrderByName(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (orderName == null)
-            {
-                throw new ArgumentNullException(nameof(orderName));
-            }
-            if (orderName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
 
             using var message = CreateGetOrderByNameRequest(subscriptionId, resourceGroupName, location, orderName);
             _pipeline.Send(message, cancellationToken);
@@ -1453,6 +1294,31 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderItemsAtResourceGroupLevelRequestUri(string subscriptionId, string resourceGroupName, string filter, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListOrderItemsAtResourceGroupLevelRequest(string subscriptionId, string resourceGroupName, string filter, string expand, string skipToken)
@@ -1497,22 +1363,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderItemResourceList>> ListOrderItemsAtResourceGroupLevelAsync(string subscriptionId, string resourceGroupName, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListOrderItemsAtResourceGroupLevelRequest(subscriptionId, resourceGroupName, filter, expand, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1541,22 +1393,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderItemResourceList> ListOrderItemsAtResourceGroupLevel(string subscriptionId, string resourceGroupName, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListOrderItemsAtResourceGroupLevelRequest(subscriptionId, resourceGroupName, filter, expand, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -1572,6 +1410,24 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetOrderItemByNameRequestUri(string subscriptionId, string resourceGroupName, string orderItemName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetOrderItemByNameRequest(string subscriptionId, string resourceGroupName, string orderItemName, string expand)
@@ -1608,30 +1464,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<EdgeOrderItemData>> GetOrderItemByNameAsync(string subscriptionId, string resourceGroupName, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var message = CreateGetOrderItemByNameRequest(subscriptionId, resourceGroupName, orderItemName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1661,30 +1496,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<EdgeOrderItemData> GetOrderItemByName(string subscriptionId, string resourceGroupName, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var message = CreateGetOrderItemByNameRequest(subscriptionId, resourceGroupName, orderItemName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -1702,6 +1516,20 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrderItemRequestUri(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemData data)
@@ -1722,7 +1550,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1738,34 +1566,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1789,34 +1593,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, data);
             _pipeline.Send(message, cancellationToken);
@@ -1828,6 +1608,20 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteOrderItemByNameRequestUri(string subscriptionId, string resourceGroupName, string orderItemName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteOrderItemByNameRequest(string subscriptionId, string resourceGroupName, string orderItemName)
@@ -1859,30 +1653,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteOrderItemByNameAsync(string subscriptionId, string resourceGroupName, string orderItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var message = CreateDeleteOrderItemByNameRequest(subscriptionId, resourceGroupName, orderItemName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1906,30 +1679,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteOrderItemByName(string subscriptionId, string resourceGroupName, string orderItemName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var message = CreateDeleteOrderItemByNameRequest(subscriptionId, resourceGroupName, orderItemName);
             _pipeline.Send(message, cancellationToken);
@@ -1942,6 +1694,20 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateOrderItemRequestUri(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemPatch patch, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemPatch patch, string ifMatch)
@@ -1966,7 +1732,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1983,34 +1749,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, patch, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2035,34 +1777,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, patch, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -2074,6 +1792,21 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCancelOrderItemRequestUri(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemCancellationReason cancellationReason)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCancelOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemCancellationReason cancellationReason)
@@ -2095,7 +1828,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(cancellationReason);
+            content.JsonWriter.WriteObjectValue(cancellationReason, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -2111,34 +1844,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CancelOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemCancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
-            if (cancellationReason == null)
-            {
-                throw new ArgumentNullException(nameof(cancellationReason));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
 
             using var message = CreateCancelOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, cancellationReason);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2162,34 +1871,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CancelOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemCancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
-            if (cancellationReason == null)
-            {
-                throw new ArgumentNullException(nameof(cancellationReason));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
 
             using var message = CreateCancelOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, cancellationReason);
             _pipeline.Send(message, cancellationToken);
@@ -2201,6 +1886,21 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateReturnOrderItemRequestUri(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemReturnContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendPath("/return", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateReturnOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemReturnContent content)
@@ -2222,7 +1922,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -2238,34 +1938,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ReturnOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateReturnOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2289,34 +1965,10 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ReturnOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateReturnOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, content);
             _pipeline.Send(message, cancellationToken);
@@ -2328,6 +1980,14 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAddressesAtSubscriptionLevelNextPageRequestUri(string nextLink, string subscriptionId, string filter, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAddressesAtSubscriptionLevelNextPageRequest(string nextLink, string subscriptionId, string filter, string skipToken)
@@ -2354,18 +2014,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AddressResourceList>> ListAddressesAtSubscriptionLevelNextPageAsync(string nextLink, string subscriptionId, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListAddressesAtSubscriptionLevelNextPageRequest(nextLink, subscriptionId, filter, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2393,18 +2043,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AddressResourceList> ListAddressesAtSubscriptionLevelNextPage(string nextLink, string subscriptionId, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListAddressesAtSubscriptionLevelNextPageRequest(nextLink, subscriptionId, filter, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -2420,6 +2060,14 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListProductFamiliesNextPageRequestUri(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListProductFamiliesNextPageRequest(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
@@ -2447,22 +2095,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProductFamilies>> ListProductFamiliesNextPageAsync(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListProductFamiliesNextPageRequest(nextLink, subscriptionId, content, expand, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2491,22 +2126,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProductFamilies> ListProductFamiliesNextPage(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListProductFamiliesNextPageRequest(nextLink, subscriptionId, content, expand, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -2522,6 +2144,14 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListConfigurationsNextPageRequestUri(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListConfigurationsNextPageRequest(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken)
@@ -2548,22 +2178,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProductConfigurations>> ListConfigurationsNextPageAsync(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListConfigurationsNextPageRequest(nextLink, subscriptionId, content, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2591,22 +2208,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProductConfigurations> ListConfigurationsNextPage(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListConfigurationsNextPageRequest(nextLink, subscriptionId, content, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -2622,6 +2226,14 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListProductFamiliesMetadataNextPageRequestUri(string nextLink, string subscriptionId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListProductFamiliesMetadataNextPageRequest(string nextLink, string subscriptionId, string skipToken)
@@ -2647,18 +2259,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ProductFamiliesMetadataListResult>> ListProductFamiliesMetadataNextPageAsync(string nextLink, string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListProductFamiliesMetadataNextPageRequest(nextLink, subscriptionId, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2685,18 +2287,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ProductFamiliesMetadataListResult> ListProductFamiliesMetadataNextPage(string nextLink, string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListProductFamiliesMetadataNextPageRequest(nextLink, subscriptionId, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -2712,6 +2304,14 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderAtSubscriptionLevelNextPageRequestUri(string nextLink, string subscriptionId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListOrderAtSubscriptionLevelNextPageRequest(string nextLink, string subscriptionId, string skipToken)
@@ -2737,18 +2337,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderResourceList>> ListOrderAtSubscriptionLevelNextPageAsync(string nextLink, string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListOrderAtSubscriptionLevelNextPageRequest(nextLink, subscriptionId, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2775,18 +2365,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderResourceList> ListOrderAtSubscriptionLevelNextPage(string nextLink, string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListOrderAtSubscriptionLevelNextPageRequest(nextLink, subscriptionId, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -2802,6 +2382,14 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderItemsAtSubscriptionLevelNextPageRequestUri(string nextLink, string subscriptionId, string filter, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListOrderItemsAtSubscriptionLevelNextPageRequest(string nextLink, string subscriptionId, string filter, string expand, string skipToken)
@@ -2829,18 +2417,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderItemResourceList>> ListOrderItemsAtSubscriptionLevelNextPageAsync(string nextLink, string subscriptionId, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListOrderItemsAtSubscriptionLevelNextPageRequest(nextLink, subscriptionId, filter, expand, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2869,18 +2447,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderItemResourceList> ListOrderItemsAtSubscriptionLevelNextPage(string nextLink, string subscriptionId, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListOrderItemsAtSubscriptionLevelNextPageRequest(nextLink, subscriptionId, filter, expand, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -2896,6 +2464,14 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAddressesAtResourceGroupLevelNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string filter, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAddressesAtResourceGroupLevelNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string filter, string skipToken)
@@ -2923,26 +2499,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AddressResourceList>> ListAddressesAtResourceGroupLevelNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListAddressesAtResourceGroupLevelNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2971,26 +2530,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AddressResourceList> ListAddressesAtResourceGroupLevelNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListAddressesAtResourceGroupLevelNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -3006,6 +2548,14 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderAtResourceGroupLevelNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListOrderAtResourceGroupLevelNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string skipToken)
@@ -3032,26 +2582,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderResourceList>> ListOrderAtResourceGroupLevelNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListOrderAtResourceGroupLevelNextPageRequest(nextLink, subscriptionId, resourceGroupName, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3079,26 +2612,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderResourceList> ListOrderAtResourceGroupLevelNextPage(string nextLink, string subscriptionId, string resourceGroupName, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListOrderAtResourceGroupLevelNextPageRequest(nextLink, subscriptionId, resourceGroupName, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -3114,6 +2630,14 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderItemsAtResourceGroupLevelNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string filter, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListOrderItemsAtResourceGroupLevelNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string filter, string expand, string skipToken)
@@ -3142,26 +2666,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<OrderItemResourceList>> ListOrderItemsAtResourceGroupLevelNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListOrderItemsAtResourceGroupLevelNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, expand, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3191,26 +2698,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<OrderItemResourceList> ListOrderItemsAtResourceGroupLevelNextPage(string nextLink, string subscriptionId, string resourceGroupName, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListOrderItemsAtResourceGroupLevelNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, expand, skipToken);
             _pipeline.Send(message, cancellationToken);

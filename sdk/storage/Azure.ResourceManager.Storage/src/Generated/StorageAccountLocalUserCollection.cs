@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageAccountLocalUserResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string username, StorageAccountLocalUserData data, CancellationToken cancellationToken = default)
         {
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
-            if (username.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(username));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(username, nameof(username));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _storageAccountLocalUserLocalUsersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<StorageAccountLocalUserResource>(Response.FromValue(new StorageAccountLocalUserResource(Client, response), response.GetRawResponse()));
+                var uri = _storageAccountLocalUserLocalUsersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<StorageAccountLocalUserResource>(Response.FromValue(new StorageAccountLocalUserResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StorageAccountLocalUserResource> CreateOrUpdate(WaitUntil waitUntil, string username, StorageAccountLocalUserData data, CancellationToken cancellationToken = default)
         {
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
-            if (username.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(username));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(username, nameof(username));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _storageAccountLocalUserLocalUsersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, data, cancellationToken);
-                var operation = new StorageArmOperation<StorageAccountLocalUserResource>(Response.FromValue(new StorageAccountLocalUserResource(Client, response), response.GetRawResponse()));
+                var uri = _storageAccountLocalUserLocalUsersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<StorageAccountLocalUserResource>(Response.FromValue(new StorageAccountLocalUserResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public virtual async Task<Response<StorageAccountLocalUserResource>> GetAsync(string username, CancellationToken cancellationToken = default)
         {
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
-            if (username.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(username));
-            }
+            Argument.AssertNotNullOrEmpty(username, nameof(username));
 
             using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public virtual Response<StorageAccountLocalUserResource> Get(string username, CancellationToken cancellationToken = default)
         {
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
-            if (username.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(username));
-            }
+            Argument.AssertNotNullOrEmpty(username, nameof(username));
 
             using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserCollection.Get");
             scope.Start();
@@ -360,14 +328,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string username, CancellationToken cancellationToken = default)
         {
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
-            if (username.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(username));
-            }
+            Argument.AssertNotNullOrEmpty(username, nameof(username));
 
             using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserCollection.Exists");
             scope.Start();
@@ -410,14 +371,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public virtual Response<bool> Exists(string username, CancellationToken cancellationToken = default)
         {
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
-            if (username.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(username));
-            }
+            Argument.AssertNotNullOrEmpty(username, nameof(username));
 
             using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserCollection.Exists");
             scope.Start();
@@ -460,14 +414,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public virtual async Task<NullableResponse<StorageAccountLocalUserResource>> GetIfExistsAsync(string username, CancellationToken cancellationToken = default)
         {
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
-            if (username.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(username));
-            }
+            Argument.AssertNotNullOrEmpty(username, nameof(username));
 
             using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserCollection.GetIfExists");
             scope.Start();
@@ -512,14 +459,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public virtual NullableResponse<StorageAccountLocalUserResource> GetIfExists(string username, CancellationToken cancellationToken = default)
         {
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
-            if (username.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(username));
-            }
+            Argument.AssertNotNullOrEmpty(username, nameof(username));
 
             using var scope = _storageAccountLocalUserLocalUsersClientDiagnostics.CreateScope("StorageAccountLocalUserCollection.GetIfExists");
             scope.Start();

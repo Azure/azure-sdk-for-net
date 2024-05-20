@@ -10,21 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EventGrid;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class EventGridDomainPatch : IUtf8JsonSerializable, IJsonModel<EventGridDomainPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridDomainPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridDomainPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventGridDomainPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventGridDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridDomainPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridDomainPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in InboundIPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
-                writer.WriteObjectValue(EventTypeInfo);
+                writer.WriteObjectValue(EventTypeInfo, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventGridDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridDomainPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridDomainPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static EventGridDomainPatch DeserializeEventGridDomainPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             DataResidencyBoundary? dataResidencyBoundary = default;
             PartnerTopicEventTypeInfo eventTypeInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -273,10 +272,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EventGridDomainPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
@@ -301,7 +300,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventGridDomainPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridDomainPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -317,7 +316,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeEventGridDomainPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventGridDomainPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridDomainPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

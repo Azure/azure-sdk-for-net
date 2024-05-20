@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -83,14 +81,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-            if (detectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Get");
             scope.Start();
@@ -138,14 +129,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual Response<HostingEnvironmentDetectorResource> Get(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-            if (detectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Get");
             scope.Start();
@@ -253,14 +237,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-            if (detectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Exists");
             scope.Start();
@@ -306,14 +283,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual Response<bool> Exists(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-            if (detectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Exists");
             scope.Start();
@@ -359,14 +329,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual async Task<NullableResponse<HostingEnvironmentDetectorResource>> GetIfExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-            if (detectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetIfExists");
             scope.Start();
@@ -414,14 +377,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual NullableResponse<HostingEnvironmentDetectorResource> GetIfExists(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-            if (detectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.GetIfExists");
             scope.Start();

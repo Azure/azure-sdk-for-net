@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<NotificationHubNamespaceAuthorizationRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _notificationHubNamespaceAuthorizationRuleNamespacesRestClient.CreateOrUpdateAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource>(Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _notificationHubNamespaceAuthorizationRuleNamespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource>(Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<NotificationHubNamespaceAuthorizationRuleResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _notificationHubNamespaceAuthorizationRuleNamespacesRestClient.CreateOrUpdateAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, content, cancellationToken);
-                var operation = new NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource>(Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _notificationHubNamespaceAuthorizationRuleNamespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource>(Response.FromValue(new NotificationHubNamespaceAuthorizationRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual async Task<Response<NotificationHubNamespaceAuthorizationRuleResource>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual Response<NotificationHubNamespaceAuthorizationRuleResource> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<NotificationHubNamespaceAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual NullableResponse<NotificationHubNamespaceAuthorizationRuleResource> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleCollection.GetIfExists");
             scope.Start();

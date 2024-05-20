@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Models;
 
@@ -527,7 +525,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _storageAccountRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation(response);
+                var uri = _storageAccountRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -569,7 +569,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _storageAccountRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StorageArmOperation(response);
+                var uri = _storageAccountRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -607,10 +609,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<StorageAccountResource>> UpdateAsync(StorageAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.Update");
             scope.Start();
@@ -652,10 +651,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<StorageAccountResource> Update(StorageAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.Update");
             scope.Start();
@@ -758,10 +754,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="StorageAccountKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageAccountKey> RegenerateKeyAsync(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => StorageAccountKey.DeserializeStorageAccountKey(e), _storageAccountClientDiagnostics, Pipeline, "StorageAccountResource.RegenerateKey", "keys", null, cancellationToken);
@@ -794,10 +787,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="StorageAccountKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageAccountKey> RegenerateKey(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => StorageAccountKey.DeserializeStorageAccountKey(e), _storageAccountClientDiagnostics, Pipeline, "StorageAccountResource.RegenerateKey", "keys", null, cancellationToken);
@@ -829,10 +819,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<GetAccountSasResult>> GetAccountSasAsync(AccountSasContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetAccountSas");
             scope.Start();
@@ -874,10 +861,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<GetAccountSasResult> GetAccountSas(AccountSasContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetAccountSas");
             scope.Start();
@@ -919,10 +903,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<GetServiceSasResult>> GetServiceSasAsync(ServiceSasContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetServiceSas");
             scope.Start();
@@ -964,10 +945,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<GetServiceSasResult> GetServiceSas(ServiceSasContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetServiceSas");
             scope.Start();
@@ -1096,10 +1074,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="requestType"/> is null. </exception>
         public virtual async Task<ArmOperation> EnableHierarchicalNamespaceAsync(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
         {
-            if (requestType == null)
-            {
-                throw new ArgumentNullException(nameof(requestType));
-            }
+            Argument.AssertNotNull(requestType, nameof(requestType));
 
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.EnableHierarchicalNamespace");
             scope.Start();
@@ -1145,10 +1120,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="requestType"/> is null. </exception>
         public virtual ArmOperation EnableHierarchicalNamespace(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
         {
-            if (requestType == null)
-            {
-                throw new ArgumentNullException(nameof(requestType));
-            }
+            Argument.AssertNotNull(requestType, nameof(requestType));
 
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.EnableHierarchicalNamespace");
             scope.Start();
@@ -1242,104 +1214,6 @@ namespace Azure.ResourceManager.Storage
                 var operation = new StorageArmOperation(_storageAccountClientDiagnostics, Pipeline, _storageAccountRestClient.CreateAbortHierarchicalNamespaceMigrationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Restore blobs in the specified blob ranges
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/restoreBlobRanges</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccounts_RestoreBlobRanges</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The parameters to provide for restore blob ranges. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<StorageAccountRestoreBlobRangesOperation> RestoreBlobRangesAsync(WaitUntil waitUntil, BlobRestoreContent content, CancellationToken cancellationToken = default)
-        {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
-
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RestoreBlobRanges");
-            scope.Start();
-            try
-            {
-                var response = await _storageAccountRestClient.RestoreBlobRangesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageAccountRestoreBlobRangesOperation(new BlobRestoreStatusOperationSource(), _storageAccountClientDiagnostics, Pipeline, _storageAccountRestClient.CreateRestoreBlobRangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Restore blobs in the specified blob ranges
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/restoreBlobRanges</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccounts_RestoreBlobRanges</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The parameters to provide for restore blob ranges. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual StorageAccountRestoreBlobRangesOperation RestoreBlobRanges(WaitUntil waitUntil, BlobRestoreContent content, CancellationToken cancellationToken = default)
-        {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
-
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RestoreBlobRanges");
-            scope.Start();
-            try
-            {
-                var response = _storageAccountRestClient.RestoreBlobRanges(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new StorageAccountRestoreBlobRangesOperation(new BlobRestoreStatusOperationSource(), _storageAccountClientDiagnostics, Pipeline, _storageAccountRestClient.CreateRestoreBlobRangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -1502,14 +1376,8 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<StorageAccountResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.AddTag");
             scope.Start();
@@ -1570,14 +1438,8 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<StorageAccountResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.AddTag");
             scope.Start();
@@ -1637,10 +1499,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<StorageAccountResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.SetTags");
             scope.Start();
@@ -1697,10 +1556,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<StorageAccountResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.SetTags");
             scope.Start();
@@ -1757,10 +1613,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<StorageAccountResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RemoveTag");
             scope.Start();
@@ -1820,10 +1673,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<StorageAccountResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RemoveTag");
             scope.Start();

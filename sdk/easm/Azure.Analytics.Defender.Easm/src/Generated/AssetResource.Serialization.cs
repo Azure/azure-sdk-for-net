@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -16,14 +15,14 @@ namespace Azure.Analytics.Defender.Easm
     [PersistableModelProxy(typeof(UnknownAssetResource))]
     public partial class AssetResource : IUtf8JsonSerializable, IJsonModel<AssetResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssetResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssetResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AssetResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AssetResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssetResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -95,7 +94,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in AuditTrail)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +126,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<AssetResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssetResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +135,7 @@ namespace Azure.Analytics.Defender.Easm
 
         internal static AssetResource DeserializeAssetResource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +167,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssetResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssetResource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +183,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeAssetResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssetResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssetResource)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -198,11 +197,11 @@ namespace Azure.Analytics.Defender.Easm
             return DeserializeAssetResource(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

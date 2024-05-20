@@ -11,20 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class RestServiceLinkedService : IUtf8JsonSerializable, IJsonModel<RestServiceLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestServiceLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestServiceLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RestServiceLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RestServiceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestServiceLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestServiceLinkedService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue(ConnectVia, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                writer.WriteObjectValue(Credential, options);
             }
             if (Optional.IsDefined(ClientId))
             {
@@ -180,7 +179,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestServiceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestServiceLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestServiceLinkedService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static RestServiceLinkedService DeserializeRestServiceLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -204,17 +203,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<bool> enableServerCertificateValidation = default;
             RestServiceAuthenticationType authenticationType = default;
             DataFactoryElement<string> userName = default;
-            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecret password = default;
             DataFactoryElement<BinaryData> authHeaders = default;
             DataFactoryElement<string> servicePrincipalId = default;
-            DataFactorySecretBaseDefinition servicePrincipalKey = default;
+            DataFactorySecret servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             DataFactoryElement<string> azureCloudType = default;
             DataFactoryElement<string> aadResourceId = default;
             string encryptedCredential = default;
             DataFactoryCredentialReference credential = default;
             DataFactoryElement<string> clientId = default;
-            DataFactorySecretBaseDefinition clientSecret = default;
+            DataFactorySecret clientSecret = default;
             DataFactoryElement<string> tokenEndpoint = default;
             DataFactoryElement<string> resource = default;
             DataFactoryElement<string> scope = default;
@@ -319,7 +318,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authHeaders"u8))
@@ -346,7 +345,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -405,7 +404,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            clientSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tokenEndpoint"u8))
@@ -477,7 +476,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestServiceLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestServiceLinkedService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -493,7 +492,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeRestServiceLinkedService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestServiceLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestServiceLinkedService)} does not support reading '{options.Format}' format.");
             }
         }
 

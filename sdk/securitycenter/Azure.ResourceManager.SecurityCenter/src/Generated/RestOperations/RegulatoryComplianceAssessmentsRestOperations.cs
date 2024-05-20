@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -35,6 +34,25 @@ namespace Azure.ResourceManager.SecurityCenter
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2019-01-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/regulatoryComplianceStandards/", false);
+            uri.AppendPath(regulatoryComplianceStandardName, true);
+            uri.AppendPath("/regulatoryComplianceControls/", false);
+            uri.AppendPath(regulatoryComplianceControlName, true);
+            uri.AppendPath("/regulatoryComplianceAssessments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string filter)
@@ -72,30 +90,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="regulatoryComplianceStandardName"/> or <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RegulatoryComplianceAssessmentList>> ListAsync(string subscriptionId, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (regulatoryComplianceStandardName == null)
-            {
-                throw new ArgumentNullException(nameof(regulatoryComplianceStandardName));
-            }
-            if (regulatoryComplianceStandardName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceStandardName));
-            }
-            if (regulatoryComplianceControlName == null)
-            {
-                throw new ArgumentNullException(nameof(regulatoryComplianceControlName));
-            }
-            if (regulatoryComplianceControlName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceControlName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceStandardName, nameof(regulatoryComplianceStandardName));
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceControlName, nameof(regulatoryComplianceControlName));
 
             using var message = CreateListRequest(subscriptionId, regulatoryComplianceStandardName, regulatoryComplianceControlName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -123,30 +120,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="regulatoryComplianceStandardName"/> or <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RegulatoryComplianceAssessmentList> List(string subscriptionId, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (regulatoryComplianceStandardName == null)
-            {
-                throw new ArgumentNullException(nameof(regulatoryComplianceStandardName));
-            }
-            if (regulatoryComplianceStandardName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceStandardName));
-            }
-            if (regulatoryComplianceControlName == null)
-            {
-                throw new ArgumentNullException(nameof(regulatoryComplianceControlName));
-            }
-            if (regulatoryComplianceControlName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceControlName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceStandardName, nameof(regulatoryComplianceStandardName));
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceControlName, nameof(regulatoryComplianceControlName));
 
             using var message = CreateListRequest(subscriptionId, regulatoryComplianceStandardName, regulatoryComplianceControlName, filter);
             _pipeline.Send(message, cancellationToken);
@@ -162,6 +138,22 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string regulatoryComplianceAssessmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/regulatoryComplianceStandards/", false);
+            uri.AppendPath(regulatoryComplianceStandardName, true);
+            uri.AppendPath("/regulatoryComplianceControls/", false);
+            uri.AppendPath(regulatoryComplianceControlName, true);
+            uri.AppendPath("/regulatoryComplianceAssessments/", false);
+            uri.AppendPath(regulatoryComplianceAssessmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string regulatoryComplianceAssessmentName)
@@ -196,38 +188,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="regulatoryComplianceStandardName"/>, <paramref name="regulatoryComplianceControlName"/> or <paramref name="regulatoryComplianceAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RegulatoryComplianceAssessmentData>> GetAsync(string subscriptionId, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string regulatoryComplianceAssessmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (regulatoryComplianceStandardName == null)
-            {
-                throw new ArgumentNullException(nameof(regulatoryComplianceStandardName));
-            }
-            if (regulatoryComplianceStandardName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceStandardName));
-            }
-            if (regulatoryComplianceControlName == null)
-            {
-                throw new ArgumentNullException(nameof(regulatoryComplianceControlName));
-            }
-            if (regulatoryComplianceControlName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceControlName));
-            }
-            if (regulatoryComplianceAssessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(regulatoryComplianceAssessmentName));
-            }
-            if (regulatoryComplianceAssessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceAssessmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceStandardName, nameof(regulatoryComplianceStandardName));
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceControlName, nameof(regulatoryComplianceControlName));
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceAssessmentName, nameof(regulatoryComplianceAssessmentName));
 
             using var message = CreateGetRequest(subscriptionId, regulatoryComplianceStandardName, regulatoryComplianceControlName, regulatoryComplianceAssessmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -257,38 +221,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="regulatoryComplianceStandardName"/>, <paramref name="regulatoryComplianceControlName"/> or <paramref name="regulatoryComplianceAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RegulatoryComplianceAssessmentData> Get(string subscriptionId, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string regulatoryComplianceAssessmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (regulatoryComplianceStandardName == null)
-            {
-                throw new ArgumentNullException(nameof(regulatoryComplianceStandardName));
-            }
-            if (regulatoryComplianceStandardName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceStandardName));
-            }
-            if (regulatoryComplianceControlName == null)
-            {
-                throw new ArgumentNullException(nameof(regulatoryComplianceControlName));
-            }
-            if (regulatoryComplianceControlName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceControlName));
-            }
-            if (regulatoryComplianceAssessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(regulatoryComplianceAssessmentName));
-            }
-            if (regulatoryComplianceAssessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceAssessmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceStandardName, nameof(regulatoryComplianceStandardName));
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceControlName, nameof(regulatoryComplianceControlName));
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceAssessmentName, nameof(regulatoryComplianceAssessmentName));
 
             using var message = CreateGetRequest(subscriptionId, regulatoryComplianceStandardName, regulatoryComplianceControlName, regulatoryComplianceAssessmentName);
             _pipeline.Send(message, cancellationToken);
@@ -306,6 +242,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string filter)
@@ -333,34 +277,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="regulatoryComplianceStandardName"/> or <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RegulatoryComplianceAssessmentList>> ListNextPageAsync(string nextLink, string subscriptionId, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (regulatoryComplianceStandardName == null)
-            {
-                throw new ArgumentNullException(nameof(regulatoryComplianceStandardName));
-            }
-            if (regulatoryComplianceStandardName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceStandardName));
-            }
-            if (regulatoryComplianceControlName == null)
-            {
-                throw new ArgumentNullException(nameof(regulatoryComplianceControlName));
-            }
-            if (regulatoryComplianceControlName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceControlName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceStandardName, nameof(regulatoryComplianceStandardName));
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceControlName, nameof(regulatoryComplianceControlName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, regulatoryComplianceStandardName, regulatoryComplianceControlName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -389,34 +309,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="regulatoryComplianceStandardName"/> or <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RegulatoryComplianceAssessmentList> ListNextPage(string nextLink, string subscriptionId, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (regulatoryComplianceStandardName == null)
-            {
-                throw new ArgumentNullException(nameof(regulatoryComplianceStandardName));
-            }
-            if (regulatoryComplianceStandardName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceStandardName));
-            }
-            if (regulatoryComplianceControlName == null)
-            {
-                throw new ArgumentNullException(nameof(regulatoryComplianceControlName));
-            }
-            if (regulatoryComplianceControlName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceControlName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceStandardName, nameof(regulatoryComplianceStandardName));
+            Argument.AssertNotNullOrEmpty(regulatoryComplianceControlName, nameof(regulatoryComplianceControlName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, regulatoryComplianceStandardName, regulatoryComplianceControlName, filter);
             _pipeline.Send(message, cancellationToken);

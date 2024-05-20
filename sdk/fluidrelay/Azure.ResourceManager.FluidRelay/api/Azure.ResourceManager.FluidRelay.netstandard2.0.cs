@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FluidRelay
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.FluidRelayContainerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.FluidRelayContainerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FluidRelayContainerResource : Azure.ResourceManager.ArmResource
+    public partial class FluidRelayContainerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.FluidRelayContainerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.FluidRelayContainerData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected FluidRelayContainerResource() { }
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.FluidRelay
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FluidRelay.FluidRelayContainerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FluidRelay.FluidRelayContainerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.FluidRelay.FluidRelayContainerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.FluidRelayContainerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.FluidRelayContainerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.FluidRelay.FluidRelayContainerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.FluidRelayContainerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.FluidRelayContainerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.FluidRelayContainerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class FluidRelayExtensions
     {
@@ -83,7 +88,7 @@ namespace Azure.ResourceManager.FluidRelay
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.FluidRelayServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.FluidRelayServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FluidRelayServerResource : Azure.ResourceManager.ArmResource
+    public partial class FluidRelayServerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.FluidRelayServerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.FluidRelayServerData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected FluidRelayServerResource() { }
@@ -107,6 +112,11 @@ namespace Azure.ResourceManager.FluidRelay
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FluidRelay.FluidRelayServerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FluidRelay.FluidRelayServerResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FluidRelay.FluidRelayServerResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.FluidRelay.FluidRelayServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.FluidRelayServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FluidRelay.FluidRelayServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.FluidRelay.FluidRelayServerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.FluidRelayServerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.FluidRelayServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FluidRelay.FluidRelayServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FluidRelay.FluidRelayServerResource> Update(Azure.ResourceManager.FluidRelay.Models.FluidRelayServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FluidRelay.FluidRelayServerResource>> UpdateAsync(Azure.ResourceManager.FluidRelay.Models.FluidRelayServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     public partial class StorageServiceAccessPolicy : IUtf8JsonSerializable, IJsonModel<StorageServiceAccessPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageServiceAccessPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageServiceAccessPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageServiceAccessPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageServiceAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageServiceAccessPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageServiceAccessPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageServiceAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageServiceAccessPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageServiceAccessPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageServiceAccessPolicy DeserializeStorageServiceAccessPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Storage.Models
             DateTimeOffset? expiryTime = default;
             string permission = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -112,11 +112,81 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageServiceAccessPolicy(startTime, expiryTime, permission, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    builder.Append("  startTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpireOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  expiryTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExpireOn))
+                {
+                    builder.Append("  expiryTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Permission), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  permission: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Permission))
+                {
+                    builder.Append("  permission: ");
+                    if (Permission.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Permission}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Permission}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<StorageServiceAccessPolicy>.Write(ModelReaderWriterOptions options)
@@ -127,8 +197,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageServiceAccessPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageServiceAccessPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +216,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageServiceAccessPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageServiceAccessPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageServiceAccessPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

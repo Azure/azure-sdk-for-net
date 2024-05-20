@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -37,6 +36,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricData data)
         {
             var message = _pipeline.CreateMessage();
@@ -55,7 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -71,34 +84,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, networkFabricName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -122,34 +111,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, networkFabricName, data);
             _pipeline.Send(message, cancellationToken);
@@ -161,6 +126,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
@@ -192,30 +171,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkFabricData>> GetAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkFabricName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -244,30 +202,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkFabricData> Get(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkFabricName);
             _pipeline.Send(message, cancellationToken);
@@ -285,6 +222,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricPatch patch)
@@ -305,7 +256,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -321,34 +272,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, networkFabricName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -372,34 +299,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, networkFabricName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -411,6 +314,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
@@ -442,30 +359,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkFabricName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -488,30 +384,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkFabricName);
             _pipeline.Send(message, cancellationToken);
@@ -523,6 +398,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -552,22 +440,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkFabricsListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -593,22 +467,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkFabricsListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -624,6 +484,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
@@ -650,14 +521,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkFabricsListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -682,14 +546,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkFabricsListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -705,6 +562,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateProvisionRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/provision", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateProvisionRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
@@ -737,30 +609,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ProvisionAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var message = CreateProvisionRequest(subscriptionId, resourceGroupName, networkFabricName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -783,30 +634,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Provision(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var message = CreateProvisionRequest(subscriptionId, resourceGroupName, networkFabricName);
             _pipeline.Send(message, cancellationToken);
@@ -818,6 +648,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeprovisionRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/deprovision", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeprovisionRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
@@ -850,30 +695,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeprovisionAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var message = CreateDeprovisionRequest(subscriptionId, resourceGroupName, networkFabricName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -896,30 +720,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Deprovision(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var message = CreateDeprovisionRequest(subscriptionId, resourceGroupName, networkFabricName);
             _pipeline.Send(message, cancellationToken);
@@ -931,6 +734,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpgradeRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricUpdateVersionContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/upgrade", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpgradeRequest(string subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricUpdateVersionContent content)
@@ -952,7 +770,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -968,34 +786,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpgradeAsync(string subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricUpdateVersionContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpgradeRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1019,34 +813,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Upgrade(string subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricUpdateVersionContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpgradeRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1058,6 +828,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRefreshConfigurationRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/refreshConfiguration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRefreshConfigurationRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
@@ -1090,30 +875,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RefreshConfigurationAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var message = CreateRefreshConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1136,30 +900,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response RefreshConfiguration(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var message = CreateRefreshConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName);
             _pipeline.Send(message, cancellationToken);
@@ -1171,6 +914,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateWorkloadManagementBfdConfigurationRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/updateWorkloadManagementBfdConfiguration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateWorkloadManagementBfdConfigurationRequest(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content)
@@ -1192,7 +950,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1208,34 +966,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateWorkloadManagementBfdConfigurationAsync(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateWorkloadManagementBfdConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1259,34 +993,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateWorkloadManagementBfdConfiguration(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateWorkloadManagementBfdConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1298,6 +1008,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateInfraManagementBfdConfigurationRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/updateInfraManagementBfdConfiguration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateInfraManagementBfdConfigurationRequest(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content)
@@ -1319,7 +1044,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1335,34 +1060,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateInfraManagementBfdConfigurationAsync(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateInfraManagementBfdConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1386,34 +1087,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateInfraManagementBfdConfiguration(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateInfraManagementBfdConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1425,6 +1102,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateValidateConfigurationRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, ValidateConfigurationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/validateConfiguration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateValidateConfigurationRequest(string subscriptionId, string resourceGroupName, string networkFabricName, ValidateConfigurationContent content)
@@ -1446,7 +1138,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1462,34 +1154,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ValidateConfigurationAsync(string subscriptionId, string resourceGroupName, string networkFabricName, ValidateConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateValidateConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1513,34 +1181,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ValidateConfiguration(string subscriptionId, string resourceGroupName, string networkFabricName, ValidateConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateValidateConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1552,6 +1196,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetTopologyRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/getTopology", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetTopologyRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
@@ -1584,30 +1243,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> GetTopologyAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var message = CreateGetTopologyRequest(subscriptionId, resourceGroupName, networkFabricName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1630,30 +1268,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response GetTopology(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var message = CreateGetTopologyRequest(subscriptionId, resourceGroupName, networkFabricName);
             _pipeline.Send(message, cancellationToken);
@@ -1665,6 +1282,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCommitConfigurationRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/commitConfiguration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCommitConfigurationRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
@@ -1697,30 +1329,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CommitConfigurationAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var message = CreateCommitConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1743,30 +1354,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CommitConfiguration(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkFabricName == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricName));
-            }
-            if (networkFabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkFabricName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
             using var message = CreateCommitConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName);
             _pipeline.Send(message, cancellationToken);
@@ -1778,6 +1368,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -1803,26 +1401,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkFabricsListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1849,26 +1430,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkFabricsListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -1884,6 +1448,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
@@ -1908,18 +1480,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkFabricsListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1945,18 +1507,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkFabricsListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);

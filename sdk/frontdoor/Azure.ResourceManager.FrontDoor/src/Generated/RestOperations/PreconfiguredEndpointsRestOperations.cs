@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.FrontDoor.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.FrontDoor
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2019-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string profileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/NetworkExperimentProfiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/PreconfiguredEndpoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string profileName)
@@ -67,30 +81,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PreconfiguredEndpointList>> ListAsync(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, profileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +110,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PreconfiguredEndpointList> List(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, profileName);
             _pipeline.Send(message, cancellationToken);
@@ -156,6 +128,14 @@ namespace Azure.ResourceManager.FrontDoor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string profileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string profileName)
@@ -182,34 +162,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PreconfiguredEndpointList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, profileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -237,34 +193,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PreconfiguredEndpointList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, profileName);
             _pipeline.Send(message, cancellationToken);

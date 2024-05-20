@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.TrafficManager.Models;
@@ -36,6 +35,30 @@ namespace Azure.ResourceManager.TrafficManager
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string profileName, TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft, IEnumerable<double> botRight)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/trafficmanagerprofiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/heatMaps/", false);
+            uri.AppendPath(heatMapType.ToString(), true);
+            if (topLeft != null && !(topLeft is ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("topLeft", topLeft, ",", true);
+            }
+            if (botRight != null && !(botRight is ChangeTrackingList<double> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                uri.AppendQueryDelimited("botRight", botRight, ",", true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string profileName, TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft, IEnumerable<double> botRight)
@@ -80,30 +103,9 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<TrafficManagerHeatMapData>> GetAsync(string subscriptionId, string resourceGroupName, string profileName, TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = null, IEnumerable<double> botRight = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, profileName, heatMapType, topLeft, botRight);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -135,30 +137,9 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<TrafficManagerHeatMapData> Get(string subscriptionId, string resourceGroupName, string profileName, TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = null, IEnumerable<double> botRight = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
-            if (profileName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, profileName, heatMapType, topLeft, botRight);
             _pipeline.Send(message, cancellationToken);

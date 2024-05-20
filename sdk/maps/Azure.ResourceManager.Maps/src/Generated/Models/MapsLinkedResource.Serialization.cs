@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Maps.Models
 {
     public partial class MapsLinkedResource : IUtf8JsonSerializable, IJsonModel<MapsLinkedResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsLinkedResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsLinkedResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MapsLinkedResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MapsLinkedResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapsLinkedResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapsLinkedResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Maps.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapsLinkedResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapsLinkedResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapsLinkedResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Maps.Models
 
         internal static MapsLinkedResource DeserializeMapsLinkedResource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Maps.Models
             string uniqueName = default;
             string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uniqueName"u8))
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Maps.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MapsLinkedResource(uniqueName, id, serializedAdditionalRawData);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Maps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MapsLinkedResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapsLinkedResource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Maps.Models
                         return DeserializeMapsLinkedResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MapsLinkedResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapsLinkedResource)} does not support reading '{options.Format}' format.");
             }
         }
 

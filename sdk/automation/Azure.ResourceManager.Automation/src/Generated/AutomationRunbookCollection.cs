@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="runbookName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomationRunbookResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string runbookName, AutomationRunbookCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (runbookName == null)
-            {
-                throw new ArgumentNullException(nameof(runbookName));
-            }
-            if (runbookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runbookName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _automationRunbookRunbookRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runbookName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationRunbookResource>(Response.FromValue(new AutomationRunbookResource(Client, response), response.GetRawResponse()));
+                var uri = _automationRunbookRunbookRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runbookName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationRunbookResource>(Response.FromValue(new AutomationRunbookResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="runbookName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AutomationRunbookResource> CreateOrUpdate(WaitUntil waitUntil, string runbookName, AutomationRunbookCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (runbookName == null)
-            {
-                throw new ArgumentNullException(nameof(runbookName));
-            }
-            if (runbookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runbookName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _automationRunbookRunbookRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runbookName, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationRunbookResource>(Response.FromValue(new AutomationRunbookResource(Client, response), response.GetRawResponse()));
+                var uri = _automationRunbookRunbookRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runbookName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationRunbookResource>(Response.FromValue(new AutomationRunbookResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="runbookName"/> is null. </exception>
         public virtual async Task<Response<AutomationRunbookResource>> GetAsync(string runbookName, CancellationToken cancellationToken = default)
         {
-            if (runbookName == null)
-            {
-                throw new ArgumentNullException(nameof(runbookName));
-            }
-            if (runbookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runbookName));
-            }
+            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
 
             using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="runbookName"/> is null. </exception>
         public virtual Response<AutomationRunbookResource> Get(string runbookName, CancellationToken cancellationToken = default)
         {
-            if (runbookName == null)
-            {
-                throw new ArgumentNullException(nameof(runbookName));
-            }
-            if (runbookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runbookName));
-            }
+            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
 
             using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="runbookName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string runbookName, CancellationToken cancellationToken = default)
         {
-            if (runbookName == null)
-            {
-                throw new ArgumentNullException(nameof(runbookName));
-            }
-            if (runbookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runbookName));
-            }
+            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
 
             using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="runbookName"/> is null. </exception>
         public virtual Response<bool> Exists(string runbookName, CancellationToken cancellationToken = default)
         {
-            if (runbookName == null)
-            {
-                throw new ArgumentNullException(nameof(runbookName));
-            }
-            if (runbookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runbookName));
-            }
+            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
 
             using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="runbookName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutomationRunbookResource>> GetIfExistsAsync(string runbookName, CancellationToken cancellationToken = default)
         {
-            if (runbookName == null)
-            {
-                throw new ArgumentNullException(nameof(runbookName));
-            }
-            if (runbookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runbookName));
-            }
+            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
 
             using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="runbookName"/> is null. </exception>
         public virtual NullableResponse<AutomationRunbookResource> GetIfExists(string runbookName, CancellationToken cancellationToken = default)
         {
-            if (runbookName == null)
-            {
-                throw new ArgumentNullException(nameof(runbookName));
-            }
-            if (runbookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runbookName));
-            }
+            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
 
             using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookCollection.GetIfExists");
             scope.Start();

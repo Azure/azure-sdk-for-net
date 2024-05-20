@@ -8,22 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class ServiceAccountThrottlingRule : IUtf8JsonSerializable, IJsonModel<ServiceAccountThrottlingRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAccountThrottlingRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAccountThrottlingRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceAccountThrottlingRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountThrottlingRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAccountThrottlingRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAccountThrottlingRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in MatchPatterns)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountThrottlingRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAccountThrottlingRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAccountThrottlingRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static ServiceAccountThrottlingRule DeserializeServiceAccountThrottlingRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             bool? dynamicThrottlingEnabled = default;
             IReadOnlyList<ServiceAccountThrottlingMatchPattern> matchPatterns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -167,10 +168,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceAccountThrottlingRule(
                 key,
                 renewalPeriod,
@@ -181,6 +182,128 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Key), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  key: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Key))
+                {
+                    builder.Append("  key: ");
+                    if (Key.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Key}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Key}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RenewalPeriod), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  renewalPeriod: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RenewalPeriod))
+                {
+                    builder.Append("  renewalPeriod: ");
+                    builder.AppendLine($"'{RenewalPeriod.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Count), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  count: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Count))
+                {
+                    builder.Append("  count: ");
+                    builder.AppendLine($"'{Count.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinCount))
+                {
+                    builder.Append("  minCount: ");
+                    builder.AppendLine($"'{MinCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDynamicThrottlingEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dynamicThrottlingEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDynamicThrottlingEnabled))
+                {
+                    builder.Append("  dynamicThrottlingEnabled: ");
+                    var boolValue = IsDynamicThrottlingEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MatchPatterns), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  matchPatterns: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MatchPatterns))
+                {
+                    if (MatchPatterns.Any())
+                    {
+                        builder.Append("  matchPatterns: ");
+                        builder.AppendLine("[");
+                        foreach (var item in MatchPatterns)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  matchPatterns: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ServiceAccountThrottlingRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountThrottlingRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -189,8 +312,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAccountThrottlingRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAccountThrottlingRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +331,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeServiceAccountThrottlingRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAccountThrottlingRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAccountThrottlingRule)} does not support reading '{options.Format}' format.");
             }
         }
 

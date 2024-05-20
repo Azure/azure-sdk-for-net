@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteSlotHostNameBindingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hostName, HostNameBindingData data, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _siteSlotHostNameBindingWebAppsRestClient.CreateOrUpdateHostNameBindingSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteSlotHostNameBindingResource>(Response.FromValue(new SiteSlotHostNameBindingResource(Client, response), response.GetRawResponse()));
+                var uri = _siteSlotHostNameBindingWebAppsRestClient.CreateCreateOrUpdateHostNameBindingSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<SiteSlotHostNameBindingResource>(Response.FromValue(new SiteSlotHostNameBindingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SiteSlotHostNameBindingResource> CreateOrUpdate(WaitUntil waitUntil, string hostName, HostNameBindingData data, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _siteSlotHostNameBindingWebAppsRestClient.CreateOrUpdateHostNameBindingSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteSlotHostNameBindingResource>(Response.FromValue(new SiteSlotHostNameBindingResource(Client, response), response.GetRawResponse()));
+                var uri = _siteSlotHostNameBindingWebAppsRestClient.CreateCreateOrUpdateHostNameBindingSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<SiteSlotHostNameBindingResource>(Response.FromValue(new SiteSlotHostNameBindingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual async Task<Response<SiteSlotHostNameBindingResource>> GetAsync(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual Response<SiteSlotHostNameBindingResource> Get(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.Get");
             scope.Start();
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.Exists");
             scope.Start();
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual Response<bool> Exists(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.Exists");
             scope.Start();
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteSlotHostNameBindingResource>> GetIfExistsAsync(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.GetIfExists");
             scope.Start();
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual NullableResponse<SiteSlotHostNameBindingResource> GetIfExists(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.GetIfExists");
             scope.Start();

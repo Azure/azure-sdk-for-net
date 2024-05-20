@@ -8,27 +8,34 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
     public partial class AudioTranscriptionOptions : IUtf8JsonSerializable, IJsonModel<AudioTranscriptionOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AudioTranscriptionOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AudioTranscriptionOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AudioTranscriptionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AudioTranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioTranscriptionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AudioTranscriptionOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("file"u8);
-            writer.WriteBase64StringValue(AudioData.ToArray(), "D");
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AudioData);
+#else
+            using (JsonDocument document = JsonDocument.Parse(AudioData))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(Filename))
             {
                 writer.WritePropertyName("filename"u8);
@@ -53,6 +60,16 @@ namespace Azure.AI.OpenAI
             {
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
+            }
+            if (Optional.IsCollectionDefined(TimestampGranularities))
+            {
+                writer.WritePropertyName("timestamp_granularities"u8);
+                writer.WriteStartArray();
+                foreach (var item in TimestampGranularities)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(DeploymentName))
             {
@@ -82,7 +99,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AudioTranscriptionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioTranscriptionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AudioTranscriptionOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,7 +108,7 @@ namespace Azure.AI.OpenAI
 
         internal static AudioTranscriptionOptions DeserializeAudioTranscriptionOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,14 +120,15 @@ namespace Azure.AI.OpenAI
             string language = default;
             string prompt = default;
             float? temperature = default;
+            IList<AudioTranscriptionTimestampGranularity> timestampGranularities = default;
             string model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("file"u8))
                 {
-                    file = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
+                    file = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("filename"u8))
@@ -146,6 +164,20 @@ namespace Azure.AI.OpenAI
                     temperature = property.Value.GetSingle();
                     continue;
                 }
+                if (property.NameEquals("timestamp_granularities"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AudioTranscriptionTimestampGranularity> array = new List<AudioTranscriptionTimestampGranularity>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new AudioTranscriptionTimestampGranularity(item.GetString()));
+                    }
+                    timestampGranularities = array;
+                    continue;
+                }
                 if (property.NameEquals("model"u8))
                 {
                     model = property.Value.GetString();
@@ -153,10 +185,10 @@ namespace Azure.AI.OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AudioTranscriptionOptions(
                 file,
                 filename,
@@ -164,8 +196,62 @@ namespace Azure.AI.OpenAI
                 language,
                 prompt,
                 temperature,
+                timestampGranularities ?? new ChangeTrackingList<AudioTranscriptionTimestampGranularity>(),
                 model,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeMultipart(ModelReaderWriterOptions options)
+        {
+            using MultipartFormDataRequestContent content = ToMultipartRequestContent();
+            using MemoryStream stream = new MemoryStream();
+            content.WriteTo(stream);
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        internal virtual MultipartFormDataRequestContent ToMultipartRequestContent()
+        {
+            MultipartFormDataRequestContent content = new MultipartFormDataRequestContent();
+            content.Add(AudioData, "file", "file");
+            if (Optional.IsDefined(Filename))
+            {
+                content.Add(Filename, "filename");
+            }
+            if (Optional.IsDefined(ResponseFormat))
+            {
+                content.Add(ResponseFormat.Value.ToString(), "response_format");
+            }
+            if (Optional.IsDefined(Language))
+            {
+                content.Add(Language, "language");
+            }
+            if (Optional.IsDefined(Prompt))
+            {
+                content.Add(Prompt, "prompt");
+            }
+            if (Optional.IsDefined(Temperature))
+            {
+                content.Add(Temperature.Value, "temperature");
+            }
+            if (Optional.IsCollectionDefined(TimestampGranularities))
+            {
+                foreach (AudioTranscriptionTimestampGranularity item in TimestampGranularities)
+                {
+                    content.Add(item.ToString(), "timestamp_granularities");
+                }
+            }
+            if (Optional.IsDefined(DeploymentName))
+            {
+                content.Add(DeploymentName, "model");
+            }
+            return content;
         }
 
         BinaryData IPersistableModel<AudioTranscriptionOptions>.Write(ModelReaderWriterOptions options)
@@ -176,8 +262,10 @@ namespace Azure.AI.OpenAI
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "MFD":
+                    return SerializeMultipart(options);
                 default:
-                    throw new FormatException($"The model {nameof(AudioTranscriptionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AudioTranscriptionOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,11 +281,11 @@ namespace Azure.AI.OpenAI
                         return DeserializeAudioTranscriptionOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AudioTranscriptionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AudioTranscriptionOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AudioTranscriptionOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AudioTranscriptionOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "MFD";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>

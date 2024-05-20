@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Sql.Models;
@@ -35,6 +34,19 @@ namespace Azure.ResourceManager.Sql
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByLocationRequestUri(string subscriptionId, AzureLocation locationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/usages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByLocationRequest(string subscriptionId, AzureLocation locationName)
@@ -64,14 +76,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SubscriptionUsageListResult>> ListByLocationAsync(string subscriptionId, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListByLocationRequest(subscriptionId, locationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -97,14 +102,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SubscriptionUsageListResult> ListByLocation(string subscriptionId, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListByLocationRequest(subscriptionId, locationName);
             _pipeline.Send(message, cancellationToken);
@@ -120,6 +118,20 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation locationName, string usageName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/usages/", false);
+            uri.AppendPath(usageName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation locationName, string usageName)
@@ -151,22 +163,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="usageName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SubscriptionUsageData>> GetAsync(string subscriptionId, AzureLocation locationName, string usageName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (usageName == null)
-            {
-                throw new ArgumentNullException(nameof(usageName));
-            }
-            if (usageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(usageName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
             using var message = CreateGetRequest(subscriptionId, locationName, usageName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -195,22 +193,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="usageName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SubscriptionUsageData> Get(string subscriptionId, AzureLocation locationName, string usageName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (usageName == null)
-            {
-                throw new ArgumentNullException(nameof(usageName));
-            }
-            if (usageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(usageName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
             using var message = CreateGetRequest(subscriptionId, locationName, usageName);
             _pipeline.Send(message, cancellationToken);
@@ -228,6 +212,14 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByLocationNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation locationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByLocationNextPageRequest(string nextLink, string subscriptionId, AzureLocation locationName)
@@ -253,18 +245,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SubscriptionUsageListResult>> ListByLocationNextPageAsync(string nextLink, string subscriptionId, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListByLocationNextPageRequest(nextLink, subscriptionId, locationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -291,18 +273,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SubscriptionUsageListResult> ListByLocationNextPage(string nextLink, string subscriptionId, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListByLocationNextPageRequest(nextLink, subscriptionId, locationName);
             _pipeline.Send(message, cancellationToken);

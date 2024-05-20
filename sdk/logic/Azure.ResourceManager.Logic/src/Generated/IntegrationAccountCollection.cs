@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Logic
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="integrationAccountName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IntegrationAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string integrationAccountName, IntegrationAccountData data, CancellationToken cancellationToken = default)
         {
-            if (integrationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationAccountName));
-            }
-            if (integrationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationAccountName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _integrationAccountRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, integrationAccountName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LogicArmOperation<IntegrationAccountResource>(Response.FromValue(new IntegrationAccountResource(Client, response), response.GetRawResponse()));
+                var uri = _integrationAccountRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, integrationAccountName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new LogicArmOperation<IntegrationAccountResource>(Response.FromValue(new IntegrationAccountResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="integrationAccountName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IntegrationAccountResource> CreateOrUpdate(WaitUntil waitUntil, string integrationAccountName, IntegrationAccountData data, CancellationToken cancellationToken = default)
         {
-            if (integrationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationAccountName));
-            }
-            if (integrationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationAccountName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _integrationAccountRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, integrationAccountName, data, cancellationToken);
-                var operation = new LogicArmOperation<IntegrationAccountResource>(Response.FromValue(new IntegrationAccountResource(Client, response), response.GetRawResponse()));
+                var uri = _integrationAccountRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, integrationAccountName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new LogicArmOperation<IntegrationAccountResource>(Response.FromValue(new IntegrationAccountResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="integrationAccountName"/> is null. </exception>
         public virtual async Task<Response<IntegrationAccountResource>> GetAsync(string integrationAccountName, CancellationToken cancellationToken = default)
         {
-            if (integrationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationAccountName));
-            }
-            if (integrationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="integrationAccountName"/> is null. </exception>
         public virtual Response<IntegrationAccountResource> Get(string integrationAccountName, CancellationToken cancellationToken = default)
         {
-            if (integrationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationAccountName));
-            }
-            if (integrationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountCollection.Get");
             scope.Start();
@@ -365,14 +333,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="integrationAccountName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string integrationAccountName, CancellationToken cancellationToken = default)
         {
-            if (integrationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationAccountName));
-            }
-            if (integrationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountCollection.Exists");
             scope.Start();
@@ -415,14 +376,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="integrationAccountName"/> is null. </exception>
         public virtual Response<bool> Exists(string integrationAccountName, CancellationToken cancellationToken = default)
         {
-            if (integrationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationAccountName));
-            }
-            if (integrationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountCollection.Exists");
             scope.Start();
@@ -465,14 +419,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="integrationAccountName"/> is null. </exception>
         public virtual async Task<NullableResponse<IntegrationAccountResource>> GetIfExistsAsync(string integrationAccountName, CancellationToken cancellationToken = default)
         {
-            if (integrationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationAccountName));
-            }
-            if (integrationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountCollection.GetIfExists");
             scope.Start();
@@ -517,14 +464,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="integrationAccountName"/> is null. </exception>
         public virtual NullableResponse<IntegrationAccountResource> GetIfExists(string integrationAccountName, CancellationToken cancellationToken = default)
         {
-            if (integrationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationAccountName));
-            }
-            if (integrationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountCollection.GetIfExists");
             scope.Start();

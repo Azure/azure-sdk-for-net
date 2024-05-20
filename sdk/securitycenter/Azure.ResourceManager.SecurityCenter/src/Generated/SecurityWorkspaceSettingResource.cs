@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -199,7 +197,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _securityWorkspaceSettingWorkspaceSettingsRestClient.DeleteAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation(response);
+                var uri = _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -241,7 +241,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _securityWorkspaceSettingWorkspaceSettingsRestClient.Delete(Id.SubscriptionId, Id.Name, cancellationToken);
-                var operation = new SecurityCenterArmOperation(response);
+                var uri = _securityWorkspaceSettingWorkspaceSettingsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -279,10 +281,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<SecurityWorkspaceSettingResource>> UpdateAsync(SecurityWorkspaceSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingResource.Update");
             scope.Start();
@@ -324,10 +323,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<SecurityWorkspaceSettingResource> Update(SecurityWorkspaceSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingResource.Update");
             scope.Start();

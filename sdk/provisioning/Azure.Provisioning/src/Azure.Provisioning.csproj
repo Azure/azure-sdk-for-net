@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Contains the core functionality for defining Azure infrastructure with dotnet code.</Description>
+    <Version>0.3.0</Version>
+    <ApiCompatVersion>0.2.0</ApiCompatVersion>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net472;net6.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager" />
+    <PackageReference Include="Azure.ResourceManager.Authorization" />
+    <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" />
+  </ItemGroup>
+
+</Project>

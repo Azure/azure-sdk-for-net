@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Peering.Models;
@@ -35,6 +34,41 @@ namespace Azure.ResourceManager.Peering
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByPeeringRequestUri(string subscriptionId, string resourceGroupName, string peeringName, string prefix, string asPath, string originAsValidationState, string rpkiValidationState, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Peering/peerings/", false);
+            uri.AppendPath(peeringName, true);
+            uri.AppendPath("/receivedRoutes", false);
+            if (prefix != null)
+            {
+                uri.AppendQuery("prefix", prefix, true);
+            }
+            if (asPath != null)
+            {
+                uri.AppendQuery("asPath", asPath, true);
+            }
+            if (originAsValidationState != null)
+            {
+                uri.AppendQuery("originAsValidationState", originAsValidationState, true);
+            }
+            if (rpkiValidationState != null)
+            {
+                uri.AppendQuery("rpkiValidationState", rpkiValidationState, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByPeeringRequest(string subscriptionId, string resourceGroupName, string peeringName, string prefix, string asPath, string originAsValidationState, string rpkiValidationState, string skipToken)
@@ -92,30 +126,9 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PeeringReceivedRouteListResult>> ListByPeeringAsync(string subscriptionId, string resourceGroupName, string peeringName, string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var message = CreateListByPeeringRequest(subscriptionId, resourceGroupName, peeringName, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -147,30 +160,9 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PeeringReceivedRouteListResult> ListByPeering(string subscriptionId, string resourceGroupName, string peeringName, string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var message = CreateListByPeeringRequest(subscriptionId, resourceGroupName, peeringName, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -186,6 +178,14 @@ namespace Azure.ResourceManager.Peering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByPeeringNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string peeringName, string prefix, string asPath, string originAsValidationState, string rpkiValidationState, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByPeeringNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string peeringName, string prefix, string asPath, string originAsValidationState, string rpkiValidationState, string skipToken)
@@ -217,34 +217,10 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PeeringReceivedRouteListResult>> ListByPeeringNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string peeringName, string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var message = CreateListByPeeringNextPageRequest(nextLink, subscriptionId, resourceGroupName, peeringName, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -277,34 +253,10 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PeeringReceivedRouteListResult> ListByPeeringNextPage(string nextLink, string subscriptionId, string resourceGroupName, string peeringName, string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var message = CreateListByPeeringNextPageRequest(nextLink, subscriptionId, resourceGroupName, peeringName, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
             _pipeline.Send(message, cancellationToken);

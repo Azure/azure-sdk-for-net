@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Quota.Models
     [PersistableModelProxy(typeof(UnknownLimitJsonObject))]
     public partial class QuotaLimitJsonObject : IUtf8JsonSerializable, IJsonModel<QuotaLimitJsonObject>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaLimitJsonObject>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaLimitJsonObject>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QuotaLimitJsonObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QuotaLimitJsonObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaLimitJsonObject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaLimitJsonObject)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Quota.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaLimitJsonObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaLimitJsonObject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaLimitJsonObject)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Quota.Models
 
         internal static QuotaLimitJsonObject DeserializeQuotaLimitJsonObject(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Quota.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaLimitJsonObject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaLimitJsonObject)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Quota.Models
                         return DeserializeQuotaLimitJsonObject(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaLimitJsonObject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaLimitJsonObject)} does not support reading '{options.Format}' format.");
             }
         }
 

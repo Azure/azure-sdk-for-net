@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Marketplace
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PrivateStoreOfferResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string offerId, PrivateStoreOfferData data, CancellationToken cancellationToken = default)
         {
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateOrUpdateAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<PrivateStoreOfferResource>(Response.FromValue(new PrivateStoreOfferResource(Client, response), response.GetRawResponse()));
+                var uri = _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateCreateOrUpdateRequestUri(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<PrivateStoreOfferResource>(Response.FromValue(new PrivateStoreOfferResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PrivateStoreOfferResource> CreateOrUpdate(WaitUntil waitUntil, string offerId, PrivateStoreOfferData data, CancellationToken cancellationToken = default)
         {
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateOrUpdate(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, data, cancellationToken);
-                var operation = new MarketplaceArmOperation<PrivateStoreOfferResource>(Response.FromValue(new PrivateStoreOfferResource(Client, response), response.GetRawResponse()));
+                var uri = _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateCreateOrUpdateRequestUri(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), offerId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<PrivateStoreOfferResource>(Response.FromValue(new PrivateStoreOfferResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         public virtual async Task<Response<PrivateStoreOfferResource>> GetAsync(string offerId, CancellationToken cancellationToken = default)
         {
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             using var scope = _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         public virtual Response<PrivateStoreOfferResource> Get(string offerId, CancellationToken cancellationToken = default)
         {
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             using var scope = _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.Get");
             scope.Start();
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string offerId, CancellationToken cancellationToken = default)
         {
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             using var scope = _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.Exists");
             scope.Start();
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         public virtual Response<bool> Exists(string offerId, CancellationToken cancellationToken = default)
         {
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             using var scope = _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.Exists");
             scope.Start();
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         public virtual async Task<NullableResponse<PrivateStoreOfferResource>> GetIfExistsAsync(string offerId, CancellationToken cancellationToken = default)
         {
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             using var scope = _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.GetIfExists");
             scope.Start();
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         public virtual NullableResponse<PrivateStoreOfferResource> GetIfExists(string offerId, CancellationToken cancellationToken = default)
         {
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             using var scope = _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.GetIfExists");
             scope.Start();

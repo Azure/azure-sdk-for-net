@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault
 {
@@ -281,17 +279,16 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KeyVaultPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, KeyVaultPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
                 var response = await _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KeyVaultArmOperation<KeyVaultPrivateEndpointConnectionResource>(Response.FromValue(new KeyVaultPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new KeyVaultArmOperation<KeyVaultPrivateEndpointConnectionResource>(Response.FromValue(new KeyVaultPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -330,17 +327,16 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KeyVaultPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, KeyVaultPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
                 var response = _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new KeyVaultArmOperation<KeyVaultPrivateEndpointConnectionResource>(Response.FromValue(new KeyVaultPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new KeyVaultArmOperation<KeyVaultPrivateEndpointConnectionResource>(Response.FromValue(new KeyVaultPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

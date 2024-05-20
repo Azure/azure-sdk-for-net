@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -16,14 +15,14 @@ namespace Azure.Analytics.Defender.Easm
     [PersistableModelProxy(typeof(UnknownDataConnection))]
     public partial class DataConnection : IUtf8JsonSerializable, IJsonModel<DataConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataConnection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -107,7 +106,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<DataConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +115,7 @@ namespace Azure.Analytics.Defender.Easm
 
         internal static DataConnection DeserializeDataConnection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -126,8 +125,8 @@ namespace Azure.Analytics.Defender.Easm
             {
                 switch (discriminator.GetString())
                 {
-                    case "logAnalytics": return LogAnalyticsDataConnection.DeserializeLogAnalyticsDataConnection(element, options);
                     case "azureDataExplorer": return AzureDataExplorerDataConnection.DeserializeAzureDataExplorerDataConnection(element, options);
+                    case "logAnalytics": return LogAnalyticsDataConnection.DeserializeLogAnalyticsDataConnection(element, options);
                 }
             }
             return UnknownDataConnection.DeserializeUnknownDataConnection(element, options);
@@ -142,7 +141,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +157,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeDataConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataConnection)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -172,11 +171,11 @@ namespace Azure.Analytics.Defender.Easm
             return DeserializeDataConnection(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

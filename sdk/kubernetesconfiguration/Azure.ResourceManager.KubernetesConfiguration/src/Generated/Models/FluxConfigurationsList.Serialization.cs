@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     internal partial class FluxConfigurationsList : IUtf8JsonSerializable, IJsonModel<FluxConfigurationsList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FluxConfigurationsList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FluxConfigurationsList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FluxConfigurationsList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FluxConfigurationsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FluxConfigurationsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FluxConfigurationsList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<FluxConfigurationsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FluxConfigurationsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FluxConfigurationsList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static FluxConfigurationsList DeserializeFluxConfigurationsList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             IReadOnlyList<KubernetesFluxConfigurationData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -107,10 +106,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FluxConfigurationsList(value ?? new ChangeTrackingList<KubernetesFluxConfigurationData>(), nextLink, serializedAdditionalRawData);
         }
 
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FluxConfigurationsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluxConfigurationsList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeFluxConfigurationsList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FluxConfigurationsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluxConfigurationsList)} does not support reading '{options.Format}' format.");
             }
         }
 

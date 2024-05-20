@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsWatchlistItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string watchlistItemId, SecurityInsightsWatchlistItemData data, CancellationToken cancellationToken = default)
         {
-            if (watchlistItemId == null)
-            {
-                throw new ArgumentNullException(nameof(watchlistItemId));
-            }
-            if (watchlistItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watchlistItemId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(watchlistItemId, nameof(watchlistItemId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics.CreateScope("SecurityInsightsWatchlistItemCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _securityInsightsWatchlistItemWatchlistItemsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, watchlistItemId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsWatchlistItemResource>(Response.FromValue(new SecurityInsightsWatchlistItemResource(Client, response), response.GetRawResponse()));
+                var uri = _securityInsightsWatchlistItemWatchlistItemsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, watchlistItemId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsWatchlistItemResource>(Response.FromValue(new SecurityInsightsWatchlistItemResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityInsightsWatchlistItemResource> CreateOrUpdate(WaitUntil waitUntil, string watchlistItemId, SecurityInsightsWatchlistItemData data, CancellationToken cancellationToken = default)
         {
-            if (watchlistItemId == null)
-            {
-                throw new ArgumentNullException(nameof(watchlistItemId));
-            }
-            if (watchlistItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watchlistItemId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(watchlistItemId, nameof(watchlistItemId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics.CreateScope("SecurityInsightsWatchlistItemCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _securityInsightsWatchlistItemWatchlistItemsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, watchlistItemId, data, cancellationToken);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsWatchlistItemResource>(Response.FromValue(new SecurityInsightsWatchlistItemResource(Client, response), response.GetRawResponse()));
+                var uri = _securityInsightsWatchlistItemWatchlistItemsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, watchlistItemId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsWatchlistItemResource>(Response.FromValue(new SecurityInsightsWatchlistItemResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
         public virtual async Task<Response<SecurityInsightsWatchlistItemResource>> GetAsync(string watchlistItemId, CancellationToken cancellationToken = default)
         {
-            if (watchlistItemId == null)
-            {
-                throw new ArgumentNullException(nameof(watchlistItemId));
-            }
-            if (watchlistItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watchlistItemId));
-            }
+            Argument.AssertNotNullOrEmpty(watchlistItemId, nameof(watchlistItemId));
 
             using var scope = _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics.CreateScope("SecurityInsightsWatchlistItemCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
         public virtual Response<SecurityInsightsWatchlistItemResource> Get(string watchlistItemId, CancellationToken cancellationToken = default)
         {
-            if (watchlistItemId == null)
-            {
-                throw new ArgumentNullException(nameof(watchlistItemId));
-            }
-            if (watchlistItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watchlistItemId));
-            }
+            Argument.AssertNotNullOrEmpty(watchlistItemId, nameof(watchlistItemId));
 
             using var scope = _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics.CreateScope("SecurityInsightsWatchlistItemCollection.Get");
             scope.Start();
@@ -364,14 +332,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string watchlistItemId, CancellationToken cancellationToken = default)
         {
-            if (watchlistItemId == null)
-            {
-                throw new ArgumentNullException(nameof(watchlistItemId));
-            }
-            if (watchlistItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watchlistItemId));
-            }
+            Argument.AssertNotNullOrEmpty(watchlistItemId, nameof(watchlistItemId));
 
             using var scope = _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics.CreateScope("SecurityInsightsWatchlistItemCollection.Exists");
             scope.Start();
@@ -414,14 +375,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
         public virtual Response<bool> Exists(string watchlistItemId, CancellationToken cancellationToken = default)
         {
-            if (watchlistItemId == null)
-            {
-                throw new ArgumentNullException(nameof(watchlistItemId));
-            }
-            if (watchlistItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watchlistItemId));
-            }
+            Argument.AssertNotNullOrEmpty(watchlistItemId, nameof(watchlistItemId));
 
             using var scope = _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics.CreateScope("SecurityInsightsWatchlistItemCollection.Exists");
             scope.Start();
@@ -464,14 +418,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsWatchlistItemResource>> GetIfExistsAsync(string watchlistItemId, CancellationToken cancellationToken = default)
         {
-            if (watchlistItemId == null)
-            {
-                throw new ArgumentNullException(nameof(watchlistItemId));
-            }
-            if (watchlistItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watchlistItemId));
-            }
+            Argument.AssertNotNullOrEmpty(watchlistItemId, nameof(watchlistItemId));
 
             using var scope = _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics.CreateScope("SecurityInsightsWatchlistItemCollection.GetIfExists");
             scope.Start();
@@ -516,14 +463,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
         public virtual NullableResponse<SecurityInsightsWatchlistItemResource> GetIfExists(string watchlistItemId, CancellationToken cancellationToken = default)
         {
-            if (watchlistItemId == null)
-            {
-                throw new ArgumentNullException(nameof(watchlistItemId));
-            }
-            if (watchlistItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watchlistItemId));
-            }
+            Argument.AssertNotNullOrEmpty(watchlistItemId, nameof(watchlistItemId));
 
             using var scope = _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics.CreateScope("SecurityInsightsWatchlistItemCollection.GetIfExists");
             scope.Start();

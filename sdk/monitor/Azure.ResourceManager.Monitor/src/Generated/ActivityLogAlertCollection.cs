@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ActivityLogAlertResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string activityLogAlertName, ActivityLogAlertData data, CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertName == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlertName));
-            }
-            if (activityLogAlertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(activityLogAlertName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _activityLogAlertRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<ActivityLogAlertResource>(Response.FromValue(new ActivityLogAlertResource(Client, response), response.GetRawResponse()));
+                var uri = _activityLogAlertRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MonitorArmOperation<ActivityLogAlertResource>(Response.FromValue(new ActivityLogAlertResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ActivityLogAlertResource> CreateOrUpdate(WaitUntil waitUntil, string activityLogAlertName, ActivityLogAlertData data, CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertName == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlertName));
-            }
-            if (activityLogAlertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(activityLogAlertName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _activityLogAlertRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, data, cancellationToken);
-                var operation = new MonitorArmOperation<ActivityLogAlertResource>(Response.FromValue(new ActivityLogAlertResource(Client, response), response.GetRawResponse()));
+                var uri = _activityLogAlertRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MonitorArmOperation<ActivityLogAlertResource>(Response.FromValue(new ActivityLogAlertResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
         public virtual async Task<Response<ActivityLogAlertResource>> GetAsync(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertName == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlertName));
-            }
-            if (activityLogAlertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(activityLogAlertName));
-            }
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
         public virtual Response<ActivityLogAlertResource> Get(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertName == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlertName));
-            }
-            if (activityLogAlertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(activityLogAlertName));
-            }
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertName == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlertName));
-            }
-            if (activityLogAlertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(activityLogAlertName));
-            }
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
         public virtual Response<bool> Exists(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertName == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlertName));
-            }
-            if (activityLogAlertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(activityLogAlertName));
-            }
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
         public virtual async Task<NullableResponse<ActivityLogAlertResource>> GetIfExistsAsync(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertName == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlertName));
-            }
-            if (activityLogAlertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(activityLogAlertName));
-            }
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
         public virtual NullableResponse<ActivityLogAlertResource> GetIfExists(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
-            if (activityLogAlertName == null)
-            {
-                throw new ArgumentNullException(nameof(activityLogAlertName));
-            }
-            if (activityLogAlertName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(activityLogAlertName));
-            }
+            Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
 
             using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.GetIfExists");
             scope.Start();

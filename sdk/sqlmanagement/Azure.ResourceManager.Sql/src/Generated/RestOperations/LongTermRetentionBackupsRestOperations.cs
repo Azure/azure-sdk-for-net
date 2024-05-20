@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Sql.Models;
@@ -35,6 +34,27 @@ namespace Azure.ResourceManager.Sql
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByLocationRequestUri(string subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionBackups", false);
+            if (onlyLatestPerDatabase != null)
+            {
+                uri.AppendQuery("onlyLatestPerDatabase", onlyLatestPerDatabase.Value, true);
+            }
+            if (databaseState != null)
+            {
+                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByLocationRequest(string subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
@@ -74,14 +94,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LongTermRetentionBackupListResult>> ListByLocationAsync(string subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListByLocationRequest(subscriptionId, locationName, onlyLatestPerDatabase, databaseState);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -109,14 +122,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LongTermRetentionBackupListResult> ListByLocation(string subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListByLocationRequest(subscriptionId, locationName, onlyLatestPerDatabase, databaseState);
             _pipeline.Send(message, cancellationToken);
@@ -132,6 +138,29 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByServerRequestUri(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionBackups", false);
+            if (onlyLatestPerDatabase != null)
+            {
+                uri.AppendQuery("onlyLatestPerDatabase", onlyLatestPerDatabase.Value, true);
+            }
+            if (databaseState != null)
+            {
+                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByServerRequest(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
@@ -174,22 +203,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LongTermRetentionBackupListResult>> ListByServerAsync(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
             using var message = CreateListByServerRequest(subscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -218,22 +233,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LongTermRetentionBackupListResult> ListByServer(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
             using var message = CreateListByServerRequest(subscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
             _pipeline.Send(message, cancellationToken);
@@ -249,6 +250,31 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByDatabaseRequestUri(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(longTermRetentionDatabaseName, true);
+            uri.AppendPath("/longTermRetentionBackups", false);
+            if (onlyLatestPerDatabase != null)
+            {
+                uri.AppendQuery("onlyLatestPerDatabase", onlyLatestPerDatabase.Value, true);
+            }
+            if (databaseState != null)
+            {
+                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByDatabaseRequest(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
@@ -294,30 +320,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LongTermRetentionBackupListResult>> ListByDatabaseAsync(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
 
             using var message = CreateListByDatabaseRequest(subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -347,30 +352,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LongTermRetentionBackupListResult> ListByDatabase(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
 
             using var message = CreateListByDatabaseRequest(subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState);
             _pipeline.Send(message, cancellationToken);
@@ -386,6 +370,24 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(longTermRetentionDatabaseName, true);
+            uri.AppendPath("/longTermRetentionBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName)
@@ -423,38 +425,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LongTermRetentionBackupData>> GetAsync(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var message = CreateGetRequest(subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -485,38 +459,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LongTermRetentionBackupData> Get(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var message = CreateGetRequest(subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
             _pipeline.Send(message, cancellationToken);
@@ -534,6 +480,24 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(longTermRetentionDatabaseName, true);
+            uri.AppendPath("/longTermRetentionBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName)
@@ -571,38 +535,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var message = CreateDeleteRequest(subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -627,38 +563,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var message = CreateDeleteRequest(subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
             _pipeline.Send(message, cancellationToken);
@@ -670,6 +578,25 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateChangeAccessTierRequestUri(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(longTermRetentionDatabaseName, true);
+            uri.AppendPath("/longTermRetentionBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendPath("/changeAccessTier", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateChangeAccessTierRequest(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters)
@@ -695,7 +622,7 @@ namespace Azure.ResourceManager.Sql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(changeLongTermRetentionBackupAccessTierParameters);
+            content.JsonWriter.WriteObjectValue(changeLongTermRetentionBackupAccessTierParameters, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -713,42 +640,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ChangeAccessTierAsync(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
-            if (changeLongTermRetentionBackupAccessTierParameters == null)
-            {
-                throw new ArgumentNullException(nameof(changeLongTermRetentionBackupAccessTierParameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            Argument.AssertNotNull(changeLongTermRetentionBackupAccessTierParameters, nameof(changeLongTermRetentionBackupAccessTierParameters));
 
             using var message = CreateChangeAccessTierRequest(subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, changeLongTermRetentionBackupAccessTierParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -774,42 +670,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ChangeAccessTier(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
-            if (changeLongTermRetentionBackupAccessTierParameters == null)
-            {
-                throw new ArgumentNullException(nameof(changeLongTermRetentionBackupAccessTierParameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            Argument.AssertNotNull(changeLongTermRetentionBackupAccessTierParameters, nameof(changeLongTermRetentionBackupAccessTierParameters));
 
             using var message = CreateChangeAccessTierRequest(subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, changeLongTermRetentionBackupAccessTierParameters);
             _pipeline.Send(message, cancellationToken);
@@ -821,6 +686,25 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCopyRequestUri(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(longTermRetentionDatabaseName, true);
+            uri.AppendPath("/longTermRetentionBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendPath("/copy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCopyRequest(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupContent content)
@@ -846,7 +730,7 @@ namespace Azure.ResourceManager.Sql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -864,42 +748,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CopyAsync(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCopyRequest(subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -925,42 +778,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Copy(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCopyRequest(subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, content);
             _pipeline.Send(message, cancellationToken);
@@ -972,6 +794,25 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(longTermRetentionDatabaseName, true);
+            uri.AppendPath("/longTermRetentionBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendPath("/update", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupContent content)
@@ -997,7 +838,7 @@ namespace Azure.ResourceManager.Sql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1015,42 +856,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateRequest(subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1076,42 +886,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateRequest(subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1123,6 +902,29 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupLocationRequestUri(string subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionBackups", false);
+            if (onlyLatestPerDatabase != null)
+            {
+                uri.AppendQuery("onlyLatestPerDatabase", onlyLatestPerDatabase.Value, true);
+            }
+            if (databaseState != null)
+            {
+                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupLocationRequest(string subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
@@ -1165,22 +967,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LongTermRetentionBackupListResult>> ListByResourceGroupLocationAsync(string subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupLocationRequest(subscriptionId, resourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1209,22 +997,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LongTermRetentionBackupListResult> ListByResourceGroupLocation(string subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupLocationRequest(subscriptionId, resourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
             _pipeline.Send(message, cancellationToken);
@@ -1240,6 +1014,31 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupServerRequestUri(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionBackups", false);
+            if (onlyLatestPerDatabase != null)
+            {
+                uri.AppendQuery("onlyLatestPerDatabase", onlyLatestPerDatabase.Value, true);
+            }
+            if (databaseState != null)
+            {
+                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupServerRequest(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
@@ -1285,30 +1084,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LongTermRetentionBackupListResult>> ListByResourceGroupServerAsync(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
             using var message = CreateListByResourceGroupServerRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1338,30 +1116,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LongTermRetentionBackupListResult> ListByResourceGroupServer(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
             using var message = CreateListByResourceGroupServerRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
             _pipeline.Send(message, cancellationToken);
@@ -1377,6 +1134,33 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupDatabaseRequestUri(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(longTermRetentionDatabaseName, true);
+            uri.AppendPath("/longTermRetentionBackups", false);
+            if (onlyLatestPerDatabase != null)
+            {
+                uri.AppendQuery("onlyLatestPerDatabase", onlyLatestPerDatabase.Value, true);
+            }
+            if (databaseState != null)
+            {
+                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupDatabaseRequest(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
@@ -1425,38 +1209,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LongTermRetentionBackupListResult>> ListByResourceGroupDatabaseAsync(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
 
             using var message = CreateListByResourceGroupDatabaseRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1487,38 +1243,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LongTermRetentionBackupListResult> ListByResourceGroupDatabase(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
 
             using var message = CreateListByResourceGroupDatabaseRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState);
             _pipeline.Send(message, cancellationToken);
@@ -1534,6 +1262,26 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(longTermRetentionDatabaseName, true);
+            uri.AppendPath("/longTermRetentionBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName)
@@ -1574,46 +1322,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LongTermRetentionBackupData>> GetByResourceGroupAsync(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var message = CreateGetByResourceGroupRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1645,46 +1358,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LongTermRetentionBackupData> GetByResourceGroup(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var message = CreateGetByResourceGroupRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
             _pipeline.Send(message, cancellationToken);
@@ -1702,6 +1380,26 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(longTermRetentionDatabaseName, true);
+            uri.AppendPath("/longTermRetentionBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName)
@@ -1742,46 +1440,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteByResourceGroupAsync(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var message = CreateDeleteByResourceGroupRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1807,46 +1470,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteByResourceGroup(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
             using var message = CreateDeleteByResourceGroupRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName);
             _pipeline.Send(message, cancellationToken);
@@ -1858,6 +1486,27 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateChangeAccessTierByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(longTermRetentionDatabaseName, true);
+            uri.AppendPath("/longTermRetentionBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendPath("/changeAccessTier", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateChangeAccessTierByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters)
@@ -1885,7 +1534,7 @@ namespace Azure.ResourceManager.Sql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(changeLongTermRetentionBackupAccessTierParameters);
+            content.JsonWriter.WriteObjectValue(changeLongTermRetentionBackupAccessTierParameters, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1904,50 +1553,12 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ChangeAccessTierByResourceGroupAsync(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
-            if (changeLongTermRetentionBackupAccessTierParameters == null)
-            {
-                throw new ArgumentNullException(nameof(changeLongTermRetentionBackupAccessTierParameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            Argument.AssertNotNull(changeLongTermRetentionBackupAccessTierParameters, nameof(changeLongTermRetentionBackupAccessTierParameters));
 
             using var message = CreateChangeAccessTierByResourceGroupRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, changeLongTermRetentionBackupAccessTierParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1974,50 +1585,12 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ChangeAccessTierByResourceGroup(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, ChangeLongTermRetentionBackupAccessTierParameters changeLongTermRetentionBackupAccessTierParameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
-            if (changeLongTermRetentionBackupAccessTierParameters == null)
-            {
-                throw new ArgumentNullException(nameof(changeLongTermRetentionBackupAccessTierParameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            Argument.AssertNotNull(changeLongTermRetentionBackupAccessTierParameters, nameof(changeLongTermRetentionBackupAccessTierParameters));
 
             using var message = CreateChangeAccessTierByResourceGroupRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, changeLongTermRetentionBackupAccessTierParameters);
             _pipeline.Send(message, cancellationToken);
@@ -2029,6 +1602,27 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCopyByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(longTermRetentionDatabaseName, true);
+            uri.AppendPath("/longTermRetentionBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendPath("/copy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCopyByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupContent content)
@@ -2056,7 +1650,7 @@ namespace Azure.ResourceManager.Sql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -2075,50 +1669,12 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CopyByResourceGroupAsync(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCopyByResourceGroupRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2145,50 +1701,12 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CopyByResourceGroup(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CopyLongTermRetentionBackupContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCopyByResourceGroupRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, content);
             _pipeline.Send(message, cancellationToken);
@@ -2200,6 +1718,27 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionServers/", false);
+            uri.AppendPath(longTermRetentionServerName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(longTermRetentionDatabaseName, true);
+            uri.AppendPath("/longTermRetentionBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendPath("/update", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupContent content)
@@ -2227,7 +1766,7 @@ namespace Azure.ResourceManager.Sql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -2246,50 +1785,12 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateByResourceGroupAsync(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateByResourceGroupRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2316,50 +1817,12 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateByResourceGroup(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, UpdateLongTermRetentionBackupContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
-            if (backupName == null)
-            {
-                throw new ArgumentNullException(nameof(backupName));
-            }
-            if (backupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
+            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUpdateByResourceGroupRequest(subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, content);
             _pipeline.Send(message, cancellationToken);
@@ -2371,6 +1834,14 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByLocationNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByLocationNextPageRequest(string nextLink, string subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
@@ -2398,18 +1869,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LongTermRetentionBackupListResult>> ListByLocationNextPageAsync(string nextLink, string subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListByLocationNextPageRequest(nextLink, subscriptionId, locationName, onlyLatestPerDatabase, databaseState);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2438,18 +1899,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LongTermRetentionBackupListResult> ListByLocationNextPage(string nextLink, string subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListByLocationNextPageRequest(nextLink, subscriptionId, locationName, onlyLatestPerDatabase, databaseState);
             _pipeline.Send(message, cancellationToken);
@@ -2465,6 +1916,14 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByServerNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByServerNextPageRequest(string nextLink, string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
@@ -2493,26 +1952,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LongTermRetentionBackupListResult>> ListByServerNextPageAsync(string nextLink, string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
             using var message = CreateListByServerNextPageRequest(nextLink, subscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2542,26 +1984,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LongTermRetentionBackupListResult> ListByServerNextPage(string nextLink, string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
             using var message = CreateListByServerNextPageRequest(nextLink, subscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
             _pipeline.Send(message, cancellationToken);
@@ -2577,6 +2002,14 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByDatabaseNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByDatabaseNextPageRequest(string nextLink, string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
@@ -2606,34 +2039,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LongTermRetentionBackupListResult>> ListByDatabaseNextPageAsync(string nextLink, string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
 
             using var message = CreateListByDatabaseNextPageRequest(nextLink, subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2664,34 +2073,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LongTermRetentionBackupListResult> ListByDatabaseNextPage(string nextLink, string subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
 
             using var message = CreateListByDatabaseNextPageRequest(nextLink, subscriptionId, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState);
             _pipeline.Send(message, cancellationToken);
@@ -2707,6 +2092,14 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupLocationNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupLocationNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
@@ -2735,26 +2128,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LongTermRetentionBackupListResult>> ListByResourceGroupLocationNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupLocationNextPageRequest(nextLink, subscriptionId, resourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2784,26 +2160,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LongTermRetentionBackupListResult> ListByResourceGroupLocationNextPage(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupLocationNextPageRequest(nextLink, subscriptionId, resourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
             _pipeline.Send(message, cancellationToken);
@@ -2819,6 +2178,14 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupServerNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupServerNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
@@ -2848,34 +2215,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LongTermRetentionBackupListResult>> ListByResourceGroupServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
             using var message = CreateListByResourceGroupServerNextPageRequest(nextLink, subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2906,34 +2249,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LongTermRetentionBackupListResult> ListByResourceGroupServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
             using var message = CreateListByResourceGroupServerNextPageRequest(nextLink, subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
             _pipeline.Send(message, cancellationToken);
@@ -2949,6 +2268,14 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupDatabaseNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupDatabaseNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
@@ -2979,42 +2306,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LongTermRetentionBackupListResult>> ListByResourceGroupDatabaseNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
 
             using var message = CreateListByResourceGroupDatabaseNextPageRequest(nextLink, subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -3046,42 +2342,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LongTermRetentionBackupListResult> ListByResourceGroupDatabaseNextPage(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (longTermRetentionServerName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionServerName));
-            }
-            if (longTermRetentionDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(longTermRetentionDatabaseName));
-            }
-            if (longTermRetentionDatabaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(longTermRetentionDatabaseName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
+            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
 
             using var message = CreateListByResourceGroupDatabaseNextPageRequest(nextLink, subscriptionId, resourceGroupName, locationName, longTermRetentionServerName, longTermRetentionDatabaseName, onlyLatestPerDatabase, databaseState);
             _pipeline.Send(message, cancellationToken);

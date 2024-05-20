@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ChangeAnalysis.Models;
@@ -35,6 +34,23 @@ namespace Azure.ResourceManager.ChangeAnalysis
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, true);
+            uri.AppendPath("/providers/Microsoft.ChangeAnalysis/resourceChanges", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("$startTime", startTime, "O", true);
+            uri.AppendQuery("$endTime", endTime, "O", true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken)
@@ -70,14 +86,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ChangeList>> ListAsync(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             using var message = CreateListRequest(resourceId, startTime, endTime, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -105,14 +114,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ChangeList> List(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             using var message = CreateListRequest(resourceId, startTime, endTime, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -128,6 +130,14 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken)
@@ -155,18 +165,8 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ChangeList>> ListNextPageAsync(string nextLink, string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             using var message = CreateListNextPageRequest(nextLink, resourceId, startTime, endTime, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -195,18 +195,8 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ChangeList> ListNextPage(string nextLink, string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             using var message = CreateListNextPageRequest(nextLink, resourceId, startTime, endTime, skipToken);
             _pipeline.Send(message, cancellationToken);

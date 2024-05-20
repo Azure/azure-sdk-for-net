@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -51,13 +50,11 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal AudioTranscription(string text)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
             Segments = new ChangeTrackingList<AudioTranscriptionSegment>();
+            Words = new ChangeTrackingList<AudioTranscriptionWord>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AudioTranscription"/>. </summary>
@@ -69,14 +66,16 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="duration"> The total duration of the audio processed to produce accompanying transcription information. </param>
         /// <param name="segments"> A collection of information about the timing, probabilities, and other detail of each processed audio segment. </param>
+        /// <param name="words"> A collection of information about the timing of each processed word. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AudioTranscription(string text, AudioTaskLabel? internalAudioTaskLabel, string language, TimeSpan? duration, IReadOnlyList<AudioTranscriptionSegment> segments, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AudioTranscription(string text, AudioTaskLabel? internalAudioTaskLabel, string language, TimeSpan? duration, IReadOnlyList<AudioTranscriptionSegment> segments, IReadOnlyList<AudioTranscriptionWord> words, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             InternalAudioTaskLabel = internalAudioTaskLabel;
             Language = language;
             Duration = duration;
             Segments = segments;
+            Words = words;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -96,5 +95,7 @@ namespace Azure.AI.OpenAI
         public TimeSpan? Duration { get; }
         /// <summary> A collection of information about the timing, probabilities, and other detail of each processed audio segment. </summary>
         public IReadOnlyList<AudioTranscriptionSegment> Segments { get; }
+        /// <summary> A collection of information about the timing of each processed word. </summary>
+        public IReadOnlyList<AudioTranscriptionWord> Words { get; }
     }
 }

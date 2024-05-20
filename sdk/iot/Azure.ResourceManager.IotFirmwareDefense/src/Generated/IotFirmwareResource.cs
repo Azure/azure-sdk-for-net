@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.IotFirmwareDefense.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
@@ -291,7 +289,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             try
             {
                 var response = await _iotFirmwareFirmwaresRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new IotFirmwareDefenseArmOperation(response);
+                var uri = _iotFirmwareFirmwaresRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotFirmwareDefenseArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -333,7 +333,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             try
             {
                 var response = _iotFirmwareFirmwaresRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new IotFirmwareDefenseArmOperation(response);
+                var uri = _iotFirmwareFirmwaresRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotFirmwareDefenseArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -371,10 +373,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<IotFirmwareResource>> UpdateAsync(IotFirmwarePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareResource.Update");
             scope.Start();
@@ -416,10 +415,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<IotFirmwareResource> Update(IotFirmwarePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _iotFirmwareFirmwaresClientDiagnostics.CreateScope("IotFirmwareResource.Update");
             scope.Start();

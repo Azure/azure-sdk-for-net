@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Sphere.Models;
@@ -33,8 +32,41 @@ namespace Azure.ResourceManager.Sphere
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01-preview";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByProductRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string productName, string filter, int? top, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/products/", false);
+            uri.AppendPath(productName, true);
+            uri.AppendPath("/deviceGroups", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByProductRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string filter, int? top, int? skip, int? maxpagesize)
@@ -90,38 +122,10 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DeviceGroupListResult>> ListByProductAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
-            if (catalogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
-            }
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
 
             using var message = CreateListByProductRequest(subscriptionId, resourceGroupName, catalogName, productName, filter, top, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -153,38 +157,10 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DeviceGroupListResult> ListByProduct(string subscriptionId, string resourceGroupName, string catalogName, string productName, string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
-            if (catalogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
-            }
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
 
             using var message = CreateListByProductRequest(subscriptionId, resourceGroupName, catalogName, productName, filter, top, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);
@@ -200,6 +176,24 @@ namespace Azure.ResourceManager.Sphere
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/products/", false);
+            uri.AppendPath(productName, true);
+            uri.AppendPath("/deviceGroups/", false);
+            uri.AppendPath(deviceGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName)
@@ -237,46 +231,11 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SphereDeviceGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
-            if (catalogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
-            }
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -307,46 +266,11 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SphereDeviceGroupData> Get(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
-            if (catalogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
-            }
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -364,6 +288,24 @@ namespace Azure.ResourceManager.Sphere
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, SphereDeviceGroupData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/products/", false);
+            uri.AppendPath(productName, true);
+            uri.AppendPath("/deviceGroups/", false);
+            uri.AppendPath(deviceGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, SphereDeviceGroupData data)
@@ -388,7 +330,7 @@ namespace Azure.ResourceManager.Sphere
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -406,50 +348,12 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, SphereDeviceGroupData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
-            if (catalogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
-            }
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -475,50 +379,12 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, SphereDeviceGroupData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
-            if (catalogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
-            }
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, data);
             _pipeline.Send(message, cancellationToken);
@@ -530,6 +396,132 @@ namespace Azure.ResourceManager.Sphere
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, SphereDeviceGroupPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/products/", false);
+            uri.AppendPath(productName, true);
+            uri.AppendPath("/deviceGroups/", false);
+            uri.AppendPath(deviceGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, SphereDeviceGroupPatch patch)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/products/", false);
+            uri.AppendPath(productName, true);
+            uri.AppendPath("/deviceGroups/", false);
+            uri.AppendPath(deviceGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Update a DeviceGroup. '.default' and '.unassigned' are system defined values and cannot be used for product or device group name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="catalogName"> Name of catalog. </param>
+        /// <param name="productName"> Name of product. </param>
+        /// <param name="deviceGroupName"> Name of device group. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, SphereDeviceGroupPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, patch);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Update a DeviceGroup. '.default' and '.unassigned' are system defined values and cannot be used for product or device group name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="catalogName"> Name of catalog. </param>
+        /// <param name="productName"> Name of product. </param>
+        /// <param name="deviceGroupName"> Name of device group. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, SphereDeviceGroupPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, patch);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/products/", false);
+            uri.AppendPath(productName, true);
+            uri.AppendPath("/deviceGroups/", false);
+            uri.AppendPath(deviceGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName)
@@ -567,46 +559,11 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
-            if (catalogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
-            }
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -632,46 +589,11 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
-            if (catalogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
-            }
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -686,11 +608,8 @@ namespace Azure.ResourceManager.Sphere
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, SphereDeviceGroupPatch patch)
+        internal RequestUriBuilder CreateClaimDevicesRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, ClaimSphereDevicesContent content)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -703,153 +622,9 @@ namespace Azure.ResourceManager.Sphere
             uri.AppendPath(productName, true);
             uri.AppendPath("/deviceGroups/", false);
             uri.AppendPath(deviceGroupName, true);
+            uri.AppendPath("/claimDevices", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Update a DeviceGroup. '.default' and '.unassigned' are system defined values and cannot be used for product or device group name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, SphereDeviceGroupPatch patch, CancellationToken cancellationToken = default)
-        {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
-            if (catalogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
-            }
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, patch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Update a DeviceGroup. '.default' and '.unassigned' are system defined values and cannot be used for product or device group name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="productName"> Name of product. </param>
-        /// <param name="deviceGroupName"> Name of device group. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/>, <paramref name="deviceGroupName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, SphereDeviceGroupPatch patch, CancellationToken cancellationToken = default)
-        {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
-            if (catalogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
-            }
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, patch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return uri;
         }
 
         internal HttpMessage CreateClaimDevicesRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, ClaimSphereDevicesContent content)
@@ -875,7 +650,7 @@ namespace Azure.ResourceManager.Sphere
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -893,50 +668,12 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ClaimDevicesAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, ClaimSphereDevicesContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
-            if (catalogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
-            }
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateClaimDevicesRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -961,50 +698,12 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ClaimDevices(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, ClaimSphereDevicesContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
-            if (catalogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
-            }
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateClaimDevicesRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1015,6 +714,25 @@ namespace Azure.ResourceManager.Sphere
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCountDevicesRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/products/", false);
+            uri.AppendPath(productName, true);
+            uri.AppendPath("/deviceGroups/", false);
+            uri.AppendPath(deviceGroupName, true);
+            uri.AppendPath("/countDevices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCountDevicesRequest(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName)
@@ -1051,48 +769,13 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CountDeviceResult>> CountDevicesAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<CountDevicesResult>> CountDevicesAsync(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
-            if (catalogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
-            }
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
             using var message = CreateCountDevicesRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1100,9 +783,9 @@ namespace Azure.ResourceManager.Sphere
             {
                 case 200:
                     {
-                        CountDeviceResult value = default;
+                        CountDevicesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CountDeviceResult.DeserializeCountDeviceResult(document.RootElement);
+                        value = CountDevicesResult.DeserializeCountDevicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1119,48 +802,13 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="productName"/> or <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CountDeviceResult> CountDevices(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, CancellationToken cancellationToken = default)
+        public Response<CountDevicesResult> CountDevices(string subscriptionId, string resourceGroupName, string catalogName, string productName, string deviceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
-            if (catalogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
-            }
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
-            if (deviceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceGroupName));
-            }
-            if (deviceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
+            Argument.AssertNotNullOrEmpty(deviceGroupName, nameof(deviceGroupName));
 
             using var message = CreateCountDevicesRequest(subscriptionId, resourceGroupName, catalogName, productName, deviceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -1168,14 +816,22 @@ namespace Azure.ResourceManager.Sphere
             {
                 case 200:
                     {
-                        CountDeviceResult value = default;
+                        CountDevicesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CountDeviceResult.DeserializeCountDeviceResult(document.RootElement);
+                        value = CountDevicesResult.DeserializeCountDevicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByProductNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, string productName, string filter, int? top, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByProductNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, string productName, string filter, int? top, int? skip, int? maxpagesize)
@@ -1207,42 +863,11 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DeviceGroupListResult>> ListByProductNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, string productName, string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
-            if (catalogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
-            }
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
 
             using var message = CreateListByProductNextPageRequest(nextLink, subscriptionId, resourceGroupName, catalogName, productName, filter, top, skip, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1275,42 +900,11 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="productName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DeviceGroupListResult> ListByProductNextPage(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, string productName, string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (catalogName == null)
-            {
-                throw new ArgumentNullException(nameof(catalogName));
-            }
-            if (catalogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(catalogName));
-            }
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
 
             using var message = CreateListByProductNextPageRequest(nextLink, subscriptionId, resourceGroupName, catalogName, productName, filter, top, skip, maxpagesize);
             _pipeline.Send(message, cancellationToken);

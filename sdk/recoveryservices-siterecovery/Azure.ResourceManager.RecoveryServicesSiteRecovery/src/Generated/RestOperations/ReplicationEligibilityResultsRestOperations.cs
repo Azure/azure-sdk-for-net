@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
+            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/replicationEligibilityResults", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string virtualMachineName)
@@ -67,30 +81,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ReplicationEligibilityResultListResult>> ListAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineName));
-            }
-            if (virtualMachineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, virtualMachineName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +110,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ReplicationEligibilityResultListResult> List(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineName));
-            }
-            if (virtualMachineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, virtualMachineName);
             _pipeline.Send(message, cancellationToken);
@@ -156,6 +128,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
+            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/replicationEligibilityResults/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string virtualMachineName)
@@ -188,30 +175,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ReplicationEligibilityResultData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineName));
-            }
-            if (virtualMachineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, virtualMachineName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -240,30 +206,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ReplicationEligibilityResultData> Get(string subscriptionId, string resourceGroupName, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (virtualMachineName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineName));
-            }
-            if (virtualMachineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, virtualMachineName);
             _pipeline.Send(message, cancellationToken);

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HciClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, HciClusterData data, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _hciClusterClustersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation<HciClusterResource>(Response.FromValue(new HciClusterResource(Client, response), response.GetRawResponse()));
+                var uri = _hciClusterClustersRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HciArmOperation<HciClusterResource>(Response.FromValue(new HciClusterResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HciClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, HciClusterData data, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _hciClusterClustersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken);
-                var operation = new HciArmOperation<HciClusterResource>(Response.FromValue(new HciClusterResource(Client, response), response.GetRawResponse()));
+                var uri = _hciClusterClustersRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HciArmOperation<HciClusterResource>(Response.FromValue(new HciClusterResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual async Task<Response<HciClusterResource>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<HciClusterResource> Get(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<bool> Exists(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual async Task<NullableResponse<HciClusterResource>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual NullableResponse<HciClusterResource> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterCollection.GetIfExists");
             scope.Start();

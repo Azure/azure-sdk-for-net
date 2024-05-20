@@ -8,23 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ElasticPoolActivity : IUtf8JsonSerializable, IJsonModel<ElasticPoolActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticPoolActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticPoolActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ElasticPoolActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticPoolActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticPoolActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticPoolActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticPoolActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ElasticPoolActivity DeserializeElasticPoolActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Sql.Models
             int? requestedDatabaseDtuCap = default;
             int? requestedDtuGuarantee = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -426,10 +426,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ElasticPoolActivity(
                 id,
                 name,
@@ -459,6 +459,442 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    builder.Append("  location: ");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    endTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    builder.Append("    endTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorCode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    errorCode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ErrorCode))
+                {
+                    builder.Append("    errorCode: ");
+                    builder.AppendLine($"{ErrorCode.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorMessage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    errorMessage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ErrorMessage))
+                {
+                    builder.Append("    errorMessage: ");
+                    if (ErrorMessage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ErrorMessage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ErrorMessage}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorSeverity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    errorSeverity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ErrorSeverity))
+                {
+                    builder.Append("    errorSeverity: ");
+                    builder.AppendLine($"{ErrorSeverity.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Operation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    operation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Operation))
+                {
+                    builder.Append("    operation: ");
+                    if (Operation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Operation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Operation}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    operationId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperationId))
+                {
+                    builder.Append("    operationId: ");
+                    builder.AppendLine($"'{OperationId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PercentComplete), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    percentComplete: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PercentComplete))
+                {
+                    builder.Append("    percentComplete: ");
+                    builder.AppendLine($"{PercentComplete.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedDatabaseDtuMax), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestedDatabaseDtuMax: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestedDatabaseDtuMax))
+                {
+                    builder.Append("    requestedDatabaseDtuMax: ");
+                    builder.AppendLine($"{RequestedDatabaseDtuMax.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedDatabaseDtuMin), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestedDatabaseDtuMin: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestedDatabaseDtuMin))
+                {
+                    builder.Append("    requestedDatabaseDtuMin: ");
+                    builder.AppendLine($"{RequestedDatabaseDtuMin.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedDtu), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestedDtu: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestedDtu))
+                {
+                    builder.Append("    requestedDtu: ");
+                    builder.AppendLine($"{RequestedDtu.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedElasticPoolName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestedElasticPoolName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestedElasticPoolName))
+                {
+                    builder.Append("    requestedElasticPoolName: ");
+                    if (RequestedElasticPoolName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RequestedElasticPoolName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RequestedElasticPoolName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedStorageLimitInGB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestedStorageLimitInGB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestedStorageLimitInGB))
+                {
+                    builder.Append("    requestedStorageLimitInGB: ");
+                    builder.AppendLine($"'{RequestedStorageLimitInGB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ElasticPoolName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    elasticPoolName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ElasticPoolName))
+                {
+                    builder.Append("    elasticPoolName: ");
+                    if (ElasticPoolName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ElasticPoolName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ElasticPoolName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serverName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerName))
+                {
+                    builder.Append("    serverName: ");
+                    if (ServerName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServerName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServerName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    startTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    builder.Append("    startTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("    state: ");
+                    if (State.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{State}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{State}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedStorageLimitInMB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestedStorageLimitInMB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestedStorageLimitInMB))
+                {
+                    builder.Append("    requestedStorageLimitInMB: ");
+                    builder.AppendLine($"{RequestedStorageLimitInMB.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedDatabaseDtuGuarantee), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestedDatabaseDtuGuarantee: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestedDatabaseDtuGuarantee))
+                {
+                    builder.Append("    requestedDatabaseDtuGuarantee: ");
+                    builder.AppendLine($"{RequestedDatabaseDtuGuarantee.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedDatabaseDtuCap), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestedDatabaseDtuCap: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestedDatabaseDtuCap))
+                {
+                    builder.Append("    requestedDatabaseDtuCap: ");
+                    builder.AppendLine($"{RequestedDatabaseDtuCap.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedDtuGuarantee), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestedDtuGuarantee: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestedDtuGuarantee))
+                {
+                    builder.Append("    requestedDtuGuarantee: ");
+                    builder.AppendLine($"{RequestedDtuGuarantee.Value}");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ElasticPoolActivity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolActivity>)this).GetFormatFromOptions(options) : options.Format;
@@ -467,8 +903,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticPoolActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticPoolActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -484,7 +922,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeElasticPoolActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticPoolActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticPoolActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

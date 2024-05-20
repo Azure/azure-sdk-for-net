@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ResourcesSku : IUtf8JsonSerializable, IJsonModel<ResourcesSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourcesSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourcesSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourcesSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourcesSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourcesSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourcesSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourcesSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourcesSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourcesSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ResourcesSku DeserializeResourcesSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Resources.Models
             string model = default;
             int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ResourcesSku(
                 name,
                 tier,
@@ -155,6 +155,151 @@ namespace Azure.ResourceManager.Resources.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Tier))
+                {
+                    builder.Append("  tier: ");
+                    if (Tier.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Tier}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Tier}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Size), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  size: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Size))
+                {
+                    builder.Append("  size: ");
+                    if (Size.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Size}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Size}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Family), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  family: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Family))
+                {
+                    builder.Append("  family: ");
+                    if (Family.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Family}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Family}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Model), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  model: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Model))
+                {
+                    builder.Append("  model: ");
+                    if (Model.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Model}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Model}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Capacity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  capacity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Capacity))
+                {
+                    builder.Append("  capacity: ");
+                    builder.AppendLine($"{Capacity.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ResourcesSku>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourcesSku>)this).GetFormatFromOptions(options) : options.Format;
@@ -163,8 +308,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourcesSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourcesSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +327,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeResourcesSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourcesSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourcesSku)} does not support reading '{options.Format}' format.");
             }
         }
 

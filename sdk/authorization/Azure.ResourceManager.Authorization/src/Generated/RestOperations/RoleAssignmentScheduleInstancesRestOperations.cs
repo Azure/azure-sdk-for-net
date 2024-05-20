@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Authorization.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.Authorization
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListForScopeRequestUri(string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleAssignmentScheduleInstances", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListForScopeRequest(string scope, string filter)
@@ -65,10 +79,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<RoleAssignmentScheduleInstanceListResult>> ListForScopeAsync(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListForScopeRequest(scope, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -93,10 +104,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<RoleAssignmentScheduleInstanceListResult> ListForScope(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListForScopeRequest(scope, filter);
             _pipeline.Send(message, cancellationToken);
@@ -112,6 +120,18 @@ namespace Azure.ResourceManager.Authorization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string roleAssignmentScheduleInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/", false);
+            uri.AppendPath(roleAssignmentScheduleInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string scope, string roleAssignmentScheduleInstanceName)
@@ -140,18 +160,8 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RoleAssignmentScheduleInstanceData>> GetAsync(string scope, string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleAssignmentScheduleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentScheduleInstanceName));
-            }
-            if (roleAssignmentScheduleInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentScheduleInstanceName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleInstanceName, nameof(roleAssignmentScheduleInstanceName));
 
             using var message = CreateGetRequest(scope, roleAssignmentScheduleInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -179,18 +189,8 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RoleAssignmentScheduleInstanceData> Get(string scope, string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleAssignmentScheduleInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentScheduleInstanceName));
-            }
-            if (roleAssignmentScheduleInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentScheduleInstanceName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleInstanceName, nameof(roleAssignmentScheduleInstanceName));
 
             using var message = CreateGetRequest(scope, roleAssignmentScheduleInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -208,6 +208,14 @@ namespace Azure.ResourceManager.Authorization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListForScopeNextPageRequestUri(string nextLink, string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListForScopeNextPageRequest(string nextLink, string scope, string filter)
@@ -232,14 +240,8 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<RoleAssignmentScheduleInstanceListResult>> ListForScopeNextPageAsync(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListForScopeNextPageRequest(nextLink, scope, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -265,14 +267,8 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<RoleAssignmentScheduleInstanceListResult> ListForScopeNextPage(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListForScopeNextPageRequest(nextLink, scope, filter);
             _pipeline.Send(message, cancellationToken);

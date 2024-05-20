@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataFactory.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.DataFactory
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2018-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByFactoryRequestUri(string subscriptionId, string resourceGroupName, string factoryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/managedVirtualNetworks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByFactoryRequest(string subscriptionId, string resourceGroupName, string factoryName)
@@ -67,30 +81,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataFactoryManagedVirtualNetworkListResult>> ListByFactoryAsync(string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var message = CreateListByFactoryRequest(subscriptionId, resourceGroupName, factoryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +110,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataFactoryManagedVirtualNetworkListResult> ListByFactory(string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var message = CreateListByFactoryRequest(subscriptionId, resourceGroupName, factoryName);
             _pipeline.Send(message, cancellationToken);
@@ -156,6 +128,22 @@ namespace Azure.ResourceManager.DataFactory
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, DataFactoryManagedVirtualNetworkData data, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/managedVirtualNetworks/", false);
+            uri.AppendPath(managedVirtualNetworkName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, DataFactoryManagedVirtualNetworkData data, string ifMatch)
@@ -182,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -200,42 +188,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataFactoryManagedVirtualNetworkData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, DataFactoryManagedVirtualNetworkData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
-            if (managedVirtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedVirtualNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, factoryName, managedVirtualNetworkName, data, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -265,42 +222,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataFactoryManagedVirtualNetworkData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, DataFactoryManagedVirtualNetworkData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
-            if (managedVirtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedVirtualNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, factoryName, managedVirtualNetworkName, data, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -316,6 +242,22 @@ namespace Azure.ResourceManager.DataFactory
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/managedVirtualNetworks/", false);
+            uri.AppendPath(managedVirtualNetworkName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string ifNoneMatch)
@@ -355,38 +297,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataFactoryManagedVirtualNetworkData>> GetAsync(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
-            if (managedVirtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedVirtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, factoryName, managedVirtualNetworkName, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -417,38 +331,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataFactoryManagedVirtualNetworkData> Get(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
-            if (managedVirtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedVirtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, factoryName, managedVirtualNetworkName, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
@@ -466,6 +352,14 @@ namespace Azure.ResourceManager.DataFactory
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByFactoryNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string factoryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByFactoryNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string factoryName)
@@ -492,34 +386,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataFactoryManagedVirtualNetworkListResult>> ListByFactoryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var message = CreateListByFactoryNextPageRequest(nextLink, subscriptionId, resourceGroupName, factoryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -547,34 +417,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataFactoryManagedVirtualNetworkListResult> ListByFactoryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var message = CreateListByFactoryNextPageRequest(nextLink, subscriptionId, resourceGroupName, factoryName);
             _pipeline.Send(message, cancellationToken);

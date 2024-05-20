@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PowerBIDedicated.Models;
@@ -35,6 +34,20 @@ namespace Azure.ResourceManager.PowerBIDedicated
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetDetailsRequestUri(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities/", false);
+            uri.AppendPath(dedicatedCapacityName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDetailsRequest(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
@@ -66,30 +79,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DedicatedCapacityData>> GetDetailsAsync(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
 
             using var message = CreateGetDetailsRequest(subscriptionId, resourceGroupName, dedicatedCapacityName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -118,30 +110,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DedicatedCapacityData> GetDetails(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
 
             using var message = CreateGetDetailsRequest(subscriptionId, resourceGroupName, dedicatedCapacityName);
             _pipeline.Send(message, cancellationToken);
@@ -159,6 +130,20 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, DedicatedCapacityData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities/", false);
+            uri.AppendPath(dedicatedCapacityName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, DedicatedCapacityData data)
@@ -179,7 +164,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -195,34 +180,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, DedicatedCapacityData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, dedicatedCapacityName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -246,34 +207,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, DedicatedCapacityData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, dedicatedCapacityName, data);
             _pipeline.Send(message, cancellationToken);
@@ -285,6 +222,20 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities/", false);
+            uri.AppendPath(dedicatedCapacityName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
@@ -316,30 +267,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, dedicatedCapacityName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -363,30 +293,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, dedicatedCapacityName);
             _pipeline.Send(message, cancellationToken);
@@ -399,6 +308,20 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, DedicatedCapacityPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities/", false);
+            uri.AppendPath(dedicatedCapacityName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, DedicatedCapacityPatch patch)
@@ -419,7 +342,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -435,34 +358,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, DedicatedCapacityPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, dedicatedCapacityName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -486,34 +385,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, DedicatedCapacityPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, dedicatedCapacityName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -525,6 +400,21 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSuspendRequestUri(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities/", false);
+            uri.AppendPath(dedicatedCapacityName, true);
+            uri.AppendPath("/suspend", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSuspendRequest(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
@@ -557,30 +447,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> SuspendAsync(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
 
             using var message = CreateSuspendRequest(subscriptionId, resourceGroupName, dedicatedCapacityName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -603,30 +472,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Suspend(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
 
             using var message = CreateSuspendRequest(subscriptionId, resourceGroupName, dedicatedCapacityName);
             _pipeline.Send(message, cancellationToken);
@@ -638,6 +486,21 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateResumeRequestUri(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities/", false);
+            uri.AppendPath(dedicatedCapacityName, true);
+            uri.AppendPath("/resume", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateResumeRequest(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
@@ -670,30 +533,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ResumeAsync(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
 
             using var message = CreateResumeRequest(subscriptionId, resourceGroupName, dedicatedCapacityName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -716,30 +558,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Resume(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
 
             using var message = CreateResumeRequest(subscriptionId, resourceGroupName, dedicatedCapacityName);
             _pipeline.Send(message, cancellationToken);
@@ -751,6 +572,19 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -780,22 +614,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DedicatedCapacities>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -821,22 +641,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DedicatedCapacities> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -852,6 +658,17 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId)
@@ -878,14 +695,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DedicatedCapacities>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -910,14 +720,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DedicatedCapacities> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -933,6 +736,17 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSkusRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSkusRequest(string subscriptionId)
@@ -959,14 +773,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SkuEnumerationForNewResourceResult>> ListSkusAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListSkusRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -991,14 +798,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SkuEnumerationForNewResourceResult> ListSkus(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListSkusRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -1014,6 +814,21 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSkusForCapacityRequestUri(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/capacities/", false);
+            uri.AppendPath(dedicatedCapacityName, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSkusForCapacityRequest(string subscriptionId, string resourceGroupName, string dedicatedCapacityName)
@@ -1046,30 +861,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SkuEnumerationForExistingResourceResult>> ListSkusForCapacityAsync(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
 
             using var message = CreateListSkusForCapacityRequest(subscriptionId, resourceGroupName, dedicatedCapacityName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1096,30 +890,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dedicatedCapacityName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SkuEnumerationForExistingResourceResult> ListSkusForCapacity(string subscriptionId, string resourceGroupName, string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
 
             using var message = CreateListSkusForCapacityRequest(subscriptionId, resourceGroupName, dedicatedCapacityName);
             _pipeline.Send(message, cancellationToken);
@@ -1135,6 +908,19 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, AzureLocation location, CheckCapacityNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.PowerBIDedicated/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, CheckCapacityNameAvailabilityContent content)
@@ -1154,7 +940,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1169,18 +955,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CheckCapacityNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1207,18 +983,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CheckCapacityNameAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);

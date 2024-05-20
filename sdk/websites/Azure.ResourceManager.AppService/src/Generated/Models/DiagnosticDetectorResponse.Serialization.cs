@@ -8,23 +8,24 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class DiagnosticDetectorResponse : IUtf8JsonSerializable, IJsonModel<DiagnosticDetectorResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticDetectorResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticDetectorResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiagnosticDetectorResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticDetectorResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticDetectorResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticDetectorResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DetectorDefinition))
             {
                 writer.WritePropertyName("detectorDefinition"u8);
-                writer.WriteObjectValue(DetectorDefinition);
+                writer.WriteObjectValue(DetectorDefinition, options);
             }
             if (Optional.IsCollectionDefined(Metrics))
             {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in AbnormalTimePeriods)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
-                        writer.WriteObjectValue(item0);
+                        writer.WriteObjectValue(item0, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ResponseMetaData))
             {
                 writer.WritePropertyName("responseMetaData"u8);
-                writer.WriteObjectValue(ResponseMetaData);
+                writer.WriteObjectValue(ResponseMetaData, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticDetectorResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticDetectorResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticDetectorResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DiagnosticDetectorResponse DeserializeDiagnosticDetectorResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.AppService.Models
             IList<IList<AppServiceNameValuePair>> data = default;
             DetectorMetadata responseMetaData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -318,10 +319,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DiagnosticDetectorResponse(
                 id,
                 name,
@@ -339,6 +340,262 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    startTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    builder.Append("    startTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    endTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    builder.Append("    endTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IssueDetected), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    issueDetected: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IssueDetected))
+                {
+                    builder.Append("    issueDetected: ");
+                    var boolValue = IssueDetected.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DetectorDefinition), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    detectorDefinition: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DetectorDefinition))
+                {
+                    builder.Append("    detectorDefinition: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DetectorDefinition, options, 4, false, "    detectorDefinition: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metrics), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    metrics: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Metrics))
+                {
+                    if (Metrics.Any())
+                    {
+                        builder.Append("    metrics: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Metrics)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    metrics: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AbnormalTimePeriods), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    abnormalTimePeriods: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AbnormalTimePeriods))
+                {
+                    if (AbnormalTimePeriods.Any())
+                    {
+                        builder.Append("    abnormalTimePeriods: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AbnormalTimePeriods)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    abnormalTimePeriods: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Data), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    data: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Data))
+                {
+                    if (Data.Any())
+                    {
+                        builder.Append("    data: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Data)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine("[");
+                            foreach (var item0 in item)
+                            {
+                                BicepSerializationHelpers.AppendChildObject(builder, item0, options, 6, true, "    data: ");
+                            }
+                            builder.AppendLine("    ]");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DataSource", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    responseMetaData: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      responseMetaData: {");
+                builder.Append("        dataSource: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ResponseMetaData))
+                {
+                    builder.Append("    responseMetaData: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ResponseMetaData, options, 4, false, "    responseMetaData: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DiagnosticDetectorResponse>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticDetectorResponse>)this).GetFormatFromOptions(options) : options.Format;
@@ -347,8 +604,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticDetectorResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticDetectorResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -364,7 +623,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeDiagnosticDetectorResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticDetectorResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticDetectorResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

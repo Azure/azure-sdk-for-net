@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataBox.Models
     [PersistableModelProxy(typeof(UnknownCopyLogDetails))]
     public partial class CopyLogDetails : IUtf8JsonSerializable, IJsonModel<CopyLogDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyLogDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyLogDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CopyLogDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CopyLogDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyLogDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyLogDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<CopyLogDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyLogDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyLogDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static CopyLogDetails DeserializeCopyLogDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CopyLogDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyLogDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeCopyLogDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CopyLogDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyLogDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

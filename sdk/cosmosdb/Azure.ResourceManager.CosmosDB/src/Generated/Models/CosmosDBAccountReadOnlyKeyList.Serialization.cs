@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CosmosDBAccountReadOnlyKeyList : IUtf8JsonSerializable, IJsonModel<CosmosDBAccountReadOnlyKeyList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBAccountReadOnlyKeyList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBAccountReadOnlyKeyList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBAccountReadOnlyKeyList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountReadOnlyKeyList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBAccountReadOnlyKeyList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBAccountReadOnlyKeyList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountReadOnlyKeyList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBAccountReadOnlyKeyList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBAccountReadOnlyKeyList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBAccountReadOnlyKeyList DeserializeCosmosDBAccountReadOnlyKeyList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string primaryReadonlyMasterKey = default;
             string secondaryReadonlyMasterKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryReadonlyMasterKey"u8))
@@ -93,11 +93,72 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CosmosDBAccountReadOnlyKeyList(primaryReadonlyMasterKey, secondaryReadonlyMasterKey, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryReadonlyMasterKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  primaryReadonlyMasterKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryReadonlyMasterKey))
+                {
+                    builder.Append("  primaryReadonlyMasterKey: ");
+                    if (PrimaryReadonlyMasterKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryReadonlyMasterKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryReadonlyMasterKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryReadonlyMasterKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secondaryReadonlyMasterKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondaryReadonlyMasterKey))
+                {
+                    builder.Append("  secondaryReadonlyMasterKey: ");
+                    if (SecondaryReadonlyMasterKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecondaryReadonlyMasterKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecondaryReadonlyMasterKey}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CosmosDBAccountReadOnlyKeyList>.Write(ModelReaderWriterOptions options)
@@ -108,8 +169,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBAccountReadOnlyKeyList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBAccountReadOnlyKeyList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +188,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCosmosDBAccountReadOnlyKeyList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBAccountReadOnlyKeyList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBAccountReadOnlyKeyList)} does not support reading '{options.Format}' format.");
             }
         }
 

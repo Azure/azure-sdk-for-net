@@ -74,20 +74,28 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets or sets the rx bytes. </summary>
+        [WirePath("rxBytes")]
         public long? RxBytes { get; set; }
         /// <summary> Gets or sets the rx packets. </summary>
+        [WirePath("rxPackets")]
         public long? RxPackets { get; set; }
         /// <summary> Gets or sets the rx errors. </summary>
+        [WirePath("rxErrors")]
         public long? RxErrors { get; set; }
         /// <summary> Gets or sets the rx dropped. </summary>
+        [WirePath("rxDropped")]
         public long? RxDropped { get; set; }
         /// <summary> Gets or sets the tx bytes. </summary>
+        [WirePath("txBytes")]
         public long? TxBytes { get; set; }
         /// <summary> Gets or sets the tx packets. </summary>
+        [WirePath("txPackets")]
         public long? TxPackets { get; set; }
         /// <summary> Gets or sets the tx errors. </summary>
+        [WirePath("txErrors")]
         public long? TxErrors { get; set; }
         /// <summary> Gets or sets the tx dropped. </summary>
+        [WirePath("txDropped")]
         public long? TxDropped { get; set; }
     }
 }

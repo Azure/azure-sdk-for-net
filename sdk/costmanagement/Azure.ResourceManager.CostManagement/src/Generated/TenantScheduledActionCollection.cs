@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CostManagement
@@ -81,25 +79,17 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<TenantScheduledActionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, ScheduledActionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _tenantScheduledActionScheduledActionsClientDiagnostics.CreateScope("TenantScheduledActionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _tenantScheduledActionScheduledActionsRestClient.CreateOrUpdateAsync(name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<TenantScheduledActionResource>(Response.FromValue(new TenantScheduledActionResource(Client, response), response.GetRawResponse()));
+                var uri = _tenantScheduledActionScheduledActionsRestClient.CreateCreateOrUpdateRequestUri(name, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation<TenantScheduledActionResource>(Response.FromValue(new TenantScheduledActionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<TenantScheduledActionResource> CreateOrUpdate(WaitUntil waitUntil, string name, ScheduledActionData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _tenantScheduledActionScheduledActionsClientDiagnostics.CreateScope("TenantScheduledActionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _tenantScheduledActionScheduledActionsRestClient.CreateOrUpdate(name, data, ifMatch, cancellationToken);
-                var operation = new CostManagementArmOperation<TenantScheduledActionResource>(Response.FromValue(new TenantScheduledActionResource(Client, response), response.GetRawResponse()));
+                var uri = _tenantScheduledActionScheduledActionsRestClient.CreateCreateOrUpdateRequestUri(name, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation<TenantScheduledActionResource>(Response.FromValue(new TenantScheduledActionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<TenantScheduledActionResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _tenantScheduledActionScheduledActionsClientDiagnostics.CreateScope("TenantScheduledActionCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<TenantScheduledActionResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _tenantScheduledActionScheduledActionsClientDiagnostics.CreateScope("TenantScheduledActionCollection.Get");
             scope.Start();
@@ -302,14 +270,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _tenantScheduledActionScheduledActionsClientDiagnostics.CreateScope("TenantScheduledActionCollection.Exists");
             scope.Start();
@@ -352,14 +313,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _tenantScheduledActionScheduledActionsClientDiagnostics.CreateScope("TenantScheduledActionCollection.Exists");
             scope.Start();
@@ -402,14 +356,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<NullableResponse<TenantScheduledActionResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _tenantScheduledActionScheduledActionsClientDiagnostics.CreateScope("TenantScheduledActionCollection.GetIfExists");
             scope.Start();
@@ -454,14 +401,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual NullableResponse<TenantScheduledActionResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _tenantScheduledActionScheduledActionsClientDiagnostics.CreateScope("TenantScheduledActionCollection.GetIfExists");
             scope.Start();

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class DevCenterEnvironmentTypeData : IUtf8JsonSerializable, IJsonModel<DevCenterEnvironmentTypeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterEnvironmentTypeData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterEnvironmentTypeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevCenterEnvironmentTypeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterEnvironmentTypeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterEnvironmentTypeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterEnvironmentTypeData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DevCenter
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterEnvironmentTypeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterEnvironmentTypeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterEnvironmentTypeData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static DevCenterEnvironmentTypeData DeserializeDevCenterEnvironmentTypeData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DevCenter
             SystemData systemData = default;
             DevCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevCenterEnvironmentTypeData(
                 id,
                 name,
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DevCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterEnvironmentTypeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterEnvironmentTypeData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DevCenter
                         return DeserializeDevCenterEnvironmentTypeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterEnvironmentTypeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterEnvironmentTypeData)} does not support reading '{options.Format}' format.");
             }
         }
 

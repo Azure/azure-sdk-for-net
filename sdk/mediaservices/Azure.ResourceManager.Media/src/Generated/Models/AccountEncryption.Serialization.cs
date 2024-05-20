@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
     public partial class AccountEncryption : IUtf8JsonSerializable, IJsonModel<AccountEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountEncryption>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountEncryption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AccountEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AccountEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccountEncryption)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,12 +31,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                writer.WriteObjectValue(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue(Identity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<AccountEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccountEncryption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static AccountEncryption DeserializeAccountEncryption(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
             ResourceIdentity identity = default;
             string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -120,10 +119,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AccountEncryption(type, keyVaultProperties, identity, status, serializedAdditionalRawData);
         }
 
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AccountEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccountEncryption)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeAccountEncryption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccountEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccountEncryption)} does not support reading '{options.Format}' format.");
             }
         }
 

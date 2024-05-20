@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AlertsManagement
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentNullException"> <paramref name="alertProcessingRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AlertProcessingRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string alertProcessingRuleName, AlertProcessingRuleData data, CancellationToken cancellationToken = default)
         {
-            if (alertProcessingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertProcessingRuleName));
-            }
-            if (alertProcessingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertProcessingRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(alertProcessingRuleName, nameof(alertProcessingRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _alertProcessingRuleClientDiagnostics.CreateScope("AlertProcessingRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _alertProcessingRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AlertsManagementArmOperation<AlertProcessingRuleResource>(Response.FromValue(new AlertProcessingRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _alertProcessingRuleRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AlertsManagementArmOperation<AlertProcessingRuleResource>(Response.FromValue(new AlertProcessingRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentNullException"> <paramref name="alertProcessingRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AlertProcessingRuleResource> CreateOrUpdate(WaitUntil waitUntil, string alertProcessingRuleName, AlertProcessingRuleData data, CancellationToken cancellationToken = default)
         {
-            if (alertProcessingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertProcessingRuleName));
-            }
-            if (alertProcessingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertProcessingRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(alertProcessingRuleName, nameof(alertProcessingRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _alertProcessingRuleClientDiagnostics.CreateScope("AlertProcessingRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _alertProcessingRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, data, cancellationToken);
-                var operation = new AlertsManagementArmOperation<AlertProcessingRuleResource>(Response.FromValue(new AlertProcessingRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _alertProcessingRuleRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AlertsManagementArmOperation<AlertProcessingRuleResource>(Response.FromValue(new AlertProcessingRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentNullException"> <paramref name="alertProcessingRuleName"/> is null. </exception>
         public virtual async Task<Response<AlertProcessingRuleResource>> GetAsync(string alertProcessingRuleName, CancellationToken cancellationToken = default)
         {
-            if (alertProcessingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertProcessingRuleName));
-            }
-            if (alertProcessingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertProcessingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(alertProcessingRuleName, nameof(alertProcessingRuleName));
 
             using var scope = _alertProcessingRuleClientDiagnostics.CreateScope("AlertProcessingRuleCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentNullException"> <paramref name="alertProcessingRuleName"/> is null. </exception>
         public virtual Response<AlertProcessingRuleResource> Get(string alertProcessingRuleName, CancellationToken cancellationToken = default)
         {
-            if (alertProcessingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertProcessingRuleName));
-            }
-            if (alertProcessingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertProcessingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(alertProcessingRuleName, nameof(alertProcessingRuleName));
 
             using var scope = _alertProcessingRuleClientDiagnostics.CreateScope("AlertProcessingRuleCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentNullException"> <paramref name="alertProcessingRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string alertProcessingRuleName, CancellationToken cancellationToken = default)
         {
-            if (alertProcessingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertProcessingRuleName));
-            }
-            if (alertProcessingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertProcessingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(alertProcessingRuleName, nameof(alertProcessingRuleName));
 
             using var scope = _alertProcessingRuleClientDiagnostics.CreateScope("AlertProcessingRuleCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentNullException"> <paramref name="alertProcessingRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string alertProcessingRuleName, CancellationToken cancellationToken = default)
         {
-            if (alertProcessingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertProcessingRuleName));
-            }
-            if (alertProcessingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertProcessingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(alertProcessingRuleName, nameof(alertProcessingRuleName));
 
             using var scope = _alertProcessingRuleClientDiagnostics.CreateScope("AlertProcessingRuleCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentNullException"> <paramref name="alertProcessingRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<AlertProcessingRuleResource>> GetIfExistsAsync(string alertProcessingRuleName, CancellationToken cancellationToken = default)
         {
-            if (alertProcessingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertProcessingRuleName));
-            }
-            if (alertProcessingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertProcessingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(alertProcessingRuleName, nameof(alertProcessingRuleName));
 
             using var scope = _alertProcessingRuleClientDiagnostics.CreateScope("AlertProcessingRuleCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentNullException"> <paramref name="alertProcessingRuleName"/> is null. </exception>
         public virtual NullableResponse<AlertProcessingRuleResource> GetIfExists(string alertProcessingRuleName, CancellationToken cancellationToken = default)
         {
-            if (alertProcessingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertProcessingRuleName));
-            }
-            if (alertProcessingRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertProcessingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(alertProcessingRuleName, nameof(alertProcessingRuleName));
 
             using var scope = _alertProcessingRuleClientDiagnostics.CreateScope("AlertProcessingRuleCollection.GetIfExists");
             scope.Start();

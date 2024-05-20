@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MixedReality
@@ -83,25 +81,17 @@ namespace Azure.ResourceManager.MixedReality
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SpatialAnchorsAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accountName, SpatialAnchorsAccountData data, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _spatialAnchorsAccountClientDiagnostics.CreateScope("SpatialAnchorsAccountCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _spatialAnchorsAccountRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MixedRealityArmOperation<SpatialAnchorsAccountResource>(Response.FromValue(new SpatialAnchorsAccountResource(Client, response), response.GetRawResponse()));
+                var uri = _spatialAnchorsAccountRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, accountName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MixedRealityArmOperation<SpatialAnchorsAccountResource>(Response.FromValue(new SpatialAnchorsAccountResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,25 +132,17 @@ namespace Azure.ResourceManager.MixedReality
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SpatialAnchorsAccountResource> CreateOrUpdate(WaitUntil waitUntil, string accountName, SpatialAnchorsAccountData data, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _spatialAnchorsAccountClientDiagnostics.CreateScope("SpatialAnchorsAccountCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _spatialAnchorsAccountRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken);
-                var operation = new MixedRealityArmOperation<SpatialAnchorsAccountResource>(Response.FromValue(new SpatialAnchorsAccountResource(Client, response), response.GetRawResponse()));
+                var uri = _spatialAnchorsAccountRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, accountName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MixedRealityArmOperation<SpatialAnchorsAccountResource>(Response.FromValue(new SpatialAnchorsAccountResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -199,14 +181,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual async Task<Response<SpatialAnchorsAccountResource>> GetAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _spatialAnchorsAccountClientDiagnostics.CreateScope("SpatialAnchorsAccountCollection.Get");
             scope.Start();
@@ -251,14 +226,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual Response<SpatialAnchorsAccountResource> Get(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _spatialAnchorsAccountClientDiagnostics.CreateScope("SpatialAnchorsAccountCollection.Get");
             scope.Start();
@@ -363,14 +331,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _spatialAnchorsAccountClientDiagnostics.CreateScope("SpatialAnchorsAccountCollection.Exists");
             scope.Start();
@@ -413,14 +374,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual Response<bool> Exists(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _spatialAnchorsAccountClientDiagnostics.CreateScope("SpatialAnchorsAccountCollection.Exists");
             scope.Start();
@@ -463,14 +417,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual async Task<NullableResponse<SpatialAnchorsAccountResource>> GetIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _spatialAnchorsAccountClientDiagnostics.CreateScope("SpatialAnchorsAccountCollection.GetIfExists");
             scope.Start();
@@ -515,14 +462,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual NullableResponse<SpatialAnchorsAccountResource> GetIfExists(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _spatialAnchorsAccountClientDiagnostics.CreateScope("SpatialAnchorsAccountCollection.GetIfExists");
             scope.Start();

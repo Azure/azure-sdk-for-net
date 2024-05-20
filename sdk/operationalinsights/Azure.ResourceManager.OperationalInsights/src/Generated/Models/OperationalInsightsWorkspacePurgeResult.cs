@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="operationStringId"/> is null. </exception>
         internal OperationalInsightsWorkspacePurgeResult(string operationStringId)
         {
-            if (operationStringId == null)
-            {
-                throw new ArgumentNullException(nameof(operationStringId));
-            }
+            Argument.AssertNotNull(operationStringId, nameof(operationStringId));
 
             OperationStringId = operationStringId;
         }
@@ -73,6 +70,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Id to use when querying for status for a particular purge operation. </summary>
+        [WirePath("operationId")]
         public string OperationStringId { get; }
     }
 }

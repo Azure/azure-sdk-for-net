@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlVmGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sqlVmGroupName, SqlVmGroupData data, CancellationToken cancellationToken = default)
         {
-            if (sqlVmGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmGroupName));
-            }
-            if (sqlVmGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlVmGroupSqlVmGroupsClientDiagnostics.CreateScope("SqlVmGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlVmGroupResource> CreateOrUpdate(WaitUntil waitUntil, string sqlVmGroupName, SqlVmGroupData data, CancellationToken cancellationToken = default)
         {
-            if (sqlVmGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmGroupName));
-            }
-            if (sqlVmGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlVmGroupSqlVmGroupsClientDiagnostics.CreateScope("SqlVmGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/> is null. </exception>
         public virtual async Task<Response<SqlVmGroupResource>> GetAsync(string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            if (sqlVmGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmGroupName));
-            }
-            if (sqlVmGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
 
             using var scope = _sqlVmGroupSqlVmGroupsClientDiagnostics.CreateScope("SqlVmGroupCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/> is null. </exception>
         public virtual Response<SqlVmGroupResource> Get(string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            if (sqlVmGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmGroupName));
-            }
-            if (sqlVmGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
 
             using var scope = _sqlVmGroupSqlVmGroupsClientDiagnostics.CreateScope("SqlVmGroupCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            if (sqlVmGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmGroupName));
-            }
-            if (sqlVmGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
 
             using var scope = _sqlVmGroupSqlVmGroupsClientDiagnostics.CreateScope("SqlVmGroupCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            if (sqlVmGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmGroupName));
-            }
-            if (sqlVmGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
 
             using var scope = _sqlVmGroupSqlVmGroupsClientDiagnostics.CreateScope("SqlVmGroupCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlVmGroupResource>> GetIfExistsAsync(string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            if (sqlVmGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmGroupName));
-            }
-            if (sqlVmGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
 
             using var scope = _sqlVmGroupSqlVmGroupsClientDiagnostics.CreateScope("SqlVmGroupCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/> is null. </exception>
         public virtual NullableResponse<SqlVmGroupResource> GetIfExists(string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            if (sqlVmGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmGroupName));
-            }
-            if (sqlVmGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
 
             using var scope = _sqlVmGroupSqlVmGroupsClientDiagnostics.CreateScope("SqlVmGroupCollection.GetIfExists");
             scope.Start();

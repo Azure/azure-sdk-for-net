@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Reservations.Models;
@@ -35,6 +34,49 @@ namespace Azure.ResourceManager.Reservations
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetCatalogRequestUri(string subscriptionId, string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, string filter, float? skip, float? take)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Capacity/catalogs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (reservedResourceType != null)
+            {
+                uri.AppendQuery("reservedResourceType", reservedResourceType, true);
+            }
+            if (location != null)
+            {
+                uri.AppendQuery("location", location.Value, true);
+            }
+            if (publisherId != null)
+            {
+                uri.AppendQuery("publisherId", publisherId, true);
+            }
+            if (offerId != null)
+            {
+                uri.AppendQuery("offerId", offerId, true);
+            }
+            if (planId != null)
+            {
+                uri.AppendQuery("planId", planId, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (take != null)
+            {
+                uri.AppendQuery("$take", take.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetCatalogRequest(string subscriptionId, string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, string filter, float? skip, float? take)
@@ -101,14 +143,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CatalogsResult>> GetCatalogAsync(string subscriptionId, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, string filter = null, float? skip = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateGetCatalogRequest(subscriptionId, reservedResourceType, location, publisherId, offerId, planId, filter, skip, take);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -141,14 +176,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CatalogsResult> GetCatalog(string subscriptionId, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, string filter = null, float? skip = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateGetCatalogRequest(subscriptionId, reservedResourceType, location, publisherId, offerId, planId, filter, skip, take);
             _pipeline.Send(message, cancellationToken);
@@ -164,6 +192,17 @@ namespace Azure.ResourceManager.Reservations
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAppliedReservationListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Capacity/appliedReservations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAppliedReservationListRequest(string subscriptionId)
@@ -190,14 +229,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppliedReservationData>> GetAppliedReservationListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateGetAppliedReservationListRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -222,14 +254,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppliedReservationData> GetAppliedReservationList(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateGetAppliedReservationListRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -245,6 +270,14 @@ namespace Azure.ResourceManager.Reservations
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetCatalogNextPageRequestUri(string nextLink, string subscriptionId, string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, string filter, float? skip, float? take)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetCatalogNextPageRequest(string nextLink, string subscriptionId, string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, string filter, float? skip, float? take)
@@ -277,18 +310,8 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CatalogsResult>> GetCatalogNextPageAsync(string nextLink, string subscriptionId, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, string filter = null, float? skip = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateGetCatalogNextPageRequest(nextLink, subscriptionId, reservedResourceType, location, publisherId, offerId, planId, filter, skip, take);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -322,18 +345,8 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CatalogsResult> GetCatalogNextPage(string nextLink, string subscriptionId, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, string filter = null, float? skip = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateGetCatalogNextPageRequest(nextLink, subscriptionId, reservedResourceType, location, publisherId, offerId, planId, filter, skip, take);
             _pipeline.Send(message, cancellationToken);

@@ -8,22 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class PerfMonResponseInfo : IUtf8JsonSerializable, IJsonModel<PerfMonResponseInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PerfMonResponseInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PerfMonResponseInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PerfMonResponseInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PerfMonResponseInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PerfMonResponseInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PerfMonResponseInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteObjectValue(Data);
+                writer.WriteObjectValue(Data, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<PerfMonResponseInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PerfMonResponseInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PerfMonResponseInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static PerfMonResponseInfo DeserializePerfMonResponseInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
             string message = default;
             PerfMonSet data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -108,11 +108,87 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PerfMonResponseInfo(code, message, data, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Code), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  code: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Code))
+                {
+                    builder.Append("  code: ");
+                    if (Code.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Code}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Code}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Message), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  message: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    builder.Append("  message: ");
+                    if (Message.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Message}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Message}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Data), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  data: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Data))
+                {
+                    builder.Append("  data: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Data, options, 2, false, "  data: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<PerfMonResponseInfo>.Write(ModelReaderWriterOptions options)
@@ -123,8 +199,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PerfMonResponseInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PerfMonResponseInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +218,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializePerfMonResponseInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PerfMonResponseInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PerfMonResponseInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

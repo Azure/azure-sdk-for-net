@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ArcSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string arcSettingName, ArcSettingData data, CancellationToken cancellationToken = default)
         {
-            if (arcSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(arcSettingName));
-            }
-            if (arcSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _arcSettingRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation<ArcSettingResource>(Response.FromValue(new ArcSettingResource(Client, response), response.GetRawResponse()));
+                var uri = _arcSettingRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HciArmOperation<ArcSettingResource>(Response.FromValue(new ArcSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ArcSettingResource> CreateOrUpdate(WaitUntil waitUntil, string arcSettingName, ArcSettingData data, CancellationToken cancellationToken = default)
         {
-            if (arcSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(arcSettingName));
-            }
-            if (arcSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _arcSettingRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, data, cancellationToken);
-                var operation = new HciArmOperation<ArcSettingResource>(Response.FromValue(new ArcSettingResource(Client, response), response.GetRawResponse()));
+                var uri = _arcSettingRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HciArmOperation<ArcSettingResource>(Response.FromValue(new ArcSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
         public virtual async Task<Response<ArcSettingResource>> GetAsync(string arcSettingName, CancellationToken cancellationToken = default)
         {
-            if (arcSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(arcSettingName));
-            }
-            if (arcSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
 
             using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
         public virtual Response<ArcSettingResource> Get(string arcSettingName, CancellationToken cancellationToken = default)
         {
-            if (arcSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(arcSettingName));
-            }
-            if (arcSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
 
             using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingCollection.Get");
             scope.Start();
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string arcSettingName, CancellationToken cancellationToken = default)
         {
-            if (arcSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(arcSettingName));
-            }
-            if (arcSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
 
             using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingCollection.Exists");
             scope.Start();
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
         public virtual Response<bool> Exists(string arcSettingName, CancellationToken cancellationToken = default)
         {
-            if (arcSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(arcSettingName));
-            }
-            if (arcSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
 
             using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingCollection.Exists");
             scope.Start();
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
         public virtual async Task<NullableResponse<ArcSettingResource>> GetIfExistsAsync(string arcSettingName, CancellationToken cancellationToken = default)
         {
-            if (arcSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(arcSettingName));
-            }
-            if (arcSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
 
             using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingCollection.GetIfExists");
             scope.Start();
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
         public virtual NullableResponse<ArcSettingResource> GetIfExists(string arcSettingName, CancellationToken cancellationToken = default)
         {
-            if (arcSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(arcSettingName));
-            }
-            if (arcSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
 
             using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingCollection.GetIfExists");
             scope.Start();

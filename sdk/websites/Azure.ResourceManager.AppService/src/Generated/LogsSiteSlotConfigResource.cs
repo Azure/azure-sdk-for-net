@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -197,17 +195,16 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LogsSiteSlotConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteLogsConfigData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _logsSiteSlotConfigWebAppsRestClient.UpdateDiagnosticLogsConfigSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<LogsSiteSlotConfigResource>(Response.FromValue(new LogsSiteSlotConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _logsSiteSlotConfigWebAppsRestClient.CreateUpdateDiagnosticLogsConfigSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<LogsSiteSlotConfigResource>(Response.FromValue(new LogsSiteSlotConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -246,17 +243,16 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LogsSiteSlotConfigResource> CreateOrUpdate(WaitUntil waitUntil, SiteLogsConfigData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _logsSiteSlotConfigWebAppsRestClient.UpdateDiagnosticLogsConfigSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<LogsSiteSlotConfigResource>(Response.FromValue(new LogsSiteSlotConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _logsSiteSlotConfigWebAppsRestClient.CreateUpdateDiagnosticLogsConfigSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<LogsSiteSlotConfigResource>(Response.FromValue(new LogsSiteSlotConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.DataBoxEdge
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, string expand)
@@ -66,14 +80,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataBoxEdgeDeviceList>> ListBySubscriptionAsync(string subscriptionId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionRequest(subscriptionId, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -99,14 +106,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataBoxEdgeDeviceList> ListBySubscription(string subscriptionId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionRequest(subscriptionId, expand);
             _pipeline.Send(message, cancellationToken);
@@ -122,6 +122,23 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, string expand)
@@ -156,22 +173,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataBoxEdgeDeviceList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -198,22 +201,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataBoxEdgeDeviceList> ListByResourceGroup(string subscriptionId, string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -229,6 +218,20 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -260,30 +263,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataBoxEdgeDeviceData>> GetAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, deviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -312,30 +294,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataBoxEdgeDeviceData> Get(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, deviceName);
             _pipeline.Send(message, cancellationToken);
@@ -353,6 +314,20 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceData data)
@@ -373,7 +348,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -389,34 +364,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataBoxEdgeDeviceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, deviceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -444,34 +395,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataBoxEdgeDeviceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, deviceName, data);
             _pipeline.Send(message, cancellationToken);
@@ -487,6 +414,20 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -518,30 +459,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, deviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -565,30 +485,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, deviceName);
             _pipeline.Send(message, cancellationToken);
@@ -601,6 +500,20 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDevicePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDevicePatch patch)
@@ -621,7 +534,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -637,34 +550,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataBoxEdgeDeviceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDevicePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, deviceName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -692,34 +581,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataBoxEdgeDeviceData> Update(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDevicePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, deviceName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -735,6 +600,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDownloadUpdatesRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/downloadUpdates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDownloadUpdatesRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -767,30 +647,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DownloadUpdatesAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateDownloadUpdatesRequest(subscriptionId, resourceGroupName, deviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -813,30 +672,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DownloadUpdates(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateDownloadUpdatesRequest(subscriptionId, resourceGroupName, deviceName);
             _pipeline.Send(message, cancellationToken);
@@ -848,6 +686,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGenerateCertificateRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/generateCertificate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGenerateCertificateRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -880,30 +733,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GenerateCertResult>> GenerateCertificateAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateGenerateCertificateRequest(subscriptionId, resourceGroupName, deviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -930,30 +762,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GenerateCertResult> GenerateCertificate(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateGenerateCertificateRequest(subscriptionId, resourceGroupName, deviceName);
             _pipeline.Send(message, cancellationToken);
@@ -969,6 +780,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetExtendedInformationRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/getExtendedInformation", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetExtendedInformationRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -1001,30 +827,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataBoxEdgeDeviceExtendedInfo>> GetExtendedInformationAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateGetExtendedInformationRequest(subscriptionId, resourceGroupName, deviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1051,30 +856,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataBoxEdgeDeviceExtendedInfo> GetExtendedInformation(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateGetExtendedInformationRequest(subscriptionId, resourceGroupName, deviceName);
             _pipeline.Send(message, cancellationToken);
@@ -1090,6 +874,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateInstallUpdatesRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/installUpdates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateInstallUpdatesRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -1122,30 +921,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> InstallUpdatesAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateInstallUpdatesRequest(subscriptionId, resourceGroupName, deviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1168,30 +946,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response InstallUpdates(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateInstallUpdatesRequest(subscriptionId, resourceGroupName, deviceName);
             _pipeline.Send(message, cancellationToken);
@@ -1203,6 +960,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetNetworkSettingsRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/networkSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetNetworkSettingsRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -1235,30 +1007,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataBoxEdgeDeviceNetworkSettings>> GetNetworkSettingsAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateGetNetworkSettingsRequest(subscriptionId, resourceGroupName, deviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1285,30 +1036,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataBoxEdgeDeviceNetworkSettings> GetNetworkSettings(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateGetNetworkSettingsRequest(subscriptionId, resourceGroupName, deviceName);
             _pipeline.Send(message, cancellationToken);
@@ -1324,6 +1054,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateScanForUpdatesRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/scanForUpdates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateScanForUpdatesRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -1356,30 +1101,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ScanForUpdatesAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateScanForUpdatesRequest(subscriptionId, resourceGroupName, deviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1402,30 +1126,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ScanForUpdates(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateScanForUpdatesRequest(subscriptionId, resourceGroupName, deviceName);
             _pipeline.Send(message, cancellationToken);
@@ -1437,6 +1140,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateSecuritySettingsRequestUri(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings securitySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/securitySettings/default/update", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateSecuritySettingsRequest(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings securitySettings)
@@ -1458,7 +1176,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(securitySettings);
+            content.JsonWriter.WriteObjectValue(securitySettings, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1474,34 +1192,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateSecuritySettingsAsync(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings securitySettings, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (securitySettings == null)
-            {
-                throw new ArgumentNullException(nameof(securitySettings));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNull(securitySettings, nameof(securitySettings));
 
             using var message = CreateCreateOrUpdateSecuritySettingsRequest(subscriptionId, resourceGroupName, deviceName, securitySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1525,34 +1219,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdateSecuritySettings(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeSecuritySettings securitySettings, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (securitySettings == null)
-            {
-                throw new ArgumentNullException(nameof(securitySettings));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNull(securitySettings, nameof(securitySettings));
 
             using var message = CreateCreateOrUpdateSecuritySettingsRequest(subscriptionId, resourceGroupName, deviceName, securitySettings);
             _pipeline.Send(message, cancellationToken);
@@ -1564,6 +1234,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateExtendedInformationRequestUri(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceExtendedInfoPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/updateExtendedInformation", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateExtendedInformationRequest(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceExtendedInfoPatch patch)
@@ -1585,7 +1270,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1601,34 +1286,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataBoxEdgeDeviceExtendedInfo>> UpdateExtendedInformationAsync(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceExtendedInfoPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateExtendedInformationRequest(subscriptionId, resourceGroupName, deviceName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1656,34 +1317,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataBoxEdgeDeviceExtendedInfo> UpdateExtendedInformation(string subscriptionId, string resourceGroupName, string deviceName, DataBoxEdgeDeviceExtendedInfoPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateExtendedInformationRequest(subscriptionId, resourceGroupName, deviceName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -1699,6 +1336,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUpdateSummaryRequestUri(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/updateSummary/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetUpdateSummaryRequest(string subscriptionId, string resourceGroupName, string deviceName)
@@ -1731,30 +1383,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataBoxEdgeDeviceUpdateSummary>> GetUpdateSummaryAsync(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateGetUpdateSummaryRequest(subscriptionId, resourceGroupName, deviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1781,30 +1412,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataBoxEdgeDeviceUpdateSummary> GetUpdateSummary(string subscriptionId, string resourceGroupName, string deviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
 
             using var message = CreateGetUpdateSummaryRequest(subscriptionId, resourceGroupName, deviceName);
             _pipeline.Send(message, cancellationToken);
@@ -1820,6 +1430,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUploadCertificateRequestUri(string subscriptionId, string resourceGroupName, string deviceName, UploadCertificateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/", false);
+            uri.AppendPath(deviceName, true);
+            uri.AppendPath("/uploadCertificate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUploadCertificateRequest(string subscriptionId, string resourceGroupName, string deviceName, UploadCertificateContent content)
@@ -1841,7 +1466,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1857,34 +1482,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<UploadCertificateResponse>> UploadCertificateAsync(string subscriptionId, string resourceGroupName, string deviceName, UploadCertificateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUploadCertificateRequest(subscriptionId, resourceGroupName, deviceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1912,34 +1513,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<UploadCertificateResponse> UploadCertificate(string subscriptionId, string resourceGroupName, string deviceName, UploadCertificateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (deviceName == null)
-            {
-                throw new ArgumentNullException(nameof(deviceName));
-            }
-            if (deviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(deviceName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateUploadCertificateRequest(subscriptionId, resourceGroupName, deviceName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1955,6 +1532,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, string expand)
@@ -1980,18 +1565,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataBoxEdgeDeviceList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2018,18 +1593,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataBoxEdgeDeviceList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, expand);
             _pipeline.Send(message, cancellationToken);
@@ -2045,6 +1610,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string expand)
@@ -2071,26 +1644,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataBoxEdgeDeviceList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2118,26 +1674,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataBoxEdgeDeviceList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, expand);
             _pipeline.Send(message, cancellationToken);

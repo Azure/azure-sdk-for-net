@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ArmApplicationSku(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
@@ -83,16 +80,22 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The SKU name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The SKU tier. </summary>
+        [WirePath("tier")]
         public string Tier { get; set; }
         /// <summary> The SKU size. </summary>
+        [WirePath("size")]
         public string Size { get; set; }
         /// <summary> The SKU family. </summary>
+        [WirePath("family")]
         public string Family { get; set; }
         /// <summary> The SKU model. </summary>
+        [WirePath("model")]
         public string Model { get; set; }
         /// <summary> The SKU capacity. </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
     }
 }

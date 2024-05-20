@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Authorization.Models;
@@ -35,6 +34,27 @@ namespace Azure.ResourceManager.Authorization
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2022-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(resourceProviderNamespace, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(parentResourcePath, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceType, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/permissions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName)
@@ -76,42 +96,12 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RoleDefinitionPermissionListResult>> ListAsync(string subscriptionId, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(resourceProviderNamespace));
-            }
-            if (parentResourcePath == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourcePath));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNull(parentResourcePath, nameof(parentResourcePath));
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -141,42 +131,12 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RoleDefinitionPermissionListResult> List(string subscriptionId, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(resourceProviderNamespace));
-            }
-            if (parentResourcePath == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourcePath));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNull(parentResourcePath, nameof(parentResourcePath));
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -192,6 +152,14 @@ namespace Azure.ResourceManager.Authorization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName)
@@ -221,46 +189,13 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RoleDefinitionPermissionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(resourceProviderNamespace));
-            }
-            if (parentResourcePath == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourcePath));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNull(parentResourcePath, nameof(parentResourcePath));
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -291,46 +226,13 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RoleDefinitionPermissionListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(resourceProviderNamespace));
-            }
-            if (parentResourcePath == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourcePath));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNull(parentResourcePath, nameof(parentResourcePath));
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
             _pipeline.Send(message, cancellationToken);

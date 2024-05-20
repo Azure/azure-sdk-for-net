@@ -8,22 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceDeploymentLocations : IUtf8JsonSerializable, IJsonModel<AppServiceDeploymentLocations>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceDeploymentLocations>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceDeploymentLocations>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceDeploymentLocations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceDeploymentLocations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in HostingEnvironments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in HostingEnvironmentDeploymentInfos)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceDeploymentLocations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceDeploymentLocations DeserializeAppServiceDeploymentLocations(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
             IReadOnlyList<AppServiceEnvironmentProperties> hostingEnvironments = default;
             IReadOnlyList<HostingEnvironmentDeploymentInfo> hostingEnvironmentDeploymentInfos = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locations"u8))
@@ -146,11 +147,95 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppServiceDeploymentLocations(locations ?? new ChangeTrackingList<AppServiceGeoRegion>(), hostingEnvironments ?? new ChangeTrackingList<AppServiceEnvironmentProperties>(), hostingEnvironmentDeploymentInfos ?? new ChangeTrackingList<HostingEnvironmentDeploymentInfo>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Locations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  locations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Locations))
+                {
+                    if (Locations.Any())
+                    {
+                        builder.Append("  locations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Locations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  locations: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingEnvironments), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hostingEnvironments: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(HostingEnvironments))
+                {
+                    if (HostingEnvironments.Any())
+                    {
+                        builder.Append("  hostingEnvironments: ");
+                        builder.AppendLine("[");
+                        foreach (var item in HostingEnvironments)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  hostingEnvironments: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingEnvironmentDeploymentInfos), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hostingEnvironmentDeploymentInfos: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(HostingEnvironmentDeploymentInfos))
+                {
+                    if (HostingEnvironmentDeploymentInfos.Any())
+                    {
+                        builder.Append("  hostingEnvironmentDeploymentInfos: ");
+                        builder.AppendLine("[");
+                        foreach (var item in HostingEnvironmentDeploymentInfos)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  hostingEnvironmentDeploymentInfos: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<AppServiceDeploymentLocations>.Write(ModelReaderWriterOptions options)
@@ -161,8 +246,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +265,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceDeploymentLocations(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support reading '{options.Format}' format.");
             }
         }
 

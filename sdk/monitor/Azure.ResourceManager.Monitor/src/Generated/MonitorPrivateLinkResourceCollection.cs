@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual async Task<Response<MonitorPrivateLinkResource>> GetAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual Response<MonitorPrivateLinkResource> Get(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -242,14 +226,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -292,14 +269,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual Response<bool> Exists(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -342,14 +312,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual async Task<NullableResponse<MonitorPrivateLinkResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -394,14 +357,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual NullableResponse<MonitorPrivateLinkResource> GetIfExists(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResourceCollection.GetIfExists");
             scope.Start();

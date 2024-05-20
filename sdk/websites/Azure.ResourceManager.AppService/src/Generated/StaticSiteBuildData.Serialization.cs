@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -17,14 +19,14 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class StaticSiteBuildData : IUtf8JsonSerializable, IJsonModel<StaticSiteBuildData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSiteBuildData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSiteBuildData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StaticSiteBuildData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteBuildData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSiteBuildData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSiteBuildData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -96,7 +98,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in UserProvidedFunctionApps)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +126,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteBuildData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSiteBuildData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSiteBuildData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +135,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static StaticSiteBuildData DeserializeStaticSiteBuildData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -153,7 +155,7 @@ namespace Azure.ResourceManager.AppService
             StaticSiteBuildStatus? status = default;
             IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -260,10 +262,10 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StaticSiteBuildData(
                 id,
                 name,
@@ -281,6 +283,262 @@ namespace Azure.ResourceManager.AppService
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BuildId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    buildId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BuildId))
+                {
+                    builder.Append("    buildId: ");
+                    if (BuildId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BuildId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BuildId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceBranch), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sourceBranch: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceBranch))
+                {
+                    builder.Append("    sourceBranch: ");
+                    if (SourceBranch.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceBranch}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceBranch}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PullRequestTitle), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    pullRequestTitle: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PullRequestTitle))
+                {
+                    builder.Append("    pullRequestTitle: ");
+                    if (PullRequestTitle.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PullRequestTitle}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PullRequestTitle}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Hostname), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    hostname: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Hostname))
+                {
+                    builder.Append("    hostname: ");
+                    if (Hostname.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Hostname}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Hostname}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    createdTimeUtc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    builder.Append("    createdTimeUtc: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lastUpdatedOn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastUpdatedOn))
+                {
+                    builder.Append("    lastUpdatedOn: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("    status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserProvidedFunctionApps), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    userProvidedFunctionApps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(UserProvidedFunctionApps))
+                {
+                    if (UserProvidedFunctionApps.Any())
+                    {
+                        builder.Append("    userProvidedFunctionApps: ");
+                        builder.AppendLine("[");
+                        foreach (var item in UserProvidedFunctionApps)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    userProvidedFunctionApps: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<StaticSiteBuildData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteBuildData>)this).GetFormatFromOptions(options) : options.Format;
@@ -289,8 +547,10 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StaticSiteBuildData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSiteBuildData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -306,7 +566,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeStaticSiteBuildData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StaticSiteBuildData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSiteBuildData)} does not support reading '{options.Format}' format.");
             }
         }
 

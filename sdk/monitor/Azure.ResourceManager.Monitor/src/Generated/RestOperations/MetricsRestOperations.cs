@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Monitor.Models;
@@ -35,6 +34,62 @@ namespace Azure.ResourceManager.Monitor
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListAtSubscriptionScopeRequestUri(string subscriptionId, string region, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, MonitorMetricResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/metrics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("region", region, true);
+            if (timespan != null)
+            {
+                uri.AppendQuery("timespan", timespan, true);
+            }
+            if (interval != null)
+            {
+                uri.AppendQuery("interval", interval.Value, "P", true);
+            }
+            if (metricnames != null)
+            {
+                uri.AppendQuery("metricnames", metricnames, true);
+            }
+            if (aggregation != null)
+            {
+                uri.AppendQuery("aggregation", aggregation, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (resultType != null)
+            {
+                uri.AppendQuery("resultType", resultType.Value.ToString(), true);
+            }
+            if (metricnamespace != null)
+            {
+                uri.AppendQuery("metricnamespace", metricnamespace, true);
+            }
+            if (autoAdjustTimegrain != null)
+            {
+                uri.AppendQuery("AutoAdjustTimegrain", autoAdjustTimegrain.Value, true);
+            }
+            if (validateDimensions != null)
+            {
+                uri.AppendQuery("ValidateDimensions", validateDimensions.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListAtSubscriptionScopeRequest(string subscriptionId, string region, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, MonitorMetricResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions)
@@ -126,18 +181,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SubscriptionScopeMetricResponse>> ListAtSubscriptionScopeAsync(string subscriptionId, string region, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MonitorMetricResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(region, nameof(region));
 
             using var message = CreateListAtSubscriptionScopeRequest(subscriptionId, region, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -182,18 +227,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SubscriptionScopeMetricResponse> ListAtSubscriptionScope(string subscriptionId, string region, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MonitorMetricResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(region, nameof(region));
 
             using var message = CreateListAtSubscriptionScopeRequest(subscriptionId, region, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions);
             _pipeline.Send(message, cancellationToken);
@@ -209,6 +244,62 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAtSubscriptionScopePostRequestUri(string subscriptionId, string region, SubscriptionResourceGetMonitorMetricsWithPostContent content, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, MonitorMetricResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/metrics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("region", region, true);
+            if (timespan != null)
+            {
+                uri.AppendQuery("timespan", timespan, true);
+            }
+            if (interval != null)
+            {
+                uri.AppendQuery("interval", interval.Value, "P", true);
+            }
+            if (metricnames != null)
+            {
+                uri.AppendQuery("metricnames", metricnames, true);
+            }
+            if (aggregation != null)
+            {
+                uri.AppendQuery("aggregation", aggregation, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (resultType != null)
+            {
+                uri.AppendQuery("resultType", resultType.Value.ToString(), true);
+            }
+            if (metricnamespace != null)
+            {
+                uri.AppendQuery("metricnamespace", metricnamespace, true);
+            }
+            if (autoAdjustTimegrain != null)
+            {
+                uri.AppendQuery("AutoAdjustTimegrain", autoAdjustTimegrain.Value, true);
+            }
+            if (validateDimensions != null)
+            {
+                uri.AppendQuery("ValidateDimensions", validateDimensions.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListAtSubscriptionScopePostRequest(string subscriptionId, string region, SubscriptionResourceGetMonitorMetricsWithPostContent content, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, MonitorMetricResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions)
@@ -273,7 +364,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -308,18 +399,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SubscriptionScopeMetricResponse>> ListAtSubscriptionScopePostAsync(string subscriptionId, string region, SubscriptionResourceGetMonitorMetricsWithPostContent content = null, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MonitorMetricResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(region, nameof(region));
 
             using var message = CreateListAtSubscriptionScopePostRequest(subscriptionId, region, content, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -365,18 +446,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SubscriptionScopeMetricResponse> ListAtSubscriptionScopePost(string subscriptionId, string region, SubscriptionResourceGetMonitorMetricsWithPostContent content = null, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MonitorMetricResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(region, nameof(region));
 
             using var message = CreateListAtSubscriptionScopePostRequest(subscriptionId, region, content, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions);
             _pipeline.Send(message, cancellationToken);
@@ -392,6 +463,61 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string resourceUri, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, MonitorResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Insights/metrics", false);
+            if (timespan != null)
+            {
+                uri.AppendQuery("timespan", timespan, true);
+            }
+            if (interval != null)
+            {
+                uri.AppendQuery("interval", interval.Value, "P", true);
+            }
+            if (metricnames != null)
+            {
+                uri.AppendQuery("metricnames", metricnames, true);
+            }
+            if (aggregation != null)
+            {
+                uri.AppendQuery("aggregation", aggregation, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (resultType != null)
+            {
+                uri.AppendQuery("resultType", resultType.Value.ToSerialString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (metricnamespace != null)
+            {
+                uri.AppendQuery("metricnamespace", metricnamespace, true);
+            }
+            if (autoAdjustTimegrain != null)
+            {
+                uri.AppendQuery("AutoAdjustTimegrain", autoAdjustTimegrain.Value, true);
+            }
+            if (validateDimensions != null)
+            {
+                uri.AppendQuery("ValidateDimensions", validateDimensions.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string resourceUri, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, MonitorResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions)
@@ -480,10 +606,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<MonitorResponse>> ListAsync(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MonitorResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListRequest(resourceUri, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -526,10 +649,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public Response<MonitorResponse> List(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MonitorResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListRequest(resourceUri, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions);
             _pipeline.Send(message, cancellationToken);

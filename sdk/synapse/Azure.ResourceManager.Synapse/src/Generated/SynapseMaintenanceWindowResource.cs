@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
@@ -116,10 +114,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> is null. </exception>
         public virtual async Task<Response<SynapseMaintenanceWindowResource>> GetAsync(string maintenanceWindowName, CancellationToken cancellationToken = default)
         {
-            if (maintenanceWindowName == null)
-            {
-                throw new ArgumentNullException(nameof(maintenanceWindowName));
-            }
+            Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
 
             using var scope = _synapseMaintenanceWindowSqlPoolMaintenanceWindowsClientDiagnostics.CreateScope("SynapseMaintenanceWindowResource.Get");
             scope.Start();
@@ -163,10 +158,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> is null. </exception>
         public virtual Response<SynapseMaintenanceWindowResource> Get(string maintenanceWindowName, CancellationToken cancellationToken = default)
         {
-            if (maintenanceWindowName == null)
-            {
-                throw new ArgumentNullException(nameof(maintenanceWindowName));
-            }
+            Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
 
             using var scope = _synapseMaintenanceWindowSqlPoolMaintenanceWindowsClientDiagnostics.CreateScope("SynapseMaintenanceWindowResource.Get");
             scope.Start();
@@ -212,21 +204,17 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string maintenanceWindowName, SynapseMaintenanceWindowData data, CancellationToken cancellationToken = default)
         {
-            if (maintenanceWindowName == null)
-            {
-                throw new ArgumentNullException(nameof(maintenanceWindowName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseMaintenanceWindowSqlPoolMaintenanceWindowsClientDiagnostics.CreateScope("SynapseMaintenanceWindowResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _synapseMaintenanceWindowSqlPoolMaintenanceWindowsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(response);
+                var uri = _synapseMaintenanceWindowSqlPoolMaintenanceWindowsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SynapseArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -266,21 +254,17 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string maintenanceWindowName, SynapseMaintenanceWindowData data, CancellationToken cancellationToken = default)
         {
-            if (maintenanceWindowName == null)
-            {
-                throw new ArgumentNullException(nameof(maintenanceWindowName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(maintenanceWindowName, nameof(maintenanceWindowName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseMaintenanceWindowSqlPoolMaintenanceWindowsClientDiagnostics.CreateScope("SynapseMaintenanceWindowResource.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _synapseMaintenanceWindowSqlPoolMaintenanceWindowsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, data, cancellationToken);
-                var operation = new SynapseArmOperation(response);
+                var uri = _synapseMaintenanceWindowSqlPoolMaintenanceWindowsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SynapseArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

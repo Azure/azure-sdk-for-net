@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,14 +17,14 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class RelayServiceConnectionEntityData : IUtf8JsonSerializable, IJsonModel<RelayServiceConnectionEntityData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RelayServiceConnectionEntityData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RelayServiceConnectionEntityData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RelayServiceConnectionEntityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RelayServiceConnectionEntityData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayServiceConnectionEntityData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayServiceConnectionEntityData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<RelayServiceConnectionEntityData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayServiceConnectionEntityData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayServiceConnectionEntityData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static RelayServiceConnectionEntityData DeserializeRelayServiceConnectionEntityData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.AppService
             int? port = default;
             Uri biztalkUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -219,10 +220,10 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RelayServiceConnectionEntityData(
                 id,
                 name,
@@ -238,6 +239,222 @@ namespace Azure.ResourceManager.AppService
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EntityName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    entityName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EntityName))
+                {
+                    builder.Append("    entityName: ");
+                    if (EntityName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EntityName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EntityName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EntityConnectionString), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    entityConnectionString: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EntityConnectionString))
+                {
+                    builder.Append("    entityConnectionString: ");
+                    if (EntityConnectionString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EntityConnectionString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EntityConnectionString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceConnectionString), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    resourceConnectionString: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceConnectionString))
+                {
+                    builder.Append("    resourceConnectionString: ");
+                    if (ResourceConnectionString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceConnectionString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceConnectionString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Hostname), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    hostname: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Hostname))
+                {
+                    builder.Append("    hostname: ");
+                    if (Hostname.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Hostname}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Hostname}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    port: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Port))
+                {
+                    builder.Append("    port: ");
+                    builder.AppendLine($"{Port.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BiztalkUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    biztalkUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BiztalkUri))
+                {
+                    builder.Append("    biztalkUri: ");
+                    builder.AppendLine($"'{BiztalkUri.AbsoluteUri}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RelayServiceConnectionEntityData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RelayServiceConnectionEntityData>)this).GetFormatFromOptions(options) : options.Format;
@@ -246,8 +463,10 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RelayServiceConnectionEntityData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayServiceConnectionEntityData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -263,7 +482,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeRelayServiceConnectionEntityData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RelayServiceConnectionEntityData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayServiceConnectionEntityData)} does not support reading '{options.Format}' format.");
             }
         }
 

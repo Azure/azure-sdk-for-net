@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataMigration.Models;
@@ -37,6 +36,20 @@ namespace Azure.ResourceManager.DataMigration
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string groupName, string serviceName, DataMigrationServiceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string groupName, string serviceName, DataMigrationServiceData data)
         {
             var message = _pipeline.CreateMessage();
@@ -55,7 +68,7 @@ namespace Azure.ResourceManager.DataMigration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -71,34 +84,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string groupName, string serviceName, DataMigrationServiceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, groupName, serviceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -123,34 +112,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string groupName, string serviceName, DataMigrationServiceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, groupName, serviceName, data);
             _pipeline.Send(message, cancellationToken);
@@ -163,6 +128,20 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string groupName, string serviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string groupName, string serviceName)
@@ -194,30 +173,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataMigrationServiceData>> GetAsync(string subscriptionId, string groupName, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateGetRequest(subscriptionId, groupName, serviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -246,30 +204,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataMigrationServiceData> Get(string subscriptionId, string groupName, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateGetRequest(subscriptionId, groupName, serviceName);
             _pipeline.Send(message, cancellationToken);
@@ -287,6 +224,24 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string groupName, string serviceName, bool? deleteRunningTasks)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (deleteRunningTasks != null)
+            {
+                uri.AppendQuery("deleteRunningTasks", deleteRunningTasks.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string groupName, string serviceName, bool? deleteRunningTasks)
@@ -323,30 +278,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string groupName, string serviceName, bool? deleteRunningTasks = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateDeleteRequest(subscriptionId, groupName, serviceName, deleteRunningTasks);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -371,30 +305,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string groupName, string serviceName, bool? deleteRunningTasks = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateDeleteRequest(subscriptionId, groupName, serviceName, deleteRunningTasks);
             _pipeline.Send(message, cancellationToken);
@@ -407,6 +320,20 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string groupName, string serviceName, DataMigrationServiceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string groupName, string serviceName, DataMigrationServiceData data)
@@ -427,7 +354,7 @@ namespace Azure.ResourceManager.DataMigration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -443,34 +370,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string groupName, string serviceName, DataMigrationServiceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateRequest(subscriptionId, groupName, serviceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -494,34 +397,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string groupName, string serviceName, DataMigrationServiceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateRequest(subscriptionId, groupName, serviceName, data);
             _pipeline.Send(message, cancellationToken);
@@ -533,6 +412,21 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckStatusRequestUri(string subscriptionId, string groupName, string serviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/checkStatus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckStatusRequest(string subscriptionId, string groupName, string serviceName)
@@ -565,30 +459,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataMigrationServiceStatusResponse>> CheckStatusAsync(string subscriptionId, string groupName, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateCheckStatusRequest(subscriptionId, groupName, serviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -615,30 +488,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataMigrationServiceStatusResponse> CheckStatus(string subscriptionId, string groupName, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateCheckStatusRequest(subscriptionId, groupName, serviceName);
             _pipeline.Send(message, cancellationToken);
@@ -654,6 +506,21 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStartRequestUri(string subscriptionId, string groupName, string serviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStartRequest(string subscriptionId, string groupName, string serviceName)
@@ -686,30 +553,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> StartAsync(string subscriptionId, string groupName, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateStartRequest(subscriptionId, groupName, serviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -732,30 +578,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Start(string subscriptionId, string groupName, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateStartRequest(subscriptionId, groupName, serviceName);
             _pipeline.Send(message, cancellationToken);
@@ -767,6 +592,21 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStopRequestUri(string subscriptionId, string groupName, string serviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStopRequest(string subscriptionId, string groupName, string serviceName)
@@ -799,30 +639,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> StopAsync(string subscriptionId, string groupName, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateStopRequest(subscriptionId, groupName, serviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -845,30 +664,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Stop(string subscriptionId, string groupName, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateStopRequest(subscriptionId, groupName, serviceName);
             _pipeline.Send(message, cancellationToken);
@@ -880,6 +678,21 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSkusRequestUri(string subscriptionId, string groupName, string serviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSkusRequest(string subscriptionId, string groupName, string serviceName)
@@ -912,30 +725,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceSkuList>> ListSkusAsync(string subscriptionId, string groupName, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateListSkusRequest(subscriptionId, groupName, serviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -962,30 +754,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceSkuList> ListSkus(string subscriptionId, string groupName, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateListSkusRequest(subscriptionId, groupName, serviceName);
             _pipeline.Send(message, cancellationToken);
@@ -1001,6 +772,21 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckChildrenNameAvailabilityRequestUri(string subscriptionId, string groupName, string serviceName, NameAvailabilityRequest nameAvailabilityRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/services/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckChildrenNameAvailabilityRequest(string subscriptionId, string groupName, string serviceName, NameAvailabilityRequest nameAvailabilityRequest)
@@ -1022,7 +808,7 @@ namespace Azure.ResourceManager.DataMigration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(nameAvailabilityRequest);
+            content.JsonWriter.WriteObjectValue(nameAvailabilityRequest, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1038,34 +824,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NameAvailabilityResponse>> CheckChildrenNameAvailabilityAsync(string subscriptionId, string groupName, string serviceName, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (nameAvailabilityRequest == null)
-            {
-                throw new ArgumentNullException(nameof(nameAvailabilityRequest));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
 
             using var message = CreateCheckChildrenNameAvailabilityRequest(subscriptionId, groupName, serviceName, nameAvailabilityRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1093,34 +855,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NameAvailabilityResponse> CheckChildrenNameAvailability(string subscriptionId, string groupName, string serviceName, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (nameAvailabilityRequest == null)
-            {
-                throw new ArgumentNullException(nameof(nameAvailabilityRequest));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
 
             using var message = CreateCheckChildrenNameAvailabilityRequest(subscriptionId, groupName, serviceName, nameAvailabilityRequest);
             _pipeline.Send(message, cancellationToken);
@@ -1136,6 +874,19 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string groupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/services", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string groupName)
@@ -1165,22 +916,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataMigrationServiceList>> ListByResourceGroupAsync(string subscriptionId, string groupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, groupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1206,22 +943,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataMigrationServiceList> ListByResourceGroup(string subscriptionId, string groupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, groupName);
             _pipeline.Send(message, cancellationToken);
@@ -1237,6 +960,17 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/services", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId)
@@ -1263,14 +997,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataMigrationServiceList>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1295,14 +1022,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataMigrationServiceList> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -1318,6 +1038,19 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest)
@@ -1337,7 +1070,7 @@ namespace Azure.ResourceManager.DataMigration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(nameAvailabilityRequest);
+            content.JsonWriter.WriteObjectValue(nameAvailabilityRequest, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1352,18 +1085,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NameAvailabilityResponse>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (nameAvailabilityRequest == null)
-            {
-                throw new ArgumentNullException(nameof(nameAvailabilityRequest));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, location, nameAvailabilityRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1390,18 +1113,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NameAvailabilityResponse> CheckNameAvailability(string subscriptionId, AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (nameAvailabilityRequest == null)
-            {
-                throw new ArgumentNullException(nameof(nameAvailabilityRequest));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, location, nameAvailabilityRequest);
             _pipeline.Send(message, cancellationToken);
@@ -1417,6 +1130,14 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSkusNextPageRequestUri(string nextLink, string subscriptionId, string groupName, string serviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListSkusNextPageRequest(string nextLink, string subscriptionId, string groupName, string serviceName)
@@ -1443,34 +1164,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceSkuList>> ListSkusNextPageAsync(string nextLink, string subscriptionId, string groupName, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateListSkusNextPageRequest(nextLink, subscriptionId, groupName, serviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1498,34 +1195,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceSkuList> ListSkusNextPage(string nextLink, string subscriptionId, string groupName, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateListSkusNextPageRequest(nextLink, subscriptionId, groupName, serviceName);
             _pipeline.Send(message, cancellationToken);
@@ -1541,6 +1214,14 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string groupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string groupName)
@@ -1566,26 +1247,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataMigrationServiceList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string groupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, groupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1612,26 +1276,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataMigrationServiceList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string groupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, groupName);
             _pipeline.Send(message, cancellationToken);
@@ -1647,6 +1294,14 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
@@ -1671,18 +1326,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataMigrationServiceList>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1708,18 +1353,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataMigrationServiceList> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);

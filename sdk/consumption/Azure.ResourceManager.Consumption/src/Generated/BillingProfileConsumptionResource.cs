@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption
@@ -152,14 +150,8 @@ namespace Azure.ResourceManager.Consumption
         /// <returns> An async collection of <see cref="ConsumptionEventSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionEventSummary> GetEventsAsync(string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            if (startDate == null)
-            {
-                throw new ArgumentNullException(nameof(startDate));
-            }
-            if (endDate == null)
-            {
-                throw new ArgumentNullException(nameof(endDate));
-            }
+            Argument.AssertNotNull(startDate, nameof(startDate));
+            Argument.AssertNotNull(endDate, nameof(endDate));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, startDate, endDate);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, startDate, endDate);
@@ -190,14 +182,8 @@ namespace Azure.ResourceManager.Consumption
         /// <returns> A collection of <see cref="ConsumptionEventSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionEventSummary> GetEvents(string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            if (startDate == null)
-            {
-                throw new ArgumentNullException(nameof(startDate));
-            }
-            if (endDate == null)
-            {
-                throw new ArgumentNullException(nameof(endDate));
-            }
+            Argument.AssertNotNull(startDate, nameof(startDate));
+            Argument.AssertNotNull(endDate, nameof(endDate));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, startDate, endDate);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, startDate, endDate);

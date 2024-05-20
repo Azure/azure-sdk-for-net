@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class DynamicThresholdFailingPeriods : IUtf8JsonSerializable, IJsonModel<DynamicThresholdFailingPeriods>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynamicThresholdFailingPeriods>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynamicThresholdFailingPeriods>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DynamicThresholdFailingPeriods>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DynamicThresholdFailingPeriods>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynamicThresholdFailingPeriods)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynamicThresholdFailingPeriods)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynamicThresholdFailingPeriods>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynamicThresholdFailingPeriods)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynamicThresholdFailingPeriods)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DynamicThresholdFailingPeriods DeserializeDynamicThresholdFailingPeriods(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Monitor.Models
             float numberOfEvaluationPeriods = default;
             float minFailingPeriodsToAlert = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("numberOfEvaluationPeriods"u8))
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DynamicThresholdFailingPeriods(numberOfEvaluationPeriods, minFailingPeriodsToAlert, serializedAdditionalRawData);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynamicThresholdFailingPeriods)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynamicThresholdFailingPeriods)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeDynamicThresholdFailingPeriods(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynamicThresholdFailingPeriods)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynamicThresholdFailingPeriods)} does not support reading '{options.Format}' format.");
             }
         }
 

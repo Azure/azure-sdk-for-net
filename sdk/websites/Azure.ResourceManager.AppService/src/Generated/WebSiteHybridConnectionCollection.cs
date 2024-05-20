@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -79,25 +77,17 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WebSiteHybridConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
-            if (entityName == null)
-            {
-                throw new ArgumentNullException(nameof(entityName));
-            }
-            if (entityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(entityName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _webSiteHybridConnectionWebAppsRestClient.CreateOrUpdateRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteHybridConnectionResource>(Response.FromValue(new WebSiteHybridConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _webSiteHybridConnectionWebAppsRestClient.CreateCreateOrUpdateRelayServiceConnectionRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<WebSiteHybridConnectionResource>(Response.FromValue(new WebSiteHybridConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -138,25 +128,17 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WebSiteHybridConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
-            if (entityName == null)
-            {
-                throw new ArgumentNullException(nameof(entityName));
-            }
-            if (entityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(entityName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _webSiteHybridConnectionWebAppsRestClient.CreateOrUpdateRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteHybridConnectionResource>(Response.FromValue(new WebSiteHybridConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _webSiteHybridConnectionWebAppsRestClient.CreateCreateOrUpdateRelayServiceConnectionRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<WebSiteHybridConnectionResource>(Response.FromValue(new WebSiteHybridConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -195,14 +177,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public virtual async Task<Response<WebSiteHybridConnectionResource>> GetAsync(string entityName, CancellationToken cancellationToken = default)
         {
-            if (entityName == null)
-            {
-                throw new ArgumentNullException(nameof(entityName));
-            }
-            if (entityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(entityName));
-            }
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
             using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.Get");
             scope.Start();
@@ -247,14 +222,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public virtual Response<WebSiteHybridConnectionResource> Get(string entityName, CancellationToken cancellationToken = default)
         {
-            if (entityName == null)
-            {
-                throw new ArgumentNullException(nameof(entityName));
-            }
-            if (entityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(entityName));
-            }
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
             using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.Get");
             scope.Start();
@@ -299,14 +267,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string entityName, CancellationToken cancellationToken = default)
         {
-            if (entityName == null)
-            {
-                throw new ArgumentNullException(nameof(entityName));
-            }
-            if (entityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(entityName));
-            }
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
             using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.Exists");
             scope.Start();
@@ -349,14 +310,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public virtual Response<bool> Exists(string entityName, CancellationToken cancellationToken = default)
         {
-            if (entityName == null)
-            {
-                throw new ArgumentNullException(nameof(entityName));
-            }
-            if (entityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(entityName));
-            }
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
             using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.Exists");
             scope.Start();
@@ -399,14 +353,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public virtual async Task<NullableResponse<WebSiteHybridConnectionResource>> GetIfExistsAsync(string entityName, CancellationToken cancellationToken = default)
         {
-            if (entityName == null)
-            {
-                throw new ArgumentNullException(nameof(entityName));
-            }
-            if (entityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(entityName));
-            }
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
             using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.GetIfExists");
             scope.Start();
@@ -451,14 +398,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         public virtual NullableResponse<WebSiteHybridConnectionResource> GetIfExists(string entityName, CancellationToken cancellationToken = default)
         {
-            if (entityName == null)
-            {
-                throw new ArgumentNullException(nameof(entityName));
-            }
-            if (entityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(entityName));
-            }
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
             using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionCollection.GetIfExists");
             scope.Start();

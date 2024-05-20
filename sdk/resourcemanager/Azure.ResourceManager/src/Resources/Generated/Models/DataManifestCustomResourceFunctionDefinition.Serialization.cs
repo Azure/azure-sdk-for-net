@@ -8,22 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class DataManifestCustomResourceFunctionDefinition : IUtf8JsonSerializable, IJsonModel<DataManifestCustomResourceFunctionDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataManifestCustomResourceFunctionDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataManifestCustomResourceFunctionDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataManifestCustomResourceFunctionDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataManifestCustomResourceFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataManifestCustomResourceFunctionDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataManifestCustomResourceFunctionDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataManifestCustomResourceFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataManifestCustomResourceFunctionDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataManifestCustomResourceFunctionDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static DataManifestCustomResourceFunctionDefinition DeserializeDataManifestCustomResourceFunctionDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Resources.Models
             IReadOnlyList<string> defaultProperties = default;
             bool? allowCustomProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -137,11 +138,116 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataManifestCustomResourceFunctionDefinition(name, fullyQualifiedResourceType, defaultProperties ?? new ChangeTrackingList<string>(), allowCustomProperties, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FullyQualifiedResourceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fullyQualifiedResourceType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FullyQualifiedResourceType))
+                {
+                    builder.Append("  fullyQualifiedResourceType: ");
+                    builder.AppendLine($"'{FullyQualifiedResourceType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  defaultProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DefaultProperties))
+                {
+                    if (DefaultProperties.Any())
+                    {
+                        builder.Append("  defaultProperties: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DefaultProperties)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowCustomProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allowCustomProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowCustomProperties))
+                {
+                    builder.Append("  allowCustomProperties: ");
+                    var boolValue = AllowCustomProperties.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<DataManifestCustomResourceFunctionDefinition>.Write(ModelReaderWriterOptions options)
@@ -152,8 +258,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DataManifestCustomResourceFunctionDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataManifestCustomResourceFunctionDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +277,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeDataManifestCustomResourceFunctionDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataManifestCustomResourceFunctionDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataManifestCustomResourceFunctionDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

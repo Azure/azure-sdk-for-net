@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Relay
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RelayNamespaceAuthorizationRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _relayNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _relayNamespaceAuthorizationRuleNamespacesRestClient.CreateOrUpdateAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RelayArmOperation<RelayNamespaceAuthorizationRuleResource>(Response.FromValue(new RelayNamespaceAuthorizationRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _relayNamespaceAuthorizationRuleNamespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RelayArmOperation<RelayNamespaceAuthorizationRuleResource>(Response.FromValue(new RelayNamespaceAuthorizationRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RelayNamespaceAuthorizationRuleResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _relayNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _relayNamespaceAuthorizationRuleNamespacesRestClient.CreateOrUpdateAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, data, cancellationToken);
-                var operation = new RelayArmOperation<RelayNamespaceAuthorizationRuleResource>(Response.FromValue(new RelayNamespaceAuthorizationRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _relayNamespaceAuthorizationRuleNamespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RelayArmOperation<RelayNamespaceAuthorizationRuleResource>(Response.FromValue(new RelayNamespaceAuthorizationRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual async Task<Response<RelayNamespaceAuthorizationRuleResource>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _relayNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual Response<RelayNamespaceAuthorizationRuleResource> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _relayNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleCollection.Get");
             scope.Start();
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _relayNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleCollection.Exists");
             scope.Start();
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _relayNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleCollection.Exists");
             scope.Start();
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<RelayNamespaceAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _relayNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleCollection.GetIfExists");
             scope.Start();
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual NullableResponse<RelayNamespaceAuthorizationRuleResource> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _relayNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("RelayNamespaceAuthorizationRuleCollection.GetIfExists");
             scope.Start();

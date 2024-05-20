@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Elastic
 {
@@ -82,25 +80,17 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MonitoringTagRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleSetName, MonitoringTagRuleData data, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _monitoringTagRuleTagRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticArmOperation<MonitoringTagRuleResource>(Response.FromValue(new MonitoringTagRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _monitoringTagRuleTagRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ElasticArmOperation<MonitoringTagRuleResource>(Response.FromValue(new MonitoringTagRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,25 +131,17 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MonitoringTagRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleSetName, MonitoringTagRuleData data, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _monitoringTagRuleTagRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data, cancellationToken);
-                var operation = new ElasticArmOperation<MonitoringTagRuleResource>(Response.FromValue(new MonitoringTagRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _monitoringTagRuleTagRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ElasticArmOperation<MonitoringTagRuleResource>(Response.FromValue(new MonitoringTagRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -198,14 +180,7 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual async Task<Response<MonitoringTagRuleResource>> GetAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.Get");
             scope.Start();
@@ -250,14 +225,7 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual Response<MonitoringTagRuleResource> Get(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.Get");
             scope.Start();
@@ -362,14 +330,7 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.Exists");
             scope.Start();
@@ -412,14 +373,7 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.Exists");
             scope.Start();
@@ -462,14 +416,7 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual async Task<NullableResponse<MonitoringTagRuleResource>> GetIfExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.GetIfExists");
             scope.Start();
@@ -514,14 +461,7 @@ namespace Azure.ResourceManager.Elastic
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual NullableResponse<MonitoringTagRuleResource> GetIfExists(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.GetIfExists");
             scope.Start();

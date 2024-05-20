@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.HardwareSecurityModules.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-12-10-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByCloudHsmClusterRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
+            uri.AppendPath(cloudHsmClusterName, true);
+            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByCloudHsmClusterRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName)
@@ -67,30 +81,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HardwareSecurityModulesPrivateLinkResourceListResult>> ListByCloudHsmClusterAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudHsmClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudHsmClusterName));
-            }
-            if (cloudHsmClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudHsmClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
             using var message = CreateListByCloudHsmClusterRequest(subscriptionId, resourceGroupName, cloudHsmClusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +110,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HardwareSecurityModulesPrivateLinkResourceListResult> ListByCloudHsmCluster(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cloudHsmClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudHsmClusterName));
-            }
-            if (cloudHsmClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudHsmClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
             using var message = CreateListByCloudHsmClusterRequest(subscriptionId, resourceGroupName, cloudHsmClusterName);
             _pipeline.Send(message, cancellationToken);

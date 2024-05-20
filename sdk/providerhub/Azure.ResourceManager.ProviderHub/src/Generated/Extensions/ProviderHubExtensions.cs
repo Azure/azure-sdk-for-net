@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ProviderHub.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -43,10 +41,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="CustomRolloutResource"/> object. </returns>
         public static CustomRolloutResource GetCustomRolloutResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableProviderHubArmClient(client).GetCustomRolloutResource(id);
         }
@@ -65,10 +60,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="DefaultRolloutResource"/> object. </returns>
         public static DefaultRolloutResource GetDefaultRolloutResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableProviderHubArmClient(client).GetDefaultRolloutResource(id);
         }
@@ -87,10 +79,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="NotificationRegistrationResource"/> object. </returns>
         public static NotificationRegistrationResource GetNotificationRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableProviderHubArmClient(client).GetNotificationRegistrationResource(id);
         }
@@ -109,10 +98,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="ProviderRegistrationResource"/> object. </returns>
         public static ProviderRegistrationResource GetProviderRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableProviderHubArmClient(client).GetProviderRegistrationResource(id);
         }
@@ -131,10 +117,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="ResourceTypeRegistrationResource"/> object. </returns>
         public static ResourceTypeRegistrationResource GetResourceTypeRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableProviderHubArmClient(client).GetResourceTypeRegistrationResource(id);
         }
@@ -153,10 +136,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="ResourceTypeSkuResource"/> object. </returns>
         public static ResourceTypeSkuResource GetResourceTypeSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableProviderHubArmClient(client).GetResourceTypeSkuResource(id);
         }
@@ -175,10 +155,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="NestedResourceTypeFirstSkuResource"/> object. </returns>
         public static NestedResourceTypeFirstSkuResource GetNestedResourceTypeFirstSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableProviderHubArmClient(client).GetNestedResourceTypeFirstSkuResource(id);
         }
@@ -197,10 +174,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="NestedResourceTypeSecondSkuResource"/> object. </returns>
         public static NestedResourceTypeSecondSkuResource GetNestedResourceTypeSecondSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableProviderHubArmClient(client).GetNestedResourceTypeSecondSkuResource(id);
         }
@@ -219,10 +193,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="NestedResourceTypeThirdSkuResource"/> object. </returns>
         public static NestedResourceTypeThirdSkuResource GetNestedResourceTypeThirdSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableProviderHubArmClient(client).GetNestedResourceTypeThirdSkuResource(id);
         }
@@ -239,10 +210,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> An object representing collection of ProviderRegistrationResources and their operations over a ProviderRegistrationResource. </returns>
         public static ProviderRegistrationCollection GetProviderRegistrations(this SubscriptionResource subscriptionResource)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableProviderHubSubscriptionResource(subscriptionResource).GetProviderRegistrations();
         }
@@ -280,10 +248,7 @@ namespace Azure.ResourceManager.ProviderHub
         [ForwardsClientCalls]
         public static async Task<Response<ProviderRegistrationResource>> GetProviderRegistrationAsync(this SubscriptionResource subscriptionResource, string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableProviderHubSubscriptionResource(subscriptionResource).GetProviderRegistrationAsync(providerNamespace, cancellationToken).ConfigureAwait(false);
         }
@@ -321,10 +286,7 @@ namespace Azure.ResourceManager.ProviderHub
         [ForwardsClientCalls]
         public static Response<ProviderRegistrationResource> GetProviderRegistration(this SubscriptionResource subscriptionResource, string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableProviderHubSubscriptionResource(subscriptionResource).GetProviderRegistration(providerNamespace, cancellationToken);
         }

@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> is null. </exception>
         public TenantResourceByExternalCloudProviderTypeDimensionsOptions(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId)
         {
-            if (externalCloudProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(externalCloudProviderId));
-            }
+            Argument.AssertNotNull(externalCloudProviderId, nameof(externalCloudProviderId));
 
             ExternalCloudProviderType = externalCloudProviderType;
             ExternalCloudProviderId = externalCloudProviderId;

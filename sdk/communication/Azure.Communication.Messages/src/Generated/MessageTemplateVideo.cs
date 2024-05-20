@@ -19,16 +19,10 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="uri"/> is null. </exception>
         public MessageTemplateVideo(string name, Uri uri) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(uri, nameof(uri));
 
-            Kind = "video";
+            Kind = MessageTemplateValueKind.Video;
             Uri = uri;
         }
 
@@ -39,7 +33,7 @@ namespace Azure.Communication.Messages
         /// <param name="uri"> The (public) URL of the media. </param>
         /// <param name="caption"> The [optional] caption of the media object. </param>
         /// <param name="fileName"> The [optional] filename of the media file. </param>
-        internal MessageTemplateVideo(string name, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri uri, string caption, string fileName) : base(name, kind, serializedAdditionalRawData)
+        internal MessageTemplateVideo(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri uri, string caption, string fileName) : base(name, kind, serializedAdditionalRawData)
         {
             Uri = uri;
             Caption = caption;

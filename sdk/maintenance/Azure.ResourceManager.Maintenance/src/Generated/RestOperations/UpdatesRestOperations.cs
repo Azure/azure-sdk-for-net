@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Maintenance.Models;
@@ -33,8 +32,31 @@ namespace Azure.ResourceManager.Maintenance
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01-preview";
+            _apiVersion = apiVersion ?? "2023-10-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListParentRequestUri(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(providerName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceParentType, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceParentName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/providers/Microsoft.Maintenance/updates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListParentRequest(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName)
@@ -67,7 +89,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary> Get updates to resources. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="providerName"> Resource provider name. </param>
         /// <param name="resourceParentType"> Resource parent type. </param>
@@ -79,62 +101,13 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MaintenanceUpdateListResult>> ListParentAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (providerName == null)
-            {
-                throw new ArgumentNullException(nameof(providerName));
-            }
-            if (providerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
-            }
-            if (resourceParentType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceParentType));
-            }
-            if (resourceParentType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceParentType));
-            }
-            if (resourceParentName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceParentName));
-            }
-            if (resourceParentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceParentName));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
+            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var message = CreateListParentRequest(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -153,7 +126,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary> Get updates to resources. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="providerName"> Resource provider name. </param>
         /// <param name="resourceParentType"> Resource parent type. </param>
@@ -165,62 +138,13 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MaintenanceUpdateListResult> ListParent(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (providerName == null)
-            {
-                throw new ArgumentNullException(nameof(providerName));
-            }
-            if (providerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
-            }
-            if (resourceParentType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceParentType));
-            }
-            if (resourceParentType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceParentType));
-            }
-            if (resourceParentName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceParentName));
-            }
-            if (resourceParentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceParentName));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
+            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var message = CreateListParentRequest(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -236,6 +160,25 @@ namespace Azure.ResourceManager.Maintenance
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(providerName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/providers/Microsoft.Maintenance/updates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName)
@@ -264,7 +207,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary> Get updates to resources. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="providerName"> Resource provider name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -274,46 +217,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MaintenanceUpdateListResult>> ListAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (providerName == null)
-            {
-                throw new ArgumentNullException(nameof(providerName));
-            }
-            if (providerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, providerName, resourceType, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -332,7 +240,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary> Get updates to resources. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="providerName"> Resource provider name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -342,46 +250,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MaintenanceUpdateListResult> List(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (providerName == null)
-            {
-                throw new ArgumentNullException(nameof(providerName));
-            }
-            if (providerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, providerName, resourceType, resourceName);
             _pipeline.Send(message, cancellationToken);
