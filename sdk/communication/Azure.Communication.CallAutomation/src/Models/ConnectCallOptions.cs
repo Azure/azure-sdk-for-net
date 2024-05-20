@@ -8,14 +8,14 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Options for creating a call.
     /// </summary>
-    public class ConnectOptions
+    public class ConnectCallOptions
     {
         /// <summary>
         /// Creates a new instance of ConnectOptions.
         /// </summary>
         /// <param name="callLocator"></param>
         /// <param name="callbackUri"></param>
-        public ConnectOptions(CallLocator callLocator, Uri callbackUri)
+        public ConnectCallOptions(CallLocator callLocator, Uri callbackUri)
         {
             CallLocator = callLocator;
             CallbackUri = callbackUri;

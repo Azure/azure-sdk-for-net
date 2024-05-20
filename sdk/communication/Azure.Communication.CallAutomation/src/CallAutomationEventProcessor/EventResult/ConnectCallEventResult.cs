@@ -3,8 +3,8 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary><see cref="ConnectEventResult"/> is returned from WaitForEvent of <see cref="ConnectResult"/>.</summary>
-    public class ConnectEventResult
+    /// <summary><see cref="ConnectCallEventResult"/> is returned from WaitForEvent of <see cref="ConnectCallResult"/>.</summary>
+    public class ConnectCallEventResult
     {
         /// <summary>
         /// Indicates whether the returned event is considered successful or not.
@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public ConnectFailed FailureResult { get; }
 
-        internal ConnectEventResult(bool isSuccess, ConnectFailed failureResult)
+        internal ConnectCallEventResult(bool isSuccess, ConnectFailed failureResult)
         {
             IsSuccess = isSuccess;
             FailureResult = failureResult;

@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>The result from connect request.</summary>
-    public class ConnectResult
+    public class ConnectCallResult
     {
         private CallAutomationEventProcessor _evHandler;
         private string _callConnectionId;
 
-        internal ConnectResult(CallConnectionProperties callConnectionProperties, CallConnection callConnection)
+        internal ConnectCallResult(CallConnectionProperties callConnectionProperties, CallConnection callConnection)
         {
             CallConnectionProperties = callConnectionProperties;
             CallConnection = callConnection;
@@ -32,11 +32,11 @@ namespace Azure.Communication.CallAutomation
         public CallConnectionProperties CallConnectionProperties { get; }
 
         /// <summary>
-        /// This is blocking call. Wait for <see cref="ConnectEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
+        /// This is blocking call. Wait for <see cref="ConnectCallEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="ConnectEventResult"/> which contains <see cref="ConnectFailed"/> event.</returns>
-        public ConnectEventResult WaitForEventProcessor(CancellationToken cancellationToken = default)
+        /// <returns>Returns <see cref="ConnectCallEventResult"/> which contains <see cref="ConnectFailed"/> event.</returns>
+        public ConnectCallEventResult WaitForEventProcessor(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
             {
@@ -52,11 +52,11 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Wait for <see cref="ConnectEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
+        /// Wait for <see cref="ConnectCallEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
         /// <param name="cancellationToken">Cancellation Token can be used to set timeout or cancel this WaitForEventProcessor.</param>
-        /// <returns>Returns <see cref="ConnectEventResult"/> which contains <see cref="ConnectFailed"/> event.</returns>
-        public async Task<ConnectEventResult> WaitForEventProcessorAsync(CancellationToken cancellationToken = default)
+        /// <returns>Returns <see cref="ConnectCallEventResult"/> which contains <see cref="ConnectFailed"/> event.</returns>
+        public async Task<ConnectCallEventResult> WaitForEventProcessorAsync(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
             {
@@ -71,9 +71,9 @@ namespace Azure.Communication.CallAutomation
             return SetReturnedEvent(returnedEvent);
         }
 
-        private static ConnectEventResult SetReturnedEvent(CallAutomationEventBase returnedEvent)
+        private static ConnectCallEventResult SetReturnedEvent(CallAutomationEventBase returnedEvent)
         {
-            return new ConnectEventResult(true, (ConnectFailed)returnedEvent);
+            return new ConnectCallEventResult(true, (ConnectFailed)returnedEvent);
         }
     }
 }

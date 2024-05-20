@@ -71,10 +71,10 @@ namespace Azure.Communication.CallAutomation
         public virtual Azure.Response<Azure.Communication.CallAutomation.AnswerCallResult> AnswerCall(string incomingCallContext, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.AnswerCallResult>> AnswerCallAsync(Azure.Communication.CallAutomation.AnswerCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.AnswerCallResult>> AnswerCallAsync(string incomingCallContext, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.CallAutomation.ConnectResult> Connect(Azure.Communication.CallAutomation.CallLocator callLocator, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.CallAutomation.ConnectResult> Connect(Azure.Communication.CallAutomation.ConnectOptions connectOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.ConnectResult>> ConnectAsync(Azure.Communication.CallAutomation.CallLocator callLocator, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.ConnectResult>> ConnectAsync(Azure.Communication.CallAutomation.ConnectOptions connectOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallAutomation.ConnectCallResult> ConnectCall(Azure.Communication.CallAutomation.CallLocator callLocator, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallAutomation.ConnectCallResult> ConnectCall(Azure.Communication.CallAutomation.ConnectCallOptions connectCallOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.ConnectCallResult>> ConnectCallAsync(Azure.Communication.CallAutomation.CallLocator callLocator, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.ConnectCallResult>> ConnectCallAsync(Azure.Communication.CallAutomation.ConnectCallOptions connectCallOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.CreateCallResult> CreateCall(Azure.Communication.CallAutomation.CallInvite callInvite, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.CreateCallResult> CreateCall(Azure.Communication.CallAutomation.CreateCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.CreateCallResult>> CreateCallAsync(Azure.Communication.CallAutomation.CallInvite callInvite, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -99,9 +99,12 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CommunicationUserIdentifier Source { get { throw null; } set { } }
         public enum ServiceVersion
         {
-            V2023_06_15_Preview = 1,
-            V2023_10_03_Preview = 2,
-            V2024_06_15_Preview = 3,
+            V2023_03_06 = 1,
+            V2023_06_15_Preview = 2,
+            V2023_10_15 = 3,
+            V2023_10_03_Preview = 4,
+            V2024_04_15 = 5,
+            V2024_06_15_Preview = 6,
         }
     }
     public abstract partial class CallAutomationEventBase
@@ -486,32 +489,32 @@ namespace Azure.Communication.CallAutomation
         public string RecognizedPhrase { get { throw null; } }
         public override Azure.Communication.CallAutomation.RecognizeResultType ResultType { get { throw null; } }
     }
-    public partial class ConnectEventResult
+    public partial class ConnectCallEventResult
     {
-        internal ConnectEventResult() { }
+        internal ConnectCallEventResult() { }
         public Azure.Communication.CallAutomation.ConnectFailed FailureResult { get { throw null; } }
         public bool IsSuccess { get { throw null; } }
     }
-    public partial class ConnectFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
+    public partial class ConnectCallOptions
     {
-        internal ConnectFailed() { }
-        public static Azure.Communication.CallAutomation.ConnectFailed Deserialize(string content) { throw null; }
-    }
-    public partial class ConnectOptions
-    {
-        public ConnectOptions(Azure.Communication.CallAutomation.CallLocator callLocator, System.Uri callbackUri) { }
+        public ConnectCallOptions(Azure.Communication.CallAutomation.CallLocator callLocator, System.Uri callbackUri) { }
         public System.Uri CallbackUri { get { throw null; } }
         public Azure.Communication.CallAutomation.CallIntelligenceOptions CallIntelligenceOptions { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.CallLocator CallLocator { get { throw null; } }
         public string OperationContext { get { throw null; } set { } }
     }
-    public partial class ConnectResult
+    public partial class ConnectCallResult
     {
-        internal ConnectResult() { }
+        internal ConnectCallResult() { }
         public Azure.Communication.CallAutomation.CallConnection CallConnection { get { throw null; } }
         public Azure.Communication.CallAutomation.CallConnectionProperties CallConnectionProperties { get { throw null; } }
-        public Azure.Communication.CallAutomation.ConnectEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.ConnectEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public Azure.Communication.CallAutomation.ConnectCallEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.ConnectCallEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ConnectFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal ConnectFailed() { }
+        public static Azure.Communication.CallAutomation.ConnectFailed Deserialize(string content) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct ContentTransferOptions : System.IEquatable<Azure.Communication.CallAutomation.ContentTransferOptions>
