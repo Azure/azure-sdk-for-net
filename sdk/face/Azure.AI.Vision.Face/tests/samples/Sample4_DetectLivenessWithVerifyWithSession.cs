@@ -12,6 +12,7 @@ namespace Azure.AI.Vision.Face.Samples
 {
     public partial class Sample5_DetectLivenessWithVerifyWithSession : FaceSamplesBase
     {
+        [Ignore("Sync MFD request will throw in debug build")]
         [Test]
         [TestCase(true)] // Change deleteSession to false to keep the session and perform liveness detection with liveness SDK
         public void CreateDetectLivenessWithVerifySession(bool deleteSession)

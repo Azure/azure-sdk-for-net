@@ -196,7 +196,7 @@ namespace Azure.AI.Vision.Face.Tests
         #endregion
 
         #region LivenessWithVerifySession
-        protected async Task<CreateLivenessWithVerifySessionResult> CreateLivenessWithSession(bool withVerifyImage, bool nonRecordingClient = false)
+        protected async Task<CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySession(bool withVerifyImage, bool nonRecordingClient = false)
         {
             var client = CreateSessionClient(nonRecordingClient: nonRecordingClient);
 
@@ -233,7 +233,8 @@ namespace Azure.AI.Vision.Face.Tests
             Assert.IsNotNull(verifyResult.VerifyImage.QualityForRecognition);
         }
 
-        [LiveOnly] // "Unable to playback multipart request.
+        [LiveOnly] // Unable to playback multipart request.
+        [AsyncOnly] // Sync MFD request will throw in debug build
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
@@ -241,7 +242,7 @@ namespace Azure.AI.Vision.Face.Tests
         {
             var client = CreateSessionClient();
 
-            var createResult = await CreateLivenessWithSession(withVerifyImage);
+            var createResult = await CreateLivenessWithVerifySession(withVerifyImage);
 
             Assert.IsNotNull(createResult.SessionId);
             Assert.IsNotNull(createResult.AuthToken);
@@ -265,8 +266,8 @@ namespace Azure.AI.Vision.Face.Tests
         {
             if (Mode != RecordedTestMode.Playback)
             {
-                await CreateLivenessWithSession(true, nonRecordingClient: true);
-                await CreateLivenessWithSession(false, nonRecordingClient: true);
+                await CreateLivenessWithVerifySession(true, nonRecordingClient: true);
+                await CreateLivenessWithVerifySession(false, nonRecordingClient: true);
             }
 
             var client = CreateSessionClient();
@@ -323,7 +324,7 @@ namespace Azure.AI.Vision.Face.Tests
         [RecordedTest]
         public async Task TestDeleteLivenessWithVerifySessions()
         {
-            var result = await CreateLivenessWithSession(false);
+            var result = await CreateLivenessWithVerifySession(false);
 
             var client = CreateSessionClient();
             await client.DeleteLivenessWithVerifySessionAsync(result.SessionId);
