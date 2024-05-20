@@ -15,7 +15,7 @@ namespace Azure.Health.Deidentification
 {
     public partial class PhiTaggerResult : IUtf8JsonSerializable, IJsonModel<PhiTaggerResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PhiTaggerResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PhiTaggerResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PhiTaggerResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,11 +30,11 @@ namespace Azure.Health.Deidentification
             writer.WriteStartArray();
             foreach (var item in Entities)
             {
-                writer.WriteObjectValue<PhiEntity>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("stringIndexType"u8);
-            writer.WriteStringValue(StringIndexType.ToSerialString());
+            writer.WriteStringValue(StringIndexType.ToString());
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
@@ -77,7 +77,7 @@ namespace Azure.Health.Deidentification
 
         internal static PhiTaggerResult DeserializePhiTaggerResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,7 +103,7 @@ namespace Azure.Health.Deidentification
                 }
                 if (property.NameEquals("stringIndexType"u8))
                 {
-                    stringIndexType = property.Value.GetString().ToStringIndexType();
+                    stringIndexType = new StringIndexType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("path"u8))
@@ -164,11 +164,11 @@ namespace Azure.Health.Deidentification
             return DeserializePhiTaggerResult(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PhiTaggerResult>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

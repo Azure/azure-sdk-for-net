@@ -14,7 +14,7 @@ namespace Azure.Health.Deidentification
     /// <summary> Model factory for models. </summary>
     public static partial class HealthDeidentificationModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentifyJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentificationJob"/>. </summary>
         /// <param name="sourceLocation"> Storage location to perform the operation on. </param>
         /// <param name="targetLocation"> Target location to store output of operation. </param>
         /// <param name="dataType"> Data type of the input documents. </param>
@@ -32,10 +32,10 @@ namespace Azure.Health.Deidentification
         /// If the job failed, this is the time when the job failed.
         /// </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
-        /// <returns> A new <see cref="Deidentification.DeidentifyJob"/> instance for mocking. </returns>
-        public static DeidentifyJob DeidentifyJob(SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, DocumentDataType dataType = default, OperationType operation = default, string redactionFormat = null, JobStatus status = default, ResponseError error = null, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, DateTimeOffset? lastUpdatedAt = null, JobSummary summary = null)
+        /// <returns> A new <see cref="Deidentification.DeidentificationJob"/> instance for mocking. </returns>
+        public static DeidentificationJob DeidentificationJob(SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, DocumentDataType dataType = default, OperationType operation = default, string redactionFormat = null, JobStatus status = default, ResponseError error = null, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, DateTimeOffset? lastUpdatedAt = null, JobSummary summary = null)
         {
-            return new DeidentifyJob(
+            return new DeidentificationJob(
                 sourceLocation,
                 targetLocation,
                 dataType,
@@ -77,16 +77,16 @@ namespace Azure.Health.Deidentification
             return new FileLocation(path, etag, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentifyConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentificationContent"/>. </summary>
         /// <param name="inputText"> Input text to deidentify. </param>
         /// <param name="dataType"> Data type of the input. </param>
         /// <param name="operation"> Operation to perform on the input. </param>
         /// <param name="stringIndexType"> Requested Encoding of the tag response indices. </param>
         /// <param name="redactionFormat"> Format of the redacted output. Only valid when OperationType is Redact. </param>
-        /// <returns> A new <see cref="Deidentification.DeidentifyConfig"/> instance for mocking. </returns>
-        public static DeidentifyConfig DeidentifyConfig(string inputText = null, DocumentDataType dataType = default, OperationType operation = default, StringIndexType stringIndexType = default, string redactionFormat = null)
+        /// <returns> A new <see cref="Deidentification.DeidentificationContent"/> instance for mocking. </returns>
+        public static DeidentificationContent DeidentificationContent(string inputText = null, DocumentDataType dataType = default, OperationType operation = default, StringIndexType stringIndexType = default, string redactionFormat = null)
         {
-            return new DeidentifyConfig(
+            return new DeidentificationContent(
                 inputText,
                 dataType,
                 operation,
@@ -95,13 +95,13 @@ namespace Azure.Health.Deidentification
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentifyResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentificationResult"/>. </summary>
         /// <param name="outputText"> Output text after de-identifying. Not available for Tag Operation. </param>
         /// <param name="taggerResult"> Result of the tag operation. Only available for Tag Operation. </param>
-        /// <returns> A new <see cref="Deidentification.DeidentifyResult"/> instance for mocking. </returns>
-        public static DeidentifyResult DeidentifyResult(string outputText = null, PhiTaggerResult taggerResult = null)
+        /// <returns> A new <see cref="Deidentification.DeidentificationResult"/> instance for mocking. </returns>
+        public static DeidentificationResult DeidentificationResult(string outputText = null, PhiTaggerResult taggerResult = null)
         {
-            return new DeidentifyResult(outputText, taggerResult, serializedAdditionalRawData: null);
+            return new DeidentificationResult(outputText, taggerResult, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Deidentification.PhiTaggerResult"/>. </summary>

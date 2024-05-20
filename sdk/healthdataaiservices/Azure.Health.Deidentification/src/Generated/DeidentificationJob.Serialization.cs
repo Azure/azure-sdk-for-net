@@ -13,27 +13,27 @@ using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
-    public partial class DeidentifyJob : IUtf8JsonSerializable, IJsonModel<DeidentifyJob>
+    public partial class DeidentificationJob : IUtf8JsonSerializable, IJsonModel<DeidentificationJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeidentifyJob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeidentificationJob>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DeidentifyJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeidentificationJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeidentifyJob>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeidentifyJob)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeidentificationJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceLocation"u8);
-            writer.WriteObjectValue<SourceStorageLocation>(SourceLocation, options);
+            writer.WriteObjectValue(SourceLocation, options);
             writer.WritePropertyName("targetLocation"u8);
-            writer.WriteObjectValue<TargetStorageLocation>(TargetLocation, options);
+            writer.WriteObjectValue(TargetLocation, options);
             writer.WritePropertyName("dataType"u8);
-            writer.WriteStringValue(DataType.ToSerialString());
+            writer.WriteStringValue(DataType.ToString());
             writer.WritePropertyName("operation"u8);
-            writer.WriteStringValue(Operation.ToSerialString());
+            writer.WriteStringValue(Operation.ToString());
             if (Optional.IsDefined(RedactionFormat))
             {
                 writer.WritePropertyName("redactionFormat"u8);
@@ -42,7 +42,7 @@ namespace Azure.Health.Deidentification
             if (options.Format != "W")
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.ToSerialString());
+                writer.WriteStringValue(Status.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
@@ -67,7 +67,7 @@ namespace Azure.Health.Deidentification
             if (options.Format != "W" && Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
-                writer.WriteObjectValue<JobSummary>(Summary, options);
+                writer.WriteObjectValue(Summary, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,21 +87,21 @@ namespace Azure.Health.Deidentification
             writer.WriteEndObject();
         }
 
-        DeidentifyJob IJsonModel<DeidentifyJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeidentificationJob IJsonModel<DeidentificationJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeidentifyJob>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeidentifyJob)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeidentificationJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeidentifyJob(document.RootElement, options);
+            return DeserializeDeidentificationJob(document.RootElement, options);
         }
 
-        internal static DeidentifyJob DeserializeDeidentifyJob(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeidentificationJob DeserializeDeidentificationJob(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -134,12 +134,12 @@ namespace Azure.Health.Deidentification
                 }
                 if (property.NameEquals("dataType"u8))
                 {
-                    dataType = property.Value.GetString().ToDocumentDataType();
+                    dataType = new DocumentDataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("operation"u8))
                 {
-                    operation = property.Value.GetString().ToOperationType();
+                    operation = new OperationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("redactionFormat"u8))
@@ -149,7 +149,7 @@ namespace Azure.Health.Deidentification
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString().ToJobStatus();
+                    status = new JobStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -199,7 +199,7 @@ namespace Azure.Health.Deidentification
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeidentifyJob(
+            return new DeidentificationJob(
                 sourceLocation,
                 targetLocation,
                 dataType,
@@ -214,50 +214,50 @@ namespace Azure.Health.Deidentification
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DeidentifyJob>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeidentificationJob>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeidentifyJob>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationJob>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeidentifyJob)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeidentificationJob)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeidentifyJob IPersistableModel<DeidentifyJob>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeidentificationJob IPersistableModel<DeidentificationJob>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeidentifyJob>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationJob>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDeidentifyJob(document.RootElement, options);
+                        return DeserializeDeidentificationJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeidentifyJob)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeidentificationJob)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DeidentifyJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeidentificationJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DeidentifyJob FromResponse(Response response)
+        internal static DeidentificationJob FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDeidentifyJob(document.RootElement);
+            return DeserializeDeidentificationJob(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DeidentifyJob>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

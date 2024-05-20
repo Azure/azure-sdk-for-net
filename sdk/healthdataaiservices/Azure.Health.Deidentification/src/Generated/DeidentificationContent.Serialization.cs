@@ -13,27 +13,27 @@ using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
-    public partial class DeidentifyConfig : IUtf8JsonSerializable, IJsonModel<DeidentifyConfig>
+    public partial class DeidentificationContent : IUtf8JsonSerializable, IJsonModel<DeidentificationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeidentifyConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeidentificationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DeidentifyConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeidentificationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeidentifyConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeidentifyConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeidentificationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("inputText"u8);
             writer.WriteStringValue(InputText);
             writer.WritePropertyName("dataType"u8);
-            writer.WriteStringValue(DataType.ToSerialString());
+            writer.WriteStringValue(DataType.ToString());
             writer.WritePropertyName("operation"u8);
-            writer.WriteStringValue(Operation.ToSerialString());
+            writer.WriteStringValue(Operation.ToString());
             writer.WritePropertyName("stringIndexType"u8);
-            writer.WriteStringValue(StringIndexType.ToSerialString());
+            writer.WriteStringValue(StringIndexType.ToString());
             if (Optional.IsDefined(RedactionFormat))
             {
                 writer.WritePropertyName("redactionFormat"u8);
@@ -57,21 +57,21 @@ namespace Azure.Health.Deidentification
             writer.WriteEndObject();
         }
 
-        DeidentifyConfig IJsonModel<DeidentifyConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeidentificationContent IJsonModel<DeidentificationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeidentifyConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeidentifyConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeidentificationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeidentifyConfig(document.RootElement, options);
+            return DeserializeDeidentificationContent(document.RootElement, options);
         }
 
-        internal static DeidentifyConfig DeserializeDeidentifyConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeidentificationContent DeserializeDeidentificationContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -93,17 +93,17 @@ namespace Azure.Health.Deidentification
                 }
                 if (property.NameEquals("dataType"u8))
                 {
-                    dataType = property.Value.GetString().ToDocumentDataType();
+                    dataType = new DocumentDataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("operation"u8))
                 {
-                    operation = property.Value.GetString().ToOperationType();
+                    operation = new OperationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stringIndexType"u8))
                 {
-                    stringIndexType = property.Value.GetString().ToStringIndexType();
+                    stringIndexType = new StringIndexType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("redactionFormat"u8))
@@ -117,7 +117,7 @@ namespace Azure.Health.Deidentification
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeidentifyConfig(
+            return new DeidentificationContent(
                 inputText,
                 dataType,
                 operation,
@@ -126,50 +126,50 @@ namespace Azure.Health.Deidentification
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DeidentifyConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeidentificationContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeidentifyConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeidentifyConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeidentificationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeidentifyConfig IPersistableModel<DeidentifyConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeidentificationContent IPersistableModel<DeidentificationContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeidentifyConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDeidentifyConfig(document.RootElement, options);
+                        return DeserializeDeidentificationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeidentifyConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeidentificationContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DeidentifyConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeidentificationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DeidentifyConfig FromResponse(Response response)
+        internal static DeidentificationContent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDeidentifyConfig(document.RootElement);
+            return DeserializeDeidentificationContent(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DeidentifyConfig>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

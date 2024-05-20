@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
-    public partial class DeidentifyResult : IUtf8JsonSerializable, IJsonModel<DeidentifyResult>
+    public partial class DeidentificationResult : IUtf8JsonSerializable, IJsonModel<DeidentificationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeidentifyResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeidentificationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DeidentifyResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeidentificationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeidentifyResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeidentifyResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeidentificationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.Health.Deidentification
             if (Optional.IsDefined(TaggerResult))
             {
                 writer.WritePropertyName("taggerResult"u8);
-                writer.WriteObjectValue<PhiTaggerResult>(TaggerResult, options);
+                writer.WriteObjectValue(TaggerResult, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,21 +54,21 @@ namespace Azure.Health.Deidentification
             writer.WriteEndObject();
         }
 
-        DeidentifyResult IJsonModel<DeidentifyResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeidentificationResult IJsonModel<DeidentificationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeidentifyResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeidentifyResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeidentificationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeidentifyResult(document.RootElement, options);
+            return DeserializeDeidentificationResult(document.RootElement, options);
         }
 
-        internal static DeidentifyResult DeserializeDeidentifyResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeidentificationResult DeserializeDeidentificationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,53 +100,53 @@ namespace Azure.Health.Deidentification
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeidentifyResult(outputText, taggerResult, serializedAdditionalRawData);
+            return new DeidentificationResult(outputText, taggerResult, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DeidentifyResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeidentificationResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeidentifyResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeidentifyResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeidentificationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeidentifyResult IPersistableModel<DeidentifyResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeidentificationResult IPersistableModel<DeidentificationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeidentifyResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDeidentifyResult(document.RootElement, options);
+                        return DeserializeDeidentificationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeidentifyResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeidentificationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DeidentifyResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeidentificationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DeidentifyResult FromResponse(Response response)
+        internal static DeidentificationResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDeidentifyResult(document.RootElement);
+            return DeserializeDeidentificationResult(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DeidentifyResult>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

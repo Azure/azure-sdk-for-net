@@ -26,10 +26,10 @@ namespace Azure.Health.Deidentification.Tests
             string input = "Hello, my name is John Smith.";
 
             // TODO: Defaults should be set for these.
-            DeidentifyConfig config = new(input, DocumentDataType.PlainText, OperationType.Surrogate, StringIndexType.TextElementV8);
+            DeidentificationContent content = new(input, DocumentDataType.PlainText, OperationType.Surrogate, StringIndexType.TextElementV8);
 
             // TODO: body should be changed to config
-            DeidentifyResult result = await client.DeidentifyAsync(config);
+            DeidentificationResult result = await client.DeidentifyAsync(content);
 
             Assert.IsNull(result.TaggerResult, "On Surrogate Operation, expect TaggerResult to be null.");
             Assert.IsNotNull(result.OutputText, "On Surrogate Operation, expect OutputText to be not null.");

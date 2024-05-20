@@ -33,7 +33,7 @@ namespace Azure.Health.Deidentification.Tests
             string jobName = "net-sdk-job-" + Recording.GenerateId();
             const string inputPrefix = "example_patient_1";
 
-            DeidentifyJob deidJobInput = new()
+            DeidentificationJob job = new()
             {
                 SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), inputPrefix, new string[] { "*" }),
                 // TODO: Change prefix to outputPrefix
@@ -43,7 +43,7 @@ namespace Azure.Health.Deidentification.Tests
                 Operation = OperationType.Surrogate
             };
 
-            DeidentifyJob job = (await client.CreateJobAsync(WaitUntil.Started, jobName, deidJobInput)).Value;
+            job = (await client.CreateJobAsync(WaitUntil.Started, jobName, job)).Value;
 
             Assert.IsNotNull(job);
             Assert.IsNotNull(job.CreatedAt);
@@ -67,7 +67,7 @@ namespace Azure.Health.Deidentification.Tests
             string jobName = "net-sdk-job-" + Recording.GenerateId();
             const string inputPrefix = "example_patient_1";
 
-            DeidentifyJob deidJobInput = new()
+            DeidentificationJob job = new()
             {
                 SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), inputPrefix, new string[] { "*" }),
                 // TODO: Change prefix to outputPrefix
@@ -77,7 +77,7 @@ namespace Azure.Health.Deidentification.Tests
                 Operation = OperationType.Surrogate
             };
 
-            DeidentifyJob job = (await client.CreateJobAsync(WaitUntil.Completed, jobName, deidJobInput)).Value;
+            job = (await client.CreateJobAsync(WaitUntil.Completed, jobName, job)).Value;
 
             Assert.AreEqual(JobStatus.Succeeded, job.Status);
             Assert.IsNotNull(job.StartedAt);
@@ -94,8 +94,8 @@ namespace Azure.Health.Deidentification.Tests
             string jobName = "net-sdk-job-" + Recording.GenerateId();
             const string inputPrefix = "example_patient_1";
 
-            // TODO: Potentially swap DeidentifyJob with DeidentificationJob. Only action is deidentify
-            DeidentifyJob job = new()
+            // TODO: Potentially swap DeidentificationJob with DeidentificationJob. Only action is deidentify
+            DeidentificationJob job = new()
             {
                 SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), inputPrefix, new string[] { "*" }),
                 TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), OUTPUT_FOLDER),
@@ -106,7 +106,7 @@ namespace Azure.Health.Deidentification.Tests
             };
 
             // TODO: Bring up started langauge with SDK team
-            job = (await client.CreateJobAsync(WaitUntil.Started, jobName, deidJobInput)).Value;
+            job = (await client.CreateJobAsync(WaitUntil.Started, jobName, job)).Value;
 
             do
             {

@@ -15,7 +15,7 @@ namespace Azure.Health.Deidentification
 {
     public partial class HealthFileDetails : IUtf8JsonSerializable, IJsonModel<HealthFileDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthFileDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthFileDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HealthFileDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,11 +32,11 @@ namespace Azure.Health.Deidentification
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("input"u8);
-            writer.WriteObjectValue<FileLocation>(Input, options);
+            writer.WriteObjectValue(Input, options);
             if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
-                writer.WriteObjectValue<FileLocation>(Output, options);
+                writer.WriteObjectValue(Output, options);
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
@@ -77,7 +77,7 @@ namespace Azure.Health.Deidentification
 
         internal static HealthFileDetails DeserializeHealthFileDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,11 +179,11 @@ namespace Azure.Health.Deidentification
             return DeserializeHealthFileDetails(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<HealthFileDetails>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

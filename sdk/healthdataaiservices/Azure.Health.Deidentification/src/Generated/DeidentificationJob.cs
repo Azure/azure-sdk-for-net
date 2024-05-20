@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Health.Deidentification
 {
     /// <summary> A job containing a batch of documents to deidentify. </summary>
-    public partial class DeidentifyJob
+    public partial class DeidentificationJob
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.Health.Deidentification
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeidentifyJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeidentificationJob"/>. </summary>
         /// <param name="sourceLocation"> Storage location to perform the operation on. </param>
         /// <param name="targetLocation"> Target location to store output of operation. </param>
         /// <param name="dataType"> Data type of the input documents. </param>
         /// <param name="operation"> Operation to perform on the input documents. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="targetLocation"/> is null. </exception>
-        public DeidentifyJob(SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, DocumentDataType dataType, OperationType operation)
+        public DeidentificationJob(SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, DocumentDataType dataType, OperationType operation)
         {
             Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
             Argument.AssertNotNull(targetLocation, nameof(targetLocation));
@@ -62,7 +62,7 @@ namespace Azure.Health.Deidentification
             Operation = operation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeidentifyJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeidentificationJob"/>. </summary>
         /// <param name="sourceLocation"> Storage location to perform the operation on. </param>
         /// <param name="targetLocation"> Target location to store output of operation. </param>
         /// <param name="dataType"> Data type of the input documents. </param>
@@ -81,7 +81,7 @@ namespace Azure.Health.Deidentification
         /// </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentifyJob(SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, DocumentDataType dataType, OperationType operation, string redactionFormat, JobStatus status, ResponseError error, DateTimeOffset createdAt, DateTimeOffset? startedAt, DateTimeOffset? lastUpdatedAt, JobSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationJob(SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, DocumentDataType dataType, OperationType operation, string redactionFormat, JobStatus status, ResponseError error, DateTimeOffset createdAt, DateTimeOffset? startedAt, DateTimeOffset? lastUpdatedAt, JobSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceLocation = sourceLocation;
             TargetLocation = targetLocation;
@@ -97,8 +97,8 @@ namespace Azure.Health.Deidentification
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeidentifyJob"/> for deserialization. </summary>
-        internal DeidentifyJob()
+        /// <summary> Initializes a new instance of <see cref="DeidentificationJob"/> for deserialization. </summary>
+        internal DeidentificationJob()
         {
         }
 
