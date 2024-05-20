@@ -23,16 +23,16 @@
   The type of offset-related data has been changed from `long` to `string` to align with changes to the Event Hubs service API.  The default value for any offset-related data has been changed from `long.MinValue` to `null`.
 
   Impacted properties:
-    - EventData.Offset
-    - LastEnqueuedEventProperties.Offset
-    - PartitionProperties.LastEnqueuedOffset
-    - CheckpointPosition.Offset
+  - EventData.Offset
+  - LastEnqueuedEventProperties.Offset
+  - PartitionProperties.LastEnqueuedOffset
+  - CheckpointPosition.Offset
     
   Impacted methods:
-    - EventPosition.FromOffset
-    - EventHubsModelFactory.EventData
-    - CheckpointStore.UpdateCheckpointAsync _(deprecated overload)_
-    - EventProcessor&lt;T&gt;.UpdateCheckpointAsync _(deprecated overload)_
+  - EventPosition.FromOffset
+  - EventHubsModelFactory.EventData
+  - CheckpointStore.UpdateCheckpointAsync _(deprecated overload)_
+  - EventProcessor&lt;T&gt;.UpdateCheckpointAsync _(deprecated overload)_
 
 ## 5.11.3 (2024-05-15)
 
