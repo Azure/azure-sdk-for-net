@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("trafficManagementProfile");
                 JsonSerializer.Serialize(writer, TrafficManagementProfile);
             }
-            if (Optional.IsCollectionDefined(DnsNaptrRecorNaptr))
+            if (Optional.IsCollectionDefined(DnsNaptrRecords))
             {
                 writer.WritePropertyName("NaptrRecords");
                 writer.WriteStartArray();
-                foreach (var item in DnsNaptrRecorNaptr)
+                foreach (var item in DnsNaptrRecords)
                 {
                     writer.WriteObjectValue(item);
                 }

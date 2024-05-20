@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Dns
     public partial class DnsNaptrRecordData : Azure.ResourceManager.Dns.DnsBaseRecordData
     {
         public DnsNaptrRecordData() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsNaptrRecordInfo> DnsNaptrRecorNaptr { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsNaptrRecordInfo> DnsNaptrRecords { get { throw null; } }
     }
     public partial class DnsNaptrRecordResource : Azure.ResourceManager.ArmResource
     {
