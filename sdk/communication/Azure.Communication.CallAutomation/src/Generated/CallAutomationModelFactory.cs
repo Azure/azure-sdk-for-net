@@ -77,24 +77,5 @@ namespace Azure.Communication.CallAutomation
         {
             return new SpeechResult(speech);
         }
-
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.RecognizeFailed"/>. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        /// <param name="failedPlaySourceIndex"> Contains the index of the failed play source. </param>
-        /// <returns> A new <see cref="CallAutomation.RecognizeFailed"/> instance for mocking. </returns>
-        public static RecognizeFailed RecognizeFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, int? failedPlaySourceIndex = null)
-        {
-            return new RecognizeFailed(
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                operationContext,
-                resultInformation,
-                failedPlaySourceIndex);
-        }
     }
 }
