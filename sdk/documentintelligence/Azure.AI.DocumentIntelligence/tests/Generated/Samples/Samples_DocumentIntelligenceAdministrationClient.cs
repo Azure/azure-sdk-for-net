@@ -506,11 +506,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Response response = client.GetOperation("<operationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("operationId").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("resourceLocation").ToString());
         }
 
@@ -525,11 +525,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Response response = await client.GetOperationAsync("<operationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("operationId").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("resourceLocation").ToString());
         }
 
@@ -566,12 +566,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Response response = client.GetOperation("<operationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("operationId").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("percentCompleted").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("resourceLocation").ToString());
             Console.WriteLine(result.GetProperty("apiVersion").ToString());
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
@@ -593,12 +593,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Response response = await client.GetOperationAsync("<operationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("operationId").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("percentCompleted").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
             Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("resourceLocation").ToString());
             Console.WriteLine(result.GetProperty("apiVersion").ToString());
             Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
@@ -984,11 +984,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
             foreach (BinaryData item in client.GetOperations(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("operationId").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
                 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
                 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
             }
         }
@@ -1004,11 +1004,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
             await foreach (BinaryData item in client.GetOperationsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("operationId").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
                 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
                 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
             }
         }
@@ -1050,12 +1050,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             foreach (BinaryData item in client.GetOperations(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("operationId").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
                 Console.WriteLine(result.GetProperty("percentCompleted").ToString());
                 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
                 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
                 Console.WriteLine(result.GetProperty("apiVersion").ToString());
                 Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
@@ -1078,12 +1078,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             await foreach (BinaryData item in client.GetOperationsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("operationId").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
                 Console.WriteLine(result.GetProperty("percentCompleted").ToString());
                 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
                 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
                 Console.WriteLine(result.GetProperty("apiVersion").ToString());
                 Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());

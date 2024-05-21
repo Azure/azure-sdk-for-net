@@ -26,6 +26,8 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
             writer.WritePropertyName("status"u8);
@@ -39,8 +41,6 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStringValue(CreatedOn, "O");
             writer.WritePropertyName("lastUpdatedDateTime"u8);
             writer.WriteStringValue(LastUpdatedOn, "O");
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("resourceLocation"u8);
             writer.WriteStringValue(ResourceLocation.AbsoluteUri);
             if (Optional.IsDefined(ApiVersion))

@@ -486,11 +486,11 @@ DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdmini
 Response response = await client.GetOperationAsync("<operationId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("operationId").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
 ]]></code>
 This sample shows how to call GetOperationAsync with all parameters and parse the result.
@@ -502,12 +502,12 @@ DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdmini
 Response response = await client.GetOperationAsync("<operationId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("operationId").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("percentCompleted").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
 Console.WriteLine(result.GetProperty("apiVersion").ToString());
 Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
@@ -529,11 +529,11 @@ DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdmini
 Response response = client.GetOperation("<operationId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("operationId").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
 ]]></code>
 This sample shows how to call GetOperation with all parameters and parse the result.
@@ -545,12 +545,12 @@ DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdmini
 Response response = client.GetOperation("<operationId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("operationId").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("percentCompleted").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
 Console.WriteLine(result.GetProperty("apiVersion").ToString());
 Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
@@ -930,11 +930,11 @@ DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdmini
 await foreach (BinaryData item in client.GetOperationsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("operationId").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("resourceLocation").ToString());
 }
 ]]></code>
@@ -947,12 +947,12 @@ DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdmini
 await foreach (BinaryData item in client.GetOperationsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("operationId").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("percentCompleted").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("resourceLocation").ToString());
     Console.WriteLine(result.GetProperty("apiVersion").ToString());
     Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
@@ -975,11 +975,11 @@ DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdmini
 foreach (BinaryData item in client.GetOperations(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("operationId").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("resourceLocation").ToString());
 }
 ]]></code>
@@ -992,12 +992,12 @@ DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdmini
 foreach (BinaryData item in client.GetOperations(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("operationId").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("percentCompleted").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("kind").ToString());
     Console.WriteLine(result.GetProperty("resourceLocation").ToString());
     Console.WriteLine(result.GetProperty("apiVersion").ToString());
     Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
