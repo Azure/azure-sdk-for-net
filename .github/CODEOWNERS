@@ -657,12 +657,6 @@
 # ServiceLabel: %Mixed Reality
 # ServiceOwners:                                                   @crtreasu @rgarcia
 
-# PRLabel: %Oracle
-/sdk/oracle/                                                       @v-jamcheung
-
-# ServiceLabel: %Oracle
-# ServiceOwners:                                                   @v-jamcheung
-
 # PRLabel: %Network
 /sdk/network*/                                                     @aznetsuppgithub
 
@@ -961,6 +955,12 @@
 
 # ServiceLabel: %Network - Front Door %Mgmt
 # ServiceOwners:                                                   @ptnan7
+
+# PRLabel: %Oracle
+/sdk/oracle/Azure.ResourceManager.*/                               @v-rvilathurs @eelhomsi1 @v-jamcheung
+
+# ServiceLabel: %Oracle %Mgmt
+# ServiceOwners:                                                   @v-rvilathurs @eelhomsi1 @v-jamcheung
 
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
