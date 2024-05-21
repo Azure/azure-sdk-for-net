@@ -60,13 +60,13 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateValue"/>. </summary>
-        /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MessageTemplateValue(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MessageTemplateValue(MessageTemplateValueKind kind, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
             Kind = kind;
+            Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -75,9 +75,9 @@ namespace Azure.Communication.Messages
         {
         }
 
-        /// <summary> Template binding reference name. </summary>
-        public string Name { get; }
         /// <summary> The type discriminator describing a template parameter type. </summary>
         internal MessageTemplateValueKind Kind { get; set; }
+        /// <summary> Template binding reference name. </summary>
+        public string Name { get; }
     }
 }

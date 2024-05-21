@@ -26,6 +26,8 @@ namespace Azure.Communication.Messages
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W")
             {
                 writer.WritePropertyName("name"u8);
@@ -35,8 +37,6 @@ namespace Azure.Communication.Messages
             writer.WriteStringValue(Language);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,14 +75,19 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
+            CommunicationMessagesChannel kind = "Unknown";
             string name = default;
             string language = default;
             MessageTemplateStatus status = default;
-            CommunicationMessagesChannel kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new CommunicationMessagesChannel(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -98,18 +103,13 @@ namespace Azure.Communication.Messages
                     status = new MessageTemplateStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new CommunicationMessagesChannel(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownMessageTemplateItem(name, language, status, kind, serializedAdditionalRawData);
+            return new UnknownMessageTemplateItem(kind, name, language, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MessageTemplateItem>.Write(ModelReaderWriterOptions options)

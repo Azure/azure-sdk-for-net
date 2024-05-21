@@ -107,12 +107,12 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionAction"/>. </summary>
-        /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
+        /// <param name="id"> Unique Id of the exception action. </param>
         /// <returns> A new <see cref="JobRouter.ExceptionAction"/> instance for mocking. </returns>
-        public static ExceptionAction ExceptionAction(string id = null, string kind = null)
+        public static ExceptionAction ExceptionAction(string kind = null, string id = null)
         {
-            return new UnknownExceptionAction(id, kind == null ? default : new ExceptionActionKind(kind), serializedAdditionalRawData: null);
+            return new UnknownExceptionAction(kind == null ? default : new ExceptionActionKind(kind), id, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobAssignment"/>. </summary>
@@ -396,7 +396,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> A new <see cref="JobRouter.CancelExceptionAction"/> instance for mocking. </returns>
         public static CancelExceptionAction CancelExceptionAction(string id = null, string note = null, string dispositionCode = null)
         {
-            return new CancelExceptionAction(id, ExceptionActionKind.Cancel, serializedAdditionalRawData: null, note, dispositionCode);
+            return new CancelExceptionAction(ExceptionActionKind.Cancel, id, serializedAdditionalRawData: null, note, dispositionCode);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.ManualReclassifyExceptionAction"/>. </summary>
@@ -410,8 +410,8 @@ namespace Azure.Communication.JobRouter
             workerSelectors ??= new List<RouterWorkerSelector>();
 
             return new ManualReclassifyExceptionAction(
-                id,
                 ExceptionActionKind.ManualReclassify,
+                id,
                 serializedAdditionalRawData: null,
                 queueId,
                 priority,

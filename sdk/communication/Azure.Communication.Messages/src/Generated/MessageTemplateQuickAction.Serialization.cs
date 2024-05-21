@@ -36,10 +36,10 @@ namespace Azure.Communication.Messages
                 writer.WritePropertyName("payload"u8);
                 writer.WriteStringValue(Payload);
             }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,8 +80,8 @@ namespace Azure.Communication.Messages
             }
             string text = default;
             string payload = default;
-            string name = default;
             MessageTemplateValueKind kind = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,14 +96,14 @@ namespace Azure.Communication.Messages
                     payload = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("kind"u8))
                 {
                     kind = new MessageTemplateValueKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +112,7 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MessageTemplateQuickAction(name, kind, serializedAdditionalRawData, text, payload);
+            return new MessageTemplateQuickAction(kind, name, serializedAdditionalRawData, text, payload);
         }
 
         BinaryData IPersistableModel<MessageTemplateQuickAction>.Write(ModelReaderWriterOptions options)

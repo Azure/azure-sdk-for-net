@@ -26,6 +26,8 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("minConcurrentOffers"u8);
             writer.WriteNumberValue(MinConcurrentOffers);
             writer.WritePropertyName("maxConcurrentOffers"u8);
@@ -35,8 +37,6 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

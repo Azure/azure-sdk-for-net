@@ -16,15 +16,15 @@ namespace Azure.Communication.Messages
     public static partial class CommunicationMessagesModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Messages.NotificationContent"/>. </summary>
+        /// <param name="kind"> The type discriminator describing a notification type. </param>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
-        /// <param name="kind"> The type discriminator describing a notification type. </param>
         /// <returns> A new <see cref="Messages.NotificationContent"/> instance for mocking. </returns>
-        public static NotificationContent NotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string kind = null)
+        public static NotificationContent NotificationContent(string kind = null, Guid channelRegistrationId = default, IEnumerable<string> to = null)
         {
             to ??= new List<string>();
 
-            return new UnknownNotificationContent(channelRegistrationId, to?.ToList(), kind == null ? default : new CommunicationMessageKind(kind), serializedAdditionalRawData: null);
+            return new UnknownNotificationContent(kind == null ? default : new CommunicationMessageKind(kind), channelRegistrationId, to?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.SendMessageResult"/>. </summary>
@@ -47,14 +47,14 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateItem"/>. </summary>
+        /// <param name="kind"> The type discriminator describing a template type. </param>
         /// <param name="name"> The template's name. </param>
         /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="status"> The aggregated template status. </param>
-        /// <param name="kind"> The type discriminator describing a template type. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateItem"/> instance for mocking. </returns>
-        public static MessageTemplateItem MessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, string kind = null)
+        public static MessageTemplateItem MessageTemplateItem(string kind = null, string name = null, string language = null, MessageTemplateStatus status = default)
         {
-            return new UnknownMessageTemplateItem(name, language, status, kind == null ? default : new CommunicationMessagesChannel(kind), serializedAdditionalRawData: null);
+            return new UnknownMessageTemplateItem(kind == null ? default : new CommunicationMessagesChannel(kind), name, language, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.TextNotificationContent"/>. </summary>
@@ -66,7 +66,7 @@ namespace Azure.Communication.Messages
         {
             to ??= new List<string>();
 
-            return new TextNotificationContent(channelRegistrationId, to?.ToList(), CommunicationMessageKind.Text, serializedAdditionalRawData: null, content);
+            return new TextNotificationContent(CommunicationMessageKind.Text, channelRegistrationId, to?.ToList(), serializedAdditionalRawData: null, content);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MediaNotificationContent"/>. </summary>
@@ -80,9 +80,9 @@ namespace Azure.Communication.Messages
             to ??= new List<string>();
 
             return new MediaNotificationContent(
+                CommunicationMessageKind.Image,
                 channelRegistrationId,
                 to?.ToList(),
-                CommunicationMessageKind.Image,
                 serializedAdditionalRawData: null,
                 content,
                 mediaUri);
@@ -97,7 +97,7 @@ namespace Azure.Communication.Messages
         {
             to ??= new List<string>();
 
-            return new TemplateNotificationContent(channelRegistrationId, to?.ToList(), CommunicationMessageKind.Template, serializedAdditionalRawData: null, template);
+            return new TemplateNotificationContent(CommunicationMessageKind.Template, channelRegistrationId, to?.ToList(), serializedAdditionalRawData: null, template);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplate"/>. </summary>
@@ -122,12 +122,12 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateValue"/>. </summary>
-        /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateValue"/> instance for mocking. </returns>
-        public static MessageTemplateValue MessageTemplateValue(string name = null, string kind = null)
+        public static MessageTemplateValue MessageTemplateValue(string kind = null, string name = null)
         {
-            return new UnknownMessageTemplateValue(name, kind == null ? default : new MessageTemplateValueKind(kind), serializedAdditionalRawData: null);
+            return new UnknownMessageTemplateValue(kind == null ? default : new MessageTemplateValueKind(kind), name, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateText"/>. </summary>
@@ -136,7 +136,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.MessageTemplateText"/> instance for mocking. </returns>
         public static MessageTemplateText MessageTemplateText(string name = null, string text = null)
         {
-            return new MessageTemplateText(name, MessageTemplateValueKind.Text, serializedAdditionalRawData: null, text);
+            return new MessageTemplateText(MessageTemplateValueKind.Text, name, serializedAdditionalRawData: null, text);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateImage"/>. </summary>
@@ -148,8 +148,8 @@ namespace Azure.Communication.Messages
         public static MessageTemplateImage MessageTemplateImage(string name = null, Uri uri = null, string caption = null, string fileName = null)
         {
             return new MessageTemplateImage(
-                name,
                 MessageTemplateValueKind.Image,
+                name,
                 serializedAdditionalRawData: null,
                 uri,
                 caption,
@@ -165,8 +165,8 @@ namespace Azure.Communication.Messages
         public static MessageTemplateDocument MessageTemplateDocument(string name = null, Uri uri = null, string caption = null, string fileName = null)
         {
             return new MessageTemplateDocument(
-                name,
                 MessageTemplateValueKind.Document,
+                name,
                 serializedAdditionalRawData: null,
                 uri,
                 caption,
@@ -182,8 +182,8 @@ namespace Azure.Communication.Messages
         public static MessageTemplateVideo MessageTemplateVideo(string name = null, Uri uri = null, string caption = null, string fileName = null)
         {
             return new MessageTemplateVideo(
-                name,
                 MessageTemplateValueKind.Video,
+                name,
                 serializedAdditionalRawData: null,
                 uri,
                 caption,
@@ -197,7 +197,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.MessageTemplateQuickAction"/> instance for mocking. </returns>
         public static MessageTemplateQuickAction MessageTemplateQuickAction(string name = null, string text = null, string payload = null)
         {
-            return new MessageTemplateQuickAction(name, MessageTemplateValueKind.QuickAction, serializedAdditionalRawData: null, text, payload);
+            return new MessageTemplateQuickAction(MessageTemplateValueKind.QuickAction, name, serializedAdditionalRawData: null, text, payload);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Channels.WhatsAppMessageTemplateItem"/>. </summary>
@@ -209,10 +209,10 @@ namespace Azure.Communication.Messages
         public static WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, BinaryData content = null)
         {
             return new WhatsAppMessageTemplateItem(
+                CommunicationMessagesChannel.WhatsApp,
                 name,
                 language,
                 status,
-                CommunicationMessagesChannel.WhatsApp,
                 serializedAdditionalRawData: null,
                 content);
         }

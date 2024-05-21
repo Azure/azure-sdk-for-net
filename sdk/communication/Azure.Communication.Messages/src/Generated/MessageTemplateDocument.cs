@@ -27,13 +27,13 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateDocument"/>. </summary>
-        /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> The (public) URL of the media. </param>
         /// <param name="caption"> The [optional] caption of the media object. </param>
         /// <param name="fileName"> The [optional] filename of the media file. </param>
-        internal MessageTemplateDocument(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri uri, string caption, string fileName) : base(name, kind, serializedAdditionalRawData)
+        internal MessageTemplateDocument(MessageTemplateValueKind kind, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri uri, string caption, string fileName) : base(kind, name, serializedAdditionalRawData)
         {
             Uri = uri;
             Caption = caption;

@@ -244,40 +244,6 @@
    "Properties": [
     {
      "$id": "31",
-     "Name": "channelRegistrationId",
-     "SerializedName": "channelRegistrationId",
-     "Description": "The Channel Registration ID for the Business Identifier.",
-     "Type": {
-      "$id": "32",
-      "Kind": "Primitive",
-      "Name": "Guid",
-      "IsNullable": false
-     },
-     "IsRequired": true,
-     "IsReadOnly": false
-    },
-    {
-     "$id": "33",
-     "Name": "to",
-     "SerializedName": "to",
-     "Description": "The native external platform user identifiers of the recipient.",
-     "Type": {
-      "$id": "34",
-      "Kind": "Array",
-      "Name": "Array",
-      "ElementType": {
-       "$id": "35",
-       "Kind": "Primitive",
-       "Name": "String",
-       "IsNullable": false
-      },
-      "IsNullable": false
-     },
-     "IsRequired": true,
-     "IsReadOnly": false
-    },
-    {
-     "$id": "36",
      "Name": "kind",
      "SerializedName": "kind",
      "Description": "The type discriminator describing a notification type.",
@@ -287,6 +253,40 @@
      "IsRequired": true,
      "IsReadOnly": false,
      "IsDiscriminator": true
+    },
+    {
+     "$id": "32",
+     "Name": "channelRegistrationId",
+     "SerializedName": "channelRegistrationId",
+     "Description": "The Channel Registration ID for the Business Identifier.",
+     "Type": {
+      "$id": "33",
+      "Kind": "Primitive",
+      "Name": "Guid",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "34",
+     "Name": "to",
+     "SerializedName": "to",
+     "Description": "The native external platform user identifiers of the recipient.",
+     "Type": {
+      "$id": "35",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "36",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
     }
    ]
   },
@@ -387,45 +387,6 @@
        "Properties": [
         {
          "$id": "49",
-         "Name": "name",
-         "SerializedName": "name",
-         "Description": "The template's name.",
-         "Type": {
-          "$id": "50",
-          "Kind": "Primitive",
-          "Name": "String",
-          "IsNullable": false
-         },
-         "IsRequired": true,
-         "IsReadOnly": true
-        },
-        {
-         "$id": "51",
-         "Name": "language",
-         "SerializedName": "language",
-         "Description": "The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'.",
-         "Type": {
-          "$id": "52",
-          "Kind": "Primitive",
-          "Name": "String",
-          "IsNullable": false
-         },
-         "IsRequired": true,
-         "IsReadOnly": false
-        },
-        {
-         "$id": "53",
-         "Name": "status",
-         "SerializedName": "status",
-         "Description": "The aggregated template status.",
-         "Type": {
-          "$ref": "9"
-         },
-         "IsRequired": true,
-         "IsReadOnly": false
-        },
-        {
-         "$id": "54",
          "Name": "kind",
          "SerializedName": "kind",
          "Description": "The type discriminator describing a template type.",
@@ -435,6 +396,45 @@
          "IsRequired": true,
          "IsReadOnly": false,
          "IsDiscriminator": true
+        },
+        {
+         "$id": "50",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "The template's name.",
+         "Type": {
+          "$id": "51",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "52",
+         "Name": "language",
+         "SerializedName": "language",
+         "Description": "The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'.",
+         "Type": {
+          "$id": "53",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "54",
+         "Name": "status",
+         "SerializedName": "status",
+         "Description": "The aggregated template status.",
+         "Type": {
+          "$ref": "9"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
         }
        ]
       },
@@ -610,20 +610,6 @@
           "Properties": [
            {
             "$id": "75",
-            "Name": "name",
-            "SerializedName": "name",
-            "Description": "Template binding reference name",
-            "Type": {
-             "$id": "76",
-             "Kind": "Primitive",
-             "Name": "String",
-             "IsNullable": false
-            },
-            "IsRequired": true,
-            "IsReadOnly": false
-           },
-           {
-            "$id": "77",
             "Name": "kind",
             "SerializedName": "kind",
             "Description": "The type discriminator describing a template parameter type.",
@@ -633,6 +619,20 @@
             "IsRequired": true,
             "IsReadOnly": false,
             "IsDiscriminator": true
+           },
+           {
+            "$id": "76",
+            "Name": "name",
+            "SerializedName": "name",
+            "Description": "Template binding reference name",
+            "Type": {
+             "$id": "77",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
            }
           ]
          },

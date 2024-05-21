@@ -26,10 +26,10 @@ namespace Azure.Communication.Messages
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -68,20 +68,20 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            string name = default;
             MessageTemplateValueKind kind = "Unknown";
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("kind"u8))
                 {
                     kind = new MessageTemplateValueKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -90,7 +90,7 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownMessageTemplateValue(name, kind, serializedAdditionalRawData);
+            return new UnknownMessageTemplateValue(kind, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MessageTemplateValue>.Write(ModelReaderWriterOptions options)

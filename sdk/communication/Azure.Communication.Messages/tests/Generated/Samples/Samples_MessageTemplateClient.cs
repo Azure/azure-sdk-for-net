@@ -24,10 +24,10 @@ namespace Azure.Communication.Messages.Samples
             foreach (BinaryData item in client.GetTemplates(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("language").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -40,10 +40,10 @@ namespace Azure.Communication.Messages.Samples
             await foreach (BinaryData item in client.GetTemplatesAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("language").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -78,10 +78,10 @@ namespace Azure.Communication.Messages.Samples
             foreach (BinaryData item in client.GetTemplates(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), 1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("language").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -94,10 +94,10 @@ namespace Azure.Communication.Messages.Samples
             await foreach (BinaryData item in client.GetTemplatesAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), 1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("kind").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("language").ToString());
                 Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 

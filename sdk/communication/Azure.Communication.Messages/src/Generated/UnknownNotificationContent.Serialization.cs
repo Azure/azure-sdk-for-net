@@ -26,6 +26,8 @@ namespace Azure.Communication.Messages
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("channelRegistrationId"u8);
             writer.WriteStringValue(ChannelRegistrationId);
             writer.WritePropertyName("to"u8);
@@ -35,8 +37,6 @@ namespace Azure.Communication.Messages
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,13 +75,18 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
+            CommunicationMessageKind kind = "Unknown";
             Guid channelRegistrationId = default;
             IList<string> to = default;
-            CommunicationMessageKind kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new CommunicationMessageKind(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("channelRegistrationId"u8))
                 {
                     channelRegistrationId = property.Value.GetGuid();
@@ -97,18 +102,13 @@ namespace Azure.Communication.Messages
                     to = array;
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new CommunicationMessageKind(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownNotificationContent(channelRegistrationId, to, kind, serializedAdditionalRawData);
+            return new UnknownNotificationContent(kind, channelRegistrationId, to, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationContent>.Write(ModelReaderWriterOptions options)
