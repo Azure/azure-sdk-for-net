@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>CloudNative CloudEvents support for Azure.Messaging.EventGrid library</AssemblyTitle>
     <Description>This library allows the CloudEvent model from CloudNative.CloudEvents to be published using the Azure Event Grid client library.</Description>
@@ -19,7 +19,6 @@
     <PackageReference Include="Azure.Messaging.EventGrid" />
     <PackageReference Include="CloudNative.CloudEvents" />
     <PackageReference Include="CloudNative.CloudEvents.SystemTextJson" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
 		<PackageReference Include="Azure.Core"/>
   </ItemGroup>
 </Project>
