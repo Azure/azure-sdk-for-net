@@ -116,7 +116,7 @@ namespace Azure.Storage.Tests
             new Random().NextBytes(originalData);
             byte[] encodedData = StructuredMessageHelper.MakeEncodedData(originalData, segmentContentLength, flags);
 
-            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
+            (Stream decodingStream, _) = StructuredMessageDecodingStream.WrapStream(new MemoryStream(encodedData));
             byte[] decodedData;
             using (MemoryStream dest = new())
             {
@@ -136,7 +136,7 @@ namespace Azure.Storage.Tests
 
             encodedData[0] = byte.MaxValue;
 
-            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
+            (Stream decodingStream, _) = StructuredMessageDecodingStream.WrapStream(new MemoryStream(encodedData));
             Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());
         }
 
@@ -154,7 +154,7 @@ namespace Azure.Storage.Tests
             encodedData[badBytePos] = (byte)~encodedData[badBytePos];
 
             MemoryStream encodedDataStream = new(encodedData);
-            Stream decodingStream = new StructuredMessageDecodingStream(encodedDataStream);
+            (Stream decodingStream, _) = StructuredMessageDecodingStream.WrapStream(encodedDataStream);
 
             // manual try/catch to validate the proccess failed mid-stream rather than the end
             const int copyBufferSize = 4;
@@ -183,7 +183,7 @@ namespace Azure.Storage.Tests
 
             encodedData[originalData.Length - 1] = (byte)~encodedData[originalData.Length - 1];
 
-            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
+            (Stream decodingStream, _) = StructuredMessageDecodingStream.WrapStream(new MemoryStream(encodedData));
             Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());
         }
 
@@ -196,7 +196,7 @@ namespace Azure.Storage.Tests
 
             BinaryPrimitives.WriteInt64LittleEndian(new Span<byte>(encodedData, V1_0.StreamHeaderMessageLengthOffset, 8), 123456789L);
 
-            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
+            (Stream decodingStream, _) = StructuredMessageDecodingStream.WrapStream(new MemoryStream(encodedData));
             Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());
         }
 
@@ -216,7 +216,7 @@ namespace Azure.Storage.Tests
             BinaryPrimitives.WriteInt16LittleEndian(
                 new Span<byte>(encodedData, V1_0.StreamHeaderSegmentCountOffset, 2), (short)(numSegments + difference));
 
-            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
+            (Stream decodingStream, _) = StructuredMessageDecodingStream.WrapStream(new MemoryStream(encodedData));
             Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());
         }
 
@@ -230,7 +230,7 @@ namespace Azure.Storage.Tests
             BinaryPrimitives.WriteInt16LittleEndian(
                 new Span<byte>(encodedData, V1_0.StreamHeaderLength + V1_0.SegmentHeaderNumOffset, 2), 123);
 
-            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
+            (Stream decodingStream, _) = StructuredMessageDecodingStream.WrapStream(new MemoryStream(encodedData));
             Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());
         }
 
@@ -248,7 +248,7 @@ namespace Azure.Storage.Tests
                 new Span<byte>(encodedData, V1_0.StreamHeaderMessageLengthOffset, 8),
                 encodedData.Length + difference);
 
-            Stream decodingStream = new StructuredMessageDecodingStream(
+            (Stream decodingStream, _) = StructuredMessageDecodingStream.WrapStream(
                 new MemoryStream(encodedData),
                 lengthProvided ? (long?)encodedData.Length : default);
 
@@ -284,14 +284,14 @@ namespace Azure.Storage.Tests
             byte[] brokenData = new byte[encodedData.Length - Crc64Length];
             new Span<byte>(encodedData, 0, encodedData.Length - Crc64Length).CopyTo(brokenData);
 
-            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(brokenData));
+            (Stream decodingStream, _) = StructuredMessageDecodingStream.WrapStream(new MemoryStream(brokenData));
             Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());
         }
 
         [Test]
         public void NoSeek()
         {
-            StructuredMessageDecodingStream stream = new(new MemoryStream());
+            (Stream stream, _) = StructuredMessageDecodingStream.WrapStream(new MemoryStream());
 
             Assert.That(stream.CanSeek, Is.False);
             Assert.That(() => stream.Length, Throws.TypeOf<NotSupportedException>());
@@ -303,7 +303,7 @@ namespace Azure.Storage.Tests
         [Test]
         public void NoWrite()
         {
-            StructuredMessageDecodingStream stream = new(new MemoryStream());
+            (Stream stream, _) = StructuredMessageDecodingStream.WrapStream(new MemoryStream());
             byte[] data = new byte[1024];
             new Random().NextBytes(data);
 
