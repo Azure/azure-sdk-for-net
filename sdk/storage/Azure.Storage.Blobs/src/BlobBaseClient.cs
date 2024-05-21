@@ -1761,7 +1761,7 @@ namespace Azure.Storage.Blobs.Specialized
             if (response.GetRawResponse().Headers.TryGetValue(Constants.StructuredMessage.CrcStructuredMessageHeader, out string _) &&
                 response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ContentLength, out string rawContentLength))
             {
-                result.Content = new StructuredMessageDecodingStream(result.Content, long.Parse(rawContentLength));
+                (result.Content, _) = StructuredMessageDecodingStream.WrapStream(result.Content, long.Parse(rawContentLength));
             }
             // if not null, we expected a structured message response
             // but we didn't find one in the above condition

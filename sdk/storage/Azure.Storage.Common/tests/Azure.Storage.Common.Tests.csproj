@@ -13,6 +13,8 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Common.csproj" />
     <ProjectReference Include="..\..\Azure.Storage.Files.Shares\src\Azure.Storage.Files.Shares.csproj" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)CancellationHelper.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)RetriableStream.cs" LinkBase="Shared\Core" />
     <Compile Remove="Shared\AzuriteFixture.cs" />
     <Compile Remove="Shared\AzuriteNUnitFixture.cs" />
     <Compile Remove="Shared\ClientSideEncryptionTestExtensions.cs" />
@@ -47,6 +49,7 @@
     <Compile Include="$(AzureStorageSharedSources)StorageWriteStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StreamExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StructuredMessage.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StructuredMessageDecodingRetriableStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StructuredMessageDecodingStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StructuredMessageEncodingStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" LinkBase="Shared" />
