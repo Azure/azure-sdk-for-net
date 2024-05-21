@@ -95,7 +95,7 @@ namespace Azure.AI.Personalizer
                 {
                      new JsonBinaryDataConverter(),
                 },
-                IgnoreNullValues = true
+                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
             };
             var contextJson = JsonSerializer.Serialize(decisionContext, jsonSerializerOptions);
             ActionFlags flags = options.DeferActivation == true ? ActionFlags.Deferred : ActionFlags.Default;
