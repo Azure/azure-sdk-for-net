@@ -66,7 +66,7 @@ namespace Azure.Communication.Messages
         /// <param name="address"> The [Optional] address of the location. </param>
         /// <param name="latitudeInternal"> The latitude of the location. </param>
         /// <param name="longitudeInternal"> The longitude of the location. </param>
-        internal MessageTemplateLocation(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string locationName, string address, double latitudeInternal, double longitudeInternal) : base(name, kind, serializedAdditionalRawData)
+        internal MessageTemplateLocation(MessageTemplateValueKind kind, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, string locationName, string address, double latitudeInternal, double longitudeInternal) : base(kind, name, serializedAdditionalRawData)
         {
             LocationName = locationName;
             Address = address;
