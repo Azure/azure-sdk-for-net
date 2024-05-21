@@ -22,14 +22,14 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
 ### Authenticate the client
 
-When the Microsoft Entra authentication events service calls your custom extension, it sends an `Authorization` header with a `Bearer {token}`. This token represents a [service to service authentication](https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow) in which:
+When the Microsoft Entra authentication events service calls your custom extension, it sends an `Authorization` header with a `Bearer {token}`. This token represents a [service to service authentication](https://learn.microsoft.com/entra/identity-platform/v2-oauth2-client-creds-grant-flow) in which:
 
 * The '**resource**', also known as the **audience**, is the application that you register to represent your API. This is represented by the `aud` claim in the token.
 * The '**client**' is a Microsoft application that represents the Microsoft Entra authentication events service. It has an `appId` value of `99045fe1-7639-4a75-9d4a-577b6ca3810f`. This is represented by:
   * The `azp` claim in the token if your application `accessTokenAcceptedVersion` property is set to `2`.
   * The `appid` claim in the token if your resource application's `accessTokenAcceptedVersion` property is set to `1` or `null`.
 
-There are different approaches to authenticating HTTP requests to your function app and validating the token which can be found [here](https://learn.microsoft.com/en-us/entra/identity-platform/custom-extension-tokenissuancestart-setup?tabs=visual-studio%2Cazure-portal&pivots=nuget-library#configure-authentication-for-your-azure-function).
+There are different approaches to authenticating HTTP requests to your function app and validating the token which can be found [here](https://learn.microsoft.com/entra/identity-platform/custom-extension-tokenissuancestart-setup?tabs=visual-studio%2Cazure-portal&pivots=nuget-library#configure-authentication-for-your-azure-function).
 
 #### No token validation
 
@@ -37,9 +37,9 @@ If you would like to _not_ authenticate the token while in local development, se
 
 * **AuthenticationEvents__BypassTokenValidation** - value of `true` will make the trigger not check for a validation of the token.
 
-### Quickstart
+### How to get started
 
-You can follow this article to start creating your function: [Create a REST API for a token issuance start event in Azure Functions](https://learn.microsoft.com/en-us/entra/identity-platform/custom-extension-tokenissuancestart-setup?tabs=visual-studio%2Cazure-portal&pivots=nuget-library)
+You can follow this article to start creating your function: [Create a REST API for a token issuance start event in Azure Functions](https://learn.microsoft.com/entra/identity-platform/custom-extension-tokenissuancestart-setup?tabs=visual-studio%2Cazure-portal&pivots=nuget-library)
 
 ## Key concepts
 
@@ -59,17 +59,12 @@ The authentication events trigger allows a function to be executed when an authe
 
 The authentication events trigger output binding allows a function to send authentication event actions to the Microsoft Entra event service.
 
-## Documentation
-
-* Once the function has been published, there's some good reading about logging and metrics that can be found [here](https://learn.microsoft.com/azure/azure-functions/functions-monitor-log-analytics?tabs=csharp)
-* Once this moves to preview, we except no breaking changes and would be as simple as removing the the NuGet source that points to the private preview.
-
 ## Examples
 
 To Test Token Augmentation, please do the following.
 
-* Open the project that was created in the prior step. (QuickStart)
-* Follow [these](https://learn.microsoft.com/en-us/entra/identity-platform/custom-extension-tokenissuancestart-setup?tabs=visual-studio%2Cazure-portal&pivots=nuget-library#build-and-run-the-project-locally) steps to test your app locally.
+* Open the project that was created in the prior step. (How to get started)
+* Follow [these](https://learn.microsoft.com/entra/identity-platform/custom-extension-tokenissuancestart-setup?tabs=visual-studio%2Cazure-portal&pivots=nuget-library#build-and-run-the-project-locally) steps to test your app locally.
 
 ## Troubleshooting
 
@@ -79,7 +74,7 @@ To Test Token Augmentation, please do the following.
 
 ## Publish
 
-* Follow the instruction [here](https://learn.microsoft.com/en-us/entra/identity-platform/custom-extension-tokenissuancestart-setup?tabs=visual-studio%2Cazure-portal&pivots=nuget-library#deploy-the-function-and-publish-to-azure) to create and publish your Azure Application.
+* Follow the instruction [here](https://learn.microsoft.com/entra/identity-platform/custom-extension-tokenissuancestart-setup?tabs=visual-studio%2Cazure-portal&pivots=nuget-library#deploy-the-function-and-publish-to-azure) to create and publish your Azure Application.
 * To determine your published posting endpoint, combine the azure function endpoint you created, route to the listener and listener code, the listen code can be found by navigating to your azure function application, selecting "App Keys" and copying the value of AuthenticationEvents_extension.
   * For example: "https://azureautheventstriggerdemo.azurewebsites.net/runtime/webhooks/AuthenticationEvents?code=(AuthenticationEvents_extension_key)&function=OnTokenIssuanceStart"
 * Make sure your production environment has the correct application settings for token authentication.
@@ -88,7 +83,9 @@ To Test Token Augmentation, please do the following.
 
 For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/)
 
-[Configure a custom claim provider for a token issuance event](https://learn.microsoft.com/en-us/entra/identity-platform/custom-extension-tokenissuancestart-configuration?tabs=azure-portal%2Cworkforce-tenant)
+Information about logging and metrics for the deployed function can be found [here](https://learn.microsoft.com/azure/azure-functions/monitor-functions?tabs=portal)
+
+[Configure a custom claim provider for a token issuance event](https://learn.microsoft.com/entra/identity-platform/custom-extension-tokenissuancestart-configuration?tabs=azure-portal%2Cworkforce-tenant)
 
 ## Contributing
 
