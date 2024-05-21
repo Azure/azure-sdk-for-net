@@ -202,10 +202,13 @@
 # ServiceOwners:                                                   @ryogok @TFR258 @tburns10 @areddish @toothache
 
 # PRLabel: %Cognitive - Face
-/sdk/cognitiveservices/Vision.Face/                                @JinyuID @dipidoo @SteveMSFT @msyache @longli0 @lulululululu
+/sdk/cognitiveservices/Vision.Face/                                @dipidoo @longli0 @ShaoAnLin @lulululululu @leareai @Han-msft
+
+# PRLabel: %Cognitive - Face
+/sdk/face/                                                         @dipidoo @longli0 @ShaoAnLin @lulululululu @leareai @Han-msft
 
 # ServiceLabel: %Cognitive - Face
-# ServiceOwners:                                                   @JinyuID @dipidoo @SteveMSFT @msyache @longli0 @lulululululu
+# ServiceOwners:                                                   @dipidoo @longli0 @ShaoAnLin @lulululululu @leareai @Han-msft
 
 # PRLabel: %Cognitive - Form Recognizer
 /sdk/documentintelligence/                                         @kinelski @pallavit @joseharriaga
@@ -711,12 +714,6 @@
 # ServiceLabel: %Network - Private Link
 # ServiceOwners:                                                   @privlinksuppgithub
 
-# PRLabel: %Nginx
-/sdk/nginx/                                                        @spencerofwiti @bangbingsyb
-
-# ServiceLabel: %Nginx
-# ServiceOwners:                                                   @spencerofwiti @bangbingsyb
-
 # ServiceLabel: %Notification Hub
 # ServiceOwners:                                                   @tjsomasundaram
 
@@ -955,6 +952,12 @@
 
 # ServiceLabel: %Network - Front Door %Mgmt
 # ServiceOwners:                                                   @ptnan7
+
+# PRLabel: %Nginx
+/sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti
+
+# ServiceLabel: %Nginx %Mgmt
+# ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
 
 # PRLabel: %Oracle
 /sdk/oracle/Azure.ResourceManager.*/                               @v-rvilathurs @eelhomsi1 @v-jamcheung

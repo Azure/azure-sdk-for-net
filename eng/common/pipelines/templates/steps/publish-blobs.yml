@@ -1,6 +1,5 @@
 parameters:
   FolderForUpload: ''
-  BlobSASKey: ''
   TargetLanguage: ''
   BlobName: ''
   ScriptPath: ''
@@ -17,17 +16,20 @@ steps:
   workingDirectory: $(Build.BinariesDirectory)
   displayName: Download and Extract azcopy Zip
 
-- task: Powershell@2
+- task: AzurePowerShell@5
+  displayName: 'Copy Docs to Blob Storage'
+  continueOnError: false
   inputs:
-    filePath: ${{ parameters.ScriptPath }}
-    arguments: >
+    azureSubscription: 'Azure SDK Artifacts'
+    ScriptType: 'FilePath'
+    ScriptPath: ${{ parameters.ScriptPath }}
+    ScriptArguments: >
       -AzCopy $(Resolve-Path "$(Build.BinariesDirectory)/azcopy/azcopy_windows_amd64_*/azcopy.exe")[0]
       -DocLocation "${{ parameters.FolderForUpload }}"
-      -SASKey "${{ parameters.BlobSASKey }}"
       -BlobName "${{ parameters.BlobName }}"
       -PublicArtifactLocation "${{ parameters.ArtifactLocation }}"
       -RepoReplaceRegex "(https://github.com/${{ parameters.RepoId }}/(?:blob|tree)/)$(DefaultBranch)"
+    azurePowerShellVersion: latestVersion
     pwsh: true
-    workingDirectory: $(Pipeline.Workspace)
-  displayName: Copy Docs to Blob
-  continueOnError: false
+  env:
+    AZCOPY_AUTO_LOGIN_TYPE: 'PSCRED'

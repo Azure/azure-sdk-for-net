@@ -31,7 +31,7 @@ namespace Azure.AI.Translation.Text
             writer.WritePropertyName("nativeName"u8);
             writer.WriteStringValue(NativeName);
             writer.WritePropertyName("dir"u8);
-            writer.WriteStringValue(Dir);
+            writer.WriteStringValue(Directionality.ToSerialString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -72,7 +72,7 @@ namespace Azure.AI.Translation.Text
             }
             string name = default;
             string nativeName = default;
-            string dir = default;
+            LanguageDirectionality dir = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.AI.Translation.Text
                 }
                 if (property.NameEquals("dir"u8))
                 {
-                    dir = property.Value.GetString();
+                    dir = property.Value.GetString().ToLanguageDirectionality();
                     continue;
                 }
                 if (options.Format != "W")
