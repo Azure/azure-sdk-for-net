@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionReservationTransaction : IUtf8JsonSerializable, IJsonModel<ConsumptionReservationTransaction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionReservationTransaction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionReservationTransaction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionReservationTransaction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationTransaction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationTransaction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -207,42 +207,42 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionReservationTransaction DeserializeConsumptionReservationTransaction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> tags = default;
+            IReadOnlyList<string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> eventDate = default;
-            Optional<string> reservationOrderId = default;
-            Optional<string> description = default;
-            Optional<string> eventType = default;
-            Optional<decimal> quantity = default;
-            Optional<decimal> amount = default;
-            Optional<string> currency = default;
-            Optional<string> reservationOrderName = default;
-            Optional<string> purchasingEnrollment = default;
-            Optional<Guid> purchasingSubscriptionGuid = default;
-            Optional<string> purchasingSubscriptionName = default;
-            Optional<string> armSkuName = default;
-            Optional<string> term = default;
-            Optional<string> region = default;
-            Optional<string> accountName = default;
-            Optional<string> accountOwnerEmail = default;
-            Optional<string> departmentName = default;
-            Optional<string> costCenter = default;
-            Optional<string> currentEnrollment = default;
-            Optional<string> billingFrequency = default;
-            Optional<int> billingMonth = default;
-            Optional<decimal> monetaryCommitment = default;
-            Optional<decimal> overage = default;
+            SystemData systemData = default;
+            DateTimeOffset? eventDate = default;
+            string reservationOrderId = default;
+            string description = default;
+            string eventType = default;
+            decimal? quantity = default;
+            decimal? amount = default;
+            string currency = default;
+            string reservationOrderName = default;
+            string purchasingEnrollment = default;
+            Guid? purchasingSubscriptionGuid = default;
+            string purchasingSubscriptionName = default;
+            string armSkuName = default;
+            string term = default;
+            string region = default;
+            string accountName = default;
+            string accountOwnerEmail = default;
+            string departmentName = default;
+            string costCenter = default;
+            string currentEnrollment = default;
+            string billingFrequency = default;
+            int? billingMonth = default;
+            decimal? monetaryCommitment = default;
+            decimal? overage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -440,11 +440,40 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionReservationTransaction(id, name, type, systemData.Value, Optional.ToNullable(eventDate), reservationOrderId.Value, description.Value, eventType.Value, Optional.ToNullable(quantity), Optional.ToNullable(amount), currency.Value, reservationOrderName.Value, purchasingEnrollment.Value, Optional.ToNullable(purchasingSubscriptionGuid), purchasingSubscriptionName.Value, armSkuName.Value, term.Value, region.Value, accountName.Value, accountOwnerEmail.Value, departmentName.Value, costCenter.Value, currentEnrollment.Value, billingFrequency.Value, Optional.ToNullable(billingMonth), Optional.ToNullable(monetaryCommitment), Optional.ToNullable(overage), Optional.ToList(tags), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionReservationTransaction(
+                id,
+                name,
+                type,
+                systemData,
+                eventDate,
+                reservationOrderId,
+                description,
+                eventType,
+                quantity,
+                amount,
+                currency,
+                reservationOrderName,
+                purchasingEnrollment,
+                purchasingSubscriptionGuid,
+                purchasingSubscriptionName,
+                armSkuName,
+                term,
+                region,
+                accountName,
+                accountOwnerEmail,
+                departmentName,
+                costCenter,
+                currentEnrollment,
+                billingFrequency,
+                billingMonth,
+                monetaryCommitment,
+                overage,
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionReservationTransaction>.Write(ModelReaderWriterOptions options)
@@ -456,7 +485,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -472,7 +501,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionReservationTransaction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support reading '{options.Format}' format.");
             }
         }
 

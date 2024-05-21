@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.3 (2024-05-10)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-09-01-preview' to 'package-2024-03-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b38632bbd56247985cb0493b128ba048e5fee16b/specification/help/resource-manager/readme.md.
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.39.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.11.1
 
 ## 1.1.0-beta.2 (2023-11-30)
 

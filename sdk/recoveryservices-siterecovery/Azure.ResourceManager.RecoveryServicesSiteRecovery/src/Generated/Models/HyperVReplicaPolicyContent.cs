@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -22,6 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaPolicyContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPoints"> A value indicating the number of recovery points. </param>
         /// <param name="applicationConsistentSnapshotFrequencyInHours"> A value indicating the application consistent frequency. </param>
         /// <param name="compression"> A value indicating whether compression has to be enabled. </param>
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="replicationPort"> A value indicating the recovery HTTPS port. </param>
         /// <param name="allowedAuthenticationType"> A value indicating the authentication type. </param>
         /// <param name="replicaDeletion"> A value indicating whether the VM has to be auto deleted. </param>
-        internal HyperVReplicaPolicyContent(string instanceType, int? recoveryPoints, int? applicationConsistentSnapshotFrequencyInHours, string compression, string initialReplicationMethod, string onlineReplicationStartTime, string offlineReplicationImportPath, string offlineReplicationExportPath, int? replicationPort, int? allowedAuthenticationType, string replicaDeletion) : base(instanceType)
+        internal HyperVReplicaPolicyContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? recoveryPoints, int? applicationConsistentSnapshotFrequencyInHours, string compression, string initialReplicationMethod, string onlineReplicationStartTime, string offlineReplicationImportPath, string offlineReplicationExportPath, int? replicationPort, int? allowedAuthenticationType, string replicaDeletion) : base(instanceType, serializedAdditionalRawData)
         {
             RecoveryPoints = recoveryPoints;
             ApplicationConsistentSnapshotFrequencyInHours = applicationConsistentSnapshotFrequencyInHours;

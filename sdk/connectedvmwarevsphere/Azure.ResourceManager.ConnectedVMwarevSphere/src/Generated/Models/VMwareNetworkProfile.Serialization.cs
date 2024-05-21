@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     internal partial class VMwareNetworkProfile : IUtf8JsonSerializable, IJsonModel<VMwareNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareNetworkProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VMwareNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,15 +68,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static VMwareNetworkProfile DeserializeVMwareNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<VMwareNetworkInterface>> networkInterfaces = default;
+            IList<VMwareNetworkInterface> networkInterfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaces"u8))
@@ -88,18 +88,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VMwareNetworkInterface> array = new List<VMwareNetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareNetworkInterface.DeserializeVMwareNetworkInterface(item));
+                        array.Add(VMwareNetworkInterface.DeserializeVMwareNetworkInterface(item, options));
                     }
                     networkInterfaces = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareNetworkProfile(Optional.ToList(networkInterfaces), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VMwareNetworkProfile(networkInterfaces ?? new ChangeTrackingList<VMwareNetworkInterface>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareNetworkProfile>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializeVMwareNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

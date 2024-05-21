@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class MetricsResponse : IUtf8JsonSerializable, IJsonModel<MetricsResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricsResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricsResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MetricsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MetricsResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricsResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricsResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Series)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricsResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricsResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricsResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,18 +83,18 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static MetricsResponse DeserializeMetricsResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset> dateTimeBegin = default;
-            Optional<DateTimeOffset> dateTimeEnd = default;
-            Optional<MetricsResponseGranularity> granularity = default;
-            Optional<IReadOnlyList<MetricsResponseSeriesItem>> series = default;
+            DateTimeOffset? dateTimeBegin = default;
+            DateTimeOffset? dateTimeEnd = default;
+            MetricsResponseGranularity? granularity = default;
+            IReadOnlyList<MetricsResponseSeriesItem> series = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateTimeBegin"u8))
@@ -133,18 +133,18 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<MetricsResponseSeriesItem> array = new List<MetricsResponseSeriesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricsResponseSeriesItem.DeserializeMetricsResponseSeriesItem(item));
+                        array.Add(MetricsResponseSeriesItem.DeserializeMetricsResponseSeriesItem(item, options));
                     }
                     series = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToNullable(granularity), Optional.ToList(series), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MetricsResponse(dateTimeBegin, dateTimeEnd, granularity, series ?? new ChangeTrackingList<MetricsResponseSeriesItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricsResponse>.Write(ModelReaderWriterOptions options)
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricsResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricsResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeMetricsResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricsResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricsResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

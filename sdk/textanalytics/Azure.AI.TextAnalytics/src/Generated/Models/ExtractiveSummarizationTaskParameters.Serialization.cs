@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -50,11 +49,11 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<int> sentenceCount = default;
-            Optional<ExtractiveSummarySentencesOrder> sortBy = default;
-            Optional<StringIndexType> stringIndexType = default;
-            Optional<string> modelVersion = default;
-            Optional<bool> loggingOptOut = default;
+            int? sentenceCount = default;
+            ExtractiveSummarySentencesOrder? sortBy = default;
+            StringIndexType? stringIndexType = default;
+            string modelVersion = default;
+            bool? loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sentenceCount"u8))
@@ -99,7 +98,23 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new ExtractiveSummarizationTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(sentenceCount), Optional.ToNullable(sortBy), Optional.ToNullable(stringIndexType));
+            return new ExtractiveSummarizationTaskParameters(loggingOptOut, modelVersion, sentenceCount, sortBy, stringIndexType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ExtractiveSummarizationTaskParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExtractiveSummarizationTaskParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

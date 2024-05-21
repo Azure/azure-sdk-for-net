@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class DscReportResource : IUtf8JsonSerializable, IJsonModel<DscReportResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscReportResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscReportResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DscReportResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DscReportResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscReportResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscReportResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscReportResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscReportResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscReportResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,24 +113,24 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static DscReportResource DeserializeDscReportResource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> resourceId = default;
-            Optional<string> sourceInfo = default;
-            Optional<IReadOnlyList<DscReportResourceNavigation>> dependsOn = default;
-            Optional<string> moduleName = default;
-            Optional<string> moduleVersion = default;
-            Optional<string> resourceName = default;
-            Optional<string> error = default;
-            Optional<string> status = default;
-            Optional<double> durationInSeconds = default;
-            Optional<DateTimeOffset> startDate = default;
+            string resourceId = default;
+            string sourceInfo = default;
+            IReadOnlyList<DscReportResourceNavigation> dependsOn = default;
+            string moduleName = default;
+            string moduleVersion = default;
+            string resourceName = default;
+            string error = default;
+            string status = default;
+            double? durationInSeconds = default;
+            DateTimeOffset? startDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscReportResourceNavigation> array = new List<DscReportResourceNavigation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscReportResourceNavigation.DeserializeDscReportResourceNavigation(item));
+                        array.Add(DscReportResourceNavigation.DeserializeDscReportResourceNavigation(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -202,11 +202,22 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscReportResource(resourceId.Value, sourceInfo.Value, Optional.ToList(dependsOn), moduleName.Value, moduleVersion.Value, resourceName.Value, error.Value, status.Value, Optional.ToNullable(durationInSeconds), Optional.ToNullable(startDate), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DscReportResource(
+                resourceId,
+                sourceInfo,
+                dependsOn ?? new ChangeTrackingList<DscReportResourceNavigation>(),
+                moduleName,
+                moduleVersion,
+                resourceName,
+                error,
+                status,
+                durationInSeconds,
+                startDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscReportResource>.Write(ModelReaderWriterOptions options)
@@ -218,7 +229,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscReportResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscReportResource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -234,7 +245,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDscReportResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscReportResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscReportResource)} does not support reading '{options.Format}' format.");
             }
         }
 

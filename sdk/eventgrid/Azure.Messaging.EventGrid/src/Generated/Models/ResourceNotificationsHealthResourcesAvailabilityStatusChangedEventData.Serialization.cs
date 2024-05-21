@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,9 +20,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<ResourceNotificationsResourceUpdatedDetails> resourceInfo = default;
-            Optional<ResourceNotificationsOperationalDetails> operationalInfo = default;
-            Optional<string> apiVersion = default;
+            ResourceNotificationsResourceUpdatedDetails resourceInfo = default;
+            ResourceNotificationsOperationalDetails operationalInfo = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceInfo"u8))
@@ -50,7 +49,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(resourceInfo.Value, operationalInfo.Value, apiVersion.Value);
+            return new ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(resourceInfo, operationalInfo, apiVersion);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData(document.RootElement);
         }
 
         internal partial class ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventDataConverter : JsonConverter<ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData>
@@ -59,6 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

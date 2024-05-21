@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineScaleSetPublicIPAddressConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetPublicIPAddressConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetPublicIPAddressConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetPublicIPAddressConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineScaleSetPublicIPAddressConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetPublicIPAddressConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetPublicIPAddressConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings);
+                writer.WriteObjectValue(DnsSettings, options);
             }
             if (Optional.IsCollectionDefined(IPTags))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in IPTags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetPublicIPAddressConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetPublicIPAddressConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,22 +104,22 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetPublicIPAddressConfiguration DeserializeVirtualMachineScaleSetPublicIPAddressConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            Optional<ComputePublicIPAddressSku> sku = default;
-            Optional<int> idleTimeoutInMinutes = default;
-            Optional<VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings> dnsSettings = default;
-            Optional<IList<VirtualMachineScaleSetIPTag>> ipTags = default;
-            Optional<WritableSubResource> publicIPPrefix = default;
-            Optional<IPVersion> publicIPAddressVersion = default;
-            Optional<ComputeDeleteOption> deleteOption = default;
+            ComputePublicIPAddressSku sku = default;
+            int? idleTimeoutInMinutes = default;
+            VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default;
+            IList<VirtualMachineScaleSetIPTag> ipTags = default;
+            WritableSubResource publicIPPrefix = default;
+            IPVersion? publicIPAddressVersion = default;
+            ComputeDeleteOption? deleteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sku = ComputePublicIPAddressSku.DeserializeComputePublicIPAddressSku(property.Value);
+                    sku = ComputePublicIPAddressSku.DeserializeComputePublicIPAddressSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            dnsSettings = VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings.DeserializeVirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(property0.Value);
+                            dnsSettings = VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings.DeserializeVirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipTags"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<VirtualMachineScaleSetIPTag> array = new List<VirtualMachineScaleSetIPTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualMachineScaleSetIPTag.DeserializeVirtualMachineScaleSetIPTag(item));
+                                array.Add(VirtualMachineScaleSetIPTag.DeserializeVirtualMachineScaleSetIPTag(item, options));
                             }
                             ipTags = array;
                             continue;
@@ -209,11 +209,20 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetPublicIPAddressConfiguration(name, sku.Value, Optional.ToNullable(idleTimeoutInMinutes), dnsSettings.Value, Optional.ToList(ipTags), publicIPPrefix, Optional.ToNullable(publicIPAddressVersion), Optional.ToNullable(deleteOption), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualMachineScaleSetPublicIPAddressConfiguration(
+                name,
+                sku,
+                idleTimeoutInMinutes,
+                dnsSettings,
+                ipTags ?? new ChangeTrackingList<VirtualMachineScaleSetIPTag>(),
+                publicIPPrefix,
+                publicIPAddressVersion,
+                deleteOption,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetPublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options)
@@ -225,7 +234,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetPublicIPAddressConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetPublicIPAddressConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -241,7 +250,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineScaleSetPublicIPAddressConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetPublicIPAddressConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetPublicIPAddressConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

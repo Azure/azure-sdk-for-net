@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class WafMetricsResponseSeriesItem : IUtf8JsonSerializable, IJsonModel<WafMetricsResponseSeriesItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WafMetricsResponseSeriesItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WafMetricsResponseSeriesItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WafMetricsResponseSeriesItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WafMetricsResponseSeriesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WafMetricsResponseSeriesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WafMetricsResponseSeriesItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteStartArray();
                     foreach (var item in Groups)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<WafMetricsResponseSeriesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WafMetricsResponseSeriesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WafMetricsResponseSeriesItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,18 +95,18 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static WafMetricsResponseSeriesItem DeserializeWafMetricsResponseSeriesItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> metric = default;
-            Optional<WafMetricsResponseSeriesItemUnit> unit = default;
-            Optional<IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem>> groups = default;
-            Optional<IReadOnlyList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>> data = default;
+            string metric = default;
+            WafMetricsResponseSeriesItemUnit? unit = default;
+            IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem> groups = default;
+            IReadOnlyList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metric"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<WafMetricsResponseSeriesPropertiesItemsItem> array = new List<WafMetricsResponseSeriesPropertiesItemsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WafMetricsResponseSeriesPropertiesItemsItem.DeserializeWafMetricsResponseSeriesPropertiesItemsItem(item));
+                        array.Add(WafMetricsResponseSeriesPropertiesItemsItem.DeserializeWafMetricsResponseSeriesPropertiesItemsItem(item, options));
                     }
                     groups = array;
                     continue;
@@ -147,18 +147,18 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> array = new List<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems.DeserializeComponents18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(item));
+                        array.Add(Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems.DeserializeComponents18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(item, options));
                     }
                     data = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WafMetricsResponseSeriesItem(metric.Value, Optional.ToNullable(unit), Optional.ToList(groups), Optional.ToList(data), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WafMetricsResponseSeriesItem(metric, unit, groups ?? new ChangeTrackingList<WafMetricsResponseSeriesPropertiesItemsItem>(), data ?? new ChangeTrackingList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WafMetricsResponseSeriesItem>.Write(ModelReaderWriterOptions options)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WafMetricsResponseSeriesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WafMetricsResponseSeriesItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeWafMetricsResponseSeriesItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WafMetricsResponseSeriesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WafMetricsResponseSeriesItem)} does not support reading '{options.Format}' format.");
             }
         }
 

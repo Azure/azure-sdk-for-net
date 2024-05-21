@@ -5,21 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceVirtualNetworkRoute : IUtf8JsonSerializable
+    public partial class AppServiceVirtualNetworkRoute : IUtf8JsonSerializable, IJsonModel<AppServiceVirtualNetworkRoute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceVirtualNetworkRoute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppServiceVirtualNetworkRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceVirtualNetworkRoute>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkRoute)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -39,23 +71,54 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStringValue(RouteType.Value.ToString());
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceVirtualNetworkRoute DeserializeAppServiceVirtualNetworkRoute(JsonElement element)
+        AppServiceVirtualNetworkRoute IJsonModel<AppServiceVirtualNetworkRoute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceVirtualNetworkRoute>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkRoute)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceVirtualNetworkRoute(document.RootElement, options);
+        }
+
+        internal static AppServiceVirtualNetworkRoute DeserializeAppServiceVirtualNetworkRoute(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> startAddress = default;
-            Optional<string> endAddress = default;
-            Optional<AppServiceVirtualNetworkRouteType> routeType = default;
+            SystemData systemData = default;
+            string startAddress = default;
+            string endAddress = default;
+            AppServiceVirtualNetworkRouteType? routeType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -118,8 +181,210 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceVirtualNetworkRoute(id, name, type, systemData.Value, startAddress.Value, endAddress.Value, Optional.ToNullable(routeType), kind.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppServiceVirtualNetworkRoute(
+                id,
+                name,
+                type,
+                systemData,
+                startAddress,
+                endAddress,
+                routeType,
+                kind,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    startAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartAddress))
+                {
+                    builder.Append("    startAddress: ");
+                    if (StartAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StartAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StartAddress}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    endAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndAddress))
+                {
+                    builder.Append("    endAddress: ");
+                    if (EndAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EndAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EndAddress}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RouteType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    routeType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RouteType))
+                {
+                    builder.Append("    routeType: ");
+                    builder.AppendLine($"'{RouteType.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AppServiceVirtualNetworkRoute>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceVirtualNetworkRoute>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkRoute)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppServiceVirtualNetworkRoute IPersistableModel<AppServiceVirtualNetworkRoute>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceVirtualNetworkRoute>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppServiceVirtualNetworkRoute(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkRoute)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppServiceVirtualNetworkRoute>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

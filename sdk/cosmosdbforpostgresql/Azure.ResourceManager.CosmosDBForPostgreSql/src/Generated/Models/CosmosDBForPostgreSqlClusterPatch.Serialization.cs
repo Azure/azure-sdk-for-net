@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     public partial class CosmosDBForPostgreSqlClusterPatch : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlClusterPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlClusterPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlClusterPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBForPostgreSqlClusterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow);
+                writer.WriteObjectValue(MaintenanceWindow, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,31 +152,31 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 
         internal static CosmosDBForPostgreSqlClusterPatch DeserializeCosmosDBForPostgreSqlClusterPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<string> postgresqlVersion = default;
-            Optional<string> citusVersion = default;
-            Optional<bool> enableShardsOnCoordinator = default;
-            Optional<bool> enableHa = default;
-            Optional<string> preferredPrimaryZone = default;
-            Optional<string> coordinatorServerEdition = default;
-            Optional<int> coordinatorStorageQuotaInMb = default;
-            Optional<int> coordinatorVCores = default;
-            Optional<bool> coordinatorEnablePublicIPAccess = default;
-            Optional<string> nodeServerEdition = default;
-            Optional<int> nodeCount = default;
-            Optional<int> nodeStorageQuotaInMb = default;
-            Optional<int> nodeVCores = default;
-            Optional<bool> nodeEnablePublicIPAccess = default;
-            Optional<CosmosDBForPostgreSqlMaintenanceWindow> maintenanceWindow = default;
+            IDictionary<string, string> tags = default;
+            string administratorLoginPassword = default;
+            string postgresqlVersion = default;
+            string citusVersion = default;
+            bool? enableShardsOnCoordinator = default;
+            bool? enableHa = default;
+            string preferredPrimaryZone = default;
+            string coordinatorServerEdition = default;
+            int? coordinatorStorageQuotaInMb = default;
+            int? coordinatorVCores = default;
+            bool? coordinatorEnablePublicIPAccess = default;
+            string nodeServerEdition = default;
+            int? nodeCount = default;
+            int? nodeStorageQuotaInMb = default;
+            int? nodeVCores = default;
+            bool? nodeEnablePublicIPAccess = default;
+            CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                             {
                                 continue;
                             }
-                            maintenanceWindow = CosmosDBForPostgreSqlMaintenanceWindow.DeserializeCosmosDBForPostgreSqlMaintenanceWindow(property0.Value);
+                            maintenanceWindow = CosmosDBForPostgreSqlMaintenanceWindow.DeserializeCosmosDBForPostgreSqlMaintenanceWindow(property0.Value, options);
                             continue;
                         }
                     }
@@ -327,11 +327,29 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlClusterPatch(Optional.ToDictionary(tags), administratorLoginPassword.Value, postgresqlVersion.Value, citusVersion.Value, Optional.ToNullable(enableShardsOnCoordinator), Optional.ToNullable(enableHa), preferredPrimaryZone.Value, coordinatorServerEdition.Value, Optional.ToNullable(coordinatorStorageQuotaInMb), Optional.ToNullable(coordinatorVCores), Optional.ToNullable(coordinatorEnablePublicIPAccess), nodeServerEdition.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(nodeStorageQuotaInMb), Optional.ToNullable(nodeVCores), Optional.ToNullable(nodeEnablePublicIPAccess), maintenanceWindow.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CosmosDBForPostgreSqlClusterPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                administratorLoginPassword,
+                postgresqlVersion,
+                citusVersion,
+                enableShardsOnCoordinator,
+                enableHa,
+                preferredPrimaryZone,
+                coordinatorServerEdition,
+                coordinatorStorageQuotaInMb,
+                coordinatorVCores,
+                coordinatorEnablePublicIPAccess,
+                nodeServerEdition,
+                nodeCount,
+                nodeStorageQuotaInMb,
+                nodeVCores,
+                nodeEnablePublicIPAccess,
+                maintenanceWindow,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlClusterPatch>.Write(ModelReaderWriterOptions options)
@@ -343,7 +361,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -359,7 +377,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                         return DeserializeCosmosDBForPostgreSqlClusterPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

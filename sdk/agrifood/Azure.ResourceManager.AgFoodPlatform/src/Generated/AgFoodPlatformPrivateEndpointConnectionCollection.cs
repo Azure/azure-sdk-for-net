@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AgFoodPlatform
 {
@@ -90,7 +88,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
             try
             {
                 var response = await _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AgFoodPlatformArmOperation<AgFoodPlatformPrivateEndpointConnectionResource>(Response.FromValue(new AgFoodPlatformPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AgFoodPlatformArmOperation<AgFoodPlatformPrivateEndpointConnectionResource>(Response.FromValue(new AgFoodPlatformPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +139,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
             try
             {
                 var response = _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new AgFoodPlatformArmOperation<AgFoodPlatformPrivateEndpointConnectionResource>(Response.FromValue(new AgFoodPlatformPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AgFoodPlatformArmOperation<AgFoodPlatformPrivateEndpointConnectionResource>(Response.FromValue(new AgFoodPlatformPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

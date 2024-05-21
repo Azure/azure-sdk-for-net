@@ -7,21 +7,23 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class CostManagementDimension : IUtf8JsonSerializable, IJsonModel<CostManagementDimension>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CostManagementDimension>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CostManagementDimension>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CostManagementDimension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CostManagementDimension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostManagementDimension)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CostManagementDimension)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -147,11 +149,214 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<CostManagementDimension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostManagementDimension)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CostManagementDimension)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCostManagementDimension(document.RootElement, options);
+        }
+
+        internal static CostManagementDimension DeserializeCostManagementDimension(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AzureLocation? location = default;
+            string sku = default;
+            ETag? eTag = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            SystemData systemData = default;
+            string description = default;
+            bool? filterEnabled = default;
+            bool? groupingEnabled = default;
+            IReadOnlyList<string> data = default;
+            int? total = default;
+            string category = default;
+            DateTimeOffset? usageStart = default;
+            DateTimeOffset? usageEnd = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    sku = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("eTag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    ReadId(property, ref id);
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("filterEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            filterEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("groupingEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            groupingEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("data"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            data = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("total"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            total = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("category"u8))
+                        {
+                            category = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("usageStart"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            usageStart = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("usageEnd"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            usageEnd = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("nextLink"u8))
+                        {
+                            nextLink = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CostManagementDimension(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                filterEnabled,
+                groupingEnabled,
+                data ?? new ChangeTrackingList<string>(),
+                total,
+                category,
+                usageStart,
+                usageEnd,
+                nextLink,
+                location,
+                sku,
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementDimension>.Write(ModelReaderWriterOptions options)
@@ -163,7 +368,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CostManagementDimension)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostManagementDimension)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +384,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeCostManagementDimension(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CostManagementDimension)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostManagementDimension)} does not support reading '{options.Format}' format.");
             }
         }
 

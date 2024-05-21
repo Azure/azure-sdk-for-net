@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineScaleSetUpdateNetworkConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetUpdateNetworkConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetUpdateNetworkConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetUpdateNetworkConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineScaleSetUpdateNetworkConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings);
+                writer.WriteObjectValue(DnsSettings, options);
             }
             if (Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,27 +132,27 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetUpdateNetworkConfiguration DeserializeVirtualMachineScaleSetUpdateNetworkConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<bool> primary = default;
-            Optional<bool> enableAcceleratedNetworking = default;
-            Optional<bool> disableTcpStateTracking = default;
-            Optional<bool> enableFpga = default;
-            Optional<WritableSubResource> networkSecurityGroup = default;
-            Optional<VirtualMachineScaleSetNetworkConfigurationDnsSettings> dnsSettings = default;
-            Optional<IList<VirtualMachineScaleSetUpdateIPConfiguration>> ipConfigurations = default;
-            Optional<bool> enableIPForwarding = default;
-            Optional<ComputeDeleteOption> deleteOption = default;
-            Optional<ComputeNetworkInterfaceAuxiliaryMode> auxiliaryMode = default;
-            Optional<ComputeNetworkInterfaceAuxiliarySku> auxiliarySku = default;
+            string name = default;
+            ResourceIdentifier id = default;
+            bool? primary = default;
+            bool? enableAcceleratedNetworking = default;
+            bool? disableTcpStateTracking = default;
+            bool? enableFpga = default;
+            WritableSubResource networkSecurityGroup = default;
+            VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default;
+            IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default;
+            bool? enableIPForwarding = default;
+            ComputeDeleteOption? deleteOption = default;
+            ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
+            ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            dnsSettings = VirtualMachineScaleSetNetworkConfigurationDnsSettings.DeserializeVirtualMachineScaleSetNetworkConfigurationDnsSettings(property0.Value);
+                            dnsSettings = VirtualMachineScaleSetNetworkConfigurationDnsSettings.DeserializeVirtualMachineScaleSetNetworkConfigurationDnsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<VirtualMachineScaleSetUpdateIPConfiguration> array = new List<VirtualMachineScaleSetUpdateIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualMachineScaleSetUpdateIPConfiguration.DeserializeVirtualMachineScaleSetUpdateIPConfiguration(item));
+                                array.Add(VirtualMachineScaleSetUpdateIPConfiguration.DeserializeVirtualMachineScaleSetUpdateIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -287,11 +287,25 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetUpdateNetworkConfiguration(id.Value, serializedAdditionalRawData, name.Value, Optional.ToNullable(primary), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableFpga), networkSecurityGroup, dnsSettings.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(enableIPForwarding), Optional.ToNullable(deleteOption), Optional.ToNullable(auxiliaryMode), Optional.ToNullable(auxiliarySku));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualMachineScaleSetUpdateNetworkConfiguration(
+                id,
+                serializedAdditionalRawData,
+                name,
+                primary,
+                enableAcceleratedNetworking,
+                disableTcpStateTracking,
+                enableFpga,
+                networkSecurityGroup,
+                dnsSettings,
+                ipConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetUpdateIPConfiguration>(),
+                enableIPForwarding,
+                deleteOption,
+                auxiliaryMode,
+                auxiliarySku);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetUpdateNetworkConfiguration>.Write(ModelReaderWriterOptions options)
@@ -303,7 +317,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -319,7 +333,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineScaleSetUpdateNetworkConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

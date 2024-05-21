@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class TransferConfiguration : IUtf8JsonSerializable, IJsonModel<TransferConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransferConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransferConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TransferConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TransferConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransferConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransferConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(TransferFilterDetails))
             {
                 writer.WritePropertyName("transferFilterDetails"u8);
-                writer.WriteObjectValue(TransferFilterDetails);
+                writer.WriteObjectValue(TransferFilterDetails, options);
             }
             if (Optional.IsDefined(TransferAllDetails))
             {
                 writer.WritePropertyName("transferAllDetails"u8);
-                writer.WriteObjectValue(TransferAllDetails);
+                writer.WriteObjectValue(TransferAllDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<TransferConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransferConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransferConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static TransferConfiguration DeserializeTransferConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             TransferConfigurationType transferConfigurationType = default;
-            Optional<TransferConfigurationTransferFilterDetails> transferFilterDetails = default;
-            Optional<TransferConfigurationTransferAllDetails> transferAllDetails = default;
+            TransferConfigurationTransferFilterDetails transferFilterDetails = default;
+            TransferConfigurationTransferAllDetails transferAllDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transferConfigurationType"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transferFilterDetails = TransferConfigurationTransferFilterDetails.DeserializeTransferConfigurationTransferFilterDetails(property.Value);
+                    transferFilterDetails = TransferConfigurationTransferFilterDetails.DeserializeTransferConfigurationTransferFilterDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("transferAllDetails"u8))
@@ -103,16 +103,16 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transferAllDetails = TransferConfigurationTransferAllDetails.DeserializeTransferConfigurationTransferAllDetails(property.Value);
+                    transferAllDetails = TransferConfigurationTransferAllDetails.DeserializeTransferConfigurationTransferAllDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransferConfiguration(transferConfigurationType, transferFilterDetails.Value, transferAllDetails.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TransferConfiguration(transferConfigurationType, transferFilterDetails, transferAllDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransferConfiguration>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TransferConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransferConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeTransferConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TransferConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransferConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

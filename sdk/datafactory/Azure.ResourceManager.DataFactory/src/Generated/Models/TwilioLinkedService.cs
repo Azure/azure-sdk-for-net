@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userName"> The Account SID of Twilio service. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> The auth token of Twilio service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public TwilioLinkedService(DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password)
+        public TwilioLinkedService(DataFactoryElement<string> userName, DataFactorySecret password)
         {
             Argument.AssertNotNull(userName, nameof(userName));
             Argument.AssertNotNull(password, nameof(password));
@@ -38,16 +37,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="userName"> The Account SID of Twilio service. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> The auth token of Twilio service. </param>
-        internal TwilioLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal TwilioLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> userName, DataFactorySecret password) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             UserName = userName;
             Password = password;
             LinkedServiceType = linkedServiceType ?? "Twilio";
         }
 
+        /// <summary> Initializes a new instance of <see cref="TwilioLinkedService"/> for deserialization. </summary>
+        internal TwilioLinkedService()
+        {
+        }
+
         /// <summary> The Account SID of Twilio service. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> The auth token of Twilio service. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
     }
 }

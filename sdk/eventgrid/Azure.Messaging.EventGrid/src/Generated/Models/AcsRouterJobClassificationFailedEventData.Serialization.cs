@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -22,14 +21,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> classificationPolicyId = default;
-            Optional<IReadOnlyList<AcsRouterCommunicationError>> errors = default;
-            Optional<string> queueId = default;
-            Optional<IReadOnlyDictionary<string, string>> labels = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<string> jobId = default;
-            Optional<string> channelReference = default;
-            Optional<string> channelId = default;
+            string classificationPolicyId = default;
+            IReadOnlyList<AcsRouterCommunicationError> errors = default;
+            string queueId = default;
+            IReadOnlyDictionary<string, string> labels = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            string jobId = default;
+            string channelReference = default;
+            string channelId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("classificationPolicyId"u8))
@@ -100,7 +99,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterJobClassificationFailedEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, Optional.ToDictionary(labels), Optional.ToDictionary(tags), classificationPolicyId.Value, Optional.ToList(errors));
+            return new AcsRouterJobClassificationFailedEventData(
+                jobId,
+                channelReference,
+                channelId,
+                queueId,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                classificationPolicyId,
+                errors ?? new ChangeTrackingList<AcsRouterCommunicationError>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsRouterJobClassificationFailedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterJobClassificationFailedEventData(document.RootElement);
         }
 
         internal partial class AcsRouterJobClassificationFailedEventDataConverter : JsonConverter<AcsRouterJobClassificationFailedEventData>
@@ -109,6 +124,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override AcsRouterJobClassificationFailedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -18,6 +18,7 @@ using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Producer;
 using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -420,7 +421,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task EventProcesorCreatesScopeForEventProcessing()
+        public async Task EventProcessorCreatesScopeForEventProcessing()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
@@ -507,10 +508,10 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".EventProcessor", processingActivity.Source.Name);
 
             var expectedTag =
-                new KeyValuePair<string, string>(DiagnosticProperty.EnqueuedTimeAttribute,
-                    enqueuedTime.ToUnixTimeMilliseconds().ToString());
+                new KeyValuePair<string, object>(DiagnosticProperty.EnqueuedTimeAttribute,
+                    enqueuedTime.ToUnixTimeMilliseconds());
 
-            var tags = processingActivity.Tags;
+            var tags = processingActivity.TagObjects;
             Assert.That(tags.Contains(expectedTag), Is.True, "The processing scope should have contained the enqueued time tag.");
         }
 
@@ -520,7 +521,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task EventProcesorAddsAttributesToLinkedActivitiesForBatchEventProcessing()
+        public async Task EventProcessorAddsAttributesToLinkedActivitiesForBatchEventProcessing()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
@@ -553,9 +554,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var linkedActivities = processingScope.Links.Where(a => a.Context.TraceId == ActivityContext.Parse(diagnosticId, null).TraceId).ToList();
             Assert.That(linkedActivities.Count, Is.EqualTo(2), "There should have been a two activities linked to the diagnostic identifier.");
 
-            var expectedTags = new List<KeyValuePair<string, string>>()
+            var expectedTags = new List<KeyValuePair<string, object>>()
             {
-                new KeyValuePair<string, string>(DiagnosticProperty.EnqueuedTimeAttribute, enqueuedTime.ToUnixTimeMilliseconds().ToString())
+                new KeyValuePair<string, object>(DiagnosticProperty.EnqueuedTimeAttribute, enqueuedTime.ToUnixTimeMilliseconds())
             };
 
             var tags = linkedActivities[0].Tags.ToList();
@@ -563,6 +564,35 @@ namespace Azure.Messaging.EventHubs.Tests
 
             tags = linkedActivities[1].Tags.ToList();
             Assert.That(tags, Is.EquivalentTo(expectedTags), "The second activity should have been tagged appropriately.");
+        }
+
+        /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="EventProcessor{TPartition}.ProcessEventBatchAsync" />
+        ///   class when base processor tracing is disabled.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventProcessorDisabledBatchTracing()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            using var _ = SetAppConfigSwitch();
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
+
+            var eventBatch = new[] { new EventData(new BinaryData(Array.Empty<byte>()), enqueuedTime: DateTimeOffset.UtcNow) };
+            var partition = new EventProcessorPartition { PartitionId = "123" };
+            var fullyQualifiedNamespace = "namespace";
+            var eventHubName = "eventHub";
+            var mockProcessor = new MockEventProcessor(1, "consumerGroup", fullyQualifiedNamespace, eventHubName, Mock.Of<TokenCredential>(), default);
+
+            mockProcessor.EnableBatchTracing = false;
+            await mockProcessor.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
+
+            // Validate the diagnostics.
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.IsEmpty(listener.Activities);
         }
 
         /// <summary>
@@ -622,6 +652,36 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                     EventHubTokenCredential credential,
                                                                     EventHubConnectionOptions options,
                                                                     bool useTls = true) => Mock.Of<TransportClient>();
+        }
+
+        /// <summary>
+        ///   A minimal mock processor that allows toggling the batch tracing
+        ///   flag.
+        /// </summary>
+        ///
+        private class MockEventProcessor : EventProcessor<EventProcessorPartition>
+        {
+            public MockEventProcessor(int identifier,
+                                      string consumerGroup,
+                                      string fullyQualifiedNamespace,
+                                      string eventHubName,
+                                      TokenCredential credential,
+                                      EventProcessorOptions options) : base(identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
+            {
+            }
+
+            public new bool EnableBatchTracing
+            {
+                get => base.EnableBatchTracing;
+                set => base.EnableBatchTracing = value;
+            }
+
+            protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
+            protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => throw new NotImplementedException();
+
+            protected override Task OnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorPartition partition, CancellationToken cancellationToken) => Task.CompletedTask;
+
+            protected override Task OnProcessingErrorAsync(Exception exception, EventProcessorPartition partition, string operationDescription, CancellationToken cancellationToken) => Task.CompletedTask;
         }
     }
 #endif

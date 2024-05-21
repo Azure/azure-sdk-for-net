@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataShare
 {
@@ -90,7 +88,9 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _dataShareInvitationInvitationsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, invitationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<DataShareInvitationResource>(Response.FromValue(new DataShareInvitationResource(Client, response), response.GetRawResponse()));
+                var uri = _dataShareInvitationInvitationsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, invitationName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataShareArmOperation<DataShareInvitationResource>(Response.FromValue(new DataShareInvitationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +139,9 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _dataShareInvitationInvitationsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, invitationName, data, cancellationToken);
-                var operation = new DataShareArmOperation<DataShareInvitationResource>(Response.FromValue(new DataShareInvitationResource(Client, response), response.GetRawResponse()));
+                var uri = _dataShareInvitationInvitationsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, invitationName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataShareArmOperation<DataShareInvitationResource>(Response.FromValue(new DataShareInvitationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

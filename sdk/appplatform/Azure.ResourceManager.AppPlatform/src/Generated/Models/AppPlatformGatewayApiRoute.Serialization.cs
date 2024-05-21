@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformGatewayApiRoute : IUtf8JsonSerializable, IJsonModel<AppPlatformGatewayApiRoute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformGatewayApiRoute>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformGatewayApiRoute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformGatewayApiRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformGatewayApiRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformGatewayApiRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformGatewayApiRoute)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformGatewayApiRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformGatewayApiRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformGatewayApiRoute)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,23 +118,23 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformGatewayApiRoute DeserializeAppPlatformGatewayApiRoute(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<Uri> uri = default;
-            Optional<bool> ssoEnabled = default;
-            Optional<bool> tokenRelay = default;
-            Optional<IList<string>> predicates = default;
-            Optional<IList<string>> filters = default;
-            Optional<int> order = default;
-            Optional<IList<string>> tags = default;
+            string title = default;
+            string description = default;
+            Uri uri = default;
+            bool? ssoEnabled = default;
+            bool? tokenRelay = default;
+            IList<string> predicates = default;
+            IList<string> filters = default;
+            int? order = default;
+            IList<string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))
@@ -227,11 +227,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayApiRoute(title.Value, description.Value, uri.Value, Optional.ToNullable(ssoEnabled), Optional.ToNullable(tokenRelay), Optional.ToList(predicates), Optional.ToList(filters), Optional.ToNullable(order), Optional.ToList(tags), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformGatewayApiRoute(
+                title,
+                description,
+                uri,
+                ssoEnabled,
+                tokenRelay,
+                predicates ?? new ChangeTrackingList<string>(),
+                filters ?? new ChangeTrackingList<string>(),
+                order,
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayApiRoute>.Write(ModelReaderWriterOptions options)
@@ -243,7 +253,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformGatewayApiRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformGatewayApiRoute)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +269,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformGatewayApiRoute(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformGatewayApiRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformGatewayApiRoute)} does not support reading '{options.Format}' format.");
             }
         }
 

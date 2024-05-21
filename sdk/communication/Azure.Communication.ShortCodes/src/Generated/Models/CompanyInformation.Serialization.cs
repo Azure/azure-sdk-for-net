@@ -50,11 +50,11 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Uri> url = default;
-            Optional<string> address = default;
-            Optional<ContactInformation> contactInformation = default;
-            Optional<CustomerCareInformation> customerCareInformation = default;
+            string name = default;
+            Uri url = default;
+            string address = default;
+            ContactInformation contactInformation = default;
+            CustomerCareInformation customerCareInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -95,7 +95,23 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new CompanyInformation(name.Value, url.Value, address.Value, contactInformation.Value, customerCareInformation.Value);
+            return new CompanyInformation(name, url, address, contactInformation, customerCareInformation);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CompanyInformation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCompanyInformation(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

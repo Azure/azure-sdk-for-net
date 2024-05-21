@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Chaos.Models
     [PersistableModelProxy(typeof(UnknownChaosTargetSelector))]
     public partial class ChaosTargetSelector : IUtf8JsonSerializable, IJsonModel<ChaosTargetSelector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosTargetSelector>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosTargetSelector>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChaosTargetSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetSelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosTargetSelector)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosTargetSelector)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Chaos.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue(Filter, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetSelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosTargetSelector)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosTargetSelector)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static ChaosTargetSelector DeserializeChaosTargetSelector(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "List": return ChaosTargetListSelector.DeserializeChaosTargetListSelector(element);
-                    case "Query": return ChaosTargetQuerySelector.DeserializeChaosTargetQuerySelector(element);
+                    case "List": return ChaosTargetListSelector.DeserializeChaosTargetListSelector(element, options);
+                    case "Query": return ChaosTargetQuerySelector.DeserializeChaosTargetQuerySelector(element, options);
                 }
             }
-            return UnknownChaosTargetSelector.DeserializeUnknownChaosTargetSelector(element);
+            return UnknownChaosTargetSelector.DeserializeUnknownChaosTargetSelector(element, options);
         }
 
         BinaryData IPersistableModel<ChaosTargetSelector>.Write(ModelReaderWriterOptions options)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosTargetSelector)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosTargetSelector)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Chaos.Models
                         return DeserializeChaosTargetSelector(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosTargetSelector)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosTargetSelector)} does not support reading '{options.Format}' format.");
             }
         }
 

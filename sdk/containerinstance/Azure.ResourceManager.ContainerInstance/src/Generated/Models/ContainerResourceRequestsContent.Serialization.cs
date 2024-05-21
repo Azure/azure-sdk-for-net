@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 {
     public partial class ContainerResourceRequestsContent : IUtf8JsonSerializable, IJsonModel<ContainerResourceRequestsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerResourceRequestsContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerResourceRequestsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerResourceRequestsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerResourceRequestsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerResourceRequestsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerResourceRequestsContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(Gpu))
             {
                 writer.WritePropertyName("gpu"u8);
-                writer.WriteObjectValue(Gpu);
+                writer.WriteObjectValue(Gpu, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerResourceRequestsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerResourceRequestsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerResourceRequestsContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerResourceRequestsContent DeserializeContainerResourceRequestsContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             double memoryInGB = default;
             double cpu = default;
-            Optional<ContainerGpuResourceInfo> gpu = default;
+            ContainerGpuResourceInfo gpu = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("memoryInGB"u8))
@@ -96,16 +96,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    gpu = ContainerGpuResourceInfo.DeserializeContainerGpuResourceInfo(property.Value);
+                    gpu = ContainerGpuResourceInfo.DeserializeContainerGpuResourceInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerResourceRequestsContent(memoryInGB, cpu, gpu.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerResourceRequestsContent(memoryInGB, cpu, gpu, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerResourceRequestsContent>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerResourceRequestsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerResourceRequestsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerResourceRequestsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerResourceRequestsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerResourceRequestsContent)} does not support reading '{options.Format}' format.");
             }
         }
 

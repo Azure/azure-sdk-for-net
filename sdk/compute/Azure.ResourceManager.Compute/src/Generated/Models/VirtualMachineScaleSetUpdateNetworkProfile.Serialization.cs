@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineScaleSetUpdateNetworkProfile : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetUpdateNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetUpdateNetworkProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetUpdateNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineScaleSetUpdateNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaceConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetUpdateNetworkProfile DeserializeVirtualMachineScaleSetUpdateNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<WritableSubResource> healthProbe = default;
-            Optional<IList<VirtualMachineScaleSetUpdateNetworkConfiguration>> networkInterfaceConfigurations = default;
-            Optional<NetworkApiVersion> networkApiVersion = default;
+            WritableSubResource healthProbe = default;
+            IList<VirtualMachineScaleSetUpdateNetworkConfiguration> networkInterfaceConfigurations = default;
+            NetworkApiVersion? networkApiVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("healthProbe"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineScaleSetUpdateNetworkConfiguration> array = new List<VirtualMachineScaleSetUpdateNetworkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineScaleSetUpdateNetworkConfiguration.DeserializeVirtualMachineScaleSetUpdateNetworkConfiguration(item));
+                        array.Add(VirtualMachineScaleSetUpdateNetworkConfiguration.DeserializeVirtualMachineScaleSetUpdateNetworkConfiguration(item, options));
                     }
                     networkInterfaceConfigurations = array;
                     continue;
@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetUpdateNetworkProfile(healthProbe, Optional.ToList(networkInterfaceConfigurations), Optional.ToNullable(networkApiVersion), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualMachineScaleSetUpdateNetworkProfile(healthProbe, networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetUpdateNetworkConfiguration>(), networkApiVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetUpdateNetworkProfile>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineScaleSetUpdateNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

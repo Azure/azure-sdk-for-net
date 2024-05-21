@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabNotificationChannelEvent : IUtf8JsonSerializable, IJsonModel<DevTestLabNotificationChannelEvent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabNotificationChannelEvent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabNotificationChannelEvent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevTestLabNotificationChannelEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabNotificationChannelEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabNotificationChannelEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabNotificationChannelEvent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabNotificationChannelEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabNotificationChannelEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabNotificationChannelEvent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,15 +63,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabNotificationChannelEvent DeserializeDevTestLabNotificationChannelEvent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DevTestLabNotificationChannelEventType> eventName = default;
+            DevTestLabNotificationChannelEventType? eventName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventName"u8))
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabNotificationChannelEvent(Optional.ToNullable(eventName), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevTestLabNotificationChannelEvent(eventName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabNotificationChannelEvent>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabNotificationChannelEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabNotificationChannelEvent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabNotificationChannelEvent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabNotificationChannelEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabNotificationChannelEvent)} does not support reading '{options.Format}' format.");
             }
         }
 

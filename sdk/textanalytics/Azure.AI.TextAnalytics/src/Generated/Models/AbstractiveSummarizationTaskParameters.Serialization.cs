@@ -44,10 +44,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<string> modelVersion = default;
-            Optional<bool> loggingOptOut = default;
-            Optional<int> sentenceCount = default;
-            Optional<StringIndexType> stringIndexType = default;
+            string modelVersion = default;
+            bool? loggingOptOut = default;
+            int? sentenceCount = default;
+            StringIndexType? stringIndexType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelVersion"u8))
@@ -83,7 +83,23 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummarizationTaskParameters(Optional.ToNullable(sentenceCount), Optional.ToNullable(stringIndexType), modelVersion.Value, Optional.ToNullable(loggingOptOut));
+            return new AbstractiveSummarizationTaskParameters(sentenceCount, stringIndexType, modelVersion, loggingOptOut);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AbstractiveSummarizationTaskParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAbstractiveSummarizationTaskParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

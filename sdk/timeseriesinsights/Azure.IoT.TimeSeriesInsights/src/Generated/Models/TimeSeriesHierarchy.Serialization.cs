@@ -33,7 +33,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string name = default;
             TimeSeriesHierarchySource source = default;
             foreach (var property in element.EnumerateObject())
@@ -54,7 +54,23 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesHierarchy(id.Value, name, source);
+            return new TimeSeriesHierarchy(id, name, source);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TimeSeriesHierarchy FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTimeSeriesHierarchy(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

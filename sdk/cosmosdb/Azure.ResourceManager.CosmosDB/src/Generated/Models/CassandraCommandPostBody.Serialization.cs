@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CassandraCommandPostBody : IUtf8JsonSerializable, IJsonModel<CassandraCommandPostBody>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraCommandPostBody>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraCommandPostBody>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CassandraCommandPostBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraCommandPostBody>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraCommandPostBody)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraCommandPostBody)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsDefined(AllowWrite))
             {
-                writer.WritePropertyName("readwrite"u8);
+                writer.WritePropertyName("readWrite"u8);
                 writer.WriteBooleanValue(AllowWrite.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraCommandPostBody>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraCommandPostBody)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraCommandPostBody)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,19 +83,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraCommandPostBody DeserializeCassandraCommandPostBody(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string command = default;
-            Optional<IDictionary<string, string>> arguments = default;
+            IDictionary<string, string> arguments = default;
             string host = default;
-            Optional<bool> cassandraStopStart = default;
-            Optional<bool> readwrite = default;
+            bool? cassandraStopStart = default;
+            bool? readWrite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("command"u8))
@@ -131,22 +131,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     cassandraStopStart = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("readwrite"u8))
+                if (property.NameEquals("readWrite"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    readwrite = property.Value.GetBoolean();
+                    readWrite = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraCommandPostBody(command, Optional.ToDictionary(arguments), host, Optional.ToNullable(cassandraStopStart), Optional.ToNullable(readwrite), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CassandraCommandPostBody(
+                command,
+                arguments ?? new ChangeTrackingDictionary<string, string>(),
+                host,
+                cassandraStopStart,
+                readWrite,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraCommandPostBody>.Write(ModelReaderWriterOptions options)
@@ -158,7 +164,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraCommandPostBody)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraCommandPostBody)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +180,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCassandraCommandPostBody(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraCommandPostBody)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraCommandPostBody)} does not support reading '{options.Format}' format.");
             }
         }
 

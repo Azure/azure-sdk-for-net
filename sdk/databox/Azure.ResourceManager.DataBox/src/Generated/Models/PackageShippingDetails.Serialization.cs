@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class PackageShippingDetails : IUtf8JsonSerializable, IJsonModel<PackageShippingDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PackageShippingDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PackageShippingDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PackageShippingDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PackageShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<PackageShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static PackageShippingDetails DeserializePackageShippingDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Uri> trackingUrl = default;
-            Optional<string> carrierName = default;
-            Optional<string> trackingId = default;
+            Uri trackingUrl = default;
+            string carrierName = default;
+            string trackingId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trackingUrl"u8))
@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PackageShippingDetails(trackingUrl.Value, carrierName.Value, trackingId.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PackageShippingDetails(trackingUrl, carrierName, trackingId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PackageShippingDetails>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializePackageShippingDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

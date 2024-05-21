@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineScaleSetUpdateIPConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetUpdateIPConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetUpdateIPConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetUpdateIPConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineScaleSetUpdateIPConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateIPConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateIPConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
-                writer.WriteObjectValue(PublicIPAddressConfiguration);
+                writer.WriteObjectValue(PublicIPAddressConfiguration, options);
             }
             if (Optional.IsDefined(PrivateIPAddressVersion))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateIPConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateIPConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,24 +132,24 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetUpdateIPConfiguration DeserializeVirtualMachineScaleSetUpdateIPConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<bool> primary = default;
-            Optional<VirtualMachineScaleSetUpdatePublicIPAddressConfiguration> publicIPAddressConfiguration = default;
-            Optional<IPVersion> privateIPAddressVersion = default;
-            Optional<IList<WritableSubResource>> applicationGatewayBackendAddressPools = default;
-            Optional<IList<WritableSubResource>> applicationSecurityGroups = default;
-            Optional<IList<WritableSubResource>> loadBalancerBackendAddressPools = default;
-            Optional<IList<WritableSubResource>> loadBalancerInboundNatPools = default;
+            string name = default;
+            ResourceIdentifier id = default;
+            WritableSubResource subnet = default;
+            bool? primary = default;
+            VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration = default;
+            IPVersion? privateIPAddressVersion = default;
+            IList<WritableSubResource> applicationGatewayBackendAddressPools = default;
+            IList<WritableSubResource> applicationSecurityGroups = default;
+            IList<WritableSubResource> loadBalancerBackendAddressPools = default;
+            IList<WritableSubResource> loadBalancerInboundNatPools = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            publicIPAddressConfiguration = VirtualMachineScaleSetUpdatePublicIPAddressConfiguration.DeserializeVirtualMachineScaleSetUpdatePublicIPAddressConfiguration(property0.Value);
+                            publicIPAddressConfiguration = VirtualMachineScaleSetUpdatePublicIPAddressConfiguration.DeserializeVirtualMachineScaleSetUpdatePublicIPAddressConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateIPAddressVersion"u8))
@@ -272,11 +272,22 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetUpdateIPConfiguration(id.Value, serializedAdditionalRawData, name.Value, subnet, Optional.ToNullable(primary), publicIPAddressConfiguration.Value, Optional.ToNullable(privateIPAddressVersion), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(applicationSecurityGroups), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatPools));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualMachineScaleSetUpdateIPConfiguration(
+                id,
+                serializedAdditionalRawData,
+                name,
+                subnet,
+                primary,
+                publicIPAddressConfiguration,
+                privateIPAddressVersion,
+                applicationGatewayBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
+                applicationSecurityGroups ?? new ChangeTrackingList<WritableSubResource>(),
+                loadBalancerBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
+                loadBalancerInboundNatPools ?? new ChangeTrackingList<WritableSubResource>());
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetUpdateIPConfiguration>.Write(ModelReaderWriterOptions options)
@@ -288,7 +299,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateIPConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateIPConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -304,7 +315,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineScaleSetUpdateIPConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateIPConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateIPConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

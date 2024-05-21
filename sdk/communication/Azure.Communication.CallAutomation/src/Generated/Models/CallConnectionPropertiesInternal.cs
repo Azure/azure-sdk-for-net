@@ -6,8 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -36,7 +34,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="source"> Source identity. </param>
         /// <param name="correlationId"> The correlation ID. </param>
         /// <param name="answeredBy"> Identity of the answering entity. Only populated when identity is provided in the request. </param>
-        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string mediaSubscriptionId, string dataSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel source, string correlationId, CommunicationUserIdentifierModel answeredBy)
+        /// <param name="answeredFor"> Identity of the original Pstn target of an incoming Call. Only populated when the original target is a Pstn number. </param>
+        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string mediaSubscriptionId, string dataSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel source, string correlationId, CommunicationUserIdentifierModel answeredBy, PhoneNumberIdentifierModel answeredFor)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -50,6 +49,7 @@ namespace Azure.Communication.CallAutomation
             Source = source;
             CorrelationId = correlationId;
             AnsweredBy = answeredBy;
+            AnsweredFor = answeredFor;
         }
 
         /// <summary> The call connection id. </summary>
@@ -79,5 +79,7 @@ namespace Azure.Communication.CallAutomation
         public string CorrelationId { get; }
         /// <summary> Identity of the answering entity. Only populated when identity is provided in the request. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; }
+        /// <summary> Identity of the original Pstn target of an incoming Call. Only populated when the original target is a Pstn number. </summary>
+        public PhoneNumberIdentifierModel AnsweredFor { get; }
     }
 }

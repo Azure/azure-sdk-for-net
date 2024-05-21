@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class CapacityReservationGroupInstanceView : IUtf8JsonSerializable, IJsonModel<CapacityReservationGroupInstanceView>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapacityReservationGroupInstanceView>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapacityReservationGroupInstanceView>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CapacityReservationGroupInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationGroupInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationGroupInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in CapacityReservations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationGroupInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationGroupInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,16 +79,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CapacityReservationGroupInstanceView DeserializeCapacityReservationGroupInstanceView(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<CapacityReservationInstanceViewWithName>> capacityReservations = default;
-            Optional<IReadOnlyList<SubResource>> sharedSubscriptionIds = default;
+            IReadOnlyList<CapacityReservationInstanceViewWithName> capacityReservations = default;
+            IReadOnlyList<SubResource> sharedSubscriptionIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("capacityReservations"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CapacityReservationInstanceViewWithName> array = new List<CapacityReservationInstanceViewWithName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CapacityReservationInstanceViewWithName.DeserializeCapacityReservationInstanceViewWithName(item));
+                        array.Add(CapacityReservationInstanceViewWithName.DeserializeCapacityReservationInstanceViewWithName(item, options));
                     }
                     capacityReservations = array;
                     continue;
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationGroupInstanceView(Optional.ToList(capacityReservations), Optional.ToList(sharedSubscriptionIds), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CapacityReservationGroupInstanceView(capacityReservations ?? new ChangeTrackingList<CapacityReservationInstanceViewWithName>(), sharedSubscriptionIds ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacityReservationGroupInstanceView>.Write(ModelReaderWriterOptions options)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationGroupInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationGroupInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeCapacityReservationGroupInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationGroupInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationGroupInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

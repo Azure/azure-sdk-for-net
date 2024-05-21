@@ -1,6 +1,6 @@
 # Release History
 
-## 1.38.0-beta.1 (Unreleased)
+## 1.40.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,32 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.39.0 (2024-04-18)
+
+### Features Added
+
+- Add `Operation.Rehydrate` and `Operation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+### Other Changes
+
+- `RequestFailedException` will not include the response content or headers in the message when the `IsError` property of the response is `false`.
+
+## 1.38.0 (2024-02-26)
+
+### Features Added
+
+- Add `GetRehydrationToken` to `Operation` for rehydration purpose.
+
+### Other Changes
+
+- Additional Azure data centers are now included in `AzureLocation`.  The following were added:
+  - China East 3
+  - China North 3
+  - Israel Central
+  - Italy North
+  - Poland Central
+  - Sweden South
 
 ## 1.37.0 (2024-01-11)
 

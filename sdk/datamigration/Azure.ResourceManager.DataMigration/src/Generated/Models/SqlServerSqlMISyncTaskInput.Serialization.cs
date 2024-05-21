@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class SqlServerSqlMISyncTaskInput : IUtf8JsonSerializable, IJsonModel<SqlServerSqlMISyncTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerSqlMISyncTaskInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerSqlMISyncTaskInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlServerSqlMISyncTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerSqlMISyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerSqlMISyncTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerSqlMISyncTaskInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
-                writer.WriteObjectValue(BackupFileShare);
+                writer.WriteObjectValue(BackupFileShare, options);
             }
             writer.WritePropertyName("storageResourceId"u8);
             writer.WriteStringValue(StorageResourceId);
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            writer.WriteObjectValue(SourceConnectionInfo, options);
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            writer.WriteObjectValue(TargetConnectionInfo, options);
             writer.WritePropertyName("azureApp"u8);
-            writer.WriteObjectValue(AzureApp);
+            writer.WriteObjectValue(AzureApp, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerSqlMISyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerSqlMISyncTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerSqlMISyncTaskInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,20 +78,20 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SqlServerSqlMISyncTaskInput DeserializeSqlServerSqlMISyncTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = default;
-            Optional<FileShare> backupFileShare = default;
+            FileShare backupFileShare = default;
             string storageResourceId = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             MISqlConnectionInfo targetConnectionInfo = default;
             AzureActiveDirectoryApp azureApp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("selectedDatabases"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateSqlServerSqlMIDatabaseInput> array = new List<MigrateSqlServerSqlMIDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateSqlServerSqlMIDatabaseInput.DeserializeMigrateSqlServerSqlMIDatabaseInput(item));
+                        array.Add(MigrateSqlServerSqlMIDatabaseInput.DeserializeMigrateSqlServerSqlMIDatabaseInput(item, options));
                     }
                     selectedDatabases = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupFileShare = FileShare.DeserializeFileShare(property.Value);
+                    backupFileShare = FileShare.DeserializeFileShare(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageResourceId"u8))
@@ -120,26 +120,33 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = MISqlConnectionInfo.DeserializeMISqlConnectionInfo(property.Value);
+                    targetConnectionInfo = MISqlConnectionInfo.DeserializeMISqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureApp"u8))
                 {
-                    azureApp = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property.Value);
+                    azureApp = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerSqlMISyncTaskInput(selectedDatabases, backupFileShare.Value, storageResourceId, sourceConnectionInfo, targetConnectionInfo, azureApp, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SqlServerSqlMISyncTaskInput(
+                selectedDatabases,
+                backupFileShare,
+                storageResourceId,
+                sourceConnectionInfo,
+                targetConnectionInfo,
+                azureApp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerSqlMISyncTaskInput>.Write(ModelReaderWriterOptions options)
@@ -151,7 +158,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerSqlMISyncTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerSqlMISyncTaskInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +174,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeSqlServerSqlMISyncTaskInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerSqlMISyncTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerSqlMISyncTaskInput)} does not support reading '{options.Format}' format.");
             }
         }
 

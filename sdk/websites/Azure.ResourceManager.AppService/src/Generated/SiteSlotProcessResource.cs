@@ -11,10 +11,8 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
@@ -273,7 +271,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotProcessWebAppsRestClient.DeleteProcessSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(response);
+                var uri = _siteSlotProcessWebAppsRestClient.CreateDeleteProcessSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -315,7 +315,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotProcessWebAppsRestClient.DeleteProcessSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppServiceArmOperation(response);
+                var uri = _siteSlotProcessWebAppsRestClient.CreateDeleteProcessSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -430,7 +432,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotProcessWebAppsRestClient.CreateListProcessThreadsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotProcessWebAppsRestClient.CreateListProcessThreadsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProcessThreadInfo.DeserializeProcessThreadInfo, _siteSlotProcessWebAppsClientDiagnostics, Pipeline, "SiteSlotProcessResource.GetProcessThreadsSlot", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProcessThreadInfo.DeserializeProcessThreadInfo(e), _siteSlotProcessWebAppsClientDiagnostics, Pipeline, "SiteSlotProcessResource.GetProcessThreadsSlot", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -460,7 +462,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotProcessWebAppsRestClient.CreateListProcessThreadsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotProcessWebAppsRestClient.CreateListProcessThreadsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProcessThreadInfo.DeserializeProcessThreadInfo, _siteSlotProcessWebAppsClientDiagnostics, Pipeline, "SiteSlotProcessResource.GetProcessThreadsSlot", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProcessThreadInfo.DeserializeProcessThreadInfo(e), _siteSlotProcessWebAppsClientDiagnostics, Pipeline, "SiteSlotProcessResource.GetProcessThreadsSlot", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class CdnEndpointPatch : IUtf8JsonSerializable, IJsonModel<CdnEndpointPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnEndpointPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnEndpointPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CdnEndpointPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in GeoFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DefaultOriginGroup != null)
                 {
                     writer.WritePropertyName("defaultOriginGroup"u8);
-                    writer.WriteObjectValue(DefaultOriginGroup);
+                    writer.WriteObjectValue(DefaultOriginGroup, options);
                 }
                 else
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteStartArray();
                     foreach (var item in UriSigningKeys)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DeliveryPolicy != null)
                 {
                     writer.WritePropertyName("deliveryPolicy"u8);
-                    writer.WriteObjectValue(DeliveryPolicy);
+                    writer.WriteObjectValue(DeliveryPolicy, options);
                 }
                 else
                 {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (WebApplicationFirewallPolicyLink != null)
                 {
                     writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
+                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink, options);
                 }
                 else
                 {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -192,29 +192,29 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CdnEndpointPatch DeserializeCdnEndpointPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> originPath = default;
-            Optional<IList<string>> contentTypesToCompress = default;
-            Optional<string> originHostHeader = default;
-            Optional<bool> isCompressionEnabled = default;
-            Optional<bool> isHttpAllowed = default;
-            Optional<bool> isHttpsAllowed = default;
-            Optional<QueryStringCachingBehavior> queryStringCachingBehavior = default;
-            Optional<OptimizationType?> optimizationType = default;
-            Optional<string> probePath = default;
-            Optional<IList<GeoFilter>> geoFilters = default;
-            Optional<EndpointPropertiesUpdateParametersDefaultOriginGroup> defaultOriginGroup = default;
-            Optional<IList<UriSigningKey>> uriSigningKeys = default;
-            Optional<EndpointDeliveryPolicy> deliveryPolicy = default;
-            Optional<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
+            IDictionary<string, string> tags = default;
+            string originPath = default;
+            IList<string> contentTypesToCompress = default;
+            string originHostHeader = default;
+            bool? isCompressionEnabled = default;
+            bool? isHttpAllowed = default;
+            bool? isHttpsAllowed = default;
+            QueryStringCachingBehavior? queryStringCachingBehavior = default;
+            OptimizationType? optimizationType = default;
+            string probePath = default;
+            IList<GeoFilter> geoFilters = default;
+            EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup = default;
+            IList<UriSigningKey> uriSigningKeys = default;
+            EndpointDeliveryPolicy deliveryPolicy = default;
+            EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<GeoFilter> array = new List<GeoFilter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GeoFilter.DeserializeGeoFilter(item));
+                                array.Add(GeoFilter.DeserializeGeoFilter(item, options));
                             }
                             geoFilters = array;
                             continue;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 defaultOriginGroup = null;
                                 continue;
                             }
-                            defaultOriginGroup = EndpointPropertiesUpdateParametersDefaultOriginGroup.DeserializeEndpointPropertiesUpdateParametersDefaultOriginGroup(property0.Value);
+                            defaultOriginGroup = EndpointPropertiesUpdateParametersDefaultOriginGroup.DeserializeEndpointPropertiesUpdateParametersDefaultOriginGroup(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("urlSigningKeys"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<UriSigningKey> array = new List<UriSigningKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UriSigningKey.DeserializeUriSigningKey(item));
+                                array.Add(UriSigningKey.DeserializeUriSigningKey(item, options));
                             }
                             uriSigningKeys = array;
                             continue;
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 deliveryPolicy = null;
                                 continue;
                             }
-                            deliveryPolicy = EndpointDeliveryPolicy.DeserializeEndpointDeliveryPolicy(property0.Value);
+                            deliveryPolicy = EndpointDeliveryPolicy.DeserializeEndpointDeliveryPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("webApplicationFirewallPolicyLink"u8))
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 webApplicationFirewallPolicyLink = null;
                                 continue;
                             }
-                            webApplicationFirewallPolicyLink = EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.DeserializeEndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(property0.Value);
+                            webApplicationFirewallPolicyLink = EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.DeserializeEndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(property0.Value, options);
                             continue;
                         }
                     }
@@ -379,11 +379,27 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnEndpointPatch(Optional.ToDictionary(tags), originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup.Value, Optional.ToList(uriSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CdnEndpointPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                originPath,
+                contentTypesToCompress ?? new ChangeTrackingList<string>(),
+                originHostHeader,
+                isCompressionEnabled,
+                isHttpAllowed,
+                isHttpsAllowed,
+                queryStringCachingBehavior,
+                optimizationType,
+                probePath,
+                geoFilters ?? new ChangeTrackingList<GeoFilter>(),
+                defaultOriginGroup,
+                uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>(),
+                deliveryPolicy,
+                webApplicationFirewallPolicyLink,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnEndpointPatch>.Write(ModelReaderWriterOptions options)
@@ -395,7 +411,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -411,7 +427,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeCdnEndpointPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

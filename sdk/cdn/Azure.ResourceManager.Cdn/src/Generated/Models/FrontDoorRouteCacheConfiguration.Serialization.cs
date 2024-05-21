@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class FrontDoorRouteCacheConfiguration : IUtf8JsonSerializable, IJsonModel<FrontDoorRouteCacheConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorRouteCacheConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorRouteCacheConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorRouteCacheConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorRouteCacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(CompressionSettings))
             {
                 writer.WritePropertyName("compressionSettings"u8);
-                writer.WriteObjectValue(CompressionSettings);
+                writer.WriteObjectValue(CompressionSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorRouteCacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static FrontDoorRouteCacheConfiguration DeserializeFrontDoorRouteCacheConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<FrontDoorQueryStringCachingBehavior> queryStringCachingBehavior = default;
-            Optional<string> queryParameters = default;
-            Optional<RouteCacheCompressionSettings> compressionSettings = default;
+            FrontDoorQueryStringCachingBehavior? queryStringCachingBehavior = default;
+            string queryParameters = default;
+            RouteCacheCompressionSettings compressionSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryStringCachingBehavior"u8))
@@ -106,16 +106,16 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    compressionSettings = RouteCacheCompressionSettings.DeserializeRouteCacheCompressionSettings(property.Value);
+                    compressionSettings = RouteCacheCompressionSettings.DeserializeRouteCacheCompressionSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRouteCacheConfiguration(Optional.ToNullable(queryStringCachingBehavior), queryParameters.Value, compressionSettings.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FrontDoorRouteCacheConfiguration(queryStringCachingBehavior, queryParameters, compressionSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRouteCacheConfiguration>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeFrontDoorRouteCacheConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorRouteCacheConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

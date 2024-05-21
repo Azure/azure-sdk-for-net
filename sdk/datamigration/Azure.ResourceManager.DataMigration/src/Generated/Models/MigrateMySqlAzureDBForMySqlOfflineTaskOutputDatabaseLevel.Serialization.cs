@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel : IUtf8JsonSerializable, IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ExceptionsAndWarnings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,31 +145,31 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<MigrationState> state = default;
-            Optional<DatabaseMigrationStage> stage = default;
-            Optional<string> statusMessage = default;
-            Optional<string> message = default;
-            Optional<long> numberOfObjects = default;
-            Optional<long> numberOfObjectsCompleted = default;
-            Optional<long> errorCount = default;
-            Optional<string> errorPrefix = default;
-            Optional<string> resultPrefix = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Optional<DateTimeOffset> lastStorageUpdate = default;
-            Optional<string> objectSummary = default;
-            Optional<string> id = default;
+            string databaseName = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            MigrationState? state = default;
+            DatabaseMigrationStage? stage = default;
+            string statusMessage = default;
+            string message = default;
+            long? numberOfObjects = default;
+            long? numberOfObjectsCompleted = default;
+            long? errorCount = default;
+            string errorPrefix = default;
+            string resultPrefix = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
+            DateTimeOffset? lastStorageUpdate = default;
+            string objectSummary = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -300,11 +300,29 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, databaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(state), Optional.ToNullable(stage), statusMessage.Value, message.Value, Optional.ToNullable(numberOfObjects), Optional.ToNullable(numberOfObjectsCompleted), Optional.ToNullable(errorCount), errorPrefix.Value, resultPrefix.Value, Optional.ToList(exceptionsAndWarnings), Optional.ToNullable(lastStorageUpdate), objectSummary.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                databaseName,
+                startedOn,
+                endedOn,
+                state,
+                stage,
+                statusMessage,
+                message,
+                numberOfObjects,
+                numberOfObjectsCompleted,
+                errorCount,
+                errorPrefix,
+                resultPrefix,
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>(),
+                lastStorageUpdate,
+                objectSummary);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)
@@ -316,7 +334,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -332,7 +350,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -123,14 +123,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<InputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -143,17 +143,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string uri = default;
-            Optional<IDictionary<string, string>> httpHeaders = default;
-            Optional<string> httpMethod = default;
-            Optional<TimeSpan?> timeout = default;
-            Optional<int?> batchSize = default;
-            Optional<int?> degreeOfParallelism = default;
-            Optional<ResourceIdentifier> authResourceId = default;
-            Optional<SearchIndexerDataIdentity> authIdentity = default;
+            IDictionary<string, string> httpHeaders = default;
+            string httpMethod = default;
+            TimeSpan? timeout = default;
+            int? batchSize = default;
+            int? degreeOfParallelism = default;
+            ResourceIdentifier authResourceId = default;
+            SearchIndexerDataIdentity authIdentity = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -274,7 +274,37 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new WebApiSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, uri, Optional.ToDictionary(httpHeaders), httpMethod.Value, Optional.ToNullable(timeout), Optional.ToNullable(batchSize), Optional.ToNullable(degreeOfParallelism), authResourceId.Value, authIdentity.Value);
+            return new WebApiSkill(
+                odataType,
+                name,
+                description,
+                context,
+                inputs,
+                outputs,
+                uri,
+                httpHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                httpMethod,
+                timeout,
+                batchSize,
+                degreeOfParallelism,
+                authResourceId,
+                authIdentity);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new WebApiSkill FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebApiSkill(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

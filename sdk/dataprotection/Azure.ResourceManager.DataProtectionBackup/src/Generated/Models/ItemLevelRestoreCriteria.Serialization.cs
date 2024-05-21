@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     [PersistableModelProxy(typeof(UnknownItemLevelRestoreCriteria))]
     public partial class ItemLevelRestoreCriteria : IUtf8JsonSerializable, IJsonModel<ItemLevelRestoreCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ItemLevelRestoreCriteria>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ItemLevelRestoreCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ItemLevelRestoreCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ItemLevelRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ItemLevelRestoreCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ItemLevelRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ItemLevelRestoreCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ItemLevelRestoreCriteria DeserializeItemLevelRestoreCriteria(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ItemPathBasedRestoreCriteria": return ItemPathBasedRestoreCriteria.DeserializeItemPathBasedRestoreCriteria(element);
-                    case "KubernetesClusterRestoreCriteria": return KubernetesClusterRestoreCriteria.DeserializeKubernetesClusterRestoreCriteria(element);
-                    case "KubernetesClusterVaultTierRestoreCriteria": return KubernetesClusterVaultTierRestoreCriteria.DeserializeKubernetesClusterVaultTierRestoreCriteria(element);
-                    case "KubernetesPVRestoreCriteria": return KubernetesPVRestoreCriteria.DeserializeKubernetesPVRestoreCriteria(element);
-                    case "KubernetesStorageClassRestoreCriteria": return KubernetesStorageClassRestoreCriteria.DeserializeKubernetesStorageClassRestoreCriteria(element);
-                    case "RangeBasedItemLevelRestoreCriteria": return RangeBasedItemLevelRestoreCriteria.DeserializeRangeBasedItemLevelRestoreCriteria(element);
+                    case "ItemPathBasedRestoreCriteria": return ItemPathBasedRestoreCriteria.DeserializeItemPathBasedRestoreCriteria(element, options);
+                    case "KubernetesClusterRestoreCriteria": return KubernetesClusterRestoreCriteria.DeserializeKubernetesClusterRestoreCriteria(element, options);
+                    case "KubernetesClusterVaultTierRestoreCriteria": return KubernetesClusterVaultTierRestoreCriteria.DeserializeKubernetesClusterVaultTierRestoreCriteria(element, options);
+                    case "KubernetesPVRestoreCriteria": return KubernetesPVRestoreCriteria.DeserializeKubernetesPVRestoreCriteria(element, options);
+                    case "KubernetesStorageClassRestoreCriteria": return KubernetesStorageClassRestoreCriteria.DeserializeKubernetesStorageClassRestoreCriteria(element, options);
+                    case "RangeBasedItemLevelRestoreCriteria": return RangeBasedItemLevelRestoreCriteria.DeserializeRangeBasedItemLevelRestoreCriteria(element, options);
                 }
             }
-            return UnknownItemLevelRestoreCriteria.DeserializeUnknownItemLevelRestoreCriteria(element);
+            return UnknownItemLevelRestoreCriteria.DeserializeUnknownItemLevelRestoreCriteria(element, options);
         }
 
         BinaryData IPersistableModel<ItemLevelRestoreCriteria>.Write(ModelReaderWriterOptions options)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ItemLevelRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ItemLevelRestoreCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeItemLevelRestoreCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ItemLevelRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ItemLevelRestoreCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

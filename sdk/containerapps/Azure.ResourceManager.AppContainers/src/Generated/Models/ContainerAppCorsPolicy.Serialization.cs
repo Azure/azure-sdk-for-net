@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppCorsPolicy : IUtf8JsonSerializable, IJsonModel<ContainerAppCorsPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCorsPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCorsPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppCorsPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCorsPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCorsPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCorsPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCorsPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCorsPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCorsPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,20 +105,20 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCorsPolicy DeserializeContainerAppCorsPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<string> allowedOrigins = default;
-            Optional<IList<string>> allowedMethods = default;
-            Optional<IList<string>> allowedHeaders = default;
-            Optional<IList<string>> exposeHeaders = default;
-            Optional<int> maxAge = default;
-            Optional<bool> allowCredentials = default;
+            IList<string> allowedMethods = default;
+            IList<string> allowedHeaders = default;
+            IList<string> exposeHeaders = default;
+            int? maxAge = default;
+            bool? allowCredentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedOrigins"u8))
@@ -193,11 +193,18 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCorsPolicy(allowedOrigins, Optional.ToList(allowedMethods), Optional.ToList(allowedHeaders), Optional.ToList(exposeHeaders), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerAppCorsPolicy(
+                allowedOrigins,
+                allowedMethods ?? new ChangeTrackingList<string>(),
+                allowedHeaders ?? new ChangeTrackingList<string>(),
+                exposeHeaders ?? new ChangeTrackingList<string>(),
+                maxAge,
+                allowCredentials,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCorsPolicy>.Write(ModelReaderWriterOptions options)
@@ -209,7 +216,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCorsPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCorsPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +232,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppCorsPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCorsPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCorsPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

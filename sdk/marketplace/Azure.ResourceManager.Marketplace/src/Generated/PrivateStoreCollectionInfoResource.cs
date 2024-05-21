@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Marketplace.Models;
 
 namespace Azure.ResourceManager.Marketplace
@@ -278,7 +276,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.DeleteAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateDeleteRequestUri(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -320,7 +320,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.Delete(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateDeleteRequestUri(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -366,7 +368,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateOrUpdateAsync(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), info, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()));
+                var uri = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateCreateOrUpdateRequestUri(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), info);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -412,7 +416,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateOrUpdate(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), info, cancellationToken);
-                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()));
+                var uri = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateCreateOrUpdateRequestUri(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), info);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -516,7 +522,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual AsyncPageable<MarketplaceRule> QueryRulesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryRulesRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MarketplaceRule.DeserializeMarketplaceRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.QueryRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MarketplaceRule.DeserializeMarketplaceRule(e), _defaultClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.QueryRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -541,7 +547,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Pageable<MarketplaceRule> QueryRules(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryRulesRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MarketplaceRule.DeserializeMarketplaceRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.QueryRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MarketplaceRule.DeserializeMarketplaceRule(e), _defaultClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.QueryRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -802,7 +808,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListByContextsRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), payload);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListByContextsNextPageRequest(nextLink, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), payload);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CollectionOffersByContext.DeserializeCollectionOffersByContext, _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.GetPrivateStoreCollectionOffersByContexts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CollectionOffersByContext.DeserializeCollectionOffersByContext(e), _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.GetPrivateStoreCollectionOffersByContexts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -833,7 +839,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListByContextsRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), payload);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListByContextsNextPageRequest(nextLink, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), payload);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CollectionOffersByContext.DeserializeCollectionOffersByContext, _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.GetPrivateStoreCollectionOffersByContexts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CollectionOffersByContext.DeserializeCollectionOffersByContext(e), _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoResource.GetPrivateStoreCollectionOffersByContexts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

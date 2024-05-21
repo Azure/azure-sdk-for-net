@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabAnnouncement : IUtf8JsonSerializable, IJsonModel<DevTestLabAnnouncement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabAnnouncement>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabAnnouncement>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevTestLabAnnouncement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabAnnouncement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabAnnouncement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabAnnouncement)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabAnnouncement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabAnnouncement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabAnnouncement)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,21 +93,21 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabAnnouncement DeserializeDevTestLabAnnouncement(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> markdown = default;
-            Optional<DevTestLabEnableStatus> enabled = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<bool> expired = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            string title = default;
+            string markdown = default;
+            DevTestLabEnableStatus? enabled = default;
+            DateTimeOffset? expirationDate = default;
+            bool? expired = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))
@@ -163,11 +163,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabAnnouncement(title.Value, markdown.Value, Optional.ToNullable(enabled), Optional.ToNullable(expirationDate), Optional.ToNullable(expired), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevTestLabAnnouncement(
+                title,
+                markdown,
+                enabled,
+                expirationDate,
+                expired,
+                provisioningState,
+                uniqueIdentifier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabAnnouncement>.Write(ModelReaderWriterOptions options)
@@ -179,7 +187,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabAnnouncement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabAnnouncement)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +203,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabAnnouncement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabAnnouncement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabAnnouncement)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<SemanticFieldState> state = default;
+            string name = default;
+            SemanticFieldState? state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,7 +36,15 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new QueryResultDocumentSemanticField(name.Value, Optional.ToNullable(state));
+            return new QueryResultDocumentSemanticField(name, state);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static QueryResultDocumentSemanticField FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeQueryResultDocumentSemanticField(document.RootElement);
         }
     }
 }

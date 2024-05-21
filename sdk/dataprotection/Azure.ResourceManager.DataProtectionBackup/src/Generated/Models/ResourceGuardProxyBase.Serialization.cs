@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class ResourceGuardProxyBase : IUtf8JsonSerializable, IJsonModel<ResourceGuardProxyBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceGuardProxyBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceGuardProxyBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceGuardProxyBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProxyBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGuardProxyBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGuardProxyBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperationDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProxyBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGuardProxyBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGuardProxyBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,18 +83,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ResourceGuardProxyBase DeserializeResourceGuardProxyBase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> resourceGuardResourceId = default;
-            Optional<IList<ResourceGuardOperationDetail>> resourceGuardOperationDetails = default;
-            Optional<string> lastUpdatedTime = default;
-            Optional<string> description = default;
+            string resourceGuardResourceId = default;
+            IList<ResourceGuardOperationDetail> resourceGuardOperationDetails = default;
+            string lastUpdatedTime = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceGuardResourceId"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<ResourceGuardOperationDetail> array = new List<ResourceGuardOperationDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceGuardOperationDetail.DeserializeResourceGuardOperationDetail(item));
+                        array.Add(ResourceGuardOperationDetail.DeserializeResourceGuardOperationDetail(item, options));
                     }
                     resourceGuardOperationDetails = array;
                     continue;
@@ -128,11 +128,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGuardProxyBase(resourceGuardResourceId.Value, Optional.ToList(resourceGuardOperationDetails), lastUpdatedTime.Value, description.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ResourceGuardProxyBase(resourceGuardResourceId, resourceGuardOperationDetails ?? new ChangeTrackingList<ResourceGuardOperationDetail>(), lastUpdatedTime, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGuardProxyBase>.Write(ModelReaderWriterOptions options)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGuardProxyBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGuardProxyBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeResourceGuardProxyBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGuardProxyBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGuardProxyBase)} does not support reading '{options.Format}' format.");
             }
         }
 

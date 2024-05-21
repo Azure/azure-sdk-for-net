@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class GatewayRoute : IUtf8JsonSerializable, IJsonModel<GatewayRoute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayRoute>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayRoute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GatewayRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GatewayRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayRoute)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<GatewayRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayRoute)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,21 +93,21 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static GatewayRoute DeserializeGatewayRoute(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> localAddress = default;
-            Optional<string> network = default;
-            Optional<string> nextHop = default;
-            Optional<string> sourcePeer = default;
-            Optional<string> origin = default;
-            Optional<string> asPath = default;
-            Optional<int> weight = default;
+            string localAddress = default;
+            string network = default;
+            string nextHop = default;
+            string sourcePeer = default;
+            string origin = default;
+            string asPath = default;
+            int? weight = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("localAddress"u8))
@@ -151,11 +151,19 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayRoute(localAddress.Value, network.Value, nextHop.Value, sourcePeer.Value, origin.Value, asPath.Value, Optional.ToNullable(weight), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GatewayRoute(
+                localAddress,
+                network,
+                nextHop,
+                sourcePeer,
+                origin,
+                asPath,
+                weight,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayRoute>.Write(ModelReaderWriterOptions options)
@@ -167,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GatewayRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayRoute)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +191,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeGatewayRoute(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GatewayRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayRoute)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     internal partial class AuthConfigCollection : IUtf8JsonSerializable, IJsonModel<AuthConfigCollection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthConfigCollection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthConfigCollection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AuthConfigCollection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AuthConfigCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthConfigCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthConfigCollection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthConfigCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthConfigCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthConfigCollection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,16 +70,16 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static AuthConfigCollection DeserializeAuthConfigCollection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<ContainerAppAuthConfigData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppAuthConfigData> array = new List<ContainerAppAuthConfigData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(item));
+                        array.Add(ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,11 +99,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthConfigCollection(value, nextLink.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AuthConfigCollection(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthConfigCollection>.Write(ModelReaderWriterOptions options)
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthConfigCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthConfigCollection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeAuthConfigCollection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthConfigCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthConfigCollection)} does not support reading '{options.Format}' format.");
             }
         }
 

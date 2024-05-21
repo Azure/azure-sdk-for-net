@@ -11,9 +11,9 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Rendering
 {
@@ -31,7 +31,7 @@ namespace Azure.Maps.Rendering
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public RenderRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, string apiVersion = "2022-08-01")
@@ -82,11 +82,11 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// The Get Map Tiles API allows users to request map tiles in vector or raster formats typically to be integrated  into a map control or SDK. Some example tiles that can be requested are Azure Maps road tiles, real-time  Weather Radar tiles or the map tiles created using [Azure Maps Creator](https://aka.ms/amcreator). By default,  Azure Maps uses vector tiles for its web map control (Web SDK) and Android SDK.
         /// </summary>
-        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/en-us/rest/api/maps/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
+        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/rest/api/maps-creator/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
         /// <param name="tileIndex"> Parameter group. </param>
         /// <param name="timeStamp">
         /// The desired date and time of the requested tile. This parameter must be specified in the standard date-time format (e.g. 2019-11-14T16:03:00-08:00), as defined by [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601). This parameter is only supported when tilesetId parameter is set to one of the values below.
@@ -130,11 +130,11 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// The Get Map Tiles API allows users to request map tiles in vector or raster formats typically to be integrated  into a map control or SDK. Some example tiles that can be requested are Azure Maps road tiles, real-time  Weather Radar tiles or the map tiles created using [Azure Maps Creator](https://aka.ms/amcreator). By default,  Azure Maps uses vector tiles for its web map control (Web SDK) and Android SDK.
         /// </summary>
-        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/en-us/rest/api/maps/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
+        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/rest/api/maps-creator/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
         /// <param name="tileIndex"> Parameter group. </param>
         /// <param name="timeStamp">
         /// The desired date and time of the requested tile. This parameter must be specified in the standard date-time format (e.g. 2019-11-14T16:03:00-08:00), as defined by [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601). This parameter is only supported when tilesetId parameter is set to one of the values below.
@@ -197,11 +197,11 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// The Get Map Tileset API allows users to request metadata for a tileset.
         /// </summary>
-        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/en-us/rest/api/maps/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
+        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/rest/api/maps-creator/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<MapTileSet>> GetMapTilesetAsync(MapTileSetId tilesetId, CancellationToken cancellationToken = default)
         {
@@ -222,11 +222,11 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// The Get Map Tileset API allows users to request metadata for a tileset.
         /// </summary>
-        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/en-us/rest/api/maps/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
+        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/rest/api/maps-creator/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<MapTileSet> GetMapTileset(MapTileSetId tilesetId, CancellationToken cancellationToken = default)
         {
@@ -257,7 +257,7 @@ namespace Azure.Maps.Rendering
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("tilesetId", tilesetId.ToString(), true);
             uri.AppendQuery("zoom", zoom, true);
-            if (bounds != null && Optional.IsCollectionDefined(bounds))
+            if (bounds != null && !(bounds is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("bounds", bounds, ",", true);
             }
@@ -271,11 +271,11 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// The Get Map Attribution API allows users to request map copyright attribution information for a section of a tileset.
         /// </summary>
-        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/en-us/rest/api/maps/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
+        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/rest/api/maps-creator/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
         /// <param name="zoom"> Zoom level for the desired map attribution. </param>
         /// <param name="bounds"> The string that represents the rectangular area of a bounding box. The bounds parameter is defined by the 4 bounding box coordinates, with WGS84 longitude and latitude of the southwest corner followed by  WGS84 longitude and latitude of the northeast corner. The string is presented in the following  format: `[SouthwestCorner_Longitude, SouthwestCorner_Latitude, NortheastCorner_Longitude,  NortheastCorner_Latitude]`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -304,11 +304,11 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// The Get Map Attribution API allows users to request map copyright attribution information for a section of a tileset.
         /// </summary>
-        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/en-us/rest/api/maps/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
+        /// <param name="tilesetId"> A tileset is a collection of raster or vector data broken up into a uniform grid of square tiles at preset  zoom levels. Every tileset has a **tilesetId** to use when making requests. The **tilesetId** for tilesets created using [Azure Maps Creator](https://aka.ms/amcreator) are generated through the  [Tileset Create API](https://docs.microsoft.com/rest/api/maps-creator/tileset). The ready-to-use tilesets supplied  by Azure Maps are listed below. For example, microsoft.base. </param>
         /// <param name="zoom"> Zoom level for the desired map attribution. </param>
         /// <param name="bounds"> The string that represents the rectangular area of a bounding box. The bounds parameter is defined by the 4 bounding box coordinates, with WGS84 longitude and latitude of the southwest corner followed by  WGS84 longitude and latitude of the northeast corner. The string is presented in the following  format: `[SouthwestCorner_Longitude, SouthwestCorner_Latitude, NortheastCorner_Longitude,  NortheastCorner_Latitude]`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -359,7 +359,7 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// Fetches state tiles in vector format typically to be integrated into indoor maps module of map control or SDK. The map control will call this API after user turns on dynamic styling (see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid))
         /// </summary>
@@ -394,7 +394,7 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// Fetches state tiles in vector format typically to be integrated into indoor maps module of map control or SDK. The map control will call this API after user turns on dynamic styling (see [Zoom Levels and Tile Grid](https://docs.microsoft.com/azure/location-based-services/zoom-levels-and-tile-grid))
         /// </summary>
@@ -448,7 +448,7 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// Copyrights API is designed to serve copyright information for Render Tile
         /// service. In addition to basic copyright for the whole map, API is serving
@@ -478,7 +478,7 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// Copyrights API is designed to serve copyright information for Render Tile
         /// service. In addition to basic copyright for the whole map, API is serving
@@ -529,11 +529,11 @@ namespace Azure.Maps.Rendering
             {
                 uri.AppendQuery("zoom", zoom.Value, true);
             }
-            if (center != null && Optional.IsCollectionDefined(center))
+            if (center != null && !(center is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("center", center, ",", true);
             }
-            if (boundingBoxPrivate != null && Optional.IsCollectionDefined(boundingBoxPrivate))
+            if (boundingBoxPrivate != null && !(boundingBoxPrivate is Common.ChangeTrackingList<double> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("bbox", boundingBoxPrivate, ",", true);
             }
@@ -553,14 +553,14 @@ namespace Azure.Maps.Rendering
             {
                 uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
             }
-            if (pins != null && Optional.IsCollectionDefined(pins))
+            if (pins != null && !(pins is Common.ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in pins)
                 {
                     uri.AppendQuery("pins", param, true);
                 }
             }
-            if (path != null && Optional.IsCollectionDefined(path))
+            if (path != null && !(path is Common.ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in path)
                 {
@@ -577,7 +577,7 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// The static image service renders a user-defined, rectangular image containing a map section using a zoom level from 0 to 20. The supported resolution range for the map image is from 1x1 to 8192x8192. If you are deciding when to use the static image service over the map tile service, you may want to consider how you would like to interact with the rendered map. If the map contents will be relatively unchanging, a static map is a good choice. If you want to support a lot of zooming, panning and changing of the map content, the map tile service would be a better choice.
         ///
@@ -864,7 +864,7 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// The static image service renders a user-defined, rectangular image containing a map section using a zoom level from 0 to 20. The supported resolution range for the map image is from 1x1 to 8192x8192. If you are deciding when to use the static image service over the map tile service, you may want to consider how you would like to interact with the rendered map. If the map contents will be relatively unchanging, a static map is a good choice. If you want to support a lot of zooming, panning and changing of the map content, the map tile service would be a better choice.
         ///
@@ -1160,11 +1160,11 @@ namespace Azure.Maps.Rendering
             uri.AppendPath("/map/copyright/bounding/", false);
             uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (boundingBox?.SouthWest != null && Optional.IsCollectionDefined(boundingBox?.SouthWest))
+            if (boundingBox?.SouthWest != null && !(boundingBox?.SouthWest is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("mincoordinates", boundingBox.SouthWest, ",", true);
             }
-            if (boundingBox?.NorthEast != null && Optional.IsCollectionDefined(boundingBox?.NorthEast))
+            if (boundingBox?.NorthEast != null && !(boundingBox?.NorthEast is Common.ChangeTrackingList<double> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("maxcoordinates", boundingBox.NorthEast, ",", true);
             }
@@ -1182,7 +1182,7 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// Returns copyright information for a given bounding box. Bounding-box requests should specify the minimum and maximum longitude and latitude (EPSG-3857) coordinates
         /// </summary>
@@ -1215,7 +1215,7 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// Returns copyright information for a given bounding box. Bounding-box requests should specify the minimum and maximum longitude and latitude (EPSG-3857) coordinates
         /// </summary>
@@ -1274,7 +1274,7 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// Copyrights API is designed to serve copyright information for Render Tile  service. In addition to basic copyright for the whole map, API is serving  specific groups of copyrights for some countries/regions.
         /// Returns the copyright information for a given tile. To obtain the copyright information for a particular tile, the request should specify the tile's zoom level and x and y coordinates (see: Zoom Levels and Tile Grid).
@@ -1308,7 +1308,7 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// Copyrights API is designed to serve copyright information for Render Tile  service. In addition to basic copyright for the whole map, API is serving  specific groups of copyrights for some countries/regions.
         /// Returns the copyright information for a given tile. To obtain the copyright information for a particular tile, the request should specify the tile's zoom level and x and y coordinates (see: Zoom Levels and Tile Grid).
@@ -1365,7 +1365,7 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// Copyrights API is designed to serve copyright information for Render Tile  service. In addition to basic copyright for the whole map, API is serving  specific groups of copyrights for some countries/regions.
         /// Returns the copyright information for the world. To obtain the default copyright information for the whole world, do not specify a tile or bounding box.
@@ -1392,7 +1392,7 @@ namespace Azure.Maps.Rendering
         }
 
         /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
+        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
         ///
         /// Copyrights API is designed to serve copyright information for Render Tile  service. In addition to basic copyright for the whole map, API is serving  specific groups of copyrights for some countries/regions.
         /// Returns the copyright information for the world. To obtain the default copyright information for the whole world, do not specify a tile or bounding box.

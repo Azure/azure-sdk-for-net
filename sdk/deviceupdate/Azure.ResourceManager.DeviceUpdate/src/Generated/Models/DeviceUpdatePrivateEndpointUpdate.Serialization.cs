@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     public partial class DeviceUpdatePrivateEndpointUpdate : IUtf8JsonSerializable, IJsonModel<DeviceUpdatePrivateEndpointUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdatePrivateEndpointUpdate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdatePrivateEndpointUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeviceUpdatePrivateEndpointUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateEndpointUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateEndpointUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,19 +83,19 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static DeviceUpdatePrivateEndpointUpdate DeserializeDeviceUpdatePrivateEndpointUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> immutableSubscriptionId = default;
-            Optional<ResourceIdentifier> immutableResourceId = default;
-            Optional<string> vnetTrafficTag = default;
+            ResourceIdentifier id = default;
+            AzureLocation? location = default;
+            string immutableSubscriptionId = default;
+            ResourceIdentifier immutableResourceId = default;
+            string vnetTrafficTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -137,11 +137,17 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdatePrivateEndpointUpdate(id.Value, Optional.ToNullable(location), immutableSubscriptionId.Value, immutableResourceId.Value, vnetTrafficTag.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DeviceUpdatePrivateEndpointUpdate(
+                id,
+                location,
+                immutableSubscriptionId,
+                immutableResourceId,
+                vnetTrafficTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdatePrivateEndpointUpdate>.Write(ModelReaderWriterOptions options)
@@ -153,7 +159,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                         return DeserializeDeviceUpdatePrivateEndpointUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

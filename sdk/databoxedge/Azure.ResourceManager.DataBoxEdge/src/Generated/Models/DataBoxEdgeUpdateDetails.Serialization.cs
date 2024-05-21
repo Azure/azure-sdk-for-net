@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class DataBoxEdgeUpdateDetails : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeUpdateDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeUpdateDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeUpdateDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxEdgeUpdateDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,23 +103,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeUpdateDetails DeserializeDataBoxEdgeUpdateDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> updateTitle = default;
-            Optional<double> updateSize = default;
-            Optional<DataBoxEdgeUpdateType> updateType = default;
-            Optional<string> targetVersion = default;
-            Optional<string> friendlyVersionNumber = default;
-            Optional<int> estimatedInstallTimeInMins = default;
-            Optional<InstallRebootBehavior> rebootBehavior = default;
-            Optional<InstallationImpact> installationImpact = default;
-            Optional<DataBoxEdgeUpdateStatus> status = default;
+            string updateTitle = default;
+            double? updateSize = default;
+            DataBoxEdgeUpdateType? updateType = default;
+            string targetVersion = default;
+            string friendlyVersionNumber = default;
+            int? estimatedInstallTimeInMins = default;
+            InstallRebootBehavior? rebootBehavior = default;
+            InstallationImpact? installationImpact = default;
+            DataBoxEdgeUpdateStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("updateTitle"u8))
@@ -193,11 +193,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeUpdateDetails(updateTitle.Value, Optional.ToNullable(updateSize), Optional.ToNullable(updateType), targetVersion.Value, friendlyVersionNumber.Value, Optional.ToNullable(estimatedInstallTimeInMins), Optional.ToNullable(rebootBehavior), Optional.ToNullable(installationImpact), Optional.ToNullable(status), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxEdgeUpdateDetails(
+                updateTitle,
+                updateSize,
+                updateType,
+                targetVersion,
+                friendlyVersionNumber,
+                estimatedInstallTimeInMins,
+                rebootBehavior,
+                installationImpact,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeUpdateDetails>.Write(ModelReaderWriterOptions options)
@@ -209,7 +219,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +235,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDataBoxEdgeUpdateDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

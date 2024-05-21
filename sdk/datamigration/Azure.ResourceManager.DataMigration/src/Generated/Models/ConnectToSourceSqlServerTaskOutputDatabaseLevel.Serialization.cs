@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class ConnectToSourceSqlServerTaskOutputDatabaseLevel : IUtf8JsonSerializable, IJsonModel<ConnectToSourceSqlServerTaskOutputDatabaseLevel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceSqlServerTaskOutputDatabaseLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceSqlServerTaskOutputDatabaseLevel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectToSourceSqlServerTaskOutputDatabaseLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputDatabaseLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputDatabaseLevel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in DatabaseFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputDatabaseLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputDatabaseLevel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,21 +95,21 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToSourceSqlServerTaskOutputDatabaseLevel DeserializeConnectToSourceSqlServerTaskOutputDatabaseLevel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<double> sizeMB = default;
-            Optional<IReadOnlyList<DatabaseFileInfo>> databaseFiles = default;
-            Optional<DatabaseCompatLevel> compatibilityLevel = default;
-            Optional<DatabaseState> databaseState = default;
-            Optional<string> id = default;
+            string name = default;
+            double? sizeMB = default;
+            IReadOnlyList<DatabaseFileInfo> databaseFiles = default;
+            DatabaseCompatLevel? compatibilityLevel = default;
+            DatabaseState? databaseState = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<DatabaseFileInfo> array = new List<DatabaseFileInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseFileInfo.DeserializeDatabaseFileInfo(item));
+                        array.Add(DatabaseFileInfo.DeserializeDatabaseFileInfo(item, options));
                     }
                     databaseFiles = array;
                     continue;
@@ -170,11 +170,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceSqlServerTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, name.Value, Optional.ToNullable(sizeMB), Optional.ToList(databaseFiles), Optional.ToNullable(compatibilityLevel), Optional.ToNullable(databaseState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectToSourceSqlServerTaskOutputDatabaseLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                name,
+                sizeMB,
+                databaseFiles ?? new ChangeTrackingList<DatabaseFileInfo>(),
+                compatibilityLevel,
+                databaseState);
         }
 
         BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)
@@ -186,7 +194,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputDatabaseLevel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +210,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeConnectToSourceSqlServerTaskOutputDatabaseLevel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputDatabaseLevel)} does not support reading '{options.Format}' format.");
             }
         }
 

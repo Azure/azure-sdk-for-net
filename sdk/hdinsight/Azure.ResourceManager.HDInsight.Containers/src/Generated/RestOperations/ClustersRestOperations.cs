@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.HDInsight.Containers.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01-preview";
+            _apiVersion = apiVersion ?? "2023-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByClusterPoolNameRequestUri(string subscriptionId, string resourceGroupName, string clusterPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusterpools/", false);
+            uri.AppendPath(clusterPoolName, true);
+            uri.AppendPath("/clusters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByClusterPoolNameRequest(string subscriptionId, string resourceGroupName, string clusterPoolName)
@@ -116,6 +130,125 @@ namespace Azure.ResourceManager.HDInsight.Containers
             }
         }
 
+        internal RequestUriBuilder CreateUpgradeRequestUri(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, ClusterUpgrade clusterUpgradeRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusterpools/", false);
+            uri.AppendPath(clusterPoolName, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/upgrade", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateUpgradeRequest(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, ClusterUpgrade clusterUpgradeRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusterpools/", false);
+            uri.AppendPath(clusterPoolName, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/upgrade", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(clusterUpgradeRequest, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Upgrade a cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="clusterPoolName"> The name of the cluster pool. </param>
+        /// <param name="clusterName"> The name of the HDInsight cluster. </param>
+        /// <param name="clusterUpgradeRequest"> Upgrade a cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/>, <paramref name="clusterName"/> or <paramref name="clusterUpgradeRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpgradeAsync(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, ClusterUpgrade clusterUpgradeRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNull(clusterUpgradeRequest, nameof(clusterUpgradeRequest));
+
+            using var message = CreateUpgradeRequest(subscriptionId, resourceGroupName, clusterPoolName, clusterName, clusterUpgradeRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Upgrade a cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="clusterPoolName"> The name of the cluster pool. </param>
+        /// <param name="clusterName"> The name of the HDInsight cluster. </param>
+        /// <param name="clusterUpgradeRequest"> Upgrade a cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/>, <paramref name="clusterName"/> or <paramref name="clusterUpgradeRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterPoolName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Upgrade(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, ClusterUpgrade clusterUpgradeRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterPoolName, nameof(clusterPoolName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNull(clusterUpgradeRequest, nameof(clusterUpgradeRequest));
+
+            using var message = CreateUpgradeRequest(subscriptionId, resourceGroupName, clusterPoolName, clusterName, clusterUpgradeRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateResizeRequestUri(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, ClusterResizeContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusterpools/", false);
+            uri.AppendPath(clusterPoolName, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/resize", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateResizeRequest(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, ClusterResizeContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -137,7 +270,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -199,6 +332,22 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusterpools/", false);
+            uri.AppendPath(clusterPoolName, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
@@ -289,6 +438,22 @@ namespace Azure.ResourceManager.HDInsight.Containers
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, HDInsightClusterData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusterpools/", false);
+            uri.AppendPath(clusterPoolName, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, HDInsightClusterData data)
         {
             var message = _pipeline.CreateMessage();
@@ -309,7 +474,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -373,6 +538,22 @@ namespace Azure.ResourceManager.HDInsight.Containers
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, HDInsightClusterPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusterpools/", false);
+            uri.AppendPath(clusterPoolName, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, HDInsightClusterPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -393,7 +574,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -457,6 +638,22 @@ namespace Azure.ResourceManager.HDInsight.Containers
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusterpools/", false);
+            uri.AppendPath(clusterPoolName, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
         {
             var message = _pipeline.CreateMessage();
@@ -498,7 +695,6 @@ namespace Azure.ResourceManager.HDInsight.Containers
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -526,13 +722,29 @@ namespace Azure.ResourceManager.HDInsight.Containers
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListServiceConfigsRequestUri(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusterpools/", false);
+            uri.AppendPath(clusterPoolName, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/serviceConfigs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListServiceConfigsRequest(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
@@ -620,6 +832,23 @@ namespace Azure.ResourceManager.HDInsight.Containers
             }
         }
 
+        internal RequestUriBuilder CreateListInstanceViewsRequestUri(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusterpools/", false);
+            uri.AppendPath(clusterPoolName, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/instanceViews", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListInstanceViewsRequest(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
         {
             var message = _pipeline.CreateMessage();
@@ -703,6 +932,23 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetInstanceViewRequestUri(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusterpools/", false);
+            uri.AppendPath(clusterPoolName, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/instanceViews/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetInstanceViewRequest(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
@@ -790,6 +1036,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
             }
         }
 
+        internal RequestUriBuilder CreateListByClusterPoolNameNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByClusterPoolNameNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName)
         {
             var message = _pipeline.CreateMessage();
@@ -864,6 +1118,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListServiceConfigsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListServiceConfigsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
@@ -944,6 +1206,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListInstanceViewsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListInstanceViewsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)

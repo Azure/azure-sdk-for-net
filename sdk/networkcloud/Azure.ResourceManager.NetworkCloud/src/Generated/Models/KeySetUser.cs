@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> KeySetUser represents the properties of the user in the key set. </summary>
     public partial class KeySetUser
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="KeySetUser"/>. </summary>
         /// <param name="azureUserName"> The user name that will be used for access. </param>
         /// <param name="sshPublicKey"> The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in. </param>
@@ -30,11 +62,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="azureUserName"> The user name that will be used for access. </param>
         /// <param name="description"> The free-form description for this user. </param>
         /// <param name="sshPublicKey"> The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in. </param>
-        internal KeySetUser(string azureUserName, string description, NetworkCloudSshPublicKey sshPublicKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeySetUser(string azureUserName, string description, NetworkCloudSshPublicKey sshPublicKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureUserName = azureUserName;
             Description = description;
             SshPublicKey = sshPublicKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeySetUser"/> for deserialization. </summary>
+        internal KeySetUser()
+        {
         }
 
         /// <summary> The user name that will be used for access. </summary>

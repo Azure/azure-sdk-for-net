@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Text;
 using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Rendering
 {
@@ -93,7 +94,7 @@ namespace Azure.Maps.Rendering
             if (PushpinColor != null)
             {
                 sb.AppendFormat(CultureInfo.InvariantCulture, "|co{0:X2}{1:X2}{2:X2}",
-                    PushpinColor?.R, PushpinColor?.G, PushpinColor?.A);
+                    PushpinColor?.R, PushpinColor?.G, PushpinColor?.B);
 
                 if (PushpinColor?.A != 255)
                 {

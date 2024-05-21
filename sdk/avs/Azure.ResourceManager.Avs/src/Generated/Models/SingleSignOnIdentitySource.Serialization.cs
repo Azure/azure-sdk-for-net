@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Avs.Models
 {
     public partial class SingleSignOnIdentitySource : IUtf8JsonSerializable, IJsonModel<SingleSignOnIdentitySource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SingleSignOnIdentitySource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SingleSignOnIdentitySource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SingleSignOnIdentitySource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SingleSignOnIdentitySource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SingleSignOnIdentitySource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SingleSignOnIdentitySource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<SingleSignOnIdentitySource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SingleSignOnIdentitySource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SingleSignOnIdentitySource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static SingleSignOnIdentitySource DeserializeSingleSignOnIdentitySource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @alias = default;
-            Optional<string> domain = default;
-            Optional<string> baseUserDN = default;
-            Optional<string> baseGroupDN = default;
-            Optional<Uri> primaryServer = default;
-            Optional<Uri> secondaryServer = default;
-            Optional<SslCertificateStatus> ssl = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
+            string name = default;
+            string @alias = default;
+            string domain = default;
+            string baseUserDN = default;
+            string baseGroupDN = default;
+            Uri primaryServer = default;
+            Uri secondaryServer = default;
+            SslCertificateStatus? ssl = default;
+            string username = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -192,11 +192,22 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SingleSignOnIdentitySource(name.Value, @alias.Value, domain.Value, baseUserDN.Value, baseGroupDN.Value, primaryServer.Value, secondaryServer.Value, Optional.ToNullable(ssl), username.Value, password.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SingleSignOnIdentitySource(
+                name,
+                @alias,
+                domain,
+                baseUserDN,
+                baseGroupDN,
+                primaryServer,
+                secondaryServer,
+                ssl,
+                username,
+                password,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SingleSignOnIdentitySource>.Write(ModelReaderWriterOptions options)
@@ -208,7 +219,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SingleSignOnIdentitySource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SingleSignOnIdentitySource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +235,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeSingleSignOnIdentitySource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SingleSignOnIdentitySource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SingleSignOnIdentitySource)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class RouteTable : IUtf8JsonSerializable, IJsonModel<RouteTable>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteTable>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteTable>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RouteTable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RouteTable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteTable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteTable)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteTable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteTable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteTable)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,18 +86,18 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static RouteTable DeserializeRouteTable(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> etag = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<IList<Route>> routes = default;
+            string etag = default;
+            string name = default;
+            string type = default;
+            IList<Route> routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Hci.Models
                             List<Route> array = new List<Route>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Route.DeserializeRoute(item));
+                                array.Add(Route.DeserializeRoute(item, options));
                             }
                             routes = array;
                             continue;
@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteTable(etag.Value, name.Value, type.Value, Optional.ToList(routes), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RouteTable(etag, name, type, routes ?? new ChangeTrackingList<Route>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteTable>.Write(ModelReaderWriterOptions options)
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouteTable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteTable)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeRouteTable(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouteTable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteTable)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -17,6 +17,11 @@ namespace Azure.Core.TestFramework
         private readonly bool _alwaysRunLocally;
 
         /// <summary>
+        /// Optional reason that the test is marked LiveOnly.
+        /// </summary>
+        public string Reason { get; set; }
+
+        /// <summary>
         /// Creates a new LiveOnlyAttribute instance.
         /// </summary>
         /// <param name="alwaysRunLocally">If true, the test will still be run even if the Mode is not Live.

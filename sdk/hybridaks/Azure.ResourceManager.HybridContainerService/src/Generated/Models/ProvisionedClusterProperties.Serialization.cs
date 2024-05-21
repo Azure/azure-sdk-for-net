@@ -5,26 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ProvisionedClusterProperties : IUtf8JsonSerializable
+    public partial class ProvisionedClusterProperties : IUtf8JsonSerializable, IJsonModel<ProvisionedClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ProvisionedClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProvisionedClusterProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinuxProfile))
             {
                 writer.WritePropertyName("linuxProfile"u8);
-                writer.WriteObjectValue(LinuxProfile);
+                writer.WriteObjectValue(LinuxProfile, options);
             }
             if (Optional.IsDefined(ControlPlane))
             {
                 writer.WritePropertyName("controlPlane"u8);
-                writer.WriteObjectValue(ControlPlane);
+                writer.WriteObjectValue(ControlPlane, options);
             }
             if (Optional.IsDefined(KubernetesVersion))
             {
@@ -34,17 +44,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue(StorageProfile, options);
             }
             if (Optional.IsDefined(ClusterVmAccessProfile))
             {
                 writer.WritePropertyName("clusterVMAccessProfile"u8);
-                writer.WriteObjectValue(ClusterVmAccessProfile);
+                writer.WriteObjectValue(ClusterVmAccessProfile, options);
             }
             if (Optional.IsCollectionDefined(AgentPoolProfiles))
             {
@@ -52,46 +62,87 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in AgentPoolProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CloudProviderProfile))
             {
                 writer.WritePropertyName("cloudProviderProfile"u8);
-                writer.WriteObjectValue(CloudProviderProfile);
+                writer.WriteObjectValue(CloudProviderProfile, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status, options);
             }
             if (Optional.IsDefined(LicenseProfile))
             {
                 writer.WritePropertyName("licenseProfile"u8);
-                writer.WriteObjectValue(LicenseProfile);
+                writer.WriteObjectValue(LicenseProfile, options);
             }
             if (Optional.IsDefined(AutoScalerProfile))
             {
                 writer.WritePropertyName("autoScalerProfile"u8);
-                writer.WriteObjectValue(AutoScalerProfile);
+                writer.WriteObjectValue(AutoScalerProfile, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ProvisionedClusterProperties DeserializeProvisionedClusterProperties(JsonElement element)
+        ProvisionedClusterProperties IJsonModel<ProvisionedClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProvisionedClusterProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProvisionedClusterProperties(document.RootElement, options);
+        }
+
+        internal static ProvisionedClusterProperties DeserializeProvisionedClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<LinuxProfileProperties> linuxProfile = default;
-            Optional<ProvisionedClusterControlPlaneProfile> controlPlane = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<ProvisionedClusterNetworkProfile> networkProfile = default;
-            Optional<StorageProfile> storageProfile = default;
-            Optional<ClusterVmAccessProfile> clusterVmAccessProfile = default;
-            Optional<IList<HybridContainerServiceNamedAgentPoolProfile>> agentPoolProfiles = default;
-            Optional<ProvisionedClusterCloudProviderProfile> cloudProviderProfile = default;
-            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
-            Optional<ProvisionedClusterStatus> status = default;
-            Optional<ProvisionedClusterLicenseProfile> licenseProfile = default;
-            Optional<ProvisionedClusterPropertiesAutoScalerProfile> autoScalerProfile = default;
+            LinuxProfileProperties linuxProfile = default;
+            ProvisionedClusterControlPlaneProfile controlPlane = default;
+            string kubernetesVersion = default;
+            ProvisionedClusterNetworkProfile networkProfile = default;
+            StorageProfile storageProfile = default;
+            ClusterVmAccessProfile clusterVmAccessProfile = default;
+            IList<HybridContainerServiceNamedAgentPoolProfile> agentPoolProfiles = default;
+            ProvisionedClusterCloudProviderProfile cloudProviderProfile = default;
+            HybridContainerServiceResourceProvisioningState? provisioningState = default;
+            ProvisionedClusterStatus status = default;
+            ProvisionedClusterLicenseProfile licenseProfile = default;
+            ProvisionedClusterPropertiesAutoScalerProfile autoScalerProfile = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linuxProfile"u8))
@@ -100,7 +151,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    linuxProfile = LinuxProfileProperties.DeserializeLinuxProfileProperties(property.Value);
+                    linuxProfile = LinuxProfileProperties.DeserializeLinuxProfileProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("controlPlane"u8))
@@ -109,7 +160,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    controlPlane = ProvisionedClusterControlPlaneProfile.DeserializeProvisionedClusterControlPlaneProfile(property.Value);
+                    controlPlane = ProvisionedClusterControlPlaneProfile.DeserializeProvisionedClusterControlPlaneProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kubernetesVersion"u8))
@@ -123,7 +174,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    networkProfile = ProvisionedClusterNetworkProfile.DeserializeProvisionedClusterNetworkProfile(property.Value);
+                    networkProfile = ProvisionedClusterNetworkProfile.DeserializeProvisionedClusterNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -132,7 +183,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    storageProfile = StorageProfile.DeserializeStorageProfile(property.Value);
+                    storageProfile = StorageProfile.DeserializeStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clusterVMAccessProfile"u8))
@@ -141,7 +192,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    clusterVmAccessProfile = ClusterVmAccessProfile.DeserializeClusterVmAccessProfile(property.Value);
+                    clusterVmAccessProfile = ClusterVmAccessProfile.DeserializeClusterVmAccessProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("agentPoolProfiles"u8))
@@ -153,7 +204,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<HybridContainerServiceNamedAgentPoolProfile> array = new List<HybridContainerServiceNamedAgentPoolProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridContainerServiceNamedAgentPoolProfile.DeserializeHybridContainerServiceNamedAgentPoolProfile(item));
+                        array.Add(HybridContainerServiceNamedAgentPoolProfile.DeserializeHybridContainerServiceNamedAgentPoolProfile(item, options));
                     }
                     agentPoolProfiles = array;
                     continue;
@@ -164,7 +215,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    cloudProviderProfile = ProvisionedClusterCloudProviderProfile.DeserializeProvisionedClusterCloudProviderProfile(property.Value);
+                    cloudProviderProfile = ProvisionedClusterCloudProviderProfile.DeserializeProvisionedClusterCloudProviderProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -182,7 +233,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    status = ProvisionedClusterStatus.DeserializeProvisionedClusterStatus(property.Value);
+                    status = ProvisionedClusterStatus.DeserializeProvisionedClusterStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("licenseProfile"u8))
@@ -191,7 +242,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    licenseProfile = ProvisionedClusterLicenseProfile.DeserializeProvisionedClusterLicenseProfile(property.Value);
+                    licenseProfile = ProvisionedClusterLicenseProfile.DeserializeProvisionedClusterLicenseProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoScalerProfile"u8))
@@ -200,11 +251,60 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    autoScalerProfile = ProvisionedClusterPropertiesAutoScalerProfile.DeserializeProvisionedClusterPropertiesAutoScalerProfile(property.Value);
+                    autoScalerProfile = ProvisionedClusterPropertiesAutoScalerProfile.DeserializeProvisionedClusterPropertiesAutoScalerProfile(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProvisionedClusterProperties(linuxProfile.Value, controlPlane.Value, kubernetesVersion.Value, networkProfile.Value, storageProfile.Value, clusterVmAccessProfile.Value, Optional.ToList(agentPoolProfiles), cloudProviderProfile.Value, Optional.ToNullable(provisioningState), status.Value, licenseProfile.Value, autoScalerProfile.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ProvisionedClusterProperties(
+                linuxProfile,
+                controlPlane,
+                kubernetesVersion,
+                networkProfile,
+                storageProfile,
+                clusterVmAccessProfile,
+                agentPoolProfiles ?? new ChangeTrackingList<HybridContainerServiceNamedAgentPoolProfile>(),
+                cloudProviderProfile,
+                provisioningState,
+                status,
+                licenseProfile,
+                autoScalerProfile,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProvisionedClusterProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ProvisionedClusterProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ProvisionedClusterProperties IPersistableModel<ProvisionedClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProvisionedClusterProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProvisionedClusterProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProvisionedClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

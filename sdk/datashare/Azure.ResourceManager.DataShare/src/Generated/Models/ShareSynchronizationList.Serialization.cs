@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     internal partial class ShareSynchronizationList : IUtf8JsonSerializable, IJsonModel<ShareSynchronizationList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareSynchronizationList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareSynchronizationList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ShareSynchronizationList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ShareSynchronizationList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareSynchronizationList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareSynchronizationList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<ShareSynchronizationList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareSynchronizationList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareSynchronizationList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static ShareSynchronizationList DeserializeShareSynchronizationList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<ShareSynchronization> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -92,18 +92,18 @@ namespace Azure.ResourceManager.DataShare.Models
                     List<ShareSynchronization> array = new List<ShareSynchronization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ShareSynchronization.DeserializeShareSynchronization(item));
+                        array.Add(ShareSynchronization.DeserializeShareSynchronization(item, options));
                     }
                     value = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareSynchronizationList(nextLink.Value, value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ShareSynchronizationList(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareSynchronizationList>.Write(ModelReaderWriterOptions options)
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ShareSynchronizationList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareSynchronizationList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeShareSynchronizationList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ShareSynchronizationList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareSynchronizationList)} does not support reading '{options.Format}' format.");
             }
         }
 

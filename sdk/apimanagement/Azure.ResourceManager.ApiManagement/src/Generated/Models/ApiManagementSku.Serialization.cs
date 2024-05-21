@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementSku : IUtf8JsonSerializable, IJsonModel<ApiManagementSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiManagementSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue(Capacity, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,27 +153,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementSku DeserializeApiManagementSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<string> kind = default;
-            Optional<ApiManagementSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<ApiManagementSkuLocationInfo>> locationInfo = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<IReadOnlyList<ApiManagementSkuCosts>> costs = default;
-            Optional<IReadOnlyList<ApiManagementSkuCapabilities>> capabilities = default;
-            Optional<IReadOnlyList<ApiManagementSkuRestrictions>> restrictions = default;
+            string resourceType = default;
+            string name = default;
+            string tier = default;
+            string size = default;
+            string family = default;
+            string kind = default;
+            ApiManagementSkuCapacity capacity = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<ApiManagementSkuLocationInfo> locationInfo = default;
+            IReadOnlyList<string> apiVersions = default;
+            IReadOnlyList<ApiManagementSkuCosts> costs = default;
+            IReadOnlyList<ApiManagementSkuCapabilities> capabilities = default;
+            IReadOnlyList<ApiManagementSkuRestrictions> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    capacity = ApiManagementSkuCapacity.DeserializeApiManagementSkuCapacity(property.Value);
+                    capacity = ApiManagementSkuCapacity.DeserializeApiManagementSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementSkuLocationInfo> array = new List<ApiManagementSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementSkuLocationInfo.DeserializeApiManagementSkuLocationInfo(item));
+                        array.Add(ApiManagementSkuLocationInfo.DeserializeApiManagementSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementSkuCosts> array = new List<ApiManagementSkuCosts>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementSkuCosts.DeserializeApiManagementSkuCosts(item));
+                        array.Add(ApiManagementSkuCosts.DeserializeApiManagementSkuCosts(item, options));
                     }
                     costs = array;
                     continue;
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementSkuCapabilities> array = new List<ApiManagementSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementSkuCapabilities.DeserializeApiManagementSkuCapabilities(item));
+                        array.Add(ApiManagementSkuCapabilities.DeserializeApiManagementSkuCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -294,18 +294,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementSkuRestrictions> array = new List<ApiManagementSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementSkuRestrictions.DeserializeApiManagementSkuRestrictions(item));
+                        array.Add(ApiManagementSkuRestrictions.DeserializeApiManagementSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(apiVersions), Optional.ToList(costs), Optional.ToList(capabilities), Optional.ToList(restrictions), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApiManagementSku(
+                resourceType,
+                name,
+                tier,
+                size,
+                family,
+                kind,
+                capacity,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<ApiManagementSkuLocationInfo>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                costs ?? new ChangeTrackingList<ApiManagementSkuCosts>(),
+                capabilities ?? new ChangeTrackingList<ApiManagementSkuCapabilities>(),
+                restrictions ?? new ChangeTrackingList<ApiManagementSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementSku>.Write(ModelReaderWriterOptions options)
@@ -317,7 +331,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -333,7 +347,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiManagementSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementSku)} does not support reading '{options.Format}' format.");
             }
         }
 

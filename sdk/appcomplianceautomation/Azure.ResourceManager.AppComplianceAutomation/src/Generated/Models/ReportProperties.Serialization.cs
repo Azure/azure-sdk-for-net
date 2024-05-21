@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public partial class ReportProperties : IUtf8JsonSerializable, IJsonModel<ReportProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReportProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             writer.WriteStartArray();
             foreach (var item in Resources)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
-                writer.WriteObjectValue(ComplianceStatus);
+                writer.WriteObjectValue(ComplianceStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,27 +124,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         internal static ReportProperties DeserializeReportProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<ReportStatus> status = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> reportName = default;
-            Optional<string> offerGuid = default;
+            string id = default;
+            ReportStatus? status = default;
+            Guid? tenantId = default;
+            string reportName = default;
+            string offerGuid = default;
             string timeZone = default;
             DateTimeOffset triggerTime = default;
-            Optional<DateTimeOffset> nextTriggerTime = default;
-            Optional<DateTimeOffset> lastTriggerTime = default;
-            Optional<IReadOnlyList<string>> subscriptions = default;
+            DateTimeOffset? nextTriggerTime = default;
+            DateTimeOffset? lastTriggerTime = default;
+            IReadOnlyList<string> subscriptions = default;
             IList<ResourceMetadata> resources = default;
-            Optional<ReportComplianceStatus> complianceStatus = default;
-            Optional<ProvisioningState> provisioningState = default;
+            ReportComplianceStatus complianceStatus = default;
+            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ResourceMetadata> array = new List<ResourceMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceMetadata.DeserializeResourceMetadata(item));
+                        array.Add(ResourceMetadata.DeserializeResourceMetadata(item, options));
                     }
                     resources = array;
                     continue;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    complianceStatus = ReportComplianceStatus.DeserializeReportComplianceStatus(property.Value);
+                    complianceStatus = ReportComplianceStatus.DeserializeReportComplianceStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -252,11 +252,25 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportProperties(id.Value, Optional.ToNullable(status), Optional.ToNullable(tenantId), reportName.Value, offerGuid.Value, timeZone, triggerTime, Optional.ToNullable(nextTriggerTime), Optional.ToNullable(lastTriggerTime), Optional.ToList(subscriptions), resources, complianceStatus.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ReportProperties(
+                id,
+                status,
+                tenantId,
+                reportName,
+                offerGuid,
+                timeZone,
+                triggerTime,
+                nextTriggerTime,
+                lastTriggerTime,
+                subscriptions ?? new ChangeTrackingList<string>(),
+                resources,
+                complianceStatus,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportProperties>.Write(ModelReaderWriterOptions options)
@@ -268,7 +282,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReportProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -284,7 +298,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeReportProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

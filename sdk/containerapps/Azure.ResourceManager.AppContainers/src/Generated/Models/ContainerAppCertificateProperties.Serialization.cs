@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppCertificateProperties : IUtf8JsonSerializable, IJsonModel<ContainerAppCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCertificateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCertificateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppCertificateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCertificateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCertificateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,25 +118,25 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCertificateProperties DeserializeContainerAppCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ContainerAppCertificateProvisioningState> provisioningState = default;
-            Optional<string> password = default;
-            Optional<string> subjectName = default;
-            Optional<IReadOnlyList<string>> subjectAlternativeNames = default;
-            Optional<byte[]> value = default;
-            Optional<string> issuer = default;
-            Optional<DateTimeOffset> issueDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> thumbprint = default;
-            Optional<bool> valid = default;
-            Optional<string> publicKeyHash = default;
+            ContainerAppCertificateProvisioningState? provisioningState = default;
+            string password = default;
+            string subjectName = default;
+            IReadOnlyList<string> subjectAlternativeNames = default;
+            byte[] value = default;
+            string issuer = default;
+            DateTimeOffset? issueDate = default;
+            DateTimeOffset? expirationDate = default;
+            string thumbprint = default;
+            bool? valid = default;
+            string publicKeyHash = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -225,11 +225,23 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCertificateProperties(Optional.ToNullable(provisioningState), password.Value, subjectName.Value, Optional.ToList(subjectAlternativeNames), value.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprint.Value, Optional.ToNullable(valid), publicKeyHash.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerAppCertificateProperties(
+                provisioningState,
+                password,
+                subjectName,
+                subjectAlternativeNames ?? new ChangeTrackingList<string>(),
+                value,
+                issuer,
+                issueDate,
+                expirationDate,
+                thumbprint,
+                valid,
+                publicKeyHash,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCertificateProperties>.Write(ModelReaderWriterOptions options)
@@ -241,7 +253,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCertificateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -257,7 +269,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppCertificateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCertificateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

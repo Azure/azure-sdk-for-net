@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Network.Models;
@@ -32,8 +31,24 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2023-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string ruleCollectionName, InboundSecurityRule inboundSecurityRule)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkVirtualAppliances/", false);
+            uri.AppendPath(networkVirtualApplianceName, true);
+            uri.AppendPath("/inboundSecurityRules/", false);
+            uri.AppendPath(ruleCollectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string ruleCollectionName, InboundSecurityRule inboundSecurityRule)
@@ -56,7 +71,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(inboundSecurityRule);
+            content.JsonWriter.WriteObjectValue(inboundSecurityRule, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;

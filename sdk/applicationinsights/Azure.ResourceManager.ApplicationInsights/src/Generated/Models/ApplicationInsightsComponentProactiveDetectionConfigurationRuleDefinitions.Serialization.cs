@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,14 +16,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,10 +62,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("IsInPreview"u8);
                 writer.WriteBooleanValue(IsInPreview.Value);
             }
-            if (Optional.IsDefined(SupportsEmailNotifications))
+            if (Optional.IsDefined(IsEmailNotificationsSupported))
             {
                 writer.WritePropertyName("SupportsEmailNotifications"u8);
-                writer.WriteBooleanValue(SupportsEmailNotifications.Value);
+                writer.WriteBooleanValue(IsEmailNotificationsSupported.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,22 +99,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions DeserializeApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> helpUrl = default;
-            Optional<bool> isHidden = default;
-            Optional<bool> isEnabledByDefault = default;
-            Optional<bool> isInPreview = default;
-            Optional<bool> supportsEmailNotifications = default;
+            string name = default;
+            string displayName = default;
+            string description = default;
+            Uri helpUrl = default;
+            bool? isHidden = default;
+            bool? isEnabledByDefault = default;
+            bool? isInPreview = default;
+            bool? supportsEmailNotifications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Name"u8))
@@ -178,11 +179,183 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(name.Value, displayName.Value, description.Value, helpUrl.Value, Optional.ToNullable(isHidden), Optional.ToNullable(isEnabledByDefault), Optional.ToNullable(isInPreview), Optional.ToNullable(supportsEmailNotifications), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(
+                name,
+                displayName,
+                description,
+                helpUrl,
+                isHidden,
+                isEnabledByDefault,
+                isInPreview,
+                supportsEmailNotifications,
+                serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  Name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  Name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  DisplayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    builder.Append("  DisplayName: ");
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  Description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  Description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HelpUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  HelpUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HelpUri))
+                {
+                    builder.Append("  HelpUrl: ");
+                    builder.AppendLine($"'{HelpUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHidden), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  IsHidden: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsHidden))
+                {
+                    builder.Append("  IsHidden: ");
+                    var boolValue = IsHidden.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabledByDefault), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  IsEnabledByDefault: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsEnabledByDefault))
+                {
+                    builder.Append("  IsEnabledByDefault: ");
+                    var boolValue = IsEnabledByDefault.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsInPreview), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  IsInPreview: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsInPreview))
+                {
+                    builder.Append("  IsInPreview: ");
+                    var boolValue = IsInPreview.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEmailNotificationsSupported), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  SupportsEmailNotifications: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsEmailNotificationsSupported))
+                {
+                    builder.Append("  SupportsEmailNotifications: ");
+                    var boolValue = IsEmailNotificationsSupported.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>.Write(ModelReaderWriterOptions options)
@@ -193,8 +366,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -210,7 +385,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 {
     public partial class BillingBenefitsExtendedStatusInfo : IUtf8JsonSerializable, IJsonModel<BillingBenefitsExtendedStatusInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingBenefitsExtendedStatusInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingBenefitsExtendedStatusInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BillingBenefitsExtendedStatusInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsExtendedStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingBenefitsExtendedStatusInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingBenefitsExtendedStatusInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsExtendedStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingBenefitsExtendedStatusInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingBenefitsExtendedStatusInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static BillingBenefitsExtendedStatusInfo DeserializeBillingBenefitsExtendedStatusInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> statusCode = default;
-            Optional<string> message = default;
+            string statusCode = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCode"u8))
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsExtendedStatusInfo(statusCode.Value, message.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BillingBenefitsExtendedStatusInfo(statusCode, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsExtendedStatusInfo>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingBenefitsExtendedStatusInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingBenefitsExtendedStatusInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         return DeserializeBillingBenefitsExtendedStatusInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingBenefitsExtendedStatusInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingBenefitsExtendedStatusInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

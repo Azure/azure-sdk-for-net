@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction.Models;
@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.NetworkFunction
     /// </summary>
     public partial class CollectorPolicyData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CollectorPolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CollectorPolicyData(AzureLocation location) : base(location)
@@ -37,12 +69,19 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="ingestionPolicy"> Ingestion policies. </param>
         /// <param name="emissionPolicies"> Emission policies. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        internal CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IngestionPolicyPropertiesFormat ingestionPolicy, IList<EmissionPoliciesPropertiesFormat> emissionPolicies, CollectorProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IngestionPolicyPropertiesFormat ingestionPolicy, IList<EmissionPoliciesPropertiesFormat> emissionPolicies, CollectorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             IngestionPolicy = ingestionPolicy;
             EmissionPolicies = emissionPolicies;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CollectorPolicyData"/> for deserialization. </summary>
+        internal CollectorPolicyData()
+        {
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

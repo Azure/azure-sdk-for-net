@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MongoDBCollectionInfo : IUtf8JsonSerializable, IJsonModel<MongoDBCollectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBCollectionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBCollectionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MongoDBCollectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBCollectionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBCollectionInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
-                writer.WriteObjectValue(ShardKey);
+                writer.WriteObjectValue(ShardKey, options);
             }
             writer.WritePropertyName("supportsSharding"u8);
             writer.WriteBooleanValue(SupportsSharding);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBCollectionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBCollectionInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBCollectionInfo DeserializeMongoDBCollectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -98,16 +98,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             bool isCapped = default;
             bool isSystemCollection = default;
             bool isView = default;
-            Optional<MongoDBShardKeyInfo> shardKey = default;
+            MongoDBShardKeyInfo shardKey = default;
             bool supportsSharding = default;
-            Optional<string> viewOf = default;
+            string viewOf = default;
             long averageDocumentSize = default;
             long dataSize = default;
             long documentCount = default;
             string name = default;
             string qualifiedName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    shardKey = MongoDBShardKeyInfo.DeserializeMongoDBShardKeyInfo(property.Value);
+                    shardKey = MongoDBShardKeyInfo.DeserializeMongoDBShardKeyInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportsSharding"u8))
@@ -176,11 +176,24 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBCollectionInfo(averageDocumentSize, dataSize, documentCount, name, qualifiedName, serializedAdditionalRawData, databaseName, isCapped, isSystemCollection, isView, shardKey.Value, supportsSharding, viewOf.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MongoDBCollectionInfo(
+                averageDocumentSize,
+                dataSize,
+                documentCount,
+                name,
+                qualifiedName,
+                serializedAdditionalRawData,
+                databaseName,
+                isCapped,
+                isSystemCollection,
+                isView,
+                shardKey,
+                supportsSharding,
+                viewOf);
         }
 
         BinaryData IPersistableModel<MongoDBCollectionInfo>.Write(ModelReaderWriterOptions options)
@@ -192,7 +205,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBCollectionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBCollectionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -208,7 +221,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMongoDBCollectionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBCollectionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBCollectionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

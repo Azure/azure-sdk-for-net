@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class CefExternalSecuritySolution : IUtf8JsonSerializable, IJsonModel<CefExternalSecuritySolution>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CefExternalSecuritySolution>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CefExternalSecuritySolution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CefExternalSecuritySolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CefExternalSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CefExternalSecuritySolution)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CefExternalSecuritySolution)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Kind != null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<CefExternalSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CefExternalSecuritySolution)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CefExternalSecuritySolution)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,21 +98,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static CefExternalSecuritySolution DeserializeCefExternalSecuritySolution(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<CefSolutionProperties> properties = default;
+            CefSolutionProperties properties = default;
             ExternalSecuritySolutionKind? kind = default;
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    properties = CefSolutionProperties.DeserializeCefSolutionProperties(property.Value);
+                    properties = CefSolutionProperties.DeserializeCefSolutionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -169,11 +169,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CefExternalSecuritySolution(id, name, type, systemData.Value, kind, Optional.ToNullable(location), serializedAdditionalRawData, properties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CefExternalSecuritySolution(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                location,
+                serializedAdditionalRawData,
+                properties);
         }
 
         BinaryData IPersistableModel<CefExternalSecuritySolution>.Write(ModelReaderWriterOptions options)
@@ -185,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CefExternalSecuritySolution)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CefExternalSecuritySolution)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -201,7 +209,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeCefExternalSecuritySolution(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CefExternalSecuritySolution)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CefExternalSecuritySolution)} does not support reading '{options.Format}' format.");
             }
         }
 

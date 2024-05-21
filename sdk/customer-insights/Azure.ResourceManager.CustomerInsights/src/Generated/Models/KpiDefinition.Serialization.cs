@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class KpiDefinition : IUtf8JsonSerializable, IJsonModel<KpiDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KpiDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KpiDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KpiDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KpiDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in GroupByMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ParticipantProfilesMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             if (Optional.IsDefined(ThresHolds))
             {
                 writer.WritePropertyName("thresHolds"u8);
-                writer.WriteObjectValue(ThresHolds);
+                writer.WriteObjectValue(ThresHolds, options);
             }
             if (Optional.IsCollectionDefined(Aliases))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Aliases)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Extracts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<KpiDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static KpiDefinition DeserializeKpiDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -183,25 +183,25 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             EntityType entityType = default;
             string entityTypeName = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> kpiName = default;
-            Optional<IReadOnlyDictionary<string, string>> displayName = default;
-            Optional<IReadOnlyDictionary<string, string>> description = default;
+            Guid? tenantId = default;
+            string kpiName = default;
+            IReadOnlyDictionary<string, string> displayName = default;
+            IReadOnlyDictionary<string, string> description = default;
             CalculationWindowType calculationWindow = default;
-            Optional<string> calculationWindowFieldName = default;
+            string calculationWindowFieldName = default;
             KpiFunction function = default;
             string expression = default;
-            Optional<string> unit = default;
-            Optional<string> filter = default;
-            Optional<IReadOnlyList<string>> groupBy = default;
-            Optional<IReadOnlyList<KpiGroupByMetadata>> groupByMetadata = default;
-            Optional<IReadOnlyList<KpiParticipantProfilesMetadata>> participantProfilesMetadata = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<KpiThresholds> thresHolds = default;
-            Optional<IReadOnlyList<KpiAlias>> aliases = default;
-            Optional<IReadOnlyList<KpiExtract>> extracts = default;
+            string unit = default;
+            string filter = default;
+            IReadOnlyList<string> groupBy = default;
+            IReadOnlyList<KpiGroupByMetadata> groupByMetadata = default;
+            IReadOnlyList<KpiParticipantProfilesMetadata> participantProfilesMetadata = default;
+            ProvisioningState? provisioningState = default;
+            KpiThresholds thresHolds = default;
+            IReadOnlyList<KpiAlias> aliases = default;
+            IReadOnlyList<KpiExtract> extracts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("entityType"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiGroupByMetadata> array = new List<KpiGroupByMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiGroupByMetadata.DeserializeKpiGroupByMetadata(item));
+                        array.Add(KpiGroupByMetadata.DeserializeKpiGroupByMetadata(item, options));
                     }
                     groupByMetadata = array;
                     continue;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiParticipantProfilesMetadata> array = new List<KpiParticipantProfilesMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiParticipantProfilesMetadata.DeserializeKpiParticipantProfilesMetadata(item));
+                        array.Add(KpiParticipantProfilesMetadata.DeserializeKpiParticipantProfilesMetadata(item, options));
                     }
                     participantProfilesMetadata = array;
                     continue;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     {
                         continue;
                     }
-                    thresHolds = KpiThresholds.DeserializeKpiThresholds(property.Value);
+                    thresHolds = KpiThresholds.DeserializeKpiThresholds(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("aliases"u8))
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiAlias> array = new List<KpiAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiAlias.DeserializeKpiAlias(item));
+                        array.Add(KpiAlias.DeserializeKpiAlias(item, options));
                     }
                     aliases = array;
                     continue;
@@ -369,18 +369,38 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiExtract> array = new List<KpiExtract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiExtract.DeserializeKpiExtract(item));
+                        array.Add(KpiExtract.DeserializeKpiExtract(item, options));
                     }
                     extracts = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiDefinition(entityType, entityTypeName, Optional.ToNullable(tenantId), kpiName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), calculationWindow, calculationWindowFieldName.Value, function, expression, unit.Value, filter.Value, Optional.ToList(groupBy), Optional.ToList(groupByMetadata), Optional.ToList(participantProfilesMetadata), Optional.ToNullable(provisioningState), thresHolds.Value, Optional.ToList(aliases), Optional.ToList(extracts), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KpiDefinition(
+                entityType,
+                entityTypeName,
+                tenantId,
+                kpiName,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                calculationWindow,
+                calculationWindowFieldName,
+                function,
+                expression,
+                unit,
+                filter,
+                groupBy ?? new ChangeTrackingList<string>(),
+                groupByMetadata ?? new ChangeTrackingList<KpiGroupByMetadata>(),
+                participantProfilesMetadata ?? new ChangeTrackingList<KpiParticipantProfilesMetadata>(),
+                provisioningState,
+                thresHolds,
+                aliases ?? new ChangeTrackingList<KpiAlias>(),
+                extracts ?? new ChangeTrackingList<KpiExtract>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiDefinition>.Write(ModelReaderWriterOptions options)
@@ -392,7 +412,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KpiDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -408,7 +428,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeKpiDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KpiDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

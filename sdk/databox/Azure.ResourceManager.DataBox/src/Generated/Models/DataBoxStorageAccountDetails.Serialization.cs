@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxStorageAccountDetails : IUtf8JsonSerializable, IJsonModel<DataBoxStorageAccountDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxStorageAccountDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxStorageAccountDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxStorageAccountDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxStorageAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxStorageAccountDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxStorageAccountDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxStorageAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxStorageAccountDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxStorageAccountDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxStorageAccountDetails DeserializeDataBoxStorageAccountDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             ResourceIdentifier storageAccountId = default;
             DataAccountType dataAccountType = default;
-            Optional<string> sharePassword = default;
+            string sharePassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountId"u8))
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxStorageAccountDetails(dataAccountType, sharePassword.Value, serializedAdditionalRawData, storageAccountId);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxStorageAccountDetails(dataAccountType, sharePassword, serializedAdditionalRawData, storageAccountId);
         }
 
         BinaryData IPersistableModel<DataBoxStorageAccountDetails>.Write(ModelReaderWriterOptions options)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxStorageAccountDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxStorageAccountDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxStorageAccountDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxStorageAccountDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxStorageAccountDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

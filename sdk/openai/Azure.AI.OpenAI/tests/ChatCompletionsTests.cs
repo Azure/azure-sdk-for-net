@@ -82,6 +82,41 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         [RecordedTest]
+        [TestCase(Service.Azure, Ignore = "logprobs is not yet supported on azure endpoint")]
+        [TestCase(Service.NonAzure)]
+        public async Task ChatCompletionsLogProbabilities(Service serviceTarget)
+        {
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, Scenario.ChatCompletions);
+
+            int topLogprobs = 3;
+            ChatCompletionsOptions requestOptions = new()
+            {
+                DeploymentName = deploymentOrModelName,
+                Messages =
+                {
+                    new ChatRequestUserMessage("Say this is a test!"),
+                },
+                EnableLogProbabilities = true,
+                LogProbabilitiesPerToken = topLogprobs
+            };
+            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(requestOptions);
+
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            var probResults = response.Value.Choices[0].LogProbabilityInfo?.TokenLogProbabilityResults;
+
+            Assert.That(probResults, Is.Not.Null.Or.Empty);
+
+            foreach (ChatTokenLogProbabilityResult result in probResults)
+            {
+                Assert.That(result.TopLogProbabilityEntries, Is.Not.Null.Or.Empty);
+                Assert.That(result.TopLogProbabilityEntries, Has.Count.EqualTo(topLogprobs));
+            }
+        }
+
+        [RecordedTest]
         [TestCase(Service.Azure)]
         [TestCase(Service.NonAzure)]
         public async Task StreamingChatCompletions(Service serviceTarget)
@@ -100,6 +135,8 @@ namespace Azure.AI.OpenAI.Tests
                     new ChatRequestUserMessage("What temperature should I bake pizza at?"),
                 },
                 MaxTokens = 512,
+                EnableLogProbabilities = true,
+                LogProbabilitiesPerToken = 2,
             };
 
             StreamingResponse<StreamingChatCompletionsUpdate> response
@@ -107,6 +144,8 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response, Is.Not.Null);
 
             StringBuilder contentBuilder = new();
+            string id = null;
+            string model = null;
             bool gotRole = false;
             bool gotRequestContentFilterResults = false;
             bool gotResponseContentFilterResults = false;
@@ -115,11 +154,21 @@ namespace Azure.AI.OpenAI.Tests
             {
                 Assert.That(chatUpdate, Is.Not.Null);
 
-                if (chatUpdate.AzureExtensionsContext?.RequestContentFilterResults is null)
+                if (serviceTarget != Service.Azure)
                 {
                     Assert.That(chatUpdate.Id, Is.Not.Null.Or.Empty);
                     Assert.That(chatUpdate.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
                     Assert.That(chatUpdate.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
+                }
+                if (!string.IsNullOrEmpty(chatUpdate.Id))
+                {
+                    Assert.That((id is null) || (id == chatUpdate.Id));
+                    id = chatUpdate.Id;
+                }
+                if (!string.IsNullOrEmpty(chatUpdate.Model))
+                {
+                    Assert.That((model is null) || (model == chatUpdate.Model));
+                    model = chatUpdate.Model;
                 }
                 if (chatUpdate.Role.HasValue)
                 {
@@ -127,9 +176,13 @@ namespace Azure.AI.OpenAI.Tests
                     Assert.That(chatUpdate.Role.Value, Is.EqualTo(ChatRole.Assistant));
                     gotRole = true;
                 }
-                if (chatUpdate.ContentUpdate is not null)
+                if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
                 {
                     contentBuilder.Append(chatUpdate.ContentUpdate);
+                    Assert.That(chatUpdate.LogProbabilityInfo, Is.Not.Null);
+                    Assert.That(chatUpdate.LogProbabilityInfo.TokenLogProbabilityResults.Count, Is.GreaterThanOrEqualTo(1));
+                    Assert.That(chatUpdate.ContentUpdate.StartsWith(chatUpdate.LogProbabilityInfo.TokenLogProbabilityResults[0].Token));
+                    Assert.That(chatUpdate.LogProbabilityInfo.TokenLogProbabilityResults[0].TopLogProbabilityEntries.Count, Is.LessThanOrEqualTo(requestOptions.LogProbabilitiesPerToken));
                 }
                 if (chatUpdate.AzureExtensionsContext?.RequestContentFilterResults is not null)
                 {
@@ -149,6 +202,8 @@ namespace Azure.AI.OpenAI.Tests
                 }
             }
 
+            Assert.IsTrue(!string.IsNullOrEmpty(id));
+            Assert.IsTrue(!string.IsNullOrEmpty(model));
             Assert.IsTrue(gotRole);
             Assert.That(contentBuilder.ToString(), Is.Not.Null.Or.Empty);
             if (serviceTarget == Service.Azure)
@@ -156,6 +211,58 @@ namespace Azure.AI.OpenAI.Tests
                 Assert.IsTrue(gotRequestContentFilterResults);
                 Assert.IsTrue(gotResponseContentFilterResults);
             }
+        }
+
+        [RecordedTest]
+        [LiveOnly] // pending timed recording playback integration, this must be live
+        [TestCase(Service.NonAzure)] // Azure OpenAI's default RAI behavior introduces timing confounds
+        public async Task StreamingChatDoesNotBlockEnumerator(Service serviceTarget)
+        {
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
+
+            var requestOptions = new ChatCompletionsOptions()
+            {
+                DeploymentName = deploymentOrModelName,
+                Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant."),
+                    new ChatRequestUserMessage("Can you help me?"),
+                    new ChatRequestAssistantMessage("Of course! What do you need help with?"),
+                    new ChatRequestUserMessage("What temperature should I bake pizza at?"),
+                },
+            };
+
+            StreamingResponse<StreamingChatCompletionsUpdate> response
+                = await client.GetChatCompletionsStreamingAsync(requestOptions);
+            Assert.That(response, Is.Not.Null);
+
+            IAsyncEnumerable<StreamingChatCompletionsUpdate> updateEnumerable = response.EnumerateValues();
+            IAsyncEnumerator<StreamingChatCompletionsUpdate> updateEnumerator = updateEnumerable.GetAsyncEnumerator();
+
+            int tasksAlreadyComplete = 0;
+            int tasksNotYetComplete = 0;
+
+            while (true)
+            {
+                ValueTask<bool> hasNextTask = updateEnumerator.MoveNextAsync();
+                if (hasNextTask.IsCompleted)
+                {
+                    tasksAlreadyComplete++;
+                }
+                else
+                {
+                    tasksNotYetComplete++;
+                }
+                if (!await hasNextTask)
+                {
+                    break;
+                }
+            }
+            Assert.That(
+                tasksNotYetComplete,
+                Is.GreaterThan(tasksAlreadyComplete / 5),
+                "Live streaming is expected to encounter a significant proportion of not yet buffered reads");
         }
     }
 }

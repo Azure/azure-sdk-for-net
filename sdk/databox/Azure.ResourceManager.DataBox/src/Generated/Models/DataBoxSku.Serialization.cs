@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxSku : IUtf8JsonSerializable, IJsonModel<DataBoxSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxSku DeserializeDataBoxSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataBoxSkuName name = default;
-            Optional<string> displayName = default;
-            Optional<string> family = default;
+            string displayName = default;
+            string family = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxSku(name, displayName.Value, family.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxSku(name, displayName, family, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxSku>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxSku)} does not support reading '{options.Format}' format.");
             }
         }
 

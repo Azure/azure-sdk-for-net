@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
 {

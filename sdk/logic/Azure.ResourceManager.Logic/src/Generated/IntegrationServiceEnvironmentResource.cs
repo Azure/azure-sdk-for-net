@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.Resources;
 
@@ -280,7 +278,9 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = await _integrationServiceEnvironmentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LogicArmOperation(response);
+                var uri = _integrationServiceEnvironmentRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new LogicArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -322,7 +322,9 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = _integrationServiceEnvironmentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new LogicArmOperation(response);
+                var uri = _integrationServiceEnvironmentRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new LogicArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -525,7 +527,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationServiceEnvironmentSkusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationServiceEnvironmentSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IntegrationServiceEnvironmentSkuDefinition.DeserializeIntegrationServiceEnvironmentSkuDefinition, _integrationServiceEnvironmentSkusClientDiagnostics, Pipeline, "IntegrationServiceEnvironmentResource.GetIntegrationServiceEnvironmentSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => IntegrationServiceEnvironmentSkuDefinition.DeserializeIntegrationServiceEnvironmentSkuDefinition(e), _integrationServiceEnvironmentSkusClientDiagnostics, Pipeline, "IntegrationServiceEnvironmentResource.GetIntegrationServiceEnvironmentSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -551,7 +553,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationServiceEnvironmentSkusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationServiceEnvironmentSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IntegrationServiceEnvironmentSkuDefinition.DeserializeIntegrationServiceEnvironmentSkuDefinition, _integrationServiceEnvironmentSkusClientDiagnostics, Pipeline, "IntegrationServiceEnvironmentResource.GetIntegrationServiceEnvironmentSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => IntegrationServiceEnvironmentSkuDefinition.DeserializeIntegrationServiceEnvironmentSkuDefinition(e), _integrationServiceEnvironmentSkusClientDiagnostics, Pipeline, "IntegrationServiceEnvironmentResource.GetIntegrationServiceEnvironmentSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

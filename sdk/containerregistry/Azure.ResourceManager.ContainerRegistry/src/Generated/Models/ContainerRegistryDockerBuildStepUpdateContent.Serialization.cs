@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryDockerBuildStepUpdateContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryDockerBuildStepUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryDockerBuildStepUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryDockerBuildStepUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryDockerBuildStepUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryDockerBuildStepUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryDockerBuildStepUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryDockerBuildStepUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryDockerBuildStepUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryDockerBuildStepUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryDockerBuildStepUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,23 +110,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryDockerBuildStepUpdateContent DeserializeContainerRegistryDockerBuildStepUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> imageNames = default;
-            Optional<bool> isPushEnabled = default;
-            Optional<bool> noCache = default;
-            Optional<string> dockerFilePath = default;
-            Optional<IList<ContainerRegistryRunArgument>> arguments = default;
-            Optional<string> target = default;
+            IList<string> imageNames = default;
+            bool? isPushEnabled = default;
+            bool? noCache = default;
+            string dockerFilePath = default;
+            IList<ContainerRegistryRunArgument> arguments = default;
+            string target = default;
             ContainerRegistryTaskStepType type = default;
-            Optional<string> contextPath = default;
-            Optional<string> contextAccessToken = default;
+            string contextPath = default;
+            string contextAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageNames"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryRunArgument> array = new List<ContainerRegistryRunArgument>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryRunArgument.DeserializeContainerRegistryRunArgument(item));
+                        array.Add(ContainerRegistryRunArgument.DeserializeContainerRegistryRunArgument(item, options));
                     }
                     arguments = array;
                     continue;
@@ -202,11 +202,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryDockerBuildStepUpdateContent(type, contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData, Optional.ToList(imageNames), Optional.ToNullable(isPushEnabled), Optional.ToNullable(noCache), dockerFilePath.Value, Optional.ToList(arguments), target.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerRegistryDockerBuildStepUpdateContent(
+                type,
+                contextPath,
+                contextAccessToken,
+                serializedAdditionalRawData,
+                imageNames ?? new ChangeTrackingList<string>(),
+                isPushEnabled,
+                noCache,
+                dockerFilePath,
+                arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>(),
+                target);
         }
 
         BinaryData IPersistableModel<ContainerRegistryDockerBuildStepUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -218,7 +228,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryDockerBuildStepUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryDockerBuildStepUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -234,7 +244,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryDockerBuildStepUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryDockerBuildStepUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryDockerBuildStepUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

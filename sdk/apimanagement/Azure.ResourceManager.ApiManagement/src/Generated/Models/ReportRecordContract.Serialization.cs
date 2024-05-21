@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ReportRecordContract : IUtf8JsonSerializable, IJsonModel<ReportRecordContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportRecordContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportRecordContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReportRecordContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportRecordContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportRecordContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportRecordContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportRecordContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -188,40 +188,40 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ReportRecordContract DeserializeReportRecordContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> interval = default;
-            Optional<string> country = default;
-            Optional<string> region = default;
-            Optional<string> zip = default;
-            Optional<string> userId = default;
-            Optional<string> productId = default;
-            Optional<string> apiId = default;
-            Optional<string> operationId = default;
-            Optional<string> apiRegion = default;
-            Optional<ResourceIdentifier> subscriptionId = default;
-            Optional<int> callCountSuccess = default;
-            Optional<int> callCountBlocked = default;
-            Optional<int> callCountFailed = default;
-            Optional<int> callCountOther = default;
-            Optional<int> callCountTotal = default;
-            Optional<long> bandwidth = default;
-            Optional<int> cacheHitCount = default;
-            Optional<int> cacheMissCount = default;
-            Optional<double> apiTimeAvg = default;
-            Optional<double> apiTimeMin = default;
-            Optional<double> apiTimeMax = default;
-            Optional<double> serviceTimeAvg = default;
-            Optional<double> serviceTimeMin = default;
-            Optional<double> serviceTimeMax = default;
+            string name = default;
+            DateTimeOffset? timestamp = default;
+            string interval = default;
+            string country = default;
+            string region = default;
+            string zip = default;
+            string userId = default;
+            string productId = default;
+            string apiId = default;
+            string operationId = default;
+            string apiRegion = default;
+            ResourceIdentifier subscriptionId = default;
+            int? callCountSuccess = default;
+            int? callCountBlocked = default;
+            int? callCountFailed = default;
+            int? callCountOther = default;
+            int? callCountTotal = default;
+            long? bandwidth = default;
+            int? cacheHitCount = default;
+            int? cacheMissCount = default;
+            double? apiTimeAvg = default;
+            double? apiTimeMin = default;
+            double? apiTimeMax = default;
+            double? serviceTimeAvg = default;
+            double? serviceTimeMin = default;
+            double? serviceTimeMax = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -420,11 +420,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportRecordContract(name.Value, Optional.ToNullable(timestamp), interval.Value, country.Value, region.Value, zip.Value, userId.Value, productId.Value, apiId.Value, operationId.Value, apiRegion.Value, subscriptionId.Value, Optional.ToNullable(callCountSuccess), Optional.ToNullable(callCountBlocked), Optional.ToNullable(callCountFailed), Optional.ToNullable(callCountOther), Optional.ToNullable(callCountTotal), Optional.ToNullable(bandwidth), Optional.ToNullable(cacheHitCount), Optional.ToNullable(cacheMissCount), Optional.ToNullable(apiTimeAvg), Optional.ToNullable(apiTimeMin), Optional.ToNullable(apiTimeMax), Optional.ToNullable(serviceTimeAvg), Optional.ToNullable(serviceTimeMin), Optional.ToNullable(serviceTimeMax), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ReportRecordContract(
+                name,
+                timestamp,
+                interval,
+                country,
+                region,
+                zip,
+                userId,
+                productId,
+                apiId,
+                operationId,
+                apiRegion,
+                subscriptionId,
+                callCountSuccess,
+                callCountBlocked,
+                callCountFailed,
+                callCountOther,
+                callCountTotal,
+                bandwidth,
+                cacheHitCount,
+                cacheMissCount,
+                apiTimeAvg,
+                apiTimeMin,
+                apiTimeMax,
+                serviceTimeAvg,
+                serviceTimeMin,
+                serviceTimeMax,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportRecordContract>.Write(ModelReaderWriterOptions options)
@@ -436,7 +463,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReportRecordContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportRecordContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -452,7 +479,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeReportRecordContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportRecordContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportRecordContract)} does not support reading '{options.Format}' format.");
             }
         }
 

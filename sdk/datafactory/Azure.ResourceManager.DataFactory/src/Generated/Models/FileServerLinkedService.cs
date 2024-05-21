@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userId"> User ID to logon the server. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password to logon the server. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal FileServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<string> userId, DataFactorySecretBaseDefinition password, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal FileServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<string> userId, DataFactorySecret password, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             UserId = userId;
@@ -46,12 +45,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "FileServer";
         }
 
+        /// <summary> Initializes a new instance of <see cref="FileServerLinkedService"/> for deserialization. </summary>
+        internal FileServerLinkedService()
+        {
+        }
+
         /// <summary> Host name of the server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> User ID to logon the server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserId { get; set; }
         /// <summary> Password to logon the server. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
     }

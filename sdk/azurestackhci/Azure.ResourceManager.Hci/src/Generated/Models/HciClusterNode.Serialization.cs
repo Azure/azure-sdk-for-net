@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class HciClusterNode : IUtf8JsonSerializable, IJsonModel<HciClusterNode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciClusterNode>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciClusterNode>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HciClusterNode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HciClusterNode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciClusterNode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciClusterNode)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciClusterNode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciClusterNode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciClusterNode)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,28 +128,28 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static HciClusterNode DeserializeHciClusterNode(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<float> id = default;
-            Optional<WindowsServerSubscription> windowsServerSubscription = default;
-            Optional<ClusterNodeType> nodeType = default;
-            Optional<string> ehcResourceId = default;
-            Optional<string> manufacturer = default;
-            Optional<string> model = default;
-            Optional<string> osName = default;
-            Optional<string> osVersion = default;
-            Optional<string> osDisplayVersion = default;
-            Optional<string> serialNumber = default;
-            Optional<float> coreCount = default;
-            Optional<float> memoryInGiB = default;
-            Optional<DateTimeOffset> lastLicensingTimestamp = default;
+            string name = default;
+            float? id = default;
+            WindowsServerSubscription? windowsServerSubscription = default;
+            ClusterNodeType? nodeType = default;
+            string ehcResourceId = default;
+            string manufacturer = default;
+            string model = default;
+            string osName = default;
+            string osVersion = default;
+            string osDisplayVersion = default;
+            string serialNumber = default;
+            float? coreCount = default;
+            float? memoryInGiB = default;
+            DateTimeOffset? lastLicensingTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -248,11 +248,26 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterNode(name.Value, Optional.ToNullable(id), Optional.ToNullable(windowsServerSubscription), Optional.ToNullable(nodeType), ehcResourceId.Value, manufacturer.Value, model.Value, osName.Value, osVersion.Value, osDisplayVersion.Value, serialNumber.Value, Optional.ToNullable(coreCount), Optional.ToNullable(memoryInGiB), Optional.ToNullable(lastLicensingTimestamp), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HciClusterNode(
+                name,
+                id,
+                windowsServerSubscription,
+                nodeType,
+                ehcResourceId,
+                manufacturer,
+                model,
+                osName,
+                osVersion,
+                osDisplayVersion,
+                serialNumber,
+                coreCount,
+                memoryInGiB,
+                lastLicensingTimestamp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterNode>.Write(ModelReaderWriterOptions options)
@@ -264,7 +279,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HciClusterNode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciClusterNode)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -280,7 +295,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeHciClusterNode(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciClusterNode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciClusterNode)} does not support reading '{options.Format}' format.");
             }
         }
 

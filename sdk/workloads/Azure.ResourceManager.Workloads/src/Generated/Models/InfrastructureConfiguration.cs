@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -17,6 +17,38 @@ namespace Azure.ResourceManager.Workloads.Models
     /// </summary>
     public abstract partial class InfrastructureConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="InfrastructureConfiguration"/>. </summary>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appResourceGroup"/> is null. </exception>
@@ -30,10 +62,17 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of <see cref="InfrastructureConfiguration"/>. </summary>
         /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
-        internal InfrastructureConfiguration(SapDeploymentType deploymentType, string appResourceGroup)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InfrastructureConfiguration(SapDeploymentType deploymentType, string appResourceGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeploymentType = deploymentType;
             AppResourceGroup = appResourceGroup;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InfrastructureConfiguration"/> for deserialization. </summary>
+        internal InfrastructureConfiguration()
+        {
         }
 
         /// <summary> The type of SAP deployment, single server or Three tier. </summary>

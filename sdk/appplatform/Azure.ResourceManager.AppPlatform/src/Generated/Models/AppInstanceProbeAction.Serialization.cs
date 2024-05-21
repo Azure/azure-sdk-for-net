@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
     [PersistableModelProxy(typeof(UnknownProbeAction))]
     public partial class AppInstanceProbeAction : IUtf8JsonSerializable, IJsonModel<AppInstanceProbeAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppInstanceProbeAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppInstanceProbeAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppInstanceProbeAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppInstanceProbeAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInstanceProbeAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInstanceProbeAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppInstanceProbeAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInstanceProbeAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInstanceProbeAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppInstanceProbeAction DeserializeAppInstanceProbeAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ExecAction": return AppInstanceExecAction.DeserializeAppInstanceExecAction(element);
-                    case "HTTPGetAction": return AppInstanceHttpGetAction.DeserializeAppInstanceHttpGetAction(element);
-                    case "TCPSocketAction": return AppInstanceTcpSocketAction.DeserializeAppInstanceTcpSocketAction(element);
+                    case "ExecAction": return AppInstanceExecAction.DeserializeAppInstanceExecAction(element, options);
+                    case "HTTPGetAction": return AppInstanceHttpGetAction.DeserializeAppInstanceHttpGetAction(element, options);
+                    case "TCPSocketAction": return AppInstanceTcpSocketAction.DeserializeAppInstanceTcpSocketAction(element, options);
                 }
             }
-            return UnknownProbeAction.DeserializeUnknownProbeAction(element);
+            return UnknownProbeAction.DeserializeUnknownProbeAction(element, options);
         }
 
         BinaryData IPersistableModel<AppInstanceProbeAction>.Write(ModelReaderWriterOptions options)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppInstanceProbeAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInstanceProbeAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppInstanceProbeAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppInstanceProbeAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInstanceProbeAction)} does not support reading '{options.Format}' format.");
             }
         }
 

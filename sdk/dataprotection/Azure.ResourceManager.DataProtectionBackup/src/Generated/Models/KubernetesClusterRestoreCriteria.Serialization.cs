@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class KubernetesClusterRestoreCriteria : IUtf8JsonSerializable, IJsonModel<KubernetesClusterRestoreCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterRestoreCriteria>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterRestoreCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KubernetesClusterRestoreCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RestoreHookReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,25 +143,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static KubernetesClusterRestoreCriteria DeserializeKubernetesClusterRestoreCriteria(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             bool includeClusterScopeResources = default;
-            Optional<IList<string>> includedNamespaces = default;
-            Optional<IList<string>> excludedNamespaces = default;
-            Optional<IList<string>> includedResourceTypes = default;
-            Optional<IList<string>> excludedResourceTypes = default;
-            Optional<IList<string>> labelSelectors = default;
-            Optional<PersistentVolumeRestoreMode> persistentVolumeRestoreMode = default;
-            Optional<KubernetesClusterRestoreExistingResourcePolicy> conflictPolicy = default;
-            Optional<IDictionary<string, string>> namespaceMappings = default;
-            Optional<IList<NamespacedName>> restoreHookReferences = default;
+            IList<string> includedNamespaces = default;
+            IList<string> excludedNamespaces = default;
+            IList<string> includedResourceTypes = default;
+            IList<string> excludedResourceTypes = default;
+            IList<string> labelSelectors = default;
+            PersistentVolumeRestoreMode? persistentVolumeRestoreMode = default;
+            KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy = default;
+            IDictionary<string, string> namespaceMappings = default;
+            IList<NamespacedName> restoreHookReferences = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("includeClusterScopeResources"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<NamespacedName> array = new List<NamespacedName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NamespacedName.DeserializeNamespacedName(item));
+                        array.Add(NamespacedName.DeserializeNamespacedName(item, options));
                     }
                     restoreHookReferences = array;
                     continue;
@@ -292,11 +292,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterRestoreCriteria(objectType, serializedAdditionalRawData, includeClusterScopeResources, Optional.ToList(includedNamespaces), Optional.ToList(excludedNamespaces), Optional.ToList(includedResourceTypes), Optional.ToList(excludedResourceTypes), Optional.ToList(labelSelectors), Optional.ToNullable(persistentVolumeRestoreMode), Optional.ToNullable(conflictPolicy), Optional.ToDictionary(namespaceMappings), Optional.ToList(restoreHookReferences));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KubernetesClusterRestoreCriteria(
+                objectType,
+                serializedAdditionalRawData,
+                includeClusterScopeResources,
+                includedNamespaces ?? new ChangeTrackingList<string>(),
+                excludedNamespaces ?? new ChangeTrackingList<string>(),
+                includedResourceTypes ?? new ChangeTrackingList<string>(),
+                excludedResourceTypes ?? new ChangeTrackingList<string>(),
+                labelSelectors ?? new ChangeTrackingList<string>(),
+                persistentVolumeRestoreMode,
+                conflictPolicy,
+                namespaceMappings ?? new ChangeTrackingDictionary<string, string>(),
+                restoreHookReferences ?? new ChangeTrackingList<NamespacedName>());
         }
 
         BinaryData IPersistableModel<KubernetesClusterRestoreCriteria>.Write(ModelReaderWriterOptions options)
@@ -308,7 +320,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -324,7 +336,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeKubernetesClusterRestoreCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

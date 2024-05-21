@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
-            writer.WriteObjectValue(Text);
+            writer.WriteObjectValue<object>(Text);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (Optional.IsCollectionDefined(Parameters))
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             object text = default;
             ScriptType type = default;
-            Optional<IList<ScriptActivityParameter>> parameters = default;
+            IList<ScriptActivityParameter> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -72,7 +72,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ScriptActivityScriptBlock(text, type, Optional.ToList(parameters));
+            return new ScriptActivityScriptBlock(text, type, parameters ?? new ChangeTrackingList<ScriptActivityParameter>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ScriptActivityScriptBlock FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeScriptActivityScriptBlock(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class ScriptActivityScriptBlockConverter : JsonConverter<ScriptActivityScriptBlock>
@@ -81,6 +97,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override ScriptActivityScriptBlock Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

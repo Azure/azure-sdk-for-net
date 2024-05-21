@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class PolicySettings : IUtf8JsonSerializable, IJsonModel<PolicySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicySettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicySettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(LogScrubbing))
             {
                 writer.WritePropertyName("logScrubbing"u8);
-                writer.WriteObjectValue(LogScrubbing);
+                writer.WriteObjectValue(LogScrubbing, options);
+            }
+            if (Optional.IsDefined(JsChallengeCookieExpirationInMins))
+            {
+                writer.WritePropertyName("jsChallengeCookieExpirationInMins"u8);
+                writer.WriteNumberValue(JsChallengeCookieExpirationInMins.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -104,7 +109,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicySettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,25 +118,26 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PolicySettings DeserializePolicySettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<WebApplicationFirewallEnabledState> state = default;
-            Optional<WebApplicationFirewallMode> mode = default;
-            Optional<bool> requestBodyCheck = default;
-            Optional<int> requestBodyInspectLimitInKB = default;
-            Optional<bool> requestBodyEnforcement = default;
-            Optional<int> maxRequestBodySizeInKb = default;
-            Optional<bool> fileUploadEnforcement = default;
-            Optional<int> fileUploadLimitInMb = default;
-            Optional<int> customBlockResponseStatusCode = default;
-            Optional<string> customBlockResponseBody = default;
-            Optional<PolicySettingsLogScrubbing> logScrubbing = default;
+            WebApplicationFirewallEnabledState? state = default;
+            WebApplicationFirewallMode? mode = default;
+            bool? requestBodyCheck = default;
+            int? requestBodyInspectLimitInKB = default;
+            bool? requestBodyEnforcement = default;
+            int? maxRequestBodySizeInKb = default;
+            bool? fileUploadEnforcement = default;
+            int? fileUploadLimitInMb = default;
+            int? customBlockResponseStatusCode = default;
+            string customBlockResponseBody = default;
+            PolicySettingsLogScrubbing logScrubbing = default;
+            int? jsChallengeCookieExpirationInMins = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -226,16 +232,38 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    logScrubbing = PolicySettingsLogScrubbing.DeserializePolicySettingsLogScrubbing(property.Value);
+                    logScrubbing = PolicySettingsLogScrubbing.DeserializePolicySettingsLogScrubbing(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("jsChallengeCookieExpirationInMins"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    jsChallengeCookieExpirationInMins = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySettings(Optional.ToNullable(state), Optional.ToNullable(mode), Optional.ToNullable(requestBodyCheck), Optional.ToNullable(requestBodyInspectLimitInKB), Optional.ToNullable(requestBodyEnforcement), Optional.ToNullable(maxRequestBodySizeInKb), Optional.ToNullable(fileUploadEnforcement), Optional.ToNullable(fileUploadLimitInMb), Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, logScrubbing.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PolicySettings(
+                state,
+                mode,
+                requestBodyCheck,
+                requestBodyInspectLimitInKB,
+                requestBodyEnforcement,
+                maxRequestBodySizeInKb,
+                fileUploadEnforcement,
+                fileUploadLimitInMb,
+                customBlockResponseStatusCode,
+                customBlockResponseBody,
+                logScrubbing,
+                jsChallengeCookieExpirationInMins,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySettings>.Write(ModelReaderWriterOptions options)
@@ -247,7 +275,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -263,7 +291,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializePolicySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicySettings)} does not support reading '{options.Format}' format.");
             }
         }
 

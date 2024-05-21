@@ -5,19 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownGroupTaskDetails. </summary>
+    /// <summary> Unknown version of GroupTaskDetails. </summary>
     internal partial class UnknownGroupTaskDetails : SiteRecoveryGroupTaskDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownGroupTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
         /// <param name="childTasks"> The child tasks. </param>
-        internal UnknownGroupTaskDetails(string instanceType, IReadOnlyList<AsrTask> childTasks) : base(instanceType, childTasks)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownGroupTaskDetails(string instanceType, IReadOnlyList<AsrTask> childTasks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, childTasks, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownGroupTaskDetails"/> for deserialization. </summary>
+        internal UnknownGroupTaskDetails()
+        {
         }
     }
 }

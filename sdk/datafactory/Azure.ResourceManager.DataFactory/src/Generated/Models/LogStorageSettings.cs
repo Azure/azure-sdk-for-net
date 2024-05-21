@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -39,6 +38,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LogLevel = logLevel;
             EnableReliableLogging = enableReliableLogging;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogStorageSettings"/> for deserialization. </summary>
+        internal LogStorageSettings()
+        {
         }
 
         /// <summary> Log storage linked service reference. </summary>

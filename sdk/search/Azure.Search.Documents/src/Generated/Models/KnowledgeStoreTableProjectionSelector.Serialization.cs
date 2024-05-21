@@ -58,11 +58,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string tableName = default;
-            Optional<string> referenceKeyName = default;
-            Optional<string> generatedKeyName = default;
-            Optional<string> source = default;
-            Optional<string> sourceContext = default;
-            Optional<IList<InputFieldMappingEntry>> inputs = default;
+            string referenceKeyName = default;
+            string generatedKeyName = default;
+            string source = default;
+            string sourceContext = default;
+            IList<InputFieldMappingEntry> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tableName"u8))
@@ -105,7 +105,29 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KnowledgeStoreTableProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, Optional.ToList(inputs), tableName);
+            return new KnowledgeStoreTableProjectionSelector(
+                referenceKeyName,
+                generatedKeyName,
+                source,
+                sourceContext,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                tableName);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new KnowledgeStoreTableProjectionSelector FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKnowledgeStoreTableProjectionSelector(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -27,6 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             Method = method;
             Uri = uri;
+            Headers = new ChangeTrackingDictionary<string, DataFactoryElement<string>>();
             ActivityType = "WebHook";
         }
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="body"> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </param>
         /// <param name="authentication"> Authentication method used for calling the endpoint. </param>
         /// <param name="reportStatusOnCallBack"> When set to true, statusCode, output and error in callback request body will be consumed by activity. The activity can be marked as failed by setting statusCode &gt;= 400 in callback request. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        internal WebHookActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, SecureInputOutputPolicy policy, WebHookActivityMethod method, DataFactoryElement<string> uri, string timeout, DataFactoryElement<string> headers, DataFactoryElement<string> body, WebActivityAuthentication authentication, DataFactoryElement<bool> reportStatusOnCallBack) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        internal WebHookActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, SecureInputOutputPolicy policy, WebHookActivityMethod method, DataFactoryElement<string> uri, string timeout, IDictionary<string, DataFactoryElement<string>> headers, DataFactoryElement<string> body, WebActivityAuthentication authentication, DataFactoryElement<bool> reportStatusOnCallBack) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             Policy = policy;
             Method = method;
@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "WebHook";
         }
 
+        /// <summary> Initializes a new instance of <see cref="WebHookActivity"/> for deserialization. </summary>
+        internal WebHookActivity()
+        {
+        }
+
         /// <summary> Activity policy. </summary>
         public SecureInputOutputPolicy Policy { get; set; }
         /// <summary> Rest API method for target endpoint. </summary>
@@ -69,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The timeout within which the webhook should be called back. If there is no value specified, it defaults to 10 minutes. Type: string. Pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public string Timeout { get; set; }
         /// <summary> Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Headers { get; set; }
+        public IDictionary<string, DataFactoryElement<string>> Headers { get; }
         /// <summary> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Body { get; set; }
         /// <summary> Authentication method used for calling the endpoint. </summary>

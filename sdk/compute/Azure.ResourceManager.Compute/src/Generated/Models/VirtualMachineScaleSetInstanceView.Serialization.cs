@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineScaleSetInstanceView : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetInstanceView>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetInstanceView>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetInstanceView>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineScaleSetInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(VirtualMachine))
             {
                 writer.WritePropertyName("virtualMachine"u8);
-                writer.WriteObjectValue(VirtualMachine);
+                writer.WriteObjectValue(VirtualMachine, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Extensions))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in OrchestrationServices)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,18 +93,18 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetInstanceView DeserializeVirtualMachineScaleSetInstanceView(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<VirtualMachineScaleSetInstanceViewStatusesSummary> virtualMachine = default;
-            Optional<IReadOnlyList<VirtualMachineScaleSetVmExtensionsSummary>> extensions = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
-            Optional<IReadOnlyList<OrchestrationServiceSummary>> orchestrationServices = default;
+            VirtualMachineScaleSetInstanceViewStatusesSummary virtualMachine = default;
+            IReadOnlyList<VirtualMachineScaleSetVmExtensionsSummary> extensions = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
+            IReadOnlyList<OrchestrationServiceSummary> orchestrationServices = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachine"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    virtualMachine = VirtualMachineScaleSetInstanceViewStatusesSummary.DeserializeVirtualMachineScaleSetInstanceViewStatusesSummary(property.Value);
+                    virtualMachine = VirtualMachineScaleSetInstanceViewStatusesSummary.DeserializeVirtualMachineScaleSetInstanceViewStatusesSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extensions"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineScaleSetVmExtensionsSummary> array = new List<VirtualMachineScaleSetVmExtensionsSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineScaleSetVmExtensionsSummary.DeserializeVirtualMachineScaleSetVmExtensionsSummary(item));
+                        array.Add(VirtualMachineScaleSetVmExtensionsSummary.DeserializeVirtualMachineScaleSetVmExtensionsSummary(item, options));
                     }
                     extensions = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;
@@ -153,18 +153,18 @@ namespace Azure.ResourceManager.Compute.Models
                     List<OrchestrationServiceSummary> array = new List<OrchestrationServiceSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrchestrationServiceSummary.DeserializeOrchestrationServiceSummary(item));
+                        array.Add(OrchestrationServiceSummary.DeserializeOrchestrationServiceSummary(item, options));
                     }
                     orchestrationServices = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetInstanceView(virtualMachine.Value, Optional.ToList(extensions), Optional.ToList(statuses), Optional.ToList(orchestrationServices), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualMachineScaleSetInstanceView(virtualMachine, extensions ?? new ChangeTrackingList<VirtualMachineScaleSetVmExtensionsSummary>(), statuses ?? new ChangeTrackingList<InstanceViewStatus>(), orchestrationServices ?? new ChangeTrackingList<OrchestrationServiceSummary>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetInstanceView>.Write(ModelReaderWriterOptions options)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineScaleSetInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

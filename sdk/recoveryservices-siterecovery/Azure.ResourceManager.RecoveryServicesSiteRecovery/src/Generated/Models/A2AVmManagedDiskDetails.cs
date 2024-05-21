@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A managed disk input details. </summary>
     public partial class A2AVmManagedDiskDetails
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="A2AVmManagedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account Arm Id. </param>
@@ -37,7 +70,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryTargetDiskAccountType"> The target disk type after failover. Its an optional value and will be same as source disk type if not user provided. </param>
         /// <param name="recoveryDiskEncryptionSetId"> The recovery disk encryption set Id. </param>
         /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for one / single pass flows). </param>
-        internal A2AVmManagedDiskDetails(string diskId, ResourceIdentifier primaryStagingAzureStorageAccountId, ResourceIdentifier recoveryResourceGroupId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal A2AVmManagedDiskDetails(string diskId, ResourceIdentifier primaryStagingAzureStorageAccountId, ResourceIdentifier recoveryResourceGroupId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskId = diskId;
             PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;
@@ -46,6 +80,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryTargetDiskAccountType = recoveryTargetDiskAccountType;
             RecoveryDiskEncryptionSetId = recoveryDiskEncryptionSetId;
             DiskEncryptionInfo = diskEncryptionInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2AVmManagedDiskDetails"/> for deserialization. </summary>
+        internal A2AVmManagedDiskDetails()
+        {
         }
 
         /// <summary> The disk Id. </summary>

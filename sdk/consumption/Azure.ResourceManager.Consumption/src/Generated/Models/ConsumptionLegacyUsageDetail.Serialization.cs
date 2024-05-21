@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,14 +16,14 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionLegacyUsageDetail : IUtf8JsonSerializable, IJsonModel<ConsumptionLegacyUsageDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionLegacyUsageDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionLegacyUsageDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionLegacyUsageDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLegacyUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionLegacyUsageDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionLegacyUsageDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(MeterDetails))
             {
                 writer.WritePropertyName("meterDetails"u8);
-                writer.WriteObjectValue(MeterDetails);
+                writer.WriteObjectValue(MeterDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Quantity))
             {
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLegacyUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionLegacyUsageDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionLegacyUsageDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -331,67 +330,67 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionLegacyUsageDetail DeserializeConsumptionLegacyUsageDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             UsageDetailsKind kind = default;
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> billingAccountId = default;
-            Optional<string> billingAccountName = default;
-            Optional<DateTimeOffset> billingPeriodStartDate = default;
-            Optional<DateTimeOffset> billingPeriodEndDate = default;
-            Optional<string> billingProfileId = default;
-            Optional<string> billingProfileName = default;
-            Optional<string> accountOwnerId = default;
-            Optional<string> accountName = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> subscriptionName = default;
-            Optional<DateTimeOffset> date = default;
-            Optional<string> product = default;
-            Optional<string> partNumber = default;
-            Optional<Guid> meterId = default;
-            Optional<ConsumptionMeterDetailsInfo> meterDetails = default;
-            Optional<decimal> quantity = default;
-            Optional<decimal> effectivePrice = default;
-            Optional<decimal> cost = default;
-            Optional<decimal> unitPrice = default;
-            Optional<string> billingCurrency = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> consumedService = default;
-            Optional<string> resourceId = default;
-            Optional<string> resourceName = default;
-            Optional<string> serviceInfo1 = default;
-            Optional<string> serviceInfo2 = default;
-            Optional<string> additionalInfo = default;
-            Optional<string> invoiceSection = default;
-            Optional<string> costCenter = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> reservationId = default;
-            Optional<string> reservationName = default;
-            Optional<string> productOrderId = default;
-            Optional<string> productOrderName = default;
-            Optional<string> offerId = default;
-            Optional<bool> isAzureCreditEligible = default;
-            Optional<string> term = default;
-            Optional<string> publisherName = default;
-            Optional<string> publisherType = default;
-            Optional<string> planName = default;
-            Optional<string> chargeType = default;
-            Optional<string> frequency = default;
-            Optional<decimal> payGPrice = default;
-            Optional<string> benefitId = default;
-            Optional<string> benefitName = default;
-            Optional<ConsumptionPricingModelType> pricingModel = default;
+            SystemData systemData = default;
+            string billingAccountId = default;
+            string billingAccountName = default;
+            DateTimeOffset? billingPeriodStartDate = default;
+            DateTimeOffset? billingPeriodEndDate = default;
+            string billingProfileId = default;
+            string billingProfileName = default;
+            string accountOwnerId = default;
+            string accountName = default;
+            string subscriptionId = default;
+            string subscriptionName = default;
+            DateTimeOffset? date = default;
+            string product = default;
+            string partNumber = default;
+            Guid? meterId = default;
+            ConsumptionMeterDetailsInfo meterDetails = default;
+            decimal? quantity = default;
+            decimal? effectivePrice = default;
+            decimal? cost = default;
+            decimal? unitPrice = default;
+            string billingCurrency = default;
+            string resourceLocation = default;
+            string consumedService = default;
+            string resourceId = default;
+            string resourceName = default;
+            string serviceInfo1 = default;
+            string serviceInfo2 = default;
+            string additionalInfo = default;
+            string invoiceSection = default;
+            string costCenter = default;
+            string resourceGroup = default;
+            string reservationId = default;
+            string reservationName = default;
+            string productOrderId = default;
+            string productOrderName = default;
+            string offerId = default;
+            bool? isAzureCreditEligible = default;
+            string term = default;
+            string publisherName = default;
+            string publisherType = default;
+            string planName = default;
+            string chargeType = default;
+            string frequency = default;
+            decimal? payGPrice = default;
+            string benefitId = default;
+            string benefitName = default;
+            ConsumptionPricingModelType? pricingModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -547,7 +546,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            meterDetails = ConsumptionMeterDetailsInfo.DeserializeConsumptionMeterDetailsInfo(property0.Value);
+                            meterDetails = ConsumptionMeterDetailsInfo.DeserializeConsumptionMeterDetailsInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("quantity"u8))
@@ -738,11 +737,65 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionLegacyUsageDetail(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData, billingAccountId.Value, billingAccountName.Value, Optional.ToNullable(billingPeriodStartDate), Optional.ToNullable(billingPeriodEndDate), billingProfileId.Value, billingProfileName.Value, accountOwnerId.Value, accountName.Value, subscriptionId.Value, subscriptionName.Value, Optional.ToNullable(date), product.Value, partNumber.Value, Optional.ToNullable(meterId), meterDetails.Value, Optional.ToNullable(quantity), Optional.ToNullable(effectivePrice), Optional.ToNullable(cost), Optional.ToNullable(unitPrice), billingCurrency.Value, resourceLocation.Value, consumedService.Value, resourceId.Value, resourceName.Value, serviceInfo1.Value, serviceInfo2.Value, additionalInfo.Value, invoiceSection.Value, costCenter.Value, resourceGroup.Value, reservationId.Value, reservationName.Value, productOrderId.Value, productOrderName.Value, offerId.Value, Optional.ToNullable(isAzureCreditEligible), term.Value, publisherName.Value, publisherType.Value, planName.Value, chargeType.Value, frequency.Value, Optional.ToNullable(payGPrice), benefitId.Value, benefitName.Value, Optional.ToNullable(pricingModel));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionLegacyUsageDetail(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                billingAccountId,
+                billingAccountName,
+                billingPeriodStartDate,
+                billingPeriodEndDate,
+                billingProfileId,
+                billingProfileName,
+                accountOwnerId,
+                accountName,
+                subscriptionId,
+                subscriptionName,
+                date,
+                product,
+                partNumber,
+                meterId,
+                meterDetails,
+                quantity,
+                effectivePrice,
+                cost,
+                unitPrice,
+                billingCurrency,
+                resourceLocation,
+                consumedService,
+                resourceId,
+                resourceName,
+                serviceInfo1,
+                serviceInfo2,
+                additionalInfo,
+                invoiceSection,
+                costCenter,
+                resourceGroup,
+                reservationId,
+                reservationName,
+                productOrderId,
+                productOrderName,
+                offerId,
+                isAzureCreditEligible,
+                term,
+                publisherName,
+                publisherType,
+                planName,
+                chargeType,
+                frequency,
+                payGPrice,
+                benefitId,
+                benefitName,
+                pricingModel);
         }
 
         BinaryData IPersistableModel<ConsumptionLegacyUsageDetail>.Write(ModelReaderWriterOptions options)
@@ -754,7 +807,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionLegacyUsageDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionLegacyUsageDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -770,7 +823,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionLegacyUsageDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionLegacyUsageDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionLegacyUsageDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

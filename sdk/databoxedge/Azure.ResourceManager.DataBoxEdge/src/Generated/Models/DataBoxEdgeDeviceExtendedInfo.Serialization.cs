@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class DataBoxEdgeDeviceExtendedInfo : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeDeviceExtendedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeDeviceExtendedInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeDeviceExtendedInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxEdgeDeviceExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 foreach (var item in DeviceSecrets)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeDeviceExtendedInfo DeserializeDataBoxEdgeDeviceExtendedInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,24 +172,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> encryptionKeyThumbprint = default;
-            Optional<string> encryptionKey = default;
-            Optional<string> resourceKey = default;
-            Optional<ResourceIdentifier> clientSecretStoreId = default;
-            Optional<Uri> clientSecretStoreUrl = default;
-            Optional<string> channelIntegrityKeyName = default;
-            Optional<string> channelIntegrityKeyVersion = default;
-            Optional<EdgeKeyVaultSyncStatus> keyVaultSyncStatus = default;
-            Optional<IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret>> deviceSecrets = default;
-            Optional<EdgeClusterWitnessType> clusterWitnessType = default;
-            Optional<string> fileShareWitnessLocation = default;
-            Optional<string> fileShareWitnessUsername = default;
-            Optional<string> cloudWitnessStorageAccountName = default;
-            Optional<string> cloudWitnessContainerName = default;
-            Optional<string> cloudWitnessStorageEndpoint = default;
+            SystemData systemData = default;
+            string encryptionKeyThumbprint = default;
+            string encryptionKey = default;
+            string resourceKey = default;
+            ResourceIdentifier clientSecretStoreId = default;
+            Uri clientSecretStoreUrl = default;
+            string channelIntegrityKeyName = default;
+            string channelIntegrityKeyVersion = default;
+            EdgeKeyVaultSyncStatus? keyVaultSyncStatus = default;
+            IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret> deviceSecrets = default;
+            EdgeClusterWitnessType? clusterWitnessType = default;
+            string fileShareWitnessLocation = default;
+            string fileShareWitnessUsername = default;
+            string cloudWitnessStorageAccountName = default;
+            string cloudWitnessContainerName = default;
+            string cloudWitnessStorageEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             Dictionary<string, DataBoxEdgeDeviceSecret> dictionary = new Dictionary<string, DataBoxEdgeDeviceSecret>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DataBoxEdgeDeviceSecret.DeserializeDataBoxEdgeDeviceSecret(property1.Value));
+                                dictionary.Add(property1.Name, DataBoxEdgeDeviceSecret.DeserializeDataBoxEdgeDeviceSecret(property1.Value, options));
                             }
                             deviceSecrets = dictionary;
                             continue;
@@ -330,11 +330,31 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceExtendedInfo(id, name, type, systemData.Value, encryptionKeyThumbprint.Value, encryptionKey.Value, resourceKey.Value, clientSecretStoreId.Value, clientSecretStoreUrl.Value, channelIntegrityKeyName.Value, channelIntegrityKeyVersion.Value, Optional.ToNullable(keyVaultSyncStatus), Optional.ToDictionary(deviceSecrets), Optional.ToNullable(clusterWitnessType), fileShareWitnessLocation.Value, fileShareWitnessUsername.Value, cloudWitnessStorageAccountName.Value, cloudWitnessContainerName.Value, cloudWitnessStorageEndpoint.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxEdgeDeviceExtendedInfo(
+                id,
+                name,
+                type,
+                systemData,
+                encryptionKeyThumbprint,
+                encryptionKey,
+                resourceKey,
+                clientSecretStoreId,
+                clientSecretStoreUrl,
+                channelIntegrityKeyName,
+                channelIntegrityKeyVersion,
+                keyVaultSyncStatus,
+                deviceSecrets ?? new ChangeTrackingDictionary<string, DataBoxEdgeDeviceSecret>(),
+                clusterWitnessType,
+                fileShareWitnessLocation,
+                fileShareWitnessUsername,
+                cloudWitnessStorageAccountName,
+                cloudWitnessContainerName,
+                cloudWitnessStorageEndpoint,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceExtendedInfo>.Write(ModelReaderWriterOptions options)
@@ -346,7 +366,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -362,7 +382,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDataBoxEdgeDeviceExtendedInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

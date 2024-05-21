@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     [PersistableModelProxy(typeof(UnknownMigrateSqlServerSqlDBTaskOutput))]
     public partial class MigrateSqlServerSqlDBTaskOutput : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlDBTaskOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBTaskOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateSqlServerSqlDBTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSqlServerSqlDBTaskOutput DeserializeMigrateSqlServerSqlDBTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DatabaseLevelOutput": return MigrateSqlServerSqlDBTaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevel(element);
-                    case "ErrorOutput": return MigrateSqlServerSqlDBTaskOutputError.DeserializeMigrateSqlServerSqlDBTaskOutputError(element);
-                    case "MigrationDatabaseLevelValidationOutput": return MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult.DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(element);
-                    case "MigrationLevelOutput": return MigrateSqlServerSqlDBTaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlDBTaskOutputMigrationLevel(element);
-                    case "MigrationValidationOutput": return MigrateSqlServerSqlDBTaskOutputValidationResult.DeserializeMigrateSqlServerSqlDBTaskOutputValidationResult(element);
-                    case "TableLevelOutput": return MigrateSqlServerSqlDBTaskOutputTableLevel.DeserializeMigrateSqlServerSqlDBTaskOutputTableLevel(element);
+                    case "DatabaseLevelOutput": return MigrateSqlServerSqlDBTaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevel(element, options);
+                    case "ErrorOutput": return MigrateSqlServerSqlDBTaskOutputError.DeserializeMigrateSqlServerSqlDBTaskOutputError(element, options);
+                    case "MigrationDatabaseLevelValidationOutput": return MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult.DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(element, options);
+                    case "MigrationLevelOutput": return MigrateSqlServerSqlDBTaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlDBTaskOutputMigrationLevel(element, options);
+                    case "MigrationValidationOutput": return MigrateSqlServerSqlDBTaskOutputValidationResult.DeserializeMigrateSqlServerSqlDBTaskOutputValidationResult(element, options);
+                    case "TableLevelOutput": return MigrateSqlServerSqlDBTaskOutputTableLevel.DeserializeMigrateSqlServerSqlDBTaskOutputTableLevel(element, options);
                 }
             }
-            return UnknownMigrateSqlServerSqlDBTaskOutput.DeserializeUnknownMigrateSqlServerSqlDBTaskOutput(element);
+            return UnknownMigrateSqlServerSqlDBTaskOutput.DeserializeUnknownMigrateSqlServerSqlDBTaskOutput(element, options);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskOutput>.Write(ModelReaderWriterOptions options)
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSqlServerSqlDBTaskOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

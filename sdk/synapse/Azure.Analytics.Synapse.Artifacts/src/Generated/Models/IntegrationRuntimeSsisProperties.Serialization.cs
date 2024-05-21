@@ -57,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -68,12 +68,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IntegrationRuntimeSsisCatalogInfo> catalogInfo = default;
-            Optional<IntegrationRuntimeLicenseType> licenseType = default;
-            Optional<IntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
-            Optional<IntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
-            Optional<IntegrationRuntimeEdition> edition = default;
-            Optional<IList<CustomSetupBase>> expressCustomSetupProperties = default;
+            IntegrationRuntimeSsisCatalogInfo catalogInfo = default;
+            IntegrationRuntimeLicenseType? licenseType = default;
+            IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties = default;
+            IntegrationRuntimeDataProxyProperties dataProxyProperties = default;
+            IntegrationRuntimeEdition? edition = default;
+            IList<CustomSetupBase> expressCustomSetupProperties = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeSsisProperties(catalogInfo.Value, Optional.ToNullable(licenseType), customSetupScriptProperties.Value, dataProxyProperties.Value, Optional.ToNullable(edition), Optional.ToList(expressCustomSetupProperties), additionalProperties);
+            return new IntegrationRuntimeSsisProperties(
+                catalogInfo,
+                licenseType,
+                customSetupScriptProperties,
+                dataProxyProperties,
+                edition,
+                expressCustomSetupProperties ?? new ChangeTrackingList<CustomSetupBase>(),
+                additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IntegrationRuntimeSsisProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIntegrationRuntimeSsisProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class IntegrationRuntimeSsisPropertiesConverter : JsonConverter<IntegrationRuntimeSsisProperties>
@@ -149,6 +172,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override IntegrationRuntimeSsisProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

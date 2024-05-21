@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
     internal partial class InvitationList : IUtf8JsonSerializable, IJsonModel<InvitationList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InvitationList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InvitationList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InvitationList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InvitationList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InvitationList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InvitationList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<InvitationList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InvitationList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InvitationList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,16 +70,16 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static InvitationList DeserializeInvitationList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<DataShareInvitationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -93,18 +92,18 @@ namespace Azure.ResourceManager.DataShare.Models
                     List<DataShareInvitationData> array = new List<DataShareInvitationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataShareInvitationData.DeserializeDataShareInvitationData(item));
+                        array.Add(DataShareInvitationData.DeserializeDataShareInvitationData(item, options));
                     }
                     value = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InvitationList(nextLink.Value, value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InvitationList(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InvitationList>.Write(ModelReaderWriterOptions options)
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InvitationList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InvitationList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeInvitationList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InvitationList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InvitationList)} does not support reading '{options.Format}' format.");
             }
         }
 

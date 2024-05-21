@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class HubIPAddresses : IUtf8JsonSerializable, IJsonModel<HubIPAddresses>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HubIPAddresses>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HubIPAddresses>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HubIPAddresses>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HubIPAddresses>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HubIPAddresses)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HubIPAddresses)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(PublicIPs))
             {
                 writer.WritePropertyName("publicIPs"u8);
-                writer.WriteObjectValue(PublicIPs);
+                writer.WriteObjectValue(PublicIPs, options);
             }
             if (Optional.IsDefined(PrivateIPAddress))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<HubIPAddresses>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HubIPAddresses)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HubIPAddresses)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static HubIPAddresses DeserializeHubIPAddresses(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<HubPublicIPAddresses> publicIPs = default;
-            Optional<string> privateIPAddress = default;
+            HubPublicIPAddresses publicIPs = default;
+            string privateIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIPs"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    publicIPs = HubPublicIPAddresses.DeserializeHubPublicIPAddresses(property.Value);
+                    publicIPs = HubPublicIPAddresses.DeserializeHubPublicIPAddresses(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("privateIPAddress"u8))
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubIPAddresses(publicIPs.Value, privateIPAddress.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HubIPAddresses(publicIPs, privateIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HubIPAddresses>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HubIPAddresses)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HubIPAddresses)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeHubIPAddresses(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HubIPAddresses)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HubIPAddresses)} does not support reading '{options.Format}' format.");
             }
         }
 

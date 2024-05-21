@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             string text = default;
             string category = default;
-            Optional<string> subcategory = default;
+            string subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;
@@ -78,7 +78,29 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new Entity(text, category, subcategory.Value, offset, length, confidenceScore);
+            return new Entity(
+                text,
+                category,
+                subcategory,
+                offset,
+                length,
+                confidenceScore);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Entity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEntity(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

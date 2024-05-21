@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    /// <summary> The UnknownDigitalTwinsEndpointResourceProperties. </summary>
+    /// <summary> Unknown version of DigitalTwinsEndpointResourceProperties. </summary>
     internal partial class UnknownDigitalTwinsEndpointResourceProperties : DigitalTwinsEndpointResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDigitalTwinsEndpointResourceProperties"/>. </summary>
@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         internal UnknownDigitalTwinsEndpointResourceProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, serializedAdditionalRawData)
         {
             EndpointType = endpointType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDigitalTwinsEndpointResourceProperties"/> for deserialization. </summary>
+        internal UnknownDigitalTwinsEndpointResourceProperties()
+        {
         }
     }
 }

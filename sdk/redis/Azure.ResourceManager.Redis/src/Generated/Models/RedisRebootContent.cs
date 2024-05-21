@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Specifies which Redis node(s) to reboot. </summary>
     public partial class RedisRebootContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RedisRebootContent"/>. </summary>
         public RedisRebootContent()
         {
@@ -23,18 +55,23 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="rebootType"> Which Redis node(s) to reboot. Depending on this value data loss is possible. </param>
         /// <param name="shardId"> If clustering is enabled, the ID of the shard to be rebooted. </param>
         /// <param name="ports"> A list of redis instances to reboot, specified by per-instance SSL ports or non-SSL ports. </param>
-        internal RedisRebootContent(RedisRebootType? rebootType, int? shardId, IList<int> ports)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisRebootContent(RedisRebootType? rebootType, int? shardId, IList<int> ports, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RebootType = rebootType;
             ShardId = shardId;
             Ports = ports;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Which Redis node(s) to reboot. Depending on this value data loss is possible. </summary>
+        [WirePath("rebootType")]
         public RedisRebootType? RebootType { get; set; }
         /// <summary> If clustering is enabled, the ID of the shard to be rebooted. </summary>
+        [WirePath("shardId")]
         public int? ShardId { get; set; }
         /// <summary> A list of redis instances to reboot, specified by per-instance SSL ports or non-SSL ports. </summary>
+        [WirePath("ports")]
         public IList<int> Ports { get; }
     }
 }

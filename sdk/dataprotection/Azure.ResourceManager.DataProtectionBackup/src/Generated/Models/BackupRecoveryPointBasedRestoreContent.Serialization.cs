@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class BackupRecoveryPointBasedRestoreContent : IUtf8JsonSerializable, IJsonModel<BackupRecoveryPointBasedRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupRecoveryPointBasedRestoreContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupRecoveryPointBasedRestoreContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupRecoveryPointBasedRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupRecoveryPointBasedRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("restoreTargetInfo"u8);
-            writer.WriteObjectValue(RestoreTargetInfo);
+            writer.WriteObjectValue(RestoreTargetInfo, options);
             writer.WritePropertyName("sourceDataStoreType"u8);
             writer.WriteStringValue(SourceDataStoreType.ToString());
             if (Optional.IsDefined(SourceResourceId))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(IdentityDetails))
             {
                 writer.WritePropertyName("identityDetails"u8);
-                writer.WriteObjectValue(IdentityDetails);
+                writer.WriteObjectValue(IdentityDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupRecoveryPointBasedRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static BackupRecoveryPointBasedRestoreContent DeserializeBackupRecoveryPointBasedRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupRestoreWithRehydrationRequest": return BackupRestoreWithRehydrationContent.DeserializeBackupRestoreWithRehydrationContent(element);
+                    case "AzureBackupRestoreWithRehydrationRequest": return BackupRestoreWithRehydrationContent.DeserializeBackupRestoreWithRehydrationContent(element, options);
                 }
             }
             string recoveryPointId = default;
             string objectType = "AzureBackupRecoveryPointBasedRestoreRequest";
             RestoreTargetInfoBase restoreTargetInfo = default;
             SourceDataStoreType sourceDataStoreType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<DataProtectionIdentityDetails> identityDetails = default;
+            ResourceIdentifier sourceResourceId = default;
+            DataProtectionIdentityDetails identityDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointId"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("restoreTargetInfo"u8))
                 {
-                    restoreTargetInfo = RestoreTargetInfoBase.DeserializeRestoreTargetInfoBase(property.Value);
+                    restoreTargetInfo = RestoreTargetInfoBase.DeserializeRestoreTargetInfoBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDataStoreType"u8))
@@ -134,16 +134,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value);
+                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupRecoveryPointBasedRestoreContent(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId.Value, identityDetails.Value, serializedAdditionalRawData, recoveryPointId);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BackupRecoveryPointBasedRestoreContent(
+                objectType,
+                restoreTargetInfo,
+                sourceDataStoreType,
+                sourceResourceId,
+                identityDetails,
+                serializedAdditionalRawData,
+                recoveryPointId);
         }
 
         BinaryData IPersistableModel<BackupRecoveryPointBasedRestoreContent>.Write(ModelReaderWriterOptions options)
@@ -155,7 +162,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +178,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeBackupRecoveryPointBasedRestoreContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support reading '{options.Format}' format.");
             }
         }
 

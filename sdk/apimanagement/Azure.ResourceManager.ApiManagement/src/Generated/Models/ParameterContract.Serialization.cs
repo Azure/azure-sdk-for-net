@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ParameterContract : IUtf8JsonSerializable, IJsonModel<ParameterContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParameterContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParameterContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ParameterContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ParameterContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParameterContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParameterContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 foreach (var item in Examples)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParameterContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParameterContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParameterContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,23 +108,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ParameterContract DeserializeParameterContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             string type = default;
-            Optional<string> defaultValue = default;
-            Optional<bool> required = default;
-            Optional<IList<string>> values = default;
-            Optional<string> schemaId = default;
-            Optional<string> typeName = default;
-            Optional<IDictionary<string, ParameterExampleContract>> examples = default;
+            string defaultValue = default;
+            bool? required = default;
+            IList<string> values = default;
+            string schemaId = default;
+            string typeName = default;
+            IDictionary<string, ParameterExampleContract> examples = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -189,18 +189,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     Dictionary<string, ParameterExampleContract> dictionary = new Dictionary<string, ParameterExampleContract>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ParameterExampleContract.DeserializeParameterExampleContract(property0.Value));
+                        dictionary.Add(property0.Name, ParameterExampleContract.DeserializeParameterExampleContract(property0.Value, options));
                     }
                     examples = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ParameterContract(name, description.Value, type, defaultValue.Value, Optional.ToNullable(required), Optional.ToList(values), schemaId.Value, typeName.Value, Optional.ToDictionary(examples), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ParameterContract(
+                name,
+                description,
+                type,
+                defaultValue,
+                required,
+                values ?? new ChangeTrackingList<string>(),
+                schemaId,
+                typeName,
+                examples ?? new ChangeTrackingDictionary<string, ParameterExampleContract>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ParameterContract>.Write(ModelReaderWriterOptions options)
@@ -212,7 +222,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ParameterContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParameterContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeParameterContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ParameterContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParameterContract)} does not support reading '{options.Format}' format.");
             }
         }
 

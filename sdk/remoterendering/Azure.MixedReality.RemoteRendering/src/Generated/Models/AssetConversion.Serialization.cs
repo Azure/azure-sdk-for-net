@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
@@ -21,7 +20,7 @@ namespace Azure.MixedReality.RemoteRendering
             }
             string id = default;
             AssetConversionOptions settings = default;
-            Optional<AssetConversionOutput> output = default;
+            AssetConversionOutput output = default;
             RemoteRenderingServiceError error = default;
             AssetConversionStatus status = default;
             DateTimeOffset creationTime = default;
@@ -67,7 +66,21 @@ namespace Azure.MixedReality.RemoteRendering
                     continue;
                 }
             }
-            return new AssetConversion(id, settings, output.Value, error, status, creationTime);
+            return new AssetConversion(
+                id,
+                settings,
+                output,
+                error,
+                status,
+                creationTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AssetConversion FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAssetConversion(document.RootElement);
         }
     }
 }

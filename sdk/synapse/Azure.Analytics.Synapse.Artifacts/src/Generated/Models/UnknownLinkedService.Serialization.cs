@@ -50,14 +50,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -69,10 +69,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties);
+            return new UnknownLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LinkedService>(this);
+            return content;
         }
     }
 }

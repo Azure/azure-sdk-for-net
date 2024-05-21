@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Object containing the priming job ID. </summary>
     public partial class PrimingJobContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PrimingJobContent"/>. </summary>
         /// <param name="primingJobId"> The unique identifier of the priming job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primingJobId"/> is null. </exception>
@@ -21,6 +53,20 @@ namespace Azure.ResourceManager.StorageCache.Models
             Argument.AssertNotNull(primingJobId, nameof(primingJobId));
 
             PrimingJobId = primingJobId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PrimingJobContent"/>. </summary>
+        /// <param name="primingJobId"> The unique identifier of the priming job. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrimingJobContent(string primingJobId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PrimingJobId = primingJobId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PrimingJobContent"/> for deserialization. </summary>
+        internal PrimingJobContent()
+        {
         }
 
         /// <summary> The unique identifier of the priming job. </summary>

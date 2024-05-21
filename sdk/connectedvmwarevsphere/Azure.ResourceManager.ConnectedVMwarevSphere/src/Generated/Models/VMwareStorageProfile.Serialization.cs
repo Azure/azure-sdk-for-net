@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     public partial class VMwareStorageProfile : IUtf8JsonSerializable, IJsonModel<VMwareStorageProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareStorageProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareStorageProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VMwareStorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WriteStartArray();
                 foreach (var item in ScsiControllers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static VMwareStorageProfile DeserializeVMwareStorageProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<VMwareVirtualDisk>> disks = default;
-            Optional<IReadOnlyList<VirtualScsiController>> scsiControllers = default;
+            IList<VMwareVirtualDisk> disks = default;
+            IReadOnlyList<VirtualScsiController> scsiControllers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disks"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VMwareVirtualDisk> array = new List<VMwareVirtualDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareVirtualDisk.DeserializeVMwareVirtualDisk(item));
+                        array.Add(VMwareVirtualDisk.DeserializeVMwareVirtualDisk(item, options));
                     }
                     disks = array;
                     continue;
@@ -113,18 +113,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VirtualScsiController> array = new List<VirtualScsiController>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualScsiController.DeserializeVirtualScsiController(item));
+                        array.Add(VirtualScsiController.DeserializeVirtualScsiController(item, options));
                     }
                     scsiControllers = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareStorageProfile(Optional.ToList(disks), Optional.ToList(scsiControllers), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VMwareStorageProfile(disks ?? new ChangeTrackingList<VMwareVirtualDisk>(), scsiControllers ?? new ChangeTrackingList<VirtualScsiController>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareStorageProfile>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializeVMwareStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

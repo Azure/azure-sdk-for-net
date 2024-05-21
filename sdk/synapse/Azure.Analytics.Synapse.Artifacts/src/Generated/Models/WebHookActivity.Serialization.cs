@@ -63,7 +63,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("url"u8);
-            writer.WriteObjectValue(Url);
+            writer.WriteObjectValue<object>(Url);
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
@@ -72,12 +72,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
-                writer.WriteObjectValue(Headers);
+                writer.WriteObjectValue<object>(Headers);
             }
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
-                writer.WriteObjectValue(Body);
+                writer.WriteObjectValue<object>(Body);
             }
             if (Optional.IsDefined(Authentication))
             {
@@ -87,13 +87,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ReportStatusOnCallBack))
             {
                 writer.WritePropertyName("reportStatusOnCallBack"u8);
-                writer.WriteObjectValue(ReportStatusOnCallBack);
+                writer.WriteObjectValue<object>(ReportStatusOnCallBack);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -106,18 +106,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<ActivityDependency> dependsOn = default;
+            IList<UserProperty> userProperties = default;
             WebHookActivityMethod method = default;
             object url = default;
-            Optional<string> timeout = default;
-            Optional<object> headers = default;
-            Optional<object> body = default;
-            Optional<WebActivityAuthentication> authentication = default;
-            Optional<object> reportStatusOnCallBack = default;
+            string timeout = default;
+            object headers = default;
+            object body = default;
+            WebActivityAuthentication authentication = default;
+            object reportStatusOnCallBack = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -249,7 +249,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new WebHookActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, method, url, timeout.Value, headers.Value, body.Value, authentication.Value, reportStatusOnCallBack.Value);
+            return new WebHookActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                method,
+                url,
+                timeout,
+                headers,
+                body,
+                authentication,
+                reportStatusOnCallBack);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new WebHookActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebHookActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class WebHookActivityConverter : JsonConverter<WebHookActivity>
@@ -258,6 +289,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override WebHookActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

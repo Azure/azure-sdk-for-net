@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Metric information. </summary>
     public partial class PerfMonSet
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PerfMonSet"/>. </summary>
         internal PerfMonSet()
         {
@@ -26,24 +57,31 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="endOn"> End time of the period. </param>
         /// <param name="timeGrain"> Presented time grain. </param>
         /// <param name="values"> Collection of workers that are active during this time. </param>
-        internal PerfMonSet(string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IReadOnlyList<PerfMonSample> values)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PerfMonSet(string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IReadOnlyList<PerfMonSample> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             StartOn = startOn;
             EndOn = endOn;
             TimeGrain = timeGrain;
             Values = values;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique key name of the counter. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Start time of the period. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> End time of the period. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> Presented time grain. </summary>
+        [WirePath("timeGrain")]
         public string TimeGrain { get; }
         /// <summary> Collection of workers that are active during this time. </summary>
+        [WirePath("values")]
         public IReadOnlyList<PerfMonSample> Values { get; }
     }
 }

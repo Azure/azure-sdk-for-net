@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PostgreSql.Models
 {
     /// <summary> Service level objectives for performance tier. </summary>
     public partial class PostgreSqlPerformanceTierServiceLevelObjectives
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlPerformanceTierServiceLevelObjectives"/>. </summary>
         internal PostgreSqlPerformanceTierServiceLevelObjectives()
         {
@@ -24,7 +59,8 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <param name="minBackupRetentionDays"> Minimum Backup retention in days for the performance tier edition. </param>
         /// <param name="maxStorageInMB"> Max storage allowed for a server. </param>
         /// <param name="minStorageInMB"> Max storage allowed for a server. </param>
-        internal PostgreSqlPerformanceTierServiceLevelObjectives(string id, string edition, int? vCores, string hardwareGeneration, int? maxBackupRetentionDays, int? minBackupRetentionDays, int? maxStorageInMB, int? minStorageInMB)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlPerformanceTierServiceLevelObjectives(string id, string edition, int? vCores, string hardwareGeneration, int? maxBackupRetentionDays, int? minBackupRetentionDays, int? maxStorageInMB, int? minStorageInMB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Edition = edition;
@@ -34,23 +70,32 @@ namespace Azure.ResourceManager.PostgreSql.Models
             MinBackupRetentionDays = minBackupRetentionDays;
             MaxStorageInMB = maxStorageInMB;
             MinStorageInMB = minStorageInMB;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ID for the service level objective. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Edition of the performance tier. </summary>
+        [WirePath("edition")]
         public string Edition { get; }
         /// <summary> vCore associated with the service level objective. </summary>
+        [WirePath("vCore")]
         public int? VCores { get; }
         /// <summary> Hardware generation associated with the service level objective. </summary>
+        [WirePath("hardwareGeneration")]
         public string HardwareGeneration { get; }
         /// <summary> Maximum Backup retention in days for the performance tier edition. </summary>
+        [WirePath("maxBackupRetentionDays")]
         public int? MaxBackupRetentionDays { get; }
         /// <summary> Minimum Backup retention in days for the performance tier edition. </summary>
+        [WirePath("minBackupRetentionDays")]
         public int? MinBackupRetentionDays { get; }
         /// <summary> Max storage allowed for a server. </summary>
+        [WirePath("maxStorageMB")]
         public int? MaxStorageInMB { get; }
         /// <summary> Max storage allowed for a server. </summary>
+        [WirePath("minStorageMB")]
         public int? MinStorageInMB { get; }
     }
 }

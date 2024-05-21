@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class DiskRestorePointReplicationStatus : IUtf8JsonSerializable, IJsonModel<DiskRestorePointReplicationStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskRestorePointReplicationStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskRestorePointReplicationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiskRestorePointReplicationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointReplicationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskRestorePointReplicationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskRestorePointReplicationStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue(Status, options);
             }
             if (Optional.IsDefined(CompletionPercent))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointReplicationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskRestorePointReplicationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskRestorePointReplicationStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiskRestorePointReplicationStatus DeserializeDiskRestorePointReplicationStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<InstanceViewStatus> status = default;
-            Optional<int> completionPercent = default;
+            InstanceViewStatus status = default;
+            int? completionPercent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    status = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value);
+                    status = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("completionPercent"u8))
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskRestorePointReplicationStatus(status.Value, Optional.ToNullable(completionPercent), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DiskRestorePointReplicationStatus(status, completionPercent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskRestorePointReplicationStatus>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskRestorePointReplicationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskRestorePointReplicationStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeDiskRestorePointReplicationStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskRestorePointReplicationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskRestorePointReplicationStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

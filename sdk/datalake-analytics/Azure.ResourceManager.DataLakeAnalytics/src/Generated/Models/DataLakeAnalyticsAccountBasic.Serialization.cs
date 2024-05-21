@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     public partial class DataLakeAnalyticsAccountBasic : IUtf8JsonSerializable, IJsonModel<DataLakeAnalyticsAccountBasic>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsAccountBasic>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsAccountBasic>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataLakeAnalyticsAccountBasic>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsAccountBasic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountBasic)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountBasic)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsAccountBasic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountBasic)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountBasic)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,26 +128,26 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         internal static DataLakeAnalyticsAccountBasic DeserializeDataLakeAnalyticsAccountBasic(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            AzureLocation? location = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> accountId = default;
-            Optional<DataLakeAnalyticsAccountStatus> provisioningState = default;
-            Optional<DataLakeAnalyticsAccountState> state = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> endpoint = default;
+            SystemData systemData = default;
+            Guid? accountId = default;
+            DataLakeAnalyticsAccountStatus? provisioningState = default;
+            DataLakeAnalyticsAccountState? state = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string endpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -261,11 +261,24 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsAccountBasic(id, name, type, systemData.Value, Optional.ToNullable(accountId), Optional.ToNullable(provisioningState), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), endpoint.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataLakeAnalyticsAccountBasic(
+                id,
+                name,
+                type,
+                systemData,
+                accountId,
+                provisioningState,
+                state,
+                creationTime,
+                lastModifiedTime,
+                endpoint,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsAccountBasic>.Write(ModelReaderWriterOptions options)
@@ -277,7 +290,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountBasic)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountBasic)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -293,7 +306,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         return DeserializeDataLakeAnalyticsAccountBasic(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountBasic)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountBasic)} does not support reading '{options.Format}' format.");
             }
         }
 

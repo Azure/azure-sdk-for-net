@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Avs.Models
 {
     public partial class WorkloadNetworkDhcpRelay : IUtf8JsonSerializable, IJsonModel<WorkloadNetworkDhcpRelay>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadNetworkDhcpRelay>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadNetworkDhcpRelay>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkloadNetworkDhcpRelay>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkDhcpRelay>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadNetworkDhcpRelay)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadNetworkDhcpRelay)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkDhcpRelay>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadNetworkDhcpRelay)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadNetworkDhcpRelay)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,20 +95,20 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static WorkloadNetworkDhcpRelay DeserializeWorkloadNetworkDhcpRelay(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> serverAddresses = default;
+            IList<string> serverAddresses = default;
             DhcpTypeEnum dhcpType = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> segments = default;
-            Optional<WorkloadNetworkDhcpProvisioningState> provisioningState = default;
-            Optional<long> revision = default;
+            string displayName = default;
+            IReadOnlyList<string> segments = default;
+            WorkloadNetworkDhcpProvisioningState? provisioningState = default;
+            long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverAddresses"u8))
@@ -169,11 +169,18 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkDhcpRelay(dhcpType, displayName.Value, Optional.ToList(segments), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData, Optional.ToList(serverAddresses));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WorkloadNetworkDhcpRelay(
+                dhcpType,
+                displayName,
+                segments ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                revision,
+                serializedAdditionalRawData,
+                serverAddresses ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<WorkloadNetworkDhcpRelay>.Write(ModelReaderWriterOptions options)
@@ -185,7 +192,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadNetworkDhcpRelay)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadNetworkDhcpRelay)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -201,7 +208,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeWorkloadNetworkDhcpRelay(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadNetworkDhcpRelay)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadNetworkDhcpRelay)} does not support reading '{options.Format}' format.");
             }
         }
 

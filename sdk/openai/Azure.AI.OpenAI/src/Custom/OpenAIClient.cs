@@ -252,7 +252,7 @@ public partial class OpenAIClient
                 baseResponse,
                 (responseForEnumeration) => SseAsyncEnumerator<Completions>.EnumerateFromSseStream(
                     responseForEnumeration.ContentStream,
-                    Completions.DeserializeCompletions,
+                    e => Completions.DeserializeCompletions(e),
                     cancellationToken));
         }
         catch (Exception e)
@@ -306,7 +306,7 @@ public partial class OpenAIClient
                 baseResponse,
                 (responseForEnumeration) => SseAsyncEnumerator<Completions>.EnumerateFromSseStream(
                     responseForEnumeration.ContentStream,
-                    Completions.DeserializeCompletions,
+                    e => Completions.DeserializeCompletions(e),
                     cancellationToken));
         }
         catch (Exception e)
@@ -842,6 +842,88 @@ public partial class OpenAIClient
         return Response.FromValue(AudioTranslation.FromResponse(rawResponse), rawResponse);
     }
 
+    /// <summary> Generates text-to-speech audio from the input text. </summary>
+    /// <param name="speechGenerationOptions">
+    ///     A representation of the request options that control the behavior of a text-to-speech operation.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     An optional cancellation token that may be used to abort an ongoing request.
+    /// </param>
+    /// <exception cref="ArgumentNullException">
+    ///     <paramref name="speechGenerationOptions"/> or <paramref name="speechGenerationOptions.DeploymentName"/> is null.
+    /// </exception>
+    /// <exception cref="ArgumentException">
+    ///     <paramref name="speechGenerationOptions.DeploymentName"/> is an empty string.
+    /// </exception>
+    public virtual async Task<Response<BinaryData>> GenerateSpeechFromTextAsync(
+        SpeechGenerationOptions speechGenerationOptions,
+        CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(speechGenerationOptions, nameof(speechGenerationOptions));
+        Argument.AssertNotNullOrEmpty(speechGenerationOptions.DeploymentName, nameof(speechGenerationOptions.DeploymentName));
+
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GenerateSpeechFromText");
+        scope.Start();
+
+        try
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            HttpMessage message = CreatePostRequestMessage(
+                speechGenerationOptions.DeploymentName,
+                "audio/speech",
+                content: speechGenerationOptions.ToRequestContent(),
+                context);
+            Response rawResponse = await _pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(rawResponse.Content, rawResponse);
+        }
+        catch (Exception e)
+        {
+            scope.Failed(e);
+            throw;
+        }
+    }
+
+    /// <summary> Generates text-to-speech audio from the input text. </summary>
+    /// <param name="speechGenerationOptions">
+    ///     A representation of the request options that control the behavior of a text-to-speech operation.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     An optional cancellation token that may be used to abort an ongoing request.
+    /// </param>
+    /// <exception cref="ArgumentNullException">
+    ///     <paramref name="speechGenerationOptions"/> or <paramref name="speechGenerationOptions.DeploymentName"/> is null.
+    /// </exception>
+    /// <exception cref="ArgumentException">
+    ///     <paramref name="speechGenerationOptions.DeploymentName"/> is an empty string.
+    /// </exception>
+    public virtual Response<BinaryData> GenerateSpeechFromText(
+        SpeechGenerationOptions speechGenerationOptions,
+        CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(speechGenerationOptions, nameof(speechGenerationOptions));
+        Argument.AssertNotNullOrEmpty(speechGenerationOptions.DeploymentName, nameof(speechGenerationOptions.DeploymentName));
+
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GenerateSpeechFromText");
+        scope.Start();
+
+        try
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            HttpMessage message = CreatePostRequestMessage(
+                speechGenerationOptions.DeploymentName,
+                "audio/speech",
+                content: speechGenerationOptions.ToRequestContent(),
+                context);
+            Response rawResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
+            return Response.FromValue(rawResponse.Content, rawResponse);
+        }
+        catch (Exception e)
+        {
+            scope.Failed(e);
+            throw;
+        }
+    }
+
     internal RequestUriBuilder GetUri(string deploymentOrModelName, string operationPath)
     {
         var uri = new RawRequestUriBuilder();
@@ -872,9 +954,7 @@ public partial class OpenAIClient
         RequestContent content,
         RequestContext context)
     {
-        string operationPath = chatCompletionsOptions.AzureExtensionsOptions != null
-            ? "extensions/chat/completions"
-            : "chat/completions";
+        string operationPath = "chat/completions";
         return CreatePostRequestMessage(chatCompletionsOptions.DeploymentName, operationPath, content, context);
     }
 

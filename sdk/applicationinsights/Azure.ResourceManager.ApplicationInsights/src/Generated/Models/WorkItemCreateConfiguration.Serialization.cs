@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class WorkItemCreateConfiguration : IUtf8JsonSerializable, IJsonModel<WorkItemCreateConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkItemCreateConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkItemCreateConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkItemCreateConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WorkItemCreateConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkItemCreateConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkItemCreateConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkItemCreateConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkItemCreateConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkItemCreateConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,18 +84,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static WorkItemCreateConfiguration DeserializeWorkItemCreateConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> connectorId = default;
-            Optional<string> connectorDataConfiguration = default;
-            Optional<bool> validateOnly = default;
-            Optional<IDictionary<string, string>> workItemProperties = default;
+            string connectorId = default;
+            string connectorDataConfiguration = default;
+            bool? validateOnly = default;
+            IDictionary<string, string> workItemProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ConnectorId"u8))
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkItemCreateConfiguration(connectorId.Value, connectorDataConfiguration.Value, Optional.ToNullable(validateOnly), Optional.ToDictionary(workItemProperties), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WorkItemCreateConfiguration(connectorId, connectorDataConfiguration, validateOnly, workItemProperties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkItemCreateConfiguration>.Write(ModelReaderWriterOptions options)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkItemCreateConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkItemCreateConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeWorkItemCreateConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkItemCreateConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkItemCreateConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

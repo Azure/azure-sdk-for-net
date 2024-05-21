@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     public partial class CertificateVerificationCodeProperties : IUtf8JsonSerializable, IJsonModel<CertificateVerificationCodeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateVerificationCodeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateVerificationCodeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CertificateVerificationCodeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateVerificationCodeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificateVerificationCodeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateVerificationCodeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificateVerificationCodeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,22 +112,22 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         internal static CertificateVerificationCodeProperties DeserializeCertificateVerificationCodeProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> verificationCode = default;
-            Optional<string> subject = default;
-            Optional<DateTimeOffset> expiry = default;
-            Optional<BinaryData> thumbprint = default;
-            Optional<bool> isVerified = default;
-            Optional<BinaryData> certificate = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
+            string verificationCode = default;
+            string subject = default;
+            DateTimeOffset? expiry = default;
+            BinaryData thumbprint = default;
+            bool? isVerified = default;
+            BinaryData certificate = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? updated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("verificationCode"u8))
@@ -196,11 +196,20 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertificateVerificationCodeProperties(verificationCode.Value, subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), certificate.Value, Optional.ToNullable(created), Optional.ToNullable(updated), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CertificateVerificationCodeProperties(
+                verificationCode,
+                subject,
+                expiry,
+                thumbprint,
+                isVerified,
+                certificate,
+                created,
+                updated,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertificateVerificationCodeProperties>.Write(ModelReaderWriterOptions options)
@@ -212,7 +221,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CertificateVerificationCodeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificateVerificationCodeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +237,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         return DeserializeCertificateVerificationCodeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CertificateVerificationCodeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificateVerificationCodeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

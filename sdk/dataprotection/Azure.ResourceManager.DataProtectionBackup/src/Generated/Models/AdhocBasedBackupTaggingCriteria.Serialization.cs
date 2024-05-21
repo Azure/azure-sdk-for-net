@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     internal partial class AdhocBasedBackupTaggingCriteria : IUtf8JsonSerializable, IJsonModel<AdhocBasedBackupTaggingCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdhocBasedBackupTaggingCriteria>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdhocBasedBackupTaggingCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AdhocBasedBackupTaggingCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AdhocBasedBackupTaggingCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdhocBasedBackupTaggingCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdhocBasedBackupTaggingCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(TagInfo))
             {
                 writer.WritePropertyName("tagInfo"u8);
-                writer.WriteObjectValue(TagInfo);
+                writer.WriteObjectValue(TagInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdhocBasedBackupTaggingCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdhocBasedBackupTaggingCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdhocBasedBackupTaggingCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,15 +63,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static AdhocBasedBackupTaggingCriteria DeserializeAdhocBasedBackupTaggingCriteria(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataProtectionBackupRetentionTag> tagInfo = default;
+            DataProtectionBackupRetentionTag tagInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tagInfo"u8))
@@ -80,16 +80,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    tagInfo = DataProtectionBackupRetentionTag.DeserializeDataProtectionBackupRetentionTag(property.Value);
+                    tagInfo = DataProtectionBackupRetentionTag.DeserializeDataProtectionBackupRetentionTag(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdhocBasedBackupTaggingCriteria(tagInfo.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AdhocBasedBackupTaggingCriteria(tagInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdhocBasedBackupTaggingCriteria>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdhocBasedBackupTaggingCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdhocBasedBackupTaggingCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeAdhocBasedBackupTaggingCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdhocBasedBackupTaggingCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdhocBasedBackupTaggingCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

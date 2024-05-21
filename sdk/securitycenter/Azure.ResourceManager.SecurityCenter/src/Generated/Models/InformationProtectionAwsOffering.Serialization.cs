@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class InformationProtectionAwsOffering : IUtf8JsonSerializable, IJsonModel<InformationProtectionAwsOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InformationProtectionAwsOffering>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InformationProtectionAwsOffering>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InformationProtectionAwsOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InformationProtectionAwsOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InformationProtectionAwsOffering)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(InformationProtection))
             {
                 writer.WritePropertyName("informationProtection"u8);
-                writer.WriteObjectValue(InformationProtection);
+                writer.WriteObjectValue(InformationProtection, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InformationProtectionAwsOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InformationProtectionAwsOffering)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static InformationProtectionAwsOffering DeserializeInformationProtectionAwsOffering(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AwsInformationProtection> informationProtection = default;
+            AwsInformationProtection informationProtection = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("informationProtection"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    informationProtection = AwsInformationProtection.DeserializeAwsInformationProtection(property.Value);
+                    informationProtection = AwsInformationProtection.DeserializeAwsInformationProtection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InformationProtectionAwsOffering(offeringType, description.Value, serializedAdditionalRawData, informationProtection.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InformationProtectionAwsOffering(offeringType, description, serializedAdditionalRawData, informationProtection);
         }
 
         BinaryData IPersistableModel<InformationProtectionAwsOffering>.Write(ModelReaderWriterOptions options)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InformationProtectionAwsOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InformationProtectionAwsOffering)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeInformationProtectionAwsOffering(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InformationProtectionAwsOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InformationProtectionAwsOffering)} does not support reading '{options.Format}' format.");
             }
         }
 

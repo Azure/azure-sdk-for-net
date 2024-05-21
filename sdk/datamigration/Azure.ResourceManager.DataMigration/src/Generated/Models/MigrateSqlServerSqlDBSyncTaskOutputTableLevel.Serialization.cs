@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateSqlServerSqlDBSyncTaskOutputTableLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputTableLevel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputTableLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputTableLevel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputTableLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputTableLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputTableLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputTableLevel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputTableLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputTableLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputTableLevel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,29 +130,29 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSqlServerSqlDBSyncTaskOutputTableLevel DeserializeMigrateSqlServerSqlDBSyncTaskOutputTableLevel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> tableName = default;
-            Optional<string> databaseName = default;
-            Optional<long> cdcInsertCounter = default;
-            Optional<long> cdcUpdateCounter = default;
-            Optional<long> cdcDeleteCounter = default;
-            Optional<DateTimeOffset> fullLoadEstFinishTime = default;
-            Optional<DateTimeOffset> fullLoadStartedOn = default;
-            Optional<DateTimeOffset> fullLoadEndedOn = default;
-            Optional<long> fullLoadTotalRows = default;
-            Optional<SyncTableMigrationState> state = default;
-            Optional<long> totalChangesApplied = default;
-            Optional<long> dataErrorsCounter = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> id = default;
+            string tableName = default;
+            string databaseName = default;
+            long? cdcInsertCounter = default;
+            long? cdcUpdateCounter = default;
+            long? cdcDeleteCounter = default;
+            DateTimeOffset? fullLoadEstFinishTime = default;
+            DateTimeOffset? fullLoadStartedOn = default;
+            DateTimeOffset? fullLoadEndedOn = default;
+            long? fullLoadTotalRows = default;
+            SyncTableMigrationState? state = default;
+            long? totalChangesApplied = default;
+            long? dataErrorsCounter = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tableName"u8))
@@ -276,11 +276,27 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBSyncTaskOutputTableLevel(id.Value, resultType, serializedAdditionalRawData, tableName.Value, databaseName.Value, Optional.ToNullable(cdcInsertCounter), Optional.ToNullable(cdcUpdateCounter), Optional.ToNullable(cdcDeleteCounter), Optional.ToNullable(fullLoadEstFinishTime), Optional.ToNullable(fullLoadStartedOn), Optional.ToNullable(fullLoadEndedOn), Optional.ToNullable(fullLoadTotalRows), Optional.ToNullable(state), Optional.ToNullable(totalChangesApplied), Optional.ToNullable(dataErrorsCounter), Optional.ToNullable(lastModifiedTime));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrateSqlServerSqlDBSyncTaskOutputTableLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                tableName,
+                databaseName,
+                cdcInsertCounter,
+                cdcUpdateCounter,
+                cdcDeleteCounter,
+                fullLoadEstFinishTime,
+                fullLoadStartedOn,
+                fullLoadEndedOn,
+                fullLoadTotalRows,
+                state,
+                totalChangesApplied,
+                dataErrorsCounter,
+                lastModifiedTime);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputTableLevel>.Write(ModelReaderWriterOptions options)
@@ -292,7 +308,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputTableLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputTableLevel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +324,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSqlServerSqlDBSyncTaskOutputTableLevel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputTableLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputTableLevel)} does not support reading '{options.Format}' format.");
             }
         }
 

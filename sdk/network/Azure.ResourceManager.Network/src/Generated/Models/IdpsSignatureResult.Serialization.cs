@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class IdpsSignatureResult : IUtf8JsonSerializable, IJsonModel<IdpsSignatureResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IdpsSignatureResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IdpsSignatureResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IdpsSignatureResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IdpsSignatureResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdpsSignatureResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdpsSignatureResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdpsSignatureResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdpsSignatureResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdpsSignatureResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,25 +123,25 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static IdpsSignatureResult DeserializeIdpsSignatureResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> signatureId = default;
-            Optional<FirewallPolicyIdpsSignatureMode> mode = default;
-            Optional<FirewallPolicyIdpsSignatureSeverity> severity = default;
-            Optional<FirewallPolicyIdpsSignatureDirection> direction = default;
-            Optional<string> group = default;
-            Optional<string> description = default;
-            Optional<string> protocol = default;
-            Optional<IReadOnlyList<string>> sourcePorts = default;
-            Optional<IReadOnlyList<string>> destinationPorts = default;
-            Optional<string> lastUpdated = default;
-            Optional<bool> inheritedFromParentPolicy = default;
+            int? signatureId = default;
+            FirewallPolicyIdpsSignatureMode? mode = default;
+            FirewallPolicyIdpsSignatureSeverity? severity = default;
+            FirewallPolicyIdpsSignatureDirection? direction = default;
+            string group = default;
+            string description = default;
+            string protocol = default;
+            IReadOnlyList<string> sourcePorts = default;
+            IReadOnlyList<string> destinationPorts = default;
+            string lastUpdated = default;
+            bool? inheritedFromParentPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("signatureId"u8))
@@ -239,11 +239,23 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdpsSignatureResult(Optional.ToNullable(signatureId), Optional.ToNullable(mode), Optional.ToNullable(severity), Optional.ToNullable(direction), group.Value, description.Value, protocol.Value, Optional.ToList(sourcePorts), Optional.ToList(destinationPorts), lastUpdated.Value, Optional.ToNullable(inheritedFromParentPolicy), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IdpsSignatureResult(
+                signatureId,
+                mode,
+                severity,
+                direction,
+                group,
+                description,
+                protocol,
+                sourcePorts ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                lastUpdated,
+                inheritedFromParentPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdpsSignatureResult>.Write(ModelReaderWriterOptions options)
@@ -255,7 +267,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IdpsSignatureResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdpsSignatureResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -271,7 +283,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeIdpsSignatureResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdpsSignatureResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdpsSignatureResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class DatabaseBackupInfo : IUtf8JsonSerializable, IJsonModel<DatabaseBackupInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseBackupInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseBackupInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatabaseBackupInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseBackupInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseBackupInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,22 +103,22 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static DatabaseBackupInfo DeserializeDatabaseBackupInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<BackupType> backupType = default;
-            Optional<IReadOnlyList<string>> backupFiles = default;
-            Optional<int> position = default;
-            Optional<bool> isDamaged = default;
-            Optional<bool> isCompressed = default;
-            Optional<int> familyCount = default;
-            Optional<DateTimeOffset> backupFinishDate = default;
+            string databaseName = default;
+            BackupType? backupType = default;
+            IReadOnlyList<string> backupFiles = default;
+            int? position = default;
+            bool? isDamaged = default;
+            bool? isCompressed = default;
+            int? familyCount = default;
+            DateTimeOffset? backupFinishDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -196,11 +196,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseBackupInfo(databaseName.Value, Optional.ToNullable(backupType), Optional.ToList(backupFiles), Optional.ToNullable(position), Optional.ToNullable(isDamaged), Optional.ToNullable(isCompressed), Optional.ToNullable(familyCount), Optional.ToNullable(backupFinishDate), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DatabaseBackupInfo(
+                databaseName,
+                backupType,
+                backupFiles ?? new ChangeTrackingList<string>(),
+                position,
+                isDamaged,
+                isCompressed,
+                familyCount,
+                backupFinishDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseBackupInfo>.Write(ModelReaderWriterOptions options)
@@ -212,7 +221,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +237,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeDatabaseBackupInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

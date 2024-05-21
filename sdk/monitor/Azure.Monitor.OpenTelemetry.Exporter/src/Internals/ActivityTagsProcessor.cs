@@ -67,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeEnduserId
         };
 
-        private static readonly HashSet<string> s_semanticsSet = new(s_semantics);
+        internal static readonly HashSet<string> s_semanticsSet = new(s_semantics);
 
         public AzMonList MappedTags;
         public AzMonList UnMappedTags;

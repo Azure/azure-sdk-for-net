@@ -12,10 +12,8 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
 
@@ -1884,7 +1882,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteMetrics, deleteEmptyServerFarm, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(response);
+                var uri = _webSiteWebAppsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteMetrics, deleteEmptyServerFarm);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1928,7 +1928,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteMetrics, deleteEmptyServerFarm, cancellationToken);
-                var operation = new AppServiceArmOperation(response);
+                var uri = _webSiteWebAppsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteMetrics, deleteEmptyServerFarm);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -2049,7 +2051,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recommendationsRestClient.CreateListHistoryForWebAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recommendationsRestClient.CreateListHistoryForWebAppNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, _recommendationsClientDiagnostics, Pipeline, "WebSiteResource.GetHistoryForWebAppRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppServiceRecommendation.DeserializeAppServiceRecommendation(e), _recommendationsClientDiagnostics, Pipeline, "WebSiteResource.GetHistoryForWebAppRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2077,7 +2079,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recommendationsRestClient.CreateListHistoryForWebAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recommendationsRestClient.CreateListHistoryForWebAppNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, _recommendationsClientDiagnostics, Pipeline, "WebSiteResource.GetHistoryForWebAppRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppServiceRecommendation.DeserializeAppServiceRecommendation(e), _recommendationsClientDiagnostics, Pipeline, "WebSiteResource.GetHistoryForWebAppRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2109,7 +2111,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecommendationRecommendationsRestClient.CreateListRecommendedRulesForWebAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecommendationRecommendationsRestClient.CreateListRecommendedRulesForWebAppNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, _siteRecommendationRecommendationsClientDiagnostics, Pipeline, "WebSiteResource.GetRecommendedRulesForWebAppRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppServiceRecommendation.DeserializeAppServiceRecommendation(e), _siteRecommendationRecommendationsClientDiagnostics, Pipeline, "WebSiteResource.GetRecommendedRulesForWebAppRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2141,7 +2143,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecommendationRecommendationsRestClient.CreateListRecommendedRulesForWebAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecommendationRecommendationsRestClient.CreateListRecommendedRulesForWebAppNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, _siteRecommendationRecommendationsClientDiagnostics, Pipeline, "WebSiteResource.GetRecommendedRulesForWebAppRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppServiceRecommendation.DeserializeAppServiceRecommendation(e), _siteRecommendationRecommendationsClientDiagnostics, Pipeline, "WebSiteResource.GetRecommendedRulesForWebAppRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -4563,6 +4565,64 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// Description for Retrieves all Service Bus Hybrid Connections used by this Web App.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionRelays</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_ListHybridConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HybridConnectionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridConnectionData> GetHybridConnectionsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListHybridConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => HybridConnectionData.DeserializeHybridConnectionData(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetHybridConnections", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Retrieves all Service Bus Hybrid Connections used by this Web App.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionRelays</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_ListHybridConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HybridConnectionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridConnectionData> GetHybridConnections(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListHybridConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => HybridConnectionData.DeserializeHybridConnectionData(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetHybridConnections", "value", null, cancellationToken);
+        }
+
+        /// <summary>
         /// Description for Shows whether an app can be cloned to another resource group or subscription.
         /// <list type="bullet">
         /// <item>
@@ -5075,7 +5135,7 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateGetNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, WebAppNetworkTrace.DeserializeWebAppNetworkTrace, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTraceOperation", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => WebAppNetworkTrace.DeserializeWebAppNetworkTrace(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTraceOperation", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -5105,7 +5165,7 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateGetNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, WebAppNetworkTrace.DeserializeWebAppNetworkTrace, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTraceOperation", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => WebAppNetworkTrace.DeserializeWebAppNetworkTrace(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTraceOperation", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -5359,7 +5419,7 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateGetNetworkTracesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, WebAppNetworkTrace.DeserializeWebAppNetworkTrace, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTraces", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => WebAppNetworkTrace.DeserializeWebAppNetworkTrace(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTraces", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -5389,7 +5449,7 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateGetNetworkTracesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, WebAppNetworkTrace.DeserializeWebAppNetworkTrace, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTraces", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => WebAppNetworkTrace.DeserializeWebAppNetworkTrace(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTraces", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -5419,7 +5479,7 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateGetNetworkTraceOperationV2Request(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, WebAppNetworkTrace.DeserializeWebAppNetworkTrace, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTraceOperationV2", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => WebAppNetworkTrace.DeserializeWebAppNetworkTrace(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTraceOperationV2", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -5449,7 +5509,7 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateGetNetworkTraceOperationV2Request(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, WebAppNetworkTrace.DeserializeWebAppNetworkTrace, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTraceOperationV2", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => WebAppNetworkTrace.DeserializeWebAppNetworkTrace(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTraceOperationV2", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -5479,7 +5539,7 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateGetNetworkTracesV2Request(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, WebAppNetworkTrace.DeserializeWebAppNetworkTrace, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTracesV2", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => WebAppNetworkTrace.DeserializeWebAppNetworkTrace(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTracesV2", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -5509,7 +5569,7 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateGetNetworkTracesV2Request(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, WebAppNetworkTrace.DeserializeWebAppNetworkTrace, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTracesV2", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => WebAppNetworkTrace.DeserializeWebAppNetworkTrace(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTracesV2", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -5616,7 +5676,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListPerfMonCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteWebAppsRestClient.CreateListPerfMonCountersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PerfMonResponseInfo.DeserializePerfMonResponseInfo, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetPerfMonCounters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PerfMonResponseInfo.DeserializePerfMonResponseInfo(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetPerfMonCounters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -5647,7 +5707,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListPerfMonCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteWebAppsRestClient.CreateListPerfMonCountersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PerfMonResponseInfo.DeserializePerfMonResponseInfo, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetPerfMonCounters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PerfMonResponseInfo.DeserializePerfMonResponseInfo(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetPerfMonCounters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -5752,7 +5812,7 @@ namespace Azure.ResourceManager.AppService
         public virtual AsyncPageable<AppServicePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -5781,7 +5841,7 @@ namespace Azure.ResourceManager.AppService
         public virtual Pageable<AppServicePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -6331,7 +6391,7 @@ namespace Azure.ResourceManager.AppService
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListSlotDifferencesFromProductionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteWebAppsRestClient.CreateListSlotDifferencesFromProductionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SlotDifference.DeserializeSlotDifference, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetSlotDifferencesFromProduction", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SlotDifference.DeserializeSlotDifference(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetSlotDifferencesFromProduction", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -6365,7 +6425,7 @@ namespace Azure.ResourceManager.AppService
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListSlotDifferencesFromProductionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteWebAppsRestClient.CreateListSlotDifferencesFromProductionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SlotDifference.DeserializeSlotDifference, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetSlotDifferencesFromProduction", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SlotDifference.DeserializeSlotDifference(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetSlotDifferencesFromProduction", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -6487,7 +6547,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListSnapshotsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteWebAppsRestClient.CreateListSnapshotsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppSnapshot.DeserializeAppSnapshot, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetSnapshots", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppSnapshot.DeserializeAppSnapshot(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetSnapshots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -6517,7 +6577,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListSnapshotsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteWebAppsRestClient.CreateListSnapshotsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppSnapshot.DeserializeAppSnapshot, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetSnapshots", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppSnapshot.DeserializeAppSnapshot(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetSnapshots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -6547,7 +6607,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListSnapshotsFromDRSecondaryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteWebAppsRestClient.CreateListSnapshotsFromDRSecondaryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppSnapshot.DeserializeAppSnapshot, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetSnapshotsFromDRSecondary", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppSnapshot.DeserializeAppSnapshot(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetSnapshotsFromDRSecondary", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -6577,7 +6637,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListSnapshotsFromDRSecondaryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteWebAppsRestClient.CreateListSnapshotsFromDRSecondaryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppSnapshot.DeserializeAppSnapshot, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetSnapshotsFromDRSecondary", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppSnapshot.DeserializeAppSnapshot(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetSnapshotsFromDRSecondary", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -7078,7 +7138,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteWebAppsRestClient.CreateListUsagesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CsmUsageQuota.DeserializeCsmUsageQuota, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CsmUsageQuota.DeserializeCsmUsageQuota(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -7109,7 +7169,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteWebAppsRestClient.CreateListUsagesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CsmUsageQuota.DeserializeCsmUsageQuota, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CsmUsageQuota.DeserializeCsmUsageQuota(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

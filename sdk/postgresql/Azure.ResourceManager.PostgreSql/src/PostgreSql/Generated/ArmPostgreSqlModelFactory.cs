@@ -11,13 +11,36 @@ using System.Linq;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPostgreSqlModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlServerCreateOrUpdateContent"/>. </summary>
+        /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
+        /// <param name="sku"> The SKU (pricing tier) of the server. </param>
+        /// <param name="properties">
+        /// Properties of the server.
+        /// Please note <see cref="PostgreSqlServerPropertiesForCreate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.PostgreSqlServerPropertiesForDefaultCreate"/>, <see cref="Models.PostgreSqlServerPropertiesForGeoRestore"/>, <see cref="Models.PostgreSqlServerPropertiesForRestore"/> and <see cref="Models.PostgreSqlServerPropertiesForReplica"/>.
+        /// </param>
+        /// <param name="location"> The location the resource resides in. </param>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlServerCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static PostgreSqlServerCreateOrUpdateContent PostgreSqlServerCreateOrUpdateContent(ManagedServiceIdentity identity = null, PostgreSqlSku sku = null, PostgreSqlServerPropertiesForCreate properties = null, AzureLocation location = default, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new PostgreSqlServerCreateOrUpdateContent(
+                identity,
+                sku,
+                properties,
+                location,
+                tags,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -48,7 +71,31 @@ namespace Azure.ResourceManager.PostgreSql.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<PostgreSqlServerPrivateEndpointConnection>();
 
-            return new PostgreSqlServerData(id, name, resourceType, systemData, tags, location, identity, sku, administratorLogin, version, sslEnforcement, minimalTlsVersion, byokEnforcement, infrastructureEncryption, userVisibleState, fullyQualifiedDomainName, earliestRestoreOn, storageProfile, replicationRole, masterServerId, replicaCapacity, publicNetworkAccess, privateEndpointConnections?.ToList());
+            return new PostgreSqlServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                sku,
+                administratorLogin,
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                byokEnforcement,
+                infrastructureEncryption,
+                userVisibleState,
+                fullyQualifiedDomainName,
+                earliestRestoreOn,
+                storageProfile,
+                replicationRole,
+                masterServerId,
+                replicaCapacity,
+                publicNetworkAccess,
+                privateEndpointConnections?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlServerPrivateEndpointConnection"/>. </summary>
@@ -57,7 +104,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="Models.PostgreSqlServerPrivateEndpointConnection"/> instance for mocking. </returns>
         public static PostgreSqlServerPrivateEndpointConnection PostgreSqlServerPrivateEndpointConnection(ResourceIdentifier id = null, PostgreSqlServerPrivateEndpointConnectionProperties properties = null)
         {
-            return new PostgreSqlServerPrivateEndpointConnection(id, properties);
+            return new PostgreSqlServerPrivateEndpointConnection(id, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlServerPrivateEndpointConnectionProperties"/>. </summary>
@@ -67,7 +114,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="Models.PostgreSqlServerPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
         public static PostgreSqlServerPrivateEndpointConnectionProperties PostgreSqlServerPrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = null, PostgreSqlServerPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = null, PostgreSqlPrivateEndpointProvisioningState? provisioningState = null)
         {
-            return new PostgreSqlServerPrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState);
+            return new PostgreSqlServerPrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlServerPrivateLinkServiceConnectionStateProperty"/>. </summary>
@@ -77,7 +124,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="Models.PostgreSqlServerPrivateLinkServiceConnectionStateProperty"/> instance for mocking. </returns>
         public static PostgreSqlServerPrivateLinkServiceConnectionStateProperty PostgreSqlServerPrivateLinkServiceConnectionStateProperty(PostgreSqlPrivateLinkServiceConnectionStateStatus status = default, string description = null, PostgreSqlPrivateLinkServiceConnectionStateRequiredAction? actionsRequired = null)
         {
-            return new PostgreSqlServerPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired);
+            return new PostgreSqlServerPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlFirewallRuleData"/>. </summary>
@@ -90,7 +137,14 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="PostgreSql.PostgreSqlFirewallRuleData"/> instance for mocking. </returns>
         public static PostgreSqlFirewallRuleData PostgreSqlFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null)
         {
-            return new PostgreSqlFirewallRuleData(id, name, resourceType, systemData, startIPAddress, endIPAddress);
+            return new PostgreSqlFirewallRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startIPAddress,
+                endIPAddress,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlVirtualNetworkRuleData"/>. </summary>
@@ -104,7 +158,15 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="PostgreSql.PostgreSqlVirtualNetworkRuleData"/> instance for mocking. </returns>
         public static PostgreSqlVirtualNetworkRuleData PostgreSqlVirtualNetworkRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier virtualNetworkSubnetId = null, bool? ignoreMissingVnetServiceEndpoint = null, PostgreSqlVirtualNetworkRuleState? state = null)
         {
-            return new PostgreSqlVirtualNetworkRuleData(id, name, resourceType, systemData, virtualNetworkSubnetId, ignoreMissingVnetServiceEndpoint, state);
+            return new PostgreSqlVirtualNetworkRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                virtualNetworkSubnetId,
+                ignoreMissingVnetServiceEndpoint,
+                state,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlDatabaseData"/>. </summary>
@@ -117,7 +179,14 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="PostgreSql.PostgreSqlDatabaseData"/> instance for mocking. </returns>
         public static PostgreSqlDatabaseData PostgreSqlDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string charset = null, string collation = null)
         {
-            return new PostgreSqlDatabaseData(id, name, resourceType, systemData, charset, collation);
+            return new PostgreSqlDatabaseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                charset,
+                collation,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlConfigurationData"/>. </summary>
@@ -134,7 +203,18 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="PostgreSql.PostgreSqlConfigurationData"/> instance for mocking. </returns>
         public static PostgreSqlConfigurationData PostgreSqlConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string description = null, string defaultValue = null, string dataType = null, string allowedValues = null, string source = null)
         {
-            return new PostgreSqlConfigurationData(id, name, resourceType, systemData, value, description, defaultValue, dataType, allowedValues, source);
+            return new PostgreSqlConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                value,
+                description,
+                defaultValue,
+                dataType,
+                allowedValues,
+                source,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlLogFile"/>. </summary>
@@ -150,7 +230,17 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="Models.PostgreSqlLogFile"/> instance for mocking. </returns>
         public static PostgreSqlLogFile PostgreSqlLogFile(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? sizeInKB = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string logFileType = null, Uri uri = null)
         {
-            return new PostgreSqlLogFile(id, name, resourceType, systemData, sizeInKB, createdOn, lastModifiedOn, logFileType, uri);
+            return new PostgreSqlLogFile(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sizeInKB,
+                createdOn,
+                lastModifiedOn,
+                logFileType,
+                uri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlServerAdministratorData"/>. </summary>
@@ -165,7 +255,16 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="PostgreSql.PostgreSqlServerAdministratorData"/> instance for mocking. </returns>
         public static PostgreSqlServerAdministratorData PostgreSqlServerAdministratorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PostgreSqlAdministratorType? administratorType = null, string loginAccountName = null, Guid? secureId = null, Guid? tenantId = null)
         {
-            return new PostgreSqlServerAdministratorData(id, name, resourceType, systemData, administratorType, loginAccountName, secureId, tenantId);
+            return new PostgreSqlServerAdministratorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                administratorType,
+                loginAccountName,
+                secureId,
+                tenantId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlRecoverableServerResourceData"/>. </summary>
@@ -182,7 +281,18 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="Models.PostgreSqlRecoverableServerResourceData"/> instance for mocking. </returns>
         public static PostgreSqlRecoverableServerResourceData PostgreSqlRecoverableServerResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? lastAvailableBackupOn = null, string serviceLevelObjective = null, string edition = null, int? vCores = null, string hardwareGeneration = null, string version = null)
         {
-            return new PostgreSqlRecoverableServerResourceData(id, name, resourceType, systemData, lastAvailableBackupOn, serviceLevelObjective, edition, vCores, hardwareGeneration, version);
+            return new PostgreSqlRecoverableServerResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                lastAvailableBackupOn,
+                serviceLevelObjective,
+                edition,
+                vCores,
+                hardwareGeneration,
+                version,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlPerformanceTierProperties"/>. </summary>
@@ -199,7 +309,16 @@ namespace Azure.ResourceManager.PostgreSql.Models
         {
             serviceLevelObjectives ??= new List<PostgreSqlPerformanceTierServiceLevelObjectives>();
 
-            return new PostgreSqlPerformanceTierProperties(id, maxBackupRetentionDays, minBackupRetentionDays, maxStorageInMB, minLargeStorageInMB, maxLargeStorageInMB, minStorageInMB, serviceLevelObjectives?.ToList());
+            return new PostgreSqlPerformanceTierProperties(
+                id,
+                maxBackupRetentionDays,
+                minBackupRetentionDays,
+                maxStorageInMB,
+                minLargeStorageInMB,
+                maxLargeStorageInMB,
+                minStorageInMB,
+                serviceLevelObjectives?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlPerformanceTierServiceLevelObjectives"/>. </summary>
@@ -214,7 +333,25 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="Models.PostgreSqlPerformanceTierServiceLevelObjectives"/> instance for mocking. </returns>
         public static PostgreSqlPerformanceTierServiceLevelObjectives PostgreSqlPerformanceTierServiceLevelObjectives(string id = null, string edition = null, int? vCores = null, string hardwareGeneration = null, int? maxBackupRetentionDays = null, int? minBackupRetentionDays = null, int? maxStorageInMB = null, int? minStorageInMB = null)
         {
-            return new PostgreSqlPerformanceTierServiceLevelObjectives(id, edition, vCores, hardwareGeneration, maxBackupRetentionDays, minBackupRetentionDays, maxStorageInMB, minStorageInMB);
+            return new PostgreSqlPerformanceTierServiceLevelObjectives(
+                id,
+                edition,
+                vCores,
+                hardwareGeneration,
+                maxBackupRetentionDays,
+                minBackupRetentionDays,
+                maxStorageInMB,
+                minStorageInMB,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlNameAvailabilityContent"/> instance for mocking. </returns>
+        public static PostgreSqlNameAvailabilityContent PostgreSqlNameAvailabilityContent(string name = null, ResourceType? resourceType = null)
+        {
+            return new PostgreSqlNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlNameAvailabilityResult"/>. </summary>
@@ -224,7 +361,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="Models.PostgreSqlNameAvailabilityResult"/> instance for mocking. </returns>
         public static PostgreSqlNameAvailabilityResult PostgreSqlNameAvailabilityResult(string message = null, bool? isNameAvailable = null, string reason = null)
         {
-            return new PostgreSqlNameAvailabilityResult(message, isNameAvailable, reason);
+            return new PostgreSqlNameAvailabilityResult(message, isNameAvailable, reason, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlServerSecurityAlertPolicyData"/>. </summary>
@@ -245,7 +382,19 @@ namespace Azure.ResourceManager.PostgreSql.Models
             disabledAlerts ??= new List<string>();
             emailAddresses ??= new List<string>();
 
-            return new PostgreSqlServerSecurityAlertPolicyData(id, name, resourceType, systemData, state, disabledAlerts?.ToList(), emailAddresses?.ToList(), sendToEmailAccountAdmins, storageEndpoint, storageAccountAccessKey, retentionDays);
+            return new PostgreSqlServerSecurityAlertPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                state,
+                disabledAlerts?.ToList(),
+                emailAddresses?.ToList(),
+                sendToEmailAccountAdmins,
+                storageEndpoint,
+                storageAccountAccessKey,
+                retentionDays,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlPrivateEndpointConnectionData"/>. </summary>
@@ -259,7 +408,15 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="PostgreSql.PostgreSqlPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static PostgreSqlPrivateEndpointConnectionData PostgreSqlPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, PostgreSqlPrivateLinkServiceConnectionStateProperty connectionState = null, string provisioningState = null)
         {
-            return new PostgreSqlPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState);
+            return new PostgreSqlPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlPrivateLinkServiceConnectionStateProperty"/>. </summary>
@@ -269,7 +426,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="Models.PostgreSqlPrivateLinkServiceConnectionStateProperty"/> instance for mocking. </returns>
         public static PostgreSqlPrivateLinkServiceConnectionStateProperty PostgreSqlPrivateLinkServiceConnectionStateProperty(string status = null, string description = null, string actionsRequired = null)
         {
-            return new PostgreSqlPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired);
+            return new PostgreSqlPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlPrivateLinkResourceData"/>. </summary>
@@ -281,7 +438,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="PostgreSql.PostgreSqlPrivateLinkResourceData"/> instance for mocking. </returns>
         public static PostgreSqlPrivateLinkResourceData PostgreSqlPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PostgreSqlPrivateLinkResourceProperties properties = null)
         {
-            return new PostgreSqlPrivateLinkResourceData(id, name, resourceType, systemData, properties);
+            return new PostgreSqlPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlPrivateLinkResourceProperties"/>. </summary>
@@ -292,7 +455,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         {
             requiredMembers ??= new List<string>();
 
-            return new PostgreSqlPrivateLinkResourceProperties(groupId, requiredMembers?.ToList());
+            return new PostgreSqlPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlServerKeyData"/>. </summary>
@@ -307,7 +470,112 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="PostgreSql.PostgreSqlServerKeyData"/> instance for mocking. </returns>
         public static PostgreSqlServerKeyData PostgreSqlServerKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, PostgreSqlServerKeyType? serverKeyType = null, Uri uri = null, DateTimeOffset? createdOn = null)
         {
-            return new PostgreSqlServerKeyData(id, name, resourceType, systemData, kind, serverKeyType, uri, createdOn);
+            return new PostgreSqlServerKeyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                serverKeyType,
+                uri,
+                createdOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlServerPropertiesForDefaultCreate"/>. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
+        /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlServerPropertiesForDefaultCreate"/> instance for mocking. </returns>
+        public static PostgreSqlServerPropertiesForDefaultCreate PostgreSqlServerPropertiesForDefaultCreate(PostgreSqlServerVersion? version = null, PostgreSqlSslEnforcementEnum? sslEnforcement = null, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion = null, PostgreSqlInfrastructureEncryption? infrastructureEncryption = null, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess = null, PostgreSqlStorageProfile storageProfile = null, string administratorLogin = null, string administratorLoginPassword = null)
+        {
+            return new PostgreSqlServerPropertiesForDefaultCreate(
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
+                PostgreSqlCreateMode.Default,
+                serializedAdditionalRawData: null,
+                administratorLogin,
+                administratorLoginPassword);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlServerPropertiesForRestore"/>. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="sourceServerId"> The source server id to restore from. </param>
+        /// <param name="restorePointInTime"> Restore point creation time (ISO8601 format), specifying the time to restore from. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlServerPropertiesForRestore"/> instance for mocking. </returns>
+        public static PostgreSqlServerPropertiesForRestore PostgreSqlServerPropertiesForRestore(PostgreSqlServerVersion? version = null, PostgreSqlSslEnforcementEnum? sslEnforcement = null, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion = null, PostgreSqlInfrastructureEncryption? infrastructureEncryption = null, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess = null, PostgreSqlStorageProfile storageProfile = null, ResourceIdentifier sourceServerId = null, DateTimeOffset restorePointInTime = default)
+        {
+            return new PostgreSqlServerPropertiesForRestore(
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
+                PostgreSqlCreateMode.PointInTimeRestore,
+                serializedAdditionalRawData: null,
+                sourceServerId,
+                restorePointInTime);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlServerPropertiesForGeoRestore"/>. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="sourceServerId"> The source server id to restore from. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlServerPropertiesForGeoRestore"/> instance for mocking. </returns>
+        public static PostgreSqlServerPropertiesForGeoRestore PostgreSqlServerPropertiesForGeoRestore(PostgreSqlServerVersion? version = null, PostgreSqlSslEnforcementEnum? sslEnforcement = null, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion = null, PostgreSqlInfrastructureEncryption? infrastructureEncryption = null, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess = null, PostgreSqlStorageProfile storageProfile = null, ResourceIdentifier sourceServerId = null)
+        {
+            return new PostgreSqlServerPropertiesForGeoRestore(
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
+                PostgreSqlCreateMode.GeoRestore,
+                serializedAdditionalRawData: null,
+                sourceServerId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlServerPropertiesForReplica"/>. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="sourceServerId"> The master server id to create replica from. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlServerPropertiesForReplica"/> instance for mocking. </returns>
+        public static PostgreSqlServerPropertiesForReplica PostgreSqlServerPropertiesForReplica(PostgreSqlServerVersion? version = null, PostgreSqlSslEnforcementEnum? sslEnforcement = null, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion = null, PostgreSqlInfrastructureEncryption? infrastructureEncryption = null, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess = null, PostgreSqlStorageProfile storageProfile = null, ResourceIdentifier sourceServerId = null)
+        {
+            return new PostgreSqlServerPropertiesForReplica(
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
+                PostgreSqlCreateMode.Replica,
+                serializedAdditionalRawData: null,
+                sourceServerId);
         }
     }
 }

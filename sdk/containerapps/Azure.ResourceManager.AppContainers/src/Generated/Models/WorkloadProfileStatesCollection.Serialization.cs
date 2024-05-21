@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     internal partial class WorkloadProfileStatesCollection : IUtf8JsonSerializable, IJsonModel<WorkloadProfileStatesCollection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadProfileStatesCollection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadProfileStatesCollection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkloadProfileStatesCollection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadProfileStatesCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadProfileStatesCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadProfileStatesCollection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadProfileStatesCollection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadProfileStatesCollection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadProfileStatesCollection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static WorkloadProfileStatesCollection DeserializeWorkloadProfileStatesCollection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<ContainerAppWorkloadProfileState> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppWorkloadProfileState> array = new List<ContainerAppWorkloadProfileState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState(item));
+                        array.Add(ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState(item, options));
                     }
                     value = array;
                     continue;
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadProfileStatesCollection(value, nextLink.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WorkloadProfileStatesCollection(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadProfileStatesCollection>.Write(ModelReaderWriterOptions options)
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadProfileStatesCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadProfileStatesCollection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeWorkloadProfileStatesCollection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadProfileStatesCollection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadProfileStatesCollection)} does not support reading '{options.Format}' format.");
             }
         }
 

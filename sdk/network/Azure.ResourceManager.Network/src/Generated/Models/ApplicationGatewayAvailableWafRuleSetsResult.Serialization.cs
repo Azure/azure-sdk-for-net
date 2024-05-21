@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal partial class ApplicationGatewayAvailableWafRuleSetsResult : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayAvailableWafRuleSetsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayAvailableWafRuleSetsResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayAvailableWafRuleSetsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationGatewayAvailableWafRuleSetsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayAvailableWafRuleSetsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayAvailableWafRuleSetsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayAvailableWafRuleSetsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayAvailableWafRuleSetsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayAvailableWafRuleSetsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayAvailableWafRuleSetsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,15 +68,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayAvailableWafRuleSetsResult DeserializeApplicationGatewayAvailableWafRuleSetsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApplicationGatewayFirewallRuleSet>> value = default;
+            IReadOnlyList<ApplicationGatewayFirewallRuleSet> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -88,18 +88,18 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayFirewallRuleSet> array = new List<ApplicationGatewayFirewallRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet(item));
+                        array.Add(ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet(item, options));
                     }
                     value = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayAvailableWafRuleSetsResult(Optional.ToList(value), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationGatewayAvailableWafRuleSetsResult(value ?? new ChangeTrackingList<ApplicationGatewayFirewallRuleSet>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayAvailableWafRuleSetsResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayAvailableWafRuleSetsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayAvailableWafRuleSetsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayAvailableWafRuleSetsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayAvailableWafRuleSetsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayAvailableWafRuleSetsResult)} does not support reading '{options.Format}' format.");
             }
         }
 

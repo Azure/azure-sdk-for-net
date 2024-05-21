@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class AutomationAccountCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<AutomationAccountCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationAccountCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationAccountCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationAccountCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationAccountCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationAccountCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationAccountCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsDefined(IsPublicNetworkAccessAllowed))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationAccountCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationAccountCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationAccountCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,22 +108,22 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationAccountCreateOrUpdateContent DeserializeAutomationAccountCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AutomationSku> sku = default;
-            Optional<AutomationEncryptionProperties> encryption = default;
-            Optional<bool> publicNetworkAccess = default;
-            Optional<bool> disableLocalAuth = default;
+            string name = default;
+            AzureLocation? location = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            AutomationSku sku = default;
+            AutomationEncryptionProperties encryption = default;
+            bool? publicNetworkAccess = default;
+            bool? disableLocalAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            sku = AutomationSku.DeserializeAutomationSku(property0.Value);
+                            sku = AutomationSku.DeserializeAutomationSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            encryption = AutomationEncryptionProperties.DeserializeAutomationEncryptionProperties(property0.Value);
+                            encryption = AutomationEncryptionProperties.DeserializeAutomationEncryptionProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -213,11 +213,20 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountCreateOrUpdateContent(name.Value, Optional.ToNullable(location), identity, Optional.ToDictionary(tags), sku.Value, encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AutomationAccountCreateOrUpdateContent(
+                name,
+                location,
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                encryption,
+                publicNetworkAccess,
+                disableLocalAuth,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -229,7 +238,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationAccountCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationAccountCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +254,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationAccountCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationAccountCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationAccountCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

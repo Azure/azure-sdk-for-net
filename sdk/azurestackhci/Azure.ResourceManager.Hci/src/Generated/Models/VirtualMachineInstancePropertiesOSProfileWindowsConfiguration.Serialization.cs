@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class VirtualMachineInstancePropertiesOSProfileWindowsConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualMachineInstancePropertiesOSProfileWindowsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineInstancePropertiesOSProfileWindowsConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineInstancePropertiesOSProfileWindowsConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineInstancePropertiesOSProfileWindowsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesOSProfileWindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfileWindowsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfileWindowsConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
-                writer.WriteObjectValue(Ssh);
+                writer.WriteObjectValue(Ssh, options);
             }
             if (Optional.IsDefined(TimeZone))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesOSProfileWindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfileWindowsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfileWindowsConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,19 +83,19 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static VirtualMachineInstancePropertiesOSProfileWindowsConfiguration DeserializeVirtualMachineInstancePropertiesOSProfileWindowsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> enableAutomaticUpdates = default;
-            Optional<SshConfiguration> ssh = default;
-            Optional<string> timeZone = default;
-            Optional<bool> provisionVmAgent = default;
-            Optional<bool> provisionVmConfigAgent = default;
+            bool? enableAutomaticUpdates = default;
+            SshConfiguration ssh = default;
+            string timeZone = default;
+            bool? provisionVmAgent = default;
+            bool? provisionVmConfigAgent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableAutomaticUpdates"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    ssh = SshConfiguration.DeserializeSshConfiguration(property.Value);
+                    ssh = SshConfiguration.DeserializeSshConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("timeZone"u8))
@@ -141,11 +141,17 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePropertiesOSProfileWindowsConfiguration(Optional.ToNullable(enableAutomaticUpdates), ssh.Value, timeZone.Value, Optional.ToNullable(provisionVmAgent), Optional.ToNullable(provisionVmConfigAgent), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualMachineInstancePropertiesOSProfileWindowsConfiguration(
+                enableAutomaticUpdates,
+                ssh,
+                timeZone,
+                provisionVmAgent,
+                provisionVmConfigAgent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePropertiesOSProfileWindowsConfiguration>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfileWindowsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfileWindowsConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeVirtualMachineInstancePropertiesOSProfileWindowsConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfileWindowsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfileWindowsConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

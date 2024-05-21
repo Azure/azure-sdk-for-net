@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class OSVersionPropertiesBase : IUtf8JsonSerializable, IJsonModel<OSVersionPropertiesBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSVersionPropertiesBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSVersionPropertiesBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OSVersionPropertiesBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OSVersionPropertiesBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSVersionPropertiesBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSVersionPropertiesBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSVersionPropertiesBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSVersionPropertiesBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSVersionPropertiesBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,18 +78,18 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static OSVersionPropertiesBase DeserializeOSVersionPropertiesBase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> version = default;
-            Optional<string> label = default;
-            Optional<bool> isDefault = default;
-            Optional<bool> isActive = default;
+            string version = default;
+            string label = default;
+            bool? isDefault = default;
+            bool? isActive = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSVersionPropertiesBase(version.Value, label.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isActive), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OSVersionPropertiesBase(version, label, isDefault, isActive, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OSVersionPropertiesBase>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OSVersionPropertiesBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSVersionPropertiesBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeOSVersionPropertiesBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OSVersionPropertiesBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSVersionPropertiesBase)} does not support reading '{options.Format}' format.");
             }
         }
 

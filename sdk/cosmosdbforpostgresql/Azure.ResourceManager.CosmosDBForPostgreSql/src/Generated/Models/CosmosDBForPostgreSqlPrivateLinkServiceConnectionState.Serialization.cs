@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     public partial class CosmosDBForPostgreSqlPrivateLinkServiceConnectionState : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlPrivateLinkServiceConnectionState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlPrivateLinkServiceConnectionState>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlPrivateLinkServiceConnectionState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBForPostgreSqlPrivateLinkServiceConnectionState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkServiceConnectionState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkServiceConnectionState)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkServiceConnectionState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkServiceConnectionState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 
         internal static CosmosDBForPostgreSqlPrivateLinkServiceConnectionState DeserializeCosmosDBForPostgreSqlPrivateLinkServiceConnectionState(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus> status = default;
-            Optional<string> description = default;
-            Optional<string> actionsRequired = default;
+            CosmosDBForPostgreSqlPrivateEndpointServiceConnectionStatus? status = default;
+            string description = default;
+            string actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CosmosDBForPostgreSqlPrivateLinkServiceConnectionState(status, description, actionsRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkServiceConnectionState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkServiceConnectionState)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                         return DeserializeCosmosDBForPostgreSqlPrivateLinkServiceConnectionState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkServiceConnectionState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkServiceConnectionState)} does not support reading '{options.Format}' format.");
             }
         }
 

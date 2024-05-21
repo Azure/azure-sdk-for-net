@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Models
             string type = "Unknown";
             string fieldName = default;
             double boost = default;
-            Optional<ScoringFunctionInterpolation> interpolation = default;
+            ScoringFunctionInterpolation? interpolation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -67,7 +67,23 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new UnknownScoringFunction(type, fieldName, boost, Optional.ToNullable(interpolation));
+            return new UnknownScoringFunction(type, fieldName, boost, interpolation);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownScoringFunction FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownScoringFunction(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ScoringFunction>(this);
+            return content;
         }
     }
 }

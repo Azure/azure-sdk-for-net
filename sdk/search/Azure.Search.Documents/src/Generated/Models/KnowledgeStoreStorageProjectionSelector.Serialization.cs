@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -48,6 +49,85 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        internal static KnowledgeStoreStorageProjectionSelector DeserializeKnowledgeStoreStorageProjectionSelector(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string storageContainer = default;
+            string referenceKeyName = default;
+            string generatedKeyName = default;
+            string source = default;
+            string sourceContext = default;
+            IList<InputFieldMappingEntry> inputs = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("storageContainer"u8))
+                {
+                    storageContainer = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("referenceKeyName"u8))
+                {
+                    referenceKeyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("generatedKeyName"u8))
+                {
+                    generatedKeyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("source"u8))
+                {
+                    source = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sourceContext"u8))
+                {
+                    sourceContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("inputs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                    }
+                    inputs = array;
+                    continue;
+                }
+            }
+            return new KnowledgeStoreStorageProjectionSelector(
+                referenceKeyName,
+                generatedKeyName,
+                source,
+                sourceContext,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                storageContainer);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new KnowledgeStoreStorageProjectionSelector FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKnowledgeStoreStorageProjectionSelector(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     [PersistableModelProxy(typeof(UnknownAlertsMetaDataProperties))]
     public partial class ServiceAlertMetadataProperties : IUtf8JsonSerializable, IJsonModel<ServiceAlertMetadataProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAlertMetadataProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAlertMetadataProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceAlertMetadataProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertMetadataProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertMetadataProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertMetadataProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertMetadataProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertMetadataProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertMetadataProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertMetadataProperties DeserializeServiceAlertMetadataProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "MonitorServiceList": return MonitorServiceList.DeserializeMonitorServiceList(element);
+                    case "MonitorServiceList": return MonitorServiceList.DeserializeMonitorServiceList(element, options);
                 }
             }
-            return UnknownAlertsMetaDataProperties.DeserializeUnknownAlertsMetaDataProperties(element);
+            return UnknownAlertsMetaDataProperties.DeserializeUnknownAlertsMetaDataProperties(element, options);
         }
 
         BinaryData IPersistableModel<ServiceAlertMetadataProperties>.Write(ModelReaderWriterOptions options)
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertMetadataProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertMetadataProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeServiceAlertMetadataProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertMetadataProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertMetadataProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

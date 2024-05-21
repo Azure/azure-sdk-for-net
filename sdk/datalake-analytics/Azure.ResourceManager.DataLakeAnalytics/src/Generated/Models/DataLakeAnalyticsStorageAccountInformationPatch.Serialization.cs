@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     public partial class DataLakeAnalyticsStorageAccountInformationPatch : IUtf8JsonSerializable, IJsonModel<DataLakeAnalyticsStorageAccountInformationPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsStorageAccountInformationPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsStorageAccountInformationPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataLakeAnalyticsStorageAccountInformationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsStorageAccountInformationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageAccountInformationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageAccountInformationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsStorageAccountInformationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageAccountInformationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageAccountInformationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,16 +71,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         internal static DataLakeAnalyticsStorageAccountInformationPatch DeserializeDataLakeAnalyticsStorageAccountInformationPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> accessKey = default;
-            Optional<string> suffix = default;
+            string accessKey = default;
+            string suffix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsStorageAccountInformationPatch(accessKey.Value, suffix.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataLakeAnalyticsStorageAccountInformationPatch(accessKey, suffix, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsStorageAccountInformationPatch>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageAccountInformationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageAccountInformationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         return DeserializeDataLakeAnalyticsStorageAccountInformationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageAccountInformationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageAccountInformationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

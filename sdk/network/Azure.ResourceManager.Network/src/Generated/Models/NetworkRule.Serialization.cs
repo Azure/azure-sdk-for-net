@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class NetworkRule : IUtf8JsonSerializable, IJsonModel<NetworkRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -140,24 +140,24 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkRule DeserializeNetworkRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<FirewallPolicyRuleNetworkProtocol>> ipProtocols = default;
-            Optional<IList<string>> sourceAddresses = default;
-            Optional<IList<string>> destinationAddresses = default;
-            Optional<IList<string>> destinationPorts = default;
-            Optional<IList<string>> sourceIPGroups = default;
-            Optional<IList<string>> destinationIPGroups = default;
-            Optional<IList<string>> destinationFqdns = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            IList<FirewallPolicyRuleNetworkProtocol> ipProtocols = default;
+            IList<string> sourceAddresses = default;
+            IList<string> destinationAddresses = default;
+            IList<string> destinationPorts = default;
+            IList<string> sourceIPGroups = default;
+            IList<string> destinationIPGroups = default;
+            IList<string> destinationFqdns = default;
+            string name = default;
+            string description = default;
             FirewallPolicyRuleType ruleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipProtocols"u8))
@@ -275,11 +275,22 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkRule(name.Value, description.Value, ruleType, serializedAdditionalRawData, Optional.ToList(ipProtocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), Optional.ToList(sourceIPGroups), Optional.ToList(destinationIPGroups), Optional.ToList(destinationFqdns));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetworkRule(
+                name,
+                description,
+                ruleType,
+                serializedAdditionalRawData,
+                ipProtocols ?? new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>(),
+                sourceAddresses ?? new ChangeTrackingList<string>(),
+                destinationAddresses ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
+                destinationIPGroups ?? new ChangeTrackingList<string>(),
+                destinationFqdns ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<NetworkRule>.Write(ModelReaderWriterOptions options)
@@ -291,7 +302,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -307,7 +318,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkRule)} does not support reading '{options.Format}' format.");
             }
         }
 

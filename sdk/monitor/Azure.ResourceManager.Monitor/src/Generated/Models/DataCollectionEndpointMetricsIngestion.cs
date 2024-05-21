@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The endpoint used by clients to ingest metrics. </summary>
@@ -17,7 +20,8 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointMetricsIngestion"/>. </summary>
         /// <param name="endpoint"> The endpoint. This property is READ-ONLY. </param>
-        internal DataCollectionEndpointMetricsIngestion(string endpoint) : base(endpoint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionEndpointMetricsIngestion(string endpoint, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(endpoint, serializedAdditionalRawData)
         {
         }
     }

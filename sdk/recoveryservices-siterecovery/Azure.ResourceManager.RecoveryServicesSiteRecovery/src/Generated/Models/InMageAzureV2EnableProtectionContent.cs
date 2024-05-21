@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="InMageAzureV2EnableProtectionContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="masterTargetId"> The Master target Id. </param>
         /// <param name="processServerId"> The Process Server Id. </param>
         /// <param name="storageAccountId"> The storage account Id. </param>
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="seedManagedDiskTags"> The tags for the seed managed disks. </param>
         /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
         /// <param name="targetNicTags"> The tags for the target NICs. </param>
-        internal InMageAzureV2EnableProtectionContent(string instanceType, string masterTargetId, Guid? processServerId, ResourceIdentifier storageAccountId, string runAsAccountId, string multiVmGroupId, string multiVmGroupName, IList<InMageAzureV2DiskDetails> disksToInclude, ResourceIdentifier targetAzureNetworkId, ResourceIdentifier targetAzureSubnetId, string enableRdpOnTargetOption, string targetAzureVmName, ResourceIdentifier logStorageAccountId, ResourceIdentifier targetAzureV1ResourceGroupId, ResourceIdentifier targetAzureV2ResourceGroupId, SiteRecoveryDiskAccountType? diskType, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, string targetVmSize, ResourceIdentifier diskEncryptionSetId, IDictionary<string, string> targetVmTags, IDictionary<string, string> seedManagedDiskTags, IDictionary<string, string> targetManagedDiskTags, IDictionary<string, string> targetNicTags) : base(instanceType)
+        internal InMageAzureV2EnableProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string masterTargetId, Guid? processServerId, ResourceIdentifier storageAccountId, string runAsAccountId, string multiVmGroupId, string multiVmGroupName, IList<InMageAzureV2DiskDetails> disksToInclude, ResourceIdentifier targetAzureNetworkId, ResourceIdentifier targetAzureSubnetId, string enableRdpOnTargetOption, string targetAzureVmName, ResourceIdentifier logStorageAccountId, ResourceIdentifier targetAzureV1ResourceGroupId, ResourceIdentifier targetAzureV2ResourceGroupId, SiteRecoveryDiskAccountType? diskType, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, string targetVmSize, ResourceIdentifier diskEncryptionSetId, IDictionary<string, string> targetVmTags, IDictionary<string, string> seedManagedDiskTags, IDictionary<string, string> targetManagedDiskTags, IDictionary<string, string> targetNicTags) : base(instanceType, serializedAdditionalRawData)
         {
             MasterTargetId = masterTargetId;
             ProcessServerId = processServerId;

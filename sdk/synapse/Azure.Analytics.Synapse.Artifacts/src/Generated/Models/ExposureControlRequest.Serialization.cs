@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> featureName = default;
-            Optional<string> featureType = default;
+            string featureName = default;
+            string featureType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("featureName"u8))
@@ -52,7 +52,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ExposureControlRequest(featureName.Value, featureType.Value);
+            return new ExposureControlRequest(featureName, featureType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ExposureControlRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExposureControlRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class ExposureControlRequestConverter : JsonConverter<ExposureControlRequest>
@@ -61,6 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override ExposureControlRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

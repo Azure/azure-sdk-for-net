@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using Azure;
+using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -30,12 +31,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="compression"> Describes how input data is compressed. </param>
         /// <param name="partitionKey"> partitionKey Describes a key in the input data which is used for partitioning the input data. </param>
         /// <param name="watermarkSettings"> Settings which determine whether to read watermark events. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="datasource">
         /// Describes an input data source that contains stream data. Required on PUT (CreateOrReplace) requests.
         /// Please note <see cref="StreamInputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GatewayMessageBusStreamInputDataSource"/>, <see cref="IoTHubStreamInputDataSource"/>, <see cref="EventGridStreamInputDataSource"/>, <see cref="EventHubV2StreamInputDataSource"/>, <see cref="EventHubStreamInputDataSource"/>, <see cref="BlobStreamInputDataSource"/> and <see cref="RawStreamInputDataSource"/>.
         /// </param>
-        internal StreamInputProperties(string inputPropertiesType, StreamAnalyticsDataSerialization serialization, StreamingJobDiagnostics diagnostics, ETag? etag, StreamingCompression compression, string partitionKey, StreamingJobInputWatermarkProperties watermarkSettings, StreamInputDataSource datasource) : base(inputPropertiesType, serialization, diagnostics, etag, compression, partitionKey, watermarkSettings)
+        internal StreamInputProperties(string inputPropertiesType, StreamAnalyticsDataSerialization serialization, StreamingJobDiagnostics diagnostics, ETag? etag, StreamingCompression compression, string partitionKey, StreamingJobInputWatermarkProperties watermarkSettings, IDictionary<string, BinaryData> serializedAdditionalRawData, StreamInputDataSource datasource) : base(inputPropertiesType, serialization, diagnostics, etag, compression, partitionKey, watermarkSettings, serializedAdditionalRawData)
         {
             Datasource = datasource;
             InputPropertiesType = inputPropertiesType ?? "Stream";

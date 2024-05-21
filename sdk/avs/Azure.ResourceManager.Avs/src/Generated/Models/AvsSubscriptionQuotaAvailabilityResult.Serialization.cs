@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Avs.Models
 {
     public partial class AvsSubscriptionQuotaAvailabilityResult : IUtf8JsonSerializable, IJsonModel<AvsSubscriptionQuotaAvailabilityResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsSubscriptionQuotaAvailabilityResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsSubscriptionQuotaAvailabilityResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvsSubscriptionQuotaAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AvsSubscriptionQuotaAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsSubscriptionQuotaAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsSubscriptionQuotaAvailabilityResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvsSubscriptionQuotaAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsSubscriptionQuotaAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsSubscriptionQuotaAvailabilityResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static AvsSubscriptionQuotaAvailabilityResult DeserializeAvsSubscriptionQuotaAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, int>> hostsRemaining = default;
-            Optional<AvsSubscriptionQuotaEnabled> quotaEnabled = default;
+            IReadOnlyDictionary<string, int> hostsRemaining = default;
+            AvsSubscriptionQuotaEnabled? quotaEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostsRemaining"u8))
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsSubscriptionQuotaAvailabilityResult(Optional.ToDictionary(hostsRemaining), Optional.ToNullable(quotaEnabled), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AvsSubscriptionQuotaAvailabilityResult(hostsRemaining ?? new ChangeTrackingDictionary<string, int>(), quotaEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsSubscriptionQuotaAvailabilityResult>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvsSubscriptionQuotaAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsSubscriptionQuotaAvailabilityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeAvsSubscriptionQuotaAvailabilityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvsSubscriptionQuotaAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsSubscriptionQuotaAvailabilityResult)} does not support reading '{options.Format}' format.");
             }
         }
 

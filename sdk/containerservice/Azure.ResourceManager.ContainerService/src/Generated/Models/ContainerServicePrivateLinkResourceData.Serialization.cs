@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ContainerServicePrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<ContainerServicePrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServicePrivateLinkResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServicePrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerServicePrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServicePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,20 +93,20 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServicePrivateLinkResourceData DeserializeContainerServicePrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> groupId = default;
-            Optional<IList<string>> requiredMembers = default;
-            Optional<ResourceIdentifier> privateLinkServiceId = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string groupId = default;
+            IList<string> requiredMembers = default;
+            ResourceIdentifier privateLinkServiceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -162,11 +162,18 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServicePrivateLinkResourceData(id.Value, name.Value, Optional.ToNullable(type), groupId.Value, Optional.ToList(requiredMembers), privateLinkServiceId.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerServicePrivateLinkResourceData(
+                id,
+                name,
+                type,
+                groupId,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                privateLinkServiceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServicePrivateLinkResourceData>.Write(ModelReaderWriterOptions options)
@@ -178,7 +185,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +201,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeContainerServicePrivateLinkResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

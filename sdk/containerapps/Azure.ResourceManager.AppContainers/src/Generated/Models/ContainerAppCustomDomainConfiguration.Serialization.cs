@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppCustomDomainConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppCustomDomainConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCustomDomainConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCustomDomainConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppCustomDomainConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomDomainConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomDomainConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,21 +93,21 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCustomDomainConfiguration DeserializeContainerAppCustomDomainConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> customDomainVerificationId = default;
-            Optional<string> dnsSuffix = default;
-            Optional<byte[]> certificateValue = default;
-            Optional<string> certificatePassword = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> thumbprint = default;
-            Optional<string> subjectName = default;
+            string customDomainVerificationId = default;
+            string dnsSuffix = default;
+            byte[] certificateValue = default;
+            string certificatePassword = default;
+            DateTimeOffset? expirationDate = default;
+            string thumbprint = default;
+            string subjectName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customDomainVerificationId"u8))
@@ -155,11 +155,19 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCustomDomainConfiguration(customDomainVerificationId.Value, dnsSuffix.Value, certificateValue.Value, certificatePassword.Value, Optional.ToNullable(expirationDate), thumbprint.Value, subjectName.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerAppCustomDomainConfiguration(
+                customDomainVerificationId,
+                dnsSuffix,
+                certificateValue,
+                certificatePassword,
+                expirationDate,
+                thumbprint,
+                subjectName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCustomDomainConfiguration>.Write(ModelReaderWriterOptions options)
@@ -171,7 +179,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +195,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppCustomDomainConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

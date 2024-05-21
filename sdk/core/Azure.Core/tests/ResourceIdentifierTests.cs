@@ -32,7 +32,7 @@ namespace Azure.Core.Tests
 
         #region LocationResouceIdentifier
         [Test]
-        public void LocationFromDiffNamespaceWithChildResouce()
+        public void LocationFromDiffNamespaceWithChildResource()
         {
             string resourceId = $"{LocationInDifferentNamespace}/publishers/128technology";
             var id = GetResourceIdentifier(resourceId);
@@ -47,7 +47,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void LocationWithChildResouce()
+        public void LocationWithChildResource()
         {
             string resourceId = $"{LocationBaseResourceId}/myResourceType/myResourceName";
             var id = GetResourceIdentifier(resourceId);

@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InputFieldMappingEntry>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -48,9 +48,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<string> source = default;
-            Optional<string> sourceContext = default;
-            Optional<IList<InputFieldMappingEntry>> inputs = default;
+            string source = default;
+            string sourceContext = default;
+            IList<InputFieldMappingEntry> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -83,7 +83,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new InputFieldMappingEntry(name, source.Value, sourceContext.Value, Optional.ToList(inputs));
+            return new InputFieldMappingEntry(name, source, sourceContext, inputs ?? new ChangeTrackingList<InputFieldMappingEntry>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static InputFieldMappingEntry FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeInputFieldMappingEntry(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

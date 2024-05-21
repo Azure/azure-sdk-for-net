@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -23,8 +23,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="FailoverJobDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="protectedItemDetails"> The test VM details. </param>
-        internal FailoverJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, IReadOnlyList<FailoverReplicationProtectedItemDetails> protectedItemDetails) : base(instanceType, affectedObjectDetails)
+        internal FailoverJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<FailoverReplicationProtectedItemDetails> protectedItemDetails) : base(instanceType, affectedObjectDetails, serializedAdditionalRawData)
         {
             ProtectedItemDetails = protectedItemDetails;
             InstanceType = instanceType ?? "FailoverJobDetails";

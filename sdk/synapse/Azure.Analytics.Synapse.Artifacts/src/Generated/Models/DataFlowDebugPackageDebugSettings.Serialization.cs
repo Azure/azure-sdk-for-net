@@ -38,14 +38,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(DatasetParameters))
             {
                 writer.WritePropertyName("datasetParameters"u8);
-                writer.WriteObjectValue(DatasetParameters);
+                writer.WriteObjectValue<object>(DatasetParameters);
             }
             writer.WriteEndObject();
         }
@@ -56,9 +56,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<DataFlowSourceSetting>> sourceSettings = default;
-            Optional<IDictionary<string, object>> parameters = default;
-            Optional<object> datasetParameters = default;
+            IList<DataFlowSourceSetting> sourceSettings = default;
+            IDictionary<string, object> parameters = default;
+            object datasetParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceSettings"u8))
@@ -106,7 +106,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowDebugPackageDebugSettings(Optional.ToList(sourceSettings), Optional.ToDictionary(parameters), datasetParameters.Value);
+            return new DataFlowDebugPackageDebugSettings(sourceSettings ?? new ChangeTrackingList<DataFlowSourceSetting>(), parameters ?? new ChangeTrackingDictionary<string, object>(), datasetParameters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataFlowDebugPackageDebugSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataFlowDebugPackageDebugSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

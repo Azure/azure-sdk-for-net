@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateMISyncCompleteCommandProperties : IUtf8JsonSerializable, IJsonModel<MigrateMISyncCompleteCommandProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateMISyncCompleteCommandProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateMISyncCompleteCommandProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateMISyncCompleteCommandProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateMISyncCompleteCommandProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateMISyncCompleteCommandProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateMISyncCompleteCommandProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input);
+                writer.WriteObjectValue(Input, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
-                writer.WriteObjectValue(Output);
+                writer.WriteObjectValue(Output, options);
             }
             writer.WritePropertyName("commandType"u8);
             writer.WriteStringValue(CommandType.ToString());
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateMISyncCompleteCommandProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateMISyncCompleteCommandProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateMISyncCompleteCommandProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,19 +85,19 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateMISyncCompleteCommandProperties DeserializeMigrateMISyncCompleteCommandProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<MigrateMISyncCompleteCommandInput> input = default;
-            Optional<MigrateMISyncCompleteCommandOutput> output = default;
+            MigrateMISyncCompleteCommandInput input = default;
+            MigrateMISyncCompleteCommandOutput output = default;
             CommandType commandType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<CommandState> state = default;
+            IReadOnlyList<ODataError> errors = default;
+            CommandState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = MigrateMISyncCompleteCommandInput.DeserializeMigrateMISyncCompleteCommandInput(property.Value);
+                    input = MigrateMISyncCompleteCommandInput.DeserializeMigrateMISyncCompleteCommandInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    output = MigrateMISyncCompleteCommandOutput.DeserializeMigrateMISyncCompleteCommandOutput(property.Value);
+                    output = MigrateMISyncCompleteCommandOutput.DeserializeMigrateMISyncCompleteCommandOutput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("commandType"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -148,11 +148,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMISyncCompleteCommandProperties(commandType, Optional.ToList(errors), Optional.ToNullable(state), serializedAdditionalRawData, input.Value, output.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrateMISyncCompleteCommandProperties(
+                commandType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                state,
+                serializedAdditionalRawData,
+                input,
+                output);
         }
 
         BinaryData IPersistableModel<MigrateMISyncCompleteCommandProperties>.Write(ModelReaderWriterOptions options)
@@ -164,7 +170,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateMISyncCompleteCommandProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateMISyncCompleteCommandProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +186,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateMISyncCompleteCommandProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateMISyncCompleteCommandProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateMISyncCompleteCommandProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

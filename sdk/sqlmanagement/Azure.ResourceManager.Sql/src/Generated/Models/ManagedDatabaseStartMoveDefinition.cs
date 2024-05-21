@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the information necessary to start a managed database move. </summary>
     public partial class ManagedDatabaseStartMoveDefinition
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ManagedDatabaseStartMoveDefinition"/>. </summary>
         /// <param name="destinationManagedDatabaseId"> The destination managed database ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="destinationManagedDatabaseId"/> is null. </exception>
@@ -26,15 +59,24 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="ManagedDatabaseStartMoveDefinition"/>. </summary>
         /// <param name="destinationManagedDatabaseId"> The destination managed database ID. </param>
         /// <param name="operationMode"> The move operation mode. </param>
-        internal ManagedDatabaseStartMoveDefinition(ResourceIdentifier destinationManagedDatabaseId, ManagedDatabaseMoveOperationMode? operationMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedDatabaseStartMoveDefinition(ResourceIdentifier destinationManagedDatabaseId, ManagedDatabaseMoveOperationMode? operationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DestinationManagedDatabaseId = destinationManagedDatabaseId;
             OperationMode = operationMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseStartMoveDefinition"/> for deserialization. </summary>
+        internal ManagedDatabaseStartMoveDefinition()
+        {
         }
 
         /// <summary> The destination managed database ID. </summary>
+        [WirePath("destinationManagedDatabaseId")]
         public ResourceIdentifier DestinationManagedDatabaseId { get; }
         /// <summary> The move operation mode. </summary>
+        [WirePath("operationMode")]
         public ManagedDatabaseMoveOperationMode? OperationMode { get; set; }
     }
 }

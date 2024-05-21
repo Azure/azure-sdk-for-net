@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class StatusCodeCount : IUtf8JsonSerializable, IJsonModel<StatusCodeCount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatusCodeCount>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatusCodeCount>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StatusCodeCount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StatusCodeCount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StatusCodeCount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StatusCodeCount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<StatusCodeCount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StatusCodeCount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StatusCodeCount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static StatusCodeCount DeserializeStatusCodeCount(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<int> count = default;
+            string code = default;
+            int? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StatusCodeCount(code.Value, Optional.ToNullable(count), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StatusCodeCount(code, count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StatusCodeCount>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StatusCodeCount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StatusCodeCount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeStatusCodeCount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StatusCodeCount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StatusCodeCount)} does not support reading '{options.Format}' format.");
             }
         }
 

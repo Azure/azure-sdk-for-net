@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.NetApp.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.NetApp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-05-01";
+            _apiVersion = apiVersion ?? "2023-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByNetAppAccountRequestUri(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/volumeGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByNetAppAccountRequest(string subscriptionId, string resourceGroupName, string accountName)
@@ -59,7 +73,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> List all volume groups for given account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,7 +102,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> List all volume groups for given account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -116,6 +130,22 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string volumeGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/volumeGroups/", false);
+            uri.AppendPath(volumeGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string volumeGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -139,7 +169,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get details of the specified volume group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
@@ -172,7 +202,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get details of the specified volume group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
@@ -204,6 +234,22 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string volumeGroupName, NetAppVolumeGroupData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/volumeGroups/", false);
+            uri.AppendPath(volumeGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string volumeGroupName, NetAppVolumeGroupData data)
         {
             var message = _pipeline.CreateMessage();
@@ -224,14 +270,14 @@ namespace Azure.ResourceManager.NetApp
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Create a volume group along with specified volumes. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
@@ -259,7 +305,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Create a volume group along with specified volumes. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
@@ -286,6 +332,22 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string accountName, string volumeGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/volumeGroups/", false);
+            uri.AppendPath(volumeGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string volumeGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -303,12 +365,13 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(volumeGroupName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Delete the specified volume group only if there are no volumes under volume group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
@@ -336,7 +399,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Delete the specified volume group only if there are no volumes under volume group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>

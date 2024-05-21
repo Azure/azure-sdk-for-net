@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public partial class ComplianceResult : IUtf8JsonSerializable, IJsonModel<ComplianceResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComplianceResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComplianceResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ComplianceResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ComplianceResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComplianceResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComplianceResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComplianceResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComplianceResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComplianceResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         internal static ComplianceResult DeserializeComplianceResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> complianceName = default;
-            Optional<IReadOnlyList<Category>> categories = default;
+            string complianceName = default;
+            IReadOnlyList<Category> categories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("complianceName"u8))
@@ -99,18 +99,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<Category> array = new List<Category>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Category.DeserializeCategory(item));
+                        array.Add(Category.DeserializeCategory(item, options));
                     }
                     categories = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComplianceResult(complianceName.Value, Optional.ToList(categories), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ComplianceResult(complianceName, categories ?? new ChangeTrackingList<Category>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComplianceResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComplianceResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComplianceResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeComplianceResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComplianceResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComplianceResult)} does not support reading '{options.Format}' format.");
             }
         }
 

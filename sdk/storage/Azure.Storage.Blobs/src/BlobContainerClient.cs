@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -117,8 +118,8 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// Determines whether the client is able to generate a SAS.
-        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// Indicates whether the client is able to generate a SAS uri.
+        /// Client can generate a SAS url if it is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
         public virtual bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
 
@@ -185,6 +186,7 @@ namespace Azure.Storage.Blobs
         /// </param>
         public BlobContainerClient(string connectionString, string blobContainerName, BlobClientOptions options)
         {
+            Argument.AssertNotNullOrWhiteSpace(blobContainerName, nameof(blobContainerName));
             var conn = StorageConnectionString.Parse(connectionString);
             var builder = new BlobUriBuilder(conn.BlobEndpoint, options?.TrimBlobNameSlashes ?? Constants.DefaultTrimBlobNameSlashes)
             {
@@ -468,6 +470,7 @@ namespace Azure.Storage.Blobs
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         protected internal virtual BlobBaseClient GetBlobBaseClientCore(string blobName)
         {
+            Argument.AssertNotNullOrEmpty(blobName, nameof(blobName));
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
                 BlobName = blobName
@@ -489,6 +492,7 @@ namespace Azure.Storage.Blobs
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
         public virtual BlobClient GetBlobClient(string blobName)
         {
+            Argument.AssertNotNullOrEmpty(blobName, nameof(blobName));
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
             {
                 BlobName = blobName
@@ -512,6 +516,7 @@ namespace Azure.Storage.Blobs
         /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
         protected internal virtual BlockBlobClient GetBlockBlobClientCore(string blobName)
         {
+            Argument.AssertNotNullOrEmpty(blobName, nameof(blobName));
             if (ClientSideEncryption != default)
             {
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(BlockBlobClient));
@@ -539,6 +544,7 @@ namespace Azure.Storage.Blobs
         /// <returns>A new <see cref="AppendBlobClient"/> instance.</returns>
         protected internal virtual AppendBlobClient GetAppendBlobClientCore(string blobName)
         {
+            Argument.AssertNotNullOrEmpty(blobName, nameof(blobName));
             if (ClientSideEncryption != default)
             {
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(AppendBlobClient));
@@ -566,6 +572,7 @@ namespace Azure.Storage.Blobs
         /// <returns>A new <see cref="PageBlobClient"/> instance.</returns>
         protected internal virtual PageBlobClient GetPageBlobClientCore(string blobName)
         {
+            Argument.AssertNotNullOrEmpty(blobName, nameof(blobName));
             if (ClientSideEncryption != default)
             {
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(PageBlobClient));
@@ -3423,9 +3430,8 @@ namespace Azure.Storage.Blobs
 
         #region FilterBlobs
         /// <summary>
-        /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
+        /// The Filter Blobs operation enables callers to list blobs in the container whose tags
         /// match a given search expression and only the tags appearing in the expression will be returned.
-        /// Filter blobs searches across all containers within a storage account but can be scoped within the expression to a single container.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/find-blobs-by-tags">
@@ -3435,7 +3441,7 @@ namespace Azure.Storage.Blobs
         /// The where parameter finds blobs in the storage account whose tags match a given expression.
         /// The expression must evaluate to true for a blob to be returned in the result set.
         /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
-        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
+        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND.
         /// Example expression: "tagKey"='tagValue'.
         /// </param>
         /// <param name="cancellationToken">
@@ -3455,9 +3461,8 @@ namespace Azure.Storage.Blobs
             new FilterBlobsAsyncCollection(this, tagFilterSqlExpression).ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
+        /// The Filter Blobs operation enables callers to list blobs in the container whose tags
         /// match a given search expression and only the tags appearing in the expression will be returned.
-        /// Filter blobs searches across all containers within a storage account but can be scoped within the expression to a single container.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/find-blobs-by-tags">
@@ -3467,7 +3472,7 @@ namespace Azure.Storage.Blobs
         /// The where parameter finds blobs in the storage account whose tags match a given expression.
         /// The expression must evaluate to true for a blob to be returned in the result set.
         /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
-        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
+        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND.
         /// Example expression: "tagKey"='tagValue'.
         /// </param>
         /// <param name="cancellationToken">
@@ -3544,6 +3549,127 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion FilterBlobs
+
+        #region GetAccountInfo
+        /// <summary>
+        /// The <see cref="GetAccountInfo"/> operation returns the sku
+        /// name and account kind for the specified account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information">
+        /// Get Account Information</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccountInfo}"/> describing the account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<AccountInfo> GetAccountInfo(
+            CancellationToken cancellationToken = default) =>
+            GetAccountInfoInternal(
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GetAccountInfoAsync"/> operation returns the sku
+        /// name and account kind for the specified account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information">
+        /// Get Account Information</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccountInfo}"/> describing the account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<AccountInfo>> GetAccountInfoAsync(
+            CancellationToken cancellationToken = default) =>
+            await GetAccountInfoInternal(
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="GetAccountInfoInternal"/> operation returns the sku
+        /// name and account kind for the specified account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information">
+        /// Get Account Information</see>.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccountInfo}"/> describing the account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<AccountInfo>> GetAccountInfoInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(GetAccountInfo)}");
+
+                try
+                {
+                    scope.Start();
+                    ResponseWithHeaders<ContainerGetAccountInfoHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ContainerRestClient.GetAccountInfoAsync(
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ContainerRestClient.GetAccountInfo(
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToAccountInfo(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobServiceClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion GetAccountInfo
 
         #region GenerateSas
         /// <summary>

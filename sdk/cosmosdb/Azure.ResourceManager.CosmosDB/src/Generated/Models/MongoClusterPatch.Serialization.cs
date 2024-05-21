@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class MongoClusterPatch : IUtf8JsonSerializable, IJsonModel<MongoClusterPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MongoClusterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MongoClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoClusterPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue(RestoreParameters);
+                writer.WriteObjectValue(RestoreParameters, options);
             }
             if (Optional.IsDefined(AdministratorLogin))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in NodeGroupSpecs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoClusterPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,25 +127,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static MongoClusterPatch DeserializeMongoClusterPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<CosmosDBAccountCreateMode> createMode = default;
-            Optional<MongoClusterRestoreParameters> restoreParameters = default;
-            Optional<string> administratorLogin = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<string> serverVersion = default;
-            Optional<string> connectionString = default;
-            Optional<string> earliestRestoreTime = default;
-            Optional<CosmosDBProvisioningState> provisioningState = default;
-            Optional<MongoClusterStatus> clusterStatus = default;
-            Optional<IList<NodeGroupSpec>> nodeGroupSpecs = default;
+            IDictionary<string, string> tags = default;
+            CosmosDBAccountCreateMode? createMode = default;
+            MongoClusterRestoreParameters restoreParameters = default;
+            string administratorLogin = default;
+            string administratorLoginPassword = default;
+            string serverVersion = default;
+            string connectionString = default;
+            string earliestRestoreTime = default;
+            CosmosDBProvisioningState? provisioningState = default;
+            MongoClusterStatus? clusterStatus = default;
+            IList<NodeGroupSpec> nodeGroupSpecs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             {
                                 continue;
                             }
-                            restoreParameters = MongoClusterRestoreParameters.DeserializeMongoClusterRestoreParameters(property0.Value);
+                            restoreParameters = MongoClusterRestoreParameters.DeserializeMongoClusterRestoreParameters(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("administratorLogin"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<NodeGroupSpec> array = new List<NodeGroupSpec>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NodeGroupSpec.DeserializeNodeGroupSpec(item));
+                                array.Add(NodeGroupSpec.DeserializeNodeGroupSpec(item, options));
                             }
                             nodeGroupSpecs = array;
                             continue;
@@ -251,11 +251,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoClusterPatch(Optional.ToDictionary(tags), Optional.ToNullable(createMode), restoreParameters.Value, administratorLogin.Value, administratorLoginPassword.Value, serverVersion.Value, connectionString.Value, earliestRestoreTime.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(clusterStatus), Optional.ToList(nodeGroupSpecs), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MongoClusterPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                createMode,
+                restoreParameters,
+                administratorLogin,
+                administratorLoginPassword,
+                serverVersion,
+                connectionString,
+                earliestRestoreTime,
+                provisioningState,
+                clusterStatus,
+                nodeGroupSpecs ?? new ChangeTrackingList<NodeGroupSpec>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoClusterPatch>.Write(ModelReaderWriterOptions options)
@@ -267,7 +279,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoClusterPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -283,7 +295,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeMongoClusterPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoClusterPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

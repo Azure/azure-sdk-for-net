@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class InstanceViewStatus : IUtf8JsonSerializable, IJsonModel<InstanceViewStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceViewStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceViewStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InstanceViewStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InstanceViewStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InstanceViewStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InstanceViewStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<InstanceViewStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InstanceViewStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InstanceViewStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,19 +83,19 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<ComputeStatusLevelType> level = default;
-            Optional<string> displayStatus = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> time = default;
+            string code = default;
+            ComputeStatusLevelType? level = default;
+            string displayStatus = default;
+            string message = default;
+            DateTimeOffset? time = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -133,11 +133,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstanceViewStatus(code.Value, Optional.ToNullable(level), displayStatus.Value, message.Value, Optional.ToNullable(time), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InstanceViewStatus(
+                code,
+                level,
+                displayStatus,
+                message,
+                time,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstanceViewStatus>.Write(ModelReaderWriterOptions options)
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InstanceViewStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InstanceViewStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeInstanceViewStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InstanceViewStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InstanceViewStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

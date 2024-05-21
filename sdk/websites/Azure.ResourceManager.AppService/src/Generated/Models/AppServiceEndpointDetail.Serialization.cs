@@ -5,24 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceEndpointDetail
+    public partial class AppServiceEndpointDetail : IUtf8JsonSerializable, IJsonModel<AppServiceEndpointDetail>
     {
-        internal static AppServiceEndpointDetail DeserializeAppServiceEndpointDetail(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceEndpointDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppServiceEndpointDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceEndpointDetail)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IPAddress))
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteStringValue(IPAddress.ToString());
+            }
+            if (Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port"u8);
+                writer.WriteNumberValue(Port.Value);
+            }
+            if (Optional.IsDefined(Latency))
+            {
+                writer.WritePropertyName("latency"u8);
+                writer.WriteNumberValue(Latency.Value);
+            }
+            if (Optional.IsDefined(IsAccessible))
+            {
+                writer.WritePropertyName("isAccessible"u8);
+                writer.WriteBooleanValue(IsAccessible.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AppServiceEndpointDetail IJsonModel<AppServiceEndpointDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceEndpointDetail)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceEndpointDetail(document.RootElement, options);
+        }
+
+        internal static AppServiceEndpointDetail DeserializeAppServiceEndpointDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IPAddress> ipAddress = default;
-            Optional<int> port = default;
-            Optional<double> latency = default;
-            Optional<bool> isAccessible = default;
+            IPAddress ipAddress = default;
+            int? port = default;
+            double? latency = default;
+            bool? isAccessible = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"u8))
@@ -61,8 +130,122 @@ namespace Azure.ResourceManager.AppService.Models
                     isAccessible = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceEndpointDetail(ipAddress.Value, Optional.ToNullable(port), Optional.ToNullable(latency), Optional.ToNullable(isAccessible));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppServiceEndpointDetail(ipAddress, port, latency, isAccessible, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ipAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPAddress))
+                {
+                    builder.Append("  ipAddress: ");
+                    builder.AppendLine($"'{IPAddress.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  port: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Port))
+                {
+                    builder.Append("  port: ");
+                    builder.AppendLine($"{Port.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Latency), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  latency: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Latency))
+                {
+                    builder.Append("  latency: ");
+                    builder.AppendLine($"'{Latency.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAccessible), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isAccessible: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAccessible))
+                {
+                    builder.Append("  isAccessible: ");
+                    var boolValue = IsAccessible.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AppServiceEndpointDetail>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceEndpointDetail)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppServiceEndpointDetail IPersistableModel<AppServiceEndpointDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppServiceEndpointDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceEndpointDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppServiceEndpointDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

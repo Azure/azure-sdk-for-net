@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformDeploymentProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformDeploymentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformDeploymentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformDeploymentProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformDeploymentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformDeploymentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformDeploymentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue(Source, options);
             }
             if (Optional.IsDefined(DeploymentSettings))
             {
                 writer.WritePropertyName("deploymentSettings"u8);
-                writer.WriteObjectValue(DeploymentSettings);
+                writer.WriteObjectValue(DeploymentSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformDeploymentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformDeploymentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,20 +93,20 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformDeploymentProperties DeserializeAppPlatformDeploymentProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AppPlatformUserSourceInfo> source = default;
-            Optional<AppPlatformDeploymentSettings> deploymentSettings = default;
-            Optional<AppPlatformDeploymentProvisioningState> provisioningState = default;
-            Optional<AppPlatformDeploymentStatus> status = default;
-            Optional<bool> active = default;
-            Optional<IReadOnlyList<AppPlatformDeploymentInstance>> instances = default;
+            AppPlatformUserSourceInfo source = default;
+            AppPlatformDeploymentSettings deploymentSettings = default;
+            AppPlatformDeploymentProvisioningState? provisioningState = default;
+            AppPlatformDeploymentStatus? status = default;
+            bool? active = default;
+            IReadOnlyList<AppPlatformDeploymentInstance> instances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    source = AppPlatformUserSourceInfo.DeserializeAppPlatformUserSourceInfo(property.Value);
+                    source = AppPlatformUserSourceInfo.DeserializeAppPlatformUserSourceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deploymentSettings"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    deploymentSettings = AppPlatformDeploymentSettings.DeserializeAppPlatformDeploymentSettings(property.Value);
+                    deploymentSettings = AppPlatformDeploymentSettings.DeserializeAppPlatformDeploymentSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -163,18 +163,25 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformDeploymentInstance> array = new List<AppPlatformDeploymentInstance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformDeploymentInstance.DeserializeAppPlatformDeploymentInstance(item));
+                        array.Add(AppPlatformDeploymentInstance.DeserializeAppPlatformDeploymentInstance(item, options));
                     }
                     instances = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformDeploymentProperties(source.Value, deploymentSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(active), Optional.ToList(instances), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformDeploymentProperties(
+                source,
+                deploymentSettings,
+                provisioningState,
+                status,
+                active,
+                instances ?? new ChangeTrackingList<AppPlatformDeploymentInstance>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformDeploymentProperties>.Write(ModelReaderWriterOptions options)
@@ -186,7 +193,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformDeploymentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformDeploymentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +209,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformDeploymentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformDeploymentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformDeploymentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

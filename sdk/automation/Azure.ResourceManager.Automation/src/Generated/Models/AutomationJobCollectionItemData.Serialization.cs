@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class AutomationJobCollectionItemData : IUtf8JsonSerializable, IJsonModel<AutomationJobCollectionItemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationJobCollectionItemData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationJobCollectionItemData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationJobCollectionItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationJobCollectionItemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationJobCollectionItemData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationJobCollectionItemData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (options.Format != "W" && Optional.IsDefined(Runbook))
             {
                 writer.WritePropertyName("runbook"u8);
-                writer.WriteObjectValue(Runbook);
+                writer.WriteObjectValue(Runbook, options);
             }
             if (options.Format != "W" && Optional.IsDefined(JobId))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationJobCollectionItemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationJobCollectionItemData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationJobCollectionItemData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationJobCollectionItemData DeserializeAutomationJobCollectionItemData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,18 +157,18 @@ namespace Azure.ResourceManager.Automation.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RunbookAssociationProperty> runbook = default;
-            Optional<Guid> jobId = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<AutomationJobStatus> status = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<DateTimeOffset?> lastModifiedTime = default;
-            Optional<string> provisioningState = default;
-            Optional<string> runOn = default;
+            SystemData systemData = default;
+            RunbookAssociationProperty runbook = default;
+            Guid? jobId = default;
+            DateTimeOffset? creationTime = default;
+            AutomationJobStatus? status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string provisioningState = default;
+            string runOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value);
+                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("jobId"u8))
@@ -285,11 +285,25 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobCollectionItemData(id, name, type, systemData.Value, runbook.Value, Optional.ToNullable(jobId), Optional.ToNullable(creationTime), Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), provisioningState.Value, runOn.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AutomationJobCollectionItemData(
+                id,
+                name,
+                type,
+                systemData,
+                runbook,
+                jobId,
+                creationTime,
+                status,
+                startTime,
+                endTime,
+                lastModifiedTime,
+                provisioningState,
+                runOn,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobCollectionItemData>.Write(ModelReaderWriterOptions options)
@@ -301,7 +315,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationJobCollectionItemData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationJobCollectionItemData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -317,7 +331,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationJobCollectionItemData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationJobCollectionItemData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationJobCollectionItemData)} does not support reading '{options.Format}' format.");
             }
         }
 

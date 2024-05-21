@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     internal partial class ReservationRecommendationsListResult : IUtf8JsonSerializable, IJsonModel<ReservationRecommendationsListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationRecommendationsListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationRecommendationsListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReservationRecommendationsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReservationRecommendationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationRecommendationsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationRecommendationsListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationRecommendationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationRecommendationsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationRecommendationsListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ReservationRecommendationsListResult DeserializeReservationRecommendationsListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionReservationRecommendation>> value = default;
-            Optional<string> nextLink = default;
-            Optional<string> previousLink = default;
+            IReadOnlyList<ConsumptionReservationRecommendation> value = default;
+            string nextLink = default;
+            string previousLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionReservationRecommendation> array = new List<ConsumptionReservationRecommendation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionReservationRecommendation.DeserializeConsumptionReservationRecommendation(item));
+                        array.Add(ConsumptionReservationRecommendation.DeserializeConsumptionReservationRecommendation(item, options));
                     }
                     value = array;
                     continue;
@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationRecommendationsListResult(Optional.ToList(value), nextLink.Value, previousLink.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ReservationRecommendationsListResult(value ?? new ChangeTrackingList<ConsumptionReservationRecommendation>(), nextLink, previousLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationRecommendationsListResult>.Write(ModelReaderWriterOptions options)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationRecommendationsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationRecommendationsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeReservationRecommendationsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationRecommendationsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationRecommendationsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

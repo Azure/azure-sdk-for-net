@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineScaleSetVmInstanceView : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetVmInstanceView>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetVmInstanceView>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetVmInstanceView>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineScaleSetVmInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(VmAgent))
             {
                 writer.WritePropertyName("vmAgent"u8);
-                writer.WriteObjectValue(VmAgent);
+                writer.WriteObjectValue(VmAgent, options);
             }
             if (Optional.IsDefined(MaintenanceRedeployStatus))
             {
                 writer.WritePropertyName("maintenanceRedeployStatus"u8);
-                writer.WriteObjectValue(MaintenanceRedeployStatus);
+                writer.WriteObjectValue(MaintenanceRedeployStatus, options);
             }
             if (Optional.IsCollectionDefined(Disks))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(VmHealth))
             {
                 writer.WritePropertyName("vmHealth"u8);
-                writer.WriteObjectValue(VmHealth);
+                writer.WriteObjectValue(VmHealth, options);
             }
             if (Optional.IsDefined(BootDiagnostics))
             {
                 writer.WritePropertyName("bootDiagnostics"u8);
-                writer.WriteObjectValue(BootDiagnostics);
+                writer.WriteObjectValue(BootDiagnostics, options);
             }
             if (Optional.IsCollectionDefined(Statuses))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,30 +153,30 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetVmInstanceView DeserializeVirtualMachineScaleSetVmInstanceView(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> platformUpdateDomain = default;
-            Optional<int> platformFaultDomain = default;
-            Optional<string> rdpThumbPrint = default;
-            Optional<VirtualMachineAgentInstanceView> vmAgent = default;
-            Optional<MaintenanceRedeployStatus> maintenanceRedeployStatus = default;
-            Optional<IReadOnlyList<DiskInstanceView>> disks = default;
-            Optional<IReadOnlyList<VirtualMachineExtensionInstanceView>> extensions = default;
-            Optional<VirtualMachineHealthStatus> vmHealth = default;
-            Optional<BootDiagnosticsInstanceView> bootDiagnostics = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
-            Optional<ResourceIdentifier> assignedHost = default;
-            Optional<string> placementGroupId = default;
-            Optional<string> computerName = default;
-            Optional<string> osName = default;
-            Optional<string> osVersion = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
+            int? platformUpdateDomain = default;
+            int? platformFaultDomain = default;
+            string rdpThumbPrint = default;
+            VirtualMachineAgentInstanceView vmAgent = default;
+            MaintenanceRedeployStatus maintenanceRedeployStatus = default;
+            IReadOnlyList<DiskInstanceView> disks = default;
+            IReadOnlyList<VirtualMachineExtensionInstanceView> extensions = default;
+            VirtualMachineHealthStatus vmHealth = default;
+            BootDiagnosticsInstanceView bootDiagnostics = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
+            ResourceIdentifier assignedHost = default;
+            string placementGroupId = default;
+            string computerName = default;
+            string osName = default;
+            string osVersion = default;
+            HyperVGeneration? hyperVGeneration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("platformUpdateDomain"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    vmAgent = VirtualMachineAgentInstanceView.DeserializeVirtualMachineAgentInstanceView(property.Value);
+                    vmAgent = VirtualMachineAgentInstanceView.DeserializeVirtualMachineAgentInstanceView(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maintenanceRedeployStatus"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    maintenanceRedeployStatus = MaintenanceRedeployStatus.DeserializeMaintenanceRedeployStatus(property.Value);
+                    maintenanceRedeployStatus = MaintenanceRedeployStatus.DeserializeMaintenanceRedeployStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("disks"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DiskInstanceView> array = new List<DiskInstanceView>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskInstanceView.DeserializeDiskInstanceView(item));
+                        array.Add(DiskInstanceView.DeserializeDiskInstanceView(item, options));
                     }
                     disks = array;
                     continue;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineExtensionInstanceView> array = new List<VirtualMachineExtensionInstanceView>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineExtensionInstanceView.DeserializeVirtualMachineExtensionInstanceView(item));
+                        array.Add(VirtualMachineExtensionInstanceView.DeserializeVirtualMachineExtensionInstanceView(item, options));
                     }
                     extensions = array;
                     continue;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    vmHealth = VirtualMachineHealthStatus.DeserializeVirtualMachineHealthStatus(property.Value);
+                    vmHealth = VirtualMachineHealthStatus.DeserializeVirtualMachineHealthStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("bootDiagnostics"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    bootDiagnostics = BootDiagnosticsInstanceView.DeserializeBootDiagnosticsInstanceView(property.Value);
+                    bootDiagnostics = BootDiagnosticsInstanceView.DeserializeBootDiagnosticsInstanceView(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("statuses"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;
@@ -320,11 +320,28 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetVmInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), rdpThumbPrint.Value, vmAgent.Value, maintenanceRedeployStatus.Value, Optional.ToList(disks), Optional.ToList(extensions), vmHealth.Value, bootDiagnostics.Value, Optional.ToList(statuses), assignedHost.Value, placementGroupId.Value, computerName.Value, osName.Value, osVersion.Value, Optional.ToNullable(hyperVGeneration), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualMachineScaleSetVmInstanceView(
+                platformUpdateDomain,
+                platformFaultDomain,
+                rdpThumbPrint,
+                vmAgent,
+                maintenanceRedeployStatus,
+                disks ?? new ChangeTrackingList<DiskInstanceView>(),
+                extensions ?? new ChangeTrackingList<VirtualMachineExtensionInstanceView>(),
+                vmHealth,
+                bootDiagnostics,
+                statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
+                assignedHost,
+                placementGroupId,
+                computerName,
+                osName,
+                osVersion,
+                hyperVGeneration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetVmInstanceView>.Write(ModelReaderWriterOptions options)
@@ -336,7 +353,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -352,7 +369,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineScaleSetVmInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

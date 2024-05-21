@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineScaleSetSku : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineScaleSetSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue(Capacity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetSku DeserializeVirtualMachineScaleSetSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<ComputeSku> sku = default;
-            Optional<VirtualMachineScaleSetSkuCapacity> capacity = default;
+            ResourceType? resourceType = default;
+            ComputeSku sku = default;
+            VirtualMachineScaleSetSkuCapacity capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sku = ComputeSku.DeserializeComputeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -110,16 +110,16 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    capacity = VirtualMachineScaleSetSkuCapacity.DeserializeVirtualMachineScaleSetSkuCapacity(property.Value);
+                    capacity = VirtualMachineScaleSetSkuCapacity.DeserializeVirtualMachineScaleSetSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetSku(Optional.ToNullable(resourceType), sku.Value, capacity.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualMachineScaleSetSku(resourceType, sku, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetSku>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineScaleSetSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetSku)} does not support reading '{options.Format}' format.");
             }
         }
 

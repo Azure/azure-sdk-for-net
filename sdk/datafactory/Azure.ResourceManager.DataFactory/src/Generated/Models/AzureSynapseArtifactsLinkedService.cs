@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -42,6 +41,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Authentication = authentication;
             WorkspaceResourceId = workspaceResourceId;
             LinkedServiceType = linkedServiceType ?? "AzureSynapseArtifacts";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureSynapseArtifactsLinkedService"/> for deserialization. </summary>
+        internal AzureSynapseArtifactsLinkedService()
+        {
         }
 
         /// <summary> https://&lt;workspacename&gt;.dev.azuresynapse.net, Azure Synapse Analytics workspace URL. Type: string (or Expression with resultType string). </summary>

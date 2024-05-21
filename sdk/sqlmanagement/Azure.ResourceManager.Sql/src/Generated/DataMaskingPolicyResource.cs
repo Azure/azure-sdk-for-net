@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -210,7 +208,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _dataMaskingPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<DataMaskingPolicyResource>(Response.FromValue(new DataMaskingPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _dataMaskingPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SqlArmOperation<DataMaskingPolicyResource>(Response.FromValue(new DataMaskingPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -256,7 +256,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _dataMaskingPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<DataMaskingPolicyResource>(Response.FromValue(new DataMaskingPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _dataMaskingPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SqlArmOperation<DataMaskingPolicyResource>(Response.FromValue(new DataMaskingPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -372,7 +374,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<DataMaskingRule> GetDataMaskingRulesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMaskingRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataMaskingRule.DeserializeDataMaskingRule, _dataMaskingRulesClientDiagnostics, Pipeline, "DataMaskingPolicyResource.GetDataMaskingRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => DataMaskingRule.DeserializeDataMaskingRule(e), _dataMaskingRulesClientDiagnostics, Pipeline, "DataMaskingPolicyResource.GetDataMaskingRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -397,7 +399,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<DataMaskingRule> GetDataMaskingRules(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMaskingRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, DataMaskingRule.DeserializeDataMaskingRule, _dataMaskingRulesClientDiagnostics, Pipeline, "DataMaskingPolicyResource.GetDataMaskingRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => DataMaskingRule.DeserializeDataMaskingRule(e), _dataMaskingRulesClientDiagnostics, Pipeline, "DataMaskingPolicyResource.GetDataMaskingRules", "value", null, cancellationToken);
         }
     }
 }

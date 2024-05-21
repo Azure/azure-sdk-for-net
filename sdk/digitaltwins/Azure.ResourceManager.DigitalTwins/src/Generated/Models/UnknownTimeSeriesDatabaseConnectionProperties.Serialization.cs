@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 {
     internal partial class UnknownTimeSeriesDatabaseConnectionProperties : IUtf8JsonSerializable, IJsonModel<TimeSeriesDatabaseConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TimeSeriesDatabaseConnectionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TimeSeriesDatabaseConnectionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TimeSeriesDatabaseConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TimeSeriesDatabaseConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TimeSeriesDatabaseConnectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TimeSeriesDatabaseConnectionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    writer.WriteObjectValue(Identity, options);
                 }
                 else
                 {
@@ -68,26 +68,26 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             var format = options.Format == "W" ? ((IPersistableModel<TimeSeriesDatabaseConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TimeSeriesDatabaseConnectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TimeSeriesDatabaseConnectionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTimeSeriesDatabaseConnectionProperties(document.RootElement, options);
+            return DeserializeTimeSeriesDatabaseConnectionProperties(document.RootElement, options);
         }
 
         internal static UnknownTimeSeriesDatabaseConnectionProperties DeserializeUnknownTimeSeriesDatabaseConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ConnectionType connectionType = "Unknown";
-            Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
-            Optional<DigitalTwinsManagedIdentityReference> identity = default;
+            TimeSeriesDatabaseConnectionState? provisioningState = default;
+            DigitalTwinsManagedIdentityReference identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionType"u8))
@@ -111,16 +111,16 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         identity = null;
                         continue;
                     }
-                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
+                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, Optional.ToNullable(provisioningState), identity.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, provisioningState, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TimeSeriesDatabaseConnectionProperties>.Write(ModelReaderWriterOptions options)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TimeSeriesDatabaseConnectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TimeSeriesDatabaseConnectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownTimeSeriesDatabaseConnectionProperties(document.RootElement, options);
+                        return DeserializeTimeSeriesDatabaseConnectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TimeSeriesDatabaseConnectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TimeSeriesDatabaseConnectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

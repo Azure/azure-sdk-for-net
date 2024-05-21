@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppCookieExpiration : IUtf8JsonSerializable, IJsonModel<ContainerAppCookieExpiration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCookieExpiration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCookieExpiration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppCookieExpiration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCookieExpiration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCookieExpiration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCookieExpiration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCookieExpiration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCookieExpiration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCookieExpiration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCookieExpiration DeserializeContainerAppCookieExpiration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ContainerAppCookieExpirationConvention> convention = default;
-            Optional<string> timeToExpiration = default;
+            ContainerAppCookieExpirationConvention? convention = default;
+            string timeToExpiration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("convention"u8))
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCookieExpiration(Optional.ToNullable(convention), timeToExpiration.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerAppCookieExpiration(convention, timeToExpiration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCookieExpiration>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCookieExpiration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCookieExpiration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppCookieExpiration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCookieExpiration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCookieExpiration)} does not support reading '{options.Format}' format.");
             }
         }
 

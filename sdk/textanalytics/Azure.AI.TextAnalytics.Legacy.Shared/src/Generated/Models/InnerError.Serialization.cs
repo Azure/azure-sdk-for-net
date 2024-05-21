@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -22,9 +21,9 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             InnerErrorCodeValue code = default;
             string message = default;
-            Optional<IReadOnlyDictionary<string, string>> details = default;
-            Optional<string> target = default;
-            Optional<InnerError> innererror = default;
+            IReadOnlyDictionary<string, string> details = default;
+            string target = default;
+            InnerError innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -66,7 +65,15 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new InnerError(code, message, Optional.ToDictionary(details), target.Value, innererror.Value);
+            return new InnerError(code, message, details ?? new ChangeTrackingDictionary<string, string>(), target, innererror);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static InnerError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeInnerError(document.RootElement);
         }
     }
 }

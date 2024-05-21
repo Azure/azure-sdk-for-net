@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppLogsConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppLogsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppLogsConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppLogsConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppLogsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppLogsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppLogsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppLogsConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(LogAnalyticsConfiguration))
             {
                 writer.WritePropertyName("logAnalyticsConfiguration"u8);
-                writer.WriteObjectValue(LogAnalyticsConfiguration);
+                writer.WriteObjectValue(LogAnalyticsConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppLogsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppLogsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppLogsConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppLogsConfiguration DeserializeContainerAppLogsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> destination = default;
-            Optional<ContainerAppLogAnalyticsConfiguration> logAnalyticsConfiguration = default;
+            string destination = default;
+            ContainerAppLogAnalyticsConfiguration logAnalyticsConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("destination"u8))
@@ -91,16 +91,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    logAnalyticsConfiguration = ContainerAppLogAnalyticsConfiguration.DeserializeContainerAppLogAnalyticsConfiguration(property.Value);
+                    logAnalyticsConfiguration = ContainerAppLogAnalyticsConfiguration.DeserializeContainerAppLogAnalyticsConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppLogsConfiguration(destination.Value, logAnalyticsConfiguration.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerAppLogsConfiguration(destination, logAnalyticsConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppLogsConfiguration>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppLogsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppLogsConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppLogsConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppLogsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppLogsConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

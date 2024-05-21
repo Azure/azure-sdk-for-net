@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -63,12 +63,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> location = default;
-            Optional<string> nodeSize = default;
-            Optional<int> numberOfNodes = default;
-            Optional<int> maxParallelExecutionsPerNode = default;
-            Optional<IntegrationRuntimeDataFlowProperties> dataFlowProperties = default;
-            Optional<IntegrationRuntimeVNetProperties> vNetProperties = default;
+            string location = default;
+            string nodeSize = default;
+            int? numberOfNodes = default;
+            int? maxParallelExecutionsPerNode = default;
+            IntegrationRuntimeDataFlowProperties dataFlowProperties = default;
+            IntegrationRuntimeVNetProperties vNetProperties = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeComputeProperties(location.Value, nodeSize.Value, Optional.ToNullable(numberOfNodes), Optional.ToNullable(maxParallelExecutionsPerNode), dataFlowProperties.Value, vNetProperties.Value, additionalProperties);
+            return new IntegrationRuntimeComputeProperties(
+                location,
+                nodeSize,
+                numberOfNodes,
+                maxParallelExecutionsPerNode,
+                dataFlowProperties,
+                vNetProperties,
+                additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IntegrationRuntimeComputeProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIntegrationRuntimeComputeProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class IntegrationRuntimeComputePropertiesConverter : JsonConverter<IntegrationRuntimeComputeProperties>
@@ -131,6 +154,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override IntegrationRuntimeComputeProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

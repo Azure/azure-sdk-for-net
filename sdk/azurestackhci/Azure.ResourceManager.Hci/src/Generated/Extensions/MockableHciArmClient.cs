@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Mocking
 {

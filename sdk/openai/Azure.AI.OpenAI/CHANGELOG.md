@@ -1,8 +1,123 @@
 # Release History
 
-## 1.0.0-beta.13 (Unreleased)
+## 1.0.0-beta.18 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.17 (2024-05-03)
+
+### Features Added
+
+- Image input support for `gpt-4-turbo` chat completions now works with image data in addition to internet URLs.
+  Images may be now be used as `gpt-4-turbo` message content items via one of three constructors:
+  - `ChatMessageImageContent(Uri)` -- the existing constructor, used for URL-based image references
+  - `ChatMessageImageContent(Stream,string)` -- (new) used with a stream and known MIME type (like `image/png`)
+  - `ChatMessageImageContent(BinaryData,string)` -- (new) used with a BinaryData instance and known MIME type
+  Please see the [readme example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/README.md#chat-with-images-using-gpt-4-turbo) for more details.
+
+### Breaking Changes
+
+- Public visibility of the `ChatMessageImageUrl` type is removed to promote more flexible use of data sources in
+  `ChatMessageImageContent`. Code that previously created a `ChatMessageImageUrl` using a `Uri` should simply provide
+  the `Uri` to the `ChatMessageImageContent` constructor directly.
+
+## 1.0.0-beta.16 (2024-04-11)
+
+### Features Added
+
+**Audio**
+
+- `GetAudioTranscription()` now supports word-level timestamp granularities via `AudioTranscriptionOptions`:
+  - The `Verbose` option for `ResponseFormat` must be used for any timing information to be populated
+  - `TimestampGranularityFlags` accepts a combination of the `.Word` and `.Segment` granularity values in
+    `AudioTimestampGranularity`, joined when needed via the single-pipe `|` operator
+    - For example, `TimestampGranularityFlags = AudioTimestampGranularity.Word | AudioTimestampGranularity.Segment`
+      will request that both word-level and segment-level timestamps are provided on the transcription result
+  - If not otherwise specified, `Verbose` format will default to using segment-level timestamp information
+  - Corresponding word-level information is found on the `.Words` collection of `AudioTranscription`, peer to the
+    existing `.Segments` collection
+  - Note that word-level timing information incurs a small amount of additional processingly latency; segment-level
+    timestamps do not encounter this behavior
+- `GenerateSpeechFromText()` can now use `Wav` and `Pcm` values from `SpeechGenerationResponseFormat`, these new
+  options providing alternative uncompressed formats to `Flac`
+
+**Chat**
+
+- `ChatCompletions` and `StreamingChatCompletionsUpdate` now include the reported `Model` value from the response
+- Log probability information is now included in `StreamingChatCompletionsUpdate` when `logprobs` are requested on
+  `GetChatCompletionsStreaming()`
+- [AOAI] Custom Blocklist information in content filter results is now represented in a more structured
+  `ContentFilterDetailedResults` type
+- [AOAI] A new `IndirectAttack` content filter entry is now present on content filter results for prompts
+
+### Breaking Changes
+
+- [AOAI] `AzureChatExtensionMessageContext`'s `RequestContentFilterResults`  now uses the new
+  `ContentFilterDetailedResults` type, changed from the previous `IReadOnlyList<ContentFilterBlockListIdResult>`. The
+  previous list is now present on `CustomBlockLists.Details`, supplemented with a new `CustomBlockLists.Filtered`
+  property.
+
+### Bugs Fixed
+
+- [AOAI] An issue that sometimes caused `StreamingChatCompletionUpdates` from Azure OpenAI to inappropriately exclude
+  top-level information like `Id` and `CreatedAt` has been addressed
+
+## 1.0.0-beta.15 (2024-03-20)
+
+This release targets the latest `2024-03-01-preview` service API label and brings support for the `Dimensions` property when using new embedding models.
+
+### Features Added
+
+- `EmbeddingsOptions` now includes the `Dimensions` property, new to Azure OpenAI's `2024-03-01-preview` service API.
+
+### Bugs Fixed
+
+- Several issues with the `ImageGenerations` response object being treated as writeable are fixed:
+  - `ImageGenerations` no longer has an erroneous public constructor
+  - `ImageGenerations.Created` no longer has a public setter
+  - `ImageGenerations.Data` is now an `IReadOnlyList` instead of an `IList`
+  - A corresponding replacement factory method for mocks is added to `AzureOpenAIModelFactory`
+
+## 1.0.0-beta.14 (2024-03-04)
+
+### Features Added
+
+- Text-to-speech using OpenAI TTS models is now supported. See [OpenAI's API reference](https://platform.openai.com/docs/api-reference/audio/createSpeech) or the [Azure OpenAI quickstart](https://learn.microsoft.com/azure/ai-services/openai/text-to-speech-quickstart) for detailed overview and background information.
+  - The new method `GenerateSpeechFromText` exposes this capability on `OpenAIClient`.
+  - Text-to-speech converts text into lifelike spoken audio in a chosen voice, together with other optional configurations.
+  - This method works for both Azure OpenAI and non-Azure `api.openai.com` client configurations
+
+### Breaking Changes
+
+"On Your Data" changes:
+
+- Introduced a new type `AzureChatExtensionDataSourceResponseCitation` for a more structured representation of citation data.
+- Correspondingly, updated `AzureChatExtensionsMessageContext`:
+  - Replaced `Messages` with `Citations` of type `AzureChatExtensionDataSourceResponseCitation`.
+  - Added `Intent` as a string type.
+- Renamed "AzureCognitiveSearch" to "AzureSearch":
+  - `AzureCognitiveSearchChatExtensionConfiguration` is now `AzureSearchChatExtensionConfiguration`.
+  - `AzureCognitiveSearchIndexFieldMappingOptions` is now `AzureSearchIndexFieldMappingOptions`.
+- Check the project README for updated code snippets.
+
+### Other Changes
+
+- New properties in `ChatCompletionsOptions`:
+  - `EnableLogProbabilities`: Allows retrieval of log probabilities (REST: `logprobs`)
+  - `LogProbabilitiesPerToken`: The number of most likely tokens to return per token (REST: `top_logprobs`)
+- Introduced a new property in `CompletionsOptions`:
+  - `Suffix`: Defines the suffix that follows the completion of inserted text (REST: `suffix`)
+- Image generation response now includes content filtering details (specific to Azure OpenAI endpoint):
+  - `ImageGenerationData.ContentFilterResults`: Information about the content filtering results. (REST: `content_filter_results`)
+  - `ImageGenerationData.PromptFilterResults`: Information about the content filtering category (REST: `prompt_filter_results`)
+  
+## 1.0.0-beta.13 (2024-02-01)
 
 ### Breaking Changes
 
@@ -11,8 +126,6 @@
 ### Bugs Fixed
 
 - Addressed an issue with the public constructor for `ChatCompletionsFunctionToolCall` that failed to set the tool call type in the corresponding request.
-
-### Other Changes
 
 ## 1.0.0-beta.12 (2023-12-15)
 

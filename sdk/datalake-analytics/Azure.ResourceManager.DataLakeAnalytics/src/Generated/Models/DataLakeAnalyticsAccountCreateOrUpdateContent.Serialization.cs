@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     public partial class DataLakeAnalyticsAccountCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<DataLakeAnalyticsAccountCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsAccountCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsAccountCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataLakeAnalyticsAccountCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsAccountCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in DataLakeStoreAccounts)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(StorageAccounts))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in ComputePolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsAccountCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,29 +153,29 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         internal static DataLakeAnalyticsAccountCreateOrUpdateContent DeserializeDataLakeAnalyticsAccountCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             string defaultDataLakeStoreAccount = default;
             IList<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent> dataLakeStoreAccounts = default;
-            Optional<IList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>> storageAccounts = default;
-            Optional<IList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>> computePolicies = default;
-            Optional<IList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>> firewallRules = default;
-            Optional<DataLakeAnalyticsFirewallState> firewallState = default;
-            Optional<DataLakeAnalyticsFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
-            Optional<DataLakeAnalyticsCommitmentTierType> newTier = default;
-            Optional<int> maxJobCount = default;
-            Optional<int> maxDegreeOfParallelism = default;
-            Optional<int> maxDegreeOfParallelismPerJob = default;
-            Optional<int> minPriorityPerJob = default;
-            Optional<int> queryStoreRetention = default;
+            IList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> storageAccounts = default;
+            IList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent> computePolicies = default;
+            IList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent> firewallRules = default;
+            DataLakeAnalyticsFirewallState? firewallState = default;
+            DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs = default;
+            DataLakeAnalyticsCommitmentTierType? newTier = default;
+            int? maxJobCount = default;
+            int? maxDegreeOfParallelism = default;
+            int? maxDegreeOfParallelismPerJob = default;
+            int? minPriorityPerJob = default;
+            int? queryStoreRetention = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                             List<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent> array = new List<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeDataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent(item));
+                                array.Add(DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeDataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent(item, options));
                             }
                             dataLakeStoreAccounts = array;
                             continue;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                             List<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> array = new List<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeStorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent(item));
+                                array.Add(StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeStorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent(item, options));
                             }
                             storageAccounts = array;
                             continue;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                             List<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent> array = new List<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(item));
+                                array.Add(ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(item, options));
                             }
                             computePolicies = array;
                             continue;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                             List<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent> array = new List<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeFirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent(item));
+                                array.Add(FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeFirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent(item, options));
                             }
                             firewallRules = array;
                             continue;
@@ -340,11 +340,27 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsAccountCreateOrUpdateContent(location, Optional.ToDictionary(tags), defaultDataLakeStoreAccount, dataLakeStoreAccounts, Optional.ToList(storageAccounts), Optional.ToList(computePolicies), Optional.ToList(firewallRules), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToNullable(newTier), Optional.ToNullable(maxJobCount), Optional.ToNullable(maxDegreeOfParallelism), Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob), Optional.ToNullable(queryStoreRetention), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataLakeAnalyticsAccountCreateOrUpdateContent(
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                defaultDataLakeStoreAccount,
+                dataLakeStoreAccounts,
+                storageAccounts ?? new ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>(),
+                computePolicies ?? new ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>(),
+                firewallRules ?? new ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>(),
+                firewallState,
+                firewallAllowAzureIPs,
+                newTier,
+                maxJobCount,
+                maxDegreeOfParallelism,
+                maxDegreeOfParallelismPerJob,
+                minPriorityPerJob,
+                queryStoreRetention,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsAccountCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -356,7 +372,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -372,7 +388,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         return DeserializeDataLakeAnalyticsAccountCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

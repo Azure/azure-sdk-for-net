@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecurityAutomationRuleSet : IUtf8JsonSerializable, IJsonModel<SecurityAutomationRuleSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAutomationRuleSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAutomationRuleSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityAutomationRuleSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationRuleSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationRuleSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationRuleSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationRuleSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,15 +68,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAutomationRuleSet DeserializeSecurityAutomationRuleSet(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<SecurityAutomationTriggeringRule>> rules = default;
+            IList<SecurityAutomationTriggeringRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rules"u8))
@@ -88,18 +88,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityAutomationTriggeringRule> array = new List<SecurityAutomationTriggeringRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAutomationTriggeringRule.DeserializeSecurityAutomationTriggeringRule(item));
+                        array.Add(SecurityAutomationTriggeringRule.DeserializeSecurityAutomationTriggeringRule(item, options));
                     }
                     rules = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationRuleSet(Optional.ToList(rules), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityAutomationRuleSet(rules ?? new ChangeTrackingList<SecurityAutomationTriggeringRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAutomationRuleSet>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationRuleSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationRuleSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAutomationRuleSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationRuleSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationRuleSet)} does not support reading '{options.Format}' format.");
             }
         }
 

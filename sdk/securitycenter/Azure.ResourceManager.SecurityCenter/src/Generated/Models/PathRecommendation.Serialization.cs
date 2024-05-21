@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class PathRecommendation : IUtf8JsonSerializable, IJsonModel<PathRecommendation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PathRecommendation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PathRecommendation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PathRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PathRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PathRecommendation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PathRecommendation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(PublisherInfo))
             {
                 writer.WritePropertyName("publisherInfo"u8);
-                writer.WriteObjectValue(PublisherInfo);
+                writer.WriteObjectValue(PublisherInfo, options);
             }
             if (Optional.IsDefined(IsCommon))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Usernames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<PathRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PathRecommendation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PathRecommendation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,23 +113,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static PathRecommendation DeserializePathRecommendation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<RecommendationAction> action = default;
-            Optional<IotSecurityRecommendationType> type = default;
-            Optional<SecurityCenterPublisherInfo> publisherInfo = default;
-            Optional<bool> common = default;
-            Optional<IList<string>> userSids = default;
-            Optional<IList<UserRecommendation>> usernames = default;
-            Optional<PathRecommendationFileType> fileType = default;
-            Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
+            string path = default;
+            RecommendationAction? action = default;
+            IotSecurityRecommendationType? type = default;
+            SecurityCenterPublisherInfo publisherInfo = default;
+            bool? common = default;
+            IList<string> userSids = default;
+            IList<UserRecommendation> usernames = default;
+            PathRecommendationFileType? fileType = default;
+            SecurityCenterConfigurationStatus? configurationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    publisherInfo = SecurityCenterPublisherInfo.DeserializeSecurityCenterPublisherInfo(property.Value);
+                    publisherInfo = SecurityCenterPublisherInfo.DeserializeSecurityCenterPublisherInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("common"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<UserRecommendation> array = new List<UserRecommendation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserRecommendation.DeserializeUserRecommendation(item));
+                        array.Add(UserRecommendation.DeserializeUserRecommendation(item, options));
                     }
                     usernames = array;
                     continue;
@@ -221,11 +221,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PathRecommendation(path.Value, Optional.ToNullable(action), Optional.ToNullable(type), publisherInfo.Value, Optional.ToNullable(common), Optional.ToList(userSids), Optional.ToList(usernames), Optional.ToNullable(fileType), Optional.ToNullable(configurationStatus), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PathRecommendation(
+                path,
+                action,
+                type,
+                publisherInfo,
+                common,
+                userSids ?? new ChangeTrackingList<string>(),
+                usernames ?? new ChangeTrackingList<UserRecommendation>(),
+                fileType,
+                configurationStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PathRecommendation>.Write(ModelReaderWriterOptions options)
@@ -237,7 +247,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PathRecommendation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PathRecommendation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -253,7 +263,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializePathRecommendation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PathRecommendation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PathRecommendation)} does not support reading '{options.Format}' format.");
             }
         }
 

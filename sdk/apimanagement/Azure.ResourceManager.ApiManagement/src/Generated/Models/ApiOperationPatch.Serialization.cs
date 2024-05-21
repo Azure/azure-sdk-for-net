@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiOperationPatch : IUtf8JsonSerializable, IJsonModel<ApiOperationPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiOperationPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiOperationPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiOperationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiOperationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in TemplateParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request);
+                writer.WriteObjectValue(Request, options);
             }
             if (Optional.IsCollectionDefined(Responses))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Responses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiOperationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,22 +111,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiOperationPatch DeserializeApiOperationPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<ParameterContract>> templateParameters = default;
-            Optional<string> description = default;
-            Optional<RequestContract> request = default;
-            Optional<IList<ResponseContract>> responses = default;
-            Optional<string> policies = default;
-            Optional<string> displayName = default;
-            Optional<string> method = default;
-            Optional<string> uriTemplate = default;
+            IList<ParameterContract> templateParameters = default;
+            string description = default;
+            RequestContract request = default;
+            IList<ResponseContract> responses = default;
+            string policies = default;
+            string displayName = default;
+            string method = default;
+            string uriTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<ParameterContract> array = new List<ParameterContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ParameterContract.DeserializeParameterContract(item));
+                                array.Add(ParameterContract.DeserializeParameterContract(item, options));
                             }
                             templateParameters = array;
                             continue;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            request = RequestContract.DeserializeRequestContract(property0.Value);
+                            request = RequestContract.DeserializeRequestContract(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("responses"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<ResponseContract> array = new List<ResponseContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResponseContract.DeserializeResponseContract(item));
+                                array.Add(ResponseContract.DeserializeResponseContract(item, options));
                             }
                             responses = array;
                             continue;
@@ -205,11 +205,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiOperationPatch(Optional.ToList(templateParameters), description.Value, request.Value, Optional.ToList(responses), policies.Value, displayName.Value, method.Value, uriTemplate.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApiOperationPatch(
+                templateParameters ?? new ChangeTrackingList<ParameterContract>(),
+                description,
+                request,
+                responses ?? new ChangeTrackingList<ResponseContract>(),
+                policies,
+                displayName,
+                method,
+                uriTemplate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiOperationPatch>.Write(ModelReaderWriterOptions options)
@@ -221,7 +230,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +246,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiOperationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

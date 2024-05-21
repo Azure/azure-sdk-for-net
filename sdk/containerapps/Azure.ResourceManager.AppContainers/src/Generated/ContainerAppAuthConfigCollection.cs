@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
@@ -90,7 +88,9 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppAuthConfigResource>(Response.FromValue(new ContainerAppAuthConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppContainersArmOperation<ContainerAppAuthConfigResource>(Response.FromValue(new ContainerAppAuthConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +139,9 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, data, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppAuthConfigResource>(Response.FromValue(new ContainerAppAuthConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _containerAppAuthConfigContainerAppsAuthConfigsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppContainersArmOperation<ContainerAppAuthConfigResource>(Response.FromValue(new ContainerAppAuthConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

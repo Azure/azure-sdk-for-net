@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class RankingsResponseTablesItem : IUtf8JsonSerializable, IJsonModel<RankingsResponseTablesItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RankingsResponseTablesItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RankingsResponseTablesItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RankingsResponseTablesItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RankingsResponseTablesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RankingsResponseTablesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RankingsResponseTablesItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<RankingsResponseTablesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RankingsResponseTablesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RankingsResponseTablesItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RankingsResponseTablesItem DeserializeRankingsResponseTablesItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> ranking = default;
-            Optional<IReadOnlyList<RankingsResponseTablesPropertiesItemsItem>> data = default;
+            string ranking = default;
+            IReadOnlyList<RankingsResponseTablesPropertiesItemsItem> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ranking"u8))
@@ -99,18 +99,18 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<RankingsResponseTablesPropertiesItemsItem> array = new List<RankingsResponseTablesPropertiesItemsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RankingsResponseTablesPropertiesItemsItem.DeserializeRankingsResponseTablesPropertiesItemsItem(item));
+                        array.Add(RankingsResponseTablesPropertiesItemsItem.DeserializeRankingsResponseTablesPropertiesItemsItem(item, options));
                     }
                     data = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RankingsResponseTablesItem(ranking.Value, Optional.ToList(data), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RankingsResponseTablesItem(ranking, data ?? new ChangeTrackingList<RankingsResponseTablesPropertiesItemsItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RankingsResponseTablesItem>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RankingsResponseTablesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RankingsResponseTablesItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeRankingsResponseTablesItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RankingsResponseTablesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RankingsResponseTablesItem)} does not support reading '{options.Format}' format.");
             }
         }
 

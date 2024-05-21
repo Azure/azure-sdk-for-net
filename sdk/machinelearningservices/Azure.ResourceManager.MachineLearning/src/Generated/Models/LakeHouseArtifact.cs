@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,9 +26,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="LakeHouseArtifact"/>. </summary>
         /// <param name="artifactName"> [Required] OneLake artifact name. </param>
         /// <param name="artifactType"> [Required] OneLake artifact type. </param>
-        internal LakeHouseArtifact(string artifactName, OneLakeArtifactType artifactType) : base(artifactName, artifactType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LakeHouseArtifact(string artifactName, OneLakeArtifactType artifactType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(artifactName, artifactType, serializedAdditionalRawData)
         {
             ArtifactType = artifactType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LakeHouseArtifact"/> for deserialization. </summary>
+        internal LakeHouseArtifact()
+        {
         }
     }
 }

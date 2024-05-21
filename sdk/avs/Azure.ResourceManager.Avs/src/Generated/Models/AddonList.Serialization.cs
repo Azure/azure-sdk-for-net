@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     internal partial class AddonList : IUtf8JsonSerializable, IJsonModel<AddonList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddonList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddonList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AddonList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AddonList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddonList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AddonList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AddonList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddonList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AddonList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,16 +73,16 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static AddonList DeserializeAddonList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvsPrivateCloudAddonData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AvsPrivateCloudAddonData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<AvsPrivateCloudAddonData> array = new List<AvsPrivateCloudAddonData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(item));
+                        array.Add(AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(item, options));
                     }
                     value = array;
                     continue;
@@ -107,11 +106,11 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AddonList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AddonList(value ?? new ChangeTrackingList<AvsPrivateCloudAddonData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AddonList>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AddonList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AddonList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeAddonList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AddonList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AddonList)} does not support reading '{options.Format}' format.");
             }
         }
 

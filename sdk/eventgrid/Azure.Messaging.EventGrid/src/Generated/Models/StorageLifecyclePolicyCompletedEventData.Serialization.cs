@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,10 +20,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> scheduleTime = default;
-            Optional<StorageLifecyclePolicyActionSummaryDetail> deleteSummary = default;
-            Optional<StorageLifecyclePolicyActionSummaryDetail> tierToCoolSummary = default;
-            Optional<StorageLifecyclePolicyActionSummaryDetail> tierToArchiveSummary = default;
+            string scheduleTime = default;
+            StorageLifecyclePolicyActionSummaryDetail deleteSummary = default;
+            StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary = default;
+            StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleTime"u8))
@@ -60,7 +59,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new StorageLifecyclePolicyCompletedEventData(scheduleTime.Value, deleteSummary.Value, tierToCoolSummary.Value, tierToArchiveSummary.Value);
+            return new StorageLifecyclePolicyCompletedEventData(scheduleTime, deleteSummary, tierToCoolSummary, tierToArchiveSummary);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageLifecyclePolicyCompletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageLifecyclePolicyCompletedEventData(document.RootElement);
         }
 
         internal partial class StorageLifecyclePolicyCompletedEventDataConverter : JsonConverter<StorageLifecyclePolicyCompletedEventData>
@@ -69,6 +76,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override StorageLifecyclePolicyCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

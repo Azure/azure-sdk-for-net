@@ -9,28 +9,27 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     public partial class KikChannel : IUtf8JsonSerializable, IJsonModel<KikChannel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KikChannel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KikChannel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KikChannel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KikChannel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KikChannel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KikChannel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue(Properties, options);
             }
             writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<KikChannel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KikChannel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KikChannel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,19 +87,19 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static KikChannel DeserializeKikChannel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<KikChannelProperties> properties = default;
+            KikChannelProperties properties = default;
             string channelName = default;
-            Optional<ETag?> etag = default;
-            Optional<string> provisioningState = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            string provisioningState = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = KikChannelProperties.DeserializeKikChannelProperties(property.Value);
+                    properties = KikChannelProperties.DeserializeKikChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("channelName"u8))
@@ -143,11 +142,17 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KikChannel(channelName, Optional.ToNullable(etag), provisioningState.Value, Optional.ToNullable(location), serializedAdditionalRawData, properties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KikChannel(
+                channelName,
+                etag,
+                provisioningState,
+                location,
+                serializedAdditionalRawData,
+                properties);
         }
 
         BinaryData IPersistableModel<KikChannel>.Write(ModelReaderWriterOptions options)
@@ -159,7 +164,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KikChannel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KikChannel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +180,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeKikChannel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KikChannel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KikChannel)} does not support reading '{options.Format}' format.");
             }
         }
 

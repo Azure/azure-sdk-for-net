@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     internal partial class UnknownDatabaseMigrationProperties : IUtf8JsonSerializable, IJsonModel<DatabaseMigrationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseMigrationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseMigrationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatabaseMigrationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SourceSqlConnection))
             {
                 writer.WritePropertyName("sourceSqlConnection"u8);
-                writer.WriteObjectValue(SourceSqlConnection);
+                writer.WriteObjectValue(SourceSqlConnection, options);
             }
             if (Optional.IsDefined(SourceDatabaseName))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(MigrationFailureError))
             {
                 writer.WritePropertyName("migrationFailureError"u8);
-                writer.WriteObjectValue(MigrationFailureError);
+                writer.WriteObjectValue(MigrationFailureError, options);
             }
             if (Optional.IsDefined(TargetDatabaseCollation))
             {
@@ -116,37 +116,37 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDatabaseMigrationProperties(document.RootElement, options);
+            return DeserializeDatabaseMigrationProperties(document.RootElement, options);
         }
 
         internal static UnknownDatabaseMigrationProperties DeserializeUnknownDatabaseMigrationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceType kind = "Unknown";
-            Optional<string> scope = default;
-            Optional<string> provisioningState = default;
-            Optional<string> migrationStatus = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<SqlConnectionInformation> sourceSqlConnection = default;
-            Optional<string> sourceDatabaseName = default;
-            Optional<string> sourceServerName = default;
-            Optional<string> migrationService = default;
-            Optional<string> migrationOperationId = default;
-            Optional<ErrorInfo> migrationFailureError = default;
-            Optional<string> targetDatabaseCollation = default;
-            Optional<string> provisioningError = default;
+            string scope = default;
+            string provisioningState = default;
+            string migrationStatus = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            SqlConnectionInformation sourceSqlConnection = default;
+            string sourceDatabaseName = default;
+            string sourceServerName = default;
+            string migrationService = default;
+            string migrationOperationId = default;
+            ErrorInfo migrationFailureError = default;
+            string targetDatabaseCollation = default;
+            string provisioningError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value);
+                    sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDatabaseName"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value);
+                    migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetDatabaseCollation"u8))
@@ -237,11 +237,26 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDatabaseMigrationProperties(kind, scope.Value, provisioningState.Value, migrationStatus.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceSqlConnection.Value, sourceDatabaseName.Value, sourceServerName.Value, migrationService.Value, migrationOperationId.Value, migrationFailureError.Value, targetDatabaseCollation.Value, provisioningError.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownDatabaseMigrationProperties(
+                kind,
+                scope,
+                provisioningState,
+                migrationStatus,
+                startedOn,
+                endedOn,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                migrationService,
+                migrationOperationId,
+                migrationFailureError,
+                targetDatabaseCollation,
+                provisioningError,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseMigrationProperties>.Write(ModelReaderWriterOptions options)
@@ -253,7 +268,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -266,10 +281,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDatabaseMigrationProperties(document.RootElement, options);
+                        return DeserializeDatabaseMigrationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

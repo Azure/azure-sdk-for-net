@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Datadog.Models
 {
     public partial class MonitorProperties : IUtf8JsonSerializable, IJsonModel<MonitorProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(DatadogOrganizationProperties))
             {
                 writer.WritePropertyName("datadogOrganizationProperties"u8);
-                writer.WriteObjectValue(DatadogOrganizationProperties);
+                writer.WriteObjectValue(DatadogOrganizationProperties, options);
             }
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue(UserInfo);
+                writer.WriteObjectValue(UserInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,21 +93,21 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static MonitorProperties DeserializeMonitorProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<MonitoringStatus> monitoringStatus = default;
-            Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
-            Optional<DatadogOrganizationProperties> datadogOrganizationProperties = default;
-            Optional<UserInfo> userInfo = default;
-            Optional<LiftrResourceCategory> liftrResourceCategory = default;
-            Optional<int> liftrResourcePreference = default;
+            ProvisioningState? provisioningState = default;
+            MonitoringStatus? monitoringStatus = default;
+            MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
+            DatadogOrganizationProperties datadogOrganizationProperties = default;
+            UserInfo userInfo = default;
+            LiftrResourceCategory? liftrResourceCategory = default;
+            int? liftrResourcePreference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    datadogOrganizationProperties = DatadogOrganizationProperties.DeserializeDatadogOrganizationProperties(property.Value);
+                    datadogOrganizationProperties = DatadogOrganizationProperties.DeserializeDatadogOrganizationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userInfo"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    userInfo = UserInfo.DeserializeUserInfo(property.Value);
+                    userInfo = UserInfo.DeserializeUserInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("liftrResourceCategory"u8))
@@ -175,11 +175,19 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(monitoringStatus), Optional.ToNullable(marketplaceSubscriptionStatus), datadogOrganizationProperties.Value, userInfo.Value, Optional.ToNullable(liftrResourceCategory), Optional.ToNullable(liftrResourcePreference), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MonitorProperties(
+                provisioningState,
+                monitoringStatus,
+                marketplaceSubscriptionStatus,
+                datadogOrganizationProperties,
+                userInfo,
+                liftrResourceCategory,
+                liftrResourcePreference,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorProperties>.Write(ModelReaderWriterOptions options)
@@ -191,7 +199,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +215,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeMonitorProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

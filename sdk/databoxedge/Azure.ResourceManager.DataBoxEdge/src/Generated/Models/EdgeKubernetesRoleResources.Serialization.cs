@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class EdgeKubernetesRoleResources : IUtf8JsonSerializable, IJsonModel<EdgeKubernetesRoleResources>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeKubernetesRoleResources>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeKubernetesRoleResources>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeKubernetesRoleResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeKubernetesRoleResources)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeKubernetesRoleResources)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage);
+                writer.WriteObjectValue(Storage, options);
             }
             writer.WritePropertyName("compute"u8);
-            writer.WriteObjectValue(Compute);
+            writer.WriteObjectValue(Compute, options);
             if (options.Format != "W" && Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue(Network);
+                writer.WriteObjectValue(Network, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeKubernetesRoleResources)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeKubernetesRoleResources)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeKubernetesRoleResources DeserializeEdgeKubernetesRoleResources(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<EdgeKubernetesRoleStorage> storage = default;
+            EdgeKubernetesRoleStorage storage = default;
             EdgeKubernetesRoleCompute compute = default;
-            Optional<EdgeKubernetesRoleNetwork> network = default;
+            EdgeKubernetesRoleNetwork network = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storage"u8))
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    storage = EdgeKubernetesRoleStorage.DeserializeEdgeKubernetesRoleStorage(property.Value);
+                    storage = EdgeKubernetesRoleStorage.DeserializeEdgeKubernetesRoleStorage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("compute"u8))
                 {
-                    compute = EdgeKubernetesRoleCompute.DeserializeEdgeKubernetesRoleCompute(property.Value);
+                    compute = EdgeKubernetesRoleCompute.DeserializeEdgeKubernetesRoleCompute(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("network"u8))
@@ -103,16 +103,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    network = EdgeKubernetesRoleNetwork.DeserializeEdgeKubernetesRoleNetwork(property.Value);
+                    network = EdgeKubernetesRoleNetwork.DeserializeEdgeKubernetesRoleNetwork(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesRoleResources(storage.Value, compute, network.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EdgeKubernetesRoleResources(storage, compute, network, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesRoleResources>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleResources)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleResources)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeKubernetesRoleResources(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleResources)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleResources)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -5,28 +5,127 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerSkuCapability
+    public partial class PostgreSqlFlexibleServerSkuCapability : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerSkuCapability>
     {
-        internal static PostgreSqlFlexibleServerSkuCapability DeserializePostgreSqlFlexibleServerSkuCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerSkuCapability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PostgreSqlFlexibleServerSkuCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerSkuCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerSkuCapability)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VCores))
+            {
+                writer.WritePropertyName("vCores"u8);
+                writer.WriteNumberValue(VCores.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SupportedIops))
+            {
+                writer.WritePropertyName("supportedIops"u8);
+                writer.WriteNumberValue(SupportedIops.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SupportedMemoryPerVcoreMb))
+            {
+                writer.WritePropertyName("supportedMemoryPerVcoreMb"u8);
+                writer.WriteNumberValue(SupportedMemoryPerVcoreMb.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedZones))
+            {
+                writer.WritePropertyName("supportedZones"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedZones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedHaMode))
+            {
+                writer.WritePropertyName("supportedHaMode"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedHaMode)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PostgreSqlFlexibleServerSkuCapability IJsonModel<PostgreSqlFlexibleServerSkuCapability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerSkuCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerSkuCapability)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerSkuCapability(document.RootElement, options);
+        }
+
+        internal static PostgreSqlFlexibleServerSkuCapability DeserializePostgreSqlFlexibleServerSkuCapability(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> vCores = default;
-            Optional<int> supportedIops = default;
-            Optional<long> supportedMemoryPerVcoreMb = default;
-            Optional<IReadOnlyList<string>> supportedZones = default;
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerHAMode>> supportedHaMode = default;
-            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            int? vCores = default;
+            int? supportedIops = default;
+            long? supportedMemoryPerVcoreMb = default;
+            IReadOnlyList<string> supportedZones = default;
+            IReadOnlyList<PostgreSqlFlexibleServerHAMode> supportedHaMode = default;
+            PostgreSqlFlexbileServerCapabilityStatus? status = default;
+            string reason = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -103,8 +202,235 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PostgreSqlFlexibleServerSkuCapability(Optional.ToNullable(status), reason.Value, name.Value, Optional.ToNullable(vCores), Optional.ToNullable(supportedIops), Optional.ToNullable(supportedMemoryPerVcoreMb), Optional.ToList(supportedZones), Optional.ToList(supportedHaMode));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PostgreSqlFlexibleServerSkuCapability(
+                status,
+                reason,
+                serializedAdditionalRawData,
+                name,
+                vCores,
+                supportedIops,
+                supportedMemoryPerVcoreMb,
+                supportedZones ?? new ChangeTrackingList<string>(),
+                supportedHaMode ?? new ChangeTrackingList<PostgreSqlFlexibleServerHAMode>());
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VCores), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vCores: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VCores))
+                {
+                    builder.Append("  vCores: ");
+                    builder.AppendLine($"{VCores.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedIops), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedIops: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedIops))
+                {
+                    builder.Append("  supportedIops: ");
+                    builder.AppendLine($"{SupportedIops.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMemoryPerVcoreMb), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedMemoryPerVcoreMb: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedMemoryPerVcoreMb))
+                {
+                    builder.Append("  supportedMemoryPerVcoreMb: ");
+                    builder.AppendLine($"'{SupportedMemoryPerVcoreMb.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedZones), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedZones: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SupportedZones))
+                {
+                    if (SupportedZones.Any())
+                    {
+                        builder.Append("  supportedZones: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedZones)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedHaMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedHaMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SupportedHaMode))
+                {
+                    if (SupportedHaMode.Any())
+                    {
+                        builder.Append("  supportedHaMode: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedHaMode)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapabilityStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CapabilityStatus))
+                {
+                    builder.Append("  status: ");
+                    builder.AppendLine($"'{CapabilityStatus.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reason: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Reason))
+                {
+                    builder.Append("  reason: ");
+                    if (Reason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Reason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Reason}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerSkuCapability>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerSkuCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerSkuCapability)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PostgreSqlFlexibleServerSkuCapability IPersistableModel<PostgreSqlFlexibleServerSkuCapability>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerSkuCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePostgreSqlFlexibleServerSkuCapability(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerSkuCapability)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PostgreSqlFlexibleServerSkuCapability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

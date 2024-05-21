@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class EdgeKubernetesNodeInfo : IUtf8JsonSerializable, IJsonModel<EdgeKubernetesNodeInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeKubernetesNodeInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeKubernetesNodeInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeKubernetesNodeInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesNodeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeKubernetesNodeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeKubernetesNodeInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfiguration)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesNodeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeKubernetesNodeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeKubernetesNodeInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeKubernetesNodeInfo DeserializeEdgeKubernetesNodeInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<EdgeKubernetesNodeType> type = default;
-            Optional<IReadOnlyList<EdgeKubernetesIPConfiguration>> ipConfiguration = default;
+            string name = default;
+            EdgeKubernetesNodeType? type = default;
+            IReadOnlyList<EdgeKubernetesIPConfiguration> ipConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -114,18 +114,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<EdgeKubernetesIPConfiguration> array = new List<EdgeKubernetesIPConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeKubernetesIPConfiguration.DeserializeEdgeKubernetesIPConfiguration(item));
+                        array.Add(EdgeKubernetesIPConfiguration.DeserializeEdgeKubernetesIPConfiguration(item, options));
                     }
                     ipConfiguration = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesNodeInfo(name.Value, Optional.ToNullable(type), Optional.ToList(ipConfiguration), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EdgeKubernetesNodeInfo(name, type, ipConfiguration ?? new ChangeTrackingList<EdgeKubernetesIPConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesNodeInfo>.Write(ModelReaderWriterOptions options)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeKubernetesNodeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeKubernetesNodeInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeKubernetesNodeInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeKubernetesNodeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeKubernetesNodeInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

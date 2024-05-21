@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -90,7 +88,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _governanceAssignmentRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, assignmentKey, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<GovernanceAssignmentResource>(Response.FromValue(new GovernanceAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _governanceAssignmentRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, assignmentKey, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<GovernanceAssignmentResource>(Response.FromValue(new GovernanceAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +139,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _governanceAssignmentRestClient.CreateOrUpdate(Id.Parent, Id.Name, assignmentKey, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<GovernanceAssignmentResource>(Response.FromValue(new GovernanceAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _governanceAssignmentRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, assignmentKey, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<GovernanceAssignmentResource>(Response.FromValue(new GovernanceAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class RestorePointSourceVmDataDisk : IUtf8JsonSerializable, IJsonModel<RestorePointSourceVmDataDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorePointSourceVmDataDisk>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorePointSourceVmDataDisk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RestorePointSourceVmDataDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVmDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointSourceVmDataDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointSourceVmDataDisk)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue(ManagedDisk);
+                writer.WriteObjectValue(ManagedDisk, options);
             }
             if (Optional.IsDefined(DiskRestorePoint))
             {
                 writer.WritePropertyName("diskRestorePoint"u8);
-                writer.WriteObjectValue(DiskRestorePoint);
+                writer.WriteObjectValue(DiskRestorePoint, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WriteAcceleratorEnabled))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVmDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointSourceVmDataDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointSourceVmDataDisk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,21 +93,21 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static RestorePointSourceVmDataDisk DeserializeRestorePointSourceVmDataDisk(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> lun = default;
-            Optional<string> name = default;
-            Optional<CachingType> caching = default;
-            Optional<int> diskSizeGB = default;
-            Optional<VirtualMachineManagedDisk> managedDisk = default;
-            Optional<DiskRestorePointAttributes> diskRestorePoint = default;
-            Optional<bool> writeAcceleratorEnabled = default;
+            int? lun = default;
+            string name = default;
+            CachingType? caching = default;
+            int? diskSizeGB = default;
+            VirtualMachineManagedDisk managedDisk = default;
+            DiskRestorePointAttributes diskRestorePoint = default;
+            bool? writeAcceleratorEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    managedDisk = VirtualMachineManagedDisk.DeserializeVirtualMachineManagedDisk(property.Value);
+                    managedDisk = VirtualMachineManagedDisk.DeserializeVirtualMachineManagedDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskRestorePoint"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diskRestorePoint = DiskRestorePointAttributes.DeserializeDiskRestorePointAttributes(property.Value);
+                    diskRestorePoint = DiskRestorePointAttributes.DeserializeDiskRestorePointAttributes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("writeAcceleratorEnabled"u8))
@@ -171,11 +171,19 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointSourceVmDataDisk(Optional.ToNullable(lun), name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint.Value, Optional.ToNullable(writeAcceleratorEnabled), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RestorePointSourceVmDataDisk(
+                lun,
+                name,
+                caching,
+                diskSizeGB,
+                managedDisk,
+                diskRestorePoint,
+                writeAcceleratorEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePointSourceVmDataDisk>.Write(ModelReaderWriterOptions options)
@@ -187,7 +195,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointSourceVmDataDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointSourceVmDataDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +211,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRestorePointSourceVmDataDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointSourceVmDataDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointSourceVmDataDisk)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class DiskEncryptionSetPatch : IUtf8JsonSerializable, IJsonModel<DiskEncryptionSetPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskEncryptionSetPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskEncryptionSetPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiskEncryptionSetPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionSetPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskEncryptionSetPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskEncryptionSetPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ActiveKey))
             {
                 writer.WritePropertyName("activeKey"u8);
-                writer.WriteObjectValue(ActiveKey);
+                writer.WriteObjectValue(ActiveKey, options);
             }
             if (Optional.IsDefined(RotationToLatestKeyVersionEnabled))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionSetPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskEncryptionSetPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskEncryptionSetPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,20 +98,20 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiskEncryptionSetPatch DeserializeDiskEncryptionSetPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<DiskEncryptionSetType> encryptionType = default;
-            Optional<KeyForDiskEncryptionSet> activeKey = default;
-            Optional<bool> rotationToLatestKeyVersionEnabled = default;
-            Optional<string> federatedClientId = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            DiskEncryptionSetType? encryptionType = default;
+            KeyForDiskEncryptionSet activeKey = default;
+            bool? rotationToLatestKeyVersionEnabled = default;
+            string federatedClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            activeKey = KeyForDiskEncryptionSet.DeserializeKeyForDiskEncryptionSet(property0.Value);
+                            activeKey = KeyForDiskEncryptionSet.DeserializeKeyForDiskEncryptionSet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rotationToLatestKeyVersionEnabled"u8))
@@ -183,11 +183,18 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskEncryptionSetPatch(Optional.ToDictionary(tags), identity, Optional.ToNullable(encryptionType), activeKey.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), federatedClientId.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DiskEncryptionSetPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                encryptionType,
+                activeKey,
+                rotationToLatestKeyVersionEnabled,
+                federatedClientId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskEncryptionSetPatch>.Write(ModelReaderWriterOptions options)
@@ -199,7 +206,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskEncryptionSetPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskEncryptionSetPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -215,7 +222,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeDiskEncryptionSetPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskEncryptionSetPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskEncryptionSetPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

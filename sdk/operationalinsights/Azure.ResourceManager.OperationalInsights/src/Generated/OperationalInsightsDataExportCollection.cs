@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
@@ -90,7 +88,9 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _operationalInsightsDataExportDataExportsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsDataExportResource>(Response.FromValue(new OperationalInsightsDataExportResource(Client, response), response.GetRawResponse()));
+                var uri = _operationalInsightsDataExportDataExportsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsDataExportResource>(Response.FromValue(new OperationalInsightsDataExportResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +139,9 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _operationalInsightsDataExportDataExportsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsDataExportResource>(Response.FromValue(new OperationalInsightsDataExportResource(Client, response), response.GetRawResponse()));
+                var uri = _operationalInsightsDataExportDataExportsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataExportName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsDataExportResource>(Response.FromValue(new OperationalInsightsDataExportResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

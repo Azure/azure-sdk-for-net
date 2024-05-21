@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using System.Xml.Linq;
-using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
@@ -29,7 +28,7 @@ namespace Azure.Data.Tables.Models
             {
                 return null;
             }
-            Optional<string> message = default;
+            string message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Message"u8))
@@ -38,7 +37,15 @@ namespace Azure.Data.Tables.Models
                     continue;
                 }
             }
-            return new TableServiceError(message.Value);
+            return new TableServiceError(message);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TableServiceError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTableServiceError(document.RootElement);
         }
     }
 }

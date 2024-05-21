@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -40,6 +39,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             MaxRowsPerFile = maxRowsPerFile;
             FileNamePrefix = fileNamePrefix;
             FormatWriteSettingsType = formatWriteSettingsType ?? "DelimitedTextWriteSettings";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DelimitedTextWriteSettings"/> for deserialization. </summary>
+        internal DelimitedTextWriteSettings()
+        {
         }
 
         /// <summary> Indicates whether string values should always be enclosed with quotes. Type: boolean (or Expression with resultType boolean). </summary>

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     public partial class VMwareNetworkInterface : IUtf8JsonSerializable, IJsonModel<VMwareNetworkInterface>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareNetworkInterface>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareNetworkInterface>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VMwareNetworkInterface>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareNetworkInterface)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareNetworkInterface)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             if (Optional.IsDefined(IPSettings))
             {
                 writer.WritePropertyName("ipSettings"u8);
-                writer.WriteObjectValue(IPSettings);
+                writer.WriteObjectValue(IPSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareNetworkInterface)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareNetworkInterface)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,25 +118,25 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static VMwareNetworkInterface DeserializeVMwareNetworkInterface(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> label = default;
-            Optional<IReadOnlyList<string>> ipAddresses = default;
-            Optional<string> macAddress = default;
-            Optional<string> networkId = default;
-            Optional<VMwareNicType> nicType = default;
-            Optional<PowerOnBootOption> powerOnBoot = default;
-            Optional<string> networkMoRefId = default;
-            Optional<string> networkMoName = default;
-            Optional<int> deviceKey = default;
-            Optional<NicIPSettings> ipSettings = default;
+            string name = default;
+            string label = default;
+            IReadOnlyList<string> ipAddresses = default;
+            string macAddress = default;
+            string networkId = default;
+            VMwareNicType? nicType = default;
+            PowerOnBootOption? powerOnBoot = default;
+            string networkMoRefId = default;
+            string networkMoName = default;
+            int? deviceKey = default;
+            NicIPSettings ipSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -216,16 +216,28 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     {
                         continue;
                     }
-                    ipSettings = NicIPSettings.DeserializeNicIPSettings(property.Value);
+                    ipSettings = NicIPSettings.DeserializeNicIPSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareNetworkInterface(name.Value, label.Value, Optional.ToList(ipAddresses), macAddress.Value, networkId.Value, Optional.ToNullable(nicType), Optional.ToNullable(powerOnBoot), networkMoRefId.Value, networkMoName.Value, Optional.ToNullable(deviceKey), ipSettings.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VMwareNetworkInterface(
+                name,
+                label,
+                ipAddresses ?? new ChangeTrackingList<string>(),
+                macAddress,
+                networkId,
+                nicType,
+                powerOnBoot,
+                networkMoRefId,
+                networkMoName,
+                deviceKey,
+                ipSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareNetworkInterface>.Write(ModelReaderWriterOptions options)
@@ -237,7 +249,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareNetworkInterface)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareNetworkInterface)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -253,7 +265,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializeVMwareNetworkInterface(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareNetworkInterface)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareNetworkInterface)} does not support reading '{options.Format}' format.");
             }
         }
 

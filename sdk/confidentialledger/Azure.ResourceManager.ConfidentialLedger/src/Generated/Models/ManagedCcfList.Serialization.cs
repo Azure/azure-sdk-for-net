@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     internal partial class ManagedCcfList : IUtf8JsonSerializable, IJsonModel<ManagedCcfList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedCcfList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedCcfList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedCcfList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedCcfList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedCcfList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedCcfList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedCcfList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedCcfList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedCcfList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,16 +73,16 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         internal static ManagedCcfList DeserializeManagedCcfList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedCcfData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ManagedCcfData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     List<ManagedCcfData> array = new List<ManagedCcfData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedCcfData.DeserializeManagedCcfData(item));
+                        array.Add(ManagedCcfData.DeserializeManagedCcfData(item, options));
                     }
                     value = array;
                     continue;
@@ -107,11 +106,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedCcfList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedCcfList(value ?? new ChangeTrackingList<ManagedCcfData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedCcfList>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedCcfList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedCcfList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                         return DeserializeManagedCcfList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedCcfList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedCcfList)} does not support reading '{options.Format}' format.");
             }
         }
 

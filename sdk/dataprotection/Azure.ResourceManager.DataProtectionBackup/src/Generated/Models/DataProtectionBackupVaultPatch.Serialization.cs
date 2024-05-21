@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class DataProtectionBackupVaultPatch : IUtf8JsonSerializable, IJsonModel<DataProtectionBackupVaultPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupVaultPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupVaultPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataProtectionBackupVaultPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupVaultPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupVaultPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupVaultPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupVaultPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupVaultPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupVaultPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupVaultPatch DeserializeDataProtectionBackupVaultPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<DataProtectionBackupVaultPatchProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            DataProtectionBackupVaultPatchProperties properties = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    properties = DataProtectionBackupVaultPatchProperties.DeserializeDataProtectionBackupVaultPatchProperties(property.Value);
+                    properties = DataProtectionBackupVaultPatchProperties.DeserializeDataProtectionBackupVaultPatchProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupVaultPatch(identity, properties.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataProtectionBackupVaultPatch(identity, properties, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupVaultPatch>.Write(ModelReaderWriterOptions options)
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupVaultPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupVaultPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionBackupVaultPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupVaultPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupVaultPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

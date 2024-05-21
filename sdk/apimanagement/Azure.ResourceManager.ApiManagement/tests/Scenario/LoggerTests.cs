@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             // Ignore the api-version of EventHub operations
             UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/providers/Microsoft.EventHub/namespaces/([\S]+)?pi-version=(?<group>[a-z0-9-]+)", "**"
-            )
+                @"/providers/Microsoft.EventHub/namespaces/([\S]+)?pi-version=(?<group>[a-z0-9-]+)")
             {
-                GroupForReplace = "group"
+                GroupForReplace = "group",
+                Value = "**"
             });
         }
 

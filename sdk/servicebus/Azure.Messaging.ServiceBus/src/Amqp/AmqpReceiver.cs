@@ -369,10 +369,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     messagesReceived as IReadOnlyCollection<AmqpMessage> ?? messagesReceived?.ToList() ?? s_emptyAmqpMessageList;
 
                 // If this is a session receiver and we didn't receive all requested messages, we need to drain the credits
-                // to ensure FIFO ordering within each session.
-                if (_isSessionReceiver && messageList.Count < maxMessages)
+                // to ensure FIFO ordering within each session. We exclude session processors, since those will always receive a single message
+                // at a time.  If there are no messages, the session will be closed unless the processor was configured to receive from specific sessions.
+                // The session won't be closed in the case that MaxConcurrentCallsPerSession > 1, but with concurrency, it is not possible to guarantee ordering.
+                if (_isSessionReceiver && (!_isProcessor || SessionId != null) && messageList.Count < maxMessages)
                 {
                     await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
+
+                    // These workarounds are necessary in order to resume prefetching after the link has been drained
+                    // https://github.com/Azure/azure-amqp/issues/252#issuecomment-1942734342
+                    if (_prefetchCount > 0)
+                    {
+                        link.Settings.TotalLinkCredit = 0;
+                        link.SetTotalLinkCredit((uint)_prefetchCount, true, true);
+                    }
                 }
 
                 List<ServiceBusReceivedMessage> receivedMessages = null;
@@ -1370,6 +1380,87 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             return messages ?? s_emptyReceivedMessageList;
+        }
+
+        /// <summary>
+        /// Deletes up to <paramref name="messageCount"/> number of messages from the entity. Only messages that
+        /// were added to the queue prior to <paramref name="beforeEnqueueTimeUtc"/> will be deleted. The actual number
+        /// of deleted messages may be less if there are fewer eligible messages in the entity.
+        /// </summary>
+        /// <param name="messageCount">The desired number of messages to delete.</param>
+        /// <param name="beforeEnqueueTimeUtc">A <see cref="DateTimeOffset"/> representing the cutoff time for deletion. Only messages that were enqueued before this time will be deleted.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <returns>The number of messages that were deleted.</returns>
+        public override async Task<int> DeleteMessagesAsync(
+            int messageCount,
+            DateTimeOffset beforeEnqueueTimeUtc,
+            CancellationToken cancellationToken = default) => await _retryPolicy.RunOperation(
+                static async (value, timeout, token) =>
+                {
+                    var (receiver, innerMessageCount, innerBeforeEnqueueTimeUtc) = value;
+                    return await receiver.DeleteMessagesInternalAsync(
+                            innerMessageCount,
+                            innerBeforeEnqueueTimeUtc,
+                            timeout,
+                            token)
+                        .ConfigureAwait(false);
+                },
+                (this, messageCount, beforeEnqueueTimeUtc),
+                _connectionScope,
+                cancellationToken).ConfigureAwait(false);
+
+        private async Task<int> DeleteMessagesInternalAsync(
+            int messageCount,
+            DateTimeOffset beforeEnqueueTimeUtc,
+            TimeSpan timeout,
+            CancellationToken cancellationToken)
+        {
+            var stopWatch = ValueStopwatch.StartNew();
+
+            AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(
+                    ManagementConstants.Operations.DeleteMessagesOperation,
+                    timeout,
+                    null);
+
+            if (_receiveLink.TryGetOpenedObject(out ReceivingAmqpLink receiveLink))
+            {
+                amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+            }
+
+            amqpRequestMessage.Map[ManagementConstants.Properties.MessageCount] = messageCount;
+            amqpRequestMessage.Map[ManagementConstants.Properties.EnqueuedTimeUtc] = beforeEnqueueTimeUtc.UtcDateTime;
+
+            if (!string.IsNullOrWhiteSpace(SessionId))
+            {
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = SessionId;
+            }
+
+            RequestResponseAmqpLink link = await _managementLink.GetOrCreateAsync(
+                timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
+                cancellationToken)
+                .ConfigureAwait(false);
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            using AmqpMessage responseAmqpMessage = await link.RequestAsync(
+                amqpRequestMessage.AmqpMessage,
+                timeout.CalculateRemaining(stopWatch.GetElapsedTime()))
+                .ConfigureAwait(false);
+
+            AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
+
+            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+            {
+                return amqpResponseMessage.GetValue<int>(ManagementConstants.Properties.MessageCount);
+            }
+
+            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
+                (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
+            {
+                return 0;
+            }
+
+            throw amqpResponseMessage.ToMessagingContractException();
         }
 
         /// <summary>

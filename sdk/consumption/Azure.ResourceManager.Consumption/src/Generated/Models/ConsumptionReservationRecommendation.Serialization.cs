@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Consumption.Models
     [PersistableModelProxy(typeof(UnknownReservationRecommendation))]
     public partial class ConsumptionReservationRecommendation : IUtf8JsonSerializable, IJsonModel<ConsumptionReservationRecommendation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionReservationRecommendation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionReservationRecommendation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionReservationRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionReservationRecommendation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionReservationRecommendation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionReservationRecommendation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionReservationRecommendation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionReservationRecommendation DeserializeConsumptionReservationRecommendation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "legacy": return ConsumptionLegacyReservationRecommendation.DeserializeConsumptionLegacyReservationRecommendation(element);
-                    case "modern": return ConsumptionModernReservationRecommendation.DeserializeConsumptionModernReservationRecommendation(element);
+                    case "legacy": return ConsumptionLegacyReservationRecommendation.DeserializeConsumptionLegacyReservationRecommendation(element, options);
+                    case "modern": return ConsumptionModernReservationRecommendation.DeserializeConsumptionModernReservationRecommendation(element, options);
                 }
             }
-            return UnknownReservationRecommendation.DeserializeUnknownReservationRecommendation(element);
+            return UnknownReservationRecommendation.DeserializeUnknownReservationRecommendation(element, options);
         }
 
         BinaryData IPersistableModel<ConsumptionReservationRecommendation>.Write(ModelReaderWriterOptions options)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionReservationRecommendation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionReservationRecommendation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionReservationRecommendation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionReservationRecommendation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionReservationRecommendation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ContainerNetworkInterfaceStatistics : IUtf8JsonSerializable
+    public partial class ContainerNetworkInterfaceStatistics : IUtf8JsonSerializable, IJsonModel<ContainerNetworkInterfaceStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerNetworkInterfaceStatistics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ContainerNetworkInterfaceStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterfaceStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RxBytes))
             {
@@ -55,23 +67,54 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("txDropped"u8);
                 writer.WriteNumberValue(TxDropped.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerNetworkInterfaceStatistics DeserializeContainerNetworkInterfaceStatistics(JsonElement element)
+        ContainerNetworkInterfaceStatistics IJsonModel<ContainerNetworkInterfaceStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterfaceStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerNetworkInterfaceStatistics(document.RootElement, options);
+        }
+
+        internal static ContainerNetworkInterfaceStatistics DeserializeContainerNetworkInterfaceStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<long> rxBytes = default;
-            Optional<long> rxPackets = default;
-            Optional<long> rxErrors = default;
-            Optional<long> rxDropped = default;
-            Optional<long> txBytes = default;
-            Optional<long> txPackets = default;
-            Optional<long> txErrors = default;
-            Optional<long> txDropped = default;
+            long? rxBytes = default;
+            long? rxPackets = default;
+            long? rxErrors = default;
+            long? rxDropped = default;
+            long? txBytes = default;
+            long? txPackets = default;
+            long? txErrors = default;
+            long? txDropped = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rxBytes"u8))
@@ -146,8 +189,190 @@ namespace Azure.ResourceManager.AppService.Models
                     txDropped = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerNetworkInterfaceStatistics(Optional.ToNullable(rxBytes), Optional.ToNullable(rxPackets), Optional.ToNullable(rxErrors), Optional.ToNullable(rxDropped), Optional.ToNullable(txBytes), Optional.ToNullable(txPackets), Optional.ToNullable(txErrors), Optional.ToNullable(txDropped));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerNetworkInterfaceStatistics(
+                rxBytes,
+                rxPackets,
+                rxErrors,
+                rxDropped,
+                txBytes,
+                txPackets,
+                txErrors,
+                txDropped,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RxBytes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rxBytes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RxBytes))
+                {
+                    builder.Append("  rxBytes: ");
+                    builder.AppendLine($"'{RxBytes.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RxPackets), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rxPackets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RxPackets))
+                {
+                    builder.Append("  rxPackets: ");
+                    builder.AppendLine($"'{RxPackets.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RxErrors), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rxErrors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RxErrors))
+                {
+                    builder.Append("  rxErrors: ");
+                    builder.AppendLine($"'{RxErrors.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RxDropped), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rxDropped: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RxDropped))
+                {
+                    builder.Append("  rxDropped: ");
+                    builder.AppendLine($"'{RxDropped.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TxBytes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  txBytes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TxBytes))
+                {
+                    builder.Append("  txBytes: ");
+                    builder.AppendLine($"'{TxBytes.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TxPackets), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  txPackets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TxPackets))
+                {
+                    builder.Append("  txPackets: ");
+                    builder.AppendLine($"'{TxPackets.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TxErrors), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  txErrors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TxErrors))
+                {
+                    builder.Append("  txErrors: ");
+                    builder.AppendLine($"'{TxErrors.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TxDropped), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  txDropped: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TxDropped))
+                {
+                    builder.Append("  txDropped: ");
+                    builder.AppendLine($"'{TxDropped.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ContainerNetworkInterfaceStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterfaceStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerNetworkInterfaceStatistics IPersistableModel<ContainerNetworkInterfaceStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterfaceStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerNetworkInterfaceStatistics(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerNetworkInterfaceStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

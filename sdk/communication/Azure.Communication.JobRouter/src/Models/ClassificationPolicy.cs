@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ClassificationPolicy : IUtf8JsonSerializable
+    public partial class ClassificationPolicy
     {
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
         /// <param name="classificationPolicyId"> Id of a classification policy. </param>
@@ -40,52 +40,6 @@ namespace Azure.Communication.JobRouter
         /// <summary> The entity tag for this resource. </summary>
         [CodeGenMember("Etag")]
         public ETag ETag { get; }
-
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(FallbackQueueId))
-            {
-                writer.WritePropertyName("fallbackQueueId"u8);
-                writer.WriteStringValue(FallbackQueueId);
-            }
-            if (Optional.IsCollectionDefined(QueueSelectorAttachments))
-            {
-                writer.WritePropertyName("queueSelectorAttachments"u8);
-                writer.WriteStartArray();
-                foreach (var item in QueueSelectorAttachments)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(PrioritizationRule))
-            {
-                writer.WritePropertyName("prioritizationRule"u8);
-                writer.WriteObjectValue(PrioritizationRule);
-            }
-            if (Optional.IsCollectionDefined(WorkerSelectorAttachments))
-            {
-                writer.WritePropertyName("workerSelectorAttachments"u8);
-                writer.WriteStartArray();
-                foreach (var item in WorkerSelectorAttachments)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.ToString());
-            }
-            writer.WriteEndObject();
-        }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal virtual RequestContent ToRequestContent()

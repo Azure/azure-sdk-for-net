@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     [PersistableModelProxy(typeof(UnknownAzureBackupRecoveryPoint))]
     public partial class DataProtectionBackupRecoveryPointProperties : IUtf8JsonSerializable, IJsonModel<DataProtectionBackupRecoveryPointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupRecoveryPointProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupRecoveryPointProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataProtectionBackupRecoveryPointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupRecoveryPointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupRecoveryPointProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupRecoveryPointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupRecoveryPointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupRecoveryPointProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupRecoveryPointProperties DeserializeDataProtectionBackupRecoveryPointProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupDiscreteRecoveryPoint": return DataProtectionBackupDiscreteRecoveryPointProperties.DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(element);
+                    case "AzureBackupDiscreteRecoveryPoint": return DataProtectionBackupDiscreteRecoveryPointProperties.DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(element, options);
                 }
             }
-            return UnknownAzureBackupRecoveryPoint.DeserializeUnknownAzureBackupRecoveryPoint(element);
+            return UnknownAzureBackupRecoveryPoint.DeserializeUnknownAzureBackupRecoveryPoint(element, options);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupRecoveryPointProperties>.Write(ModelReaderWriterOptions options)
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupRecoveryPointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupRecoveryPointProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionBackupRecoveryPointProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupRecoveryPointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupRecoveryPointProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

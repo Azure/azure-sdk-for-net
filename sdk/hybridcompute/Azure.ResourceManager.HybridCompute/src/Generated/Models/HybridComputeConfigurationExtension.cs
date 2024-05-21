@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes properties that can identify extensions. </summary>
     public partial class HybridComputeConfigurationExtension
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HybridComputeConfigurationExtension"/>. </summary>
         internal HybridComputeConfigurationExtension()
         {
@@ -18,10 +53,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="HybridComputeConfigurationExtension"/>. </summary>
         /// <param name="publisher"> Publisher of the extension. </param>
         /// <param name="configurationExtensionType"> Type of the extension. </param>
-        internal HybridComputeConfigurationExtension(string publisher, string configurationExtensionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputeConfigurationExtension(string publisher, string configurationExtensionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Publisher = publisher;
             ConfigurationExtensionType = configurationExtensionType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Publisher of the extension. </summary>

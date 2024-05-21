@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary> The properties parameters for a PATCH request to a grafana resource. </summary>
     public partial class ManagedGrafanaPatchProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ManagedGrafanaPatchProperties"/>. </summary>
         public ManagedGrafanaPatchProperties()
         {
@@ -29,7 +61,8 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="grafanaConfigurations"> Server configurations of a Grafana instance. </param>
         /// <param name="grafanaPlugins"> Update of Grafana plugin. Key is plugin id, value is plugin definition. If plugin definition is null, plugin with given plugin id will be removed. Otherwise, given plugin will be installed. </param>
         /// <param name="grafanaMajorVersion"> The major Grafana software version to target. </param>
-        internal ManagedGrafanaPatchProperties(GrafanaZoneRedundancy? zoneRedundancy, GrafanaApiKey? apiKey, DeterministicOutboundIP? deterministicOutboundIP, GrafanaPublicNetworkAccess? publicNetworkAccess, GrafanaIntegrations grafanaIntegrations, EnterpriseConfigurations enterpriseConfigurations, GrafanaConfigurations grafanaConfigurations, IDictionary<string, GrafanaPlugin> grafanaPlugins, string grafanaMajorVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedGrafanaPatchProperties(GrafanaZoneRedundancy? zoneRedundancy, GrafanaApiKey? apiKey, DeterministicOutboundIP? deterministicOutboundIP, GrafanaPublicNetworkAccess? publicNetworkAccess, GrafanaIntegrations grafanaIntegrations, EnterpriseConfigurations enterpriseConfigurations, GrafanaConfigurations grafanaConfigurations, IDictionary<string, GrafanaPlugin> grafanaPlugins, string grafanaMajorVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ZoneRedundancy = zoneRedundancy;
             ApiKey = apiKey;
@@ -40,6 +73,7 @@ namespace Azure.ResourceManager.Grafana.Models
             GrafanaConfigurations = grafanaConfigurations;
             GrafanaPlugins = grafanaPlugins;
             GrafanaMajorVersion = grafanaMajorVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The zone redundancy setting of the Grafana instance. </summary>

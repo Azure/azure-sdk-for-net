@@ -5,21 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceOperationParametersPair
+    public partial class ManagedInstanceOperationParametersPair : IUtf8JsonSerializable, IJsonModel<ManagedInstanceOperationParametersPair>
     {
-        internal static ManagedInstanceOperationParametersPair DeserializeManagedInstanceOperationParametersPair(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceOperationParametersPair>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ManagedInstanceOperationParametersPair>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceOperationParametersPair>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedInstanceOperationParametersPair)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(CurrentParameters))
+            {
+                writer.WritePropertyName("currentParameters"u8);
+                writer.WriteObjectValue(CurrentParameters, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RequestedParameters))
+            {
+                writer.WritePropertyName("requestedParameters"u8);
+                writer.WriteObjectValue(RequestedParameters, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ManagedInstanceOperationParametersPair IJsonModel<ManagedInstanceOperationParametersPair>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceOperationParametersPair>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedInstanceOperationParametersPair)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedInstanceOperationParametersPair(document.RootElement, options);
+        }
+
+        internal static ManagedInstanceOperationParametersPair DeserializeManagedInstanceOperationParametersPair(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<UpsertManagedServerOperationParameters> currentParameters = default;
-            Optional<UpsertManagedServerOperationParameters> requestedParameters = default;
+            UpsertManagedServerOperationParameters currentParameters = default;
+            UpsertManagedServerOperationParameters requestedParameters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentParameters"u8))
@@ -28,7 +87,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    currentParameters = UpsertManagedServerOperationParameters.DeserializeUpsertManagedServerOperationParameters(property.Value);
+                    currentParameters = UpsertManagedServerOperationParameters.DeserializeUpsertManagedServerOperationParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("requestedParameters"u8))
@@ -37,11 +96,94 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    requestedParameters = UpsertManagedServerOperationParameters.DeserializeUpsertManagedServerOperationParameters(property.Value);
+                    requestedParameters = UpsertManagedServerOperationParameters.DeserializeUpsertManagedServerOperationParameters(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedInstanceOperationParametersPair(currentParameters.Value, requestedParameters.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedInstanceOperationParametersPair(currentParameters, requestedParameters, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentParameters), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  currentParameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CurrentParameters))
+                {
+                    builder.Append("  currentParameters: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CurrentParameters, options, 2, false, "  currentParameters: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedParameters), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requestedParameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestedParameters))
+                {
+                    builder.Append("  requestedParameters: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RequestedParameters, options, 2, false, "  requestedParameters: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ManagedInstanceOperationParametersPair>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceOperationParametersPair>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedInstanceOperationParametersPair)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedInstanceOperationParametersPair IPersistableModel<ManagedInstanceOperationParametersPair>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceOperationParametersPair>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedInstanceOperationParametersPair(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedInstanceOperationParametersPair)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedInstanceOperationParametersPair>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

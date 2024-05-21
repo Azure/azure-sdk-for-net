@@ -71,32 +71,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("mlPipelineId"u8);
-            writer.WriteObjectValue(MlPipelineId);
+            writer.WriteObjectValue<object>(MlPipelineId);
             if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName"u8);
-                writer.WriteObjectValue(ExperimentName);
+                writer.WriteObjectValue<object>(ExperimentName);
             }
             if (Optional.IsDefined(MlPipelineParameters))
             {
                 writer.WritePropertyName("mlPipelineParameters"u8);
-                writer.WriteObjectValue(MlPipelineParameters);
+                writer.WriteObjectValue<object>(MlPipelineParameters);
             }
             if (Optional.IsDefined(MlParentRunId))
             {
                 writer.WritePropertyName("mlParentRunId"u8);
-                writer.WriteObjectValue(MlParentRunId);
+                writer.WriteObjectValue<object>(MlParentRunId);
             }
             if (Optional.IsDefined(ContinueOnStepFailure))
             {
                 writer.WritePropertyName("continueOnStepFailure"u8);
-                writer.WriteObjectValue(ContinueOnStepFailure);
+                writer.WriteObjectValue<object>(ContinueOnStepFailure);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -107,20 +107,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<ActivityDependency> dependsOn = default;
+            IList<UserProperty> userProperties = default;
             object mlPipelineId = default;
-            Optional<object> experimentName = default;
-            Optional<object> mlPipelineParameters = default;
-            Optional<object> mlParentRunId = default;
-            Optional<object> continueOnStepFailure = default;
+            object experimentName = default;
+            object mlPipelineParameters = default;
+            object mlParentRunId = default;
+            object continueOnStepFailure = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -260,7 +260,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureMLExecutePipelineActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, mlPipelineId, experimentName.Value, mlPipelineParameters.Value, mlParentRunId.Value, continueOnStepFailure.Value);
+            return new AzureMLExecutePipelineActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                mlPipelineId,
+                experimentName,
+                mlPipelineParameters,
+                mlParentRunId,
+                continueOnStepFailure);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureMLExecutePipelineActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureMLExecutePipelineActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class AzureMLExecutePipelineActivityConverter : JsonConverter<AzureMLExecutePipelineActivity>
@@ -269,6 +300,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override AzureMLExecutePipelineActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

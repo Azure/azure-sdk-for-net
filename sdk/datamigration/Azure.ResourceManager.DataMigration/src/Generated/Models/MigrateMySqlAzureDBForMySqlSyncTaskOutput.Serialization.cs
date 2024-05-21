@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     [PersistableModelProxy(typeof(UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput))]
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutput : IUtf8JsonSerializable, IJsonModel<MigrateMySqlAzureDBForMySqlSyncTaskOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateMySqlAzureDBForMySqlSyncTaskOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateMySqlAzureDBForMySqlSyncTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateMySqlAzureDBForMySqlSyncTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlSyncTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlSyncTaskOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlSyncTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlSyncTaskOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateMySqlAzureDBForMySqlSyncTaskOutput DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -75,14 +75,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DatabaseLevelErrorOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError(element);
-                    case "DatabaseLevelOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(element);
-                    case "ErrorOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputError.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputError(element);
-                    case "MigrationLevelOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel(element);
-                    case "TableLevelOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(element);
+                    case "DatabaseLevelErrorOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError(element, options);
+                    case "DatabaseLevelOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(element, options);
+                    case "ErrorOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputError.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputError(element, options);
+                    case "MigrationLevelOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel(element, options);
+                    case "TableLevelOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(element, options);
                 }
             }
-            return UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput.DeserializeUnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput(element);
+            return UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput.DeserializeUnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput(element, options);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlSyncTaskOutput>.Write(ModelReaderWriterOptions options)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlSyncTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlSyncTaskOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlSyncTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlSyncTaskOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

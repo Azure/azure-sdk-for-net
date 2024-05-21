@@ -34,8 +34,8 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<string> modelVersion = default;
-            Optional<bool> loggingOptOut = default;
+            string modelVersion = default;
+            bool? loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelVersion"u8))
@@ -53,7 +53,23 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new LanguageDetectionTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value);
+            return new LanguageDetectionTaskParameters(loggingOptOut, modelVersion);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new LanguageDetectionTaskParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLanguageDetectionTaskParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

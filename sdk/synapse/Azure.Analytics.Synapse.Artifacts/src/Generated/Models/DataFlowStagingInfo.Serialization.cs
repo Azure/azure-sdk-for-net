@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
-                writer.WriteObjectValue(FolderPath);
+                writer.WriteObjectValue<object>(FolderPath);
             }
             writer.WriteEndObject();
         }
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedService = default;
-            Optional<object> folderPath = default;
+            LinkedServiceReference linkedService = default;
+            object folderPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"u8))
@@ -60,7 +60,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowStagingInfo(linkedService.Value, folderPath.Value);
+            return new DataFlowStagingInfo(linkedService, folderPath);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataFlowStagingInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataFlowStagingInfo(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class DataFlowStagingInfoConverter : JsonConverter<DataFlowStagingInfo>
@@ -69,6 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override DataFlowStagingInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

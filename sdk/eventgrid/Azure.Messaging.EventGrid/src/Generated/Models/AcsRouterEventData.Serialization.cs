@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,9 +20,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> jobId = default;
-            Optional<string> channelReference = default;
-            Optional<string> channelId = default;
+            string jobId = default;
+            string channelReference = default;
+            string channelId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))
@@ -42,7 +41,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterEventData(jobId.Value, channelReference.Value, channelId.Value);
+            return new AcsRouterEventData(jobId, channelReference, channelId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsRouterEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterEventData(document.RootElement);
         }
 
         internal partial class AcsRouterEventDataConverter : JsonConverter<AcsRouterEventData>
@@ -51,6 +58,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override AcsRouterEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

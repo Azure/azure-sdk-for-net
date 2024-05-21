@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,17 +26,23 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> Initializes a new instance of <see cref="SynapseComponentSetup"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="componentName"> The name of the 3rd party component. </param>
         /// <param name="licenseKey">
         /// The license key to activate the component.
         /// Please note <see cref="SynapseSecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SynapseSecureString"/>.
         /// </param>
-        internal SynapseComponentSetup(string customSetupBaseType, string componentName, SynapseSecretBase licenseKey) : base(customSetupBaseType)
+        internal SynapseComponentSetup(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, string componentName, SynapseSecretBase licenseKey) : base(customSetupBaseType, serializedAdditionalRawData)
         {
             ComponentName = componentName;
             LicenseKey = licenseKey;
             CustomSetupBaseType = customSetupBaseType ?? "ComponentSetup";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseComponentSetup"/> for deserialization. </summary>
+        internal SynapseComponentSetup()
+        {
         }
 
         /// <summary> The name of the 3rd party component. </summary>

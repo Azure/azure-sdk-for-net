@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Availability group configuration. </summary>
     internal partial class AvailabilityGroupConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AvailabilityGroupConfiguration"/>. </summary>
         public AvailabilityGroupConfiguration()
         {
@@ -21,9 +53,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         /// <summary> Initializes a new instance of <see cref="AvailabilityGroupConfiguration"/>. </summary>
         /// <param name="replicas"> Replica configurations. </param>
-        internal AvailabilityGroupConfiguration(IList<AvailabilityGroupReplica> replicas)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailabilityGroupConfiguration(IList<AvailabilityGroupReplica> replicas, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Replicas = replicas;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Replica configurations. </summary>

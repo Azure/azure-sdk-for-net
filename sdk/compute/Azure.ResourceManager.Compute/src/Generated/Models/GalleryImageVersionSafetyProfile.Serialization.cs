@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class GalleryImageVersionSafetyProfile : IUtf8JsonSerializable, IJsonModel<GalleryImageVersionSafetyProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryImageVersionSafetyProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryImageVersionSafetyProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GalleryImageVersionSafetyProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionSafetyProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyViolations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionSafetyProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryImageVersionSafetyProfile DeserializeGalleryImageVersionSafetyProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> reportedForPolicyViolation = default;
-            Optional<IReadOnlyList<GalleryImageVersionPolicyViolation>> policyViolations = default;
-            Optional<bool> allowDeletionOfReplicatedLocations = default;
+            bool? reportedForPolicyViolation = default;
+            IReadOnlyList<GalleryImageVersionPolicyViolation> policyViolations = default;
+            bool? allowDeletionOfReplicatedLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reportedForPolicyViolation"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryImageVersionPolicyViolation> array = new List<GalleryImageVersionPolicyViolation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryImageVersionPolicyViolation.DeserializeGalleryImageVersionPolicyViolation(item));
+                        array.Add(GalleryImageVersionPolicyViolation.DeserializeGalleryImageVersionPolicyViolation(item, options));
                     }
                     policyViolations = array;
                     continue;
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageVersionSafetyProfile(Optional.ToNullable(allowDeletionOfReplicatedLocations), serializedAdditionalRawData, Optional.ToNullable(reportedForPolicyViolation), Optional.ToList(policyViolations));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GalleryImageVersionSafetyProfile(allowDeletionOfReplicatedLocations, serializedAdditionalRawData, reportedForPolicyViolation, policyViolations ?? new ChangeTrackingList<GalleryImageVersionPolicyViolation>());
         }
 
         BinaryData IPersistableModel<GalleryImageVersionSafetyProfile>.Write(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryImageVersionSafetyProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

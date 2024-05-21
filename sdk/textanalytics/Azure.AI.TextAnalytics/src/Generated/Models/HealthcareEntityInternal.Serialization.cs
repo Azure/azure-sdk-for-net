@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -63,13 +62,13 @@ namespace Azure.AI.TextAnalytics.Models
             }
             string text = default;
             HealthcareEntityCategory category = default;
-            Optional<string> subcategory = default;
+            string subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;
-            Optional<HealthcareEntityAssertion> assertion = default;
-            Optional<string> name = default;
-            Optional<IList<EntityDataSource>> links = default;
+            HealthcareEntityAssertion assertion = default;
+            string name = default;
+            IList<EntityDataSource> links = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -131,7 +130,32 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareEntityInternal(text, category, subcategory.Value, offset, length, confidenceScore, assertion.Value, name.Value, Optional.ToList(links));
+            return new HealthcareEntityInternal(
+                text,
+                category,
+                subcategory,
+                offset,
+                length,
+                confidenceScore,
+                assertion,
+                name,
+                links ?? new ChangeTrackingList<EntityDataSource>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HealthcareEntityInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHealthcareEntityInternal(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateSsisTaskOutputMigrationLevel : IUtf8JsonSerializable, IJsonModel<MigrateSsisTaskOutputMigrationLevel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSsisTaskOutputMigrationLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSsisTaskOutputMigrationLevel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateSsisTaskOutputMigrationLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskOutputMigrationLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSsisTaskOutputMigrationLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSsisTaskOutputMigrationLevel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ExceptionsAndWarnings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskOutputMigrationLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSsisTaskOutputMigrationLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSsisTaskOutputMigrationLevel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,26 +120,26 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSsisTaskOutputMigrationLevel DeserializeMigrateSsisTaskOutputMigrationLevel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<MigrationStatus> status = default;
-            Optional<string> message = default;
-            Optional<string> sourceServerVersion = default;
-            Optional<string> sourceServerBrandVersion = default;
-            Optional<string> targetServerVersion = default;
-            Optional<string> targetServerBrandVersion = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Optional<SsisMigrationStage> stage = default;
-            Optional<string> id = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            MigrationStatus? status = default;
+            string message = default;
+            string sourceServerVersion = default;
+            string sourceServerBrandVersion = default;
+            string targetServerVersion = default;
+            string targetServerBrandVersion = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
+            SsisMigrationStage? stage = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startedOn"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -229,11 +229,24 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSsisTaskOutputMigrationLevel(id.Value, resultType, serializedAdditionalRawData, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(status), message.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToList(exceptionsAndWarnings), Optional.ToNullable(stage));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrateSsisTaskOutputMigrationLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                startedOn,
+                endedOn,
+                status,
+                message,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                targetServerVersion,
+                targetServerBrandVersion,
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>(),
+                stage);
         }
 
         BinaryData IPersistableModel<MigrateSsisTaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)
@@ -245,7 +258,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSsisTaskOutputMigrationLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSsisTaskOutputMigrationLevel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -261,7 +274,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSsisTaskOutputMigrationLevel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSsisTaskOutputMigrationLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSsisTaskOutputMigrationLevel)} does not support reading '{options.Format}' format.");
             }
         }
 

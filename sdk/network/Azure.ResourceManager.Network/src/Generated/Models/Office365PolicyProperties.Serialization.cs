@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal partial class Office365PolicyProperties : IUtf8JsonSerializable, IJsonModel<Office365PolicyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Office365PolicyProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Office365PolicyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<Office365PolicyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<Office365PolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Office365PolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Office365PolicyProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(BreakOutCategories))
             {
                 writer.WritePropertyName("breakOutCategories"u8);
-                writer.WriteObjectValue(BreakOutCategories);
+                writer.WriteObjectValue(BreakOutCategories, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<Office365PolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Office365PolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Office365PolicyProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,15 +63,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static Office365PolicyProperties DeserializeOffice365PolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BreakOutCategoryPolicies> breakOutCategories = default;
+            BreakOutCategoryPolicies breakOutCategories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("breakOutCategories"u8))
@@ -80,16 +80,16 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    breakOutCategories = BreakOutCategoryPolicies.DeserializeBreakOutCategoryPolicies(property.Value);
+                    breakOutCategories = BreakOutCategoryPolicies.DeserializeBreakOutCategoryPolicies(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Office365PolicyProperties(breakOutCategories.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new Office365PolicyProperties(breakOutCategories, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Office365PolicyProperties>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Office365PolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Office365PolicyProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeOffice365PolicyProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Office365PolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Office365PolicyProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

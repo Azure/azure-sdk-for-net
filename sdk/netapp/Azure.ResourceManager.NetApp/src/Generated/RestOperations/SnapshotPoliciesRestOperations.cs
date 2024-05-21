@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.NetApp.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.NetApp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-05-01";
+            _apiVersion = apiVersion ?? "2023-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/snapshotPolicies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string accountName)
@@ -59,7 +73,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> List snapshot policy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,7 +102,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> List snapshot policy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -116,6 +130,22 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/snapshotPolicies/", false);
+            uri.AppendPath(snapshotPolicyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName)
         {
             var message = _pipeline.CreateMessage();
@@ -139,7 +169,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get a snapshot Policy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="snapshotPolicyName"> The name of the snapshot policy. </param>
@@ -172,7 +202,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get a snapshot Policy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="snapshotPolicyName"> The name of the snapshot policy. </param>
@@ -204,6 +234,22 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, SnapshotPolicyData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/snapshotPolicies/", false);
+            uri.AppendPath(snapshotPolicyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, SnapshotPolicyData data)
         {
             var message = _pipeline.CreateMessage();
@@ -224,14 +270,14 @@ namespace Azure.ResourceManager.NetApp
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Create a snapshot policy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="snapshotPolicyName"> The name of the snapshot policy. </param>
@@ -265,7 +311,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Create a snapshot policy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="snapshotPolicyName"> The name of the snapshot policy. </param>
@@ -298,6 +344,22 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, SnapshotPolicyPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/snapshotPolicies/", false);
+            uri.AppendPath(snapshotPolicyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName, SnapshotPolicyPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -318,14 +380,14 @@ namespace Azure.ResourceManager.NetApp
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Patch a snapshot policy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="snapshotPolicyName"> The name of the snapshot policy. </param>
@@ -354,7 +416,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Patch a snapshot policy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="snapshotPolicyName"> The name of the snapshot policy. </param>
@@ -382,6 +444,22 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/snapshotPolicies/", false);
+            uri.AppendPath(snapshotPolicyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName)
         {
             var message = _pipeline.CreateMessage();
@@ -399,12 +477,13 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(snapshotPolicyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Delete snapshot policy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="snapshotPolicyName"> The name of the snapshot policy. </param>
@@ -432,7 +511,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Delete snapshot policy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="snapshotPolicyName"> The name of the snapshot policy. </param>
@@ -459,6 +538,23 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateListVolumesRequestUri(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/snapshotPolicies/", false);
+            uri.AppendPath(snapshotPolicyName, true);
+            uri.AppendPath("/volumes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListVolumesRequest(string subscriptionId, string resourceGroupName, string accountName, string snapshotPolicyName)
         {
             var message = _pipeline.CreateMessage();
@@ -483,7 +579,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get volumes associated with snapshot policy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="snapshotPolicyName"> The name of the snapshot policy. </param>
@@ -514,7 +610,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get volumes associated with snapshot policy. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="snapshotPolicyName"> The name of the snapshot policy. </param>

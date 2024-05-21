@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,14 +16,14 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class ExportRun : IUtf8JsonSerializable, IJsonModel<ExportRun>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportRun>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportRun>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExportRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExportRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportRun)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportRun)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -93,12 +92,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RunSettings))
             {
                 writer.WritePropertyName("runSettings"u8);
-                writer.WriteObjectValue(RunSettings);
+                writer.WriteObjectValue(RunSettings, options);
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue(Error, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportRun)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportRun)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,28 +132,28 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static ExportRun DeserializeExportRun(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ExportRunExecutionType> executionType = default;
-            Optional<ExportRunExecutionStatus> status = default;
-            Optional<string> submittedBy = default;
-            Optional<DateTimeOffset> submittedTime = default;
-            Optional<DateTimeOffset> processingStartTime = default;
-            Optional<DateTimeOffset> processingEndTime = default;
-            Optional<string> fileName = default;
-            Optional<CommonExportProperties> runSettings = default;
-            Optional<ExportRunErrorDetails> error = default;
+            SystemData systemData = default;
+            ExportRunExecutionType? executionType = default;
+            ExportRunExecutionStatus? status = default;
+            string submittedBy = default;
+            DateTimeOffset? submittedTime = default;
+            DateTimeOffset? processingStartTime = default;
+            DateTimeOffset? processingEndTime = default;
+            string fileName = default;
+            CommonExportProperties runSettings = default;
+            ExportRunErrorDetails error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -260,7 +259,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            runSettings = CommonExportProperties.DeserializeCommonExportProperties(property0.Value);
+                            runSettings = CommonExportProperties.DeserializeCommonExportProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("error"u8))
@@ -269,7 +268,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            error = ExportRunErrorDetails.DeserializeExportRunErrorDetails(property0.Value);
+                            error = ExportRunErrorDetails.DeserializeExportRunErrorDetails(property0.Value, options);
                             continue;
                         }
                     }
@@ -277,11 +276,26 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportRun(id, name, type, systemData.Value, Optional.ToNullable(executionType), Optional.ToNullable(status), submittedBy.Value, Optional.ToNullable(submittedTime), Optional.ToNullable(processingStartTime), Optional.ToNullable(processingEndTime), fileName.Value, runSettings.Value, error.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ExportRun(
+                id,
+                name,
+                type,
+                systemData,
+                executionType,
+                status,
+                submittedBy,
+                submittedTime,
+                processingStartTime,
+                processingEndTime,
+                fileName,
+                runSettings,
+                error,
+                eTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportRun>.Write(ModelReaderWriterOptions options)
@@ -293,7 +307,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportRun)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportRun)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -309,7 +323,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeExportRun(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportRun)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportRun)} does not support reading '{options.Format}' format.");
             }
         }
 

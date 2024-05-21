@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class QueryFilter : IUtf8JsonSerializable, IJsonModel<QueryFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QueryFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in And)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Or)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions);
+                writer.WriteObjectValue(Dimensions, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags);
+                writer.WriteObjectValue(Tags, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,18 +88,18 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static QueryFilter DeserializeQueryFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<QueryFilter>> and = default;
-            Optional<IList<QueryFilter>> or = default;
-            Optional<QueryComparisonExpression> dimensions = default;
-            Optional<QueryComparisonExpression> tags = default;
+            IList<QueryFilter> and = default;
+            IList<QueryFilter> or = default;
+            QueryComparisonExpression dimensions = default;
+            QueryComparisonExpression tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("and"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<QueryFilter> array = new List<QueryFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeQueryFilter(item));
+                        array.Add(DeserializeQueryFilter(item, options));
                     }
                     and = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<QueryFilter> array = new List<QueryFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeQueryFilter(item));
+                        array.Add(DeserializeQueryFilter(item, options));
                     }
                     or = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    dimensions = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value);
+                    dimensions = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -145,16 +145,16 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    tags = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value);
+                    tags = QueryComparisonExpression.DeserializeQueryComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryFilter(Optional.ToList(and), Optional.ToList(or), dimensions.Value, tags.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new QueryFilter(and ?? new ChangeTrackingList<QueryFilter>(), or ?? new ChangeTrackingList<QueryFilter>(), dimensions, tags, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryFilter>.Write(ModelReaderWriterOptions options)
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeQueryFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementIdentityProviderPatch : IUtf8JsonSerializable, IJsonModel<ApiManagementIdentityProviderPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementIdentityProviderPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementIdentityProviderPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiManagementIdentityProviderPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementIdentityProviderPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementIdentityProviderPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementIdentityProviderPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementIdentityProviderPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementIdentityProviderPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementIdentityProviderPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,24 +116,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementIdentityProviderPatch DeserializeApiManagementIdentityProviderPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IdentityProviderType> type = default;
-            Optional<string> signinTenant = default;
-            Optional<IList<string>> allowedTenants = default;
-            Optional<string> authority = default;
-            Optional<string> signupPolicyName = default;
-            Optional<string> signinPolicyName = default;
-            Optional<string> profileEditingPolicyName = default;
-            Optional<string> passwordResetPolicyName = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
+            IdentityProviderType? type = default;
+            string signinTenant = default;
+            IList<string> allowedTenants = default;
+            string authority = default;
+            string signupPolicyName = default;
+            string signinPolicyName = default;
+            string profileEditingPolicyName = default;
+            string passwordResetPolicyName = default;
+            string clientId = default;
+            string clientSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -213,11 +213,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementIdentityProviderPatch(Optional.ToNullable(type), signinTenant.Value, Optional.ToList(allowedTenants), authority.Value, signupPolicyName.Value, signinPolicyName.Value, profileEditingPolicyName.Value, passwordResetPolicyName.Value, clientId.Value, clientSecret.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApiManagementIdentityProviderPatch(
+                type,
+                signinTenant,
+                allowedTenants ?? new ChangeTrackingList<string>(),
+                authority,
+                signupPolicyName,
+                signinPolicyName,
+                profileEditingPolicyName,
+                passwordResetPolicyName,
+                clientId,
+                clientSecret,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementIdentityProviderPatch>.Write(ModelReaderWriterOptions options)
@@ -229,7 +240,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementIdentityProviderPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementIdentityProviderPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +256,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiManagementIdentityProviderPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementIdentityProviderPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementIdentityProviderPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

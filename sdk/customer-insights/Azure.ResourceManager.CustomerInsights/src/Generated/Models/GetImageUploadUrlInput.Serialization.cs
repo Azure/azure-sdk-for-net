@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class GetImageUploadUrlInput : IUtf8JsonSerializable, IJsonModel<GetImageUploadUrlInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetImageUploadUrlInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetImageUploadUrlInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GetImageUploadUrlInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GetImageUploadUrlInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<GetImageUploadUrlInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static GetImageUploadUrlInput DeserializeGetImageUploadUrlInput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> entityType = default;
-            Optional<string> entityTypeName = default;
-            Optional<string> relativePath = default;
+            string entityType = default;
+            string entityTypeName = default;
+            string relativePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("entityType"u8))
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetImageUploadUrlInput(entityType.Value, entityTypeName.Value, relativePath.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GetImageUploadUrlInput(entityType, entityTypeName, relativePath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetImageUploadUrlInput>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeGetImageUploadUrlInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support reading '{options.Format}' format.");
             }
         }
 

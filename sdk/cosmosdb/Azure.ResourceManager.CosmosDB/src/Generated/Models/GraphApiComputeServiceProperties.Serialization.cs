@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,14 +17,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class GraphApiComputeServiceProperties : IUtf8JsonSerializable, IJsonModel<GraphApiComputeServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GraphApiComputeServiceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GraphApiComputeServiceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GraphApiComputeServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GraphApiComputeServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GraphApiComputeServiceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GraphApiComputeServiceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<GraphApiComputeServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GraphApiComputeServiceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GraphApiComputeServiceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,19 +94,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static GraphApiComputeServiceProperties DeserializeGraphApiComputeServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> graphApiComputeEndpoint = default;
-            Optional<IReadOnlyList<GraphApiComputeRegionalService>> locations = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<CosmosDBServiceSize> instanceSize = default;
-            Optional<int> instanceCount = default;
+            string graphApiComputeEndpoint = default;
+            IReadOnlyList<GraphApiComputeRegionalService> locations = default;
+            DateTimeOffset? creationTime = default;
+            CosmosDBServiceSize? instanceSize = default;
+            int? instanceCount = default;
             CosmosDBServiceType serviceType = default;
-            Optional<CosmosDBServiceStatus> status = default;
+            CosmosDBServiceStatus? status = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<GraphApiComputeRegionalService> array = new List<GraphApiComputeRegionalService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GraphApiComputeRegionalService.DeserializeGraphApiComputeRegionalService(item));
+                        array.Add(GraphApiComputeRegionalService.DeserializeGraphApiComputeRegionalService(item, options));
                     }
                     locations = array;
                     continue;
@@ -172,7 +174,149 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GraphApiComputeServiceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties, graphApiComputeEndpoint.Value, Optional.ToList(locations));
+            return new GraphApiComputeServiceProperties(
+                creationTime,
+                instanceSize,
+                instanceCount,
+                serviceType,
+                status,
+                additionalProperties,
+                graphApiComputeEndpoint,
+                locations ?? new ChangeTrackingList<GraphApiComputeRegionalService>());
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GraphApiComputeEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  graphApiComputeEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GraphApiComputeEndpoint))
+                {
+                    builder.Append("  graphApiComputeEndpoint: ");
+                    if (GraphApiComputeEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GraphApiComputeEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GraphApiComputeEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Locations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  locations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Locations))
+                {
+                    if (Locations.Any())
+                    {
+                        builder.Append("  locations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Locations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  locations: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  creationTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    builder.Append("  creationTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  instanceSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstanceSize))
+                {
+                    builder.Append("  instanceSize: ");
+                    builder.AppendLine($"'{InstanceSize.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  instanceCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstanceCount))
+                {
+                    builder.Append("  instanceCount: ");
+                    builder.AppendLine($"{InstanceCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  serviceType: ");
+                builder.AppendLine($"'{ServiceType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<GraphApiComputeServiceProperties>.Write(ModelReaderWriterOptions options)
@@ -183,8 +327,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(GraphApiComputeServiceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GraphApiComputeServiceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +346,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeGraphApiComputeServiceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GraphApiComputeServiceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GraphApiComputeServiceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

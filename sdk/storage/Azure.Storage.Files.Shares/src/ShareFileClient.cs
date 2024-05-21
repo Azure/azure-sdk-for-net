@@ -5,9 +5,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -16,8 +14,7 @@ using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using System.Net.Http.Headers;
-using System.Linq;
+using Azure.Storage.Common;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -127,8 +124,8 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// Determines whether the client is able to generate a SAS.
-        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// Indicates whether the client is able to generate a SAS uri.
+        /// Client can generate a SAS url if it is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
         public virtual bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
 
@@ -201,6 +198,8 @@ namespace Azure.Storage.Files.Shares
             string filePath,
             ShareClientOptions options)
         {
+            Argument.AssertNotNullOrWhiteSpace(shareName, nameof(shareName));
+            Argument.AssertNotNullOrWhiteSpace(filePath, nameof(filePath));
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
             ShareUriBuilder uriBuilder =
@@ -546,7 +545,7 @@ namespace Azure.Storage.Files.Shares
         /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="maxSize">
-        /// Required. Specifies the maximum size for the file.
+        /// Required. Specifies the maximum size for the file in bytes.  The max supported file size is 4 TiB.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -607,7 +606,7 @@ namespace Azure.Storage.Files.Shares
         /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="maxSize">
-        /// Required. Specifies the maximum size for the file.
+        /// Required. Specifies the maximum size for the file in bytes.  The max supported file size is 4 TiB.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -666,7 +665,7 @@ namespace Azure.Storage.Files.Shares
         /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="maxSize">
-        /// Required. Specifies the maximum size for the file.
+        /// Required. Specifies the maximum size for the file in bytes.  The max supported file size is 4 TiB.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -727,7 +726,7 @@ namespace Azure.Storage.Files.Shares
         /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="maxSize">
-        /// Required. Specifies the maximum size for the file.
+        /// Required. Specifies the maximum size for the file in bytes.  The max supported file size is 4 TiB.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -786,7 +785,7 @@ namespace Azure.Storage.Files.Shares
         /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="maxSize">
-        /// Required. Specifies the maximum size for the file.
+        /// Required. Specifies the maximum size for the file in bytes.  The max supported file size is 4 TiB.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -5327,6 +5326,7 @@ namespace Azure.Storage.Files.Shares
                 options?.Range,
                 options?.Snapshot,
                 previousSnapshot: default,
+                supportRename: default,
                 options?.Conditions,
                 operationName: default,
                 async: false,
@@ -5362,6 +5362,7 @@ namespace Azure.Storage.Files.Shares
                 options?.Range,
                 options?.Snapshot,
                 previousSnapshot: default,
+                supportRename: default,
                 options?.Conditions,
                 operationName: default,
                 async: true,
@@ -5404,6 +5405,7 @@ namespace Azure.Storage.Files.Shares
                 range,
                 snapshot: default,
                 previousSnapshot: default,
+                supportRename: default,
                 conditions,
                 operationName: default,
                 async: false,
@@ -5443,6 +5445,7 @@ namespace Azure.Storage.Files.Shares
                 range,
                 snapshot: default,
                 previousSnapshot: default,
+                supportRename: default,
                 conditions: default,
                 operationName: default,
                 async: false,
@@ -5485,6 +5488,7 @@ namespace Azure.Storage.Files.Shares
                 range,
                 snapshot: default,
                 previousSnapshot: default,
+                supportRename: default,
                 conditions,
                 operationName: default,
                 async: true,
@@ -5524,6 +5528,7 @@ namespace Azure.Storage.Files.Shares
                 range,
                 snapshot: default,
                 previousSnapshot: default,
+                supportRename: default,
                 conditions: default,
                 operationName: default,
                 async: true,
@@ -5554,6 +5559,12 @@ namespace Azure.Storage.Files.Shares
         /// snapshot, as long as the snapshot specified by
         /// <paramref name="previousSnapshot"/> is the older of the two.
         /// </param>
+        /// <param name="supportRename">
+        /// This header is allowed only when PreviousSnapshot query parameter is set.
+        /// Determines whether the changed ranges for a file that has been renamed or moved between the target snapshot (or the live file) and the previous snapshot should be listed.
+        /// If the value is true, the valid changed ranges for the file will be returned. If the value is false, the operation will result in a failure with 409 (Conflict) response.
+        /// The default value is false.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
@@ -5580,6 +5591,7 @@ namespace Azure.Storage.Files.Shares
             HttpRange? range,
             string snapshot,
             string previousSnapshot,
+            bool? supportRename,
             ShareFileRequestConditions conditions,
             string operationName,
             bool async,
@@ -5605,6 +5617,7 @@ namespace Azure.Storage.Files.Shares
                         response = await FileRestClient.GetRangeListAsync(
                             sharesnapshot: snapshot,
                             prevsharesnapshot: previousSnapshot,
+                            supportRename: supportRename,
                             range: range?.ToString(),
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -5615,6 +5628,7 @@ namespace Azure.Storage.Files.Shares
                         response = FileRestClient.GetRangeList(
                             sharesnapshot: snapshot,
                             prevsharesnapshot: previousSnapshot,
+                            supportRename: supportRename,
                             range: range?.ToString(),
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
@@ -5670,6 +5684,7 @@ namespace Azure.Storage.Files.Shares
                 options?.Range,
                 options?.Snapshot,
                 options?.PreviousSnapshot,
+                options?.IncludeRenames,
                 options?.Conditions,
                 operationName: $"{nameof(ShareFileClient)}.{nameof(GetRangeListDiff)}",
                 async: false,
@@ -5706,6 +5721,7 @@ namespace Azure.Storage.Files.Shares
                 options?.Range,
                 options?.Snapshot,
                 options?.PreviousSnapshot,
+                options?.IncludeRenames,
                 options?.Conditions,
                 operationName: $"{nameof(ShareFileClient)}.{nameof(GetRangeListDiff)}",
                 async: true,
@@ -6290,7 +6306,7 @@ namespace Azure.Storage.Files.Shares
                     // TODO: this seems weird to do, probably should build a way to append to the query.. without altering it somehow
                     // in the case that the customer wants the query to be in a certain order
                     ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri);
-                    UriBuilder sourceUriBuilder = new UriBuilder(Uri);
+                    ShareUriBuilder sourceUriBuilder = new ShareUriBuilder(Uri);
                     // There's already a check in at the client constructor to prevent both SAS in Uri and AzureSasCredential
                     if (shareUriBuilder.Sas == null && ClientConfiguration.SasCredential != null)
                     {
@@ -6335,6 +6351,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         // No SAS in the destination, use the source credentials to build the destination path
                         destUriBuilder.DirectoryOrFilePath = destinationPath;
+                        destUriBuilder.Sas = sourceUriBuilder.Sas;
                         destFileClient = new ShareFileClient(
                             destUriBuilder.ToUri(),
                             ClientConfiguration);
@@ -6359,7 +6376,7 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await destFileClient.FileRestClient.RenameAsync(
-                            renameSource: sourceUriBuilder.Uri.AbsoluteUri,
+                            renameSource: sourceUriBuilder.ToUri().AbsoluteUri,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
                             sourceLeaseId: options?.SourceConditions?.LeaseId,
@@ -6375,7 +6392,7 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = destFileClient.FileRestClient.Rename(
-                            renameSource: sourceUriBuilder.Uri.AbsoluteUri,
+                            renameSource: sourceUriBuilder.ToUri().AbsoluteUri,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
                             sourceLeaseId: options?.SourceConditions?.LeaseId,

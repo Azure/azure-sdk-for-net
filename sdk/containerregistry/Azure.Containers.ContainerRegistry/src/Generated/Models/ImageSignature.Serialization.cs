@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -18,9 +17,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<JWK> header = default;
-            Optional<string> signature = default;
-            Optional<string> @protected = default;
+            JWK header = default;
+            string signature = default;
+            string @protected = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("header"u8))
@@ -43,7 +42,15 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ImageSignature(header.Value, signature.Value, @protected.Value);
+            return new ImageSignature(header, signature, @protected);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ImageSignature FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeImageSignature(document.RootElement);
         }
     }
 }

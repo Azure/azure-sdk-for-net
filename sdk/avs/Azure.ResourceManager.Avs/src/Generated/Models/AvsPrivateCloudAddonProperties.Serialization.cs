@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Avs.Models
     [PersistableModelProxy(typeof(UnknownAddonProperties))]
     public partial class AvsPrivateCloudAddonProperties : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudAddonProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudAddonProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudAddonProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvsPrivateCloudAddonProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudAddonProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsPrivateCloudAddonProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsPrivateCloudAddonProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudAddonProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsPrivateCloudAddonProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsPrivateCloudAddonProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static AvsPrivateCloudAddonProperties DeserializeAvsPrivateCloudAddonProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Arc": return AddonArcProperties.DeserializeAddonArcProperties(element);
-                    case "HCX": return AddonHcxProperties.DeserializeAddonHcxProperties(element);
-                    case "SRM": return AddonSrmProperties.DeserializeAddonSrmProperties(element);
-                    case "VR": return AddonVrProperties.DeserializeAddonVrProperties(element);
+                    case "Arc": return AddonArcProperties.DeserializeAddonArcProperties(element, options);
+                    case "HCX": return AddonHcxProperties.DeserializeAddonHcxProperties(element, options);
+                    case "SRM": return AddonSrmProperties.DeserializeAddonSrmProperties(element, options);
+                    case "VR": return AddonVrProperties.DeserializeAddonVrProperties(element, options);
                 }
             }
-            return UnknownAddonProperties.DeserializeUnknownAddonProperties(element);
+            return UnknownAddonProperties.DeserializeUnknownAddonProperties(element, options);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudAddonProperties>.Write(ModelReaderWriterOptions options)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudAddonProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudAddonProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeAvsPrivateCloudAddonProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudAddonProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudAddonProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

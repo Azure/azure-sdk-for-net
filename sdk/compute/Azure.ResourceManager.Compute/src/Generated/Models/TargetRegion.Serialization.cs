@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class TargetRegion : IUtf8JsonSerializable, IJsonModel<TargetRegion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetRegion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetRegion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TargetRegion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TargetRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetRegion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetRegion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsDefined(IsExcludedFromLatest))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetRegion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetRegion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,19 +80,19 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static TargetRegion DeserializeTargetRegion(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            Optional<int> regionalReplicaCount = default;
-            Optional<ImageStorageAccountType> storageAccountType = default;
-            Optional<EncryptionImages> encryption = default;
-            Optional<bool> excludeFromLatest = default;
+            int? regionalReplicaCount = default;
+            ImageStorageAccountType? storageAccountType = default;
+            EncryptionImages encryption = default;
+            bool? excludeFromLatest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value);
+                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("excludeFromLatest"u8))
@@ -138,11 +138,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetRegion(name, Optional.ToNullable(regionalReplicaCount), Optional.ToNullable(storageAccountType), encryption.Value, Optional.ToNullable(excludeFromLatest), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TargetRegion(
+                name,
+                regionalReplicaCount,
+                storageAccountType,
+                encryption,
+                excludeFromLatest,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetRegion>.Write(ModelReaderWriterOptions options)
@@ -154,7 +160,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TargetRegion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetRegion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeTargetRegion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetRegion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetRegion)} does not support reading '{options.Format}' format.");
             }
         }
 

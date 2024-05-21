@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class DataBoxEdgeDeviceUpdateSummary : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeDeviceUpdateSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeDeviceUpdateSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeDeviceUpdateSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxEdgeDeviceUpdateSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceUpdateSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceUpdateSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceUpdateSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in Updates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceUpdateSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceUpdateSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceUpdateSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeDeviceUpdateSummary DeserializeDataBoxEdgeDeviceUpdateSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -226,34 +226,34 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> deviceVersionNumber = default;
-            Optional<string> friendlyDeviceVersionName = default;
-            Optional<DateTimeOffset> deviceLastScannedDateTime = default;
-            Optional<DateTimeOffset> lastCompletedScanJobDateTime = default;
-            Optional<DateTimeOffset> lastSuccessfulScanJobTime = default;
-            Optional<DateTimeOffset> lastCompletedDownloadJobDateTime = default;
-            Optional<ResourceIdentifier> lastCompletedDownloadJobId = default;
-            Optional<DataBoxEdgeJobStatus> lastDownloadJobStatus = default;
-            Optional<DateTimeOffset> lastSuccessfulInstallJobDateTime = default;
-            Optional<DateTimeOffset> lastCompletedInstallJobDateTime = default;
-            Optional<ResourceIdentifier> lastCompletedInstallJobId = default;
-            Optional<DataBoxEdgeJobStatus> lastInstallJobStatus = default;
-            Optional<int> totalNumberOfUpdatesAvailable = default;
-            Optional<int> totalNumberOfUpdatesPendingDownload = default;
-            Optional<int> totalNumberOfUpdatesPendingInstall = default;
-            Optional<InstallRebootBehavior> rebootBehavior = default;
-            Optional<DataBoxEdgeUpdateOperation> ongoingUpdateOperation = default;
-            Optional<ResourceIdentifier> inProgressDownloadJobId = default;
-            Optional<ResourceIdentifier> inProgressInstallJobId = default;
-            Optional<DateTimeOffset> inProgressDownloadJobStartedDateTime = default;
-            Optional<DateTimeOffset> inProgressInstallJobStartedDateTime = default;
-            Optional<IReadOnlyList<string>> updateTitles = default;
-            Optional<IReadOnlyList<DataBoxEdgeUpdateDetails>> updates = default;
-            Optional<double> totalUpdateSizeInBytes = default;
-            Optional<int> totalTimeInMinutes = default;
+            SystemData systemData = default;
+            string deviceVersionNumber = default;
+            string friendlyDeviceVersionName = default;
+            DateTimeOffset? deviceLastScannedDateTime = default;
+            DateTimeOffset? lastCompletedScanJobDateTime = default;
+            DateTimeOffset? lastSuccessfulScanJobTime = default;
+            DateTimeOffset? lastCompletedDownloadJobDateTime = default;
+            ResourceIdentifier lastCompletedDownloadJobId = default;
+            DataBoxEdgeJobStatus? lastDownloadJobStatus = default;
+            DateTimeOffset? lastSuccessfulInstallJobDateTime = default;
+            DateTimeOffset? lastCompletedInstallJobDateTime = default;
+            ResourceIdentifier lastCompletedInstallJobId = default;
+            DataBoxEdgeJobStatus? lastInstallJobStatus = default;
+            int? totalNumberOfUpdatesAvailable = default;
+            int? totalNumberOfUpdatesPendingDownload = default;
+            int? totalNumberOfUpdatesPendingInstall = default;
+            InstallRebootBehavior? rebootBehavior = default;
+            DataBoxEdgeUpdateOperation? ongoingUpdateOperation = default;
+            ResourceIdentifier inProgressDownloadJobId = default;
+            ResourceIdentifier inProgressInstallJobId = default;
+            DateTimeOffset? inProgressDownloadJobStartedDateTime = default;
+            DateTimeOffset? inProgressInstallJobStartedDateTime = default;
+            IReadOnlyList<string> updateTitles = default;
+            IReadOnlyList<DataBoxEdgeUpdateDetails> updates = default;
+            double? totalUpdateSizeInBytes = default;
+            int? totalTimeInMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             List<DataBoxEdgeUpdateDetails> array = new List<DataBoxEdgeUpdateDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeUpdateDetails.DeserializeDataBoxEdgeUpdateDetails(item));
+                                array.Add(DataBoxEdgeUpdateDetails.DeserializeDataBoxEdgeUpdateDetails(item, options));
                             }
                             updates = array;
                             continue;
@@ -521,11 +521,41 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceUpdateSummary(id, name, type, systemData.Value, deviceVersionNumber.Value, friendlyDeviceVersionName.Value, Optional.ToNullable(deviceLastScannedDateTime), Optional.ToNullable(lastCompletedScanJobDateTime), Optional.ToNullable(lastSuccessfulScanJobTime), Optional.ToNullable(lastCompletedDownloadJobDateTime), lastCompletedDownloadJobId.Value, Optional.ToNullable(lastDownloadJobStatus), Optional.ToNullable(lastSuccessfulInstallJobDateTime), Optional.ToNullable(lastCompletedInstallJobDateTime), lastCompletedInstallJobId.Value, Optional.ToNullable(lastInstallJobStatus), Optional.ToNullable(totalNumberOfUpdatesAvailable), Optional.ToNullable(totalNumberOfUpdatesPendingDownload), Optional.ToNullable(totalNumberOfUpdatesPendingInstall), Optional.ToNullable(rebootBehavior), Optional.ToNullable(ongoingUpdateOperation), inProgressDownloadJobId.Value, inProgressInstallJobId.Value, Optional.ToNullable(inProgressDownloadJobStartedDateTime), Optional.ToNullable(inProgressInstallJobStartedDateTime), Optional.ToList(updateTitles), Optional.ToList(updates), Optional.ToNullable(totalUpdateSizeInBytes), Optional.ToNullable(totalTimeInMinutes), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxEdgeDeviceUpdateSummary(
+                id,
+                name,
+                type,
+                systemData,
+                deviceVersionNumber,
+                friendlyDeviceVersionName,
+                deviceLastScannedDateTime,
+                lastCompletedScanJobDateTime,
+                lastSuccessfulScanJobTime,
+                lastCompletedDownloadJobDateTime,
+                lastCompletedDownloadJobId,
+                lastDownloadJobStatus,
+                lastSuccessfulInstallJobDateTime,
+                lastCompletedInstallJobDateTime,
+                lastCompletedInstallJobId,
+                lastInstallJobStatus,
+                totalNumberOfUpdatesAvailable,
+                totalNumberOfUpdatesPendingDownload,
+                totalNumberOfUpdatesPendingInstall,
+                rebootBehavior,
+                ongoingUpdateOperation,
+                inProgressDownloadJobId,
+                inProgressInstallJobId,
+                inProgressDownloadJobStartedDateTime,
+                inProgressInstallJobStartedDateTime,
+                updateTitles ?? new ChangeTrackingList<string>(),
+                updates ?? new ChangeTrackingList<DataBoxEdgeUpdateDetails>(),
+                totalUpdateSizeInBytes,
+                totalTimeInMinutes,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceUpdateSummary>.Write(ModelReaderWriterOptions options)
@@ -537,7 +567,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceUpdateSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceUpdateSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -553,7 +583,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDataBoxEdgeDeviceUpdateSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceUpdateSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceUpdateSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

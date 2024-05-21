@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class HciUpdateStep : IUtf8JsonSerializable, IJsonModel<HciUpdateStep>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciUpdateStep>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciUpdateStep>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HciUpdateStep>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HciUpdateStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciUpdateStep)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciUpdateStep)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in Steps)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciUpdateStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciUpdateStep)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciUpdateStep)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,22 +103,22 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static HciUpdateStep DeserializeHciUpdateStep(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> errorMessage = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<IList<HciUpdateStep>> steps = default;
+            string name = default;
+            string description = default;
+            string errorMessage = default;
+            string status = default;
+            DateTimeOffset? startTimeUtc = default;
+            DateTimeOffset? endTimeUtc = default;
+            DateTimeOffset? lastUpdatedTimeUtc = default;
+            IList<HciUpdateStep> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -177,18 +177,27 @@ namespace Azure.ResourceManager.Hci.Models
                     List<HciUpdateStep> array = new List<HciUpdateStep>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeHciUpdateStep(item));
+                        array.Add(DeserializeHciUpdateStep(item, options));
                     }
                     steps = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciUpdateStep(name.Value, description.Value, errorMessage.Value, status.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToList(steps), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HciUpdateStep(
+                name,
+                description,
+                errorMessage,
+                status,
+                startTimeUtc,
+                endTimeUtc,
+                lastUpdatedTimeUtc,
+                steps ?? new ChangeTrackingList<HciUpdateStep>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciUpdateStep>.Write(ModelReaderWriterOptions options)
@@ -200,7 +209,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HciUpdateStep)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciUpdateStep)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,7 +225,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeHciUpdateStep(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciUpdateStep)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciUpdateStep)} does not support reading '{options.Format}' format.");
             }
         }
 

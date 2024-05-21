@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.BotService.Models
 {
     public partial class SkypeChannelProperties : IUtf8JsonSerializable, IJsonModel<SkypeChannelProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkypeChannelProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkypeChannelProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SkypeChannelProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SkypeChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SkypeChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,24 +105,24 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static SkypeChannelProperties DeserializeSkypeChannelProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> enableMessaging = default;
-            Optional<bool> enableMediaCards = default;
-            Optional<bool> enableVideo = default;
-            Optional<bool> enableCalling = default;
-            Optional<bool> enableScreenSharing = default;
-            Optional<bool> enableGroups = default;
-            Optional<string> groupsMode = default;
-            Optional<string> callingWebHook = default;
-            Optional<string> incomingCallRoute = default;
+            bool? enableMessaging = default;
+            bool? enableMediaCards = default;
+            bool? enableVideo = default;
+            bool? enableCalling = default;
+            bool? enableScreenSharing = default;
+            bool? enableGroups = default;
+            string groupsMode = default;
+            string callingWebHook = default;
+            string incomingCallRoute = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableMessaging"u8))
@@ -201,11 +201,22 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkypeChannelProperties(Optional.ToNullable(enableMessaging), Optional.ToNullable(enableMediaCards), Optional.ToNullable(enableVideo), Optional.ToNullable(enableCalling), Optional.ToNullable(enableScreenSharing), Optional.ToNullable(enableGroups), groupsMode.Value, callingWebHook.Value, incomingCallRoute.Value, isEnabled, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SkypeChannelProperties(
+                enableMessaging,
+                enableMediaCards,
+                enableVideo,
+                enableCalling,
+                enableScreenSharing,
+                enableGroups,
+                groupsMode,
+                callingWebHook,
+                incomingCallRoute,
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkypeChannelProperties>.Write(ModelReaderWriterOptions options)
@@ -217,7 +228,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -233,7 +244,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeSkypeChannelProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

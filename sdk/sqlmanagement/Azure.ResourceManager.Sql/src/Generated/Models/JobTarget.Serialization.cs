@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class JobTarget : IUtf8JsonSerializable
+    public partial class JobTarget : IUtf8JsonSerializable, IJsonModel<JobTarget>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobTarget>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<JobTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JobTarget>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JobTarget)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MembershipType))
             {
@@ -47,22 +59,53 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("refreshCredential"u8);
                 writer.WriteStringValue(RefreshCredential);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JobTarget DeserializeJobTarget(JsonElement element)
+        JobTarget IJsonModel<JobTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JobTarget>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JobTarget)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobTarget(document.RootElement, options);
+        }
+
+        internal static JobTarget DeserializeJobTarget(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<JobTargetGroupMembershipType> membershipType = default;
+            JobTargetGroupMembershipType? membershipType = default;
             JobTargetType type = default;
-            Optional<string> serverName = default;
-            Optional<string> databaseName = default;
-            Optional<string> elasticPoolName = default;
-            Optional<string> shardMapName = default;
-            Optional<string> refreshCredential = default;
+            string serverName = default;
+            string databaseName = default;
+            string elasticPoolName = default;
+            string shardMapName = default;
+            string refreshCredential = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("membershipType"u8))
@@ -104,8 +147,211 @@ namespace Azure.ResourceManager.Sql.Models
                     refreshCredential = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new JobTarget(Optional.ToNullable(membershipType), type, serverName.Value, databaseName.Value, elasticPoolName.Value, shardMapName.Value, refreshCredential.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new JobTarget(
+                membershipType,
+                type,
+                serverName,
+                databaseName,
+                elasticPoolName,
+                shardMapName,
+                refreshCredential,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MembershipType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  membershipType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MembershipType))
+                {
+                    builder.Append("  membershipType: ");
+                    builder.AppendLine($"'{MembershipType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  type: ");
+                builder.AppendLine($"'{TargetType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serverName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerName))
+                {
+                    builder.Append("  serverName: ");
+                    if (ServerName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServerName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServerName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  databaseName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DatabaseName))
+                {
+                    builder.Append("  databaseName: ");
+                    if (DatabaseName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DatabaseName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DatabaseName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ElasticPoolName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  elasticPoolName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ElasticPoolName))
+                {
+                    builder.Append("  elasticPoolName: ");
+                    if (ElasticPoolName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ElasticPoolName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ElasticPoolName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShardMapName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  shardMapName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ShardMapName))
+                {
+                    builder.Append("  shardMapName: ");
+                    if (ShardMapName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ShardMapName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ShardMapName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RefreshCredential), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  refreshCredential: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RefreshCredential))
+                {
+                    builder.Append("  refreshCredential: ");
+                    if (RefreshCredential.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RefreshCredential}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RefreshCredential}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<JobTarget>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JobTarget>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(JobTarget)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        JobTarget IPersistableModel<JobTarget>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JobTarget>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeJobTarget(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JobTarget)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<JobTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

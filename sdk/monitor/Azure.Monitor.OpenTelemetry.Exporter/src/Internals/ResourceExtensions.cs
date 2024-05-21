@@ -26,12 +26,12 @@ internal static class ResourceExtensions
             return null;
         }
 
-        AzureMonitorResource azureMonitorResource = new AzureMonitorResource();
         MetricsData? metricsData = null;
         AksResourceProcessor? aksResourceProcessor = null;
         string? serviceName = null;
         string? serviceNamespace = null;
         string? serviceInstance = null;
+        string? serviceVersion = null;
         bool? hasDefaultServiceName = null;
 
         if (instrumentationKey != null && resource.Attributes.Any())
@@ -62,6 +62,9 @@ internal static class ResourceExtensions
                 case AiSdkPrefixKey when attribute.Value is string _aiSdkPrefixValue:
                     SdkVersionUtils.SdkVersionPrefix = _aiSdkPrefixValue;
                     continue;
+                case SemanticConventions.AttributeServiceVersion when attribute.Value is string _serviceVersion:
+                    serviceVersion = _serviceVersion;
+                    break;
                 case TelemetryDistroNameKey when attribute.Value is string _aiSdkDistroValue:
                     if (_aiSdkDistroValue == "Azure.Monitor.OpenTelemetry.AspNetCore")
                     {
@@ -84,20 +87,22 @@ internal static class ResourceExtensions
             }
         }
 
+        string? roleName = null, roleInstance = null;
+
         // TODO: Check if service.name as unknown_service should be sent.
         // (2023-07) we need to drop the "unknown_service."
         if (serviceName != null && serviceNamespace != null)
         {
-            azureMonitorResource.RoleName = string.Concat(serviceNamespace, "/", serviceName);
+            roleName = string.Concat(serviceNamespace, "/", serviceName);
         }
         else
         {
-            azureMonitorResource.RoleName = serviceName;
+            roleName = serviceName;
         }
 
         try
         {
-            azureMonitorResource.RoleInstance = serviceInstance ?? Dns.GetHostName();
+            roleInstance = serviceInstance ?? Dns.GetHostName();
         }
         catch (Exception ex)
         {
@@ -111,19 +116,19 @@ internal static class ResourceExtensions
 
             if (hasDefaultServiceName != false && aksRoleName != null)
             {
-                azureMonitorResource.RoleName = aksRoleName;
+                roleName = aksRoleName;
             }
 
             if (serviceInstance == null && aksRoleInstanceName != null)
             {
-                azureMonitorResource.RoleInstance = aksRoleInstanceName;
+                roleInstance = aksRoleInstanceName;
             }
         }
 
         bool shouldReportMetricTelemetry = false;
         try
         {
-            var exportResource = Environment.GetEnvironmentVariable(EnvironmentVariableConstants.EXPORT_RESOURCE_METRIC);
+            var exportResource = Environment.GetEnvironmentVariable(EnvironmentVariableConstants.EXPORT_RESOURCE_METRIC); // TODO: CAN THIS BE CHANGED TO USE THE PLATFORM ABSTRACTION?
             if (exportResource != null && exportResource.Equals("true", StringComparison.OrdinalIgnoreCase))
             {
                 shouldReportMetricTelemetry = true;
@@ -133,18 +138,21 @@ internal static class ResourceExtensions
         {
         }
 
+        MonitorBase? monitorBaseData = null;
+
         if (shouldReportMetricTelemetry && metricsData != null)
         {
-            azureMonitorResource.MetricTelemetry = new TelemetryItem(DateTime.UtcNow, azureMonitorResource, instrumentationKey!)
+            monitorBaseData = new MonitorBase
             {
-                Data = new MonitorBase
-                {
-                    BaseType = "MetricData",
-                    BaseData = metricsData
-                }
+                BaseType = "MetricData",
+                BaseData = metricsData
             };
         }
 
-        return azureMonitorResource;
+        return new AzureMonitorResource(
+            roleName: roleName,
+            roleInstance: roleInstance,
+            serviceVersion: serviceVersion,
+            monitorBaseData: monitorBaseData);
     }
 }

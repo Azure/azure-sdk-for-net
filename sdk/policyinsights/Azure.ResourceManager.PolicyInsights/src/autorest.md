@@ -35,6 +35,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 request-path-to-parent:
   /providers/Microsoft.PolicyInsights/policyMetadata: /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}

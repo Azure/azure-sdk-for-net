@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateSqlServerSqlMITaskOutputDatabaseLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlMITaskOutputDatabaseLevel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlMITaskOutputDatabaseLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlMITaskOutputDatabaseLevel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateSqlServerSqlMITaskOutputDatabaseLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMITaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputDatabaseLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputDatabaseLevel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ExceptionsAndWarnings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMITaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputDatabaseLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputDatabaseLevel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSqlServerSqlMITaskOutputDatabaseLevel DeserializeMigrateSqlServerSqlMITaskOutputDatabaseLevel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<double> sizeMB = default;
-            Optional<MigrationState> state = default;
-            Optional<DatabaseMigrationStage> stage = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Optional<string> id = default;
+            string databaseName = default;
+            double? sizeMB = default;
+            MigrationState? state = default;
+            DatabaseMigrationStage? stage = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            string message = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -211,11 +211,22 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMITaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, databaseName.Value, Optional.ToNullable(sizeMB), Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), message.Value, Optional.ToList(exceptionsAndWarnings));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrateSqlServerSqlMITaskOutputDatabaseLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                databaseName,
+                sizeMB,
+                state,
+                stage,
+                startedOn,
+                endedOn,
+                message,
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMITaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)
@@ -227,7 +238,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputDatabaseLevel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -243,7 +254,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSqlServerSqlMITaskOutputDatabaseLevel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputDatabaseLevel)} does not support reading '{options.Format}' format.");
             }
         }
 

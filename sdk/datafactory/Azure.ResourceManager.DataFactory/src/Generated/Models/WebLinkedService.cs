@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -45,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             TypeProperties = typeProperties;
             LinkedServiceType = linkedServiceType ?? "Web";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebLinkedService"/> for deserialization. </summary>
+        internal WebLinkedService()
+        {
         }
 
         /// <summary>

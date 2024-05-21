@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ActiveSecurityAdminRule : IUtf8JsonSerializable, IJsonModel<ActiveSecurityAdminRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActiveSecurityAdminRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActiveSecurityAdminRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ActiveSecurityAdminRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ActiveSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActiveSecurityAdminRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActiveSecurityAdminRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleCollectionAppliesToGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Destinations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActiveSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActiveSecurityAdminRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActiveSecurityAdminRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,33 +183,33 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ActiveSecurityAdminRule DeserializeActiveSecurityAdminRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<DateTimeOffset> commitTime = default;
-            Optional<string> region = default;
-            Optional<string> configurationDescription = default;
-            Optional<string> ruleCollectionDescription = default;
-            Optional<IReadOnlyList<NetworkManagerSecurityGroupItem>> ruleCollectionAppliesToGroups = default;
-            Optional<IReadOnlyList<NetworkConfigurationGroup>> ruleGroups = default;
+            string id = default;
+            DateTimeOffset? commitTime = default;
+            string region = default;
+            string configurationDescription = default;
+            string ruleCollectionDescription = default;
+            IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = default;
+            IReadOnlyList<NetworkConfigurationGroup> ruleGroups = default;
             EffectiveAdminRuleKind kind = default;
-            Optional<string> description = default;
-            Optional<SecurityConfigurationRuleProtocol> protocol = default;
-            Optional<IReadOnlyList<AddressPrefixItem>> sources = default;
-            Optional<IReadOnlyList<AddressPrefixItem>> destinations = default;
-            Optional<IReadOnlyList<string>> sourcePortRanges = default;
-            Optional<IReadOnlyList<string>> destinationPortRanges = default;
-            Optional<SecurityConfigurationRuleAccess> access = default;
-            Optional<int> priority = default;
-            Optional<SecurityConfigurationRuleDirection> direction = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
+            string description = default;
+            SecurityConfigurationRuleProtocol? protocol = default;
+            IReadOnlyList<AddressPrefixItem> sources = default;
+            IReadOnlyList<AddressPrefixItem> destinations = default;
+            IReadOnlyList<string> sourcePortRanges = default;
+            IReadOnlyList<string> destinationPortRanges = default;
+            SecurityConfigurationRuleAccess? access = default;
+            int? priority = default;
+            SecurityConfigurationRuleDirection? direction = default;
+            NetworkProvisioningState? provisioningState = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkManagerSecurityGroupItem> array = new List<NetworkManagerSecurityGroupItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkManagerSecurityGroupItem.DeserializeNetworkManagerSecurityGroupItem(item));
+                        array.Add(NetworkManagerSecurityGroupItem.DeserializeNetworkManagerSecurityGroupItem(item, options));
                     }
                     ruleCollectionAppliesToGroups = array;
                     continue;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkConfigurationGroup> array = new List<NetworkConfigurationGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item));
+                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item, options));
                     }
                     ruleGroups = array;
                     continue;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<AddressPrefixItem> array = new List<AddressPrefixItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item));
+                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item, options));
                             }
                             sources = array;
                             continue;
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<AddressPrefixItem> array = new List<AddressPrefixItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item));
+                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item, options));
                             }
                             destinations = array;
                             continue;
@@ -403,11 +403,31 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActiveSecurityAdminRule(id.Value, Optional.ToNullable(commitTime), region.Value, configurationDescription.Value, ruleCollectionDescription.Value, Optional.ToList(ruleCollectionAppliesToGroups), Optional.ToList(ruleGroups), kind, serializedAdditionalRawData, description.Value, Optional.ToNullable(protocol), Optional.ToList(sources), Optional.ToList(destinations), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ActiveSecurityAdminRule(
+                id,
+                commitTime,
+                region,
+                configurationDescription,
+                ruleCollectionDescription,
+                ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(),
+                ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
+                kind,
+                serializedAdditionalRawData,
+                description,
+                protocol,
+                sources ?? new ChangeTrackingList<AddressPrefixItem>(),
+                destinations ?? new ChangeTrackingList<AddressPrefixItem>(),
+                sourcePortRanges ?? new ChangeTrackingList<string>(),
+                destinationPortRanges ?? new ChangeTrackingList<string>(),
+                access,
+                priority,
+                direction,
+                provisioningState,
+                resourceGuid);
         }
 
         BinaryData IPersistableModel<ActiveSecurityAdminRule>.Write(ModelReaderWriterOptions options)
@@ -419,7 +439,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActiveSecurityAdminRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActiveSecurityAdminRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -435,7 +455,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeActiveSecurityAdminRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActiveSecurityAdminRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActiveSecurityAdminRule)} does not support reading '{options.Format}' format.");
             }
         }
 

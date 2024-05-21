@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel : IUtf8JsonSerializable, IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,26 +115,26 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel DeserializeMigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<MigrationState> state = default;
-            Optional<SchemaMigrationStage> stage = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> databaseErrorResultPrefix = default;
-            Optional<string> schemaErrorResultPrefix = default;
-            Optional<long> numberOfSuccessfulOperations = default;
-            Optional<long> numberOfFailedOperations = default;
-            Optional<string> fileId = default;
-            Optional<string> id = default;
+            string databaseName = default;
+            MigrationState? state = default;
+            SchemaMigrationStage? stage = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            string databaseErrorResultPrefix = default;
+            string schemaErrorResultPrefix = default;
+            long? numberOfSuccessfulOperations = default;
+            long? numberOfFailedOperations = default;
+            string fileId = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -223,11 +223,24 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, databaseName.Value, Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), databaseErrorResultPrefix.Value, schemaErrorResultPrefix.Value, Optional.ToNullable(numberOfSuccessfulOperations), Optional.ToNullable(numberOfFailedOperations), fileId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                databaseName,
+                state,
+                stage,
+                startedOn,
+                endedOn,
+                databaseErrorResultPrefix,
+                schemaErrorResultPrefix,
+                numberOfSuccessfulOperations,
+                numberOfFailedOperations,
+                fileId);
         }
 
         BinaryData IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)
@@ -239,7 +252,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -255,7 +268,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel)} does not support reading '{options.Format}' format.");
             }
         }
 

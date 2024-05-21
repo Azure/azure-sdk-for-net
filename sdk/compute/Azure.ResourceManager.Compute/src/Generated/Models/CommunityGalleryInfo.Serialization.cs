@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class CommunityGalleryInfo : IUtf8JsonSerializable, IJsonModel<CommunityGalleryInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunityGalleryInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunityGalleryInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommunityGalleryInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,20 +93,20 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CommunityGalleryInfo DeserializeCommunityGalleryInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> publisherUri = default;
-            Optional<string> publisherContact = default;
-            Optional<string> eula = default;
-            Optional<string> publicNamePrefix = default;
-            Optional<bool> communityGalleryEnabled = default;
-            Optional<IReadOnlyList<string>> publicNames = default;
+            string publisherUri = default;
+            string publisherContact = default;
+            string eula = default;
+            string publicNamePrefix = default;
+            bool? communityGalleryEnabled = default;
+            IReadOnlyList<string> publicNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisherUri"u8))
@@ -154,11 +154,18 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryInfo(publisherUri.Value, publisherContact.Value, eula.Value, publicNamePrefix.Value, Optional.ToNullable(communityGalleryEnabled), Optional.ToList(publicNames), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CommunityGalleryInfo(
+                publisherUri,
+                publisherContact,
+                eula,
+                publicNamePrefix,
+                communityGalleryEnabled,
+                publicNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommunityGalleryInfo>.Write(ModelReaderWriterOptions options)
@@ -170,7 +177,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -186,7 +193,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeCommunityGalleryInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

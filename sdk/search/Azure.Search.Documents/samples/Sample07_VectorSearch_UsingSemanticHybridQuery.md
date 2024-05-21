@@ -96,7 +96,7 @@ public static ReadOnlyMemory<float> GetEmbeddings(string input)
     AzureKeyCredential credential = new AzureKeyCredential(key);
 
     OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
-    EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { input });
+    EmbeddingsOptions embeddingsOptions = new("text-embedding-ada-002", new string[] { input });
 
     Embeddings embeddings = openAIClient.GetEmbeddings(embeddingsOptions);
     return embeddings.Data[0].Embedding;
@@ -132,7 +132,7 @@ public static Hotel[] GetHotelDocuments()
             Description = "Cheapest hotel in town. Infact, a motel.",
             DescriptionVector = GetEmbeddings("Cheapest hotel in town. Infact, a motel."),
             Category = "Budget",
-            CategoryVector = GetEmbeddings("Luxury")
+            CategoryVector = GetEmbeddings("Budget")
         },
         // Add more hotel documents here...
     };

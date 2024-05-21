@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineExtensionInstanceView : IUtf8JsonSerializable, IJsonModel<VirtualMachineExtensionInstanceView>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineExtensionInstanceView>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineExtensionInstanceView>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineExtensionInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineExtensionInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineExtensionInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Substatuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineExtensionInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineExtensionInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,19 +93,19 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineExtensionInstanceView DeserializeVirtualMachineExtensionInstanceView(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<IList<InstanceViewStatus>> substatuses = default;
-            Optional<IList<InstanceViewStatus>> statuses = default;
+            string name = default;
+            string type = default;
+            string typeHandlerVersion = default;
+            IList<InstanceViewStatus> substatuses = default;
+            IList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                     }
                     substatuses = array;
                     continue;
@@ -146,18 +146,24 @@ namespace Azure.ResourceManager.Compute.Models
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineExtensionInstanceView(name.Value, type.Value, typeHandlerVersion.Value, Optional.ToList(substatuses), Optional.ToList(statuses), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualMachineExtensionInstanceView(
+                name,
+                type,
+                typeHandlerVersion,
+                substatuses ?? new ChangeTrackingList<InstanceViewStatus>(),
+                statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineExtensionInstanceView>.Write(ModelReaderWriterOptions options)
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineExtensionInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineExtensionInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +191,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineExtensionInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineExtensionInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineExtensionInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

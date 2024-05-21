@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,14 +16,14 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionBalanceResult : IUtf8JsonSerializable, IJsonModel<ConsumptionBalanceResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionBalanceResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionBalanceResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionBalanceResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBalanceResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionBalanceResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionBalanceResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in NewPurchasesDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in AdjustmentDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -175,7 +174,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBalanceResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionBalanceResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionBalanceResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -184,35 +183,35 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionBalanceResult DeserializeConsumptionBalanceResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> currency = default;
-            Optional<decimal> beginningBalance = default;
-            Optional<decimal> endingBalance = default;
-            Optional<decimal> newPurchases = default;
-            Optional<decimal> adjustments = default;
-            Optional<decimal> utilized = default;
-            Optional<decimal> serviceOverage = default;
-            Optional<decimal> chargesBilledSeparately = default;
-            Optional<decimal> totalOverage = default;
-            Optional<decimal> totalUsage = default;
-            Optional<decimal> azureMarketplaceServiceCharges = default;
-            Optional<ConsumptionBillingFrequency> billingFrequency = default;
-            Optional<bool> priceHidden = default;
-            Optional<IReadOnlyList<ConsumptionBalanceNewPurchasesDetail>> newPurchasesDetails = default;
-            Optional<IReadOnlyList<ConsumptionBalanceAdjustmentDetail>> adjustmentDetails = default;
+            SystemData systemData = default;
+            string currency = default;
+            decimal? beginningBalance = default;
+            decimal? endingBalance = default;
+            decimal? newPurchases = default;
+            decimal? adjustments = default;
+            decimal? utilized = default;
+            decimal? serviceOverage = default;
+            decimal? chargesBilledSeparately = default;
+            decimal? totalOverage = default;
+            decimal? totalUsage = default;
+            decimal? azureMarketplaceServiceCharges = default;
+            ConsumptionBillingFrequency? billingFrequency = default;
+            bool? priceHidden = default;
+            IReadOnlyList<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails = default;
+            IReadOnlyList<ConsumptionBalanceAdjustmentDetail> adjustmentDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -393,7 +392,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<ConsumptionBalanceNewPurchasesDetail> array = new List<ConsumptionBalanceNewPurchasesDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConsumptionBalanceNewPurchasesDetail.DeserializeConsumptionBalanceNewPurchasesDetail(item));
+                                array.Add(ConsumptionBalanceNewPurchasesDetail.DeserializeConsumptionBalanceNewPurchasesDetail(item, options));
                             }
                             newPurchasesDetails = array;
                             continue;
@@ -407,7 +406,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<ConsumptionBalanceAdjustmentDetail> array = new List<ConsumptionBalanceAdjustmentDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConsumptionBalanceAdjustmentDetail.DeserializeConsumptionBalanceAdjustmentDetail(item));
+                                array.Add(ConsumptionBalanceAdjustmentDetail.DeserializeConsumptionBalanceAdjustmentDetail(item, options));
                             }
                             adjustmentDetails = array;
                             continue;
@@ -417,11 +416,33 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionBalanceResult(id, name, type, systemData.Value, currency.Value, Optional.ToNullable(beginningBalance), Optional.ToNullable(endingBalance), Optional.ToNullable(newPurchases), Optional.ToNullable(adjustments), Optional.ToNullable(utilized), Optional.ToNullable(serviceOverage), Optional.ToNullable(chargesBilledSeparately), Optional.ToNullable(totalOverage), Optional.ToNullable(totalUsage), Optional.ToNullable(azureMarketplaceServiceCharges), Optional.ToNullable(billingFrequency), Optional.ToNullable(priceHidden), Optional.ToList(newPurchasesDetails), Optional.ToList(adjustmentDetails), Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionBalanceResult(
+                id,
+                name,
+                type,
+                systemData,
+                currency,
+                beginningBalance,
+                endingBalance,
+                newPurchases,
+                adjustments,
+                utilized,
+                serviceOverage,
+                chargesBilledSeparately,
+                totalOverage,
+                totalUsage,
+                azureMarketplaceServiceCharges,
+                billingFrequency,
+                priceHidden,
+                newPurchasesDetails ?? new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>(),
+                adjustmentDetails ?? new ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>(),
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionBalanceResult>.Write(ModelReaderWriterOptions options)
@@ -433,7 +454,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionBalanceResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionBalanceResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -449,7 +470,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionBalanceResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionBalanceResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionBalanceResult)} does not support reading '{options.Format}' format.");
             }
         }
 

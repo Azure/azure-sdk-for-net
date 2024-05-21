@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     public partial class DeviceProvisioningServiceProperties : IUtf8JsonSerializable, IJsonModel<DeviceProvisioningServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceProvisioningServiceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceProvisioningServiceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeviceProvisioningServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceProvisioningServiceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceProvisioningServiceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WriteStartArray();
                 foreach (var item in IPFilterRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WriteStartArray();
                 foreach (var item in IotHubs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WriteStartArray();
                 foreach (var item in AuthorizationPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceProvisioningServiceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceProvisioningServiceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,26 +138,26 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         internal static DeviceProvisioningServiceProperties DeserializeDeviceProvisioningServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DeviceProvisioningServicesState> state = default;
-            Optional<DeviceProvisioningServicesPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<DeviceProvisioningServicesIPFilterRule>> ipFilterRules = default;
-            Optional<IList<DeviceProvisioningServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<string> provisioningState = default;
-            Optional<IList<IotHubDefinitionDescription>> iotHubs = default;
-            Optional<DeviceProvisioningServicesAllocationPolicy> allocationPolicy = default;
-            Optional<string> serviceOperationsHostName = default;
-            Optional<string> deviceProvisioningHostName = default;
-            Optional<string> idScope = default;
-            Optional<IList<DeviceProvisioningServicesSharedAccessKey>> authorizationPolicies = default;
-            Optional<bool> enableDataResidency = default;
+            DeviceProvisioningServicesState? state = default;
+            DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess = default;
+            IList<DeviceProvisioningServicesIPFilterRule> ipFilterRules = default;
+            IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
+            string provisioningState = default;
+            IList<IotHubDefinitionDescription> iotHubs = default;
+            DeviceProvisioningServicesAllocationPolicy? allocationPolicy = default;
+            string serviceOperationsHostName = default;
+            string deviceProvisioningHostName = default;
+            string idScope = default;
+            IList<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies = default;
+            bool? enableDataResidency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     List<DeviceProvisioningServicesIPFilterRule> array = new List<DeviceProvisioningServicesIPFilterRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceProvisioningServicesIPFilterRule.DeserializeDeviceProvisioningServicesIPFilterRule(item));
+                        array.Add(DeviceProvisioningServicesIPFilterRule.DeserializeDeviceProvisioningServicesIPFilterRule(item, options));
                     }
                     ipFilterRules = array;
                     continue;
@@ -202,7 +201,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     List<DeviceProvisioningServicesPrivateEndpointConnectionData> array = new List<DeviceProvisioningServicesPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(item));
+                        array.Add(DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -221,7 +220,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     List<IotHubDefinitionDescription> array = new List<IotHubDefinitionDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubDefinitionDescription.DeserializeIotHubDefinitionDescription(item));
+                        array.Add(IotHubDefinitionDescription.DeserializeIotHubDefinitionDescription(item, options));
                     }
                     iotHubs = array;
                     continue;
@@ -259,7 +258,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     List<DeviceProvisioningServicesSharedAccessKey> array = new List<DeviceProvisioningServicesSharedAccessKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey(item));
+                        array.Add(DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey(item, options));
                     }
                     authorizationPolicies = array;
                     continue;
@@ -275,11 +274,24 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceProvisioningServiceProperties(Optional.ToNullable(state), Optional.ToNullable(publicNetworkAccess), Optional.ToList(ipFilterRules), Optional.ToList(privateEndpointConnections), provisioningState.Value, Optional.ToList(iotHubs), Optional.ToNullable(allocationPolicy), serviceOperationsHostName.Value, deviceProvisioningHostName.Value, idScope.Value, Optional.ToList(authorizationPolicies), Optional.ToNullable(enableDataResidency), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DeviceProvisioningServiceProperties(
+                state,
+                publicNetworkAccess,
+                ipFilterRules ?? new ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>(),
+                privateEndpointConnections ?? new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>(),
+                provisioningState,
+                iotHubs ?? new ChangeTrackingList<IotHubDefinitionDescription>(),
+                allocationPolicy,
+                serviceOperationsHostName,
+                deviceProvisioningHostName,
+                idScope,
+                authorizationPolicies ?? new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>(),
+                enableDataResidency,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceProvisioningServiceProperties>.Write(ModelReaderWriterOptions options)
@@ -291,7 +303,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceProvisioningServiceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceProvisioningServiceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -307,7 +319,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         return DeserializeDeviceProvisioningServiceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceProvisioningServiceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceProvisioningServiceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

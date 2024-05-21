@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Details of a hostname derived from a domain. </summary>
     public partial class AppServiceHostName
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AppServiceHostName"/>. </summary>
         internal AppServiceHostName()
         {
@@ -26,7 +58,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="azureResourceType"> Type of the Azure resource the hostname is assigned to. </param>
         /// <param name="customHostNameDnsRecordType"> Type of the DNS record. </param>
         /// <param name="hostNameType"> Type of the hostname. </param>
-        internal AppServiceHostName(string name, IReadOnlyList<string> siteNames, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceHostName(string name, IReadOnlyList<string> siteNames, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             SiteNames = siteNames;
@@ -34,19 +67,26 @@ namespace Azure.ResourceManager.AppService.Models
             AzureResourceType = azureResourceType;
             CustomHostNameDnsRecordType = customHostNameDnsRecordType;
             HostNameType = hostNameType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the hostname. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> List of apps the hostname is assigned to. This list will have more than one app only if the hostname is pointing to a Traffic Manager. </summary>
+        [WirePath("siteNames")]
         public IReadOnlyList<string> SiteNames { get; }
         /// <summary> Name of the Azure resource the hostname is assigned to. If it is assigned to a Traffic Manager then it will be the Traffic Manager name otherwise it will be the app name. </summary>
+        [WirePath("azureResourceName")]
         public string AzureResourceName { get; }
         /// <summary> Type of the Azure resource the hostname is assigned to. </summary>
+        [WirePath("azureResourceType")]
         public AppServiceResourceType? AzureResourceType { get; }
         /// <summary> Type of the DNS record. </summary>
+        [WirePath("customHostNameDnsRecordType")]
         public CustomHostNameDnsRecordType? CustomHostNameDnsRecordType { get; }
         /// <summary> Type of the hostname. </summary>
+        [WirePath("hostNameType")]
         public AppServiceHostNameType? HostNameType { get; }
     }
 }

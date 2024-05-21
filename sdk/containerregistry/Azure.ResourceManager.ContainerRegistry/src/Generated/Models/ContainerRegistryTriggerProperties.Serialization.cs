@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryTriggerProperties : IUtf8JsonSerializable, IJsonModel<ContainerRegistryTriggerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTriggerProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTriggerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryTriggerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTriggerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTriggerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTriggerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in TimerTriggers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceTriggers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BaseImageTrigger))
             {
                 writer.WritePropertyName("baseImageTrigger"u8);
-                writer.WriteObjectValue(BaseImageTrigger);
+                writer.WriteObjectValue(BaseImageTrigger, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTriggerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTriggerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTriggerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,17 +83,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTriggerProperties DeserializeContainerRegistryTriggerProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<ContainerRegistryTimerTrigger>> timerTriggers = default;
-            Optional<IList<ContainerRegistrySourceTrigger>> sourceTriggers = default;
-            Optional<ContainerRegistryBaseImageTrigger> baseImageTrigger = default;
+            IList<ContainerRegistryTimerTrigger> timerTriggers = default;
+            IList<ContainerRegistrySourceTrigger> sourceTriggers = default;
+            ContainerRegistryBaseImageTrigger baseImageTrigger = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timerTriggers"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTimerTrigger> array = new List<ContainerRegistryTimerTrigger>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTimerTrigger.DeserializeContainerRegistryTimerTrigger(item));
+                        array.Add(ContainerRegistryTimerTrigger.DeserializeContainerRegistryTimerTrigger(item, options));
                     }
                     timerTriggers = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistrySourceTrigger> array = new List<ContainerRegistrySourceTrigger>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistrySourceTrigger.DeserializeContainerRegistrySourceTrigger(item));
+                        array.Add(ContainerRegistrySourceTrigger.DeserializeContainerRegistrySourceTrigger(item, options));
                     }
                     sourceTriggers = array;
                     continue;
@@ -130,16 +130,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    baseImageTrigger = ContainerRegistryBaseImageTrigger.DeserializeContainerRegistryBaseImageTrigger(property.Value);
+                    baseImageTrigger = ContainerRegistryBaseImageTrigger.DeserializeContainerRegistryBaseImageTrigger(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTriggerProperties(Optional.ToList(timerTriggers), Optional.ToList(sourceTriggers), baseImageTrigger.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerRegistryTriggerProperties(timerTriggers ?? new ChangeTrackingList<ContainerRegistryTimerTrigger>(), sourceTriggers ?? new ChangeTrackingList<ContainerRegistrySourceTrigger>(), baseImageTrigger, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTriggerProperties>.Write(ModelReaderWriterOptions options)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTriggerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTriggerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryTriggerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTriggerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTriggerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateSqlServerSqlDBSyncDatabaseInput : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlDBSyncDatabaseInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBSyncDatabaseInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBSyncDatabaseInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateSqlServerSqlDBSyncDatabaseInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncDatabaseInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncDatabaseInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncDatabaseInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncDatabaseInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncDatabaseInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncDatabaseInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,22 +122,22 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSqlServerSqlDBSyncDatabaseInput DeserializeMigrateSqlServerSqlDBSyncDatabaseInput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> targetDatabaseName = default;
-            Optional<string> schemaName = default;
-            Optional<IDictionary<string, string>> tableMap = default;
-            Optional<IDictionary<string, string>> migrationSetting = default;
-            Optional<IDictionary<string, string>> sourceSetting = default;
-            Optional<IDictionary<string, string>> targetSetting = default;
+            string id = default;
+            string name = default;
+            string targetDatabaseName = default;
+            string schemaName = default;
+            IDictionary<string, string> tableMap = default;
+            IDictionary<string, string> migrationSetting = default;
+            IDictionary<string, string> sourceSetting = default;
+            IDictionary<string, string> targetSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -218,11 +218,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBSyncDatabaseInput(id.Value, name.Value, targetDatabaseName.Value, schemaName.Value, Optional.ToDictionary(tableMap), Optional.ToDictionary(migrationSetting), Optional.ToDictionary(sourceSetting), Optional.ToDictionary(targetSetting), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrateSqlServerSqlDBSyncDatabaseInput(
+                id,
+                name,
+                targetDatabaseName,
+                schemaName,
+                tableMap ?? new ChangeTrackingDictionary<string, string>(),
+                migrationSetting ?? new ChangeTrackingDictionary<string, string>(),
+                sourceSetting ?? new ChangeTrackingDictionary<string, string>(),
+                targetSetting ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBSyncDatabaseInput>.Write(ModelReaderWriterOptions options)
@@ -234,7 +243,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncDatabaseInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncDatabaseInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -250,7 +259,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSqlServerSqlDBSyncDatabaseInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncDatabaseInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncDatabaseInput)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -89,13 +89,13 @@ namespace Azure.Core
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
             DelayStrategy? fallbackStrategy = null)
-            :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
+            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
             _internalOperation = new OperationInternal<VoidValue>(new OperationToOperationOfTProxy(operation), clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
         }
 
-        private OperationInternal(OperationState finalState)
-            :base(finalState.RawResponse)
+        internal OperationInternal(OperationState finalState)
+            : base(finalState.RawResponse)
         {
             _internalOperation = finalState.HasSucceeded
                 ? OperationInternal<VoidValue>.Succeeded(finalState.RawResponse, default)
@@ -209,7 +209,11 @@ namespace Azure.Core
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
         public static OperationState Success(Response rawResponse)
         {
-            Argument.AssertNotNull(rawResponse, nameof(rawResponse));
+            if (rawResponse is null)
+            {
+                throw new ArgumentNullException(nameof(rawResponse));
+            }
+
             return new OperationState(rawResponse, true, true, default);
         }
 
@@ -225,7 +229,11 @@ namespace Azure.Core
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
         public static OperationState Failure(Response rawResponse, RequestFailedException? operationFailedException = null)
         {
-            Argument.AssertNotNull(rawResponse, nameof(rawResponse));
+            if (rawResponse is null)
+            {
+                throw new ArgumentNullException(nameof(rawResponse));
+            }
+
             return new OperationState(rawResponse, true, false, operationFailedException);
         }
 
@@ -237,7 +245,11 @@ namespace Azure.Core
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
         public static OperationState Pending(Response rawResponse)
         {
-            Argument.AssertNotNull(rawResponse, nameof(rawResponse));
+            if (rawResponse is null)
+            {
+                throw new ArgumentNullException(nameof(rawResponse));
+            }
+
             return new OperationState(rawResponse, false, default, default);
         }
     }

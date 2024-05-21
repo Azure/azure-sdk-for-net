@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -41,7 +40,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             EntitiesResult results = default;
             AnalyzeTextLROResultsKind kind = default;
-            Optional<string> taskName = default;
+            string taskName = default;
             DateTimeOffset lastUpdateDateTime = default;
             TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
@@ -72,7 +71,23 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new EntityRecognitionLROResult(lastUpdateDateTime, status, kind, taskName.Value, results);
+            return new EntityRecognitionLROResult(lastUpdateDateTime, status, kind, taskName, results);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new EntityRecognitionLROResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEntityRecognitionLROResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

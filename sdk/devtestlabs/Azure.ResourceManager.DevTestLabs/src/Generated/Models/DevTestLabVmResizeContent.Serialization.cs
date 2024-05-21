@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabVmResizeContent : IUtf8JsonSerializable, IJsonModel<DevTestLabVmResizeContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabVmResizeContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabVmResizeContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevTestLabVmResizeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabVmResizeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabVmResizeContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabVmResizeContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabVmResizeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabVmResizeContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabVmResizeContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,15 +63,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabVmResizeContent DeserializeDevTestLabVmResizeContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> size = default;
+            string size = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("size"u8))
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabVmResizeContent(size.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevTestLabVmResizeContent(size, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabVmResizeContent>.Write(ModelReaderWriterOptions options)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabVmResizeContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabVmResizeContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabVmResizeContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabVmResizeContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabVmResizeContent)} does not support reading '{options.Format}' format.");
             }
         }
 

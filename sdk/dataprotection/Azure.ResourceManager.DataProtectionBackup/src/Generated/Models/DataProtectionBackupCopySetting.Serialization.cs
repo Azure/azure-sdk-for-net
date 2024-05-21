@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     [PersistableModelProxy(typeof(UnknownCopyOption))]
     public partial class DataProtectionBackupCopySetting : IUtf8JsonSerializable, IJsonModel<DataProtectionBackupCopySetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupCopySetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupCopySetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataProtectionBackupCopySetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupCopySetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupCopySetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupCopySetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupCopySetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupCopySetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupCopySetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupCopySetting DeserializeDataProtectionBackupCopySetting(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CopyOnExpiryOption": return CopyOnExpirySetting.DeserializeCopyOnExpirySetting(element);
-                    case "CustomCopyOption": return CustomCopySetting.DeserializeCustomCopySetting(element);
-                    case "ImmediateCopyOption": return ImmediateCopySetting.DeserializeImmediateCopySetting(element);
+                    case "CopyOnExpiryOption": return CopyOnExpirySetting.DeserializeCopyOnExpirySetting(element, options);
+                    case "CustomCopyOption": return CustomCopySetting.DeserializeCustomCopySetting(element, options);
+                    case "ImmediateCopyOption": return ImmediateCopySetting.DeserializeImmediateCopySetting(element, options);
                 }
             }
-            return UnknownCopyOption.DeserializeUnknownCopyOption(element);
+            return UnknownCopyOption.DeserializeUnknownCopyOption(element, options);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupCopySetting>.Write(ModelReaderWriterOptions options)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupCopySetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupCopySetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionBackupCopySetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupCopySetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupCopySetting)} does not support reading '{options.Format}' format.");
             }
         }
 

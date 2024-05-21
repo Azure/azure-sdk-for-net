@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class EdgeFileEventTrigger : IUtf8JsonSerializable, IJsonModel<EdgeFileEventTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeFileEventTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeFileEventTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeFileEventTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdgeFileEventTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeFileEventTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeFileEventTrigger)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("sourceInfo"u8);
-            writer.WriteObjectValue(SourceInfo);
+            writer.WriteObjectValue(SourceInfo, options);
             writer.WritePropertyName("sinkInfo"u8);
-            writer.WriteObjectValue(SinkInfo);
+            writer.WriteObjectValue(SinkInfo, options);
             if (Optional.IsDefined(CustomContextTag))
             {
                 writer.WritePropertyName("customContextTag"u8);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeFileEventTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeFileEventTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeFileEventTrigger)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeFileEventTrigger DeserializeEdgeFileEventTrigger(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             EdgeFileSourceInfo sourceInfo = default;
             DataBoxEdgeRoleSinkInfo sinkInfo = default;
-            Optional<string> customContextTag = default;
+            string customContextTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         if (property0.NameEquals("sourceInfo"u8))
                         {
-                            sourceInfo = EdgeFileSourceInfo.DeserializeEdgeFileSourceInfo(property0.Value);
+                            sourceInfo = EdgeFileSourceInfo.DeserializeEdgeFileSourceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sinkInfo"u8))
                         {
-                            sinkInfo = DataBoxEdgeRoleSinkInfo.DeserializeDataBoxEdgeRoleSinkInfo(property0.Value);
+                            sinkInfo = DataBoxEdgeRoleSinkInfo.DeserializeDataBoxEdgeRoleSinkInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("customContextTag"u8))
@@ -169,11 +169,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeFileEventTrigger(id, name, type, systemData.Value, kind, serializedAdditionalRawData, sourceInfo, sinkInfo, customContextTag.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EdgeFileEventTrigger(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                sourceInfo,
+                sinkInfo,
+                customContextTag);
         }
 
         BinaryData IPersistableModel<EdgeFileEventTrigger>.Write(ModelReaderWriterOptions options)
@@ -185,7 +194,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeFileEventTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeFileEventTrigger)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -201,7 +210,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeFileEventTrigger(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeFileEventTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeFileEventTrigger)} does not support reading '{options.Format}' format.");
             }
         }
 

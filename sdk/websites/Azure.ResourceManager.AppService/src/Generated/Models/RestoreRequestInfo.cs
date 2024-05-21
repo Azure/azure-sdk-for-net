@@ -15,6 +15,38 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Description of a restore request. </summary>
     public partial class RestoreRequestInfo : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RestoreRequestInfo"/>. </summary>
         public RestoreRequestInfo()
         {
@@ -41,7 +73,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="adjustConnectionStrings"> &lt;code&gt;true&lt;/code&gt; if SiteConfig.ConnectionStrings should be set in new app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="hostingEnvironment"> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal RestoreRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri storageAccountUri, string blobName, bool? canOverwrite, string siteName, IList<AppServiceDatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestoreRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri storageAccountUri, string blobName, bool? canOverwrite, string siteName, IList<AppServiceDatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StorageAccountUri = storageAccountUri;
             BlobName = blobName;
@@ -55,34 +88,47 @@ namespace Azure.ResourceManager.AppService.Models
             AdjustConnectionStrings = adjustConnectionStrings;
             HostingEnvironment = hostingEnvironment;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SAS URL to the container. </summary>
+        [WirePath("properties.storageAccountUrl")]
         public Uri StorageAccountUri { get; set; }
         /// <summary> Name of a blob which contains the backup. </summary>
+        [WirePath("properties.blobName")]
         public string BlobName { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the restore operation can overwrite target app; otherwise, &lt;code&gt;false&lt;/code&gt;. &lt;code&gt;true&lt;/code&gt; is needed if trying to restore over an existing app. </summary>
+        [WirePath("properties.overwrite")]
         public bool? CanOverwrite { get; set; }
         /// <summary> Name of an app. </summary>
+        [WirePath("properties.siteName")]
         public string SiteName { get; set; }
         /// <summary> Collection of databases which should be restored. This list has to match the list of databases included in the backup. </summary>
+        [WirePath("properties.databases")]
         public IList<AppServiceDatabaseBackupSetting> Databases { get; }
         /// <summary>
         /// Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to
         /// the app's object when it is being restored, but that might fail due to conflicts during the operation.
         /// </summary>
+        [WirePath("properties.ignoreConflictingHostNames")]
         public bool? IgnoreConflictingHostNames { get; set; }
         /// <summary> Ignore the databases and only restore the site content. </summary>
+        [WirePath("properties.ignoreDatabases")]
         public bool? IgnoreDatabases { get; set; }
         /// <summary> Specify app service plan that will own restored site. </summary>
+        [WirePath("properties.appServicePlan")]
         public string AppServicePlan { get; set; }
         /// <summary> Operation type. </summary>
+        [WirePath("properties.operationType")]
         public BackupRestoreOperationType? OperationType { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if SiteConfig.ConnectionStrings should be set in new app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.adjustConnectionStrings")]
         public bool? AdjustConnectionStrings { get; set; }
         /// <summary> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </summary>
+        [WirePath("properties.hostingEnvironment")]
         public string HostingEnvironment { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

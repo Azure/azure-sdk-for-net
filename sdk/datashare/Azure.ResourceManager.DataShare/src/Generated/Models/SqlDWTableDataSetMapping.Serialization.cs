@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class SqlDWTableDataSetMapping : IUtf8JsonSerializable, IJsonModel<SqlDWTableDataSetMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDWTableDataSetMapping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDWTableDataSetMapping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlDWTableDataSetMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlDWTableDataSetMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDWTableDataSetMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDWTableDataSetMapping)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDWTableDataSetMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDWTableDataSetMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDWTableDataSetMapping)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static SqlDWTableDataSetMapping DeserializeSqlDWTableDataSetMapping(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -114,16 +114,16 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             Guid dataSetId = default;
-            Optional<DataSetMappingStatus> dataSetMappingStatus = default;
+            DataSetMappingStatus? dataSetMappingStatus = default;
             string dataWarehouseName = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            DataShareProvisioningState? provisioningState = default;
             string schemaName = default;
             ResourceIdentifier sqlServerResourceId = default;
             string tableName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -212,11 +212,24 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDWTableDataSetMapping(id, name, type, systemData.Value, kind, serializedAdditionalRawData, dataSetId, Optional.ToNullable(dataSetMappingStatus), dataWarehouseName, Optional.ToNullable(provisioningState), schemaName, sqlServerResourceId, tableName);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SqlDWTableDataSetMapping(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                dataSetId,
+                dataSetMappingStatus,
+                dataWarehouseName,
+                provisioningState,
+                schemaName,
+                sqlServerResourceId,
+                tableName);
         }
 
         BinaryData IPersistableModel<SqlDWTableDataSetMapping>.Write(ModelReaderWriterOptions options)
@@ -228,7 +241,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlDWTableDataSetMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDWTableDataSetMapping)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -244,7 +257,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeSqlDWTableDataSetMapping(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlDWTableDataSetMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDWTableDataSetMapping)} does not support reading '{options.Format}' format.");
             }
         }
 

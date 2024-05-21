@@ -5,31 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class BlobRestoreRange : IUtf8JsonSerializable
+    public partial class BlobRestoreRange : IUtf8JsonSerializable, IJsonModel<BlobRestoreRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobRestoreRange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BlobRestoreRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobRestoreRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BlobRestoreRange)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("startRange"u8);
             writer.WriteStringValue(StartRange);
             writer.WritePropertyName("endRange"u8);
             writer.WriteStringValue(EndRange);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BlobRestoreRange DeserializeBlobRestoreRange(JsonElement element)
+        BlobRestoreRange IJsonModel<BlobRestoreRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobRestoreRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BlobRestoreRange)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBlobRestoreRange(document.RootElement, options);
+        }
+
+        internal static BlobRestoreRange DeserializeBlobRestoreRange(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string startRange = default;
             string endRange = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startRange"u8))
@@ -42,8 +85,107 @@ namespace Azure.ResourceManager.Storage.Models
                     endRange = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BlobRestoreRange(startRange, endRange);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BlobRestoreRange(startRange, endRange, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartRange), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startRange: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartRange))
+                {
+                    builder.Append("  startRange: ");
+                    if (StartRange.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StartRange}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StartRange}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndRange), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endRange: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndRange))
+                {
+                    builder.Append("  endRange: ");
+                    if (EndRange.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EndRange}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EndRange}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<BlobRestoreRange>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobRestoreRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(BlobRestoreRange)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BlobRestoreRange IPersistableModel<BlobRestoreRange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobRestoreRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBlobRestoreRange(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobRestoreRange)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobRestoreRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

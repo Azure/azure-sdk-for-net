@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class KubernetesClusterBackupDataSourceSettings : IUtf8JsonSerializable, IJsonModel<KubernetesClusterBackupDataSourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterBackupDataSourceSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterBackupDataSourceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KubernetesClusterBackupDataSourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterBackupDataSourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterBackupDataSourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterBackupDataSourceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in BackupHookReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterBackupDataSourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterBackupDataSourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterBackupDataSourceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static KubernetesClusterBackupDataSourceSettings DeserializeKubernetesClusterBackupDataSourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -132,15 +132,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             bool snapshotVolumes = default;
             bool includeClusterScopeResources = default;
-            Optional<IList<string>> includedNamespaces = default;
-            Optional<IList<string>> excludedNamespaces = default;
-            Optional<IList<string>> includedResourceTypes = default;
-            Optional<IList<string>> excludedResourceTypes = default;
-            Optional<IList<string>> labelSelectors = default;
-            Optional<IList<NamespacedName>> backupHookReferences = default;
+            IList<string> includedNamespaces = default;
+            IList<string> excludedNamespaces = default;
+            IList<string> includedResourceTypes = default;
+            IList<string> excludedResourceTypes = default;
+            IList<string> labelSelectors = default;
+            IList<NamespacedName> backupHookReferences = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("snapshotVolumes"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<NamespacedName> array = new List<NamespacedName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NamespacedName.DeserializeNamespacedName(item));
+                        array.Add(NamespacedName.DeserializeNamespacedName(item, options));
                     }
                     backupHookReferences = array;
                     continue;
@@ -244,11 +244,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterBackupDataSourceSettings(objectType, serializedAdditionalRawData, snapshotVolumes, includeClusterScopeResources, Optional.ToList(includedNamespaces), Optional.ToList(excludedNamespaces), Optional.ToList(includedResourceTypes), Optional.ToList(excludedResourceTypes), Optional.ToList(labelSelectors), Optional.ToList(backupHookReferences));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KubernetesClusterBackupDataSourceSettings(
+                objectType,
+                serializedAdditionalRawData,
+                snapshotVolumes,
+                includeClusterScopeResources,
+                includedNamespaces ?? new ChangeTrackingList<string>(),
+                excludedNamespaces ?? new ChangeTrackingList<string>(),
+                includedResourceTypes ?? new ChangeTrackingList<string>(),
+                excludedResourceTypes ?? new ChangeTrackingList<string>(),
+                labelSelectors ?? new ChangeTrackingList<string>(),
+                backupHookReferences ?? new ChangeTrackingList<NamespacedName>());
         }
 
         BinaryData IPersistableModel<KubernetesClusterBackupDataSourceSettings>.Write(ModelReaderWriterOptions options)
@@ -260,7 +270,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterBackupDataSourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterBackupDataSourceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -276,7 +286,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeKubernetesClusterBackupDataSourceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterBackupDataSourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterBackupDataSourceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

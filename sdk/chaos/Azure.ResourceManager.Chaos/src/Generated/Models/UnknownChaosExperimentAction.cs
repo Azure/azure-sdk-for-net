@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> The UnknownChaosExperimentAction. </summary>
+    /// <summary> Unknown version of ChaosExperimentAction. </summary>
     internal partial class UnknownChaosExperimentAction : ChaosExperimentAction
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChaosExperimentAction"/>. </summary>

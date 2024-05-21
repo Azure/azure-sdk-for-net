@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -19,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<DateTimeOffset> resourceEventTime = default;
+            DateTimeOffset? resourceEventTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceEventTime"u8))
@@ -32,7 +31,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ResourceNotificationsOperationalDetails(Optional.ToNullable(resourceEventTime));
+            return new ResourceNotificationsOperationalDetails(resourceEventTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ResourceNotificationsOperationalDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeResourceNotificationsOperationalDetails(document.RootElement);
         }
     }
 }

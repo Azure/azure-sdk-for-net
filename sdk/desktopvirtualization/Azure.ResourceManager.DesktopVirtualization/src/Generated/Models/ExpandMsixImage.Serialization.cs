@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class ExpandMsixImage : IUtf8JsonSerializable, IJsonModel<ExpandMsixImage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpandMsixImage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpandMsixImage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExpandMsixImage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpandMsixImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpandMsixImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpandMsixImage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     writer.WriteStartArray();
                     foreach (var item in PackageDependencies)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in PackageApplications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpandMsixImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpandMsixImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpandMsixImage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static ExpandMsixImage DeserializeExpandMsixImage(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -180,22 +180,22 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> packageAlias = default;
-            Optional<string> imagePath = default;
-            Optional<string> packageName = default;
-            Optional<string> packageFamilyName = default;
-            Optional<string> packageFullName = default;
-            Optional<string> displayName = default;
-            Optional<string> packageRelativePath = default;
-            Optional<bool> isRegularRegistration = default;
-            Optional<bool> isActive = default;
-            Optional<IList<MsixPackageDependencies>> packageDependencies = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> lastUpdated = default;
-            Optional<IList<MsixPackageApplications>> packageApplications = default;
+            SystemData systemData = default;
+            string packageAlias = default;
+            string imagePath = default;
+            string packageName = default;
+            string packageFamilyName = default;
+            string packageFullName = default;
+            string displayName = default;
+            string packageRelativePath = default;
+            bool? isRegularRegistration = default;
+            bool? isActive = default;
+            IList<MsixPackageDependencies> packageDependencies = default;
+            string version = default;
+            DateTimeOffset? lastUpdated = default;
+            IList<MsixPackageApplications> packageApplications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             List<MsixPackageDependencies> array = new List<MsixPackageDependencies>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MsixPackageDependencies.DeserializeMsixPackageDependencies(item));
+                                array.Add(MsixPackageDependencies.DeserializeMsixPackageDependencies(item, options));
                             }
                             packageDependencies = array;
                             continue;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             List<MsixPackageApplications> array = new List<MsixPackageApplications>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MsixPackageApplications.DeserializeMsixPackageApplications(item));
+                                array.Add(MsixPackageApplications.DeserializeMsixPackageApplications(item, options));
                             }
                             packageApplications = array;
                             continue;
@@ -337,11 +337,29 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpandMsixImage(id, name, type, systemData.Value, packageAlias.Value, imagePath.Value, packageName.Value, packageFamilyName.Value, packageFullName.Value, displayName.Value, packageRelativePath.Value, Optional.ToNullable(isRegularRegistration), Optional.ToNullable(isActive), Optional.ToList(packageDependencies), version.Value, Optional.ToNullable(lastUpdated), Optional.ToList(packageApplications), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ExpandMsixImage(
+                id,
+                name,
+                type,
+                systemData,
+                packageAlias,
+                imagePath,
+                packageName,
+                packageFamilyName,
+                packageFullName,
+                displayName,
+                packageRelativePath,
+                isRegularRegistration,
+                isActive,
+                packageDependencies ?? new ChangeTrackingList<MsixPackageDependencies>(),
+                version,
+                lastUpdated,
+                packageApplications ?? new ChangeTrackingList<MsixPackageApplications>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpandMsixImage>.Write(ModelReaderWriterOptions options)
@@ -353,7 +371,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpandMsixImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpandMsixImage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -369,7 +387,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeExpandMsixImage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpandMsixImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpandMsixImage)} does not support reading '{options.Format}' format.");
             }
         }
 

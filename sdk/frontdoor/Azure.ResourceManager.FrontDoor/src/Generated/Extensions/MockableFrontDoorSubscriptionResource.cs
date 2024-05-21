@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.FrontDoor.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Mocking
@@ -21,6 +18,8 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableFrontDoorSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics;
+        private PoliciesRestOperations _frontDoorWebApplicationFirewallPolicyPoliciesRestClient;
         private ClientDiagnostics _managedRuleSetsClientDiagnostics;
         private ManagedRuleSetsRestOperations _managedRuleSetsRestClient;
         private ClientDiagnostics _frontDoorNameAvailabilityWithSubscriptionClientDiagnostics;
@@ -42,6 +41,8 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         {
         }
 
+        private ClientDiagnostics FrontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics => _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorWebApplicationFirewallPolicyResource.ResourceType.Namespace, Diagnostics);
+        private PoliciesRestOperations FrontDoorWebApplicationFirewallPolicyPoliciesRestClient => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient ??= new PoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FrontDoorWebApplicationFirewallPolicyResource.ResourceType));
         private ClientDiagnostics ManagedRuleSetsClientDiagnostics => _managedRuleSetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ManagedRuleSetsRestOperations ManagedRuleSetsRestClient => _managedRuleSetsRestClient ??= new ManagedRuleSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics => _frontDoorNameAvailabilityWithSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -58,29 +59,63 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         }
 
         /// <summary>
-        /// Lists all available managed rule sets.
+        /// Lists all of the protection policies within a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallManagedRuleSets</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/frontDoorWebApplicationFirewallPolicies</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedRuleSets_List</description>
+        /// <description>Policies_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedRuleSetDefinition"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedRuleSetDefinition> GetManagedRuleSetsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FrontDoorWebApplicationFirewallPolicyResource> GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicyAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedRuleSetsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedRuleSetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedRuleSetDefinition.DeserializeManagedRuleSetDefinition, ManagedRuleSetsClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetManagedRuleSets", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FrontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FrontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorWebApplicationFirewallPolicyResource(Client, FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(e)), FrontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicy", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the protection policies within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/frontDoorWebApplicationFirewallPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Policies_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FrontDoorWebApplicationFirewallPolicyResource> GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicy(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FrontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FrontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorWebApplicationFirewallPolicyResource(Client, FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(e)), FrontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicy", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +131,33 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ManagedRuleSetDefinition"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedRuleSetDefinition> GetManagedRuleSetsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedRuleSetsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedRuleSetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ManagedRuleSetDefinition.DeserializeManagedRuleSetDefinition(e), ManagedRuleSetsClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetManagedRuleSets", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all available managed rule sets.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallManagedRuleSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedRuleSets_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,7 +167,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedRuleSetsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedRuleSetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedRuleSetDefinition.DeserializeManagedRuleSetDefinition, ManagedRuleSetsClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetManagedRuleSets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ManagedRuleSetDefinition.DeserializeManagedRuleSetDefinition(e), ManagedRuleSetsClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetManagedRuleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

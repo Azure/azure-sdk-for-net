@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class WindowsParameters : IUtf8JsonSerializable, IJsonModel<WindowsParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WindowsParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WindowsParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WindowsParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WindowsParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,19 +98,19 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static WindowsParameters DeserializeWindowsParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<VmGuestPatchClassificationForWindows>> classificationsToInclude = default;
-            Optional<IList<string>> kbNumbersToInclude = default;
-            Optional<IList<string>> kbNumbersToExclude = default;
-            Optional<bool> excludeKbsRequiringReboot = default;
-            Optional<DateTimeOffset> maxPatchPublishDate = default;
+            IList<VmGuestPatchClassificationForWindows> classificationsToInclude = default;
+            IList<string> kbNumbersToInclude = default;
+            IList<string> kbNumbersToExclude = default;
+            bool? excludeKbsRequiringReboot = default;
+            DateTimeOffset? maxPatchPublishDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("classificationsToInclude"u8))
@@ -175,11 +175,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsParameters(Optional.ToList(classificationsToInclude), Optional.ToList(kbNumbersToInclude), Optional.ToList(kbNumbersToExclude), Optional.ToNullable(excludeKbsRequiringReboot), Optional.ToNullable(maxPatchPublishDate), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WindowsParameters(
+                classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationForWindows>(),
+                kbNumbersToInclude ?? new ChangeTrackingList<string>(),
+                kbNumbersToExclude ?? new ChangeTrackingList<string>(),
+                excludeKbsRequiringReboot,
+                maxPatchPublishDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsParameters>.Write(ModelReaderWriterOptions options)
@@ -191,7 +197,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WindowsParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +213,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeWindowsParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WindowsParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

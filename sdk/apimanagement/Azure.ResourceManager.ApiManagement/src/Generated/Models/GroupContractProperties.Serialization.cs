@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class GroupContractProperties : IUtf8JsonSerializable, IJsonModel<GroupContractProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GroupContractProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GroupContractProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GroupContractProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GroupContractProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupContractProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupContractProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<GroupContractProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupContractProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupContractProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,19 +80,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static GroupContractProperties DeserializeGroupContractProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string displayName = default;
-            Optional<string> description = default;
-            Optional<bool> builtIn = default;
-            Optional<ApiManagementGroupType> type = default;
-            Optional<string> externalId = default;
+            string description = default;
+            bool? builtIn = default;
+            ApiManagementGroupType? type = default;
+            string externalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -130,11 +130,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GroupContractProperties(displayName, description.Value, Optional.ToNullable(builtIn), Optional.ToNullable(type), externalId.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GroupContractProperties(
+                displayName,
+                description,
+                builtIn,
+                type,
+                externalId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GroupContractProperties>.Write(ModelReaderWriterOptions options)
@@ -146,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GroupContractProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupContractProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeGroupContractProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GroupContractProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupContractProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

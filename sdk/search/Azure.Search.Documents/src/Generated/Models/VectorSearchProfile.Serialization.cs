@@ -24,6 +24,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("vectorizer"u8);
                 writer.WriteStringValue(Vectorizer);
             }
+            if (Optional.IsDefined(CompressionConfigurationName))
+            {
+                writer.WritePropertyName("compression"u8);
+                writer.WriteStringValue(CompressionConfigurationName);
+            }
             writer.WriteEndObject();
         }
 
@@ -35,7 +40,8 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             string algorithm = default;
-            Optional<string> vectorizer = default;
+            string vectorizer = default;
+            string compression = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,8 +59,29 @@ namespace Azure.Search.Documents.Indexes.Models
                     vectorizer = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("compression"u8))
+                {
+                    compression = property.Value.GetString();
+                    continue;
+                }
             }
-            return new VectorSearchProfile(name, algorithm, vectorizer.Value);
+            return new VectorSearchProfile(name, algorithm, vectorizer, compression);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VectorSearchProfile FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVectorSearchProfile(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

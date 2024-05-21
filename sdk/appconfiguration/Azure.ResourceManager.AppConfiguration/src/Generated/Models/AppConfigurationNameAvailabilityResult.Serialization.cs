@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,14 +16,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 {
     public partial class AppConfigurationNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<AppConfigurationNameAvailabilityResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationNameAvailabilityResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationNameAvailabilityResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppConfigurationNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppConfigurationNameAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppConfigurationNameAvailabilityResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppConfigurationNameAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppConfigurationNameAvailabilityResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,17 +74,17 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         internal static AppConfigurationNameAvailabilityResult DeserializeAppConfigurationNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> nameAvailable = default;
-            Optional<string> message = default;
-            Optional<string> reason = default;
+            bool? nameAvailable = default;
+            string message = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -107,11 +108,88 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationNameAvailabilityResult(Optional.ToNullable(nameAvailable), message.Value, reason.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppConfigurationNameAvailabilityResult(nameAvailable, message, reason, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsNameAvailable), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nameAvailable: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsNameAvailable))
+                {
+                    builder.Append("  nameAvailable: ");
+                    var boolValue = IsNameAvailable.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Message), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  message: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    builder.Append("  message: ");
+                    if (Message.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Message}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Message}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reason: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Reason))
+                {
+                    builder.Append("  reason: ");
+                    if (Reason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Reason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Reason}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<AppConfigurationNameAvailabilityResult>.Write(ModelReaderWriterOptions options)
@@ -122,8 +200,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AppConfigurationNameAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationNameAvailabilityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +219,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         return DeserializeAppConfigurationNameAvailabilityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppConfigurationNameAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationNameAvailabilityResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxDiskJobDetails : IUtf8JsonSerializable, IJsonModel<DataBoxDiskJobDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxDiskJobDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxDiskJobDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxDiskJobDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxDiskJobDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxDiskJobDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in CopyProgress)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in GranularCopyProgress)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in GranularCopyLogDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,26 +89,26 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in JobStages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails);
+            writer.WriteObjectValue(ContactDetails, options);
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                writer.WriteObjectValue(ShippingAddress, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeliveryPackage))
             {
                 writer.WritePropertyName("deliveryPackage"u8);
-                writer.WriteObjectValue(DeliveryPackage);
+                writer.WriteObjectValue(DeliveryPackage, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReturnPackage))
             {
                 writer.WritePropertyName("returnPackage"u8);
-                writer.WriteObjectValue(ReturnPackage);
+                writer.WriteObjectValue(ReturnPackage, options);
             }
             if (Optional.IsCollectionDefined(DataImportDetails))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataImportDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataExportDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences);
+                writer.WriteObjectValue(Preferences, options);
             }
             if (Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue(ReverseShippingDetails);
+                writer.WriteObjectValue(ReverseShippingDetails, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CopyLogDetails))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in CopyLogDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(DeviceErasureDetails))
             {
                 writer.WritePropertyName("deviceErasureDetails"u8);
-                writer.WriteObjectValue(DeviceErasureDetails);
+                writer.WriteObjectValue(DeviceErasureDetails, options);
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey);
+                writer.WriteObjectValue(KeyEncryptionKey, options);
             }
             if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
             {
@@ -190,12 +190,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(LastMitigationActionOnJob))
             {
                 writer.WritePropertyName("lastMitigationActionOnJob"u8);
-                writer.WriteObjectValue(LastMitigationActionOnJob);
+                writer.WriteObjectValue(LastMitigationActionOnJob, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DataCenterAddress))
             {
                 writer.WritePropertyName("datacenterAddress"u8);
-                writer.WriteObjectValue(DataCenterAddress);
+                writer.WriteObjectValue(DataCenterAddress, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DataCenterCode))
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxDiskJobDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxDiskJobDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -234,40 +234,40 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxDiskJobDetails DeserializeDataBoxDiskJobDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, int>> preferredDisks = default;
-            Optional<IReadOnlyList<DataBoxDiskCopyProgress>> copyProgress = default;
-            Optional<IReadOnlyList<DataBoxDiskGranularCopyProgress>> granularCopyProgress = default;
-            Optional<IReadOnlyList<DataBoxDiskGranularCopyLogDetails>> granularCopyLogDetails = default;
-            Optional<IReadOnlyDictionary<string, int>> disksAndSizeDetails = default;
-            Optional<string> passkey = default;
-            Optional<IReadOnlyList<DataBoxJobStage>> jobStages = default;
+            IDictionary<string, int> preferredDisks = default;
+            IReadOnlyList<DataBoxDiskCopyProgress> copyProgress = default;
+            IReadOnlyList<DataBoxDiskGranularCopyProgress> granularCopyProgress = default;
+            IReadOnlyList<DataBoxDiskGranularCopyLogDetails> granularCopyLogDetails = default;
+            IReadOnlyDictionary<string, int> disksAndSizeDetails = default;
+            string passkey = default;
+            IReadOnlyList<DataBoxJobStage> jobStages = default;
             DataBoxContactDetails contactDetails = default;
-            Optional<DataBoxShippingAddress> shippingAddress = default;
-            Optional<PackageShippingDetails> deliveryPackage = default;
-            Optional<PackageShippingDetails> returnPackage = default;
-            Optional<IList<DataImportDetails>> dataImportDetails = default;
-            Optional<IList<DataExportDetails>> dataExportDetails = default;
+            DataBoxShippingAddress shippingAddress = default;
+            PackageShippingDetails deliveryPackage = default;
+            PackageShippingDetails returnPackage = default;
+            IList<DataImportDetails> dataImportDetails = default;
+            IList<DataExportDetails> dataExportDetails = default;
             DataBoxOrderType jobDetailsType = default;
-            Optional<DataBoxOrderPreferences> preferences = default;
-            Optional<ReverseShippingDetails> reverseShippingDetails = default;
-            Optional<IReadOnlyList<CopyLogDetails>> copyLogDetails = default;
-            Optional<string> reverseShipmentLabelSasKey = default;
-            Optional<string> chainOfCustodySasKey = default;
-            Optional<DeviceErasureDetails> deviceErasureDetails = default;
-            Optional<DataBoxKeyEncryptionKey> keyEncryptionKey = default;
-            Optional<int> expectedDataSizeInTerabytes = default;
-            Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
-            Optional<LastMitigationActionOnJob> lastMitigationActionOnJob = default;
-            Optional<DataCenterAddressResult> dataCenterAddress = default;
-            Optional<DataCenterCode> dataCenterCode = default;
+            DataBoxOrderPreferences preferences = default;
+            ReverseShippingDetails reverseShippingDetails = default;
+            IReadOnlyList<CopyLogDetails> copyLogDetails = default;
+            string reverseShipmentLabelSasKey = default;
+            string chainOfCustodySasKey = default;
+            DeviceErasureDetails deviceErasureDetails = default;
+            DataBoxKeyEncryptionKey keyEncryptionKey = default;
+            int? expectedDataSizeInTerabytes = default;
+            IReadOnlyList<CustomerResolutionCode> actions = default;
+            LastMitigationActionOnJob lastMitigationActionOnJob = default;
+            DataCenterAddressResult dataCenterAddress = default;
+            DataCenterCode? dataCenterCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preferredDisks"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxDiskCopyProgress> array = new List<DataBoxDiskCopyProgress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxDiskCopyProgress.DeserializeDataBoxDiskCopyProgress(item));
+                        array.Add(DataBoxDiskCopyProgress.DeserializeDataBoxDiskCopyProgress(item, options));
                     }
                     copyProgress = array;
                     continue;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxDiskGranularCopyProgress> array = new List<DataBoxDiskGranularCopyProgress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxDiskGranularCopyProgress.DeserializeDataBoxDiskGranularCopyProgress(item));
+                        array.Add(DataBoxDiskGranularCopyProgress.DeserializeDataBoxDiskGranularCopyProgress(item, options));
                     }
                     granularCopyProgress = array;
                     continue;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxDiskGranularCopyLogDetails> array = new List<DataBoxDiskGranularCopyLogDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxDiskGranularCopyLogDetails.DeserializeDataBoxDiskGranularCopyLogDetails(item));
+                        array.Add(DataBoxDiskGranularCopyLogDetails.DeserializeDataBoxDiskGranularCopyLogDetails(item, options));
                     }
                     granularCopyLogDetails = array;
                     continue;
@@ -354,14 +354,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxJobStage> array = new List<DataBoxJobStage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxJobStage.DeserializeDataBoxJobStage(item));
+                        array.Add(DataBoxJobStage.DeserializeDataBoxJobStage(item, options));
                     }
                     jobStages = array;
                     continue;
                 }
                 if (property.NameEquals("contactDetails"u8))
                 {
-                    contactDetails = DataBoxContactDetails.DeserializeDataBoxContactDetails(property.Value);
+                    contactDetails = DataBoxContactDetails.DeserializeDataBoxContactDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("shippingAddress"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value);
+                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deliveryPackage"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    deliveryPackage = PackageShippingDetails.DeserializePackageShippingDetails(property.Value);
+                    deliveryPackage = PackageShippingDetails.DeserializePackageShippingDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("returnPackage"u8))
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    returnPackage = PackageShippingDetails.DeserializePackageShippingDetails(property.Value);
+                    returnPackage = PackageShippingDetails.DeserializePackageShippingDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataImportDetails"u8))
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataImportDetails> array = new List<DataImportDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataImportDetails.DeserializeDataImportDetails(item));
+                        array.Add(Models.DataImportDetails.DeserializeDataImportDetails(item, options));
                     }
                     dataImportDetails = array;
                     continue;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataExportDetails> array = new List<DataExportDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataExportDetails.DeserializeDataExportDetails(item));
+                        array.Add(Models.DataExportDetails.DeserializeDataExportDetails(item, options));
                     }
                     dataExportDetails = array;
                     continue;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    preferences = DataBoxOrderPreferences.DeserializeDataBoxOrderPreferences(property.Value);
+                    preferences = DataBoxOrderPreferences.DeserializeDataBoxOrderPreferences(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reverseShippingDetails"u8))
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    reverseShippingDetails = ReverseShippingDetails.DeserializeReverseShippingDetails(property.Value);
+                    reverseShippingDetails = ReverseShippingDetails.DeserializeReverseShippingDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("copyLogDetails"u8))
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<CopyLogDetails> array = new List<CopyLogDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.CopyLogDetails.DeserializeCopyLogDetails(item));
+                        array.Add(Models.CopyLogDetails.DeserializeCopyLogDetails(item, options));
                     }
                     copyLogDetails = array;
                     continue;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    deviceErasureDetails = DeviceErasureDetails.DeserializeDeviceErasureDetails(property.Value);
+                    deviceErasureDetails = DeviceErasureDetails.DeserializeDeviceErasureDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKey"u8))
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    keyEncryptionKey = DataBoxKeyEncryptionKey.DeserializeDataBoxKeyEncryptionKey(property.Value);
+                    keyEncryptionKey = DataBoxKeyEncryptionKey.DeserializeDataBoxKeyEncryptionKey(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("expectedDataSizeInTeraBytes"u8))
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    lastMitigationActionOnJob = LastMitigationActionOnJob.DeserializeLastMitigationActionOnJob(property.Value);
+                    lastMitigationActionOnJob = LastMitigationActionOnJob.DeserializeLastMitigationActionOnJob(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datacenterAddress"u8))
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dataCenterAddress = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value);
+                    dataCenterAddress = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataCenterCode"u8))
@@ -536,11 +536,38 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxDiskJobDetails(Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Optional.ToList(dataImportDetails), Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, reverseShippingDetails.Value, Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode), serializedAdditionalRawData, Optional.ToDictionary(preferredDisks), Optional.ToList(copyProgress), Optional.ToList(granularCopyProgress), Optional.ToList(granularCopyLogDetails), Optional.ToDictionary(disksAndSizeDetails), passkey.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxDiskJobDetails(
+                jobStages ?? new ChangeTrackingList<DataBoxJobStage>(),
+                contactDetails,
+                shippingAddress,
+                deliveryPackage,
+                returnPackage,
+                dataImportDetails ?? new ChangeTrackingList<DataImportDetails>(),
+                dataExportDetails ?? new ChangeTrackingList<DataExportDetails>(),
+                jobDetailsType,
+                preferences,
+                reverseShippingDetails,
+                copyLogDetails ?? new ChangeTrackingList<CopyLogDetails>(),
+                reverseShipmentLabelSasKey,
+                chainOfCustodySasKey,
+                deviceErasureDetails,
+                keyEncryptionKey,
+                expectedDataSizeInTerabytes,
+                actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
+                lastMitigationActionOnJob,
+                dataCenterAddress,
+                dataCenterCode,
+                serializedAdditionalRawData,
+                preferredDisks ?? new ChangeTrackingDictionary<string, int>(),
+                copyProgress ?? new ChangeTrackingList<DataBoxDiskCopyProgress>(),
+                granularCopyProgress ?? new ChangeTrackingList<DataBoxDiskGranularCopyProgress>(),
+                granularCopyLogDetails ?? new ChangeTrackingList<DataBoxDiskGranularCopyLogDetails>(),
+                disksAndSizeDetails ?? new ChangeTrackingDictionary<string, int>(),
+                passkey);
         }
 
         BinaryData IPersistableModel<DataBoxDiskJobDetails>.Write(ModelReaderWriterOptions options)
@@ -552,7 +579,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxDiskJobDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxDiskJobDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -568,7 +595,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxDiskJobDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxDiskJobDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxDiskJobDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

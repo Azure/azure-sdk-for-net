@@ -54,12 +54,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<VideoEncoding> encoding = default;
-            Optional<float> quality = default;
-            Optional<VideoResolution> resolution = default;
-            Optional<RateControl> rateControl = default;
-            Optional<H264Configuration> h264 = default;
-            Optional<Mpeg4Configuration> mpeg4 = default;
+            VideoEncoding? encoding = default;
+            float? quality = default;
+            VideoResolution resolution = default;
+            RateControl rateControl = default;
+            H264Configuration h264 = default;
+            Mpeg4Configuration mpeg4 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encoding"u8))
@@ -117,7 +117,29 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new VideoEncoderConfiguration(Optional.ToNullable(encoding), Optional.ToNullable(quality), resolution.Value, rateControl.Value, h264.Value, mpeg4.Value);
+            return new VideoEncoderConfiguration(
+                encoding,
+                quality,
+                resolution,
+                rateControl,
+                h264,
+                mpeg4);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VideoEncoderConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVideoEncoderConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

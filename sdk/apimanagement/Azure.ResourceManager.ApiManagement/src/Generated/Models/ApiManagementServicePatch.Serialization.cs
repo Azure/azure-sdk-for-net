@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -18,21 +17,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementServicePatch : IUtf8JsonSerializable, IJsonModel<ApiManagementServicePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementServicePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementServicePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiManagementServicePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -143,7 +142,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in HostnameConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -190,7 +189,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
-                writer.WriteObjectValue(VirtualNetworkConfiguration);
+                writer.WriteObjectValue(VirtualNetworkConfiguration, options);
             }
             if (Optional.IsCollectionDefined(AdditionalLocations))
             {
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -219,7 +218,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Certificates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -241,7 +240,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ApiVersionConstraint))
             {
                 writer.WritePropertyName("apiVersionConstraint"u8);
-                writer.WriteObjectValue(ApiVersionConstraint);
+                writer.WriteObjectValue(ApiVersionConstraint, options);
             }
             if (Optional.IsDefined(Restore))
             {
@@ -254,7 +253,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -297,7 +296,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -306,51 +305,51 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementServicePatch DeserializeApiManagementServicePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ApiManagementServiceSkuProperties> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
-            Optional<IList<string>> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ApiManagementServiceSkuProperties sku = default;
+            ManagedServiceIdentity identity = default;
+            ETag? etag = default;
+            IList<string> zones = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> notificationSenderEmail = default;
-            Optional<string> provisioningState = default;
-            Optional<string> targetProvisioningState = default;
-            Optional<DateTimeOffset> createdAtUtc = default;
-            Optional<Uri> gatewayUri = default;
-            Optional<Uri> gatewayRegionalUri = default;
-            Optional<Uri> portalUri = default;
-            Optional<Uri> managementApiUri = default;
-            Optional<Uri> scmUri = default;
-            Optional<Uri> developerPortalUri = default;
-            Optional<IList<HostnameConfiguration>> hostnameConfigurations = default;
-            Optional<IReadOnlyList<IPAddress>> publicIPAddresses = default;
-            Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
-            Optional<ResourceIdentifier> publicIPAddressId = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
-            Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
-            Optional<IList<AdditionalLocation>> additionalLocations = default;
-            Optional<IDictionary<string, string>> customProperties = default;
-            Optional<IList<CertificateConfiguration>> certificates = default;
-            Optional<bool> enableClientCertificate = default;
-            Optional<bool> disableGateway = default;
-            Optional<VirtualNetworkType> virtualNetworkType = default;
-            Optional<ApiVersionConstraint> apiVersionConstraint = default;
-            Optional<bool> restore = default;
-            Optional<IList<RemotePrivateEndpointConnectionWrapper>> privateEndpointConnections = default;
-            Optional<PlatformVersion> platformVersion = default;
-            Optional<string> publisherEmail = default;
-            Optional<string> publisherName = default;
+            SystemData systemData = default;
+            string notificationSenderEmail = default;
+            string provisioningState = default;
+            string targetProvisioningState = default;
+            DateTimeOffset? createdAtUtc = default;
+            Uri gatewayUri = default;
+            Uri gatewayRegionalUri = default;
+            Uri portalUri = default;
+            Uri managementApiUri = default;
+            Uri scmUri = default;
+            Uri developerPortalUri = default;
+            IList<HostnameConfiguration> hostnameConfigurations = default;
+            IReadOnlyList<IPAddress> publicIPAddresses = default;
+            IReadOnlyList<IPAddress> privateIPAddresses = default;
+            ResourceIdentifier publicIPAddressId = default;
+            PublicNetworkAccess? publicNetworkAccess = default;
+            VirtualNetworkConfiguration virtualNetworkConfiguration = default;
+            IList<AdditionalLocation> additionalLocations = default;
+            IDictionary<string, string> customProperties = default;
+            IList<CertificateConfiguration> certificates = default;
+            bool? enableClientCertificate = default;
+            bool? disableGateway = default;
+            VirtualNetworkType? virtualNetworkType = default;
+            ApiVersionConstraint apiVersionConstraint = default;
+            bool? restore = default;
+            IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections = default;
+            PlatformVersion? platformVersion = default;
+            string publisherEmail = default;
+            string publisherName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -359,7 +358,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    sku = ApiManagementServiceSkuProperties.DeserializeApiManagementServiceSkuProperties(property.Value);
+                    sku = ApiManagementServiceSkuProperties.DeserializeApiManagementServiceSkuProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -528,7 +527,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<HostnameConfiguration> array = new List<HostnameConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HostnameConfiguration.DeserializeHostnameConfiguration(item));
+                                array.Add(HostnameConfiguration.DeserializeHostnameConfiguration(item, options));
                             }
                             hostnameConfigurations = array;
                             continue;
@@ -599,7 +598,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            virtualNetworkConfiguration = VirtualNetworkConfiguration.DeserializeVirtualNetworkConfiguration(property0.Value);
+                            virtualNetworkConfiguration = VirtualNetworkConfiguration.DeserializeVirtualNetworkConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("additionalLocations"u8))
@@ -611,7 +610,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<AdditionalLocation> array = new List<AdditionalLocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AdditionalLocation.DeserializeAdditionalLocation(item));
+                                array.Add(AdditionalLocation.DeserializeAdditionalLocation(item, options));
                             }
                             additionalLocations = array;
                             continue;
@@ -639,7 +638,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<CertificateConfiguration> array = new List<CertificateConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CertificateConfiguration.DeserializeCertificateConfiguration(item));
+                                array.Add(CertificateConfiguration.DeserializeCertificateConfiguration(item, options));
                             }
                             certificates = array;
                             continue;
@@ -677,7 +676,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            apiVersionConstraint = ApiVersionConstraint.DeserializeApiVersionConstraint(property0.Value);
+                            apiVersionConstraint = ApiVersionConstraint.DeserializeApiVersionConstraint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("restore"u8))
@@ -698,7 +697,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<RemotePrivateEndpointConnectionWrapper> array = new List<RemotePrivateEndpointConnectionWrapper>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RemotePrivateEndpointConnectionWrapper.DeserializeRemotePrivateEndpointConnectionWrapper(item));
+                                array.Add(RemotePrivateEndpointConnectionWrapper.DeserializeRemotePrivateEndpointConnectionWrapper(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -727,11 +726,49 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementServicePatch(id, name, type, systemData.Value, sku.Value, identity, Optional.ToNullable(etag), Optional.ToList(zones), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUri.Value, gatewayRegionalUri.Value, portalUri.Value, managementApiUri.Value, scmUri.Value, developerPortalUri.Value, Optional.ToList(hostnameConfigurations), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, Optional.ToList(additionalLocations), Optional.ToDictionary(customProperties), Optional.ToList(certificates), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), Optional.ToList(privateEndpointConnections), Optional.ToNullable(platformVersion), publisherEmail.Value, publisherName.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApiManagementServicePatch(
+                id,
+                name,
+                type,
+                systemData,
+                sku,
+                identity,
+                etag,
+                zones ?? new ChangeTrackingList<string>(),
+                notificationSenderEmail,
+                provisioningState,
+                targetProvisioningState,
+                createdAtUtc,
+                gatewayUri,
+                gatewayRegionalUri,
+                portalUri,
+                managementApiUri,
+                scmUri,
+                developerPortalUri,
+                hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>(),
+                publicIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                privateIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                publicIPAddressId,
+                publicNetworkAccess,
+                virtualNetworkConfiguration,
+                additionalLocations ?? new ChangeTrackingList<AdditionalLocation>(),
+                customProperties ?? new ChangeTrackingDictionary<string, string>(),
+                certificates ?? new ChangeTrackingList<CertificateConfiguration>(),
+                enableClientCertificate,
+                disableGateway,
+                virtualNetworkType,
+                apiVersionConstraint,
+                restore,
+                privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>(),
+                platformVersion,
+                publisherEmail,
+                publisherName,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementServicePatch>.Write(ModelReaderWriterOptions options)
@@ -743,7 +780,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -759,7 +796,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiManagementServicePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

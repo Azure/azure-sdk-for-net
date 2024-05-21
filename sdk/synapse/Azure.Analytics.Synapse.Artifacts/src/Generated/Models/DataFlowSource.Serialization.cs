@@ -54,12 +54,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> schemaLinkedService = default;
+            LinkedServiceReference schemaLinkedService = default;
             string name = default;
-            Optional<string> description = default;
-            Optional<DatasetReference> dataset = default;
-            Optional<LinkedServiceReference> linkedService = default;
-            Optional<DataFlowReference> flowlet = default;
+            string description = default;
+            DatasetReference dataset = default;
+            LinkedServiceReference linkedService = default;
+            DataFlowReference flowlet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaLinkedService"u8))
@@ -109,7 +109,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowSource(name, description.Value, dataset.Value, linkedService.Value, flowlet.Value, schemaLinkedService.Value);
+            return new DataFlowSource(
+                name,
+                description,
+                dataset,
+                linkedService,
+                flowlet,
+                schemaLinkedService);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DataFlowSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataFlowSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class DataFlowSourceConverter : JsonConverter<DataFlowSource>
@@ -118,6 +140,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override DataFlowSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -83,11 +83,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<int>> minutes = default;
-            Optional<IList<int>> hours = default;
-            Optional<IList<DayOfWeek>> weekDays = default;
-            Optional<IList<int>> monthDays = default;
-            Optional<IList<RecurrenceScheduleOccurrence>> monthlyOccurrences = default;
+            IList<int> minutes = default;
+            IList<int> hours = default;
+            IList<DayOfWeek> weekDays = default;
+            IList<int> monthDays = default;
+            IList<RecurrenceScheduleOccurrence> monthlyOccurrences = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RecurrenceSchedule(Optional.ToList(minutes), Optional.ToList(hours), Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences), additionalProperties);
+            return new RecurrenceSchedule(
+                minutes ?? new ChangeTrackingList<int>(),
+                hours ?? new ChangeTrackingList<int>(),
+                weekDays ?? new ChangeTrackingList<DayOfWeek>(),
+                monthDays ?? new ChangeTrackingList<int>(),
+                monthlyOccurrences ?? new ChangeTrackingList<RecurrenceScheduleOccurrence>(),
+                additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RecurrenceSchedule FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRecurrenceSchedule(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class RecurrenceScheduleConverter : JsonConverter<RecurrenceSchedule>
@@ -174,6 +196,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override RecurrenceSchedule Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
@@ -382,7 +383,14 @@ namespace Azure.Storage.DataMovement
                 ex is not TaskCanceledException &&
                 !ex.Message.Contains("The request was canceled."))
             {
-                SetFailureType(ex.Message);
+                if (ex is RequestFailedException requestFailedException)
+                {
+                    SetFailureType(requestFailedException.ErrorCode);
+                }
+                else
+                {
+                    SetFailureType(ex.Message);
+                }
                 if (TransferFailedEventHandler != null)
                 {
                     await TransferFailedEventHandler.RaiseAsync(

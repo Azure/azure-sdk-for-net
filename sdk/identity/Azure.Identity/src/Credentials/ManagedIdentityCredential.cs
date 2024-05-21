@@ -10,7 +10,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Attempts authentication using a managed identity that has been assigned to the deployment environment. This authentication type works for all Azure hosted
+    /// Attempts authentication using a managed identity that has been assigned to the deployment environment. This authentication type works for all Azure-hosted
     /// environments that support managed identity. More information about configuring managed identities can be found at
     /// <see href="https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview"/>.
     /// </summary>
@@ -27,35 +27,34 @@ namespace Azure.Identity
             "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/managedidentitycredential/troubleshoot";
 
         /// <summary>
-        /// Protected constructor for mocking.
+        /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
         protected ManagedIdentityCredential()
         { }
 
         /// <summary>
-        /// Creates an instance of the ManagedIdentityCredential capable of authenticating a resource with a managed identity.
+        /// Creates an instance of <see cref="ManagedIdentityCredential"/> capable of authenticating a resource with a user-assigned or a system-assigned managed identity.
         /// </summary>
         /// <param name="clientId">
-        /// The client ID to authenticate for a user-assigned managed identity. More information on user-assigned managed identities can be found at
-        /// <see href="https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview#how-a-user-assigned-managed-identity-works-with-an-azure-vm"/>.
+        /// The client ID to authenticate for a <see href="https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview#how-a-user-assigned-managed-identity-works-with-an-azure-vm">user-assigned managed identity</see>.
+        /// If not provided, a system-assigned managed identity is used.
         /// </param>
         /// <param name="options">Options to configure the management of the requests sent to Microsoft Entra ID.</param>
         public ManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
-            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { ClientId = clientId, Pipeline = CredentialPipeline.GetInstance(options), Options = options }))
+            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { ClientId = clientId, Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true), Options = options }))
         {
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
         }
 
         /// <summary>
-        /// Creates an instance of the ManagedIdentityCredential capable of authenticating a resource with a managed identity.
+        /// Creates an instance of <see cref="ManagedIdentityCredential"/> capable of authenticating a resource with a user-assigned managed identity.
         /// </summary>
         /// <param name="resourceId">
-        /// The resource ID to authenticate for a user-assigned managed identity. More information on user-assigned managed identities can be found at
-        /// <see href="https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview#how-a-user-assigned-managed-identity-works-with-an-azure-vm"/>.
+        /// The resource ID to authenticate for a <see href="https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview#how-a-user-assigned-managed-identity-works-with-an-azure-vm">user-assigned managed identity</see>.
         /// </param>
         /// <param name="options">Options to configure the management of the requests sent to Microsoft Entra ID.</param>
         public ManagedIdentityCredential(ResourceIdentifier resourceId, TokenCredentialOptions options = null)
-            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { ResourceIdentifier = resourceId, Pipeline = CredentialPipeline.GetInstance(options), Options = options }))
+            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { ResourceIdentifier = resourceId, Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true), Options = options }))
         {
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             _clientId = resourceId.ToString();

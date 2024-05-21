@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,6 +14,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The SystemCreatedStorageAccount. </summary>
     public partial class SystemCreatedStorageAccount
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SystemCreatedStorageAccount"/>. </summary>
         public SystemCreatedStorageAccount()
         {
@@ -33,13 +67,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// "Premium_LRS",
         /// "Premium_ZRS"
         /// </param>
-        internal SystemCreatedStorageAccount(bool? allowBlobPublicAccess, ArmResourceId armResourceIdentifier, bool? storageAccountHnsEnabled, string storageAccountName, string storageAccountType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SystemCreatedStorageAccount(bool? allowBlobPublicAccess, ArmResourceId armResourceIdentifier, bool? storageAccountHnsEnabled, string storageAccountName, string storageAccountType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AllowBlobPublicAccess = allowBlobPublicAccess;
             ArmResourceIdentifier = armResourceIdentifier;
             StorageAccountHnsEnabled = storageAccountHnsEnabled;
             StorageAccountName = storageAccountName;
             StorageAccountType = storageAccountType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Public blob access allowed. </summary>

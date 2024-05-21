@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class HciClusterPatch : IUtf8JsonSerializable, IJsonModel<HciClusterPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciClusterPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciClusterPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HciClusterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HciClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciClusterPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciClusterPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties"u8);
-                writer.WriteObjectValue(DesiredProperties);
+                writer.WriteObjectValue(DesiredProperties, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("identity"u8);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciClusterPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciClusterPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,23 +122,23 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static HciClusterPatch DeserializeHciClusterPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> cloudManagementEndpoint = default;
-            Optional<Guid> aadClientId = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<HciClusterDesiredProperties> desiredProperties = default;
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
-            Optional<HciManagedServiceIdentityType> type = default;
-            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            IDictionary<string, string> tags = default;
+            string cloudManagementEndpoint = default;
+            Guid? aadClientId = default;
+            Guid? aadTenantId = default;
+            HciClusterDesiredProperties desiredProperties = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
+            HciManagedServiceIdentityType? type = default;
+            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Hci.Models
                             {
                                 continue;
                             }
-                            desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(property0.Value);
+                            desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -254,11 +254,21 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterPatch(Optional.ToDictionary(tags), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), desiredProperties.Value, Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HciClusterPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                cloudManagementEndpoint,
+                aadClientId,
+                aadTenantId,
+                desiredProperties,
+                principalId,
+                tenantId,
+                type,
+                userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterPatch>.Write(ModelReaderWriterOptions options)
@@ -270,7 +280,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HciClusterPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciClusterPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -286,7 +296,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeHciClusterPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciClusterPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciClusterPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

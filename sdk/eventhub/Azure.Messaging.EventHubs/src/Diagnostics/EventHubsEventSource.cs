@@ -179,7 +179,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="maximumBatchSize">The maximum number of events to include in the batch.</param>
         /// <param name="maximumWaitTime">The maximum time to wait when no events are available, in seconds.</param>
         ///
-        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'); Operation Id: '{3}'.  Service Retry Count: {4}; Event Count: {5}; Duration: '{6:0.00}' seconds; Starting sequence number: '{7}', Ending sequence number: '{8}'; Maximum batch size: '{9}'; Maximum wait time: '{10:0.00}'.")]
+        [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'); Operation Id: '{3}'.  Service Retry Count: {4}; Event Count: {5}; Duration: '{6:0.00}' seconds; Starting sequence number: '{7}', Ending sequence number: '{8}'; Maximum batch size: '{9}'; Maximum wait time: '{10:0.00}' seconds.")]
         public virtual void EventReceiveComplete(string eventHubName,
                                                  string consumerGroup,
                                                  string partitionId,
@@ -2111,7 +2111,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="durationSeconds">The total duration that load balancing took to complete, in seconds.</param>
         /// <param name="loadBalancingIntervalSeconds">The interval, in seconds, that partition ownership is reserved for.</param>
         ///
-        [Event(103, Level = EventLevel.Warning, Message = "A load balancing cycle has taken too long to complete for the processor instance with identifier '{0}' for Event Hub: {1}.  A slow cycle can cause stability issues with partition ownership.  Consider investigating storage latency and thread pool health.  Common causes are latency in storage operations and too many partitions owned.  You may also want to consider increasing the 'PartitionOwnershipExpirationInterval' in the processor options.  Cycle Duration: '{2:0.00}' seconds.  Partition Ownership Duration: '{3:0.00}' seconds.  {4}")]
+        [NonEvent]
         public virtual void EventProcessorLoadBalancingCycleSlowWarning(string identifier,
                                                                         string eventHubName,
                                                                         double durationSeconds,
@@ -2119,7 +2119,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(103, identifier ?? string.Empty, eventHubName ?? string.Empty, durationSeconds, loadBalancingIntervalSeconds, Resources.TroubleshootingGuideLink);
+                EventProcessorLoadBalancingCycleSlowWarningCore(identifier, eventHubName, durationSeconds, loadBalancingIntervalSeconds, Resources.TroubleshootingGuideLink);
             }
         }
 
@@ -2134,7 +2134,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="ownedPartitionCount">The number of partitions owned.</param>
         /// <param name="maximumAdvisedCount">The maximum number of partitions that are advised for this processor instance.</param>
         ///
-        [Event(104, Level = EventLevel.Warning, Message = "The processor instance with identifier '{0}' for Event Hub: {1} owns a higher than recommended number of partitions for average workloads.  Owning too many partitions may cause slow performance and stability issues.  Consider monitoring performance and partition ownership stability to ensure that they meet expectations.  If not, adding processors to the group may help.  Total partition count: '{2}'.  Owned partition count: '{3}'.  Maximum recommended partitions owned: '{4}'.  This warning is based on a general heuristic that will differ between applications.  If you are not experiencing issues, this warning is safe to ignore.  {5}")]
+        [NonEvent]
         public virtual void EventProcessorHighPartitionOwnershipWarning(string identifier,
                                                                         string eventHubName,
                                                                         int totalPartitionCount,
@@ -2143,7 +2143,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(104, identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount, maximumAdvisedCount, Resources.TroubleshootingGuideLink);
+                EventProcessorHighPartitionOwnershipWarningCore(identifier, eventHubName, totalPartitionCount, ownedPartitionCount, maximumAdvisedCount, Resources.TroubleshootingGuideLink);
             }
         }
 
@@ -2588,18 +2588,20 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
         /// <param name="operationId">An artificial identifier for the handler invocation.</param>
         /// <param name="durationSeconds">The total duration that the cycle took to complete, in seconds.</param>
+        /// <param name="eventCount">The number of events in the batch that was passed to the processing handler.</param>
         ///
-        [Event(124, Level = EventLevel.Verbose, Message = "Completed dispatching events to the processing handler for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2}, Consumer Group: {3}, and Operation Id: '{4}'.   Duration: '{5:0.00}' seconds.")]
+        [Event(124, Level = EventLevel.Verbose, Message = "Completed dispatching events to the processing handler for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2}, Consumer Group: {3}, and Operation Id: '{4}'.   Duration: '{5:0.00}' seconds, Event Count: '{6]'.")]
         public virtual void EventProcessorProcessingHandlerComplete(string partitionId,
                                                                     string identifier,
                                                                     string eventHubName,
                                                                     string consumerGroup,
                                                                     string operationId,
-                                                                    double durationSeconds)
+                                                                    double durationSeconds,
+                                                                    int eventCount)
         {
             if (IsEnabled())
             {
-                EventProcessorProcessingHandlerCompleteCore(124, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, operationId ?? string.Empty, durationSeconds);
+                EventProcessorProcessingHandlerCompleteCore(124, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, operationId ?? string.Empty, durationSeconds, eventCount);
             }
         }
 
@@ -2680,7 +2682,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="loadBalancingIntervalSeconds">The interval, in seconds, that should pass between load balancing cycles.</param>
         /// <param name="ownershipIntervalSeconds">The interval, in seconds, that partition ownership is reserved for..</param>
         ///
-        [Event(128, Level = EventLevel.Warning, Message = "The 'PartitionOwnershipExpirationInterval' and 'LoadBalancingUpdateInterval' are configured using intervals that may cause stability issues with partition ownership for the processor instance with identifier '{0}' for Event Hub: {1}.  It is recommended that the 'PartitionOwnershipExpirationInterval' be at least 3 times greater than the 'LoadBalancingUpdateInterval' and very strongly advised that it should be no less than twice as long.  When these intervals are too close together, ownership may expire before it is renewed during load balancing which will cause partitions to migrate.  Consider adjusting the intervals in the processor options if you experience issues.  Load Balancing Interval '{2:0:00}' seconds.  Partition Ownership Interval '{3:0:00}' seconds.  {4}")]
+        [NonEvent]
         public virtual void ProcessorLoadBalancingIntervalsTooCloseWarning(string identifier,
                                                                            string eventHubName,
                                                                            double loadBalancingIntervalSeconds,
@@ -2688,7 +2690,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(128, identifier ?? string.Empty, eventHubName ?? string.Empty, ownershipIntervalSeconds, loadBalancingIntervalSeconds, Resources.TroubleshootingGuideLink);
+                ProcessorLoadBalancingIntervalsTooCloseWarningCore(identifier, eventHubName, ownershipIntervalSeconds, loadBalancingIntervalSeconds, Resources.TroubleshootingGuideLink);
             }
         }
 
@@ -2737,6 +2739,28 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has encountered an fatal error during load balancing
+        ///   and cannot recover.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(130, Level = EventLevel.Error, Message = "A fatal exception occurred during load balancing for processor instance with identifier '{0}' for Event Hub: {1} and Consumer Group: {2}.  The processor cannot recover and has stopped.  Error Message: '{3}'")]
+        public virtual void EventProcessorFatalTaskError(string identifier,
+                                                         string eventHubName,
+                                                         string consumerGroup,
+                                                         string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(130, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
         ///   Gets the current value of <see cref="DateTimeOffset.UtcNow" /> formatted
         ///   for use in logs.
         /// </summary>
@@ -2744,6 +2768,71 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <returns>The current UTC date/time stamp as a string, formatted for logging.</returns>
         ///
         public virtual string GetLogFormattedUtcNow() => DateTime.UtcNow.ToString("yyyy-mm-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture);
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has a load balancing cycle that
+        ///   ran slowly enough to be a concern.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="durationSeconds">The total duration that load balancing took to complete, in seconds.</param>
+        /// <param name="loadBalancingIntervalSeconds">The interval, in seconds, that partition ownership is reserved for.</param>
+        /// <param name="troubleshootingGuideLink">A link to the Event Hubs troubleshooting guide.</param>
+        ///
+        [Event(103, Level = EventLevel.Warning, Message = "A load balancing cycle has taken too long to complete for the processor instance with identifier '{0}' for Event Hub: {1}.  A slow cycle can cause stability issues with partition ownership.  Consider investigating storage latency and thread pool health.  Common causes are latency in storage operations and too many partitions owned.  You may also want to consider increasing the 'PartitionOwnershipExpirationInterval' in the processor options.  Cycle Duration: '{2:0.00}' seconds.  Partition Ownership Duration: '{3:0.00}' seconds.  {4}")]
+        private void EventProcessorLoadBalancingCycleSlowWarningCore(string identifier,
+                                                                     string eventHubName,
+                                                                     double durationSeconds,
+                                                                     double loadBalancingIntervalSeconds,
+                                                                     string troubleshootingGuideLink)
+        {
+            WriteEvent(103, identifier ?? string.Empty, eventHubName ?? string.Empty, durationSeconds, loadBalancingIntervalSeconds, troubleshootingGuideLink);
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has taken responsibility for a number of
+        ///   partitions that may impact performance and normal operation.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="totalPartitionCount">The total number of partitions.</param>
+        /// <param name="ownedPartitionCount">The number of partitions owned.</param>
+        /// <param name="maximumAdvisedCount">The maximum number of partitions that are advised for this processor instance.</param>
+        /// <param name="troubleshootingGuideLink">A link to the Event Hubs troubleshooting guide.</param>
+        ///
+        [Event(104, Level = EventLevel.Warning, Message = "The processor instance with identifier '{0}' for Event Hub: {1} owns a higher than recommended number of partitions for average workloads.  Owning too many partitions may cause slow performance and stability issues.  Consider monitoring performance and partition ownership stability to ensure that they meet expectations.  If not, adding processors to the group may help.  Total partition count: '{2}'.  Owned partition count: '{3}'.  Maximum recommended partitions owned: '{4}'.  This warning is based on a general heuristic that will differ between applications.  If you are not experiencing issues, this warning is safe to ignore.  {5}")]
+        private void EventProcessorHighPartitionOwnershipWarningCore(string identifier,
+                                                                     string eventHubName,
+                                                                     int totalPartitionCount,
+                                                                     int ownedPartitionCount,
+                                                                     int maximumAdvisedCount,
+                                                                     string troubleshootingGuideLink)
+        {
+            WriteEvent(104, identifier ?? string.Empty, eventHubName ?? string.Empty, totalPartitionCount, ownedPartitionCount, maximumAdvisedCount, troubleshootingGuideLink);
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has a load balancing cycle that
+        ///   ran slowly enough to be a concern.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="loadBalancingIntervalSeconds">The interval, in seconds, that should pass between load balancing cycles.</param>
+        /// <param name="ownershipIntervalSeconds">The interval, in seconds, that partition ownership is reserved for.</param>
+        /// <param name="troubleshootingGuideLink">A link to the Event Hubs troubleshooting guide.</param>
+        ///
+        [Event(128, Level = EventLevel.Warning, Message = "The 'PartitionOwnershipExpirationInterval' and 'LoadBalancingUpdateInterval' are configured using intervals that may cause stability issues with partition ownership for the processor instance with identifier '{0}' for Event Hub: {1}.  It is recommended that the 'PartitionOwnershipExpirationInterval' be at least 3 times greater than the 'LoadBalancingUpdateInterval' and very strongly advised that it should be no less than twice as long.  When these intervals are too close together, ownership may expire before it is renewed during load balancing which will cause partitions to migrate.  Consider adjusting the intervals in the processor options if you experience issues.  Load Balancing Interval '{2:0.00}' seconds.  Partition Ownership Interval '{3:0.00}' seconds.  {4}")]
+        private void ProcessorLoadBalancingIntervalsTooCloseWarningCore(string identifier,
+                                                                        string eventHubName,
+                                                                        double loadBalancingIntervalSeconds,
+                                                                        double ownershipIntervalSeconds,
+                                                                        string troubleshootingGuideLink)
+        {
+            WriteEvent(128, identifier ?? string.Empty, eventHubName ?? string.Empty, ownershipIntervalSeconds, loadBalancingIntervalSeconds, troubleshootingGuideLink);
+        }
 
         /// <summary>
         ///   Indicates that the receiving of events has completed.
@@ -3231,6 +3320,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
         /// <param name="operationId">An artificial identifier for the handler invocation.</param>
         /// <param name="durationSeconds">The total duration that the cycle took to complete, in seconds.</param>
+        /// <param name="eventCount">The number of events in the batch that was passed to the processing handler.</param>
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -3240,7 +3330,8 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                                                                         string eventHubName,
                                                                         string consumerGroup,
                                                                         string operationId,
-                                                                        double durationSeconds)
+                                                                        double durationSeconds,
+                                                                        int eventCount)
         {
             fixed (char* partitionIdPtr = partitionId)
             fixed (char* identifierPtr = identifier)
@@ -3248,7 +3339,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             fixed (char* consumerGroupPtr = consumerGroup)
             fixed (char* operationIdPtr = operationId)
             {
-                var eventPayload = stackalloc EventData[6];
+                var eventPayload = stackalloc EventData[7];
 
                 eventPayload[0].Size = (partitionId.Length + 1) * sizeof(char);
                 eventPayload[0].DataPointer = (IntPtr)partitionIdPtr;
@@ -3268,7 +3359,10 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                 eventPayload[5].Size = Unsafe.SizeOf<double>();
                 eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
 
-                WriteEventCore(eventId, 6, eventPayload);
+                eventPayload[6].Size = Unsafe.SizeOf<int>();
+                eventPayload[6].DataPointer = (IntPtr)Unsafe.AsPointer(ref eventCount);
+
+                WriteEventCore(eventId, 7, eventPayload);
             }
         }
 

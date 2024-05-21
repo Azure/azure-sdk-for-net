@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -58,6 +57,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dataset = dataset;
             StoreSettings = storeSettings;
             ActivityType = activityType ?? "Delete";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeleteActivity"/> for deserialization. </summary>
+        internal DeleteActivity()
+        {
         }
 
         /// <summary> If true, files or sub-folders under current folder path will be deleted recursively. Default is false. Type: boolean (or Expression with resultType boolean). </summary>

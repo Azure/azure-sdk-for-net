@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -18,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 return null;
             }
-            Optional<KeyPhraseResult> results = default;
+            KeyPhraseResult results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
@@ -31,7 +30,15 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new KeyPhraseTaskResult(results.Value);
+            return new KeyPhraseTaskResult(results);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KeyPhraseTaskResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyPhraseTaskResult(document.RootElement);
         }
     }
 }

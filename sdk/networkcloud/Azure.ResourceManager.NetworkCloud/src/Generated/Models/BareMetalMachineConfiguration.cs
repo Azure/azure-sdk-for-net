@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> BareMetalMachineConfigurationData represents configuration for the bare metal machine. </summary>
     public partial class BareMetalMachineConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineConfiguration"/>. </summary>
         /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. </param>
         /// <param name="bmcMacAddress"> The MAC address of the BMC for this machine. </param>
@@ -46,7 +78,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// </param>
         /// <param name="rackSlot"> The slot the physical machine is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number of the machine. Hardware suppliers may use an alternate value. For example, service tag. </param>
-        internal BareMetalMachineConfiguration(string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, long rackSlot, string serialNumber)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BareMetalMachineConfiguration(string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, long rackSlot, string serialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BmcConnectionString = bmcConnectionString;
             BmcCredentials = bmcCredentials;
@@ -56,6 +89,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             MachineName = machineName;
             RackSlot = rackSlot;
             SerialNumber = serialNumber;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineConfiguration"/> for deserialization. </summary>
+        internal BareMetalMachineConfiguration()
+        {
         }
 
         /// <summary> The connection string for the baseboard management controller including IP address and protocol. </summary>

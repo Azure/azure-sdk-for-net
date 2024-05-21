@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public partial class OverviewStatus : IUtf8JsonSerializable, IJsonModel<OverviewStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OverviewStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OverviewStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OverviewStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OverviewStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OverviewStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OverviewStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<OverviewStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OverviewStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OverviewStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         internal static OverviewStatus DeserializeOverviewStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> passedCount = default;
-            Optional<int> failedCount = default;
-            Optional<int> manualCount = default;
+            int? passedCount = default;
+            int? failedCount = default;
+            int? manualCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("passedCount"u8))
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OverviewStatus(Optional.ToNullable(passedCount), Optional.ToNullable(failedCount), Optional.ToNullable(manualCount), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OverviewStatus(passedCount, failedCount, manualCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OverviewStatus>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OverviewStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OverviewStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeOverviewStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OverviewStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OverviewStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

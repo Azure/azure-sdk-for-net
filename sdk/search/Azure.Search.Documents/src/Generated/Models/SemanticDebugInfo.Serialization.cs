@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -19,10 +18,10 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<QueryResultDocumentSemanticField> titleField = default;
-            Optional<IReadOnlyList<QueryResultDocumentSemanticField>> contentFields = default;
-            Optional<IReadOnlyList<QueryResultDocumentSemanticField>> keywordFields = default;
-            Optional<QueryResultDocumentRerankerInput> rerankerInput = default;
+            QueryResultDocumentSemanticField titleField = default;
+            IReadOnlyList<QueryResultDocumentSemanticField> contentFields = default;
+            IReadOnlyList<QueryResultDocumentSemanticField> keywordFields = default;
+            QueryResultDocumentRerankerInput rerankerInput = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("titleField"u8))
@@ -72,7 +71,15 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new SemanticDebugInfo(titleField.Value, Optional.ToList(contentFields), Optional.ToList(keywordFields), rerankerInput.Value);
+            return new SemanticDebugInfo(titleField, contentFields ?? new ChangeTrackingList<QueryResultDocumentSemanticField>(), keywordFields ?? new ChangeTrackingList<QueryResultDocumentSemanticField>(), rerankerInput);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SemanticDebugInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSemanticDebugInfo(document.RootElement);
         }
     }
 }

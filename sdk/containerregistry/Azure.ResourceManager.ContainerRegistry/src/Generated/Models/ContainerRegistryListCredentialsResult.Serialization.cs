@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryListCredentialsResult : IUtf8JsonSerializable, IJsonModel<ContainerRegistryListCredentialsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryListCredentialsResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryListCredentialsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryListCredentialsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryListCredentialsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryListCredentialsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryListCredentialsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Passwords)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryListCredentialsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryListCredentialsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryListCredentialsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryListCredentialsResult DeserializeContainerRegistryListCredentialsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<IReadOnlyList<ContainerRegistryPassword>> passwords = default;
+            string username = default;
+            IReadOnlyList<ContainerRegistryPassword> passwords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
@@ -99,18 +99,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryPassword> array = new List<ContainerRegistryPassword>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryPassword.DeserializeContainerRegistryPassword(item));
+                        array.Add(ContainerRegistryPassword.DeserializeContainerRegistryPassword(item, options));
                     }
                     passwords = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryListCredentialsResult(username.Value, Optional.ToList(passwords), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerRegistryListCredentialsResult(username, passwords ?? new ChangeTrackingList<ContainerRegistryPassword>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryListCredentialsResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryListCredentialsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryListCredentialsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryListCredentialsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryListCredentialsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryListCredentialsResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class VmPlacementRequestResult : IUtf8JsonSerializable, IJsonModel<VmPlacementRequestResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmPlacementRequestResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmPlacementRequestResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VmPlacementRequestResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VmPlacementRequestResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmPlacementRequestResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmPlacementRequestResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmPlacementRequestResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmPlacementRequestResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmPlacementRequestResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,18 +83,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static VmPlacementRequestResult DeserializeVmPlacementRequestResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> vmSize = default;
-            Optional<bool> isFeasible = default;
-            Optional<string> messageCode = default;
-            Optional<string> message = default;
+            IList<string> vmSize = default;
+            bool? isFeasible = default;
+            string messageCode = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSize"u8))
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmPlacementRequestResult(Optional.ToList(vmSize), Optional.ToNullable(isFeasible), messageCode.Value, message.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VmPlacementRequestResult(vmSize ?? new ChangeTrackingList<string>(), isFeasible, messageCode, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmPlacementRequestResult>.Write(ModelReaderWriterOptions options)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmPlacementRequestResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmPlacementRequestResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeVmPlacementRequestResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmPlacementRequestResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmPlacementRequestResult)} does not support reading '{options.Format}' format.");
             }
         }
 

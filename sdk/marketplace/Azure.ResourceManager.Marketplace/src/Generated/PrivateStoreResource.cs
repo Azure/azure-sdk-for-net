@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Marketplace.Models;
 using Azure.ResourceManager.Resources;
 
@@ -409,7 +407,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreRestClient.DeleteAsync(Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreRestClient.CreateDeleteRequestUri(Guid.Parse(Id.Name));
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -451,7 +451,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreRestClient.Delete(Guid.Parse(Id.Name), cancellationToken);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreRestClient.CreateDeleteRequestUri(Guid.Parse(Id.Name));
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -497,7 +499,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreRestClient.CreateOrUpdateAsync(Guid.Parse(Id.Name), data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreRestClient.CreateCreateOrUpdateRequestUri(Guid.Parse(Id.Name), data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -543,7 +547,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreRestClient.CreateOrUpdate(Guid.Parse(Id.Name), data, cancellationToken);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreRestClient.CreateCreateOrUpdateRequestUri(Guid.Parse(Id.Name), data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -657,7 +663,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual AsyncPageable<PrivateStoreOfferResult> QueryOffersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateQueryOffersRequest(Guid.Parse(Id.Name));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PrivateStoreOfferResult.DeserializePrivateStoreOfferResult, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.QueryOffers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PrivateStoreOfferResult.DeserializePrivateStoreOfferResult(e), _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.QueryOffers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -686,7 +692,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Pageable<PrivateStoreOfferResult> QueryOffers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateQueryOffersRequest(Guid.Parse(Id.Name));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PrivateStoreOfferResult.DeserializePrivateStoreOfferResult, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.QueryOffers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PrivateStoreOfferResult.DeserializePrivateStoreOfferResult(e), _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.QueryOffers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -716,7 +722,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual AsyncPageable<PrivateStoreOfferResult> QueryUserOffersAsync(QueryUserOffersContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateQueryUserOffersRequest(Guid.Parse(Id.Name), content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PrivateStoreOfferResult.DeserializePrivateStoreOfferResult, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserOffers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PrivateStoreOfferResult.DeserializePrivateStoreOfferResult(e), _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserOffers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -746,7 +752,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Pageable<PrivateStoreOfferResult> QueryUserOffers(QueryUserOffersContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateQueryUserOffersRequest(Guid.Parse(Id.Name), content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PrivateStoreOfferResult.DeserializePrivateStoreOfferResult, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserOffers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PrivateStoreOfferResult.DeserializePrivateStoreOfferResult(e), _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserOffers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1242,7 +1248,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual AsyncPageable<MarketplaceSubscription> FetchAllMarketplaceSubscriptionsAsync(string nextPageToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateFetchAllSubscriptionsInTenantRequest(Guid.Parse(Id.Name), nextPageToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MarketplaceSubscription.DeserializeMarketplaceSubscription, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.FetchAllMarketplaceSubscriptions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MarketplaceSubscription.DeserializeMarketplaceSubscription(e), _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.FetchAllMarketplaceSubscriptions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1272,7 +1278,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Pageable<MarketplaceSubscription> FetchAllMarketplaceSubscriptions(string nextPageToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateFetchAllSubscriptionsInTenantRequest(Guid.Parse(Id.Name), nextPageToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MarketplaceSubscription.DeserializeMarketplaceSubscription, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.FetchAllMarketplaceSubscriptions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MarketplaceSubscription.DeserializeMarketplaceSubscription(e), _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.FetchAllMarketplaceSubscriptions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1528,7 +1534,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual AsyncPageable<MarketplaceRule> QueryUserRulesAsync(QueryUserRulesContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryUserRulesRequest(Guid.Parse(Id.Name), content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MarketplaceRule.DeserializeMarketplaceRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MarketplaceRule.DeserializeMarketplaceRule(e), _defaultClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1554,7 +1560,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Pageable<MarketplaceRule> QueryUserRules(QueryUserRulesContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRestClient.CreateQueryUserRulesRequest(Guid.Parse(Id.Name), content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MarketplaceRule.DeserializeMarketplaceRule, _defaultClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MarketplaceRule.DeserializeMarketplaceRule(e), _defaultClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserRules", "value", null, cancellationToken);
         }
     }
 }

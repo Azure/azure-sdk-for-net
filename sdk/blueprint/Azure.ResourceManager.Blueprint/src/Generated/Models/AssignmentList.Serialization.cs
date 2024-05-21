@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Blueprint;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
     internal partial class AssignmentList : IUtf8JsonSerializable, IJsonModel<AssignmentList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AssignmentList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,16 +73,16 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static AssignmentList DeserializeAssignmentList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<AssignmentData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AssignmentData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     List<AssignmentData> array = new List<AssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssignmentData.DeserializeAssignmentData(item));
+                        array.Add(AssignmentData.DeserializeAssignmentData(item, options));
                     }
                     value = array;
                     continue;
@@ -107,11 +106,11 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AssignmentList(value ?? new ChangeTrackingList<AssignmentData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentList>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                         return DeserializeAssignmentList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentList)} does not support reading '{options.Format}' format.");
             }
         }
 

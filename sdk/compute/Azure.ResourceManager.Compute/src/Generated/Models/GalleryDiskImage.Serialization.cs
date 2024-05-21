@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class GalleryDiskImage : IUtf8JsonSerializable, IJsonModel<GalleryDiskImage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryDiskImage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryDiskImage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GalleryDiskImage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GalleryDiskImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryDiskImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryDiskImage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(GallerySource))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(GallerySource);
+                writer.WriteObjectValue<GalleryDiskImageSource>(GallerySource, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryDiskImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryDiskImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryDiskImage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryDiskImage DeserializeGalleryDiskImage(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> sizeInGB = default;
-            Optional<HostCaching> hostCaching = default;
-            Optional<GalleryDiskImageSource> source = default;
+            int? sizeInGB = default;
+            HostCaching? hostCaching = default;
+            GalleryDiskImageSource source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sizeInGB"u8))
@@ -110,16 +110,16 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    source = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(property.Value);
+                    source = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryDiskImage(Optional.ToNullable(sizeInGB), Optional.ToNullable(hostCaching), source.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GalleryDiskImage(sizeInGB, hostCaching, source, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryDiskImage>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryDiskImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryDiskImage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryDiskImage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryDiskImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryDiskImage)} does not support reading '{options.Format}' format.");
             }
         }
 

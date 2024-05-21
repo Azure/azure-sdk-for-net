@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     internal partial class ContainerServicePrivateLinkResourcesListResult : IUtf8JsonSerializable, IJsonModel<ContainerServicePrivateLinkResourcesListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServicePrivateLinkResourcesListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServicePrivateLinkResourcesListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerServicePrivateLinkResourcesListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServicePrivateLinkResourcesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourcesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourcesListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServicePrivateLinkResourcesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourcesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourcesListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,15 +68,15 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServicePrivateLinkResourcesListResult DeserializeContainerServicePrivateLinkResourcesListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerServicePrivateLinkResourceData>> value = default;
+            IReadOnlyList<ContainerServicePrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -88,18 +88,18 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServicePrivateLinkResourceData> array = new List<ContainerServicePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(item));
+                        array.Add(ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServicePrivateLinkResourcesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerServicePrivateLinkResourcesListResult(value ?? new ChangeTrackingList<ContainerServicePrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServicePrivateLinkResourcesListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourcesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourcesListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeContainerServicePrivateLinkResourcesListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourcesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourcesListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

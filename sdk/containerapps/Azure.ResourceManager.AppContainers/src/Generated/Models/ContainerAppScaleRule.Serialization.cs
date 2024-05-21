@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppScaleRule : IUtf8JsonSerializable, IJsonModel<ContainerAppScaleRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppScaleRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppScaleRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppScaleRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppScaleRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppScaleRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppScaleRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(AzureQueue))
             {
                 writer.WritePropertyName("azureQueue"u8);
-                writer.WriteObjectValue(AzureQueue);
+                writer.WriteObjectValue(AzureQueue, options);
             }
             if (Optional.IsDefined(Custom))
             {
                 writer.WritePropertyName("custom"u8);
-                writer.WriteObjectValue(Custom);
+                writer.WriteObjectValue(Custom, options);
             }
             if (Optional.IsDefined(Http))
             {
                 writer.WritePropertyName("http"u8);
-                writer.WriteObjectValue(Http);
+                writer.WriteObjectValue(Http, options);
             }
             if (Optional.IsDefined(Tcp))
             {
                 writer.WritePropertyName("tcp"u8);
-                writer.WriteObjectValue(Tcp);
+                writer.WriteObjectValue(Tcp, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppScaleRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppScaleRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppScaleRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,19 +83,19 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppScaleRule DeserializeContainerAppScaleRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ContainerAppQueueScaleRule> azureQueue = default;
-            Optional<ContainerAppCustomScaleRule> custom = default;
-            Optional<ContainerAppHttpScaleRule> http = default;
-            Optional<ContainerAppTcpScaleRule> tcp = default;
+            string name = default;
+            ContainerAppQueueScaleRule azureQueue = default;
+            ContainerAppCustomScaleRule custom = default;
+            ContainerAppHttpScaleRule http = default;
+            ContainerAppTcpScaleRule tcp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    azureQueue = ContainerAppQueueScaleRule.DeserializeContainerAppQueueScaleRule(property.Value);
+                    azureQueue = ContainerAppQueueScaleRule.DeserializeContainerAppQueueScaleRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("custom"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    custom = ContainerAppCustomScaleRule.DeserializeContainerAppCustomScaleRule(property.Value);
+                    custom = ContainerAppCustomScaleRule.DeserializeContainerAppCustomScaleRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("http"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    http = ContainerAppHttpScaleRule.DeserializeContainerAppHttpScaleRule(property.Value);
+                    http = ContainerAppHttpScaleRule.DeserializeContainerAppHttpScaleRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tcp"u8))
@@ -136,16 +136,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    tcp = ContainerAppTcpScaleRule.DeserializeContainerAppTcpScaleRule(property.Value);
+                    tcp = ContainerAppTcpScaleRule.DeserializeContainerAppTcpScaleRule(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppScaleRule(name.Value, azureQueue.Value, custom.Value, http.Value, tcp.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerAppScaleRule(
+                name,
+                azureQueue,
+                custom,
+                http,
+                tcp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppScaleRule>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppScaleRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppScaleRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppScaleRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppScaleRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppScaleRule)} does not support reading '{options.Format}' format.");
             }
         }
 

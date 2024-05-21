@@ -336,6 +336,64 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
+        public async Task DeleteMessagesInPeekLockMode()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                var messageCount = 10;
+                var sessionId = "sessionId1";
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount, sessionId);
+
+                await sender.SendMessagesAsync(batch);
+
+                ServiceBusReceiver receiver = await client.AcceptSessionAsync(
+                    scope.QueueName,
+                    sessionId);
+
+                var time = (DateTimeOffset.UtcNow).AddSeconds(5); // UtcNow sometimes gets resolved as the same time as messages sent
+                var numMessagesDeleted = await receiver.DeleteMessagesAsync(messageCount, time);
+                Assert.NotZero(numMessagesDeleted);
+                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+            }
+        }
+
+        [Test]
+        public async Task DeleteMessagesInReceiveDeleteMode()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                var messageCount = 10;
+                var sessionId = "sessionId1";
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount, sessionId);
+
+                await sender.SendMessagesAsync(batch);
+
+                var clientOptions = new ServiceBusSessionReceiverOptions
+                {
+                    ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete
+                };
+
+                ServiceBusReceiver receiver = await client.AcceptSessionAsync(
+                    scope.QueueName,
+                    sessionId,
+                    clientOptions);
+
+                var time = (DateTimeOffset.UtcNow).AddSeconds(5); // UtcNow sometimes gets resolved as the same time as messages sent
+                var numMessagesDeleted = await receiver.DeleteMessagesAsync(messageCount, time);
+                Assert.NotZero(numMessagesDeleted);
+                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+            }
+        }
+
+        [Test]
         [TestCase(true)]
         [TestCase(false)]
         public async Task CompleteMessages(bool useSpecificSession)
@@ -952,7 +1010,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task CancellingDoesNotLoseSessionMessages(bool prefetch)
+        public async Task CancelingDoesNotLoseSessionMessages(bool prefetch)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
@@ -999,7 +1057,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task CancellingDoesNotBlockSubsequentReceives(bool prefetch)
+        public async Task CancelingDoesNotBlockSubsequentReceives(bool prefetch)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
@@ -1150,12 +1208,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        public async Task SessionOrderingIsGuaranteed()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SessionOrderingIsGuaranteed(bool prefetch)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                var receiver = await client.AcceptSessionAsync(scope.QueueName, "session");
+                var receiver = await client.AcceptSessionAsync(scope.QueueName, "session", new ServiceBusSessionReceiverOptions
+                {
+                    PrefetchCount = prefetch ? 5 : 0
+                });
                 var sender = client.CreateSender(scope.QueueName);
 
                 CancellationTokenSource cts = new CancellationTokenSource();
@@ -1184,11 +1247,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         var messages = await receiver.ReceiveMessagesAsync(10);
                         foreach (var message in messages)
                         {
-                            if (message.SequenceNumber != lastSequenceNumber + 1)
-                            {
-                                Assert.Fail(
-                                    $"Last sequence number: {lastSequenceNumber}, current sequence number: {message.SequenceNumber}");
-                            }
+                            Assert.That(
+                                message.SequenceNumber,
+                                Is.EqualTo(lastSequenceNumber + 1),
+                                $"Last sequence number: {lastSequenceNumber}, current sequence number: {message.SequenceNumber}");
 
                             lastSequenceNumber = message.SequenceNumber;
 

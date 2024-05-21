@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties related to service bus queue endpoint types. </summary>
     public partial class RoutingServiceBusQueueEndpointProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RoutingServiceBusQueueEndpointProperties"/>. </summary>
         /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. The name need not be the same as the actual queue name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -33,7 +66,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. The name need not be the same as the actual queue name. </param>
         /// <param name="subscriptionId"> The subscription identifier of the service bus queue endpoint. </param>
         /// <param name="resourceGroup"> The name of the resource group of the service bus queue endpoint. </param>
-        internal RoutingServiceBusQueueEndpointProperties(Guid? id, string connectionString, string endpoint, string entityPath, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoutingServiceBusQueueEndpointProperties(Guid? id, string connectionString, string endpoint, string entityPath, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ConnectionString = connectionString;
@@ -44,6 +78,12 @@ namespace Azure.ResourceManager.IotHub.Models
             Name = name;
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoutingServiceBusQueueEndpointProperties"/> for deserialization. </summary>
+        internal RoutingServiceBusQueueEndpointProperties()
+        {
         }
 
         /// <summary> Id of the service bus queue endpoint. </summary>

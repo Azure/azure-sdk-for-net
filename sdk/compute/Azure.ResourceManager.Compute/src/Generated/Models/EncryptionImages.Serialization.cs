@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class EncryptionImages : IUtf8JsonSerializable, IJsonModel<EncryptionImages>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionImages>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionImages>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EncryptionImages>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EncryptionImages>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionImages)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EncryptionImages)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
-                writer.WriteObjectValue(OSDiskImage);
+                writer.WriteObjectValue(OSDiskImage, options);
             }
             if (Optional.IsCollectionDefined(DataDiskImages))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskImages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<EncryptionImages>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionImages)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EncryptionImages)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static EncryptionImages DeserializeEncryptionImages(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<OSDiskImageEncryption> osDiskImage = default;
-            Optional<IList<DataDiskImageEncryption>> dataDiskImages = default;
+            OSDiskImageEncryption osDiskImage = default;
+            IList<DataDiskImageEncryption> dataDiskImages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDiskImage"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osDiskImage = OSDiskImageEncryption.DeserializeOSDiskImageEncryption(property.Value);
+                    osDiskImage = OSDiskImageEncryption.DeserializeOSDiskImageEncryption(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataDiskImages"u8))
@@ -103,18 +103,18 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DataDiskImageEncryption> array = new List<DataDiskImageEncryption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataDiskImageEncryption.DeserializeDataDiskImageEncryption(item));
+                        array.Add(DataDiskImageEncryption.DeserializeDataDiskImageEncryption(item, options));
                     }
                     dataDiskImages = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionImages(osDiskImage.Value, Optional.ToList(dataDiskImages), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EncryptionImages(osDiskImage, dataDiskImages ?? new ChangeTrackingList<DataDiskImageEncryption>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionImages>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionImages)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EncryptionImages)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeEncryptionImages(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionImages)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EncryptionImages)} does not support reading '{options.Format}' format.");
             }
         }
 

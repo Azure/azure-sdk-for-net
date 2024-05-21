@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecurityCenterAllowedConnection : IUtf8JsonSerializable, IJsonModel<SecurityCenterAllowedConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCenterAllowedConnection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCenterAllowedConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityCenterAllowedConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterAllowedConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterAllowedConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterAllowedConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectableResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterAllowedConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterAllowedConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterAllowedConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,21 +102,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityCenterAllowedConnection DeserializeSecurityCenterAllowedConnection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> calculatedDateTime = default;
-            Optional<IReadOnlyList<ConnectableResourceInfo>> connectableResources = default;
+            SystemData systemData = default;
+            DateTimeOffset? calculatedDateTime = default;
+            IReadOnlyList<ConnectableResourceInfo> connectableResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             List<ConnectableResourceInfo> array = new List<ConnectableResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectableResourceInfo.DeserializeConnectableResourceInfo(item));
+                                array.Add(ConnectableResourceInfo.DeserializeConnectableResourceInfo(item, options));
                             }
                             connectableResources = array;
                             continue;
@@ -189,11 +189,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCenterAllowedConnection(id, name, type, systemData.Value, Optional.ToNullable(calculatedDateTime), Optional.ToList(connectableResources), Optional.ToNullable(location), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityCenterAllowedConnection(
+                id,
+                name,
+                type,
+                systemData,
+                calculatedDateTime,
+                connectableResources ?? new ChangeTrackingList<ConnectableResourceInfo>(),
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterAllowedConnection>.Write(ModelReaderWriterOptions options)
@@ -205,7 +213,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterAllowedConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterAllowedConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityCenterAllowedConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterAllowedConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterAllowedConnection)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     [PersistableModelProxy(typeof(UnknownEnvironmentData))]
     public partial class SecurityConnectorEnvironment : IUtf8JsonSerializable, IJsonModel<SecurityConnectorEnvironment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityConnectorEnvironment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityConnectorEnvironment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityConnectorEnvironment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityConnectorEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityConnectorEnvironment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityConnectorEnvironment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityConnectorEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityConnectorEnvironment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityConnectorEnvironment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityConnectorEnvironment DeserializeSecurityConnectorEnvironment(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AwsAccount": return AwsEnvironment.DeserializeAwsEnvironment(element);
-                    case "AzureDevOpsScope": return AzureDevOpsScopeEnvironment.DeserializeAzureDevOpsScopeEnvironment(element);
-                    case "GcpProject": return GcpProjectEnvironment.DeserializeGcpProjectEnvironment(element);
-                    case "GithubScope": return GithubScopeEnvironment.DeserializeGithubScopeEnvironment(element);
-                    case "GitlabScope": return GitlabScopeEnvironment.DeserializeGitlabScopeEnvironment(element);
+                    case "AwsAccount": return AwsEnvironment.DeserializeAwsEnvironment(element, options);
+                    case "AzureDevOpsScope": return AzureDevOpsScopeEnvironment.DeserializeAzureDevOpsScopeEnvironment(element, options);
+                    case "GcpProject": return GcpProjectEnvironment.DeserializeGcpProjectEnvironment(element, options);
+                    case "GithubScope": return GithubScopeEnvironment.DeserializeGithubScopeEnvironment(element, options);
+                    case "GitlabScope": return GitlabScopeEnvironment.DeserializeGitlabScopeEnvironment(element, options);
                 }
             }
-            return UnknownEnvironmentData.DeserializeUnknownEnvironmentData(element);
+            return UnknownEnvironmentData.DeserializeUnknownEnvironmentData(element, options);
         }
 
         BinaryData IPersistableModel<SecurityConnectorEnvironment>.Write(ModelReaderWriterOptions options)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityConnectorEnvironment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityConnectorEnvironment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityConnectorEnvironment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityConnectorEnvironment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityConnectorEnvironment)} does not support reading '{options.Format}' format.");
             }
         }
 

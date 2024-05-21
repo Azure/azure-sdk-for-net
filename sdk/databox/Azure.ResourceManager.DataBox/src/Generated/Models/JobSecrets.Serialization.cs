@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataBox.Models
     [PersistableModelProxy(typeof(UnknownJobSecrets))]
     public partial class JobSecrets : IUtf8JsonSerializable, IJsonModel<JobSecrets>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobSecrets>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobSecrets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<JobSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<JobSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobSecrets)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobSecrets)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
-                writer.WriteObjectValue(DataCenterAccessSecurityCode);
+                writer.WriteObjectValue(DataCenterAccessSecurityCode, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobSecrets)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobSecrets)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static JobSecrets DeserializeJobSecrets(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataBox": return DataboxJobSecrets.DeserializeDataboxJobSecrets(element);
-                    case "DataBoxCustomerDisk": return CustomerDiskJobSecrets.DeserializeCustomerDiskJobSecrets(element);
-                    case "DataBoxDisk": return DataBoxDiskJobSecrets.DeserializeDataBoxDiskJobSecrets(element);
-                    case "DataBoxHeavy": return DataBoxHeavyJobSecrets.DeserializeDataBoxHeavyJobSecrets(element);
+                    case "DataBox": return DataboxJobSecrets.DeserializeDataboxJobSecrets(element, options);
+                    case "DataBoxCustomerDisk": return CustomerDiskJobSecrets.DeserializeCustomerDiskJobSecrets(element, options);
+                    case "DataBoxDisk": return DataBoxDiskJobSecrets.DeserializeDataBoxDiskJobSecrets(element, options);
+                    case "DataBoxHeavy": return DataBoxHeavyJobSecrets.DeserializeDataBoxHeavyJobSecrets(element, options);
                 }
             }
-            return UnknownJobSecrets.DeserializeUnknownJobSecrets(element);
+            return UnknownJobSecrets.DeserializeUnknownJobSecrets(element, options);
         }
 
         BinaryData IPersistableModel<JobSecrets>.Write(ModelReaderWriterOptions options)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JobSecrets)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobSecrets)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeJobSecrets(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobSecrets)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobSecrets)} does not support reading '{options.Format}' format.");
             }
         }
 

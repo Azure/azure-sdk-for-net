@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
@@ -1442,7 +1440,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlPoolUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlPoolUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SqlPoolUsage.DeserializeSqlPoolUsage, _sqlPoolUsagesClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetSqlPoolUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SqlPoolUsage.DeserializeSqlPoolUsage(e), _sqlPoolUsagesClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetSqlPoolUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1468,7 +1466,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlPoolUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlPoolUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SqlPoolUsage.DeserializeSqlPoolUsage, _sqlPoolUsagesClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetSqlPoolUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SqlPoolUsage.DeserializeSqlPoolUsage(e), _sqlPoolUsagesClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetSqlPoolUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

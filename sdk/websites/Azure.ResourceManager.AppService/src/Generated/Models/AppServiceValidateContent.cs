@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Resource validation request content. </summary>
     public partial class AppServiceValidateContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AppServiceValidateContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="validateResourceType"> Resource type used for verification. </param>
@@ -45,7 +78,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="containerImageTag"> Image tag. </param>
         /// <param name="containerImagePlatform"> Platform (windows or linux). </param>
         /// <param name="appServiceEnvironment"> App Service Environment Properties. </param>
-        internal AppServiceValidateContent(string name, ValidateResourceType validateResourceType, AzureLocation location, ResourceIdentifier serverFarmId, string skuName, bool? needLinuxWorkers, bool? isSpot, int? capacity, string hostingEnvironment, bool? isXenon, Uri containerRegistryBaseUri, string containerRegistryUsername, string containerRegistryPassword, string containerImageRepository, string containerImageTag, string containerImagePlatform, AppServiceEnvironmentProperties appServiceEnvironment)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceValidateContent(string name, ValidateResourceType validateResourceType, AzureLocation location, ResourceIdentifier serverFarmId, string skuName, bool? needLinuxWorkers, bool? isSpot, int? capacity, string hostingEnvironment, bool? isXenon, Uri containerRegistryBaseUri, string containerRegistryUsername, string containerRegistryPassword, string containerImageRepository, string containerImageTag, string containerImagePlatform, AppServiceEnvironmentProperties appServiceEnvironment, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ValidateResourceType = validateResourceType;
@@ -64,41 +98,64 @@ namespace Azure.ResourceManager.AppService.Models
             ContainerImageTag = containerImageTag;
             ContainerImagePlatform = containerImagePlatform;
             AppServiceEnvironment = appServiceEnvironment;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceValidateContent"/> for deserialization. </summary>
+        internal AppServiceValidateContent()
+        {
         }
 
         /// <summary> Resource name to verify. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Resource type used for verification. </summary>
+        [WirePath("type")]
         public ValidateResourceType ValidateResourceType { get; }
         /// <summary> Expected location of the resource. </summary>
+        [WirePath("location")]
         public AzureLocation Location { get; }
         /// <summary> ARM resource ID of an App Service plan that would host the app. </summary>
+        [WirePath("properties.serverFarmId")]
         public ResourceIdentifier ServerFarmId { get; set; }
         /// <summary> Name of the target SKU for the App Service plan. </summary>
+        [WirePath("properties.skuName")]
         public string SkuName { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Linux workers; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.needLinuxWorkers")]
         public bool? NeedLinuxWorkers { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Spot instances; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.isSpot")]
         public bool? IsSpot { get; set; }
         /// <summary> Target capacity of the App Service plan (number of VMs). </summary>
+        [WirePath("properties.capacity")]
         public int? Capacity { get; set; }
         /// <summary> Name of App Service Environment where app or App Service plan should be created. </summary>
+        [WirePath("properties.hostingEnvironment")]
         public string HostingEnvironment { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is running as a windows container. </summary>
+        [WirePath("properties.isXenon")]
         public bool? IsXenon { get; set; }
         /// <summary> Base URL of the container registry. </summary>
+        [WirePath("properties.containerRegistryBaseUrl")]
         public Uri ContainerRegistryBaseUri { get; set; }
         /// <summary> Username for to access the container registry. </summary>
+        [WirePath("properties.containerRegistryUsername")]
         public string ContainerRegistryUsername { get; set; }
         /// <summary> Password for to access the container registry. </summary>
+        [WirePath("properties.containerRegistryPassword")]
         public string ContainerRegistryPassword { get; set; }
         /// <summary> Repository name (image name). </summary>
+        [WirePath("properties.containerImageRepository")]
         public string ContainerImageRepository { get; set; }
         /// <summary> Image tag. </summary>
+        [WirePath("properties.containerImageTag")]
         public string ContainerImageTag { get; set; }
         /// <summary> Platform (windows or linux). </summary>
+        [WirePath("properties.containerImagePlatform")]
         public string ContainerImagePlatform { get; set; }
         /// <summary> App Service Environment Properties. </summary>
+        [WirePath("properties.appServiceEnvironment")]
         public AppServiceEnvironmentProperties AppServiceEnvironment { get; set; }
     }
 }

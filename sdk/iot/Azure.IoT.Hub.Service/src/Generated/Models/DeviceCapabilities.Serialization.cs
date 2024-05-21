@@ -29,7 +29,7 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<bool> iotEdge = default;
+            bool? iotEdge = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("iotEdge"u8))
@@ -42,7 +42,23 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new DeviceCapabilities(Optional.ToNullable(iotEdge));
+            return new DeviceCapabilities(iotEdge);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeviceCapabilities FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeviceCapabilities(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

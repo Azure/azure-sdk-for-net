@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ManagedClusterPodIdentity : IUtf8JsonSerializable, IJsonModel<ManagedClusterPodIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterPodIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterPodIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedClusterPodIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterPodIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStringValue(BindingSelector);
             }
             writer.WritePropertyName("identity"u8);
-            writer.WriteObjectValue(Identity);
+            writer.WriteObjectValue(Identity, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningInfo))
             {
                 writer.WritePropertyName("provisioningInfo"u8);
-                writer.WriteObjectValue(ProvisioningInfo);
+                writer.WriteObjectValue(ProvisioningInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterPodIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterPodIdentity DeserializeManagedClusterPodIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             string name = default;
             string @namespace = default;
-            Optional<string> bindingSelector = default;
+            string bindingSelector = default;
             ContainerServiceUserAssignedIdentity identity = default;
-            Optional<ManagedClusterPodIdentityProvisioningState> provisioningState = default;
-            Optional<ManagedClusterPodIdentityProvisioningInfo> provisioningInfo = default;
+            ManagedClusterPodIdentityProvisioningState? provisioningState = default;
+            ManagedClusterPodIdentityProvisioningInfo provisioningInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("identity"u8))
                 {
-                    identity = ContainerServiceUserAssignedIdentity.DeserializeContainerServiceUserAssignedIdentity(property.Value);
+                    identity = ContainerServiceUserAssignedIdentity.DeserializeContainerServiceUserAssignedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -130,16 +130,23 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    provisioningInfo = ManagedClusterPodIdentityProvisioningInfo.DeserializeManagedClusterPodIdentityProvisioningInfo(property.Value);
+                    provisioningInfo = ManagedClusterPodIdentityProvisioningInfo.DeserializeManagedClusterPodIdentityProvisioningInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterPodIdentity(name, @namespace, bindingSelector.Value, identity, Optional.ToNullable(provisioningState), provisioningInfo.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedClusterPodIdentity(
+                name,
+                @namespace,
+                bindingSelector,
+                identity,
+                provisioningState,
+                provisioningInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterPodIdentity>.Write(ModelReaderWriterOptions options)
@@ -151,7 +158,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +174,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterPodIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

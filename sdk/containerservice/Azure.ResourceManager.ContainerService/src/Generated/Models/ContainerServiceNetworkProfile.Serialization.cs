@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ContainerServiceNetworkProfile : IUtf8JsonSerializable, IJsonModel<ContainerServiceNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceNetworkProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerServiceNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(LoadBalancerProfile))
             {
                 writer.WritePropertyName("loadBalancerProfile"u8);
-                writer.WriteObjectValue(LoadBalancerProfile);
+                writer.WriteObjectValue(LoadBalancerProfile, options);
             }
             if (Optional.IsDefined(NatGatewayProfile))
             {
                 writer.WritePropertyName("natGatewayProfile"u8);
-                writer.WriteObjectValue(NatGatewayProfile);
+                writer.WriteObjectValue(NatGatewayProfile, options);
             }
             if (Optional.IsCollectionDefined(PodCidrs))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,29 +148,29 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceNetworkProfile DeserializeContainerServiceNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ContainerServiceNetworkPlugin> networkPlugin = default;
-            Optional<ContainerServiceNetworkPluginMode> networkPluginMode = default;
-            Optional<ContainerServiceNetworkPolicy> networkPolicy = default;
-            Optional<ContainerServiceNetworkMode> networkMode = default;
-            Optional<NetworkDataplane> networkDataplane = default;
-            Optional<string> podCidr = default;
-            Optional<string> serviceCidr = default;
-            Optional<string> dnsServiceIP = default;
-            Optional<ContainerServiceOutboundType> outboundType = default;
-            Optional<ContainerServiceLoadBalancerSku> loadBalancerSku = default;
-            Optional<ManagedClusterLoadBalancerProfile> loadBalancerProfile = default;
-            Optional<ManagedClusterNatGatewayProfile> natGatewayProfile = default;
-            Optional<IList<string>> podCidrs = default;
-            Optional<IList<string>> serviceCidrs = default;
-            Optional<IList<IPFamily>> ipFamilies = default;
+            ContainerServiceNetworkPlugin? networkPlugin = default;
+            ContainerServiceNetworkPluginMode? networkPluginMode = default;
+            ContainerServiceNetworkPolicy? networkPolicy = default;
+            ContainerServiceNetworkMode? networkMode = default;
+            NetworkDataplane? networkDataplane = default;
+            string podCidr = default;
+            string serviceCidr = default;
+            string dnsServiceIP = default;
+            ContainerServiceOutboundType? outboundType = default;
+            ContainerServiceLoadBalancerSku? loadBalancerSku = default;
+            ManagedClusterLoadBalancerProfile loadBalancerProfile = default;
+            ManagedClusterNatGatewayProfile natGatewayProfile = default;
+            IList<string> podCidrs = default;
+            IList<string> serviceCidrs = default;
+            IList<IPFamily> ipFamilies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkPlugin"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    loadBalancerProfile = ManagedClusterLoadBalancerProfile.DeserializeManagedClusterLoadBalancerProfile(property.Value);
+                    loadBalancerProfile = ManagedClusterLoadBalancerProfile.DeserializeManagedClusterLoadBalancerProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("natGatewayProfile"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    natGatewayProfile = ManagedClusterNatGatewayProfile.DeserializeManagedClusterNatGatewayProfile(property.Value);
+                    natGatewayProfile = ManagedClusterNatGatewayProfile.DeserializeManagedClusterNatGatewayProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("podCidrs"u8))
@@ -313,11 +313,27 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceNetworkProfile(Optional.ToNullable(networkPlugin), Optional.ToNullable(networkPluginMode), Optional.ToNullable(networkPolicy), Optional.ToNullable(networkMode), Optional.ToNullable(networkDataplane), podCidr.Value, serviceCidr.Value, dnsServiceIP.Value, Optional.ToNullable(outboundType), Optional.ToNullable(loadBalancerSku), loadBalancerProfile.Value, natGatewayProfile.Value, Optional.ToList(podCidrs), Optional.ToList(serviceCidrs), Optional.ToList(ipFamilies), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerServiceNetworkProfile(
+                networkPlugin,
+                networkPluginMode,
+                networkPolicy,
+                networkMode,
+                networkDataplane,
+                podCidr,
+                serviceCidr,
+                dnsServiceIP,
+                outboundType,
+                loadBalancerSku,
+                loadBalancerProfile,
+                natGatewayProfile,
+                podCidrs ?? new ChangeTrackingList<string>(),
+                serviceCidrs ?? new ChangeTrackingList<string>(),
+                ipFamilies ?? new ChangeTrackingList<IPFamily>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceNetworkProfile>.Write(ModelReaderWriterOptions options)
@@ -329,7 +345,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -345,7 +361,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeContainerServiceNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

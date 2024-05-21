@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class VpnClientConnectionHealthDetail : IUtf8JsonSerializable, IJsonModel<VpnClientConnectionHealthDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnClientConnectionHealthDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnClientConnectionHealthDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VpnClientConnectionHealthDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealthDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealthDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,26 +118,26 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnClientConnectionHealthDetail DeserializeVpnClientConnectionHealthDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> vpnConnectionId = default;
-            Optional<long> vpnConnectionDuration = default;
-            Optional<DateTimeOffset> vpnConnectionTime = default;
-            Optional<string> publicIPAddress = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> vpnUserName = default;
-            Optional<long> maxBandwidth = default;
-            Optional<long> egressPacketsTransferred = default;
-            Optional<long> egressBytesTransferred = default;
-            Optional<long> ingressPacketsTransferred = default;
-            Optional<long> ingressBytesTransferred = default;
-            Optional<long> maxPacketsPerSecond = default;
+            string vpnConnectionId = default;
+            long? vpnConnectionDuration = default;
+            DateTimeOffset? vpnConnectionTime = default;
+            string publicIPAddress = default;
+            string privateIPAddress = default;
+            string vpnUserName = default;
+            long? maxBandwidth = default;
+            long? egressPacketsTransferred = default;
+            long? egressBytesTransferred = default;
+            long? ingressPacketsTransferred = default;
+            long? ingressBytesTransferred = default;
+            long? maxPacketsPerSecond = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vpnConnectionId"u8))
@@ -234,11 +234,24 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientConnectionHealthDetail(vpnConnectionId.Value, Optional.ToNullable(vpnConnectionDuration), Optional.ToNullable(vpnConnectionTime), publicIPAddress.Value, privateIPAddress.Value, vpnUserName.Value, Optional.ToNullable(maxBandwidth), Optional.ToNullable(egressPacketsTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressPacketsTransferred), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(maxPacketsPerSecond), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VpnClientConnectionHealthDetail(
+                vpnConnectionId,
+                vpnConnectionDuration,
+                vpnConnectionTime,
+                publicIPAddress,
+                privateIPAddress,
+                vpnUserName,
+                maxBandwidth,
+                egressPacketsTransferred,
+                egressBytesTransferred,
+                ingressPacketsTransferred,
+                ingressBytesTransferred,
+                maxPacketsPerSecond,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnClientConnectionHealthDetail>.Write(ModelReaderWriterOptions options)
@@ -250,7 +263,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -266,7 +279,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVpnClientConnectionHealthDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnClientConnectionHealthDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

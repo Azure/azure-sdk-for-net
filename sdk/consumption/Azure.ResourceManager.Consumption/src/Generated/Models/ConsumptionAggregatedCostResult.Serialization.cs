@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,14 +16,14 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionAggregatedCostResult : IUtf8JsonSerializable, IJsonModel<ConsumptionAggregatedCostResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionAggregatedCostResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionAggregatedCostResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionAggregatedCostResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionAggregatedCostResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionAggregatedCostResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionAggregatedCostResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -107,7 +106,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in Children)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionAggregatedCostResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionAggregatedCostResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionAggregatedCostResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -164,30 +163,30 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionAggregatedCostResult DeserializeConsumptionAggregatedCostResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> billingPeriodId = default;
-            Optional<DateTimeOffset> usageStart = default;
-            Optional<DateTimeOffset> usageEnd = default;
-            Optional<decimal> azureCharges = default;
-            Optional<decimal> marketplaceCharges = default;
-            Optional<decimal> chargesBilledSeparately = default;
-            Optional<string> currency = default;
-            Optional<IReadOnlyList<ConsumptionAggregatedCostResult>> children = default;
-            Optional<IReadOnlyList<string>> includedSubscriptions = default;
-            Optional<IReadOnlyList<string>> excludedSubscriptions = default;
+            SystemData systemData = default;
+            string billingPeriodId = default;
+            DateTimeOffset? usageStart = default;
+            DateTimeOffset? usageEnd = default;
+            decimal? azureCharges = default;
+            decimal? marketplaceCharges = default;
+            decimal? chargesBilledSeparately = default;
+            string currency = default;
+            IReadOnlyList<ConsumptionAggregatedCostResult> children = default;
+            IReadOnlyList<string> includedSubscriptions = default;
+            IReadOnlyList<string> excludedSubscriptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<ConsumptionAggregatedCostResult> array = new List<ConsumptionAggregatedCostResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeConsumptionAggregatedCostResult(item));
+                                array.Add(DeserializeConsumptionAggregatedCostResult(item, options));
                             }
                             children = array;
                             continue;
@@ -348,11 +347,28 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionAggregatedCostResult(id, name, type, systemData.Value, billingPeriodId.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), Optional.ToNullable(azureCharges), Optional.ToNullable(marketplaceCharges), Optional.ToNullable(chargesBilledSeparately), currency.Value, Optional.ToList(children), Optional.ToList(includedSubscriptions), Optional.ToList(excludedSubscriptions), Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionAggregatedCostResult(
+                id,
+                name,
+                type,
+                systemData,
+                billingPeriodId,
+                usageStart,
+                usageEnd,
+                azureCharges,
+                marketplaceCharges,
+                chargesBilledSeparately,
+                currency,
+                children ?? new ChangeTrackingList<ConsumptionAggregatedCostResult>(),
+                includedSubscriptions ?? new ChangeTrackingList<string>(),
+                excludedSubscriptions ?? new ChangeTrackingList<string>(),
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionAggregatedCostResult>.Write(ModelReaderWriterOptions options)
@@ -364,7 +380,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionAggregatedCostResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionAggregatedCostResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -380,7 +396,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionAggregatedCostResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionAggregatedCostResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionAggregatedCostResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Represents the correlation filter expression. </summary>
     public partial class ServiceBusCorrelationFilter
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ServiceBusCorrelationFilter"/>. </summary>
         public ServiceBusCorrelationFilter()
         {
@@ -30,7 +62,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="replyToSessionId"> Session identifier to reply to. </param>
         /// <param name="contentType"> Content type of the message. </param>
         /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
-        internal ServiceBusCorrelationFilter(IDictionary<string, object> applicationProperties, string correlationId, string messageId, string sendTo, string replyTo, string subject, string sessionId, string replyToSessionId, string contentType, bool? requiresPreprocessing)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusCorrelationFilter(IDictionary<string, object> applicationProperties, string correlationId, string messageId, string sendTo, string replyTo, string subject, string sessionId, string replyToSessionId, string contentType, bool? requiresPreprocessing, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApplicationProperties = applicationProperties;
             CorrelationId = correlationId;
@@ -42,27 +75,38 @@ namespace Azure.ResourceManager.ServiceBus.Models
             ReplyToSessionId = replyToSessionId;
             ContentType = contentType;
             RequiresPreprocessing = requiresPreprocessing;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> dictionary object for custom filters. </summary>
+        [WirePath("properties")]
         public IDictionary<string, object> ApplicationProperties { get; }
         /// <summary> Identifier of the correlation. </summary>
+        [WirePath("correlationId")]
         public string CorrelationId { get; set; }
         /// <summary> Identifier of the message. </summary>
+        [WirePath("messageId")]
         public string MessageId { get; set; }
         /// <summary> Address to send to. </summary>
+        [WirePath("to")]
         public string SendTo { get; set; }
         /// <summary> Address of the queue to reply to. </summary>
+        [WirePath("replyTo")]
         public string ReplyTo { get; set; }
         /// <summary> Application specific label. </summary>
+        [WirePath("label")]
         public string Subject { get; set; }
         /// <summary> Session identifier. </summary>
+        [WirePath("sessionId")]
         public string SessionId { get; set; }
         /// <summary> Session identifier to reply to. </summary>
+        [WirePath("replyToSessionId")]
         public string ReplyToSessionId { get; set; }
         /// <summary> Content type of the message. </summary>
+        [WirePath("contentType")]
         public string ContentType { get; set; }
         /// <summary> Value that indicates whether the rule action requires preprocessing. </summary>
+        [WirePath("requiresPreprocessing")]
         public bool? RequiresPreprocessing { get; set; }
     }
 }

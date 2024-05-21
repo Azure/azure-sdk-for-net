@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class SecureScoreControlDefinitionList : IUtf8JsonSerializable, IJsonModel<SecureScoreControlDefinitionList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecureScoreControlDefinitionList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecureScoreControlDefinitionList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecureScoreControlDefinitionList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecureScoreControlDefinitionList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecureScoreControlDefinitionList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecureScoreControlDefinitionList DeserializeSecureScoreControlDefinitionList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecureScoreControlDefinitionItem>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SecureScoreControlDefinitionItem> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecureScoreControlDefinitionItem> array = new List<SecureScoreControlDefinitionItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(item));
+                        array.Add(SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(item, options));
                     }
                     value = array;
                     continue;
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecureScoreControlDefinitionList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecureScoreControlDefinitionList(value ?? new ChangeTrackingList<SecureScoreControlDefinitionItem>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecureScoreControlDefinitionList>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecureScoreControlDefinitionList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionList)} does not support reading '{options.Format}' format.");
             }
         }
 

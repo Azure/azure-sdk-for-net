@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.KeyVault.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.KeyVault
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByVaultRequestUri(string subscriptionId, string resourceGroupName, string vaultName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.KeyVault/vaults/", false);
+            uri.AppendPath(vaultName, true);
+            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByVaultRequest(string subscriptionId, string resourceGroupName, string vaultName)

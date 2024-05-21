@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformCustomContainer : IUtf8JsonSerializable, IJsonModel<AppPlatformCustomContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformCustomContainer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformCustomContainer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformCustomContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCustomContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformCustomContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformCustomContainer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ImageRegistryCredential))
             {
                 writer.WritePropertyName("imageRegistryCredential"u8);
-                writer.WriteObjectValue(ImageRegistryCredential);
+                writer.WriteObjectValue(ImageRegistryCredential, options);
             }
             if (Optional.IsDefined(LanguageFramework))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCustomContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformCustomContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformCustomContainer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,20 +98,20 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformCustomContainer DeserializeAppPlatformCustomContainer(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> server = default;
-            Optional<string> containerImage = default;
-            Optional<IList<string>> command = default;
-            Optional<IList<string>> args = default;
-            Optional<AppPlatformImageRegistryCredential> imageRegistryCredential = default;
-            Optional<string> languageFramework = default;
+            string server = default;
+            string containerImage = default;
+            IList<string> command = default;
+            IList<string> args = default;
+            AppPlatformImageRegistryCredential imageRegistryCredential = default;
+            string languageFramework = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("server"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    imageRegistryCredential = AppPlatformImageRegistryCredential.DeserializeAppPlatformImageRegistryCredential(property.Value);
+                    imageRegistryCredential = AppPlatformImageRegistryCredential.DeserializeAppPlatformImageRegistryCredential(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("languageFramework"u8))
@@ -168,11 +168,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformCustomContainer(server.Value, containerImage.Value, Optional.ToList(command), Optional.ToList(args), imageRegistryCredential.Value, languageFramework.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformCustomContainer(
+                server,
+                containerImage,
+                command ?? new ChangeTrackingList<string>(),
+                args ?? new ChangeTrackingList<string>(),
+                imageRegistryCredential,
+                languageFramework,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformCustomContainer>.Write(ModelReaderWriterOptions options)
@@ -184,7 +191,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformCustomContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformCustomContainer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +207,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformCustomContainer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformCustomContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformCustomContainer)} does not support reading '{options.Format}' format.");
             }
         }
 

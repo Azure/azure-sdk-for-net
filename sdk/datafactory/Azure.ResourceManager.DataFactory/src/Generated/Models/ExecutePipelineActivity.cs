@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -48,6 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = parameters;
             WaitOnCompletion = waitOnCompletion;
             ActivityType = activityType ?? "ExecutePipeline";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExecutePipelineActivity"/> for deserialization. </summary>
+        internal ExecutePipelineActivity()
+        {
         }
 
         /// <summary> Execute pipeline activity policy. </summary>

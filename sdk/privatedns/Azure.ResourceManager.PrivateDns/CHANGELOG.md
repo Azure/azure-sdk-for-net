@@ -10,6 +10,13 @@
 
 ### Other Changes
 
+## 1.1.1 (2024-04-29)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
 ## 1.1.0 (2023-11-29)
 
 ### Features Added
@@ -41,7 +48,7 @@
 ## 1.0.0 (2022-12-05)
 
 ### Breaking Changes
- 
+
  - Split `RecordSet` to each `PrivateDns[RecordType]Record`
  - Rename `PrivateZone` to `PrivateDnsZone`
  - Rename `RecordSet` to `Record`

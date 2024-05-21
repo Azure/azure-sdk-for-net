@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -21,9 +20,9 @@ namespace Azure.Communication.Chat
             }
             string id = default;
             ChatAttachmentType attachmentType = default;
-            Optional<string> name = default;
-            Optional<Uri> url = default;
-            Optional<Uri> previewUrl = default;
+            string name = default;
+            Uri url = default;
+            Uri previewUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -60,7 +59,15 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatAttachmentInternal(id, attachmentType, name.Value, url.Value, previewUrl.Value);
+            return new ChatAttachmentInternal(id, attachmentType, name, url, previewUrl);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChatAttachmentInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeChatAttachmentInternal(document.RootElement);
         }
     }
 }

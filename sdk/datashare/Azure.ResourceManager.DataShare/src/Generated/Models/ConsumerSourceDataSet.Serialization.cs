@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class ConsumerSourceDataSet : IUtf8JsonSerializable, IJsonModel<ConsumerSourceDataSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumerSourceDataSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumerSourceDataSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumerSourceDataSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumerSourceDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumerSourceDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumerSourceDataSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumerSourceDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumerSourceDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumerSourceDataSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static ConsumerSourceDataSet DeserializeConsumerSourceDataSet(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> dataSetId = default;
-            Optional<AzureLocation> dataSetLocation = default;
-            Optional<string> dataSetName = default;
-            Optional<string> dataSetPath = default;
-            Optional<ShareDataSetType> dataSetType = default;
+            SystemData systemData = default;
+            Guid? dataSetId = default;
+            AzureLocation? dataSetLocation = default;
+            string dataSetName = default;
+            string dataSetPath = default;
+            ShareDataSetType? dataSetType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -201,11 +201,21 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumerSourceDataSet(id, name, type, systemData.Value, Optional.ToNullable(dataSetId), Optional.ToNullable(dataSetLocation), dataSetName.Value, dataSetPath.Value, Optional.ToNullable(dataSetType), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumerSourceDataSet(
+                id,
+                name,
+                type,
+                systemData,
+                dataSetId,
+                dataSetLocation,
+                dataSetName,
+                dataSetPath,
+                dataSetType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumerSourceDataSet>.Write(ModelReaderWriterOptions options)
@@ -217,7 +227,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumerSourceDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumerSourceDataSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -233,7 +243,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeConsumerSourceDataSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumerSourceDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumerSourceDataSet)} does not support reading '{options.Format}' format.");
             }
         }
 

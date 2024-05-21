@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxSkuInformation : IUtf8JsonSerializable, IJsonModel<DataBoxSkuInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxSkuInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxSkuInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxSkuInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxSkuInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsEnabled))
             {
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataLocationToServiceLocationMap)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue(Capacity, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Costs))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxSkuInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,24 +131,24 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxSkuInformation DeserializeDataBoxSkuInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataBoxSku> sku = default;
-            Optional<bool> enabled = default;
-            Optional<IReadOnlyList<DataLocationToServiceLocationMap>> dataLocationToServiceLocationMap = default;
-            Optional<DataBoxSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<DataBoxSkuCost>> costs = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<SkuDisabledReason> disabledReason = default;
-            Optional<string> disabledReasonMessage = default;
-            Optional<string> requiredFeature = default;
-            Optional<IReadOnlyList<string>> countriesWithinCommerceBoundary = default;
+            DataBoxSku sku = default;
+            bool? enabled = default;
+            IReadOnlyList<DataLocationToServiceLocationMap> dataLocationToServiceLocationMap = default;
+            DataBoxSkuCapacity capacity = default;
+            IReadOnlyList<DataBoxSkuCost> costs = default;
+            IReadOnlyList<string> apiVersions = default;
+            SkuDisabledReason? disabledReason = default;
+            string disabledReasonMessage = default;
+            string requiredFeature = default;
+            IReadOnlyList<string> countriesWithinCommerceBoundary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    sku = DataBoxSku.DeserializeDataBoxSku(property.Value);
+                    sku = DataBoxSku.DeserializeDataBoxSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enabled"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             List<DataLocationToServiceLocationMap> array = new List<DataLocationToServiceLocationMap>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.DataLocationToServiceLocationMap.DeserializeDataLocationToServiceLocationMap(item));
+                                array.Add(Models.DataLocationToServiceLocationMap.DeserializeDataLocationToServiceLocationMap(item, options));
                             }
                             dataLocationToServiceLocationMap = array;
                             continue;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             {
                                 continue;
                             }
-                            capacity = DataBoxSkuCapacity.DeserializeDataBoxSkuCapacity(property0.Value);
+                            capacity = DataBoxSkuCapacity.DeserializeDataBoxSkuCapacity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("costs"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             List<DataBoxSkuCost> array = new List<DataBoxSkuCost>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxSkuCost.DeserializeDataBoxSkuCost(item));
+                                array.Add(DataBoxSkuCost.DeserializeDataBoxSkuCost(item, options));
                             }
                             costs = array;
                             continue;
@@ -267,11 +267,22 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxSkuInformation(sku.Value, Optional.ToNullable(enabled), Optional.ToList(dataLocationToServiceLocationMap), capacity.Value, Optional.ToList(costs), Optional.ToList(apiVersions), Optional.ToNullable(disabledReason), disabledReasonMessage.Value, requiredFeature.Value, Optional.ToList(countriesWithinCommerceBoundary), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxSkuInformation(
+                sku,
+                enabled,
+                dataLocationToServiceLocationMap ?? new ChangeTrackingList<DataLocationToServiceLocationMap>(),
+                capacity,
+                costs ?? new ChangeTrackingList<DataBoxSkuCost>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                disabledReason,
+                disabledReasonMessage,
+                requiredFeature,
+                countriesWithinCommerceBoundary ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxSkuInformation>.Write(ModelReaderWriterOptions options)
@@ -283,7 +294,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -299,7 +310,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxSkuInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class CaptureDescription : IUtf8JsonSerializable
+    public partial class CaptureDescription : IUtf8JsonSerializable, IJsonModel<CaptureDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CaptureDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CaptureDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CaptureDescription)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
             {
@@ -38,28 +50,59 @@ namespace Azure.ResourceManager.EventHubs.Models
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                writer.WriteObjectValue(Destination, options);
             }
             if (Optional.IsDefined(SkipEmptyArchives))
             {
                 writer.WritePropertyName("skipEmptyArchives"u8);
                 writer.WriteBooleanValue(SkipEmptyArchives.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CaptureDescription DeserializeCaptureDescription(JsonElement element)
+        CaptureDescription IJsonModel<CaptureDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CaptureDescription)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCaptureDescription(document.RootElement, options);
+        }
+
+        internal static CaptureDescription DeserializeCaptureDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<EncodingCaptureDescription> encoding = default;
-            Optional<int> intervalInSeconds = default;
-            Optional<int> sizeLimitInBytes = default;
-            Optional<EventHubDestination> destination = default;
-            Optional<bool> skipEmptyArchives = default;
+            bool? enabled = default;
+            EncodingCaptureDescription? encoding = default;
+            int? intervalInSeconds = default;
+            int? sizeLimitInBytes = default;
+            EventHubDestination destination = default;
+            bool? skipEmptyArchives = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -104,7 +147,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    destination = EventHubDestination.DeserializeEventHubDestination(property.Value);
+                    destination = EventHubDestination.DeserializeEventHubDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("skipEmptyArchives"u8))
@@ -116,8 +159,160 @@ namespace Azure.ResourceManager.EventHubs.Models
                     skipEmptyArchives = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CaptureDescription(Optional.ToNullable(enabled), Optional.ToNullable(encoding), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(sizeLimitInBytes), destination.Value, Optional.ToNullable(skipEmptyArchives));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CaptureDescription(
+                enabled,
+                encoding,
+                intervalInSeconds,
+                sizeLimitInBytes,
+                destination,
+                skipEmptyArchives,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Enabled))
+                {
+                    builder.Append("  enabled: ");
+                    var boolValue = Enabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Encoding), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  encoding: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Encoding))
+                {
+                    builder.Append("  encoding: ");
+                    builder.AppendLine($"'{Encoding.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalInSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  intervalInSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IntervalInSeconds))
+                {
+                    builder.Append("  intervalInSeconds: ");
+                    builder.AppendLine($"{IntervalInSeconds.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SizeLimitInBytes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sizeLimitInBytes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SizeLimitInBytes))
+                {
+                    builder.Append("  sizeLimitInBytes: ");
+                    builder.AppendLine($"{SizeLimitInBytes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Destination), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  destination: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Destination))
+                {
+                    builder.Append("  destination: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Destination, options, 2, false, "  destination: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkipEmptyArchives), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  skipEmptyArchives: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SkipEmptyArchives))
+                {
+                    builder.Append("  skipEmptyArchives: ");
+                    var boolValue = SkipEmptyArchives.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<CaptureDescription>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(CaptureDescription)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CaptureDescription IPersistableModel<CaptureDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCaptureDescription(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CaptureDescription)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CaptureDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

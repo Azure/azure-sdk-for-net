@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateSqlServerSqlMITaskOutputLoginLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlMITaskOutputLoginLevel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlMITaskOutputLoginLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlMITaskOutputLoginLevel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateSqlServerSqlMITaskOutputLoginLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMITaskOutputLoginLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputLoginLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputLoginLevel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ExceptionsAndWarnings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMITaskOutputLoginLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputLoginLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputLoginLevel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,23 +105,23 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSqlServerSqlMITaskOutputLoginLevel DeserializeMigrateSqlServerSqlMITaskOutputLoginLevel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> loginName = default;
-            Optional<MigrationState> state = default;
-            Optional<LoginMigrationStage> stage = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Optional<string> id = default;
+            string loginName = default;
+            MigrationState? state = default;
+            LoginMigrationStage? stage = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            string message = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loginName"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -196,11 +196,21 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMITaskOutputLoginLevel(id.Value, resultType, serializedAdditionalRawData, loginName.Value, Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), message.Value, Optional.ToList(exceptionsAndWarnings));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrateSqlServerSqlMITaskOutputLoginLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                loginName,
+                state,
+                stage,
+                startedOn,
+                endedOn,
+                message,
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMITaskOutputLoginLevel>.Write(ModelReaderWriterOptions options)
@@ -212,7 +222,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputLoginLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputLoginLevel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +238,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSqlServerSqlMITaskOutputLoginLevel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputLoginLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputLoginLevel)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class EdgeClusterMemoryCapacity : IUtf8JsonSerializable, IJsonModel<EdgeClusterMemoryCapacity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeClusterMemoryCapacity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeClusterMemoryCapacity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeClusterMemoryCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdgeClusterMemoryCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeClusterMemoryCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,23 +103,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeClusterMemoryCapacity DeserializeEdgeClusterMemoryCapacity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<double> clusterFreeMemoryMb = default;
-            Optional<double> clusterUsedMemoryMb = default;
-            Optional<double> clusterFailoverMemoryMb = default;
-            Optional<double> clusterFragmentationMemoryMb = default;
-            Optional<double> clusterHyperVReserveMemoryMb = default;
-            Optional<double> clusterInfraVmMemoryMb = default;
-            Optional<double> clusterTotalMemoryMb = default;
-            Optional<double> clusterNonFailoverVmMb = default;
-            Optional<double> clusterMemoryUsedByVmsMb = default;
+            double? clusterFreeMemoryMb = default;
+            double? clusterUsedMemoryMb = default;
+            double? clusterFailoverMemoryMb = default;
+            double? clusterFragmentationMemoryMb = default;
+            double? clusterHyperVReserveMemoryMb = default;
+            double? clusterInfraVmMemoryMb = default;
+            double? clusterTotalMemoryMb = default;
+            double? clusterNonFailoverVmMb = default;
+            double? clusterMemoryUsedByVmsMb = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterFreeMemoryMb"u8))
@@ -205,11 +205,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeClusterMemoryCapacity(Optional.ToNullable(clusterFreeMemoryMb), Optional.ToNullable(clusterUsedMemoryMb), Optional.ToNullable(clusterFailoverMemoryMb), Optional.ToNullable(clusterFragmentationMemoryMb), Optional.ToNullable(clusterHyperVReserveMemoryMb), Optional.ToNullable(clusterInfraVmMemoryMb), Optional.ToNullable(clusterTotalMemoryMb), Optional.ToNullable(clusterNonFailoverVmMb), Optional.ToNullable(clusterMemoryUsedByVmsMb), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EdgeClusterMemoryCapacity(
+                clusterFreeMemoryMb,
+                clusterUsedMemoryMb,
+                clusterFailoverMemoryMb,
+                clusterFragmentationMemoryMb,
+                clusterHyperVReserveMemoryMb,
+                clusterInfraVmMemoryMb,
+                clusterTotalMemoryMb,
+                clusterNonFailoverVmMb,
+                clusterMemoryUsedByVmsMb,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeClusterMemoryCapacity>.Write(ModelReaderWriterOptions options)
@@ -221,7 +231,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +247,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeClusterMemoryCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

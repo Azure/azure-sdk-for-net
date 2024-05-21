@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Mocking
 {
@@ -46,6 +44,18 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         {
             ServiceFabricClusterResource.ValidateResourceId(id);
             return new ServiceFabricClusterResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceFabricVmSizeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricVmSizeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricVmSizeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceFabricVmSizeResource"/> object. </returns>
+        public virtual ServiceFabricVmSizeResource GetServiceFabricVmSizeResource(ResourceIdentifier id)
+        {
+            ServiceFabricVmSizeResource.ValidateResourceId(id);
+            return new ServiceFabricVmSizeResource(Client, id);
         }
 
         /// <summary>

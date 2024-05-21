@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,14 +16,14 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class PredefinedTagValue : IUtf8JsonSerializable, IJsonModel<PredefinedTagValue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredefinedTagValue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredefinedTagValue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PredefinedTagValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PredefinedTagValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredefinedTagValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredefinedTagValue)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
-                writer.WriteObjectValue(Count);
+                writer.WriteObjectValue(Count, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredefinedTagValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredefinedTagValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredefinedTagValue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,17 +74,17 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static PredefinedTagValue DeserializePredefinedTagValue(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> tagValue = default;
-            Optional<PredefinedTagCount> count = default;
+            string id = default;
+            string tagValue = default;
+            PredefinedTagCount count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -102,16 +103,92 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    count = PredefinedTagCount.DeserializePredefinedTagCount(property.Value);
+                    count = PredefinedTagCount.DeserializePredefinedTagCount(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredefinedTagValue(id.Value, tagValue.Value, count.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PredefinedTagValue(id, tagValue, count, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TagValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tagValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TagValue))
+                {
+                    builder.Append("  tagValue: ");
+                    if (TagValue.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TagValue}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TagValue}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Count), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  count: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Count))
+                {
+                    builder.Append("  count: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Count, options, 2, false, "  count: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<PredefinedTagValue>.Write(ModelReaderWriterOptions options)
@@ -122,8 +199,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PredefinedTagValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredefinedTagValue)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +218,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializePredefinedTagValue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PredefinedTagValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredefinedTagValue)} does not support reading '{options.Format}' format.");
             }
         }
 

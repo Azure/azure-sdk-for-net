@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class SharedGalleryOSDiskImage : IUtf8JsonSerializable, IJsonModel<SharedGalleryOSDiskImage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharedGalleryOSDiskImage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharedGalleryOSDiskImage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SharedGalleryOSDiskImage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryOSDiskImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedGalleryOSDiskImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedGalleryOSDiskImage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryOSDiskImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedGalleryOSDiskImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedGalleryOSDiskImage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SharedGalleryOSDiskImage DeserializeSharedGalleryOSDiskImage(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> diskSizeGB = default;
-            Optional<SharedGalleryHostCaching> hostCaching = default;
+            int? diskSizeGB = default;
+            SharedGalleryHostCaching? hostCaching = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskSizeGB"u8))
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedGalleryOSDiskImage(Optional.ToNullable(diskSizeGB), Optional.ToNullable(hostCaching), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SharedGalleryOSDiskImage(diskSizeGB, hostCaching, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedGalleryOSDiskImage>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SharedGalleryOSDiskImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedGalleryOSDiskImage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeSharedGalleryOSDiskImage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharedGalleryOSDiskImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedGalleryOSDiskImage)} does not support reading '{options.Format}' format.");
             }
         }
 

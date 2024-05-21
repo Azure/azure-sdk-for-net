@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<string>> stopwords = default;
+            IList<string> stopwords = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -69,7 +69,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new StopAnalyzer(odataType, name, Optional.ToList(stopwords));
+            return new StopAnalyzer(odataType, name, stopwords ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new StopAnalyzer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStopAnalyzer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

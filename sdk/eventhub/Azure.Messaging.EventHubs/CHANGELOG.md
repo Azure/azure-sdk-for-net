@@ -1,6 +1,73 @@
 # Release History
 
-## 5.11.0-beta.1 (Unreleased)
+## 5.12.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.12.0-beta.1 (2024-05-17)
+
+### Features Added
+
+- Preview support for the Event Hubs geographic data replication feature has been enabled. Checking for whether or not this feature is enabled for your namespace can be done by querying for Event Hub properties using `EventHubProducerClient` or `EventHubConsumerClient` and referencing the the `IsGeoReplicationEnabled` property of the result.
+
+### Breaking Changes
+
+  ### Major
+
+  The type of offset-related data has been changed from `long` to `string` to align with changes to the Event Hubs service API.  The default value for any offset-related data has been changed from `long.MinValue` to `null`.
+
+  Impacted properties:
+  - EventData.Offset
+  - CheckpointPosition.Offset
+  - LastEnqueuedEventProperties.Offset
+  - PartitionProperties.LastEnqueuedOffset
+    
+  Impacted methods:
+  - CheckpointPosition constructor
+  - EventPosition.FromOffset
+  - EventHubsModelFactory.EventData
+  - BlobCheckpointStore.UpdateCheckpointAsync _(deprecated overload)_
+  - EventProcessorClient.UpdateCheckpointAsync _(deprecated overload)_
+    
+## 5.11.3 (2024-05-15)
+
+### Bugs Fixed
+
+- Fixed an error that caused connection strings using host names without a scheme to fail parsing and be considered invalid.
+
+### Other Changes
+
+- Removed the restriction that endpoints used with the development emulator had to resolve to a `localhost` variant.
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.7, which contains several bug fixes, including for an internal `NullReferenceException` that would sometimes impact creating new links. _(see: [#258](https://github.com/azure/azure-amqp/issues/258))_
+
+## 5.11.2 (2024-04-10)
+
+### Features Added
+
+- It is now possible for processors extending `EventProcessor<T>` to disable the batch-level tracing emitted when processing events.  This is intended to allow derived processors dispatching single events or partial batches to emit their own trace information that more accurately correlates to the set of events being processed.  Previously all events in a batch were tracked under a single span regardless of how they were dispatched for processing.
+
+### Bugs Fixed
+
+- Fixed a warning for "too many parameters" that was written to logs when the processor attempted to log load balancing messages due to improper ETW attribute use.
+
+### Other Changes
+
+- It is now possible to set `byte[]` values as [application properties](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties) in the `EventData.Properties` collection.
+
+## 5.11.1 (2024-03-05)
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.5, which includes several bug fixes.  A notable fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.
+
+## 5.11.0 (2024-02-13)
 
 ### Features Added
 
@@ -16,7 +83,7 @@
   - To
   - ReplyTo
 
-- The base implementations of both `UpdateCheckpointAsync` method overloads in `PluggableCheckpointStoreEventProcessor<TPartition>` and `EventProcessor<TPartition>` now choose sequence number over offset when writing a checkpoint and both values are provided. Previously, writing a checkpoint prioritized offset over sequence number.  There is no behavioral change for those using the official checkpoint store implementations.
+- The base implementations of both `UpdateCheckpointAsync` method overloads in `PluggableCheckpointStoreEventProcessor<TPartition>` and `EventProcessor<TPartition>` now choose sequence number over offset when writing a checkpoint and both values are provided. Previously, writing a checkpoint prioritized offset over sequence number.  **There is no behavioral change for those using the official checkpoint store implementations.**
 
 ### Bugs Fixed
 
@@ -28,7 +95,9 @@
 
 - Fixed an issue with event processor validation where an exception for quota exceeded may inappropriately be surfaced when starting the processor.
 
-- Reduced the timeout for transient service failures when starting the buffered producer. This ixed an issue where the buffered producer appeared to hang for an extended period of time when starting if it had issues querying Event Hub metadata for the first time.
+- In the rare case that an event processor's load balancing and health monitoring task cannot recover from an error, it will now properly surrender ownership when processing stops.
+
+- Reduced the timeout for transient service failures when starting the buffered producer. This fixed an issue where the buffered producer appeared to hang for an extended period of time when starting if it had issues querying Event Hub metadata for the first time.
 
 - Fixed the logic used to set the TimeToLive value of the AmqpMessageHeader for received messages to be based on the difference of the AbsoluteExpiryTime and CreationTime properties of the AmqpMessageProperties.
 
@@ -39,6 +108,14 @@
 - Removed the custom sizes for the AMQP sending and receiving buffers, allowing the optimized defaults of the host platform to be used.  This offers non-trivial performance increase on Linux-based platforms and a minor improvement on macOS.  Windows performance remains unchanged as the default and custom buffer sizes are equivalent.
 
 - Improved efficiency of partition management during load balancing, reducing the number of operations performed and deferring waiting for lost partitions until the processor is stopped or the partition is reclaimed.  Allocations were also non-trivially reduced.
+
+- Improved the approach used by the processor to manage the background tasks for partition processing and load balancing.  These tasks are now marked as long-running and have improved error recovery.
+
+- Initialization of the load balancing task is now performed in the background and will no longer cause delays when starting the processor.
+
+- Loosened validation for the fully qualified namespace name passed to client constructors.  A URI is now also accepted as a valid format.  This is intended to improve the experience when using the management library, CLI, Bicep, or ARM template to create the namespace, as they return only an endpoint for the namespace.  Previously, callers were responsible for parsing the endpoint and extracting the host name for use with the clients.
+
+- In the rare case that an event processor's load balancing and health monitoring task cannot recover from an error, the processor now signals the error handler with a wrapped exception that makes clear that processing will terminate.  Previously, the source exception was surfaced to the error handler and the impact was not clear.
 
 - The "Event Receive Completed" log now includes the maximum batch size and wait time that were used for the operation.
 

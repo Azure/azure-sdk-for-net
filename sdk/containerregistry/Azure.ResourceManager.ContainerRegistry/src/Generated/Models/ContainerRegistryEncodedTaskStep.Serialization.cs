@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryEncodedTaskStep : IUtf8JsonSerializable, IJsonModel<ContainerRegistryEncodedTaskStep>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryEncodedTaskStep>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryEncodedTaskStep>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryEncodedTaskStep>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEncodedTaskStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStep)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStep)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in BaseImageDependencies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEncodedTaskStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStep)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStep)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,21 +97,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryEncodedTaskStep DeserializeContainerRegistryEncodedTaskStep(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string encodedTaskContent = default;
-            Optional<string> encodedValuesContent = default;
-            Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
+            string encodedValuesContent = default;
+            IList<ContainerRegistryTaskOverridableValue> values = default;
             ContainerRegistryTaskStepType type = default;
-            Optional<IReadOnlyList<ContainerRegistryBaseImageDependency>> baseImageDependencies = default;
-            Optional<string> contextPath = default;
-            Optional<string> contextAccessToken = default;
+            IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies = default;
+            string contextPath = default;
+            string contextAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encodedTaskContent"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTaskOverridableValue> array = new List<ContainerRegistryTaskOverridableValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item));
+                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item, options));
                     }
                     values = array;
                     continue;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryBaseImageDependency> array = new List<ContainerRegistryBaseImageDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item));
+                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item, options));
                     }
                     baseImageDependencies = array;
                     continue;
@@ -169,11 +169,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryEncodedTaskStep(type, Optional.ToList(baseImageDependencies), contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData, encodedTaskContent, encodedValuesContent.Value, Optional.ToList(values));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerRegistryEncodedTaskStep(
+                type,
+                baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryBaseImageDependency>(),
+                contextPath,
+                contextAccessToken,
+                serializedAdditionalRawData,
+                encodedTaskContent,
+                encodedValuesContent,
+                values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>());
         }
 
         BinaryData IPersistableModel<ContainerRegistryEncodedTaskStep>.Write(ModelReaderWriterOptions options)
@@ -185,7 +193,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStep)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStep)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -201,7 +209,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryEncodedTaskStep(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStep)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStep)} does not support reading '{options.Format}' format.");
             }
         }
 

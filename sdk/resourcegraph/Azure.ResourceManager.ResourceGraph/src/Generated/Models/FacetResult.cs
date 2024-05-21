@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -33,15 +33,21 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <summary> Initializes a new instance of <see cref="FacetResult"/>. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="totalRecords"> Number of total records in the facet results. </param>
         /// <param name="count"> Number of records returned in the facet response. </param>
         /// <param name="data"> A JObject array or Table containing the desired facets. Only present if the facet is valid. </param>
-        internal FacetResult(string expression, string resultType, long totalRecords, int count, BinaryData data) : base(expression, resultType)
+        internal FacetResult(string expression, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, long totalRecords, int count, BinaryData data) : base(expression, resultType, serializedAdditionalRawData)
         {
             TotalRecords = totalRecords;
             Count = count;
             Data = data;
             ResultType = resultType ?? "FacetResult";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FacetResult"/> for deserialization. </summary>
+        internal FacetResult()
+        {
         }
 
         /// <summary> Number of total records in the facet results. </summary>

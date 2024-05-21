@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,14 +16,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CognitiveServicesSkuAvailabilityList : IUtf8JsonSerializable, IJsonModel<CognitiveServicesSkuAvailabilityList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesSkuAvailabilityList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesSkuAvailabilityList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CognitiveServicesSkuAvailabilityList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesSkuAvailabilityList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesSkuAvailabilityList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesSkuAvailabilityList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesSkuAvailabilityList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesSkuAvailabilityList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesSkuAvailabilityList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,20 +89,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesSkuAvailabilityList DeserializeCognitiveServicesSkuAvailabilityList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<string> type = default;
-            Optional<string> skuName = default;
-            Optional<bool> skuAvailable = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
+            string kind = default;
+            string type = default;
+            string skuName = default;
+            bool? skuAvailable = default;
+            string reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -140,11 +141,164 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesSkuAvailabilityList(kind.Value, type.Value, skuName.Value, Optional.ToNullable(skuAvailable), reason.Value, message.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CognitiveServicesSkuAvailabilityList(
+                kind,
+                type,
+                skuName,
+                skuAvailable,
+                reason,
+                message,
+                serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkuAvailabilityType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SkuAvailabilityType))
+                {
+                    builder.Append("  type: ");
+                    if (SkuAvailabilityType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SkuAvailabilityType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SkuAvailabilityType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkuName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  skuName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SkuName))
+                {
+                    builder.Append("  skuName: ");
+                    if (SkuName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SkuName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SkuName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSkuAvailable), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  skuAvailable: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsSkuAvailable))
+                {
+                    builder.Append("  skuAvailable: ");
+                    var boolValue = IsSkuAvailable.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reason: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Reason))
+                {
+                    builder.Append("  reason: ");
+                    if (Reason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Reason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Reason}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Message), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  message: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    builder.Append("  message: ");
+                    if (Message.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Message}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Message}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CognitiveServicesSkuAvailabilityList>.Write(ModelReaderWriterOptions options)
@@ -155,8 +309,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesSkuAvailabilityList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesSkuAvailabilityList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +328,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCognitiveServicesSkuAvailabilityList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesSkuAvailabilityList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesSkuAvailabilityList)} does not support reading '{options.Format}' format.");
             }
         }
 

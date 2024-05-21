@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementPrivateEndpointConnectionCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<ApiManagementPrivateEndpointConnectionCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementPrivateEndpointConnectionCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementPrivateEndpointConnectionCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiManagementPrivateEndpointConnectionCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementPrivateEndpointConnectionCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementPrivateEndpointConnectionCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementPrivateEndpointConnectionCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementPrivateEndpointConnectionCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementPrivateEndpointConnectionCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementPrivateEndpointConnectionCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementPrivateEndpointConnectionCreateOrUpdateContent DeserializeApiManagementPrivateEndpointConnectionCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<PrivateEndpointConnectionRequestProperties> properties = default;
+            ResourceIdentifier id = default;
+            PrivateEndpointConnectionRequestProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -95,16 +95,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    properties = PrivateEndpointConnectionRequestProperties.DeserializePrivateEndpointConnectionRequestProperties(property.Value);
+                    properties = PrivateEndpointConnectionRequestProperties.DeserializePrivateEndpointConnectionRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementPrivateEndpointConnectionCreateOrUpdateContent(id.Value, properties.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApiManagementPrivateEndpointConnectionCreateOrUpdateContent(id, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementPrivateEndpointConnectionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementPrivateEndpointConnectionCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementPrivateEndpointConnectionCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiManagementPrivateEndpointConnectionCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementPrivateEndpointConnectionCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementPrivateEndpointConnectionCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

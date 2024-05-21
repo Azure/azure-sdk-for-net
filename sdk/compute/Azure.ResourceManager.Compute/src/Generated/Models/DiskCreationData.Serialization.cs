@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class DiskCreationData : IUtf8JsonSerializable, IJsonModel<DiskCreationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskCreationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskCreationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiskCreationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DiskCreationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskCreationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskCreationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference);
+                writer.WriteObjectValue(ImageReference, options);
             }
             if (Optional.IsDefined(GalleryImageReference))
             {
                 writer.WritePropertyName("galleryImageReference"u8);
-                writer.WriteObjectValue(GalleryImageReference);
+                writer.WriteObjectValue(GalleryImageReference, options);
             }
             if (Optional.IsDefined(SourceUri))
             {
@@ -83,6 +83,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("elasticSanResourceId"u8);
                 writer.WriteStringValue(ElasticSanResourceId);
             }
+            if (Optional.IsDefined(ProvisionedBandwidthCopySpeed))
+            {
+                writer.WritePropertyName("provisionedBandwidthCopySpeed"u8);
+                writer.WriteStringValue(ProvisionedBandwidthCopySpeed.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -106,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskCreationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskCreationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskCreationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,26 +120,27 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiskCreationData DeserializeDiskCreationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DiskCreateOption createOption = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<ImageDiskReference> imageReference = default;
-            Optional<ImageDiskReference> galleryImageReference = default;
-            Optional<Uri> sourceUri = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<string> sourceUniqueId = default;
-            Optional<long> uploadSizeBytes = default;
-            Optional<int> logicalSectorSize = default;
-            Optional<Uri> securityDataUri = default;
-            Optional<bool> performancePlus = default;
-            Optional<ResourceIdentifier> elasticSanResourceId = default;
+            ResourceIdentifier storageAccountId = default;
+            ImageDiskReference imageReference = default;
+            ImageDiskReference galleryImageReference = default;
+            Uri sourceUri = default;
+            ResourceIdentifier sourceResourceId = default;
+            string sourceUniqueId = default;
+            long? uploadSizeBytes = default;
+            int? logicalSectorSize = default;
+            Uri securityDataUri = default;
+            bool? performancePlus = default;
+            ResourceIdentifier elasticSanResourceId = default;
+            ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createOption"u8))
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    imageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value);
+                    imageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("galleryImageReference"u8))
@@ -166,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    galleryImageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value);
+                    galleryImageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceUri"u8))
@@ -237,13 +243,36 @@ namespace Azure.ResourceManager.Compute.Models
                     elasticSanResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("provisionedBandwidthCopySpeed"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisionedBandwidthCopySpeed = new ProvisionedBandwidthCopyOption(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskCreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value, Optional.ToNullable(performancePlus), elasticSanResourceId.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DiskCreationData(
+                createOption,
+                storageAccountId,
+                imageReference,
+                galleryImageReference,
+                sourceUri,
+                sourceResourceId,
+                sourceUniqueId,
+                uploadSizeBytes,
+                logicalSectorSize,
+                securityDataUri,
+                performancePlus,
+                elasticSanResourceId,
+                provisionedBandwidthCopySpeed,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskCreationData>.Write(ModelReaderWriterOptions options)
@@ -255,7 +284,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskCreationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskCreationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -271,7 +300,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeDiskCreationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskCreationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskCreationData)} does not support reading '{options.Format}' format.");
             }
         }
 

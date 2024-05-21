@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -17,14 +16,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ApplicationGatewayRedirectConfiguration : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayRedirectConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayRedirectConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayRedirectConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationGatewayRedirectConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRedirectConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayRedirectConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayRedirectConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRedirectConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayRedirectConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayRedirectConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,26 +137,26 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayRedirectConfiguration DeserializeApplicationGatewayRedirectConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ApplicationGatewayRedirectType> redirectType = default;
-            Optional<WritableSubResource> targetListener = default;
-            Optional<Uri> targetUrl = default;
-            Optional<bool> includePath = default;
-            Optional<bool> includeQueryString = default;
-            Optional<IList<WritableSubResource>> requestRoutingRules = default;
-            Optional<IList<WritableSubResource>> urlPathMaps = default;
-            Optional<IList<WritableSubResource>> pathRules = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ApplicationGatewayRedirectType? redirectType = default;
+            WritableSubResource targetListener = default;
+            Uri targetUrl = default;
+            bool? includePath = default;
+            bool? includeQueryString = default;
+            IList<WritableSubResource> requestRoutingRules = default;
+            IList<WritableSubResource> urlPathMaps = default;
+            IList<WritableSubResource> pathRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -293,11 +292,24 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayRedirectConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(redirectType), targetListener, targetUrl.Value, Optional.ToNullable(includePath), Optional.ToNullable(includeQueryString), Optional.ToList(requestRoutingRules), Optional.ToList(urlPathMaps), Optional.ToList(pathRules));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationGatewayRedirectConfiguration(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                redirectType,
+                targetListener,
+                targetUrl,
+                includePath,
+                includeQueryString,
+                requestRoutingRules ?? new ChangeTrackingList<WritableSubResource>(),
+                urlPathMaps ?? new ChangeTrackingList<WritableSubResource>(),
+                pathRules ?? new ChangeTrackingList<WritableSubResource>());
         }
 
         BinaryData IPersistableModel<ApplicationGatewayRedirectConfiguration>.Write(ModelReaderWriterOptions options)
@@ -309,7 +321,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayRedirectConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayRedirectConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -325,7 +337,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayRedirectConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayRedirectConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayRedirectConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -38,7 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string nodeName = default;
-            Optional<IList<OutputSelector>> outputSelectors = default;
+            IList<OutputSelector> outputSelectors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodeName"u8))
@@ -61,7 +61,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new NodeInput(nodeName, Optional.ToList(outputSelectors));
+            return new NodeInput(nodeName, outputSelectors ?? new ChangeTrackingList<OutputSelector>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static NodeInput FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNodeInput(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

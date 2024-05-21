@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     [PersistableModelProxy(typeof(UnknownAuthCredentials))]
     public partial class DataProtectionBackupAuthCredentials : IUtf8JsonSerializable, IJsonModel<DataProtectionBackupAuthCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupAuthCredentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupAuthCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataProtectionBackupAuthCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupAuthCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupAuthCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupAuthCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupAuthCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupAuthCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupAuthCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupAuthCredentials DeserializeDataProtectionBackupAuthCredentials(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SecretStoreBasedAuthCredentials": return SecretStoreBasedAuthCredentials.DeserializeSecretStoreBasedAuthCredentials(element);
+                    case "SecretStoreBasedAuthCredentials": return SecretStoreBasedAuthCredentials.DeserializeSecretStoreBasedAuthCredentials(element, options);
                 }
             }
-            return UnknownAuthCredentials.DeserializeUnknownAuthCredentials(element);
+            return UnknownAuthCredentials.DeserializeUnknownAuthCredentials(element, options);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupAuthCredentials>.Write(ModelReaderWriterOptions options)
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupAuthCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupAuthCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionBackupAuthCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupAuthCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupAuthCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

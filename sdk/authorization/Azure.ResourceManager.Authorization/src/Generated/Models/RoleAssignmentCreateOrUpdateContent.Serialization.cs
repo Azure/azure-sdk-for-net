@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Authorization.Models
 {
     public partial class RoleAssignmentCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<RoleAssignmentCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleAssignmentCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Authorization.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,26 +122,26 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleAssignmentCreateOrUpdateContent DeserializeRoleAssignmentCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> scope = default;
+            string scope = default;
             ResourceIdentifier roleDefinitionId = default;
             Guid principalId = default;
-            Optional<RoleManagementPrincipalType> principalType = default;
-            Optional<string> description = default;
-            Optional<string> condition = default;
-            Optional<string> conditionVersion = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> updatedOn = default;
-            Optional<string> createdBy = default;
-            Optional<string> updatedBy = default;
-            Optional<ResourceIdentifier> delegatedManagedIdentityResourceId = default;
+            RoleManagementPrincipalType? principalType = default;
+            string description = default;
+            string condition = default;
+            string conditionVersion = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
+            string createdBy = default;
+            string updatedBy = default;
+            ResourceIdentifier delegatedManagedIdentityResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -235,11 +235,24 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleAssignmentCreateOrUpdateContent(scope.Value, roleDefinitionId, principalId, Optional.ToNullable(principalType), description.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), createdBy.Value, updatedBy.Value, delegatedManagedIdentityResourceId.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RoleAssignmentCreateOrUpdateContent(
+                scope,
+                roleDefinitionId,
+                principalId,
+                principalType,
+                description,
+                condition,
+                conditionVersion,
+                createdOn,
+                updatedOn,
+                createdBy,
+                updatedBy,
+                delegatedManagedIdentityResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleAssignmentCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -251,7 +264,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -267,7 +280,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         return DeserializeRoleAssignmentCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

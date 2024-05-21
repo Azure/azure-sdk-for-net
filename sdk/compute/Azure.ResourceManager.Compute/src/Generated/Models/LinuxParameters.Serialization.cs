@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class LinuxParameters : IUtf8JsonSerializable, IJsonModel<LinuxParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinuxParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinuxParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LinuxParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LinuxParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinuxParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinuxParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinuxParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinuxParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinuxParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,18 +93,18 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static LinuxParameters DeserializeLinuxParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<VmGuestPatchClassificationForLinux>> classificationsToInclude = default;
-            Optional<IList<string>> packageNameMasksToInclude = default;
-            Optional<IList<string>> packageNameMasksToExclude = default;
-            Optional<string> maintenanceRunId = default;
+            IList<VmGuestPatchClassificationForLinux> classificationsToInclude = default;
+            IList<string> packageNameMasksToInclude = default;
+            IList<string> packageNameMasksToExclude = default;
+            string maintenanceRunId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("classificationsToInclude"u8))
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinuxParameters(Optional.ToList(classificationsToInclude), Optional.ToList(packageNameMasksToInclude), Optional.ToList(packageNameMasksToExclude), maintenanceRunId.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LinuxParameters(classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationForLinux>(), packageNameMasksToInclude ?? new ChangeTrackingList<string>(), packageNameMasksToExclude ?? new ChangeTrackingList<string>(), maintenanceRunId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinuxParameters>.Write(ModelReaderWriterOptions options)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LinuxParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinuxParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeLinuxParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinuxParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinuxParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

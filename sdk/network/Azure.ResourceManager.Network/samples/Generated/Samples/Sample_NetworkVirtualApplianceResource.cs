@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
@@ -24,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteNetworkVirtualAppliance()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/NetworkVirtualApplianceDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/NetworkVirtualApplianceDelete.json
             // this example is just showing the usage of "NetworkVirtualAppliances_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +48,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetNetworkVirtualAppliance()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/NetworkVirtualApplianceGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/NetworkVirtualApplianceGet.json
             // this example is just showing the usage of "NetworkVirtualAppliances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +79,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateNetworkVirtualAppliance()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/NetworkVirtualApplianceUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/NetworkVirtualApplianceUpdateTags.json
             // this example is just showing the usage of "NetworkVirtualAppliances_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -116,12 +113,66 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Restart All NetworkVirtualAppliance VMs in VM Scale Set
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Restart_RestartAllNetworkVirtualApplianceVMsInVMScaleSet()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/NetworkVirtualApplianceEmptyRestart.json
+            // this example is just showing the usage of "NetworkVirtualAppliances_Restart" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkVirtualApplianceResource created on azure
+            // for more information of creating NetworkVirtualApplianceResource, please refer to the document of NetworkVirtualApplianceResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string networkVirtualApplianceName = "nva";
+            ResourceIdentifier networkVirtualApplianceResourceId = NetworkVirtualApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkVirtualApplianceName);
+            NetworkVirtualApplianceResource networkVirtualAppliance = client.GetNetworkVirtualApplianceResource(networkVirtualApplianceResourceId);
+
+            // invoke the operation
+            await networkVirtualAppliance.RestartAsync();
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // Restart Specific NetworkVirtualAppliance VMs in VM Scale Set
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Restart_RestartSpecificNetworkVirtualApplianceVMsInVMScaleSet()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/NetworkVirtualApplianceSpecificRestart.json
+            // this example is just showing the usage of "NetworkVirtualAppliances_Restart" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkVirtualApplianceResource created on azure
+            // for more information of creating NetworkVirtualApplianceResource, please refer to the document of NetworkVirtualApplianceResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string networkVirtualApplianceName = "nva";
+            ResourceIdentifier networkVirtualApplianceResourceId = NetworkVirtualApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkVirtualApplianceName);
+            NetworkVirtualApplianceResource networkVirtualAppliance = client.GetNetworkVirtualApplianceResource(networkVirtualApplianceResourceId);
+
+            // invoke the operation
+            await networkVirtualAppliance.RestartAsync();
+
+            Console.WriteLine($"Succeeded");
+        }
+
         // List all Network Virtual Appliances for a given subscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNetworkVirtualAppliances_ListAllNetworkVirtualAppliancesForAGivenSubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/NetworkVirtualApplianceListBySubscription.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/NetworkVirtualApplianceListBySubscription.json
             // this example is just showing the usage of "NetworkVirtualAppliances_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,7 +204,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdateInboundSecurityRule_CreateNetworkVirtualApplianceInboundSecurityRules()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/InboundSecurityRulePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/InboundSecurityRulePut.json
             // this example is just showing the usage of "InboundSecurityRule_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -173,13 +224,23 @@ namespace Azure.ResourceManager.Network.Samples
             string ruleCollectionName = "rule1";
             InboundSecurityRule inboundSecurityRule = new InboundSecurityRule()
             {
+                RuleType = InboundSecurityRuleType.Permanent,
                 Rules =
 {
 new InboundSecurityRules()
 {
+Name = "inboundRule1",
 Protocol = InboundSecurityRulesProtocol.Tcp,
 SourceAddressPrefix = "50.20.121.5/32",
 DestinationPortRange = 22,
+DestinationPortRanges =
+{
+"80-100"
+},
+AppliesOn =
+{
+"slbip1"
+},
 }
 },
             };

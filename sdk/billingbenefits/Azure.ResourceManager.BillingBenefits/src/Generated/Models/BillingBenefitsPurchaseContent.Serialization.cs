@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 {
     public partial class BillingBenefitsPurchaseContent : IUtf8JsonSerializable, IJsonModel<BillingBenefitsPurchaseContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingBenefitsPurchaseContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingBenefitsPurchaseContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BillingBenefitsPurchaseContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(Commitment))
             {
                 writer.WritePropertyName("commitment"u8);
-                writer.WriteObjectValue(Commitment);
+                writer.WriteObjectValue(Commitment, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EffectOn))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties);
+                writer.WriteObjectValue(AppliedScopeProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,24 +111,24 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static BillingBenefitsPurchaseContent DeserializeBillingBenefitsPurchaseContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BillingBenefitsSku> sku = default;
-            Optional<string> displayName = default;
-            Optional<ResourceIdentifier> billingScopeId = default;
-            Optional<BillingBenefitsTerm> term = default;
-            Optional<BillingBenefitsBillingPlan> billingPlan = default;
-            Optional<BillingBenefitsAppliedScopeType> appliedScopeType = default;
-            Optional<BillingBenefitsCommitment> commitment = default;
-            Optional<DateTimeOffset> effectiveDateTime = default;
-            Optional<bool> renew = default;
-            Optional<BillingBenefitsAppliedScopeProperties> appliedScopeProperties = default;
+            BillingBenefitsSku sku = default;
+            string displayName = default;
+            ResourceIdentifier billingScopeId = default;
+            BillingBenefitsTerm? term = default;
+            BillingBenefitsBillingPlan? billingPlan = default;
+            BillingBenefitsAppliedScopeType? appliedScopeType = default;
+            BillingBenefitsCommitment commitment = default;
+            DateTimeOffset? effectiveDateTime = default;
+            bool? renew = default;
+            BillingBenefitsAppliedScopeProperties appliedScopeProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    sku = BillingBenefitsSku.DeserializeBillingBenefitsSku(property.Value);
+                    sku = BillingBenefitsSku.DeserializeBillingBenefitsSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                             {
                                 continue;
                             }
-                            commitment = BillingBenefitsCommitment.DeserializeBillingBenefitsCommitment(property0.Value);
+                            commitment = BillingBenefitsCommitment.DeserializeBillingBenefitsCommitment(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("effectiveDateTime"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                             {
                                 continue;
                             }
-                            appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property0.Value);
+                            appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -231,11 +231,22 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsPurchaseContent(sku.Value, displayName.Value, billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), commitment.Value, Optional.ToNullable(effectiveDateTime), Optional.ToNullable(renew), appliedScopeProperties.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BillingBenefitsPurchaseContent(
+                sku,
+                displayName,
+                billingScopeId,
+                term,
+                billingPlan,
+                appliedScopeType,
+                commitment,
+                effectiveDateTime,
+                renew,
+                appliedScopeProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsPurchaseContent>.Write(ModelReaderWriterOptions options)
@@ -247,7 +258,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -263,7 +274,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         return DeserializeBillingBenefitsPurchaseContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingBenefitsPurchaseContent)} does not support reading '{options.Format}' format.");
             }
         }
 

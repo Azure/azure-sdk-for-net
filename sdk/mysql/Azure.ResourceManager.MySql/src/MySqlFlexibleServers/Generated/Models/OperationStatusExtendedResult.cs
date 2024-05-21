@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
@@ -35,10 +34,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="endOn"> The end time of the operation. </param>
         /// <param name="operations"> The operations list. </param>
         /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The extended properties of Operation Results. </param>
-        internal OperationStatusExtendedResult(ResourceIdentifier id, ResourceIdentifier resourceId, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, IReadOnlyDictionary<string, BinaryData> properties) : base(id, resourceId, name, status, percentComplete, startOn, endOn, operations, error)
+        internal OperationStatusExtendedResult(ResourceIdentifier id, ResourceIdentifier resourceId, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> properties) : base(id, resourceId, name, status, percentComplete, startOn, endOn, operations, error, serializedAdditionalRawData)
         {
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationStatusExtendedResult"/> for deserialization. </summary>
+        internal OperationStatusExtendedResult()
+        {
         }
 
         /// <summary>

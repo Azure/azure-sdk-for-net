@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class EventTriggerConfiguration : IUtf8JsonSerializable, IJsonModel<EventTriggerConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventTriggerConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventTriggerConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventTriggerConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventTriggerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Scale))
             {
                 writer.WritePropertyName("scale"u8);
-                writer.WriteObjectValue(Scale);
+                writer.WriteObjectValue(Scale, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventTriggerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static EventTriggerConfiguration DeserializeEventTriggerConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> replicaCompletionCount = default;
-            Optional<int> parallelism = default;
-            Optional<ContainerAppJobScale> scale = default;
+            int? replicaCompletionCount = default;
+            int? parallelism = default;
+            ContainerAppJobScale scale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replicaCompletionCount"u8))
@@ -110,16 +110,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    scale = ContainerAppJobScale.DeserializeContainerAppJobScale(property.Value);
+                    scale = ContainerAppJobScale.DeserializeContainerAppJobScale(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventTriggerConfiguration(Optional.ToNullable(replicaCompletionCount), Optional.ToNullable(parallelism), scale.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EventTriggerConfiguration(replicaCompletionCount, parallelism, scale, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventTriggerConfiguration>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeEventTriggerConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

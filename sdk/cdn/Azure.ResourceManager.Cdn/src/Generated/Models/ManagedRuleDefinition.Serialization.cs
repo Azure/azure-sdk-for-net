@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class ManagedRuleDefinition : IUtf8JsonSerializable, IJsonModel<ManagedRuleDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRuleDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRuleDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedRuleDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedRuleDefinition DeserializeManagedRuleDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> ruleId = default;
-            Optional<string> description = default;
+            string ruleId = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"u8))
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleDefinition(ruleId.Value, description.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedRuleDefinition(ruleId, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleDefinition>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeManagedRuleDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

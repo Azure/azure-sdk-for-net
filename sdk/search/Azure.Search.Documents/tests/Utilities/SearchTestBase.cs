@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
@@ -58,6 +59,9 @@ namespace Azure.Search.Documents.Tests
         {
             ServiceVersion = serviceVersion;
             JsonPathSanitizers.Add("$..applicationSecret");
+            JsonPathSanitizers.Add("$..apiKey");
+            JsonPathSanitizers.Add("$..storageConnectionString");
+            JsonPathSanitizers.Remove("$..token");
             SanitizedHeaders.Add("api-key");
             CompareBodies = false;
         }

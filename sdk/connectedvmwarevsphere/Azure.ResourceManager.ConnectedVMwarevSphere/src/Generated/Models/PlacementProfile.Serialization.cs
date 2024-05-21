@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     public partial class PlacementProfile : IUtf8JsonSerializable, IJsonModel<PlacementProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlacementProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlacementProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PlacementProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PlacementProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlacementProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlacementProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlacementProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,18 +78,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static PlacementProfile DeserializePlacementProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> resourcePoolId = default;
-            Optional<string> clusterId = default;
-            Optional<string> hostId = default;
-            Optional<string> datastoreId = default;
+            string resourcePoolId = default;
+            string clusterId = default;
+            string hostId = default;
+            string datastoreId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourcePoolId"u8))
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlacementProfile(resourcePoolId.Value, clusterId.Value, hostId.Value, datastoreId.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PlacementProfile(resourcePoolId, clusterId, hostId, datastoreId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlacementProfile>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlacementProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializePlacementProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlacementProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

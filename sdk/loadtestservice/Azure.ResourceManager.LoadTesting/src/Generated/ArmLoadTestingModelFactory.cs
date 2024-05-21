@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.LoadTesting;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting.Models
@@ -28,7 +27,15 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <returns> A new <see cref="LoadTesting.LoadTestingQuotaData"/> instance for mocking. </returns>
         public static LoadTestingQuotaData LoadTestingQuotaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? limit = null, int? usage = null, LoadTestingProvisioningState? provisioningState = null)
         {
-            return new LoadTestingQuotaData(id, name, resourceType, systemData, limit, usage, provisioningState);
+            return new LoadTestingQuotaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                limit,
+                usage,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LoadTestingQuotaBucketContent"/>. </summary>
@@ -43,7 +50,16 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <returns> A new <see cref="Models.LoadTestingQuotaBucketContent"/> instance for mocking. </returns>
         public static LoadTestingQuotaBucketContent LoadTestingQuotaBucketContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? currentUsage = null, int? currentQuota = null, int? newQuota = null, LoadTestingQuotaBucketDimensions dimensions = null)
         {
-            return new LoadTestingQuotaBucketContent(id, name, resourceType, systemData, currentUsage, currentQuota, newQuota, dimensions);
+            return new LoadTestingQuotaBucketContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                currentUsage,
+                currentQuota,
+                newQuota,
+                dimensions,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LoadTestingQuotaAvailabilityResult"/>. </summary>
@@ -56,7 +72,14 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <returns> A new <see cref="Models.LoadTestingQuotaAvailabilityResult"/> instance for mocking. </returns>
         public static LoadTestingQuotaAvailabilityResult LoadTestingQuotaAvailabilityResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isAvailable = null, string availabilityStatus = null)
         {
-            return new LoadTestingQuotaAvailabilityResult(id, name, resourceType, systemData, isAvailable, availabilityStatus);
+            return new LoadTestingQuotaAvailabilityResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isAvailable,
+                availabilityStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadTesting.LoadTestingResourceData"/>. </summary>
@@ -76,7 +99,19 @@ namespace Azure.ResourceManager.LoadTesting.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new LoadTestingResourceData(id, name, resourceType, systemData, tags, location, identity, description, provisioningState, dataPlaneUri, encryption);
+            return new LoadTestingResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                description,
+                provisioningState,
+                dataPlaneUri,
+                encryption,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LoadTestingOutboundEnvironmentEndpoint"/>. </summary>
@@ -87,7 +122,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         {
             endpoints ??= new List<LoadTestingEndpointDependency>();
 
-            return new LoadTestingOutboundEnvironmentEndpoint(category, endpoints?.ToList());
+            return new LoadTestingOutboundEnvironmentEndpoint(category, endpoints?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LoadTestingEndpointDependency"/>. </summary>
@@ -99,7 +134,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         {
             endpointDetails ??= new List<LoadTestingEndpointDetail>();
 
-            return new LoadTestingEndpointDependency(domainName, description, endpointDetails?.ToList());
+            return new LoadTestingEndpointDependency(domainName, description, endpointDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LoadTestingEndpointDetail"/>. </summary>
@@ -107,7 +142,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <returns> A new <see cref="Models.LoadTestingEndpointDetail"/> instance for mocking. </returns>
         public static LoadTestingEndpointDetail LoadTestingEndpointDetail(int? port = null)
         {
-            return new LoadTestingEndpointDetail(port);
+            return new LoadTestingEndpointDetail(port, serializedAdditionalRawData: null);
         }
     }
 }

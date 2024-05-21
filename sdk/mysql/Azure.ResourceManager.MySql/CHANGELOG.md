@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.5 (Unreleased)
+## 1.1.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,21 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.5 (2024-03-14)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2020-01-01;package-flexibleserver-2023-06-01-preview' to 'package-2020-01-01;package-flexibleserver-2023-12-01-preview'. Tag detail available at https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/mysql/Azure.ResourceManager.MySql/src/autorest.md
+
+### Breaking Changes
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.38.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.10.2
 
 ## 1.1.0-beta.4 (2023-11-29)
 

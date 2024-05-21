@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class DataBoxEdgeVmMemory : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeVmMemory>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeVmMemory>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeVmMemory>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxEdgeVmMemory>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeVmMemory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeVmMemory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeVmMemory)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeVmMemory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeVmMemory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeVmMemory)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeVmMemory DeserializeDataBoxEdgeVmMemory(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<long> startupMemoryMB = default;
-            Optional<long> currentMemoryUsageMB = default;
+            long? startupMemoryMB = default;
+            long? currentMemoryUsageMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startupMemoryMB"u8))
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeVmMemory(Optional.ToNullable(startupMemoryMB), Optional.ToNullable(currentMemoryUsageMB), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxEdgeVmMemory(startupMemoryMB, currentMemoryUsageMB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeVmMemory>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeVmMemory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeVmMemory)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDataBoxEdgeVmMemory(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeVmMemory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeVmMemory)} does not support reading '{options.Format}' format.");
             }
         }
 

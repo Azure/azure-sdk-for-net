@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class ConnectToSourceOracleSyncTaskOutput : IUtf8JsonSerializable, IJsonModel<ConnectToSourceOracleSyncTaskOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceOracleSyncTaskOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceOracleSyncTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectToSourceOracleSyncTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceOracleSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToSourceOracleSyncTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToSourceOracleSyncTaskOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceOracleSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToSourceOracleSyncTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToSourceOracleSyncTaskOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,18 +88,18 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToSourceOracleSyncTaskOutput DeserializeConnectToSourceOracleSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> sourceServerVersion = default;
-            Optional<IReadOnlyList<string>> databases = default;
-            Optional<string> sourceServerBrandVersion = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            string sourceServerVersion = default;
+            IReadOnlyList<string> databases = default;
+            string sourceServerBrandVersion = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceServerVersion"u8))
@@ -135,18 +135,18 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceOracleSyncTaskOutput(sourceServerVersion.Value, Optional.ToList(databases), sourceServerBrandVersion.Value, Optional.ToList(validationErrors), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectToSourceOracleSyncTaskOutput(sourceServerVersion, databases ?? new ChangeTrackingList<string>(), sourceServerBrandVersion, validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToSourceOracleSyncTaskOutput>.Write(ModelReaderWriterOptions options)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceOracleSyncTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToSourceOracleSyncTaskOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeConnectToSourceOracleSyncTaskOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceOracleSyncTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToSourceOracleSyncTaskOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

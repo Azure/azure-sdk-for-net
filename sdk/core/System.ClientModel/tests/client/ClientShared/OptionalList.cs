@@ -6,8 +6,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-#nullable enable
-
 namespace ClientModel.Tests.ClientShared;
 
 internal class OptionalList<T> : IList<T>, IReadOnlyList<T>
@@ -26,7 +24,7 @@ internal class OptionalList<T> : IList<T>, IReadOnlyList<T>
     {
     }
 
-    private OptionalList(IEnumerable<T> innerList)
+    private OptionalList(IEnumerable<T>? innerList)
     {
         if (innerList == null)
         {
@@ -36,7 +34,7 @@ internal class OptionalList<T> : IList<T>, IReadOnlyList<T>
         _innerList = innerList.ToList();
     }
 
-    private OptionalList(IList<T> innerList)
+    private OptionalList(IList<T>? innerList)
     {
         if (innerList == null)
         {

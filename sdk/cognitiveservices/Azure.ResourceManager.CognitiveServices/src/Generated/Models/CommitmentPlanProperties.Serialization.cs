@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,14 +17,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CommitmentPlanProperties : IUtf8JsonSerializable, IJsonModel<CommitmentPlanProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentPlanProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentPlanProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommitmentPlanProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CommitmentPlanProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommitmentPlanProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommitmentPlanProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Current))
             {
                 writer.WritePropertyName("current"u8);
-                writer.WriteObjectValue(Current);
+                writer.WriteObjectValue(Current, options);
             }
             if (Optional.IsDefined(AutoRenew))
             {
@@ -59,12 +61,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Next))
             {
                 writer.WritePropertyName("next"u8);
-                writer.WriteObjectValue(Next);
+                writer.WriteObjectValue(Next, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Last))
             {
                 writer.WritePropertyName("last"u8);
-                writer.WriteObjectValue(Last);
+                writer.WriteObjectValue(Last, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningIssues))
             {
@@ -99,7 +101,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommitmentPlanProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommitmentPlanProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommitmentPlanProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,23 +110,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CommitmentPlanProperties DeserializeCommitmentPlanProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<CommitmentPlanProvisioningState> provisioningState = default;
-            Optional<Guid> commitmentPlanGuid = default;
-            Optional<ServiceAccountHostingModel> hostingModel = default;
-            Optional<string> planType = default;
-            Optional<CommitmentPeriod> current = default;
-            Optional<bool> autoRenew = default;
-            Optional<CommitmentPeriod> next = default;
-            Optional<CommitmentPeriod> last = default;
-            Optional<IReadOnlyList<string>> provisioningIssues = default;
+            CommitmentPlanProvisioningState? provisioningState = default;
+            Guid? commitmentPlanGuid = default;
+            ServiceAccountHostingModel? hostingModel = default;
+            string planType = default;
+            CommitmentPeriod current = default;
+            bool? autoRenew = default;
+            CommitmentPeriod next = default;
+            CommitmentPeriod last = default;
+            IReadOnlyList<string> provisioningIssues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -165,7 +167,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    current = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value);
+                    current = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoRenew"u8))
@@ -183,7 +185,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    next = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value);
+                    next = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("last"u8))
@@ -192,7 +194,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    last = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value);
+                    last = CommitmentPeriod.DeserializeCommitmentPeriod(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningIssues"u8))
@@ -211,11 +213,201 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentPlanProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(commitmentPlanGuid), Optional.ToNullable(hostingModel), planType.Value, current.Value, Optional.ToNullable(autoRenew), next.Value, last.Value, Optional.ToList(provisioningIssues), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CommitmentPlanProperties(
+                provisioningState,
+                commitmentPlanGuid,
+                hostingModel,
+                planType,
+                current,
+                autoRenew,
+                next,
+                last,
+                provisioningIssues ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommitmentPlanGuid), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  commitmentPlanGuid: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CommitmentPlanGuid))
+                {
+                    builder.Append("  commitmentPlanGuid: ");
+                    builder.AppendLine($"'{CommitmentPlanGuid.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingModel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hostingModel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HostingModel))
+                {
+                    builder.Append("  hostingModel: ");
+                    builder.AppendLine($"'{HostingModel.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PlanType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  planType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PlanType))
+                {
+                    builder.Append("  planType: ");
+                    if (PlanType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PlanType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PlanType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Current), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  current: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Current))
+                {
+                    builder.Append("  current: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Current, options, 2, false, "  current: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoRenew), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  autoRenew: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AutoRenew))
+                {
+                    builder.Append("  autoRenew: ");
+                    var boolValue = AutoRenew.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Next), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  next: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Next))
+                {
+                    builder.Append("  next: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Next, options, 2, false, "  next: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Last), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  last: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Last))
+                {
+                    builder.Append("  last: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Last, options, 2, false, "  last: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningIssues), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningIssues: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ProvisioningIssues))
+                {
+                    if (ProvisioningIssues.Any())
+                    {
+                        builder.Append("  provisioningIssues: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ProvisioningIssues)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CommitmentPlanProperties>.Write(ModelReaderWriterOptions options)
@@ -226,8 +418,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CommitmentPlanProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommitmentPlanProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -243,7 +437,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCommitmentPlanProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommitmentPlanProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommitmentPlanProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

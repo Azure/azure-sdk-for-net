@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Network.Models;
@@ -33,8 +32,22 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2023-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string azureFirewallName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/azureFirewalls/", false);
+            uri.AppendPath(azureFirewallName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string azureFirewallName)
@@ -107,6 +120,20 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string azureFirewallName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/azureFirewalls/", false);
+            uri.AppendPath(azureFirewallName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string azureFirewallName)
@@ -191,6 +218,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string azureFirewallName, AzureFirewallData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/azureFirewalls/", false);
+            uri.AppendPath(azureFirewallName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string azureFirewallName, AzureFirewallData data)
         {
             var message = _pipeline.CreateMessage();
@@ -209,7 +250,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -269,6 +310,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateUpdateTagsRequestUri(string subscriptionId, string resourceGroupName, string azureFirewallName, NetworkTagsObject networkTagsObject)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/azureFirewalls/", false);
+            uri.AppendPath(azureFirewallName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string azureFirewallName, NetworkTagsObject networkTagsObject)
         {
             var message = _pipeline.CreateMessage();
@@ -287,7 +342,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(networkTagsObject);
+            content.JsonWriter.WriteObjectValue(networkTagsObject, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -345,6 +400,19 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/azureFirewalls", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName)
@@ -420,6 +488,17 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateListAllRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/azureFirewalls", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListAllRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -485,6 +564,21 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListLearnedPrefixesRequestUri(string subscriptionId, string resourceGroupName, string azureFirewallName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/azureFirewalls/", false);
+            uri.AppendPath(azureFirewallName, true);
+            uri.AppendPath("/learnedIPPrefixes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListLearnedPrefixesRequest(string subscriptionId, string resourceGroupName, string azureFirewallName)
@@ -558,6 +652,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreatePacketCaptureRequestUri(string subscriptionId, string resourceGroupName, string azureFirewallName, FirewallPacketCaptureContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/azureFirewalls/", false);
+            uri.AppendPath(azureFirewallName, true);
+            uri.AppendPath("/packetCapture", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePacketCaptureRequest(string subscriptionId, string resourceGroupName, string azureFirewallName, FirewallPacketCaptureContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -577,7 +686,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -633,6 +742,14 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -705,6 +822,14 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAllNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAllNextPageRequest(string nextLink, string subscriptionId)

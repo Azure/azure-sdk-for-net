@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class SoftwareUpdateConfigurationMachineRun : IUtf8JsonSerializable, IJsonModel<SoftwareUpdateConfigurationMachineRun>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationMachineRun>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationMachineRun>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SoftwareUpdateConfigurationMachineRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationMachineRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationMachineRun)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationMachineRun)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(SoftwareUpdateConfiguration))
             {
                 writer.WritePropertyName("softwareUpdateConfiguration"u8);
-                writer.WriteObjectValue(SoftwareUpdateConfiguration);
+                writer.WriteObjectValue(SoftwareUpdateConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Job))
             {
                 writer.WritePropertyName("job"u8);
-                writer.WriteObjectValue(Job);
+                writer.WriteObjectValue(Job, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue(Error, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationMachineRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationMachineRun)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationMachineRun)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,32 +158,32 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static SoftwareUpdateConfigurationMachineRun DeserializeSoftwareUpdateConfigurationMachineRun(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<ResourceIdentifier> targetComputer = default;
-            Optional<string> targetComputerType = default;
-            Optional<SoftwareUpdateConfigurationNavigation> softwareUpdateConfiguration = default;
-            Optional<string> status = default;
-            Optional<string> osType = default;
-            Optional<Guid> correlationId = default;
-            Optional<Guid> sourceComputerId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<TimeSpan> configuredDuration = default;
-            Optional<JobNavigation> job = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<string> createdBy = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<AutomationResponseError> error = default;
+            string name = default;
+            ResourceIdentifier id = default;
+            ResourceIdentifier targetComputer = default;
+            string targetComputerType = default;
+            SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration = default;
+            string status = default;
+            string osType = default;
+            Guid? correlationId = default;
+            Guid? sourceComputerId = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            TimeSpan? configuredDuration = default;
+            JobNavigation job = default;
+            DateTimeOffset? creationTime = default;
+            string createdBy = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string lastModifiedBy = default;
+            AutomationResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            softwareUpdateConfiguration = SoftwareUpdateConfigurationNavigation.DeserializeSoftwareUpdateConfigurationNavigation(property0.Value);
+                            softwareUpdateConfiguration = SoftwareUpdateConfigurationNavigation.DeserializeSoftwareUpdateConfigurationNavigation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            job = JobNavigation.DeserializeJobNavigation(property0.Value);
+                            job = JobNavigation.DeserializeJobNavigation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creationTime"u8))
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value);
+                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value, options);
                             continue;
                         }
                     }
@@ -339,11 +339,30 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationMachineRun(name.Value, id.Value, targetComputer.Value, targetComputerType.Value, softwareUpdateConfiguration.Value, status.Value, osType.Value, Optional.ToNullable(correlationId), Optional.ToNullable(sourceComputerId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(configuredDuration), job.Value, Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, error.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SoftwareUpdateConfigurationMachineRun(
+                name,
+                id,
+                targetComputer,
+                targetComputerType,
+                softwareUpdateConfiguration,
+                status,
+                osType,
+                correlationId,
+                sourceComputerId,
+                startTime,
+                endTime,
+                configuredDuration,
+                job,
+                creationTime,
+                createdBy,
+                lastModifiedTime,
+                lastModifiedBy,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationMachineRun>.Write(ModelReaderWriterOptions options)
@@ -355,7 +374,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationMachineRun)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationMachineRun)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -371,7 +390,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeSoftwareUpdateConfigurationMachineRun(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationMachineRun)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationMachineRun)} does not support reading '{options.Format}' format.");
             }
         }
 

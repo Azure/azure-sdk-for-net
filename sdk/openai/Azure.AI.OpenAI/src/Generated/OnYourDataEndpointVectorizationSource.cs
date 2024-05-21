@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI
 {
@@ -18,7 +18,11 @@ namespace Azure.AI.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="OnYourDataEndpointVectorizationSource"/>. </summary>
         /// <param name="endpoint"> Specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings. The api-version query parameter is not allowed. </param>
-        /// <param name="authentication"> Specifies the authentication options to use when retrieving embeddings from the specified endpoint. </param>
+        /// <param name="authentication">
+        /// Specifies the authentication options to use when retrieving embeddings from the specified endpoint.
+        /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="authentication"/> is null. </exception>
         public OnYourDataEndpointVectorizationSource(Uri endpoint, OnYourDataAuthenticationOptions authentication)
         {
@@ -32,12 +36,22 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="OnYourDataEndpointVectorizationSource"/>. </summary>
         /// <param name="type"> The type of vectorization source to use. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endpoint"> Specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings. The api-version query parameter is not allowed. </param>
-        /// <param name="authentication"> Specifies the authentication options to use when retrieving embeddings from the specified endpoint. </param>
-        internal OnYourDataEndpointVectorizationSource(OnYourDataVectorizationSourceType type, Uri endpoint, OnYourDataAuthenticationOptions authentication) : base(type)
+        /// <param name="authentication">
+        /// Specifies the authentication options to use when retrieving embeddings from the specified endpoint.
+        /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
+        /// </param>
+        internal OnYourDataEndpointVectorizationSource(OnYourDataVectorizationSourceType type, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri endpoint, OnYourDataAuthenticationOptions authentication) : base(type, serializedAdditionalRawData)
         {
             Endpoint = endpoint;
             Authentication = authentication;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OnYourDataEndpointVectorizationSource"/> for deserialization. </summary>
+        internal OnYourDataEndpointVectorizationSource()
+        {
         }
 
         /// <summary> Specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings. The api-version query parameter is not allowed. </summary>
@@ -45,7 +59,7 @@ namespace Azure.AI.OpenAI
         /// <summary>
         /// Specifies the authentication options to use when retrieving embeddings from the specified endpoint.
         /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
+        /// The available derived classes include <see cref="OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
         /// </summary>
         public OnYourDataAuthenticationOptions Authentication { get; }
     }

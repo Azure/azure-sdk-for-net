@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateSqlServerSqlMITaskOutputAgentJobLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlMITaskOutputAgentJobLevel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlMITaskOutputAgentJobLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlMITaskOutputAgentJobLevel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateSqlServerSqlMITaskOutputAgentJobLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMITaskOutputAgentJobLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputAgentJobLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputAgentJobLevel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ExceptionsAndWarnings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMITaskOutputAgentJobLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputAgentJobLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputAgentJobLevel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,23 +105,23 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSqlServerSqlMITaskOutputAgentJobLevel DeserializeMigrateSqlServerSqlMITaskOutputAgentJobLevel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> isEnabled = default;
-            Optional<MigrationState> state = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Optional<string> id = default;
+            string name = default;
+            bool? isEnabled = default;
+            MigrationState? state = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            string message = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -196,11 +196,21 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMITaskOutputAgentJobLevel(id.Value, resultType, serializedAdditionalRawData, name.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(state), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), message.Value, Optional.ToList(exceptionsAndWarnings));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrateSqlServerSqlMITaskOutputAgentJobLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                name,
+                isEnabled,
+                state,
+                startedOn,
+                endedOn,
+                message,
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMITaskOutputAgentJobLevel>.Write(ModelReaderWriterOptions options)
@@ -212,7 +222,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputAgentJobLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputAgentJobLevel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +238,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSqlServerSqlMITaskOutputAgentJobLevel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputAgentJobLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputAgentJobLevel)} does not support reading '{options.Format}' format.");
             }
         }
 

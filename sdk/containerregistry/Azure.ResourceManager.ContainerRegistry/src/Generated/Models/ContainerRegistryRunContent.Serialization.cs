@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     [PersistableModelProxy(typeof(UnknownRunRequest))]
     public partial class ContainerRegistryRunContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryRunContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryRunContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryRunContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryRunContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryRunContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryRunContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryRunContent DeserializeContainerRegistryRunContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -85,13 +85,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DockerBuildRequest": return ContainerRegistryDockerBuildContent.DeserializeContainerRegistryDockerBuildContent(element);
-                    case "EncodedTaskRunRequest": return ContainerRegistryEncodedTaskRunContent.DeserializeContainerRegistryEncodedTaskRunContent(element);
-                    case "FileTaskRunRequest": return ContainerRegistryFileTaskRunContent.DeserializeContainerRegistryFileTaskRunContent(element);
-                    case "TaskRunRequest": return ContainerRegistryTaskRunContent.DeserializeContainerRegistryTaskRunContent(element);
+                    case "DockerBuildRequest": return ContainerRegistryDockerBuildContent.DeserializeContainerRegistryDockerBuildContent(element, options);
+                    case "EncodedTaskRunRequest": return ContainerRegistryEncodedTaskRunContent.DeserializeContainerRegistryEncodedTaskRunContent(element, options);
+                    case "FileTaskRunRequest": return ContainerRegistryFileTaskRunContent.DeserializeContainerRegistryFileTaskRunContent(element, options);
+                    case "TaskRunRequest": return ContainerRegistryTaskRunContent.DeserializeContainerRegistryTaskRunContent(element, options);
                 }
             }
-            return UnknownRunRequest.DeserializeUnknownRunRequest(element);
+            return UnknownRunRequest.DeserializeUnknownRunRequest(element, options);
         }
 
         BinaryData IPersistableModel<ContainerRegistryRunContent>.Write(ModelReaderWriterOptions options)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryRunContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support reading '{options.Format}' format.");
             }
         }
 

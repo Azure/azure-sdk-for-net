@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -400,7 +398,7 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricsRestClient.CreateListElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SqlMetric.DeserializeSqlMetric, _metricsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SqlMetric.DeserializeSqlMetric(e), _metricsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -429,7 +427,7 @@ namespace Azure.ResourceManager.Sql
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricsRestClient.CreateListElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SqlMetric.DeserializeSqlMetric, _metricsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SqlMetric.DeserializeSqlMetric(e), _metricsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -454,7 +452,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<SqlMetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricDefinitionsRestClient.CreateListElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SqlMetricDefinition.DeserializeSqlMetricDefinition, _metricDefinitionsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetricDefinitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SqlMetricDefinition.DeserializeSqlMetricDefinition(e), _metricDefinitionsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -479,7 +477,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<SqlMetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metricDefinitionsRestClient.CreateListElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SqlMetricDefinition.DeserializeSqlMetricDefinition, _metricDefinitionsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetricDefinitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SqlMetricDefinition.DeserializeSqlMetricDefinition(e), _metricDefinitionsClientDiagnostics, Pipeline, "ElasticPoolResource.GetMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -504,7 +502,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<ElasticPoolActivity> GetElasticPoolActivitiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolActivitiesRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ElasticPoolActivity.DeserializeElasticPoolActivity, _elasticPoolActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolActivities", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ElasticPoolActivity.DeserializeElasticPoolActivity(e), _elasticPoolActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolActivities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -529,7 +527,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<ElasticPoolActivity> GetElasticPoolActivities(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolActivitiesRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ElasticPoolActivity.DeserializeElasticPoolActivity, _elasticPoolActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolActivities", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ElasticPoolActivity.DeserializeElasticPoolActivity(e), _elasticPoolActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolActivities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -554,7 +552,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<ElasticPoolDatabaseActivity> GetElasticPoolDatabaseActivitiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolDatabaseActivitiesRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ElasticPoolDatabaseActivity.DeserializeElasticPoolDatabaseActivity, _elasticPoolDatabaseActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolDatabaseActivities", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ElasticPoolDatabaseActivity.DeserializeElasticPoolDatabaseActivity(e), _elasticPoolDatabaseActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolDatabaseActivities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -579,7 +577,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<ElasticPoolDatabaseActivity> GetElasticPoolDatabaseActivities(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolDatabaseActivitiesRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ElasticPoolDatabaseActivity.DeserializeElasticPoolDatabaseActivity, _elasticPoolDatabaseActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolDatabaseActivities", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ElasticPoolDatabaseActivity.DeserializeElasticPoolDatabaseActivity(e), _elasticPoolDatabaseActivitiesClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolDatabaseActivities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -675,7 +673,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolOperationsRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticPoolOperationsRestClient.CreateListByElasticPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ElasticPoolOperationData.DeserializeElasticPoolOperationData, _elasticPoolOperationsClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ElasticPoolOperationData.DeserializeElasticPoolOperationData(e), _elasticPoolOperationsClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -701,7 +699,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticPoolOperationsRestClient.CreateListByElasticPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticPoolOperationsRestClient.CreateListByElasticPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ElasticPoolOperationData.DeserializeElasticPoolOperationData, _elasticPoolOperationsClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ElasticPoolOperationData.DeserializeElasticPoolOperationData(e), _elasticPoolOperationsClientDiagnostics, Pipeline, "ElasticPoolResource.GetElasticPoolOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalCredential"> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal CommonDataServiceForAppsLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> deploymentType, DataFactoryElement<string> hostName, DataFactoryElement<int> port, DataFactoryElement<string> serviceUri, DataFactoryElement<string> organizationName, DataFactoryElement<string> authenticationType, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecretBaseDefinition servicePrincipalCredential, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal CommonDataServiceForAppsLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> deploymentType, DataFactoryElement<string> hostName, DataFactoryElement<int> port, DataFactoryElement<string> serviceUri, DataFactoryElement<string> organizationName, DataFactoryElement<string> authenticationType, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecret servicePrincipalCredential, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             DeploymentType = deploymentType;
             HostName = hostName;
@@ -63,6 +62,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ServicePrincipalCredential = servicePrincipalCredential;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "CommonDataServiceForApps";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommonDataServiceForAppsLinkedService"/> for deserialization. </summary>
+        internal CommonDataServiceForAppsLinkedService()
+        {
         }
 
         /// <summary> The deployment type of the Common Data Service for Apps instance. 'Online' for Common Data Service for Apps Online and 'OnPremisesWithIfd' for Common Data Service for Apps on-premises with Ifd. Type: string (or Expression with resultType string). </summary>
@@ -80,13 +84,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> User name to access the Common Data Service for Apps instance. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Password to access the Common Data Service for Apps instance. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalCredentialType { get; set; }
         /// <summary> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference. </summary>
-        public DataFactorySecretBaseDefinition ServicePrincipalCredential { get; set; }
+        public DataFactorySecret ServicePrincipalCredential { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
     }

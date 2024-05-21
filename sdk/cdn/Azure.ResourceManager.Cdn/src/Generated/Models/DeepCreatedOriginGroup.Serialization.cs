@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class DeepCreatedOriginGroup : IUtf8JsonSerializable, IJsonModel<DeepCreatedOriginGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeepCreatedOriginGroup>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeepCreatedOriginGroup>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeepCreatedOriginGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeepCreatedOriginGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (HealthProbeSettings != null)
                 {
                     writer.WritePropertyName("healthProbeSettings"u8);
-                    writer.WriteObjectValue(HealthProbeSettings);
+                    writer.WriteObjectValue(HealthProbeSettings, options);
                 }
                 else
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (ResponseBasedOriginErrorDetectionSettings != null)
                 {
                     writer.WritePropertyName("responseBasedOriginErrorDetectionSettings"u8);
-                    writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings);
+                    writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings, options);
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeepCreatedOriginGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,19 +110,19 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeepCreatedOriginGroup DeserializeDeepCreatedOriginGroup(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            Optional<HealthProbeSettings> healthProbeSettings = default;
-            Optional<IList<WritableSubResource>> origins = default;
-            Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
-            Optional<ResponseBasedOriginErrorDetectionSettings> responseBasedOriginErrorDetectionSettings = default;
+            HealthProbeSettings healthProbeSettings = default;
+            IList<WritableSubResource> origins = default;
+            int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
+            ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 healthProbeSettings = null;
                                 continue;
                             }
-                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value);
+                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("origins"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 responseBasedOriginErrorDetectionSettings = null;
                                 continue;
                             }
-                            responseBasedOriginErrorDetectionSettings = ResponseBasedOriginErrorDetectionSettings.DeserializeResponseBasedOriginErrorDetectionSettings(property0.Value);
+                            responseBasedOriginErrorDetectionSettings = ResponseBasedOriginErrorDetectionSettings.DeserializeResponseBasedOriginErrorDetectionSettings(property0.Value, options);
                             continue;
                         }
                     }
@@ -188,11 +188,17 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeepCreatedOriginGroup(name, healthProbeSettings.Value, Optional.ToList(origins), Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedOriginErrorDetectionSettings.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DeepCreatedOriginGroup(
+                name,
+                healthProbeSettings,
+                origins ?? new ChangeTrackingList<WritableSubResource>(),
+                trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
+                responseBasedOriginErrorDetectionSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeepCreatedOriginGroup>.Write(ModelReaderWriterOptions options)
@@ -204,7 +210,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +226,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeDeepCreatedOriginGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

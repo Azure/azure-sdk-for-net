@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     internal partial class AzureBackupJobResourceList : IUtf8JsonSerializable, IJsonModel<AzureBackupJobResourceList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureBackupJobResourceList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureBackupJobResourceList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureBackupJobResourceList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureBackupJobResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureBackupJobResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,16 +73,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static AzureBackupJobResourceList DeserializeAzureBackupJobResourceList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataProtectionBackupJobData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DataProtectionBackupJobData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupJobData> array = new List<DataProtectionBackupJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupJobData.DeserializeDataProtectionBackupJobData(item));
+                        array.Add(DataProtectionBackupJobData.DeserializeDataProtectionBackupJobData(item, options));
                     }
                     value = array;
                     continue;
@@ -107,11 +106,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureBackupJobResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureBackupJobResourceList(value ?? new ChangeTrackingList<DataProtectionBackupJobData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureBackupJobResourceList>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeAzureBackupJobResourceList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support reading '{options.Format}' format.");
             }
         }
 

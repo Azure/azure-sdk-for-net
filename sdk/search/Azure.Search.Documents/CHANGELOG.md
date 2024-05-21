@@ -1,6 +1,6 @@
 # Release History
 
-## 11.6.0-beta.2 (Unreleased)
+## 11.6.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,29 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.6.0-beta.4 (2024-05-06)
+
+### Features Added
+- Added support for new embedding models `text-embedding-3-small` and `text-embedding-3-large`, as part of our existing `AzureOpenAIVectorizer` and `AzureOpenAIEmbeddingSkill` features. 
+- Added support for `AIServicesVisionVectorizer` and `VisionVectorizeSkill` to generate embeddings for an image or text using the Azure AI Services Vision Vectorize API.
+- Added support for `AzureMachineLearningVectorizer`, allowing users to specify an Azure Machine Learning endpoint deployed via the Azure AI Studio Model Catalog to generate vector embeddings of query strings.
+- Added support for `byte` to `SearchFieldDataType`.
+
+## 11.6.0-beta.3 (2024-03-05)
+
+### Features Added
+- Added the `VectorSearch.Compressions` property, which can be utilized to configure options specific to the compression method used during indexing or querying.
+- Added the `SearchField.IsStored`, `VectorSearchField.IsStored`, and `VectorSearchFieldAttribute.IsStored` property. It represent an immutable value indicating whether the field will be persisted separately on disk to be returned in a search result. This property is applicable only for vector fields.
+- Added support for `sbyte` and `int16` to `SearchFieldDataType`.
+
+## 11.6.0-beta.2 (2024-02-05)
+
+### Features Added
+- Publicly exposed HttpPipeline for all search clients.
+
+### Bugs Fixed
+- Removed the unintentional addition of the abstract keyword to the `KnowledgeStoreProjectionSelector` and `KnowledgeStoreStorageProjectionSelector` types.
 
 ## 11.6.0-beta.1 (2024-01-17)
 

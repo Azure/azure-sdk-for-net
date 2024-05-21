@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabCustomImagePlan : IUtf8JsonSerializable, IJsonModel<DevTestLabCustomImagePlan>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabCustomImagePlan>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabCustomImagePlan>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevTestLabCustomImagePlan>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCustomImagePlan>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCustomImagePlan)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCustomImagePlan)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCustomImagePlan>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCustomImagePlan)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCustomImagePlan)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabCustomImagePlan DeserializeDevTestLabCustomImagePlan(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> publisher = default;
-            Optional<string> offer = default;
+            string id = default;
+            string publisher = default;
+            string offer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCustomImagePlan(id.Value, publisher.Value, offer.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevTestLabCustomImagePlan(id, publisher, offer, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCustomImagePlan>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCustomImagePlan)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCustomImagePlan)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabCustomImagePlan(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCustomImagePlan)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCustomImagePlan)} does not support reading '{options.Format}' format.");
             }
         }
 

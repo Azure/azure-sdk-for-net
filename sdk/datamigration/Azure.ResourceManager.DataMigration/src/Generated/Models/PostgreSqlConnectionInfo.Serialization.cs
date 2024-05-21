@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class PostgreSqlConnectionInfo : IUtf8JsonSerializable, IJsonModel<PostgreSqlConnectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlConnectionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlConnectionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlConnectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlConnectionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlConnectionInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlConnectionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlConnectionInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,27 +114,27 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static PostgreSqlConnectionInfo DeserializePostgreSqlConnectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string serverName = default;
-            Optional<string> dataSource = default;
-            Optional<string> serverVersion = default;
-            Optional<string> databaseName = default;
+            string dataSource = default;
+            string serverVersion = default;
+            string databaseName = default;
             int port = default;
-            Optional<bool> encryptConnection = default;
-            Optional<bool> trustServerCertificate = default;
-            Optional<string> additionalSettings = default;
-            Optional<string> serverBrandVersion = default;
-            Optional<AuthenticationType> authentication = default;
+            bool? encryptConnection = default;
+            bool? trustServerCertificate = default;
+            string additionalSettings = default;
+            string serverBrandVersion = default;
+            AuthenticationType? authentication = default;
             string type = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string userName = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverName"u8))
@@ -216,11 +216,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData, serverName, dataSource.Value, serverVersion.Value, databaseName.Value, port, Optional.ToNullable(encryptConnection), Optional.ToNullable(trustServerCertificate), additionalSettings.Value, serverBrandVersion.Value, Optional.ToNullable(authentication));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PostgreSqlConnectionInfo(
+                type,
+                userName,
+                password,
+                serializedAdditionalRawData,
+                serverName,
+                dataSource,
+                serverVersion,
+                databaseName,
+                port,
+                encryptConnection,
+                trustServerCertificate,
+                additionalSettings,
+                serverBrandVersion,
+                authentication);
         }
 
         BinaryData IPersistableModel<PostgreSqlConnectionInfo>.Write(ModelReaderWriterOptions options)
@@ -232,7 +246,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlConnectionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlConnectionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -248,7 +262,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializePostgreSqlConnectionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlConnectionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlConnectionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

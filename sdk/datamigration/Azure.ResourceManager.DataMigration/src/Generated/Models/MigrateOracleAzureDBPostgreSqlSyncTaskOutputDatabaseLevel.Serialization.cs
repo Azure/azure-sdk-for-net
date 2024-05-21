@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel : IUtf8JsonSerializable, IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -140,31 +140,31 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<SyncDatabaseMigrationReportingState> migrationState = default;
-            Optional<long> incomingChanges = default;
-            Optional<long> appliedChanges = default;
-            Optional<long> cdcInsertCounter = default;
-            Optional<long> cdcDeleteCounter = default;
-            Optional<long> cdcUpdateCounter = default;
-            Optional<long> fullLoadCompletedTables = default;
-            Optional<long> fullLoadLoadingTables = default;
-            Optional<long> fullLoadQueuedTables = default;
-            Optional<long> fullLoadErroredTables = default;
-            Optional<bool> initializationCompleted = default;
-            Optional<long> latency = default;
-            Optional<string> id = default;
+            string databaseName = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            SyncDatabaseMigrationReportingState? migrationState = default;
+            long? incomingChanges = default;
+            long? appliedChanges = default;
+            long? cdcInsertCounter = default;
+            long? cdcDeleteCounter = default;
+            long? cdcUpdateCounter = default;
+            long? fullLoadCompletedTables = default;
+            long? fullLoadLoadingTables = default;
+            long? fullLoadQueuedTables = default;
+            long? fullLoadErroredTables = default;
+            bool? initializationCompleted = default;
+            long? latency = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -310,11 +310,29 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, databaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(migrationState), Optional.ToNullable(incomingChanges), Optional.ToNullable(appliedChanges), Optional.ToNullable(cdcInsertCounter), Optional.ToNullable(cdcDeleteCounter), Optional.ToNullable(cdcUpdateCounter), Optional.ToNullable(fullLoadCompletedTables), Optional.ToNullable(fullLoadLoadingTables), Optional.ToNullable(fullLoadQueuedTables), Optional.ToNullable(fullLoadErroredTables), Optional.ToNullable(initializationCompleted), Optional.ToNullable(latency));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                databaseName,
+                startedOn,
+                endedOn,
+                migrationState,
+                incomingChanges,
+                appliedChanges,
+                cdcInsertCounter,
+                cdcDeleteCounter,
+                cdcUpdateCounter,
+                fullLoadCompletedTables,
+                fullLoadLoadingTables,
+                fullLoadQueuedTables,
+                fullLoadErroredTables,
+                initializationCompleted,
+                latency);
         }
 
         BinaryData IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)
@@ -326,7 +344,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -342,7 +360,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel)} does not support reading '{options.Format}' format.");
             }
         }
 

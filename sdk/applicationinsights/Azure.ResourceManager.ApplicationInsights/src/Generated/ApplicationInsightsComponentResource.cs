@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Resources;
 
@@ -62,8 +60,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         private readonly FavoritesRestOperations _favoritesRestClient;
         private readonly ClientDiagnostics _webTestLocationsClientDiagnostics;
         private readonly WebTestLocationsRestOperations _webTestLocationsRestClient;
-        private readonly ClientDiagnostics _webTestClientDiagnostics;
-        private readonly WebTestsRestOperations _webTestRestClient;
+        private readonly ClientDiagnostics _applicationInsightsWebTestWebTestsClientDiagnostics;
+        private readonly WebTestsRestOperations _applicationInsightsWebTestWebTestsRestClient;
         private readonly ClientDiagnostics _analyticsItemsClientDiagnostics;
         private readonly AnalyticsItemsRestOperations _analyticsItemsRestClient;
         private readonly ApplicationInsightsComponentData _data;
@@ -115,9 +113,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             _favoritesRestClient = new FavoritesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _webTestLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _webTestLocationsRestClient = new WebTestLocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _webTestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", WebTestResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(WebTestResource.ResourceType, out string webTestApiVersion);
-            _webTestRestClient = new WebTestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webTestApiVersion);
+            _applicationInsightsWebTestWebTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ApplicationInsightsWebTestResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ApplicationInsightsWebTestResource.ResourceType, out string applicationInsightsWebTestWebTestsApiVersion);
+            _applicationInsightsWebTestWebTestsRestClient = new WebTestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsWebTestWebTestsApiVersion);
             _analyticsItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _analyticsItemsRestClient = new AnalyticsItemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -144,71 +142,6 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of ComponentLinkedStorageAccountResources in the ApplicationInsightsComponent. </summary>
-        /// <returns> An object representing collection of ComponentLinkedStorageAccountResources and their operations over a ComponentLinkedStorageAccountResource. </returns>
-        public virtual ComponentLinkedStorageAccountCollection GetComponentLinkedStorageAccounts()
-        {
-            return GetCachedClient(client => new ComponentLinkedStorageAccountCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns the current linked storage settings for an Application Insights component.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/components/{resourceName}/linkedStorageAccounts/{storageType}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ComponentLinkedStorageAccounts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComponentLinkedStorageAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ComponentLinkedStorageAccountResource>> GetComponentLinkedStorageAccountAsync(StorageType storageType, CancellationToken cancellationToken = default)
-        {
-            return await GetComponentLinkedStorageAccounts().GetAsync(storageType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns the current linked storage settings for an Application Insights component.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/components/{resourceName}/linkedStorageAccounts/{storageType}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ComponentLinkedStorageAccounts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ComponentLinkedStorageAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ComponentLinkedStorageAccountResource> GetComponentLinkedStorageAccount(StorageType storageType, CancellationToken cancellationToken = default)
-        {
-            return GetComponentLinkedStorageAccounts().Get(storageType, cancellationToken);
         }
 
         /// <summary>
@@ -321,7 +254,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             try
             {
                 var response = await _applicationInsightsComponentComponentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationInsightsArmOperation(response);
+                var uri = _applicationInsightsComponentComponentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApplicationInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -363,7 +298,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             try
             {
                 var response = _applicationInsightsComponentComponentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ApplicationInsightsArmOperation(response);
+                var uri = _applicationInsightsComponentComponentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApplicationInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -399,7 +336,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="componentTags"> Updated tag information to set into the component instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="componentTags"/> is null. </exception>
-        public virtual async Task<Response<ApplicationInsightsComponentResource>> UpdateAsync(ComponentTag componentTags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationInsightsComponentResource>> UpdateAsync(WebTestComponentTag componentTags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(componentTags, nameof(componentTags));
 
@@ -441,7 +378,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="componentTags"> Updated tag information to set into the component instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="componentTags"/> is null. </exception>
-        public virtual Response<ApplicationInsightsComponentResource> Update(ComponentTag componentTags, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationInsightsComponentResource> Update(WebTestComponentTag componentTags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(componentTags, nameof(componentTags));
 
@@ -483,18 +420,18 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> Describes the body of a request to purge data in a single table of an Application Insights component. </param>
+        /// <param name="content"> Describes the body of a request to purge data in a single table of an Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<ComponentPurgeResponse>> PurgeAsync(ComponentPurgeBody body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ComponentPurgeResult>> PurgeAsync(ComponentPurgeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.Purge");
             scope.Start();
             try
             {
-                var response = await _applicationInsightsComponentComponentsRestClient.PurgeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var response = await _applicationInsightsComponentComponentsRestClient.PurgeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -528,18 +465,18 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> Describes the body of a request to purge data in a single table of an Application Insights component. </param>
+        /// <param name="content"> Describes the body of a request to purge data in a single table of an Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<ComponentPurgeResponse> Purge(ComponentPurgeBody body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ComponentPurgeResult> Purge(ComponentPurgeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.Purge");
             scope.Start();
             try
             {
-                var response = _applicationInsightsComponentComponentsRestClient.Purge(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var response = _applicationInsightsComponentComponentsRestClient.Purge(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -574,7 +511,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="purgeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="purgeId"/> is null. </exception>
-        public virtual async Task<Response<ComponentPurgeStatusResponse>> GetPurgeStatusAsync(string purgeId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComponentPurgeStatusResult>> GetPurgeStatusAsync(string purgeId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(purgeId, nameof(purgeId));
 
@@ -617,7 +554,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="purgeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="purgeId"/> is null. </exception>
-        public virtual Response<ComponentPurgeStatusResponse> GetPurgeStatus(string purgeId, CancellationToken cancellationToken = default)
+        public virtual Response<ComponentPurgeStatusResult> GetPurgeStatus(string purgeId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(purgeId, nameof(purgeId));
 
@@ -656,14 +593,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="end"> The end time to query for annotations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="start"/> or <paramref name="end"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Annotation> GetAnnotationsAsync(string start, string end, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApplicationInsightsAnnotation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplicationInsightsAnnotation> GetAnnotationsAsync(string start, string end, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(start, nameof(start));
             Argument.AssertNotNull(end, nameof(end));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, start, end);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -687,14 +624,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="end"> The end time to query for annotations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="start"/> or <paramref name="end"/> is null. </exception>
-        /// <returns> A collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Annotation> GetAnnotations(string start, string end, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApplicationInsightsAnnotation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationInsightsAnnotation> GetAnnotations(string start, string end, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(start, nameof(start));
             Argument.AssertNotNull(end, nameof(end));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, start, end);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -717,13 +654,13 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="annotationProperties"> Properties that need to be specified to create an annotation of a Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="annotationProperties"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Annotation> CreateAnnotationsAsync(Annotation annotationProperties, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApplicationInsightsAnnotation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplicationInsightsAnnotation> CreateAnnotationsAsync(ApplicationInsightsAnnotation annotationProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(annotationProperties, nameof(annotationProperties));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, annotationProperties);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateAnnotations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateAnnotations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -746,13 +683,13 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="annotationProperties"> Properties that need to be specified to create an annotation of a Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="annotationProperties"/> is null. </exception>
-        /// <returns> A collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Annotation> CreateAnnotations(Annotation annotationProperties, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApplicationInsightsAnnotation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationInsightsAnnotation> CreateAnnotations(ApplicationInsightsAnnotation annotationProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(annotationProperties, nameof(annotationProperties));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, annotationProperties);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateAnnotations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateAnnotations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -854,13 +791,13 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="annotationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="annotationId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Annotation> GetAnnotationsAsync(string annotationId, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApplicationInsightsAnnotation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplicationInsightsAnnotation> GetAnnotationsAsync(string annotationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(annotationId, nameof(annotationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, annotationId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -884,13 +821,13 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="annotationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="annotationId"/> is null. </exception>
-        /// <returns> A collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Annotation> GetAnnotations(string annotationId, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApplicationInsightsAnnotation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationInsightsAnnotation> GetAnnotations(string annotationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(annotationId, nameof(annotationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, annotationId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -911,11 +848,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationInsightsComponentAPIKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationInsightsComponentAPIKey> GetAPIKeysAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApplicationInsightsComponentApiKey"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplicationInsightsComponentApiKey> GetApiKeysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiKeysRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(e), _apiKeysClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAPIKeys", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentApiKey.DeserializeApplicationInsightsComponentApiKey(e), _apiKeysClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetApiKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -936,11 +873,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationInsightsComponentAPIKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationInsightsComponentAPIKey> GetAPIKeys(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApplicationInsightsComponentApiKey"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationInsightsComponentApiKey> GetApiKeys(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiKeysRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(e), _apiKeysClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAPIKeys", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentApiKey.DeserializeApplicationInsightsComponentApiKey(e), _apiKeysClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetApiKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -963,11 +900,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="content"> Properties that need to be specified to create an API key of a Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ApplicationInsightsComponentAPIKey>> CreateAPIKeyAsync(APIKeyContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationInsightsComponentApiKey>> CreateApiKeyAsync(ApplicationInsightsApiKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.CreateAPIKey");
+            using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.CreateApiKey");
             scope.Start();
             try
             {
@@ -1001,11 +938,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="content"> Properties that need to be specified to create an API key of a Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ApplicationInsightsComponentAPIKey> CreateAPIKey(APIKeyContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationInsightsComponentApiKey> CreateApiKey(ApplicationInsightsApiKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.CreateAPIKey");
+            using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.CreateApiKey");
             scope.Start();
             try
             {
@@ -1040,11 +977,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> is null. </exception>
-        public virtual async Task<Response<ApplicationInsightsComponentAPIKey>> DeleteAPIKeyAsync(string keyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationInsightsComponentApiKey>> DeleteApiKeyAsync(string keyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyId, nameof(keyId));
 
-            using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.DeleteAPIKey");
+            using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.DeleteApiKey");
             scope.Start();
             try
             {
@@ -1079,11 +1016,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> is null. </exception>
-        public virtual Response<ApplicationInsightsComponentAPIKey> DeleteAPIKey(string keyId, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationInsightsComponentApiKey> DeleteApiKey(string keyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyId, nameof(keyId));
 
-            using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.DeleteAPIKey");
+            using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.DeleteApiKey");
             scope.Start();
             try
             {
@@ -1118,11 +1055,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> is null. </exception>
-        public virtual async Task<Response<ApplicationInsightsComponentAPIKey>> GetAPIKeyAsync(string keyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationInsightsComponentApiKey>> GetApiKeyAsync(string keyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyId, nameof(keyId));
 
-            using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetAPIKey");
+            using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetApiKey");
             scope.Start();
             try
             {
@@ -1157,11 +1094,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> is null. </exception>
-        public virtual Response<ApplicationInsightsComponentAPIKey> GetAPIKey(string keyId, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationInsightsComponentApiKey> GetApiKey(string keyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyId, nameof(keyId));
 
-            using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetAPIKey");
+            using var scope = _apiKeysClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetApiKey");
             scope.Start();
             try
             {
@@ -1242,15 +1179,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="exportProperties"> Properties that need to be specified to create a Continuous Export configuration of a Application Insights component. </param>
+        /// <param name="content"> Properties that need to be specified to create a Continuous Export configuration of a Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportProperties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="ApplicationInsightsComponentExportConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationInsightsComponentExportConfiguration> CreateExportConfigurationsAsync(ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApplicationInsightsComponentExportConfiguration> CreateExportConfigurationsAsync(ApplicationInsightsComponentExportContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(exportProperties, nameof(exportProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _exportConfigurationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportProperties);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _exportConfigurationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(e), _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateExportConfigurations", "", null, cancellationToken);
         }
 
@@ -1271,15 +1208,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="exportProperties"> Properties that need to be specified to create a Continuous Export configuration of a Application Insights component. </param>
+        /// <param name="content"> Properties that need to be specified to create a Continuous Export configuration of a Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportProperties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="ApplicationInsightsComponentExportConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationInsightsComponentExportConfiguration> CreateExportConfigurations(ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApplicationInsightsComponentExportConfiguration> CreateExportConfigurations(ApplicationInsightsComponentExportContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(exportProperties, nameof(exportProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _exportConfigurationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportProperties);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _exportConfigurationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(e), _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateExportConfigurations", "", null, cancellationToken);
         }
 
@@ -1457,20 +1394,20 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="exportId"> The Continuous Export configuration ID. This is unique within a Application Insights component. </param>
-        /// <param name="exportProperties"> Properties that need to be specified to update the Continuous Export configuration. </param>
+        /// <param name="content"> Properties that need to be specified to update the Continuous Export configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="exportId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportId"/> or <paramref name="exportProperties"/> is null. </exception>
-        public virtual async Task<Response<ApplicationInsightsComponentExportConfiguration>> UpdateExportConfigurationAsync(string exportId, ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="exportId"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ApplicationInsightsComponentExportConfiguration>> UpdateExportConfigurationAsync(string exportId, ApplicationInsightsComponentExportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exportId, nameof(exportId));
-            Argument.AssertNotNull(exportProperties, nameof(exportProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _exportConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.UpdateExportConfiguration");
             scope.Start();
             try
             {
-                var response = await _exportConfigurationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportId, exportProperties, cancellationToken).ConfigureAwait(false);
+                var response = await _exportConfigurationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1498,20 +1435,20 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="exportId"> The Continuous Export configuration ID. This is unique within a Application Insights component. </param>
-        /// <param name="exportProperties"> Properties that need to be specified to update the Continuous Export configuration. </param>
+        /// <param name="content"> Properties that need to be specified to update the Continuous Export configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="exportId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportId"/> or <paramref name="exportProperties"/> is null. </exception>
-        public virtual Response<ApplicationInsightsComponentExportConfiguration> UpdateExportConfiguration(string exportId, ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="exportId"/> or <paramref name="content"/> is null. </exception>
+        public virtual Response<ApplicationInsightsComponentExportConfiguration> UpdateExportConfiguration(string exportId, ApplicationInsightsComponentExportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exportId, nameof(exportId));
-            Argument.AssertNotNull(exportProperties, nameof(exportProperties));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _exportConfigurationsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.UpdateExportConfiguration");
             scope.Start();
             try
             {
-                var response = _exportConfigurationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportId, exportProperties, cancellationToken);
+                var response = _exportConfigurationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -2534,7 +2471,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="tags"> Tags that must be present on each favorite returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationInsightsComponentFavorite"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationInsightsComponentFavorite> GetFavoritesAsync(FavoriteType? favoriteType = null, FavoriteSourceType? sourceType = null, bool? canFetchContent = null, IEnumerable<string> tags = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApplicationInsightsComponentFavorite> GetFavoritesAsync(ComponentFavoriteType? favoriteType = null, FavoriteSourceType? sourceType = null, bool? canFetchContent = null, IEnumerable<string> tags = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _favoritesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, favoriteType, sourceType, canFetchContent, tags);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(e), _favoritesClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetFavorites", "", null, cancellationToken);
@@ -2563,7 +2500,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="tags"> Tags that must be present on each favorite returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationInsightsComponentFavorite"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationInsightsComponentFavorite> GetFavorites(FavoriteType? favoriteType = null, FavoriteSourceType? sourceType = null, bool? canFetchContent = null, IEnumerable<string> tags = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApplicationInsightsComponentFavorite> GetFavorites(ComponentFavoriteType? favoriteType = null, FavoriteSourceType? sourceType = null, bool? canFetchContent = null, IEnumerable<string> tags = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _favoritesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, favoriteType, sourceType, canFetchContent, tags);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(e), _favoritesClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetFavorites", "", null, cancellationToken);
@@ -2956,17 +2893,17 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WebTestResource"/></description>
+        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebTestResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebTestResource> GetWebTestsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApplicationInsightsWebTestResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplicationInsightsWebTestResource> GetWebTestsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webTestRestClient.CreateListByComponentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webTestRestClient.CreateListByComponentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebTestResource(Client, WebTestData.DeserializeWebTestData(e)), _webTestClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWebTests", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationInsightsWebTestWebTestsRestClient.CreateListByComponentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationInsightsWebTestWebTestsRestClient.CreateListByComponentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationInsightsWebTestResource(Client, ApplicationInsightsWebTestData.DeserializeApplicationInsightsWebTestData(e)), _applicationInsightsWebTestWebTestsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWebTests", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2986,17 +2923,17 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WebTestResource"/></description>
+        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebTestResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebTestResource> GetWebTests(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApplicationInsightsWebTestResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationInsightsWebTestResource> GetWebTests(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webTestRestClient.CreateListByComponentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webTestRestClient.CreateListByComponentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebTestResource(Client, WebTestData.DeserializeWebTestData(e)), _webTestClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWebTests", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationInsightsWebTestWebTestsRestClient.CreateListByComponentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationInsightsWebTestWebTestsRestClient.CreateListByComponentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationInsightsWebTestResource(Client, ApplicationInsightsWebTestData.DeserializeApplicationInsightsWebTestData(e)), _applicationInsightsWebTestWebTestsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWebTests", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3022,7 +2959,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="includeContent"> Flag indicating whether or not to return the content of each applicable item. If false, only return the item information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationInsightsComponentAnalyticsItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationInsightsComponentAnalyticsItem> GetAnalyticsItemsAsync(ItemScopePath scopePath, ItemScope? scope = null, ItemTypeParameter? type = null, bool? includeContent = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApplicationInsightsComponentAnalyticsItem> GetAnalyticsItemsAsync(AnalyticsItemScopePath scopePath, ComponentItemScope? scope = null, AnalyticsItemTypeContent? type = null, bool? includeContent = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _analyticsItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopePath, scope, type, includeContent);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentAnalyticsItem.DeserializeApplicationInsightsComponentAnalyticsItem(e), _analyticsItemsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnalyticsItems", "", null, cancellationToken);
@@ -3051,7 +2988,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="includeContent"> Flag indicating whether or not to return the content of each applicable item. If false, only return the item information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationInsightsComponentAnalyticsItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationInsightsComponentAnalyticsItem> GetAnalyticsItems(ItemScopePath scopePath, ItemScope? scope = null, ItemTypeParameter? type = null, bool? includeContent = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApplicationInsightsComponentAnalyticsItem> GetAnalyticsItems(AnalyticsItemScopePath scopePath, ComponentItemScope? scope = null, AnalyticsItemTypeContent? type = null, bool? includeContent = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _analyticsItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopePath, scope, type, includeContent);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentAnalyticsItem.DeserializeApplicationInsightsComponentAnalyticsItem(e), _analyticsItemsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnalyticsItems", "", null, cancellationToken);
@@ -3078,7 +3015,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="id"> The Id of a specific item defined in the Application Insights component. </param>
         /// <param name="name"> The name of a specific item defined in the Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplicationInsightsComponentAnalyticsItem>> GetAnalyticsItemAsync(ItemScopePath scopePath, string id = null, string name = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationInsightsComponentAnalyticsItem>> GetAnalyticsItemAsync(AnalyticsItemScopePath scopePath, string id = null, string name = null, CancellationToken cancellationToken = default)
         {
             using var scope = _analyticsItemsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetAnalyticsItem");
             scope.Start();
@@ -3115,7 +3052,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="id"> The Id of a specific item defined in the Application Insights component. </param>
         /// <param name="name"> The name of a specific item defined in the Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplicationInsightsComponentAnalyticsItem> GetAnalyticsItem(ItemScopePath scopePath, string id = null, string name = null, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationInsightsComponentAnalyticsItem> GetAnalyticsItem(AnalyticsItemScopePath scopePath, string id = null, string name = null, CancellationToken cancellationToken = default)
         {
             using var scope = _analyticsItemsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.GetAnalyticsItem");
             scope.Start();
@@ -3153,11 +3090,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="overrideItem"> Flag indicating whether or not to force save an item. This allows overriding an item if it already exists. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemProperties"/> is null. </exception>
-        public virtual async Task<Response<ApplicationInsightsComponentAnalyticsItem>> PutAnalyticsItemAsync(ItemScopePath scopePath, ApplicationInsightsComponentAnalyticsItem itemProperties, bool? overrideItem = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationInsightsComponentAnalyticsItem>> AddOrUpdateAnalyticsItemAsync(AnalyticsItemScopePath scopePath, ApplicationInsightsComponentAnalyticsItem itemProperties, bool? overrideItem = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(itemProperties, nameof(itemProperties));
 
-            using var scope = _analyticsItemsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.PutAnalyticsItem");
+            using var scope = _analyticsItemsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.AddOrUpdateAnalyticsItem");
             scope.Start();
             try
             {
@@ -3193,11 +3130,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="overrideItem"> Flag indicating whether or not to force save an item. This allows overriding an item if it already exists. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemProperties"/> is null. </exception>
-        public virtual Response<ApplicationInsightsComponentAnalyticsItem> PutAnalyticsItem(ItemScopePath scopePath, ApplicationInsightsComponentAnalyticsItem itemProperties, bool? overrideItem = null, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationInsightsComponentAnalyticsItem> AddOrUpdateAnalyticsItem(AnalyticsItemScopePath scopePath, ApplicationInsightsComponentAnalyticsItem itemProperties, bool? overrideItem = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(itemProperties, nameof(itemProperties));
 
-            using var scope = _analyticsItemsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.PutAnalyticsItem");
+            using var scope = _analyticsItemsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.AddOrUpdateAnalyticsItem");
             scope.Start();
             try
             {
@@ -3232,7 +3169,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="id"> The Id of a specific item defined in the Application Insights component. </param>
         /// <param name="name"> The name of a specific item defined in the Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAnalyticsItemAsync(ItemScopePath scopePath, string id = null, string name = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAnalyticsItemAsync(AnalyticsItemScopePath scopePath, string id = null, string name = null, CancellationToken cancellationToken = default)
         {
             using var scope = _analyticsItemsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.DeleteAnalyticsItem");
             scope.Start();
@@ -3269,7 +3206,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="id"> The Id of a specific item defined in the Application Insights component. </param>
         /// <param name="name"> The name of a specific item defined in the Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteAnalyticsItem(ItemScopePath scopePath, string id = null, string name = null, CancellationToken cancellationToken = default)
+        public virtual Response DeleteAnalyticsItem(AnalyticsItemScopePath scopePath, string id = null, string name = null, CancellationToken cancellationToken = default)
         {
             using var scope = _analyticsItemsClientDiagnostics.CreateScope("ApplicationInsightsComponentResource.DeleteAnalyticsItem");
             scope.Start();
@@ -3330,7 +3267,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ComponentTag();
+                    var patch = new WebTestComponentTag();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -3392,7 +3329,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ComponentTag();
+                    var patch = new WebTestComponentTag();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -3453,7 +3390,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ComponentTag();
+                    var patch = new WebTestComponentTag();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -3510,7 +3447,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ComponentTag();
+                    var patch = new WebTestComponentTag();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -3566,7 +3503,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ComponentTag();
+                    var patch = new WebTestComponentTag();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -3626,7 +3563,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ComponentTag();
+                    var patch = new WebTestComponentTag();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

@@ -63,14 +63,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<InputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -83,12 +83,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             TextTranslationSkillLanguage defaultToLanguageCode = default;
-            Optional<TextTranslationSkillLanguage?> defaultFromLanguageCode = default;
-            Optional<TextTranslationSkillLanguage?> suggestedFrom = default;
+            TextTranslationSkillLanguage? defaultFromLanguageCode = default;
+            TextTranslationSkillLanguage? suggestedFrom = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,32 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new TextTranslationSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultToLanguageCode, Optional.ToNullable(defaultFromLanguageCode), Optional.ToNullable(suggestedFrom));
+            return new TextTranslationSkill(
+                odataType,
+                name,
+                description,
+                context,
+                inputs,
+                outputs,
+                defaultToLanguageCode,
+                defaultFromLanguageCode,
+                suggestedFrom);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new TextTranslationSkill FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTextTranslationSkill(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -49,7 +48,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.FrontDoorUsage"/> instance for mocking. </returns>
         public static FrontDoorUsage FrontDoorUsage(ResourceIdentifier id = null, FrontDoorUsageUnit unit = default, long currentValue = default, long limit = default, FrontDoorUsageResourceName name = null)
         {
-            return new FrontDoorUsage(id, unit, currentValue, limit, name, serializedAdditionalRawData: null);
+            return new FrontDoorUsage(
+                id,
+                unit,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorUsageResourceName"/>. </summary>
@@ -71,6 +76,66 @@ namespace Azure.ResourceManager.Cdn.Models
             return new CdnNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateSecretContent"/>. </summary>
+        /// <param name="secretType"> The secret type. </param>
+        /// <param name="secretSourceId"> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
+        /// <param name="secretVersion"> Secret version, if customer is using a specific version. </param>
+        /// <returns> A new <see cref="Models.ValidateSecretContent"/> instance for mocking. </returns>
+        public static ValidateSecretContent ValidateSecretContent(SecretType secretType = default, ResourceIdentifier secretSourceId = null, string secretVersion = null)
+        {
+            return new ValidateSecretContent(secretType, secretSourceId != null ? ResourceManagerModelFactory.WritableSubResource(secretSourceId) : null, secretVersion, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateSecretResult"/>. </summary>
+        /// <param name="status"> The validation status. </param>
+        /// <param name="message"> Detailed error message. </param>
+        /// <returns> A new <see cref="Models.ValidateSecretResult"/> instance for mocking. </returns>
+        public static ValidateSecretResult ValidateSecretResult(ValidationStatus? status = null, string message = null)
+        {
+            return new ValidateSecretResult(status, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Cdn.ProfileData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="skuName"> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </param>
+        /// <param name="kind"> Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="resourceState"> Resource status of the profile. </param>
+        /// <param name="provisioningState"> Provisioning status of the profile. </param>
+        /// <param name="extendedProperties"> Key-Value pair representing additional properties for profiles. </param>
+        /// <param name="frontDoorId"> The Id of the frontdoor. </param>
+        /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
+        /// <param name="logScrubbing"> Defines rules that scrub sensitive fields in the Azure Front Door profile logs. </param>
+        /// <returns> A new <see cref="Cdn.ProfileData"/> instance for mocking. </returns>
+        public static ProfileData ProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CdnSkuName? skuName = null, string kind = null, ManagedServiceIdentity identity = null, ProfileResourceState? resourceState = null, ProfileProvisioningState? provisioningState = null, IReadOnlyDictionary<string, string> extendedProperties = null, Guid? frontDoorId = null, int? originResponseTimeoutSeconds = null, ProfileLogScrubbing logScrubbing = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            extendedProperties ??= new Dictionary<string, string>();
+
+            return new ProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null,
+                kind,
+                identity,
+                resourceState,
+                provisioningState,
+                extendedProperties,
+                frontDoorId,
+                originResponseTimeoutSeconds,
+                logScrubbing,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorCustomDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -84,11 +149,29 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="deploymentStatus"></param>
         /// <param name="domainValidationState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </param>
         /// <param name="hostName"> The host name of the domain. Must be a domain name. </param>
+        /// <param name="extendedProperties"> Key-Value pair representing migration properties for domains. </param>
         /// <param name="validationProperties"> Values the customer needs to validate domain ownership. </param>
         /// <returns> A new <see cref="Cdn.FrontDoorCustomDomainData"/> instance for mocking. </returns>
-        public static FrontDoorCustomDomainData FrontDoorCustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string profileName = null, FrontDoorCustomDomainHttpsContent tlsSettings = null, ResourceIdentifier dnsZoneId = null, ResourceIdentifier preValidatedCustomDomainResourceId = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null, DomainValidationState? domainValidationState = null, string hostName = null, DomainValidationProperties validationProperties = null)
+        public static FrontDoorCustomDomainData FrontDoorCustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string profileName = null, FrontDoorCustomDomainHttpsContent tlsSettings = null, ResourceIdentifier dnsZoneId = null, ResourceIdentifier preValidatedCustomDomainResourceId = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null, DomainValidationState? domainValidationState = null, string hostName = null, IDictionary<string, string> extendedProperties = null, DomainValidationProperties validationProperties = null)
         {
-            return new FrontDoorCustomDomainData(id, name, resourceType, systemData, profileName, tlsSettings, dnsZoneId != null ? ResourceManagerModelFactory.WritableSubResource(dnsZoneId) : null, preValidatedCustomDomainResourceId != null ? new FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(preValidatedCustomDomainResourceId, serializedAdditionalRawData: null) : null, provisioningState, deploymentStatus, domainValidationState, hostName, validationProperties, serializedAdditionalRawData: null);
+            extendedProperties ??= new Dictionary<string, string>();
+
+            return new FrontDoorCustomDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                profileName,
+                tlsSettings,
+                dnsZoneId != null ? ResourceManagerModelFactory.WritableSubResource(dnsZoneId) : null,
+                preValidatedCustomDomainResourceId != null ? new FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(preValidatedCustomDomainResourceId, serializedAdditionalRawData: null) : null,
+                provisioningState,
+                deploymentStatus,
+                domainValidationState,
+                hostName,
+                extendedProperties,
+                validationProperties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DomainValidationProperties"/>. </summary>
@@ -129,7 +212,20 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new FrontDoorEndpointData(id, name, resourceType, systemData, tags, location, profileName, enabledState, provisioningState, deploymentStatus, hostName, autoGeneratedDomainNameLabelScope, serializedAdditionalRawData: null);
+            return new FrontDoorEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                profileName,
+                enabledState,
+                provisioningState,
+                deploymentStatus,
+                hostName,
+                autoGeneratedDomainNameLabelScope,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorEndpointPatch"/>. </summary>
@@ -169,7 +265,19 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Cdn.FrontDoorOriginGroupData"/> instance for mocking. </returns>
         public static FrontDoorOriginGroupData FrontDoorOriginGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string profileName = null, LoadBalancingSettings loadBalancingSettings = null, HealthProbeSettings healthProbeSettings = null, int? trafficRestorationTimeInMinutes = null, EnabledState? sessionAffinityState = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null)
         {
-            return new FrontDoorOriginGroupData(id, name, resourceType, systemData, profileName, loadBalancingSettings, healthProbeSettings, trafficRestorationTimeInMinutes, sessionAffinityState, provisioningState, deploymentStatus, serializedAdditionalRawData: null);
+            return new FrontDoorOriginGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                profileName,
+                loadBalancingSettings,
+                healthProbeSettings,
+                trafficRestorationTimeInMinutes,
+                sessionAffinityState,
+                provisioningState,
+                deploymentStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorOriginGroupPatch"/>. </summary>
@@ -181,7 +289,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.FrontDoorOriginGroupPatch"/> instance for mocking. </returns>
         public static FrontDoorOriginGroupPatch FrontDoorOriginGroupPatch(string profileName = null, LoadBalancingSettings loadBalancingSettings = null, HealthProbeSettings healthProbeSettings = null, int? trafficRestorationTimeInMinutes = null, EnabledState? sessionAffinityState = null)
         {
-            return new FrontDoorOriginGroupPatch(profileName, loadBalancingSettings, healthProbeSettings, trafficRestorationTimeInMinutes, sessionAffinityState, serializedAdditionalRawData: null);
+            return new FrontDoorOriginGroupPatch(
+                profileName,
+                loadBalancingSettings,
+                healthProbeSettings,
+                trafficRestorationTimeInMinutes,
+                sessionAffinityState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorOriginData"/>. </summary>
@@ -194,7 +308,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="hostName"> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </param>
         /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>
         /// <param name="httpsPort"> The value of the HTTPS port. Must be between 1 and 65535. </param>
-        /// <param name="originHostHeader"> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </param>
+        /// <param name="originHostHeader"> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure Front Door origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </param>
         /// <param name="priority"> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </param>
         /// <param name="weight"> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </param>
         /// <param name="sharedPrivateLinkResource"> The properties of the private link resource for private origin. </param>
@@ -205,7 +319,25 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Cdn.FrontDoorOriginData"/> instance for mocking. </returns>
         public static FrontDoorOriginData FrontDoorOriginData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string originGroupName = null, ResourceIdentifier originId = null, string hostName = null, int? httpPort = null, int? httpsPort = null, string originHostHeader = null, int? priority = null, int? weight = null, SharedPrivateLinkResourceProperties sharedPrivateLinkResource = null, EnabledState? enabledState = null, bool? enforceCertificateNameCheck = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null)
         {
-            return new FrontDoorOriginData(id, name, resourceType, systemData, originGroupName, originId != null ? ResourceManagerModelFactory.WritableSubResource(originId) : null, hostName, httpPort, httpsPort, originHostHeader, priority, weight, sharedPrivateLinkResource, enabledState, enforceCertificateNameCheck, provisioningState, deploymentStatus, serializedAdditionalRawData: null);
+            return new FrontDoorOriginData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                originGroupName,
+                originId != null ? ResourceManagerModelFactory.WritableSubResource(originId) : null,
+                hostName,
+                httpPort,
+                httpsPort,
+                originHostHeader,
+                priority,
+                weight,
+                sharedPrivateLinkResource,
+                enabledState,
+                enforceCertificateNameCheck,
+                provisioningState,
+                deploymentStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorOriginPatch"/>. </summary>
@@ -214,7 +346,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="hostName"> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </param>
         /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>
         /// <param name="httpsPort"> The value of the HTTPS port. Must be between 1 and 65535. </param>
-        /// <param name="originHostHeader"> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </param>
+        /// <param name="originHostHeader"> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure Front Door origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </param>
         /// <param name="priority"> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </param>
         /// <param name="weight"> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </param>
         /// <param name="sharedPrivateLinkResource"> The properties of the private link resource for private origin. </param>
@@ -223,7 +355,19 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.FrontDoorOriginPatch"/> instance for mocking. </returns>
         public static FrontDoorOriginPatch FrontDoorOriginPatch(string originGroupName = null, ResourceIdentifier originId = null, string hostName = null, int? httpPort = null, int? httpsPort = null, string originHostHeader = null, int? priority = null, int? weight = null, SharedPrivateLinkResourceProperties sharedPrivateLinkResource = null, EnabledState? enabledState = null, bool? enforceCertificateNameCheck = null)
         {
-            return new FrontDoorOriginPatch(originGroupName, originId != null ? ResourceManagerModelFactory.WritableSubResource(originId) : null, hostName, httpPort, httpsPort, originHostHeader, priority, weight, sharedPrivateLinkResource, enabledState, enforceCertificateNameCheck, serializedAdditionalRawData: null);
+            return new FrontDoorOriginPatch(
+                originGroupName,
+                originId != null ? ResourceManagerModelFactory.WritableSubResource(originId) : null,
+                hostName,
+                httpPort,
+                httpsPort,
+                originHostHeader,
+                priority,
+                weight,
+                sharedPrivateLinkResource,
+                enabledState,
+                enforceCertificateNameCheck,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorRouteData"/>. </summary>
@@ -253,7 +397,26 @@ namespace Azure.ResourceManager.Cdn.Models
             supportedProtocols ??= new List<FrontDoorEndpointProtocol>();
             patternsToMatch ??= new List<string>();
 
-            return new FrontDoorRouteData(id, name, resourceType, systemData, endpointName, customDomains?.ToList(), originGroupId != null ? ResourceManagerModelFactory.WritableSubResource(originGroupId) : null, originPath, ruleSets?.ToList(), supportedProtocols?.ToList(), patternsToMatch?.ToList(), cacheConfiguration, forwardingProtocol, linkToDefaultDomain, httpsRedirect, enabledState, provisioningState, deploymentStatus, serializedAdditionalRawData: null);
+            return new FrontDoorRouteData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                endpointName,
+                customDomains?.ToList(),
+                originGroupId != null ? ResourceManagerModelFactory.WritableSubResource(originGroupId) : null,
+                originPath,
+                ruleSets?.ToList(),
+                supportedProtocols?.ToList(),
+                patternsToMatch?.ToList(),
+                cacheConfiguration,
+                forwardingProtocol,
+                linkToDefaultDomain,
+                httpsRedirect,
+                enabledState,
+                provisioningState,
+                deploymentStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorActivatedResourceInfo"/>. </summary>
@@ -286,7 +449,20 @@ namespace Azure.ResourceManager.Cdn.Models
             supportedProtocols ??= new List<FrontDoorEndpointProtocol>();
             patternsToMatch ??= new List<string>();
 
-            return new FrontDoorRoutePatch(endpointName, customDomains?.ToList(), originGroupId != null ? ResourceManagerModelFactory.WritableSubResource(originGroupId) : null, originPath, ruleSets?.ToList(), supportedProtocols?.ToList(), patternsToMatch?.ToList(), cacheConfiguration, forwardingProtocol, linkToDefaultDomain, httpsRedirect, enabledState, serializedAdditionalRawData: null);
+            return new FrontDoorRoutePatch(
+                endpointName,
+                customDomains?.ToList(),
+                originGroupId != null ? ResourceManagerModelFactory.WritableSubResource(originGroupId) : null,
+                originPath,
+                ruleSets?.ToList(),
+                supportedProtocols?.ToList(),
+                patternsToMatch?.ToList(),
+                cacheConfiguration,
+                forwardingProtocol,
+                linkToDefaultDomain,
+                httpsRedirect,
+                enabledState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorRuleSetData"/>. </summary>
@@ -300,7 +476,15 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Cdn.FrontDoorRuleSetData"/> instance for mocking. </returns>
         public static FrontDoorRuleSetData FrontDoorRuleSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null, string profileName = null)
         {
-            return new FrontDoorRuleSetData(id, name, resourceType, systemData, provisioningState, deploymentStatus, profileName, serializedAdditionalRawData: null);
+            return new FrontDoorRuleSetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                deploymentStatus,
+                profileName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorRuleData"/>. </summary>
@@ -329,7 +513,19 @@ namespace Azure.ResourceManager.Cdn.Models
             conditions ??= new List<DeliveryRuleCondition>();
             actions ??= new List<DeliveryRuleAction>();
 
-            return new FrontDoorRuleData(id, name, resourceType, systemData, ruleSetName, order, conditions?.ToList(), actions?.ToList(), matchProcessingBehavior, provisioningState, deploymentStatus, serializedAdditionalRawData: null);
+            return new FrontDoorRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ruleSetName,
+                order,
+                conditions?.ToList(),
+                actions?.ToList(),
+                matchProcessingBehavior,
+                provisioningState,
+                deploymentStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorRulePatch"/>. </summary>
@@ -352,7 +548,13 @@ namespace Azure.ResourceManager.Cdn.Models
             conditions ??= new List<DeliveryRuleCondition>();
             actions ??= new List<DeliveryRuleAction>();
 
-            return new FrontDoorRulePatch(ruleSetName, order, conditions?.ToList(), actions?.ToList(), matchProcessingBehavior, serializedAdditionalRawData: null);
+            return new FrontDoorRulePatch(
+                ruleSetName,
+                order,
+                conditions?.ToList(),
+                actions?.ToList(),
+                matchProcessingBehavior,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorSecurityPolicyData"/>. </summary>
@@ -371,7 +573,16 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Cdn.FrontDoorSecurityPolicyData"/> instance for mocking. </returns>
         public static FrontDoorSecurityPolicyData FrontDoorSecurityPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null, string profileName = null, SecurityPolicyProperties properties = null)
         {
-            return new FrontDoorSecurityPolicyData(id, name, resourceType, systemData, provisioningState, deploymentStatus, profileName, properties, serializedAdditionalRawData: null);
+            return new FrontDoorSecurityPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                deploymentStatus,
+                profileName,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorSecretData"/>. </summary>
@@ -385,12 +596,21 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="properties">
         /// object which contains secret parameters
         /// Please note <see cref="FrontDoorSecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="Models.CustomerCertificateProperties"/>, <see cref="Models.ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
+        /// The available derived classes include <see cref="Models.AzureFirstPartyManagedCertificateProperties"/>, <see cref="Models.CustomerCertificateProperties"/>, <see cref="Models.ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Cdn.FrontDoorSecretData"/> instance for mocking. </returns>
         public static FrontDoorSecretData FrontDoorSecretData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null, string profileName = null, FrontDoorSecretProperties properties = null)
         {
-            return new FrontDoorSecretData(id, name, resourceType, systemData, provisioningState, deploymentStatus, profileName, properties, serializedAdditionalRawData: null);
+            return new FrontDoorSecretData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                deploymentStatus,
+                profileName,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricsResponse"/>. </summary>
@@ -639,25 +859,58 @@ namespace Azure.ResourceManager.Cdn.Models
             return new ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(metric, value, percentage, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Cdn.ProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="skuName"> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </param>
-        /// <param name="kind"> Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile. </param>
-        /// <param name="resourceState"> Resource status of the profile. </param>
-        /// <param name="provisioningState"> Provisioning status of the profile. </param>
-        /// <param name="frontDoorId"> The Id of the frontdoor. </param>
-        /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
-        /// <returns> A new <see cref="Cdn.ProfileData"/> instance for mocking. </returns>
-        public static ProfileData ProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CdnSkuName? skuName = null, string kind = null, ProfileResourceState? resourceState = null, ProfileProvisioningState? provisioningState = null, Guid? frontDoorId = null, int? originResponseTimeoutSeconds = null)
+        /// <summary> Initializes a new instance of <see cref="Models.CanMigrateResult"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="canMigrateResultType"> Resource type. </param>
+        /// <param name="canMigrate"> Flag that says if the profile can be migrated. </param>
+        /// <param name="defaultSku"> Recommended sku for the migration. </param>
+        /// <param name="errors"></param>
+        /// <returns> A new <see cref="Models.CanMigrateResult"/> instance for mocking. </returns>
+        public static CanMigrateResult CanMigrateResult(string id = null, string canMigrateResultType = null, bool? canMigrate = null, CanMigrateDefaultSku? defaultSku = null, IEnumerable<MigrationErrorType> errors = null)
         {
-            tags ??= new Dictionary<string, string>();
+            errors ??= new List<MigrationErrorType>();
 
-            return new ProfileData(id, name, resourceType, systemData, tags, location, skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null, kind, resourceState, provisioningState, frontDoorId, originResponseTimeoutSeconds, serializedAdditionalRawData: null);
+            return new CanMigrateResult(
+                id,
+                canMigrateResultType,
+                canMigrate,
+                defaultSku,
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MigrationErrorType"/>. </summary>
+        /// <param name="code"> Error code. </param>
+        /// <param name="resourceName"> Resource which has the problem. </param>
+        /// <param name="errorMessage"> Error message indicating why the operation failed. </param>
+        /// <param name="nextSteps"> Describes what needs to be done to fix the problem. </param>
+        /// <returns> A new <see cref="Models.MigrationErrorType"/> instance for mocking. </returns>
+        public static MigrationErrorType MigrationErrorType(string code = null, string resourceName = null, string errorMessage = null, string nextSteps = null)
+        {
+            return new MigrationErrorType(code, resourceName, errorMessage, nextSteps, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MigrationContent"/>. </summary>
+        /// <param name="skuName"> Sku for the migration. </param>
+        /// <param name="classicResourceReferenceId"> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </param>
+        /// <param name="profileName"> Name of the new profile that need to be created. </param>
+        /// <param name="migrationWebApplicationFirewallMappings"> Waf mapping for the migrated profile. </param>
+        /// <returns> A new <see cref="Models.MigrationContent"/> instance for mocking. </returns>
+        public static MigrationContent MigrationContent(CdnSkuName? skuName = null, ResourceIdentifier classicResourceReferenceId = null, string profileName = null, IEnumerable<MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings = null)
+        {
+            migrationWebApplicationFirewallMappings ??= new List<MigrationWebApplicationFirewallMapping>();
+
+            return new MigrationContent(skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null, classicResourceReferenceId != null ? ResourceManagerModelFactory.WritableSubResource(classicResourceReferenceId) : null, profileName, migrationWebApplicationFirewallMappings?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateResult"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="migrateResultType"> Resource type. </param>
+        /// <param name="migratedProfileResourceIdId"> Arm resource id of the migrated profile. </param>
+        /// <returns> A new <see cref="Models.MigrateResult"/> instance for mocking. </returns>
+        public static MigrateResult MigrateResult(string id = null, string migrateResultType = null, ResourceIdentifier migratedProfileResourceIdId = null)
+        {
+            return new MigrateResult(id, migrateResultType, migratedProfileResourceIdId != null ? ResourceManagerModelFactory.WritableSubResource(migratedProfileResourceIdId) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SsoUri"/>. </summary>
@@ -713,11 +966,11 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="hostName"> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </param>
         /// <param name="origins"> The source of the content being delivered via CDN. </param>
         /// <param name="originGroups"> The origin groups comprising of origins that are used for load balancing the traffic based on availability. </param>
-        /// <param name="customDomains"> The custom domains under the endpoint. </param>
+        /// <param name="deepCreatedCustomDomains"> The custom domains under the endpoint. </param>
         /// <param name="resourceState"> Resource status of the endpoint. </param>
         /// <param name="provisioningState"> Provisioning status of the endpoint. </param>
         /// <returns> A new <see cref="Cdn.CdnEndpointData"/> instance for mocking. </returns>
-        public static CdnEndpointData CdnEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string originPath = null, IEnumerable<string> contentTypesToCompress = null, string originHostHeader = null, bool? isCompressionEnabled = null, bool? isHttpAllowed = null, bool? isHttpsAllowed = null, QueryStringCachingBehavior? queryStringCachingBehavior = null, OptimizationType? optimizationType = null, string probePath = null, IEnumerable<GeoFilter> geoFilters = null, ResourceIdentifier defaultOriginGroupId = null, IEnumerable<UriSigningKey> uriSigningKeys = null, EndpointDeliveryPolicy deliveryPolicy = null, ResourceIdentifier webApplicationFirewallPolicyLinkId = null, string hostName = null, IEnumerable<DeepCreatedOrigin> origins = null, IEnumerable<DeepCreatedOriginGroup> originGroups = null, IEnumerable<CdnCustomDomainData> customDomains = null, EndpointResourceState? resourceState = null, CdnEndpointProvisioningState? provisioningState = null)
+        public static CdnEndpointData CdnEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string originPath = null, IEnumerable<string> contentTypesToCompress = null, string originHostHeader = null, bool? isCompressionEnabled = null, bool? isHttpAllowed = null, bool? isHttpsAllowed = null, QueryStringCachingBehavior? queryStringCachingBehavior = null, OptimizationType? optimizationType = null, string probePath = null, IEnumerable<GeoFilter> geoFilters = null, ResourceIdentifier defaultOriginGroupId = null, IEnumerable<UriSigningKey> uriSigningKeys = null, EndpointDeliveryPolicy deliveryPolicy = null, ResourceIdentifier webApplicationFirewallPolicyLinkId = null, string hostName = null, IEnumerable<DeepCreatedOrigin> origins = null, IEnumerable<DeepCreatedOriginGroup> originGroups = null, IEnumerable<DeepCreatedCustomDomain> deepCreatedCustomDomains = null, EndpointResourceState? resourceState = null, CdnEndpointProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             contentTypesToCompress ??= new List<string>();
@@ -725,9 +978,36 @@ namespace Azure.ResourceManager.Cdn.Models
             uriSigningKeys ??= new List<UriSigningKey>();
             origins ??= new List<DeepCreatedOrigin>();
             originGroups ??= new List<DeepCreatedOriginGroup>();
-            customDomains ??= new List<CdnCustomDomainData>();
+            deepCreatedCustomDomains ??= new List<DeepCreatedCustomDomain>();
 
-            return new CdnEndpointData(id, name, resourceType, systemData, tags, location, originPath, contentTypesToCompress?.ToList(), originHostHeader, isCompressionEnabled, isHttpAllowed, isHttpsAllowed, queryStringCachingBehavior, optimizationType, probePath, geoFilters?.ToList(), defaultOriginGroupId != null ? new EndpointPropertiesUpdateParametersDefaultOriginGroup(defaultOriginGroupId, serializedAdditionalRawData: null) : null, uriSigningKeys?.ToList(), deliveryPolicy, webApplicationFirewallPolicyLinkId != null ? new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, serializedAdditionalRawData: null) : null, hostName, origins?.ToList(), originGroups?.ToList(), customDomains?.ToList(), resourceState, provisioningState, serializedAdditionalRawData: null);
+            return new CdnEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                originPath,
+                contentTypesToCompress?.ToList(),
+                originHostHeader,
+                isCompressionEnabled,
+                isHttpAllowed,
+                isHttpsAllowed,
+                queryStringCachingBehavior,
+                optimizationType,
+                probePath,
+                geoFilters?.ToList(),
+                defaultOriginGroupId != null ? new EndpointPropertiesUpdateParametersDefaultOriginGroup(defaultOriginGroupId, serializedAdditionalRawData: null) : null,
+                uriSigningKeys?.ToList(),
+                deliveryPolicy,
+                webApplicationFirewallPolicyLinkId != null ? new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, serializedAdditionalRawData: null) : null,
+                hostName,
+                origins?.ToList(),
+                originGroups?.ToList(),
+                deepCreatedCustomDomains?.ToList(),
+                resourceState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeepCreatedOrigin"/>. </summary>
@@ -747,29 +1027,31 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.DeepCreatedOrigin"/> instance for mocking. </returns>
         public static DeepCreatedOrigin DeepCreatedOrigin(string name = null, string hostName = null, int? httpPort = null, int? httpsPort = null, string originHostHeader = null, int? priority = null, int? weight = null, bool? enabled = null, string privateLinkAlias = null, ResourceIdentifier privateLinkResourceId = null, string privateLinkLocation = null, string privateLinkApprovalMessage = null, PrivateEndpointStatus? privateEndpointStatus = null)
         {
-            return new DeepCreatedOrigin(name, hostName, httpPort, httpsPort, originHostHeader, priority, weight, enabled, privateLinkAlias, privateLinkResourceId, privateLinkLocation, privateLinkApprovalMessage, privateEndpointStatus, serializedAdditionalRawData: null);
+            return new DeepCreatedOrigin(
+                name,
+                hostName,
+                httpPort,
+                httpsPort,
+                originHostHeader,
+                priority,
+                weight,
+                enabled,
+                privateLinkAlias,
+                privateLinkResourceId,
+                privateLinkLocation,
+                privateLinkApprovalMessage,
+                privateEndpointStatus,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Cdn.CdnCustomDomainData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.DeepCreatedCustomDomain"/>. </summary>
+        /// <param name="name"> Custom domain name. </param>
         /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
-        /// <param name="resourceState"> Resource status of the custom domain. </param>
-        /// <param name="customHttpsProvisioningState"> Provisioning status of the custom domain. </param>
-        /// <param name="customHttpsAvailabilityState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
-        /// <param name="customDomainHttpsContent">
-        /// Certificate parameters for securing custom HTTPS
-        /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="UserManagedHttpsContent"/> and <see cref="CdnManagedHttpsContent"/>.
-        /// </param>
         /// <param name="validationData"> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </param>
-        /// <param name="provisioningState"> Provisioning status of Custom Https of the custom domain. </param>
-        /// <returns> A new <see cref="Cdn.CdnCustomDomainData"/> instance for mocking. </returns>
-        public static CdnCustomDomainData CdnCustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string hostName = null, CustomDomainResourceState? resourceState = null, CustomHttpsProvisioningState? customHttpsProvisioningState = null, CustomHttpsAvailabilityState? customHttpsAvailabilityState = null, CustomDomainHttpsContent customDomainHttpsContent = null, string validationData = null, CustomHttpsProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.DeepCreatedCustomDomain"/> instance for mocking. </returns>
+        public static DeepCreatedCustomDomain DeepCreatedCustomDomain(string name = null, string hostName = null, string validationData = null)
         {
-            return new CdnCustomDomainData(id, name, resourceType, systemData, hostName, resourceState, customHttpsProvisioningState, customHttpsAvailabilityState, customDomainHttpsContent, validationData, provisioningState, serializedAdditionalRawData: null);
+            return new DeepCreatedCustomDomain(name, hostName, validationData, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.CdnOriginData"/>. </summary>
@@ -794,7 +1076,26 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Cdn.CdnOriginData"/> instance for mocking. </returns>
         public static CdnOriginData CdnOriginData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string hostName = null, int? httpPort = null, int? httpsPort = null, string originHostHeader = null, int? priority = null, int? weight = null, bool? enabled = null, string privateLinkAlias = null, ResourceIdentifier privateLinkResourceId = null, string privateLinkLocation = null, string privateLinkApprovalMessage = null, OriginResourceState? resourceState = null, OriginProvisioningState? provisioningState = null, PrivateEndpointStatus? privateEndpointStatus = null)
         {
-            return new CdnOriginData(id, name, resourceType, systemData, hostName, httpPort, httpsPort, originHostHeader, priority, weight, enabled, privateLinkAlias, privateLinkResourceId, privateLinkLocation, privateLinkApprovalMessage, resourceState, provisioningState, privateEndpointStatus, serializedAdditionalRawData: null);
+            return new CdnOriginData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                hostName,
+                httpPort,
+                httpsPort,
+                originHostHeader,
+                priority,
+                weight,
+                enabled,
+                privateLinkAlias,
+                privateLinkResourceId,
+                privateLinkLocation,
+                privateLinkApprovalMessage,
+                resourceState,
+                provisioningState,
+                privateEndpointStatus,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.CdnOriginGroupData"/>. </summary>
@@ -813,7 +1114,52 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             origins ??= new List<WritableSubResource>();
 
-            return new CdnOriginGroupData(id, name, resourceType, systemData, healthProbeSettings, origins?.ToList(), trafficRestorationTimeToHealedOrNewEndpointsInMinutes, responseBasedOriginErrorDetectionSettings, resourceState, provisioningState, serializedAdditionalRawData: null);
+            return new CdnOriginGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                healthProbeSettings,
+                origins?.ToList(),
+                trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
+                responseBasedOriginErrorDetectionSettings,
+                resourceState,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Cdn.CdnCustomDomainData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
+        /// <param name="resourceState"> Resource status of the custom domain. </param>
+        /// <param name="customHttpsProvisioningState"> Provisioning status of the custom domain. </param>
+        /// <param name="customHttpsAvailabilityState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
+        /// <param name="customDomainHttpsContent">
+        /// Certificate parameters for securing custom HTTPS
+        /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="UserManagedHttpsContent"/> and <see cref="CdnManagedHttpsContent"/>.
+        /// </param>
+        /// <param name="validationData"> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </param>
+        /// <param name="provisioningState"> Provisioning status of Custom Https of the custom domain. </param>
+        /// <returns> A new <see cref="Cdn.CdnCustomDomainData"/> instance for mocking. </returns>
+        public static CdnCustomDomainData CdnCustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string hostName = null, CustomDomainResourceState? resourceState = null, CustomHttpsProvisioningState? customHttpsProvisioningState = null, CustomHttpsAvailabilityState? customHttpsAvailabilityState = null, CustomDomainHttpsContent customDomainHttpsContent = null, string validationData = null, CustomHttpsProvisioningState? provisioningState = null)
+        {
+            return new CdnCustomDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                hostName,
+                resourceState,
+                customHttpsProvisioningState,
+                customHttpsAvailabilityState,
+                customDomainHttpsContent,
+                validationData,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ValidateProbeResult"/>. </summary>
@@ -837,7 +1183,13 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             ipAddressGroups ??= new List<IPAddressGroup>();
 
-            return new EdgeNode(id, name, resourceType, systemData, ipAddressGroups?.ToList(), serializedAdditionalRawData: null);
+            return new EdgeNode(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ipAddressGroups?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/>. </summary>
@@ -854,18 +1206,37 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="customRules"> Describes custom rules inside the policy. </param>
         /// <param name="managedRuleSets"> Describes managed rules inside the policy. </param>
         /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
+        /// <param name="extendedProperties"> Key-Value pair representing additional properties for Web Application Firewall policy. </param>
         /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
         /// <returns> A new <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
-        public static CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, CdnSkuName? skuName = null, WafPolicySettings policySettings = null, IEnumerable<RateLimitRule> rateLimitRules = null, IEnumerable<CustomRule> customRules = null, IEnumerable<WafPolicyManagedRuleSet> managedRuleSets = null, IEnumerable<SubResource> endpointLinks = null, WebApplicationFirewallPolicyProvisioningState? provisioningState = null, PolicyResourceState? resourceState = null)
+        public static CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, CdnSkuName? skuName = null, WafPolicySettings policySettings = null, IEnumerable<RateLimitRule> rateLimitRules = null, IEnumerable<CustomRule> customRules = null, IEnumerable<WafPolicyManagedRuleSet> managedRuleSets = null, IEnumerable<SubResource> endpointLinks = null, IDictionary<string, string> extendedProperties = null, WebApplicationFirewallPolicyProvisioningState? provisioningState = null, PolicyResourceState? resourceState = null)
         {
             tags ??= new Dictionary<string, string>();
             rateLimitRules ??= new List<RateLimitRule>();
             customRules ??= new List<CustomRule>();
             managedRuleSets ??= new List<WafPolicyManagedRuleSet>();
             endpointLinks ??= new List<SubResource>();
+            extendedProperties ??= new Dictionary<string, string>();
 
-            return new CdnWebApplicationFirewallPolicyData(id, name, resourceType, systemData, tags, location, etag, skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null, policySettings, rateLimitRules != null ? new RateLimitRuleList(rateLimitRules?.ToList(), serializedAdditionalRawData: null) : null, customRules != null ? new CustomRuleList(customRules?.ToList(), serializedAdditionalRawData: null) : null, managedRuleSets != null ? new ManagedRuleSetList(managedRuleSets?.ToList(), serializedAdditionalRawData: null) : null, endpointLinks?.ToList(), provisioningState, resourceState, serializedAdditionalRawData: null);
+            return new CdnWebApplicationFirewallPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null,
+                policySettings,
+                rateLimitRules != null ? new RateLimitRuleList(rateLimitRules?.ToList(), serializedAdditionalRawData: null) : null,
+                customRules != null ? new CustomRuleList(customRules?.ToList(), serializedAdditionalRawData: null) : null,
+                managedRuleSets != null ? new ManagedRuleSetList(managedRuleSets?.ToList(), serializedAdditionalRawData: null) : null,
+                endpointLinks?.ToList(),
+                extendedProperties,
+                provisioningState,
+                resourceState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleSetDefinition"/>. </summary>
@@ -883,7 +1254,17 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             ruleGroups ??= new List<ManagedRuleGroupDefinition>();
 
-            return new ManagedRuleSetDefinition(id, name, resourceType, systemData, skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null, provisioningState, ruleSetType, ruleSetVersion, ruleGroups?.ToList(), serializedAdditionalRawData: null);
+            return new ManagedRuleSetDefinition(
+                id,
+                name,
+                resourceType,
+                systemData,
+                skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null,
+                provisioningState,
+                ruleSetType,
+                ruleSetVersion,
+                ruleGroups?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleGroupDefinition"/>. </summary>
@@ -930,7 +1311,104 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             subjectAlternativeNames ??= new List<string>();
 
-            return new CustomerCertificateProperties(SecretType.CustomerCertificate, serializedAdditionalRawData: null, secretSourceId != null ? ResourceManagerModelFactory.WritableSubResource(secretSourceId) : null, secretVersion, useLatestVersion, subject, expiresOn, certificateAuthority, subjectAlternativeNames?.ToList(), thumbprint);
+            return new CustomerCertificateProperties(
+                SecretType.CustomerCertificate,
+                serializedAdditionalRawData: null,
+                secretSourceId != null ? ResourceManagerModelFactory.WritableSubResource(secretSourceId) : null,
+                secretVersion,
+                useLatestVersion,
+                subject,
+                expiresOn,
+                certificateAuthority,
+                subjectAlternativeNames?.ToList(),
+                thumbprint);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AzureFirstPartyManagedCertificateProperties"/>. </summary>
+        /// <param name="secretSourceId"> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
+        /// <param name="subject"> Subject name in the certificate. </param>
+        /// <param name="expirationDate"> Certificate expiration date. </param>
+        /// <param name="certificateAuthority"> Certificate issuing authority. </param>
+        /// <param name="subjectAlternativeNames"> The list of SANs. </param>
+        /// <param name="thumbprint"> Certificate thumbprint. </param>
+        /// <returns> A new <see cref="Models.AzureFirstPartyManagedCertificateProperties"/> instance for mocking. </returns>
+        public static AzureFirstPartyManagedCertificateProperties AzureFirstPartyManagedCertificateProperties(ResourceIdentifier secretSourceId = null, string subject = null, string expirationDate = null, string certificateAuthority = null, IEnumerable<string> subjectAlternativeNames = null, string thumbprint = null)
+        {
+            subjectAlternativeNames ??= new List<string>();
+
+            return new AzureFirstPartyManagedCertificateProperties(
+                SecretType.AzureFirstPartyManagedCertificate,
+                serializedAdditionalRawData: null,
+                secretSourceId != null ? ResourceManagerModelFactory.WritableSubResource(secretSourceId) : null,
+                subject,
+                expirationDate,
+                certificateAuthority,
+                subjectAlternativeNames?.ToList(),
+                thumbprint);
+        }
+
+        /// <summary> Initializes a new instance of FrontDoorCustomDomainData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="profileName"> The name of the profile which holds the domain. </param>
+        /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
+        /// <param name="dnsZoneId"> Resource reference to the Azure DNS zone. </param>
+        /// <param name="preValidatedCustomDomainResourceId"> Resource reference to the Azure resource where custom domain ownership was prevalidated. </param>
+        /// <param name="provisioningState"> Provisioning status. </param>
+        /// <param name="deploymentStatus"></param>
+        /// <param name="domainValidationState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </param>
+        /// <param name="hostName"> The host name of the domain. Must be a domain name. </param>
+        /// <param name="validationProperties"> Values the customer needs to validate domain ownership. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Cdn.FrontDoorCustomDomainData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorCustomDomainData FrontDoorCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, ResourceIdentifier dnsZoneId, ResourceIdentifier preValidatedCustomDomainResourceId, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, DomainValidationProperties validationProperties)
+        {
+            return FrontDoorCustomDomainData(id: id, name: name, resourceType: resourceType, systemData: systemData, profileName: profileName, tlsSettings: tlsSettings, dnsZoneId: dnsZoneId, preValidatedCustomDomainResourceId: preValidatedCustomDomainResourceId, provisioningState: provisioningState, deploymentStatus: deploymentStatus, domainValidationState: domainValidationState, hostName: hostName, extendedProperties: default, validationProperties: validationProperties);
+        }
+
+        /// <summary> Initializes a new instance of ProfileData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="skuName"> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </param>
+        /// <param name="kind"> Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile. </param>
+        /// <param name="resourceState"> Resource status of the profile. </param>
+        /// <param name="provisioningState"> Provisioning status of the profile. </param>
+        /// <param name="frontDoorId"> The Id of the frontdoor. </param>
+        /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Cdn.ProfileData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ProfileData ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSkuName? skuName, string kind, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, Guid? frontDoorId, int? originResponseTimeoutSeconds)
+        {
+            return ProfileData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, skuName: skuName, kind: kind, identity: default, resourceState: resourceState, provisioningState: provisioningState, extendedProperties: default, frontDoorId: frontDoorId, originResponseTimeoutSeconds: originResponseTimeoutSeconds, logScrubbing: default);
+        }
+
+        /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="skuName"> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </param>
+        /// <param name="policySettings"> Describes  policySettings for policy. </param>
+        /// <param name="rateLimitRules"> Describes rate limit rules inside the policy. </param>
+        /// <param name="customRules"> Describes custom rules inside the policy. </param>
+        /// <param name="managedRuleSets"> Describes managed rules inside the policy. </param>
+        /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
+        /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
+        /// <param name="resourceState"> Resource status of the policy. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSkuName? skuName, WafPolicySettings policySettings, IEnumerable<RateLimitRule> rateLimitRules, IEnumerable<CustomRule> customRules, IEnumerable<WafPolicyManagedRuleSet> managedRuleSets, IEnumerable<SubResource> endpointLinks, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState)
+        {
+            return CdnWebApplicationFirewallPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, skuName: skuName, policySettings: policySettings, rateLimitRules: rateLimitRules, customRules: customRules, managedRuleSets: managedRuleSets, endpointLinks: endpointLinks, extendedProperties: default, provisioningState: provisioningState, resourceState: resourceState);
         }
     }
 }

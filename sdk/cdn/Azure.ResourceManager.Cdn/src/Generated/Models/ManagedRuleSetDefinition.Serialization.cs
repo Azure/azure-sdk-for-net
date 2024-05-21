@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class ManagedRuleSetDefinition : IUtf8JsonSerializable, IJsonModel<ManagedRuleSetDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRuleSetDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRuleSetDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedRuleSetDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSetDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRuleSetDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleSetDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             if (options.Format != "W")
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleSetDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRuleSetDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleSetDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,23 +112,23 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedRuleSetDefinition DeserializeManagedRuleSetDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<CdnSku> sku = default;
+            CdnSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> ruleSetType = default;
-            Optional<string> ruleSetVersion = default;
-            Optional<IReadOnlyList<ManagedRuleGroupDefinition>> ruleGroups = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string ruleSetType = default;
+            string ruleSetVersion = default;
+            IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    sku = CdnSku.DeserializeCdnSku(property.Value);
+                    sku = CdnSku.DeserializeCdnSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<ManagedRuleGroupDefinition> array = new List<ManagedRuleGroupDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedRuleGroupDefinition.DeserializeManagedRuleGroupDefinition(item));
+                                array.Add(ManagedRuleGroupDefinition.DeserializeManagedRuleGroupDefinition(item, options));
                             }
                             ruleGroups = array;
                             continue;
@@ -207,11 +207,21 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleSetDefinition(id, name, type, systemData.Value, sku.Value, provisioningState.Value, ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedRuleSetDefinition(
+                id,
+                name,
+                type,
+                systemData,
+                sku,
+                provisioningState,
+                ruleSetType,
+                ruleSetVersion,
+                ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleSetDefinition>.Write(ModelReaderWriterOptions options)
@@ -223,7 +233,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRuleSetDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleSetDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -239,7 +249,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeManagedRuleSetDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRuleSetDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleSetDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

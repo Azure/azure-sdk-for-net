@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The Swagger XML. </summary>
     public partial class SwaggerXml
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SwaggerXml"/>. </summary>
         public SwaggerXml()
         {
@@ -27,7 +58,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="isAttribute"> Indicates whether the property should be an attribute instead of an element. </param>
         /// <param name="isWrapped"> Indicates whether the array elements are wrapped in a container element. </param>
         /// <param name="extensions"> The vendor extensions. </param>
-        internal SwaggerXml(string name, string @namespace, string prefix, bool? isAttribute, bool? isWrapped, IDictionary<string, BinaryData> extensions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SwaggerXml(string name, string @namespace, string prefix, bool? isAttribute, bool? isWrapped, IDictionary<string, BinaryData> extensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Namespace = @namespace;
@@ -35,6 +67,7 @@ namespace Azure.ResourceManager.Logic.Models
             IsAttribute = isAttribute;
             IsWrapped = isWrapped;
             Extensions = extensions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The xml element or attribute name. </summary>

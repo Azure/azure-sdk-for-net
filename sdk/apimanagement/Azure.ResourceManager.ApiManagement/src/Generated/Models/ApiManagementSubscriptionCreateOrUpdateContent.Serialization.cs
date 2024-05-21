@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementSubscriptionCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<ApiManagementSubscriptionCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementSubscriptionCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementSubscriptionCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiManagementSubscriptionCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSubscriptionCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementSubscriptionCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementSubscriptionCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSubscriptionCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementSubscriptionCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementSubscriptionCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,21 +96,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementSubscriptionCreateOrUpdateContent DeserializeApiManagementSubscriptionCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> ownerId = default;
-            Optional<string> scope = default;
-            Optional<string> displayName = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<SubscriptionState> state = default;
-            Optional<bool> allowTracing = default;
+            string ownerId = default;
+            string scope = default;
+            string displayName = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            SubscriptionState? state = default;
+            bool? allowTracing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -170,11 +170,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementSubscriptionCreateOrUpdateContent(ownerId.Value, scope.Value, displayName.Value, primaryKey.Value, secondaryKey.Value, Optional.ToNullable(state), Optional.ToNullable(allowTracing), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApiManagementSubscriptionCreateOrUpdateContent(
+                ownerId,
+                scope,
+                displayName,
+                primaryKey,
+                secondaryKey,
+                state,
+                allowTracing,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementSubscriptionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -186,7 +194,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementSubscriptionCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementSubscriptionCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +210,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiManagementSubscriptionCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementSubscriptionCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementSubscriptionCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

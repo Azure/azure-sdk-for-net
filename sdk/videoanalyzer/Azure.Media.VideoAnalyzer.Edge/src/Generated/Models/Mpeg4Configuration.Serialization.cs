@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<float> govLength = default;
-            Optional<Mpeg4Profile> profile = default;
+            float? govLength = default;
+            Mpeg4Profile? profile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("govLength"u8))
@@ -57,7 +57,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new Mpeg4Configuration(Optional.ToNullable(govLength), Optional.ToNullable(profile));
+            return new Mpeg4Configuration(govLength, profile);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Mpeg4Configuration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMpeg4Configuration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

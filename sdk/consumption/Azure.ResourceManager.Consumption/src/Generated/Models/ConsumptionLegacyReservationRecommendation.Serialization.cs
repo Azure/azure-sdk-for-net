@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,14 +16,14 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionLegacyReservationRecommendation : IUtf8JsonSerializable, IJsonModel<ConsumptionLegacyReservationRecommendation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionLegacyReservationRecommendation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionLegacyReservationRecommendation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionLegacyReservationRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLegacyReservationRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionLegacyReservationRecommendation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionLegacyReservationRecommendation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in SkuProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -174,7 +173,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLegacyReservationRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionLegacyReservationRecommendation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionLegacyReservationRecommendation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,37 +182,37 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionLegacyReservationRecommendation DeserializeConsumptionLegacyReservationRecommendation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ReservationRecommendationKind kind = default;
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> sku = default;
+            ETag? etag = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            AzureLocation? location = default;
+            string sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> lookBackPeriod = default;
-            Optional<float> instanceFlexibilityRatio = default;
-            Optional<string> instanceFlexibilityGroup = default;
-            Optional<string> normalizedSize = default;
-            Optional<float> recommendedQuantityNormalized = default;
-            Optional<Guid> meterId = default;
-            Optional<string> term = default;
-            Optional<decimal> costWithNoReservedInstances = default;
-            Optional<decimal> recommendedQuantity = default;
-            Optional<decimal> totalCostWithReservedInstances = default;
-            Optional<decimal> netSavings = default;
-            Optional<DateTimeOffset> firstUsageDate = default;
+            SystemData systemData = default;
+            string lookBackPeriod = default;
+            float? instanceFlexibilityRatio = default;
+            string instanceFlexibilityGroup = default;
+            string normalizedSize = default;
+            float? recommendedQuantityNormalized = default;
+            Guid? meterId = default;
+            string term = default;
+            decimal? costWithNoReservedInstances = default;
+            decimal? recommendedQuantity = default;
+            decimal? totalCostWithReservedInstances = default;
+            decimal? netSavings = default;
+            DateTimeOffset? firstUsageDate = default;
             string scope = default;
-            Optional<IReadOnlyList<ConsumptionSkuProperty>> skuProperties = default;
+            IReadOnlyList<ConsumptionSkuProperty> skuProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -397,7 +396,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<ConsumptionSkuProperty> array = new List<ConsumptionSkuProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConsumptionSkuProperty.DeserializeConsumptionSkuProperty(item));
+                                array.Add(ConsumptionSkuProperty.DeserializeConsumptionSkuProperty(item, options));
                             }
                             skuProperties = array;
                             continue;
@@ -407,11 +406,35 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionLegacyReservationRecommendation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), Optional.ToNullable(location), sku.Value, serializedAdditionalRawData, lookBackPeriod.Value, Optional.ToNullable(instanceFlexibilityRatio), instanceFlexibilityGroup.Value, normalizedSize.Value, Optional.ToNullable(recommendedQuantityNormalized), Optional.ToNullable(meterId), term.Value, Optional.ToNullable(costWithNoReservedInstances), Optional.ToNullable(recommendedQuantity), Optional.ToNullable(totalCostWithReservedInstances), Optional.ToNullable(netSavings), Optional.ToNullable(firstUsageDate), scope, Optional.ToList(skuProperties));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionLegacyReservationRecommendation(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                serializedAdditionalRawData,
+                lookBackPeriod,
+                instanceFlexibilityRatio,
+                instanceFlexibilityGroup,
+                normalizedSize,
+                recommendedQuantityNormalized,
+                meterId,
+                term,
+                costWithNoReservedInstances,
+                recommendedQuantity,
+                totalCostWithReservedInstances,
+                netSavings,
+                firstUsageDate,
+                scope,
+                skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>());
         }
 
         BinaryData IPersistableModel<ConsumptionLegacyReservationRecommendation>.Write(ModelReaderWriterOptions options)
@@ -423,7 +446,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionLegacyReservationRecommendation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionLegacyReservationRecommendation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -439,7 +462,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionLegacyReservationRecommendation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionLegacyReservationRecommendation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionLegacyReservationRecommendation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchAccountPatch : IUtf8JsonSerializable, IJsonModel<BatchAccountPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchAccountPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(AutoStorage))
             {
                 writer.WritePropertyName("autoStorage"u8);
-                writer.WriteObjectValue(AutoStorage);
+                writer.WriteObjectValue(AutoStorage, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsCollectionDefined(AllowedAuthenticationModes))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,21 +115,21 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAccountPatch DeserializeBatchAccountPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<BatchAccountAutoStorageBaseConfiguration> autoStorage = default;
-            Optional<BatchAccountEncryptionConfiguration> encryption = default;
-            Optional<IList<BatchAuthenticationMode>> allowedAuthenticationModes = default;
-            Optional<BatchPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<BatchNetworkProfile> networkProfile = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            BatchAccountAutoStorageBaseConfiguration autoStorage = default;
+            BatchAccountEncryptionConfiguration encryption = default;
+            IList<BatchAuthenticationMode> allowedAuthenticationModes = default;
+            BatchPublicNetworkAccess? publicNetworkAccess = default;
+            BatchNetworkProfile networkProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Batch.Models
                             {
                                 continue;
                             }
-                            autoStorage = BatchAccountAutoStorageBaseConfiguration.DeserializeBatchAccountAutoStorageBaseConfiguration(property0.Value);
+                            autoStorage = BatchAccountAutoStorageBaseConfiguration.DeserializeBatchAccountAutoStorageBaseConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Batch.Models
                             {
                                 continue;
                             }
-                            encryption = BatchAccountEncryptionConfiguration.DeserializeBatchAccountEncryptionConfiguration(property0.Value);
+                            encryption = BatchAccountEncryptionConfiguration.DeserializeBatchAccountEncryptionConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("allowedAuthenticationModes"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Batch.Models
                             {
                                 continue;
                             }
-                            networkProfile = BatchNetworkProfile.DeserializeBatchNetworkProfile(property0.Value);
+                            networkProfile = BatchNetworkProfile.DeserializeBatchNetworkProfile(property0.Value, options);
                             continue;
                         }
                     }
@@ -220,11 +220,19 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountPatch(Optional.ToDictionary(tags), identity, autoStorage.Value, encryption.Value, Optional.ToList(allowedAuthenticationModes), Optional.ToNullable(publicNetworkAccess), networkProfile.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchAccountPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                autoStorage,
+                encryption,
+                allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(),
+                publicNetworkAccess,
+                networkProfile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountPatch>.Write(ModelReaderWriterOptions options)
@@ -236,7 +244,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +260,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchAccountPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

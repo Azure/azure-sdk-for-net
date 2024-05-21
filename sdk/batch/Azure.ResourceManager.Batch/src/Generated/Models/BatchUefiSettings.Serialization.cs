@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchUefiSettings : IUtf8JsonSerializable, IJsonModel<BatchUefiSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchUefiSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchUefiSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchUefiSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchUefiSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchUefiSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchUefiSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchUefiSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchUefiSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchUefiSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchUefiSettings DeserializeBatchUefiSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> secureBootEnabled = default;
-            Optional<bool> vTpmEnabled = default;
+            bool? secureBootEnabled = default;
+            bool? vTpmEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secureBootEnabled"u8))
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchUefiSettings(Optional.ToNullable(secureBootEnabled), Optional.ToNullable(vTpmEnabled), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchUefiSettings(secureBootEnabled, vTpmEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchUefiSettings>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchUefiSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchUefiSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchUefiSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchUefiSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchUefiSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownActivity. </summary>
+    /// <summary> Unknown version of Activity. </summary>
     internal partial class UnknownActivity : PipelineActivity
     {
         /// <summary> Initializes a new instance of <see cref="UnknownActivity"/>. </summary>
@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal UnknownActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             ActivityType = activityType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownActivity"/> for deserialization. </summary>
+        internal UnknownActivity()
+        {
         }
     }
 }

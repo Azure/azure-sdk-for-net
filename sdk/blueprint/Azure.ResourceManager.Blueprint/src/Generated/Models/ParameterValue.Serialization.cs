@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Blueprint.Models
 {
     public partial class ParameterValue : IUtf8JsonSerializable, IJsonModel<ParameterValue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParameterValue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParameterValue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ParameterValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ParameterValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParameterValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParameterValue)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             if (Optional.IsDefined(Reference))
             {
                 writer.WritePropertyName("reference"u8);
-                writer.WriteObjectValue(Reference);
+                writer.WriteObjectValue(Reference, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParameterValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParameterValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParameterValue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static ParameterValue DeserializeParameterValue(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BinaryData> value = default;
-            Optional<SecretValueReference> reference = default;
+            BinaryData value = default;
+            SecretValueReference reference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.Blueprint.Models
                     {
                         continue;
                     }
-                    reference = SecretValueReference.DeserializeSecretValueReference(property.Value);
+                    reference = SecretValueReference.DeserializeSecretValueReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ParameterValue(value.Value, reference.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ParameterValue(value, reference, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ParameterValue>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ParameterValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParameterValue)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                         return DeserializeParameterValue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ParameterValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParameterValue)} does not support reading '{options.Format}' format.");
             }
         }
 

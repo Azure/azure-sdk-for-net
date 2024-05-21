@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
     public partial class PropertyChange : IUtf8JsonSerializable, IJsonModel<PropertyChange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PropertyChange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PropertyChange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PropertyChange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PropertyChange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PropertyChange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PropertyChange)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<PropertyChange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PropertyChange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PropertyChange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,23 +103,23 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
 
         internal static PropertyChange DeserializePropertyChange(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ChangeType> changeType = default;
-            Optional<ChangeCategory> changeCategory = default;
-            Optional<string> jsonPath = default;
-            Optional<string> displayName = default;
-            Optional<PropertyChangeLevel> level = default;
-            Optional<string> description = default;
-            Optional<string> oldValue = default;
-            Optional<string> newValue = default;
-            Optional<bool> isDataMasked = default;
+            ChangeType? changeType = default;
+            ChangeCategory? changeCategory = default;
+            string jsonPath = default;
+            string displayName = default;
+            PropertyChangeLevel? level = default;
+            string description = default;
+            string oldValue = default;
+            string newValue = default;
+            bool? isDataMasked = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("changeType"u8))
@@ -185,11 +185,21 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PropertyChange(Optional.ToNullable(changeType), Optional.ToNullable(changeCategory), jsonPath.Value, displayName.Value, Optional.ToNullable(level), description.Value, oldValue.Value, newValue.Value, Optional.ToNullable(isDataMasked), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PropertyChange(
+                changeType,
+                changeCategory,
+                jsonPath,
+                displayName,
+                level,
+                description,
+                oldValue,
+                newValue,
+                isDataMasked,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PropertyChange>.Write(ModelReaderWriterOptions options)
@@ -201,7 +211,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PropertyChange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PropertyChange)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -217,7 +227,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                         return DeserializePropertyChange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PropertyChange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PropertyChange)} does not support reading '{options.Format}' format.");
             }
         }
 

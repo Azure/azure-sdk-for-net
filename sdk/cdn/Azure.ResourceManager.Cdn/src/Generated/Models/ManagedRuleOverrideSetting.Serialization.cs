@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class ManagedRuleOverrideSetting : IUtf8JsonSerializable, IJsonModel<ManagedRuleOverrideSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRuleOverrideSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRuleOverrideSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedRuleOverrideSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleOverrideSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRuleOverrideSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleOverrideSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleOverrideSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRuleOverrideSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleOverrideSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedRuleOverrideSetting DeserializeManagedRuleOverrideSetting(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string ruleId = default;
-            Optional<ManagedRuleSetupState> enabledState = default;
-            Optional<OverrideActionType> action = default;
+            ManagedRuleSetupState? enabledState = default;
+            OverrideActionType? action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"u8))
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleOverrideSetting(ruleId, Optional.ToNullable(enabledState), Optional.ToNullable(action), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedRuleOverrideSetting(ruleId, enabledState, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleOverrideSetting>.Write(ModelReaderWriterOptions options)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRuleOverrideSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleOverrideSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeManagedRuleOverrideSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRuleOverrideSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleOverrideSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

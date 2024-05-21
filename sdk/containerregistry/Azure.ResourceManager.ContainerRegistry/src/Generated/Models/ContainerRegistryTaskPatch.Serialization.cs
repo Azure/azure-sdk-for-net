@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryTaskPatch : IUtf8JsonSerializable, IJsonModel<ContainerRegistryTaskPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTaskPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTaskPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryTaskPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTaskPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTaskPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform);
+                writer.WriteObjectValue(Platform, options);
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration);
+                writer.WriteObjectValue(AgentConfiguration, options);
             }
             if (Optional.IsDefined(AgentPoolName))
             {
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Step))
             {
                 writer.WritePropertyName("step"u8);
-                writer.WriteObjectValue(Step);
+                writer.WriteObjectValue(Step, options);
             }
             if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
-                writer.WriteObjectValue(Trigger);
+                writer.WriteObjectValue(Trigger, options);
             }
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue(Credentials, options);
             }
             if (Optional.IsDefined(LogTemplate))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTaskPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTaskPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,25 +123,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTaskPatch DeserializeContainerRegistryTaskPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ContainerRegistryTaskStatus> status = default;
-            Optional<ContainerRegistryPlatformUpdateContent> platform = default;
-            Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
-            Optional<string> agentPoolName = default;
-            Optional<int> timeout = default;
-            Optional<ContainerRegistryTaskStepUpdateContent> step = default;
-            Optional<ContainerRegistryTriggerUpdateContent> trigger = default;
-            Optional<ContainerRegistryCredentials> credentials = default;
-            Optional<string> logTemplate = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            ContainerRegistryTaskStatus? status = default;
+            ContainerRegistryPlatformUpdateContent platform = default;
+            ContainerRegistryAgentProperties agentConfiguration = default;
+            string agentPoolName = default;
+            int? timeout = default;
+            ContainerRegistryTaskStepUpdateContent step = default;
+            ContainerRegistryTriggerUpdateContent trigger = default;
+            ContainerRegistryCredentials credentials = default;
+            string logTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            platform = ContainerRegistryPlatformUpdateContent.DeserializeContainerRegistryPlatformUpdateContent(property0.Value);
+                            platform = ContainerRegistryPlatformUpdateContent.DeserializeContainerRegistryPlatformUpdateContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentConfiguration"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property0.Value);
+                            agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("agentPoolName"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            step = ContainerRegistryTaskStepUpdateContent.DeserializeContainerRegistryTaskStepUpdateContent(property0.Value);
+                            step = ContainerRegistryTaskStepUpdateContent.DeserializeContainerRegistryTaskStepUpdateContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trigger"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            trigger = ContainerRegistryTriggerUpdateContent.DeserializeContainerRegistryTriggerUpdateContent(property0.Value);
+                            trigger = ContainerRegistryTriggerUpdateContent.DeserializeContainerRegistryTriggerUpdateContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("credentials"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property0.Value);
+                            credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("logTemplate"u8))
@@ -254,11 +254,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTaskPatch(identity, Optional.ToDictionary(tags), Optional.ToNullable(status), platform.Value, agentConfiguration.Value, agentPoolName.Value, Optional.ToNullable(timeout), step.Value, trigger.Value, credentials.Value, logTemplate.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerRegistryTaskPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                status,
+                platform,
+                agentConfiguration,
+                agentPoolName,
+                timeout,
+                step,
+                trigger,
+                credentials,
+                logTemplate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskPatch>.Write(ModelReaderWriterOptions options)
@@ -270,7 +282,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTaskPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTaskPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -286,7 +298,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryTaskPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTaskPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTaskPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

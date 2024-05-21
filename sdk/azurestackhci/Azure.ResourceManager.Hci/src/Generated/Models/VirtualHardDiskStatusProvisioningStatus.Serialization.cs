@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class VirtualHardDiskStatusProvisioningStatus : IUtf8JsonSerializable, IJsonModel<VirtualHardDiskStatusProvisioningStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualHardDiskStatusProvisioningStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualHardDiskStatusProvisioningStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualHardDiskStatusProvisioningStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualHardDiskStatusProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualHardDiskStatusProvisioningStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualHardDiskStatusProvisioningStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualHardDiskStatusProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualHardDiskStatusProvisioningStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualHardDiskStatusProvisioningStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static VirtualHardDiskStatusProvisioningStatus DeserializeVirtualHardDiskStatusProvisioningStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<HciClusterStatus> status = default;
+            string operationId = default;
+            HciClusterStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHardDiskStatusProvisioningStatus(operationId.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualHardDiskStatusProvisioningStatus(operationId, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualHardDiskStatusProvisioningStatus>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualHardDiskStatusProvisioningStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualHardDiskStatusProvisioningStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeVirtualHardDiskStatusProvisioningStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualHardDiskStatusProvisioningStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualHardDiskStatusProvisioningStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

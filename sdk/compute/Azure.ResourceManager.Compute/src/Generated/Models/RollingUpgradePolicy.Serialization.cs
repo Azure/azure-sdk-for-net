@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class RollingUpgradePolicy : IUtf8JsonSerializable, IJsonModel<RollingUpgradePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RollingUpgradePolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RollingUpgradePolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RollingUpgradePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RollingUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RollingUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,22 +98,22 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static RollingUpgradePolicy DeserializeRollingUpgradePolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> maxBatchInstancePercent = default;
-            Optional<int> maxUnhealthyInstancePercent = default;
-            Optional<int> maxUnhealthyUpgradedInstancePercent = default;
-            Optional<string> pauseTimeBetweenBatches = default;
-            Optional<bool> enableCrossZoneUpgrade = default;
-            Optional<bool> prioritizeUnhealthyInstances = default;
-            Optional<bool> rollbackFailedInstancesOnPolicyBreach = default;
-            Optional<bool> maxSurge = default;
+            int? maxBatchInstancePercent = default;
+            int? maxUnhealthyInstancePercent = default;
+            int? maxUnhealthyUpgradedInstancePercent = default;
+            string pauseTimeBetweenBatches = default;
+            bool? enableCrossZoneUpgrade = default;
+            bool? prioritizeUnhealthyInstances = default;
+            bool? rollbackFailedInstancesOnPolicyBreach = default;
+            bool? maxSurge = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxBatchInstancePercent"u8))
@@ -186,11 +186,20 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RollingUpgradePolicy(Optional.ToNullable(maxBatchInstancePercent), Optional.ToNullable(maxUnhealthyInstancePercent), Optional.ToNullable(maxUnhealthyUpgradedInstancePercent), pauseTimeBetweenBatches.Value, Optional.ToNullable(enableCrossZoneUpgrade), Optional.ToNullable(prioritizeUnhealthyInstances), Optional.ToNullable(rollbackFailedInstancesOnPolicyBreach), Optional.ToNullable(maxSurge), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RollingUpgradePolicy(
+                maxBatchInstancePercent,
+                maxUnhealthyInstancePercent,
+                maxUnhealthyUpgradedInstancePercent,
+                pauseTimeBetweenBatches,
+                enableCrossZoneUpgrade,
+                prioritizeUnhealthyInstances,
+                rollbackFailedInstancesOnPolicyBreach,
+                maxSurge,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RollingUpgradePolicy>.Write(ModelReaderWriterOptions options)
@@ -202,7 +211,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +227,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRollingUpgradePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

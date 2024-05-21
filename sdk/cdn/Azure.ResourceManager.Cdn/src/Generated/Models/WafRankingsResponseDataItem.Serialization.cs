@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class WafRankingsResponseDataItem : IUtf8JsonSerializable, IJsonModel<WafRankingsResponseDataItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WafRankingsResponseDataItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WafRankingsResponseDataItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WafRankingsResponseDataItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WafRankingsResponseDataItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WafRankingsResponseDataItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WafRankingsResponseDataItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<WafRankingsResponseDataItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WafRankingsResponseDataItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WafRankingsResponseDataItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static WafRankingsResponseDataItem DeserializeWafRankingsResponseDataItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> groupValues = default;
-            Optional<IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems>> metrics = default;
+            IReadOnlyList<string> groupValues = default;
+            IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> metrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupValues"u8))
@@ -113,18 +113,18 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> array = new List<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.DeserializeComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(item));
+                        array.Add(ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.DeserializeComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(item, options));
                     }
                     metrics = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WafRankingsResponseDataItem(Optional.ToList(groupValues), Optional.ToList(metrics), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WafRankingsResponseDataItem(groupValues ?? new ChangeTrackingList<string>(), metrics ?? new ChangeTrackingList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WafRankingsResponseDataItem>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WafRankingsResponseDataItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WafRankingsResponseDataItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeWafRankingsResponseDataItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WafRankingsResponseDataItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WafRankingsResponseDataItem)} does not support reading '{options.Format}' format.");
             }
         }
 

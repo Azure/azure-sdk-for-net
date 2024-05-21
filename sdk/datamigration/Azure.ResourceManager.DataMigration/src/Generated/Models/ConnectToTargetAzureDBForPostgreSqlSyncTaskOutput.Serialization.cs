@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput : IUtf8JsonSerializable, IJsonModel<ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,19 +93,19 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput DeserializeConnectToTargetAzureDBForPostgreSqlSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> targetServerVersion = default;
-            Optional<IReadOnlyList<string>> databases = default;
-            Optional<string> targetServerBrandVersion = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            string id = default;
+            string targetServerVersion = default;
+            IReadOnlyList<string> databases = default;
+            string targetServerBrandVersion = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -146,18 +146,24 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput(id.Value, targetServerVersion.Value, Optional.ToList(databases), targetServerBrandVersion.Value, Optional.ToList(validationErrors), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput(
+                id,
+                targetServerVersion,
+                databases ?? new ChangeTrackingList<string>(),
+                targetServerBrandVersion,
+                validationErrors ?? new ChangeTrackingList<ReportableException>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput>.Write(ModelReaderWriterOptions options)
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +191,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeConnectToTargetAzureDBForPostgreSqlSyncTaskOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

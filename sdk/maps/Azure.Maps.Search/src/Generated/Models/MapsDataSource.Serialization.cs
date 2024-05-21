@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<GeometryIdentifier> geometry = default;
+            GeometryIdentifier geometry = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("geometry"u8))
@@ -31,7 +30,15 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new MapsDataSource(geometry.Value);
+            return new MapsDataSource(geometry);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MapsDataSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMapsDataSource(document.RootElement);
         }
     }
 }

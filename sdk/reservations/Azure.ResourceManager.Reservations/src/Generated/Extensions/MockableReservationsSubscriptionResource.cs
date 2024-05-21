@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Reservations;
 using Azure.ResourceManager.Reservations.Models;
 
 namespace Azure.ResourceManager.Reservations.Mocking
@@ -225,7 +222,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateGetCatalogRequest(Id.SubscriptionId, options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateGetCatalogNextPageRequest(nextLink, Id.SubscriptionId, options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReservationCatalog.DeserializeReservationCatalog, DefaultClientDiagnostics, Pipeline, "MockableReservationsSubscriptionResource.GetCatalog", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ReservationCatalog.DeserializeReservationCatalog(e), DefaultClientDiagnostics, Pipeline, "MockableReservationsSubscriptionResource.GetCatalog", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +251,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateGetCatalogRequest(Id.SubscriptionId, options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateGetCatalogNextPageRequest(nextLink, Id.SubscriptionId, options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReservationCatalog.DeserializeReservationCatalog, DefaultClientDiagnostics, Pipeline, "MockableReservationsSubscriptionResource.GetCatalog", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ReservationCatalog.DeserializeReservationCatalog(e), DefaultClientDiagnostics, Pipeline, "MockableReservationsSubscriptionResource.GetCatalog", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

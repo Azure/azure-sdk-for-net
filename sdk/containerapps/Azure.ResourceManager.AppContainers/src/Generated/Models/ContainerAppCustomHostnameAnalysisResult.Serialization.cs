@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppCustomHostnameAnalysisResult : IUtf8JsonSerializable, IJsonModel<ContainerAppCustomHostnameAnalysisResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCustomHostnameAnalysisResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCustomHostnameAnalysisResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppCustomHostnameAnalysisResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomHostnameAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCustomHostnameAnalysisResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCustomHostnameAnalysisResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationFailureInfo))
             {
                 writer.WritePropertyName("customDomainVerificationFailureInfo"u8);
-                writer.WriteObjectValue(CustomDomainVerificationFailureInfo);
+                writer.WriteObjectValue(CustomDomainVerificationFailureInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HasConflictOnManagedEnvironment))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomHostnameAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCustomHostnameAnalysisResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCustomHostnameAnalysisResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,26 +143,26 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCustomHostnameAnalysisResult DeserializeContainerAppCustomHostnameAnalysisResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> hostName = default;
-            Optional<bool> isHostnameAlreadyVerified = default;
-            Optional<ContainerAppDnsVerificationTestResult> customDomainVerificationTest = default;
-            Optional<ContainerAppCustomDomainVerificationFailureInfo> customDomainVerificationFailureInfo = default;
-            Optional<bool> hasConflictOnManagedEnvironment = default;
-            Optional<bool> conflictWithEnvironmentCustomDomain = default;
-            Optional<string> conflictingContainerAppResourceId = default;
-            Optional<IReadOnlyList<string>> cNameRecords = default;
-            Optional<IReadOnlyList<string>> txtRecords = default;
-            Optional<IReadOnlyList<string>> aRecords = default;
-            Optional<IReadOnlyList<string>> alternateCNameRecords = default;
-            Optional<IReadOnlyList<string>> alternateTxtRecords = default;
+            string hostName = default;
+            bool? isHostnameAlreadyVerified = default;
+            ContainerAppDnsVerificationTestResult? customDomainVerificationTest = default;
+            ContainerAppCustomDomainVerificationFailureInfo customDomainVerificationFailureInfo = default;
+            bool? hasConflictOnManagedEnvironment = default;
+            bool? conflictWithEnvironmentCustomDomain = default;
+            string conflictingContainerAppResourceId = default;
+            IReadOnlyList<string> cNameRecords = default;
+            IReadOnlyList<string> txtRecords = default;
+            IReadOnlyList<string> aRecords = default;
+            IReadOnlyList<string> alternateCNameRecords = default;
+            IReadOnlyList<string> alternateTxtRecords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostName"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    customDomainVerificationFailureInfo = ContainerAppCustomDomainVerificationFailureInfo.DeserializeContainerAppCustomDomainVerificationFailureInfo(property.Value);
+                    customDomainVerificationFailureInfo = ContainerAppCustomDomainVerificationFailureInfo.DeserializeContainerAppCustomDomainVerificationFailureInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("hasConflictOnManagedEnvironment"u8))
@@ -292,11 +292,24 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCustomHostnameAnalysisResult(hostName.Value, Optional.ToNullable(isHostnameAlreadyVerified), Optional.ToNullable(customDomainVerificationTest), customDomainVerificationFailureInfo.Value, Optional.ToNullable(hasConflictOnManagedEnvironment), Optional.ToNullable(conflictWithEnvironmentCustomDomain), conflictingContainerAppResourceId.Value, Optional.ToList(cNameRecords), Optional.ToList(txtRecords), Optional.ToList(aRecords), Optional.ToList(alternateCNameRecords), Optional.ToList(alternateTxtRecords), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerAppCustomHostnameAnalysisResult(
+                hostName,
+                isHostnameAlreadyVerified,
+                customDomainVerificationTest,
+                customDomainVerificationFailureInfo,
+                hasConflictOnManagedEnvironment,
+                conflictWithEnvironmentCustomDomain,
+                conflictingContainerAppResourceId,
+                cNameRecords ?? new ChangeTrackingList<string>(),
+                txtRecords ?? new ChangeTrackingList<string>(),
+                aRecords ?? new ChangeTrackingList<string>(),
+                alternateCNameRecords ?? new ChangeTrackingList<string>(),
+                alternateTxtRecords ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCustomHostnameAnalysisResult>.Write(ModelReaderWriterOptions options)
@@ -308,7 +321,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCustomHostnameAnalysisResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCustomHostnameAnalysisResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -324,7 +337,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppCustomHostnameAnalysisResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCustomHostnameAnalysisResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCustomHostnameAnalysisResult)} does not support reading '{options.Format}' format.");
             }
         }
 

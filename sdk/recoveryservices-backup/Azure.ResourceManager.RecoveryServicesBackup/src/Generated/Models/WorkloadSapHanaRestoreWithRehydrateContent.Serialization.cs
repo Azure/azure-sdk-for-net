@@ -5,21 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadSapHanaRestoreWithRehydrateContent : IUtf8JsonSerializable
+    public partial class WorkloadSapHanaRestoreWithRehydrateContent : IUtf8JsonSerializable, IJsonModel<WorkloadSapHanaRestoreWithRehydrateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadSapHanaRestoreWithRehydrateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<WorkloadSapHanaRestoreWithRehydrateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapHanaRestoreWithRehydrateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WorkloadSapHanaRestoreWithRehydrateContent)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointRehydrationInfo))
             {
                 writer.WritePropertyName("recoveryPointRehydrationInfo"u8);
-                writer.WriteObjectValue(RecoveryPointRehydrationInfo);
+                writer.WriteObjectValue(RecoveryPointRehydrationInfo, options);
             }
             if (Optional.IsDefined(RecoveryType))
             {
@@ -45,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(TargetInfo))
             {
                 writer.WritePropertyName("targetInfo"u8);
-                writer.WriteObjectValue(TargetInfo);
+                writer.WriteObjectValue(TargetInfo, options);
             }
             if (Optional.IsDefined(RecoveryMode))
             {
@@ -60,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(UserAssignedManagedIdentityDetails))
             {
                 writer.WritePropertyName("userAssignedManagedIdentityDetails"u8);
-                writer.WriteObjectValue(UserAssignedManagedIdentityDetails);
+                writer.WriteObjectValue(UserAssignedManagedIdentityDetails, options);
             }
             if (Optional.IsDefined(SnapshotRestoreParameters))
             {
                 writer.WritePropertyName("snapshotRestoreParameters"u8);
-                writer.WriteObjectValue(SnapshotRestoreParameters);
+                writer.WriteObjectValue(SnapshotRestoreParameters, options);
             }
             if (Optional.IsDefined(TargetVirtualMachineId))
             {
@@ -74,26 +84,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadSapHanaRestoreWithRehydrateContent DeserializeWorkloadSapHanaRestoreWithRehydrateContent(JsonElement element)
+        WorkloadSapHanaRestoreWithRehydrateContent IJsonModel<WorkloadSapHanaRestoreWithRehydrateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapHanaRestoreWithRehydrateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WorkloadSapHanaRestoreWithRehydrateContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadSapHanaRestoreWithRehydrateContent(document.RootElement, options);
+        }
+
+        internal static WorkloadSapHanaRestoreWithRehydrateContent DeserializeWorkloadSapHanaRestoreWithRehydrateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<RecoveryPointRehydrationInfo> recoveryPointRehydrationInfo = default;
-            Optional<FileShareRecoveryType> recoveryType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<IDictionary<string, string>> propertyBag = default;
-            Optional<TargetRestoreInfo> targetInfo = default;
-            Optional<RecoveryMode> recoveryMode = default;
-            Optional<string> targetResourceGroupName = default;
-            Optional<UserAssignedManagedIdentityDetails> userAssignedManagedIdentityDetails = default;
-            Optional<SnapshotRestoreContent> snapshotRestoreParameters = default;
-            Optional<ResourceIdentifier> targetVirtualMachineId = default;
+            RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default;
+            FileShareRecoveryType? recoveryType = default;
+            ResourceIdentifier sourceResourceId = default;
+            IDictionary<string, string> propertyBag = default;
+            TargetRestoreInfo targetInfo = default;
+            RecoveryMode? recoveryMode = default;
+            string targetResourceGroupName = default;
+            UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default;
+            SnapshotRestoreContent snapshotRestoreParameters = default;
+            ResourceIdentifier targetVirtualMachineId = default;
             string objectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointRehydrationInfo"u8))
@@ -102,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryPointRehydrationInfo = RecoveryPointRehydrationInfo.DeserializeRecoveryPointRehydrationInfo(property.Value);
+                    recoveryPointRehydrationInfo = RecoveryPointRehydrationInfo.DeserializeRecoveryPointRehydrationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryType"u8))
@@ -143,7 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    targetInfo = TargetRestoreInfo.DeserializeTargetRestoreInfo(property.Value);
+                    targetInfo = TargetRestoreInfo.DeserializeTargetRestoreInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryMode"u8))
@@ -166,7 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    userAssignedManagedIdentityDetails = UserAssignedManagedIdentityDetails.DeserializeUserAssignedManagedIdentityDetails(property.Value);
+                    userAssignedManagedIdentityDetails = UserAssignedManagedIdentityDetails.DeserializeUserAssignedManagedIdentityDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("snapshotRestoreParameters"u8))
@@ -175,7 +216,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    snapshotRestoreParameters = SnapshotRestoreContent.DeserializeSnapshotRestoreContent(property.Value);
+                    snapshotRestoreParameters = SnapshotRestoreContent.DeserializeSnapshotRestoreContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetVirtualMachineId"u8))
@@ -192,8 +233,56 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WorkloadSapHanaRestoreWithRehydrateContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetResourceGroupName.Value, userAssignedManagedIdentityDetails.Value, snapshotRestoreParameters.Value, targetVirtualMachineId.Value, recoveryPointRehydrationInfo.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WorkloadSapHanaRestoreWithRehydrateContent(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryType,
+                sourceResourceId,
+                propertyBag ?? new ChangeTrackingDictionary<string, string>(),
+                targetInfo,
+                recoveryMode,
+                targetResourceGroupName,
+                userAssignedManagedIdentityDetails,
+                snapshotRestoreParameters,
+                targetVirtualMachineId,
+                recoveryPointRehydrationInfo);
         }
+
+        BinaryData IPersistableModel<WorkloadSapHanaRestoreWithRehydrateContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapHanaRestoreWithRehydrateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadSapHanaRestoreWithRehydrateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WorkloadSapHanaRestoreWithRehydrateContent IPersistableModel<WorkloadSapHanaRestoreWithRehydrateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapHanaRestoreWithRehydrateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWorkloadSapHanaRestoreWithRehydrateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadSapHanaRestoreWithRehydrateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WorkloadSapHanaRestoreWithRehydrateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

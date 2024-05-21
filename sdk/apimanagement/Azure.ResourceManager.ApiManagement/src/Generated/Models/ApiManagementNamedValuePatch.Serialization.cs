@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementNamedValuePatch : IUtf8JsonSerializable, IJsonModel<ApiManagementNamedValuePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementNamedValuePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementNamedValuePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiManagementNamedValuePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementNamedValuePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementNamedValuePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementNamedValuePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(KeyVault))
             {
                 writer.WritePropertyName("keyVault"u8);
-                writer.WriteObjectValue(KeyVault);
+                writer.WriteObjectValue(KeyVault, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementNamedValuePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementNamedValuePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementNamedValuePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,19 +91,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementNamedValuePatch DeserializeApiManagementNamedValuePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> tags = default;
-            Optional<bool> secret = default;
-            Optional<string> displayName = default;
-            Optional<string> value = default;
-            Optional<KeyVaultContractCreateProperties> keyVault = default;
+            IList<string> tags = default;
+            bool? secret = default;
+            string displayName = default;
+            string value = default;
+            KeyVaultContractCreateProperties keyVault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            keyVault = KeyVaultContractCreateProperties.DeserializeKeyVaultContractCreateProperties(property0.Value);
+                            keyVault = KeyVaultContractCreateProperties.DeserializeKeyVaultContractCreateProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -162,11 +162,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementNamedValuePatch(Optional.ToList(tags), Optional.ToNullable(secret), displayName.Value, value.Value, keyVault.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApiManagementNamedValuePatch(
+                tags ?? new ChangeTrackingList<string>(),
+                secret,
+                displayName,
+                value,
+                keyVault,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementNamedValuePatch>.Write(ModelReaderWriterOptions options)
@@ -178,7 +184,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementNamedValuePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementNamedValuePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +200,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiManagementNamedValuePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementNamedValuePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementNamedValuePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

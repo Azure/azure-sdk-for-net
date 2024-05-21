@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Avs.Models
 {
     public partial class AvsPrivateCloudPatch : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvsPrivateCloudPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsPrivateCloudPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsPrivateCloudPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(ManagementCluster))
             {
                 writer.WritePropertyName("managementCluster"u8);
-                writer.WriteObjectValue(ManagementCluster);
+                writer.WriteObjectValue(ManagementCluster, options);
             }
             if (Optional.IsDefined(Internet))
             {
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in IdentitySources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
-                writer.WriteObjectValue(Availability);
+                writer.WriteObjectValue(Availability, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsPrivateCloudPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsPrivateCloudPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,22 +118,22 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static AvsPrivateCloudPatch DeserializeAvsPrivateCloudPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AvsManagementCluster> managementCluster = default;
-            Optional<InternetConnectivityState> internet = default;
-            Optional<IList<SingleSignOnIdentitySource>> identitySources = default;
-            Optional<PrivateCloudAvailabilityProperties> availability = default;
-            Optional<CustomerManagedEncryption> encryption = default;
-            Optional<IList<string>> extendedNetworkBlocks = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            AvsManagementCluster managementCluster = default;
+            InternetConnectivityState? internet = default;
+            IList<SingleSignOnIdentitySource> identitySources = default;
+            PrivateCloudAvailabilityProperties availability = default;
+            CustomerManagedEncryption encryption = default;
+            IList<string> extendedNetworkBlocks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Avs.Models
                             {
                                 continue;
                             }
-                            managementCluster = AvsManagementCluster.DeserializeAvsManagementCluster(property0.Value);
+                            managementCluster = AvsManagementCluster.DeserializeAvsManagementCluster(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("internet"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Avs.Models
                             List<SingleSignOnIdentitySource> array = new List<SingleSignOnIdentitySource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SingleSignOnIdentitySource.DeserializeSingleSignOnIdentitySource(item));
+                                array.Add(SingleSignOnIdentitySource.DeserializeSingleSignOnIdentitySource(item, options));
                             }
                             identitySources = array;
                             continue;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Avs.Models
                             {
                                 continue;
                             }
-                            availability = PrivateCloudAvailabilityProperties.DeserializePrivateCloudAvailabilityProperties(property0.Value);
+                            availability = PrivateCloudAvailabilityProperties.DeserializePrivateCloudAvailabilityProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Avs.Models
                             {
                                 continue;
                             }
-                            encryption = CustomerManagedEncryption.DeserializeCustomerManagedEncryption(property0.Value);
+                            encryption = CustomerManagedEncryption.DeserializeCustomerManagedEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("extendedNetworkBlocks"u8))
@@ -237,11 +237,20 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudPatch(Optional.ToDictionary(tags), identity, managementCluster.Value, Optional.ToNullable(internet), Optional.ToList(identitySources), availability.Value, encryption.Value, Optional.ToList(extendedNetworkBlocks), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AvsPrivateCloudPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                managementCluster,
+                internet,
+                identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>(),
+                availability,
+                encryption,
+                extendedNetworkBlocks ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudPatch>.Write(ModelReaderWriterOptions options)
@@ -253,7 +262,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -269,7 +278,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeAvsPrivateCloudPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

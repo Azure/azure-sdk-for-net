@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The UnknownBaseDialog. </summary>
+    /// <summary> Unknown version of BaseDialog. </summary>
     internal partial class UnknownDialog : BaseDialog
     {
     }

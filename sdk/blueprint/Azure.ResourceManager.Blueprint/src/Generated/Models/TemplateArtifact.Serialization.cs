@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Blueprint.Models
 {
     public partial class TemplateArtifact : IUtf8JsonSerializable, IJsonModel<TemplateArtifact>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TemplateArtifact>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TemplateArtifact>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TemplateArtifact>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TemplateArtifact>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateArtifact)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TemplateArtifact)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             foreach (var item in Parameters)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<TemplateArtifact>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateArtifact)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TemplateArtifact)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static TemplateArtifact DeserializeTemplateArtifact(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,15 +136,15 @@ namespace Azure.ResourceManager.Blueprint.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<IList<string>> dependsOn = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            IList<string> dependsOn = default;
             BinaryData template = default;
-            Optional<string> resourceGroup = default;
+            string resourceGroup = default;
             IDictionary<string, ParameterValue> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                             Dictionary<string, ParameterValue> dictionary = new Dictionary<string, ParameterValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterValue.DeserializeParameterValue(property1.Value));
+                                dictionary.Add(property1.Name, ParameterValue.DeserializeParameterValue(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -234,11 +234,23 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateArtifact(id, name, type, systemData.Value, kind, serializedAdditionalRawData, displayName.Value, description.Value, Optional.ToList(dependsOn), template, resourceGroup.Value, parameters);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TemplateArtifact(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                displayName,
+                description,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                template,
+                resourceGroup,
+                parameters);
         }
 
         BinaryData IPersistableModel<TemplateArtifact>.Write(ModelReaderWriterOptions options)
@@ -250,7 +262,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TemplateArtifact)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TemplateArtifact)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -266,7 +278,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                         return DeserializeTemplateArtifact(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TemplateArtifact)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TemplateArtifact)} does not support reading '{options.Format}' format.");
             }
         }
 

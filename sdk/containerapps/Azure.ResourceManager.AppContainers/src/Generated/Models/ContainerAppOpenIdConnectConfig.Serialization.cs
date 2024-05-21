@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppOpenIdConnectConfig : IUtf8JsonSerializable, IJsonModel<ContainerAppOpenIdConnectConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppOpenIdConnectConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppOpenIdConnectConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppOpenIdConnectConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppOpenIdConnectConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppOpenIdConnectConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppOpenIdConnectConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppOpenIdConnectConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppOpenIdConnectConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppOpenIdConnectConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,19 +83,19 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppOpenIdConnectConfig DeserializeContainerAppOpenIdConnectConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> authorizationEndpoint = default;
-            Optional<string> tokenEndpoint = default;
-            Optional<string> issuer = default;
-            Optional<Uri> certificationUri = default;
-            Optional<string> wellKnownOpenIdConfiguration = default;
+            string authorizationEndpoint = default;
+            string tokenEndpoint = default;
+            string issuer = default;
+            Uri certificationUri = default;
+            string wellKnownOpenIdConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationEndpoint"u8))
@@ -129,11 +129,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppOpenIdConnectConfig(authorizationEndpoint.Value, tokenEndpoint.Value, issuer.Value, certificationUri.Value, wellKnownOpenIdConfiguration.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerAppOpenIdConnectConfig(
+                authorizationEndpoint,
+                tokenEndpoint,
+                issuer,
+                certificationUri,
+                wellKnownOpenIdConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppOpenIdConnectConfig>.Write(ModelReaderWriterOptions options)
@@ -145,7 +151,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppOpenIdConnectConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppOpenIdConnectConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppOpenIdConnectConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppOpenIdConnectConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppOpenIdConnectConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

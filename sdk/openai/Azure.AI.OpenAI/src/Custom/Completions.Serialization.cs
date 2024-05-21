@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,17 +15,21 @@ public partial class Completions
     //   This fully customized deserialization allows us to support the legacy 'prompt_annotations' field name
     //   for 'prompt_filter_results' until all model versions fully migrate.
 
-    internal static Completions DeserializeCompletions(JsonElement element)
+    internal static Completions DeserializeCompletions(JsonElement element, ModelReaderWriterOptions options = null)
     {
+        options ??= new ModelReaderWriterOptions("W");
+
         if (element.ValueKind == JsonValueKind.Null)
         {
             return null;
         }
         string id = default;
         DateTimeOffset created = default;
-        Optional<IReadOnlyList<ContentFilterResultsForPrompt>> promptAnnotations = default;
+        IReadOnlyList<ContentFilterResultsForPrompt> promptFilterResults = default;
         IReadOnlyList<Choice> choices = default;
         CompletionsUsage usage = default;
+        IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+        Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
         foreach (var property in element.EnumerateObject())
         {
             if (property.NameEquals("id"u8))
@@ -49,7 +54,7 @@ public partial class Completions
                 {
                     array.Add(ContentFilterResultsForPrompt.DeserializeContentFilterResultsForPrompt(item));
                 }
-                promptAnnotations = array;
+                promptFilterResults = array;
                 continue;
             }
             if (property.NameEquals("choices"u8))
@@ -67,7 +72,12 @@ public partial class Completions
                 usage = CompletionsUsage.DeserializeCompletionsUsage(property.Value);
                 continue;
             }
+            if (options.Format != "W")
+            {
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+            }
         }
-        return new Completions(id, created, Optional.ToList(promptAnnotations), choices, usage);
+        serializedAdditionalRawData = additionalPropertiesDictionary;
+        return new Completions(id, created, promptFilterResults ?? new ChangeTrackingList<ContentFilterResultsForPrompt>(), choices, usage, serializedAdditionalRawData);
     }
 }

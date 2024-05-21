@@ -50,9 +50,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<bool> fromDhcp = default;
-            Optional<IList<string>> ipv4Address = default;
-            Optional<IList<string>> ipv6Address = default;
+            bool? fromDhcp = default;
+            IList<string> ipv4Address = default;
+            IList<string> ipv6Address = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fromDhcp"u8))
@@ -93,7 +93,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new OnvifDns(Optional.ToNullable(fromDhcp), Optional.ToList(ipv4Address), Optional.ToList(ipv6Address));
+            return new OnvifDns(fromDhcp, ipv4Address ?? new ChangeTrackingList<string>(), ipv6Address ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OnvifDns FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOnvifDns(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

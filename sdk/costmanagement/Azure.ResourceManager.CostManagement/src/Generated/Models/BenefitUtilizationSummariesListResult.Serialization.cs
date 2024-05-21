@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     internal partial class BenefitUtilizationSummariesListResult : IUtf8JsonSerializable, IJsonModel<BenefitUtilizationSummariesListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BenefitUtilizationSummariesListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BenefitUtilizationSummariesListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BenefitUtilizationSummariesListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BenefitUtilizationSummariesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitUtilizationSummariesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitUtilizationSummariesListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<BenefitUtilizationSummariesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitUtilizationSummariesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitUtilizationSummariesListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static BenefitUtilizationSummariesListResult DeserializeBenefitUtilizationSummariesListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<BenefitUtilizationSummary>> value = default;
-            Optional<Uri> nextLink = default;
+            IReadOnlyList<BenefitUtilizationSummary> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<BenefitUtilizationSummary> array = new List<BenefitUtilizationSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(item));
+                        array.Add(BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(item, options));
                     }
                     value = array;
                     continue;
@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BenefitUtilizationSummariesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BenefitUtilizationSummariesListResult(value ?? new ChangeTrackingList<BenefitUtilizationSummary>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BenefitUtilizationSummariesListResult>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BenefitUtilizationSummariesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitUtilizationSummariesListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeBenefitUtilizationSummariesListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BenefitUtilizationSummariesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitUtilizationSummariesListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

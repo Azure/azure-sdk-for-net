@@ -7,13 +7,10 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage.Samples
@@ -1035,9 +1032,10 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             {
 new BlobRestoreRange("container/blobpath1","container/blobpath2"),new BlobRestoreRange("container2/blobpath3","")
             });
-            await storageAccount.RestoreBlobRangesAsync(WaitUntil.Completed, content);
+            ArmOperation<BlobRestoreStatus> lro = await storageAccount.RestoreBlobRangesAsync(WaitUntil.Completed, content);
+            BlobRestoreStatus result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // StorageAccountRevokeUserDelegationKeys

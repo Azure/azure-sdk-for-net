@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Triggers for auto-heal. </summary>
     public partial class AutoHealTriggers
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AutoHealTriggers"/>. </summary>
         public AutoHealTriggers()
         {
@@ -28,7 +60,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="slowRequests"> A rule based on request execution time. </param>
         /// <param name="slowRequestsWithPath"> A rule based on multiple Slow Requests Rule with path. </param>
         /// <param name="statusCodesRange"> A rule based on status codes ranges. </param>
-        internal AutoHealTriggers(RequestsBasedTrigger requests, int? privateBytesInKB, IList<StatusCodesBasedTrigger> statusCodes, SlowRequestsBasedTrigger slowRequests, IList<SlowRequestsBasedTrigger> slowRequestsWithPath, IList<StatusCodesRangeBasedTrigger> statusCodesRange)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoHealTriggers(RequestsBasedTrigger requests, int? privateBytesInKB, IList<StatusCodesBasedTrigger> statusCodes, SlowRequestsBasedTrigger slowRequests, IList<SlowRequestsBasedTrigger> slowRequestsWithPath, IList<StatusCodesRangeBasedTrigger> statusCodesRange, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Requests = requests;
             PrivateBytesInKB = privateBytesInKB;
@@ -36,19 +69,26 @@ namespace Azure.ResourceManager.AppService.Models
             SlowRequests = slowRequests;
             SlowRequestsWithPath = slowRequestsWithPath;
             StatusCodesRange = statusCodesRange;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A rule based on total requests. </summary>
+        [WirePath("requests")]
         public RequestsBasedTrigger Requests { get; set; }
         /// <summary> A rule based on private bytes. </summary>
+        [WirePath("privateBytesInKB")]
         public int? PrivateBytesInKB { get; set; }
         /// <summary> A rule based on status codes. </summary>
+        [WirePath("statusCodes")]
         public IList<StatusCodesBasedTrigger> StatusCodes { get; }
         /// <summary> A rule based on request execution time. </summary>
+        [WirePath("slowRequests")]
         public SlowRequestsBasedTrigger SlowRequests { get; set; }
         /// <summary> A rule based on multiple Slow Requests Rule with path. </summary>
+        [WirePath("slowRequestsWithPath")]
         public IList<SlowRequestsBasedTrigger> SlowRequestsWithPath { get; }
         /// <summary> A rule based on status codes ranges. </summary>
+        [WirePath("statusCodesRange")]
         public IList<StatusCodesRangeBasedTrigger> StatusCodesRange { get; }
     }
 }

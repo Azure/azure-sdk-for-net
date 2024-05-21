@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class ConnectionToIPNotAllowed : IUtf8JsonSerializable, IJsonModel<ConnectionToIPNotAllowed>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionToIPNotAllowed>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionToIPNotAllowed>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectionToIPNotAllowed>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionToIPNotAllowed>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionToIPNotAllowed)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionToIPNotAllowed)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionToIPNotAllowed>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionToIPNotAllowed)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionToIPNotAllowed)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,20 +84,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static ConnectionToIPNotAllowed DeserializeConnectionToIPNotAllowed(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<string> allowlistValues = default;
-            Optional<SecurityValueType> valueType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            SecurityValueType? valueType = default;
+            string displayName = default;
+            string description = default;
             bool isEnabled = default;
             string ruleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowlistValues"u8))
@@ -141,11 +141,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionToIPNotAllowed(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData, Optional.ToNullable(valueType), allowlistValues);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectionToIPNotAllowed(
+                displayName,
+                description,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                valueType,
+                allowlistValues);
         }
 
         BinaryData IPersistableModel<ConnectionToIPNotAllowed>.Write(ModelReaderWriterOptions options)
@@ -157,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionToIPNotAllowed)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionToIPNotAllowed)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeConnectionToIPNotAllowed(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionToIPNotAllowed)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionToIPNotAllowed)} does not support reading '{options.Format}' format.");
             }
         }
 

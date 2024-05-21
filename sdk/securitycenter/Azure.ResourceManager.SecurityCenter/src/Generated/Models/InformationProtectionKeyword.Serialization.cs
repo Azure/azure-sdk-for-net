@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class InformationProtectionKeyword : IUtf8JsonSerializable, IJsonModel<InformationProtectionKeyword>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InformationProtectionKeyword>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InformationProtectionKeyword>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InformationProtectionKeyword>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionKeyword>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionKeyword>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,18 +78,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static InformationProtectionKeyword DeserializeInformationProtectionKeyword(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> pattern = default;
-            Optional<bool> custom = default;
-            Optional<bool> canBeNumeric = default;
-            Optional<bool> excluded = default;
+            string pattern = default;
+            bool? custom = default;
+            bool? canBeNumeric = default;
+            bool? excluded = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pattern"u8))
@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InformationProtectionKeyword(pattern.Value, Optional.ToNullable(custom), Optional.ToNullable(canBeNumeric), Optional.ToNullable(excluded), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InformationProtectionKeyword(pattern, custom, canBeNumeric, excluded, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InformationProtectionKeyword>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeInformationProtectionKeyword(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class HostPoolRegistrationInfo : IUtf8JsonSerializable, IJsonModel<HostPoolRegistrationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostPoolRegistrationInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostPoolRegistrationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HostPoolRegistrationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HostPoolRegistrationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<HostPoolRegistrationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static HostPoolRegistrationInfo DeserializeHostPoolRegistrationInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset> expirationTime = default;
-            Optional<string> token = default;
-            Optional<HostPoolRegistrationTokenOperation> registrationTokenOperation = default;
+            DateTimeOffset? expirationTime = default;
+            string token = default;
+            HostPoolRegistrationTokenOperation? registrationTokenOperation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expirationTime"u8))
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostPoolRegistrationInfo(Optional.ToNullable(expirationTime), token.Value, Optional.ToNullable(registrationTokenOperation), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HostPoolRegistrationInfo(expirationTime, token, registrationTokenOperation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HostPoolRegistrationInfo>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeHostPoolRegistrationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

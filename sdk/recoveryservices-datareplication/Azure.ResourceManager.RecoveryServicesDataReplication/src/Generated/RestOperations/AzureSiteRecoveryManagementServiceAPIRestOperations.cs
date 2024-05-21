@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
@@ -37,6 +36,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, AzureLocation location, DataReplicationNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DataReplication/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, DataReplicationNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -56,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -117,6 +129,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
+        internal RequestUriBuilder CreateDeploymentPreflightRequestUri(string subscriptionId, string resourceGroupName, string deploymentId, DeploymentPreflightModel body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataReplication/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            uri.AppendPath("/preflight", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeploymentPreflightRequest(string subscriptionId, string resourceGroupName, string deploymentId, DeploymentPreflightModel body)
         {
             var message = _pipeline.CreateMessage();
@@ -138,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
+                content.JsonWriter.WriteObjectValue(body, ModelSerializationExtensions.WireOptions);
                 request.Content = content;
             }
             _userAgent.Apply(message);

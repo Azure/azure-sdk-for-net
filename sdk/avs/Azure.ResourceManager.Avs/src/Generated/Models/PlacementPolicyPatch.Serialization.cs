@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Avs.Models
 {
     public partial class PlacementPolicyPatch : IUtf8JsonSerializable, IJsonModel<PlacementPolicyPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlacementPolicyPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlacementPolicyPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PlacementPolicyPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PlacementPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlacementPolicyPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlacementPolicyPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlacementPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlacementPolicyPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlacementPolicyPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,19 +101,19 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static PlacementPolicyPatch DeserializePlacementPolicyPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<PlacementPolicyState> state = default;
-            Optional<IList<ResourceIdentifier>> vmMembers = default;
-            Optional<IList<string>> hostMembers = default;
-            Optional<VmHostPlacementPolicyAffinityStrength> affinityStrength = default;
-            Optional<AzureHybridBenefitType> azureHybridBenefitType = default;
+            PlacementPolicyState? state = default;
+            IList<ResourceIdentifier> vmMembers = default;
+            IList<string> hostMembers = default;
+            VmHostPlacementPolicyAffinityStrength? affinityStrength = default;
+            AzureHybridBenefitType? azureHybridBenefitType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -192,11 +192,17 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlacementPolicyPatch(Optional.ToNullable(state), Optional.ToList(vmMembers), Optional.ToList(hostMembers), Optional.ToNullable(affinityStrength), Optional.ToNullable(azureHybridBenefitType), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PlacementPolicyPatch(
+                state,
+                vmMembers ?? new ChangeTrackingList<ResourceIdentifier>(),
+                hostMembers ?? new ChangeTrackingList<string>(),
+                affinityStrength,
+                azureHybridBenefitType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlacementPolicyPatch>.Write(ModelReaderWriterOptions options)
@@ -208,7 +214,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PlacementPolicyPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlacementPolicyPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +230,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializePlacementPolicyPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlacementPolicyPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlacementPolicyPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

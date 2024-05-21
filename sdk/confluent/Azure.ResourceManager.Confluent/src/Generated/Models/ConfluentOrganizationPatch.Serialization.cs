@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Confluent.Models
 {
     public partial class ConfluentOrganizationPatch : IUtf8JsonSerializable, IJsonModel<ConfluentOrganizationPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfluentOrganizationPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfluentOrganizationPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConfluentOrganizationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConfluentOrganizationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfluentOrganizationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentOrganizationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfluentOrganizationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfluentOrganizationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentOrganizationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.Confluent.Models
 
         internal static ConfluentOrganizationPatch DeserializeConfluentOrganizationPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentOrganizationPatch(Optional.ToDictionary(tags), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConfluentOrganizationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentOrganizationPatch>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfluentOrganizationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentOrganizationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Confluent.Models
                         return DeserializeConfluentOrganizationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfluentOrganizationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentOrganizationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

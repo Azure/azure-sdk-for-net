@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    /// <summary> The UnknownTimeSeriesDatabaseConnectionProperties. </summary>
+    /// <summary> Unknown version of TimeSeriesDatabaseConnectionProperties. </summary>
     internal partial class UnknownTimeSeriesDatabaseConnectionProperties : TimeSeriesDatabaseConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTimeSeriesDatabaseConnectionProperties"/>. </summary>
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         internal UnknownTimeSeriesDatabaseConnectionProperties(ConnectionType connectionType, TimeSeriesDatabaseConnectionState? provisioningState, DigitalTwinsManagedIdentityReference identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(connectionType, provisioningState, identity, serializedAdditionalRawData)
         {
             ConnectionType = connectionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownTimeSeriesDatabaseConnectionProperties"/> for deserialization. </summary>
+        internal UnknownTimeSeriesDatabaseConnectionProperties()
+        {
         }
     }
 }

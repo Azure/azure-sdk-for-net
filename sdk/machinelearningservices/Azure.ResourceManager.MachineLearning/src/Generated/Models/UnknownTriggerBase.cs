@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownTriggerBase. </summary>
+    /// <summary> Unknown version of TriggerBase. </summary>
     internal partial class UnknownTriggerBase : MachineLearningTriggerBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTriggerBase"/>. </summary>
@@ -22,9 +25,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </param>
         /// <param name="triggerType"> [Required]. </param>
-        internal UnknownTriggerBase(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType) : base(endTime, startTime, timeZone, triggerType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownTriggerBase(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(endTime, startTime, timeZone, triggerType, serializedAdditionalRawData)
         {
             TriggerType = triggerType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownTriggerBase"/> for deserialization. </summary>
+        internal UnknownTriggerBase()
+        {
         }
     }
 }

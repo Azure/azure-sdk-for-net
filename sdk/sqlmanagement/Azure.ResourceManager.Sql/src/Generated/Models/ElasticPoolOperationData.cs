@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,6 +15,38 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A elastic pool operation. </summary>
     public partial class ElasticPoolOperationData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ElasticPoolOperationData"/>. </summary>
         public ElasticPoolOperationData()
         {
@@ -38,7 +71,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="estimatedCompleteOn"> The estimated completion time of the operation. </param>
         /// <param name="description"> The operation description. </param>
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
-        internal ElasticPoolOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string elasticPoolName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, string state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticPoolOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string elasticPoolName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, string state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ElasticPoolName = elasticPoolName;
             Operation = operation;
@@ -54,35 +88,50 @@ namespace Azure.ResourceManager.Sql.Models
             EstimatedCompleteOn = estimatedCompleteOn;
             Description = description;
             IsCancellable = isCancellable;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the elastic pool the operation is being performed on. </summary>
+        [WirePath("properties.elasticPoolName")]
         public string ElasticPoolName { get; }
         /// <summary> The name of operation. </summary>
+        [WirePath("properties.operation")]
         public string Operation { get; }
         /// <summary> The friendly name of operation. </summary>
+        [WirePath("properties.operationFriendlyName")]
         public string OperationFriendlyName { get; }
         /// <summary> The percentage of the operation completed. </summary>
+        [WirePath("properties.percentComplete")]
         public int? PercentComplete { get; }
         /// <summary> The name of the server. </summary>
+        [WirePath("properties.serverName")]
         public string ServerName { get; }
         /// <summary> The operation start time. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The operation state. </summary>
+        [WirePath("properties.state")]
         public string State { get; }
         /// <summary> The operation error code. </summary>
+        [WirePath("properties.errorCode")]
         public int? ErrorCode { get; }
         /// <summary> The operation error description. </summary>
+        [WirePath("properties.errorDescription")]
         public string ErrorDescription { get; }
         /// <summary> The operation error severity. </summary>
+        [WirePath("properties.errorSeverity")]
         public int? ErrorSeverity { get; }
         /// <summary> Whether or not the error is a user error. </summary>
+        [WirePath("properties.isUserError")]
         public bool? IsUserError { get; }
         /// <summary> The estimated completion time of the operation. </summary>
+        [WirePath("properties.estimatedCompletionTime")]
         public DateTimeOffset? EstimatedCompleteOn { get; }
         /// <summary> The operation description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> Whether the operation can be cancelled. </summary>
+        [WirePath("properties.isCancellable")]
         public bool? IsCancellable { get; }
     }
 }

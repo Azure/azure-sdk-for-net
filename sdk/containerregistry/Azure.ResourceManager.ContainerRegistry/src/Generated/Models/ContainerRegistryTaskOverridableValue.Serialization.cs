@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryTaskOverridableValue : IUtf8JsonSerializable, IJsonModel<ContainerRegistryTaskOverridableValue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTaskOverridableValue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTaskOverridableValue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryTaskOverridableValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskOverridableValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTaskOverridableValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTaskOverridableValue)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskOverridableValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTaskOverridableValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTaskOverridableValue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTaskOverridableValue DeserializeContainerRegistryTaskOverridableValue(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             string name = default;
             string value = default;
-            Optional<bool> isSecret = default;
+            bool? isSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTaskOverridableValue(name, value, Optional.ToNullable(isSecret), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerRegistryTaskOverridableValue(name, value, isSecret, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskOverridableValue>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTaskOverridableValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTaskOverridableValue)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryTaskOverridableValue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTaskOverridableValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTaskOverridableValue)} does not support reading '{options.Format}' format.");
             }
         }
 

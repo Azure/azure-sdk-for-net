@@ -46,11 +46,11 @@ public class ResourceExtensionsTests
             Assert.Equal(Dns.GetHostName(), azMonResource?.RoleInstance);
             if (envVarValue == "true")
             {
-                Assert.Equal(instrumentationKey != null, azMonResource?.MetricTelemetry != null);
+                Assert.Equal(instrumentationKey != null, azMonResource?.MonitorBaseData != null);
             }
             else
             {
-                Assert.Null(azMonResource?.MetricTelemetry);
+                Assert.Null(azMonResource?.MonitorBaseData);
             }
         }
         finally
@@ -221,10 +221,8 @@ public class ResourceExtensionsTests
             var resource = ResourceBuilder.CreateDefault().AddAttributes(testAttributes).Build();
             var azMonResource = resource.CreateAzureMonitorResource(InstrumentationKey);
 
-            Assert.Equal("Metric", azMonResource!.MetricTelemetry!.Name);
-
-            var monitorBase = azMonResource.MetricTelemetry.Data;
-            var metricsData = monitorBase.BaseData as MetricsData;
+            var monitorBase = azMonResource?.MonitorBaseData;
+            var metricsData = monitorBase?.BaseData as MetricsData;
 
             var metricDataPoint = metricsData?.Metrics[0];
             Assert.Equal("bar", metricsData?.Properties["foo"]);
@@ -242,7 +240,7 @@ public class ResourceExtensionsTests
     [Theory]
     [InlineData(null)]
     [InlineData(InstrumentationKey)]
-    public void MetricTelemetryHasAllResourceAttributes(string? instrumentationKey)
+    public void MonitorBaseDataHasAllResourceAttributes(string? instrumentationKey)
     {
         try
         {
@@ -261,15 +259,13 @@ public class ResourceExtensionsTests
             var resource = ResourceBuilder.CreateEmpty().AddAttributes(testAttributes).Build();
             var azMonResource = resource.CreateAzureMonitorResource(instrumentationKey);
 
-            Assert.Equal(instrumentationKey != null, azMonResource?.MetricTelemetry != null);
+            Assert.Equal(instrumentationKey != null, azMonResource?.MonitorBaseData != null);
 
             if (instrumentationKey != null)
             {
-                Assert.Equal("Metric", azMonResource!.MetricTelemetry!.Name);
-                Assert.Equal(3, azMonResource.MetricTelemetry.Tags.Count);
-                Assert.NotNull(azMonResource.MetricTelemetry.Data);
+                Assert.NotNull(azMonResource?.MonitorBaseData);
 
-                var monitorBase = azMonResource.MetricTelemetry.Data;
+                var monitorBase = azMonResource.MonitorBaseData;
                 var metricsData = monitorBase.BaseData as MetricsData;
 
                 Assert.NotNull(metricsData?.Metrics);
@@ -366,11 +362,11 @@ public class ResourceExtensionsTests
 
             if (envVarValue == "true")
             {
-                Assert.NotNull(azMonResource?.MetricTelemetry);
+                Assert.NotNull(azMonResource?.MonitorBaseData);
             }
             else
             {
-                Assert.Null(azMonResource?.MetricTelemetry);
+                Assert.Null(azMonResource?.MonitorBaseData);
             }
         }
         finally

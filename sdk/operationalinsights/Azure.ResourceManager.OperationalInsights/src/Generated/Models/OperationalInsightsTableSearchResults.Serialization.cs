@@ -6,15 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsTableSearchResults : IUtf8JsonSerializable
+    public partial class OperationalInsightsTableSearchResults : IUtf8JsonSerializable, IJsonModel<OperationalInsightsTableSearchResults>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsTableSearchResults>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<OperationalInsightsTableSearchResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableSearchResults>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsTableSearchResults)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -41,22 +52,63 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("endSearchTime"u8);
                 writer.WriteStringValue(EndSearchOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(SourceTable))
+            {
+                writer.WritePropertyName("sourceTable"u8);
+                writer.WriteStringValue(SourceTable);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AzureAsyncOperationId))
+            {
+                writer.WritePropertyName("azureAsyncOperationId"u8);
+                writer.WriteStringValue(AzureAsyncOperationId.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsTableSearchResults DeserializeOperationalInsightsTableSearchResults(JsonElement element)
+        OperationalInsightsTableSearchResults IJsonModel<OperationalInsightsTableSearchResults>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableSearchResults>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsTableSearchResults)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsTableSearchResults(document.RootElement, options);
+        }
+
+        internal static OperationalInsightsTableSearchResults DeserializeOperationalInsightsTableSearchResults(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> query = default;
-            Optional<string> description = default;
-            Optional<int> limit = default;
-            Optional<DateTimeOffset> startSearchTime = default;
-            Optional<DateTimeOffset> endSearchTime = default;
-            Optional<string> sourceTable = default;
-            Optional<Guid> azureAsyncOperationId = default;
+            string query = default;
+            string description = default;
+            int? limit = default;
+            DateTimeOffset? startSearchTime = default;
+            DateTimeOffset? endSearchTime = default;
+            string sourceTable = default;
+            Guid? azureAsyncOperationId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"u8))
@@ -110,8 +162,200 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     azureAsyncOperationId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OperationalInsightsTableSearchResults(query.Value, description.Value, Optional.ToNullable(limit), Optional.ToNullable(startSearchTime), Optional.ToNullable(endSearchTime), sourceTable.Value, Optional.ToNullable(azureAsyncOperationId));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OperationalInsightsTableSearchResults(
+                query,
+                description,
+                limit,
+                startSearchTime,
+                endSearchTime,
+                sourceTable,
+                azureAsyncOperationId,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Query), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  query: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Query))
+                {
+                    builder.Append("  query: ");
+                    if (Query.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Query}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Query}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Limit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  limit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Limit))
+                {
+                    builder.Append("  limit: ");
+                    builder.AppendLine($"{Limit.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartSearchOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startSearchTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartSearchOn))
+                {
+                    builder.Append("  startSearchTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(StartSearchOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndSearchOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endSearchTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndSearchOn))
+                {
+                    builder.Append("  endSearchTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(EndSearchOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceTable), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sourceTable: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceTable))
+                {
+                    builder.Append("  sourceTable: ");
+                    if (SourceTable.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceTable}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceTable}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureAsyncOperationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureAsyncOperationId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureAsyncOperationId))
+                {
+                    builder.Append("  azureAsyncOperationId: ");
+                    builder.AppendLine($"'{AzureAsyncOperationId.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<OperationalInsightsTableSearchResults>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableSearchResults>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsTableSearchResults)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OperationalInsightsTableSearchResults IPersistableModel<OperationalInsightsTableSearchResults>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableSearchResults>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOperationalInsightsTableSearchResults(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsTableSearchResults)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OperationalInsightsTableSearchResults>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

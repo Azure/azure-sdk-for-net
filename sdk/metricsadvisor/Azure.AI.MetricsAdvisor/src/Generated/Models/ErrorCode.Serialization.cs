@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<string> code = default;
+            string message = default;
+            string code = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -33,7 +32,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new ErrorCode(message.Value, code.Value);
+            return new ErrorCode(message, code);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ErrorCode FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeErrorCode(document.RootElement);
         }
     }
 }

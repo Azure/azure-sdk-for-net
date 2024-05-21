@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,14 +16,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class ApplicationInsightsComponentDataVolumeCap : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentDataVolumeCap>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentDataVolumeCap>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentDataVolumeCap>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationInsightsComponentDataVolumeCap>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentDataVolumeCap>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentDataVolumeCap)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentDataVolumeCap)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentDataVolumeCap>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentDataVolumeCap)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentDataVolumeCap)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,20 +89,20 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static ApplicationInsightsComponentDataVolumeCap DeserializeApplicationInsightsComponentDataVolumeCap(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<float> cap = default;
-            Optional<int> resetTime = default;
-            Optional<int> warningThreshold = default;
-            Optional<bool> stopSendNotificationWhenHitThreshold = default;
-            Optional<bool> stopSendNotificationWhenHitCap = default;
-            Optional<float> maxHistoryCap = default;
+            float? cap = default;
+            int? resetTime = default;
+            int? warningThreshold = default;
+            bool? stopSendNotificationWhenHitThreshold = default;
+            bool? stopSendNotificationWhenHitCap = default;
+            float? maxHistoryCap = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Cap"u8))
@@ -160,11 +161,125 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentDataVolumeCap(Optional.ToNullable(cap), Optional.ToNullable(resetTime), Optional.ToNullable(warningThreshold), Optional.ToNullable(stopSendNotificationWhenHitThreshold), Optional.ToNullable(stopSendNotificationWhenHitCap), Optional.ToNullable(maxHistoryCap), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationInsightsComponentDataVolumeCap(
+                cap,
+                resetTime,
+                warningThreshold,
+                stopSendNotificationWhenHitThreshold,
+                stopSendNotificationWhenHitCap,
+                maxHistoryCap,
+                serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cap), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  Cap: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Cap))
+                {
+                    builder.Append("  Cap: ");
+                    builder.AppendLine($"'{Cap.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResetTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ResetTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResetTime))
+                {
+                    builder.Append("  ResetTime: ");
+                    builder.AppendLine($"{ResetTime.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WarningThreshold), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  WarningThreshold: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WarningThreshold))
+                {
+                    builder.Append("  WarningThreshold: ");
+                    builder.AppendLine($"{WarningThreshold.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStopSendNotificationWhenHitThreshold), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  StopSendNotificationWhenHitThreshold: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsStopSendNotificationWhenHitThreshold))
+                {
+                    builder.Append("  StopSendNotificationWhenHitThreshold: ");
+                    var boolValue = IsStopSendNotificationWhenHitThreshold.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStopSendNotificationWhenHitCap), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  StopSendNotificationWhenHitCap: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsStopSendNotificationWhenHitCap))
+                {
+                    builder.Append("  StopSendNotificationWhenHitCap: ");
+                    var boolValue = IsStopSendNotificationWhenHitCap.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxHistoryCap), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  MaxHistoryCap: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxHistoryCap))
+                {
+                    builder.Append("  MaxHistoryCap: ");
+                    builder.AppendLine($"'{MaxHistoryCap.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentDataVolumeCap>.Write(ModelReaderWriterOptions options)
@@ -175,8 +290,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentDataVolumeCap)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentDataVolumeCap)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +309,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeApplicationInsightsComponentDataVolumeCap(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentDataVolumeCap)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentDataVolumeCap)} does not support reading '{options.Format}' format.");
             }
         }
 

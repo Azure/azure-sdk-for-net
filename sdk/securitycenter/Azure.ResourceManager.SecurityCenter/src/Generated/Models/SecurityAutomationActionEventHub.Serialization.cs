@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecurityAutomationActionEventHub : IUtf8JsonSerializable, IJsonModel<SecurityAutomationActionEventHub>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAutomationActionEventHub>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAutomationActionEventHub>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityAutomationActionEventHub>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionEventHub>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionEventHub>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,18 +75,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAutomationActionEventHub DeserializeSecurityAutomationActionEventHub(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> eventHubResourceId = default;
-            Optional<string> sasPolicyName = default;
-            Optional<string> connectionString = default;
+            ResourceIdentifier eventHubResourceId = default;
+            string sasPolicyName = default;
+            string connectionString = default;
             ActionType actionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventHubResourceId"u8))
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationActionEventHub(actionType, serializedAdditionalRawData, eventHubResourceId.Value, sasPolicyName.Value, connectionString.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityAutomationActionEventHub(actionType, serializedAdditionalRawData, eventHubResourceId, sasPolicyName, connectionString);
         }
 
         BinaryData IPersistableModel<SecurityAutomationActionEventHub>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAutomationActionEventHub(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support reading '{options.Format}' format.");
             }
         }
 

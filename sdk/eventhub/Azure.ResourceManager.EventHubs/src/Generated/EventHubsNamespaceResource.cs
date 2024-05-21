@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Resources;
 
@@ -136,7 +134,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -167,7 +165,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -205,7 +203,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -236,7 +234,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -274,7 +272,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -305,7 +303,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -343,7 +341,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -374,7 +372,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -400,6 +398,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
+        /// Gets the details of an EventHub schema group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -411,7 +410,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -430,6 +429,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
+        /// Gets the details of an EventHub schema group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -777,6 +777,98 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
+        /// GeoDR Failover
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/failover</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Failover</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsNamespaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters for updating a namespace resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> FailoverAsync(WaitUntil waitUntil, NamespaceFailOverContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _eventHubsNamespaceNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceResource.Failover");
+            scope.Start();
+            try
+            {
+                var response = await _eventHubsNamespaceNamespacesRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new EventHubsArmOperation(_eventHubsNamespaceNamespacesClientDiagnostics, Pipeline, _eventHubsNamespaceNamespacesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// GeoDR Failover
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/failover</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Failover</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsNamespaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters for updating a namespace resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation Failover(WaitUntil waitUntil, NamespaceFailOverContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _eventHubsNamespaceNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceResource.Failover");
+            scope.Start();
+            try
+            {
+                var response = _eventHubsNamespaceNamespacesRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new EventHubsArmOperation(_eventHubsNamespaceNamespacesClientDiagnostics, Pipeline, _eventHubsNamespaceNamespacesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets lists of resources that supports Privatelinks.
         /// <list type="bullet">
         /// <item>
@@ -789,7 +881,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -798,7 +890,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual AsyncPageable<EventHubsPrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -814,7 +906,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -823,7 +915,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Pageable<EventHubsPrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -839,7 +931,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -848,7 +940,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual AsyncPageable<EventHubsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventHubsNetworkSecurityPerimeterConfiguration.DeserializeEventHubsNetworkSecurityPerimeterConfiguration, _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => EventHubsNetworkSecurityPerimeterConfiguration.DeserializeEventHubsNetworkSecurityPerimeterConfiguration(e), _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -864,7 +956,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -873,7 +965,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Pageable<EventHubsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, EventHubsNetworkSecurityPerimeterConfiguration.DeserializeEventHubsNetworkSecurityPerimeterConfiguration, _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EventHubsNetworkSecurityPerimeterConfiguration.DeserializeEventHubsNetworkSecurityPerimeterConfiguration(e), _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -889,7 +981,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -932,7 +1024,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -975,7 +1067,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1013,7 +1105,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1051,7 +1143,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1113,7 +1205,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1175,7 +1267,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1232,7 +1324,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1289,7 +1381,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1349,7 +1441,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2023-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

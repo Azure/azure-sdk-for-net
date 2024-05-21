@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,9 +20,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> etag = default;
-            Optional<string> syncToken = default;
+            string name = default;
+            string etag = default;
+            string syncToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -42,7 +41,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AppConfigurationSnapshotCreatedEventData(name.Value, etag.Value, syncToken.Value);
+            return new AppConfigurationSnapshotCreatedEventData(name, etag, syncToken);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AppConfigurationSnapshotCreatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAppConfigurationSnapshotCreatedEventData(document.RootElement);
         }
 
         internal partial class AppConfigurationSnapshotCreatedEventDataConverter : JsonConverter<AppConfigurationSnapshotCreatedEventData>
@@ -51,6 +58,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override AppConfigurationSnapshotCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

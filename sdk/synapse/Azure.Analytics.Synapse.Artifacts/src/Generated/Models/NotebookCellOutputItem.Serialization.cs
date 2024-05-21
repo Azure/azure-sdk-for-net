@@ -33,17 +33,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(Text);
+                writer.WriteObjectValue<object>(Text);
             }
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteObjectValue(Data);
+                writer.WriteObjectValue<object>(Data);
             }
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<object>(Metadata);
             }
             writer.WriteEndObject();
         }
@@ -54,12 +54,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> executionCount = default;
+            string name = default;
+            int? executionCount = default;
             CellOutputType outputType = default;
-            Optional<object> text = default;
-            Optional<object> data = default;
-            Optional<object> metadata = default;
+            object text = default;
+            object data = default;
+            object metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -109,7 +109,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new NotebookCellOutputItem(name.Value, Optional.ToNullable(executionCount), outputType, text.Value, data.Value, metadata.Value);
+            return new NotebookCellOutputItem(
+                name,
+                executionCount,
+                outputType,
+                text,
+                data,
+                metadata);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static NotebookCellOutputItem FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNotebookCellOutputItem(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class NotebookCellOutputItemConverter : JsonConverter<NotebookCellOutputItem>
@@ -118,6 +140,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override NotebookCellOutputItem Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

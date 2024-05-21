@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.MachineLearning.Models;
@@ -36,6 +35,21 @@ namespace Azure.ResourceManager.MachineLearning
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateProvisionManagedNetworkRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, ManagedNetworkProvisionContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/provisionManagedNetwork", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateProvisionManagedNetworkRequest(string subscriptionId, string resourceGroupName, string workspaceName, ManagedNetworkProvisionContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -57,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);

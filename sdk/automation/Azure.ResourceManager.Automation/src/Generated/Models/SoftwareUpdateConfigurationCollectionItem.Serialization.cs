@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class SoftwareUpdateConfigurationCollectionItem : IUtf8JsonSerializable, IJsonModel<SoftwareUpdateConfigurationCollectionItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationCollectionItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationCollectionItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SoftwareUpdateConfigurationCollectionItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationCollectionItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(UpdateConfiguration))
             {
                 writer.WritePropertyName("updateConfiguration"u8);
-                writer.WriteObjectValue(UpdateConfiguration);
+                writer.WriteObjectValue(UpdateConfiguration, options);
             }
             if (Optional.IsDefined(Tasks))
             {
                 writer.WritePropertyName("tasks"u8);
-                writer.WriteObjectValue(Tasks);
+                writer.WriteObjectValue(Tasks, options);
             }
             if (Optional.IsDefined(Frequency))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationCollectionItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static SoftwareUpdateConfigurationCollectionItem DeserializeSoftwareUpdateConfigurationCollectionItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<SoftwareUpdateConfigurationSpecificProperties> updateConfiguration = default;
-            Optional<SoftwareUpdateConfigurationTasks> tasks = default;
-            Optional<AutomationScheduleFrequency> frequency = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> provisioningState = default;
-            Optional<DateTimeOffset?> nextRun = default;
+            string name = default;
+            ResourceIdentifier id = default;
+            SoftwareUpdateConfigurationSpecificProperties updateConfiguration = default;
+            SoftwareUpdateConfigurationTasks tasks = default;
+            AutomationScheduleFrequency? frequency = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string provisioningState = default;
+            DateTimeOffset? nextRun = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            updateConfiguration = SoftwareUpdateConfigurationSpecificProperties.DeserializeSoftwareUpdateConfigurationSpecificProperties(property0.Value);
+                            updateConfiguration = SoftwareUpdateConfigurationSpecificProperties.DeserializeSoftwareUpdateConfigurationSpecificProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("tasks"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            tasks = SoftwareUpdateConfigurationTasks.DeserializeSoftwareUpdateConfigurationTasks(property0.Value);
+                            tasks = SoftwareUpdateConfigurationTasks.DeserializeSoftwareUpdateConfigurationTasks(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("frequency"u8))
@@ -235,11 +235,22 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationCollectionItem(name.Value, id.Value, updateConfiguration.Value, tasks.Value, Optional.ToNullable(frequency), Optional.ToNullable(startTime), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), provisioningState.Value, Optional.ToNullable(nextRun), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SoftwareUpdateConfigurationCollectionItem(
+                name,
+                id,
+                updateConfiguration,
+                tasks,
+                frequency,
+                startTime,
+                creationTime,
+                lastModifiedTime,
+                provisioningState,
+                nextRun,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationCollectionItem>.Write(ModelReaderWriterOptions options)
@@ -251,7 +262,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -267,7 +278,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeSoftwareUpdateConfigurationCollectionItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support reading '{options.Format}' format.");
             }
         }
 

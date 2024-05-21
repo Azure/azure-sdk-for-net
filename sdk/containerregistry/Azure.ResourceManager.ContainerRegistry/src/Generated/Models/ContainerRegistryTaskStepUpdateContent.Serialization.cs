@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     [PersistableModelProxy(typeof(UnknownTaskStepUpdateParameters))]
     public partial class ContainerRegistryTaskStepUpdateContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryTaskStepUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTaskStepUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTaskStepUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryTaskStepUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskStepUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTaskStepUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTaskStepUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskStepUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTaskStepUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTaskStepUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTaskStepUpdateContent DeserializeContainerRegistryTaskStepUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Docker": return ContainerRegistryDockerBuildStepUpdateContent.DeserializeContainerRegistryDockerBuildStepUpdateContent(element);
-                    case "EncodedTask": return ContainerRegistryEncodedTaskStepUpdateContent.DeserializeContainerRegistryEncodedTaskStepUpdateContent(element);
-                    case "FileTask": return ContainerRegistryFileTaskStepUpdateContent.DeserializeContainerRegistryFileTaskStepUpdateContent(element);
+                    case "Docker": return ContainerRegistryDockerBuildStepUpdateContent.DeserializeContainerRegistryDockerBuildStepUpdateContent(element, options);
+                    case "EncodedTask": return ContainerRegistryEncodedTaskStepUpdateContent.DeserializeContainerRegistryEncodedTaskStepUpdateContent(element, options);
+                    case "FileTask": return ContainerRegistryFileTaskStepUpdateContent.DeserializeContainerRegistryFileTaskStepUpdateContent(element, options);
                 }
             }
-            return UnknownTaskStepUpdateParameters.DeserializeUnknownTaskStepUpdateParameters(element);
+            return UnknownTaskStepUpdateParameters.DeserializeUnknownTaskStepUpdateParameters(element, options);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskStepUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTaskStepUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTaskStepUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryTaskStepUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTaskStepUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTaskStepUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

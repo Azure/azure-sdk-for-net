@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     internal partial class SubnetSharedPublicIPAddressConfiguration : IUtf8JsonSerializable, IJsonModel<SubnetSharedPublicIPAddressConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubnetSharedPublicIPAddressConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubnetSharedPublicIPAddressConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SubnetSharedPublicIPAddressConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SubnetSharedPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubnetSharedPublicIPAddressConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubnetSharedPublicIPAddressConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in AllowedPorts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubnetSharedPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubnetSharedPublicIPAddressConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubnetSharedPublicIPAddressConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,15 +68,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static SubnetSharedPublicIPAddressConfiguration DeserializeSubnetSharedPublicIPAddressConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<DevTestLabPort>> allowedPorts = default;
+            IList<DevTestLabPort> allowedPorts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedPorts"u8))
@@ -88,18 +88,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabPort> array = new List<DevTestLabPort>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabPort.DeserializeDevTestLabPort(item));
+                        array.Add(DevTestLabPort.DeserializeDevTestLabPort(item, options));
                     }
                     allowedPorts = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubnetSharedPublicIPAddressConfiguration(Optional.ToList(allowedPorts), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SubnetSharedPublicIPAddressConfiguration(allowedPorts ?? new ChangeTrackingList<DevTestLabPort>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubnetSharedPublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubnetSharedPublicIPAddressConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubnetSharedPublicIPAddressConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeSubnetSharedPublicIPAddressConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubnetSharedPublicIPAddressConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubnetSharedPublicIPAddressConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

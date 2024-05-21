@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformServiceNetworkProfile : IUtf8JsonSerializable, IJsonModel<AppPlatformServiceNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformServiceNetworkProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformServiceNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformServiceNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (options.Format != "W" && Optional.IsDefined(OutboundIPs))
             {
                 writer.WritePropertyName("outboundIPs"u8);
-                writer.WriteObjectValue(OutboundIPs);
+                writer.WriteObjectValue(OutboundIPs, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RequiredTraffics))
             {
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredTraffics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(IngressConfig))
             {
                 writer.WritePropertyName("ingressConfig"u8);
-                writer.WriteObjectValue(IngressConfig);
+                writer.WriteObjectValue(IngressConfig, options);
             }
             if (Optional.IsDefined(OutboundType))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,23 +108,23 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformServiceNetworkProfile DeserializeAppPlatformServiceNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> serviceRuntimeSubnetId = default;
-            Optional<ResourceIdentifier> appSubnetId = default;
-            Optional<string> serviceCidr = default;
-            Optional<string> serviceRuntimeNetworkResourceGroup = default;
-            Optional<string> appNetworkResourceGroup = default;
-            Optional<NetworkProfileOutboundIPs> outboundIPs = default;
-            Optional<IReadOnlyList<AppPlatformServiceRequiredTraffic>> requiredTraffics = default;
-            Optional<IngressConfig> ingressConfig = default;
-            Optional<string> outboundType = default;
+            ResourceIdentifier serviceRuntimeSubnetId = default;
+            ResourceIdentifier appSubnetId = default;
+            string serviceCidr = default;
+            string serviceRuntimeNetworkResourceGroup = default;
+            string appNetworkResourceGroup = default;
+            NetworkProfileOutboundIPs outboundIPs = default;
+            IReadOnlyList<AppPlatformServiceRequiredTraffic> requiredTraffics = default;
+            IngressConfig ingressConfig = default;
+            string outboundType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceRuntimeSubnetId"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    outboundIPs = NetworkProfileOutboundIPs.DeserializeNetworkProfileOutboundIPs(property.Value);
+                    outboundIPs = NetworkProfileOutboundIPs.DeserializeNetworkProfileOutboundIPs(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("requiredTraffics"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformServiceRequiredTraffic> array = new List<AppPlatformServiceRequiredTraffic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformServiceRequiredTraffic.DeserializeAppPlatformServiceRequiredTraffic(item));
+                        array.Add(AppPlatformServiceRequiredTraffic.DeserializeAppPlatformServiceRequiredTraffic(item, options));
                     }
                     requiredTraffics = array;
                     continue;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    ingressConfig = IngressConfig.DeserializeIngressConfig(property.Value);
+                    ingressConfig = IngressConfig.DeserializeIngressConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("outboundType"u8))
@@ -199,11 +199,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceNetworkProfile(serviceRuntimeSubnetId.Value, appSubnetId.Value, serviceCidr.Value, serviceRuntimeNetworkResourceGroup.Value, appNetworkResourceGroup.Value, outboundIPs.Value, Optional.ToList(requiredTraffics), ingressConfig.Value, outboundType.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformServiceNetworkProfile(
+                serviceRuntimeSubnetId,
+                appSubnetId,
+                serviceCidr,
+                serviceRuntimeNetworkResourceGroup,
+                appNetworkResourceGroup,
+                outboundIPs,
+                requiredTraffics ?? new ChangeTrackingList<AppPlatformServiceRequiredTraffic>(),
+                ingressConfig,
+                outboundType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceNetworkProfile>.Write(ModelReaderWriterOptions options)
@@ -215,7 +225,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +241,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformServiceNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

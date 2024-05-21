@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PolicyInsights.Models;
@@ -35,6 +34,29 @@ namespace Azure.ResourceManager.PolicyInsights
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2018-07-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListQueryResultsForManagementGroupRequestUri(string managementGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath("Microsoft.Management", true);
+            uri.AppendPath("/managementGroups/", false);
+            uri.AppendPath(managementGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/policyTrackedResources/", false);
+            uri.AppendPath(policyTrackedResourceType.ToString(), true);
+            uri.AppendPath("/queryResults", false);
+            if (policyQuerySettings?.Top != null)
+            {
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+            }
+            if (policyQuerySettings?.Filter != null)
+            {
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListQueryResultsForManagementGroupRequest(string managementGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
@@ -120,6 +142,27 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
+        internal RequestUriBuilder CreateListQueryResultsForSubscriptionRequestUri(string subscriptionId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/policyTrackedResources/", false);
+            uri.AppendPath(policyTrackedResourceType.ToString(), true);
+            uri.AppendPath("/queryResults", false);
+            if (policyQuerySettings?.Top != null)
+            {
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+            }
+            if (policyQuerySettings?.Filter != null)
+            {
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListQueryResultsForSubscriptionRequest(string subscriptionId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
@@ -199,6 +242,29 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListQueryResultsForResourceGroupRequestUri(string subscriptionId, string resourceGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/policyTrackedResources/", false);
+            uri.AppendPath(policyTrackedResourceType.ToString(), true);
+            uri.AppendPath("/queryResults", false);
+            if (policyQuerySettings?.Top != null)
+            {
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+            }
+            if (policyQuerySettings?.Filter != null)
+            {
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListQueryResultsForResourceGroupRequest(string subscriptionId, string resourceGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
@@ -288,6 +354,27 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
+        internal RequestUriBuilder CreateListQueryResultsForResourceRequestUri(string resourceId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/policyTrackedResources/", false);
+            uri.AppendPath(policyTrackedResourceType.ToString(), true);
+            uri.AppendPath("/queryResults", false);
+            if (policyQuerySettings?.Top != null)
+            {
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+            }
+            if (policyQuerySettings?.Filter != null)
+            {
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListQueryResultsForResourceRequest(string resourceId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
@@ -367,6 +454,14 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
+        internal RequestUriBuilder CreateListQueryResultsForManagementGroupNextPageRequestUri(string nextLink, string managementGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListQueryResultsForManagementGroupNextPageRequest(string nextLink, string managementGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
@@ -439,6 +534,14 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
+        internal RequestUriBuilder CreateListQueryResultsForSubscriptionNextPageRequestUri(string nextLink, string subscriptionId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListQueryResultsForSubscriptionNextPageRequest(string nextLink, string subscriptionId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
@@ -509,6 +612,14 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListQueryResultsForResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListQueryResultsForResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
@@ -585,6 +696,14 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListQueryResultsForResourceNextPageRequestUri(string nextLink, string resourceId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListQueryResultsForResourceNextPageRequest(string nextLink, string resourceId, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings)

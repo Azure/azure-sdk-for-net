@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     [PersistableModelProxy(typeof(UnknownMigrateSqlServerSqlDBSyncTaskOutput))]
     public partial class MigrateSqlServerSqlDBSyncTaskOutput : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlDBSyncTaskOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBSyncTaskOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBSyncTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateSqlServerSqlDBSyncTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSqlServerSqlDBSyncTaskOutput DeserializeMigrateSqlServerSqlDBSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -75,14 +75,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DatabaseLevelErrorOutput": return MigrateSqlServerSqlDBSyncTaskOutputDatabaseError.DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseError(element);
-                    case "DatabaseLevelOutput": return MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(element);
-                    case "ErrorOutput": return MigrateSqlServerSqlDBSyncTaskOutputError.DeserializeMigrateSqlServerSqlDBSyncTaskOutputError(element);
-                    case "MigrationLevelOutput": return MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(element);
-                    case "TableLevelOutput": return MigrateSqlServerSqlDBSyncTaskOutputTableLevel.DeserializeMigrateSqlServerSqlDBSyncTaskOutputTableLevel(element);
+                    case "DatabaseLevelErrorOutput": return MigrateSqlServerSqlDBSyncTaskOutputDatabaseError.DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseError(element, options);
+                    case "DatabaseLevelOutput": return MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(element, options);
+                    case "ErrorOutput": return MigrateSqlServerSqlDBSyncTaskOutputError.DeserializeMigrateSqlServerSqlDBSyncTaskOutputError(element, options);
+                    case "MigrationLevelOutput": return MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(element, options);
+                    case "TableLevelOutput": return MigrateSqlServerSqlDBSyncTaskOutputTableLevel.DeserializeMigrateSqlServerSqlDBSyncTaskOutputTableLevel(element, options);
                 }
             }
-            return UnknownMigrateSqlServerSqlDBSyncTaskOutput.DeserializeUnknownMigrateSqlServerSqlDBSyncTaskOutput(element);
+            return UnknownMigrateSqlServerSqlDBSyncTaskOutput.DeserializeUnknownMigrateSqlServerSqlDBSyncTaskOutput(element, options);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutput>.Write(ModelReaderWriterOptions options)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSqlServerSqlDBSyncTaskOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

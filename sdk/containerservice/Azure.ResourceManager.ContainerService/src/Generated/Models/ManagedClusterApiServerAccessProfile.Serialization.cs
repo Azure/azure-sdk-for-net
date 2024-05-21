@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ManagedClusterApiServerAccessProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterApiServerAccessProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterApiServerAccessProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterApiServerAccessProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedClusterApiServerAccessProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterApiServerAccessProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterApiServerAccessProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterApiServerAccessProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterApiServerAccessProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterApiServerAccessProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterApiServerAccessProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,19 +88,19 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterApiServerAccessProfile DeserializeManagedClusterApiServerAccessProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> authorizedIPRanges = default;
-            Optional<bool> enablePrivateCluster = default;
-            Optional<string> privateDnsZone = default;
-            Optional<bool> enablePrivateClusterPublicFQDN = default;
-            Optional<bool> disableRunCommand = default;
+            IList<string> authorizedIPRanges = default;
+            bool? enablePrivateCluster = default;
+            string privateDnsZone = default;
+            bool? enablePrivateClusterPublicFQDN = default;
+            bool? disableRunCommand = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizedIPRanges"u8))
@@ -151,11 +151,17 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterApiServerAccessProfile(Optional.ToList(authorizedIPRanges), Optional.ToNullable(enablePrivateCluster), privateDnsZone.Value, Optional.ToNullable(enablePrivateClusterPublicFQDN), Optional.ToNullable(disableRunCommand), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedClusterApiServerAccessProfile(
+                authorizedIPRanges ?? new ChangeTrackingList<string>(),
+                enablePrivateCluster,
+                privateDnsZone,
+                enablePrivateClusterPublicFQDN,
+                disableRunCommand,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterApiServerAccessProfile>.Write(ModelReaderWriterOptions options)
@@ -167,7 +173,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterApiServerAccessProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterApiServerAccessProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +189,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterApiServerAccessProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterApiServerAccessProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterApiServerAccessProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

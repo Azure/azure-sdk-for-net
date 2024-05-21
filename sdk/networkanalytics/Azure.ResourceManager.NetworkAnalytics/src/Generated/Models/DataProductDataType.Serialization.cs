@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     public partial class DataProductDataType : IUtf8JsonSerializable, IJsonModel<DataProductDataType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProductDataType>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProductDataType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataProductDataType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataProductDataType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProductDataType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProductDataType)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProductDataType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProductDataType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProductDataType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 
         internal static DataProductDataType DeserializeDataProductDataType(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -126,16 +126,16 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetworkAnalyticsProvisioningState> provisioningState = default;
-            Optional<DataProductDataTypeState> state = default;
-            Optional<string> stateReason = default;
-            Optional<int> storageOutputRetention = default;
-            Optional<int> databaseCacheRetention = default;
-            Optional<int> databaseRetention = default;
-            Optional<Uri> visualizationUrl = default;
+            SystemData systemData = default;
+            NetworkAnalyticsProvisioningState? provisioningState = default;
+            DataProductDataTypeState? state = default;
+            string stateReason = default;
+            int? storageOutputRetention = default;
+            int? databaseCacheRetention = default;
+            int? databaseRetention = default;
+            Uri visualizationUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -235,11 +235,23 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProductDataType(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(state), stateReason.Value, Optional.ToNullable(storageOutputRetention), Optional.ToNullable(databaseCacheRetention), Optional.ToNullable(databaseRetention), visualizationUrl.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataProductDataType(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                state,
+                stateReason,
+                storageOutputRetention,
+                databaseCacheRetention,
+                databaseRetention,
+                visualizationUrl,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProductDataType>.Write(ModelReaderWriterOptions options)
@@ -251,7 +263,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProductDataType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProductDataType)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -267,7 +279,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                         return DeserializeDataProductDataType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProductDataType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProductDataType)} does not support reading '{options.Format}' format.");
             }
         }
 

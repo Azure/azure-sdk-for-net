@@ -2,21 +2,22 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenSerialization(nameof(EstimatedWaitTime), SerializationValueHook = nameof(WriteEstimatedWaitTime), DeserializationValueHook = nameof(ReadEstimatedWaitTime))]
     public partial class RouterJobPositionDetails
     {
         /// <summary> Estimated wait time of the job rounded up to the nearest minute. </summary>
         [CodeGenMember("EstimatedWaitTimeMinutes")]
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteEstimatedWaitTime), DeserializationValueHook = nameof(ReadEstimatedWaitTime))]
         public TimeSpan EstimatedWaitTime { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void WriteEstimatedWaitTime(Utf8JsonWriter writer)
+        internal void WriteEstimatedWaitTime(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteNumberValue(EstimatedWaitTime.TotalMinutes);
         }

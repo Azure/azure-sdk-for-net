@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class SqlBackupFileInfo : IUtf8JsonSerializable, IJsonModel<SqlBackupFileInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlBackupFileInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlBackupFileInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlBackupFileInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlBackupFileInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlBackupFileInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,22 +98,22 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SqlBackupFileInfo DeserializeSqlBackupFileInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> fileName = default;
-            Optional<string> status = default;
-            Optional<long> totalSize = default;
-            Optional<long> dataRead = default;
-            Optional<long> dataWritten = default;
-            Optional<double> copyThroughput = default;
-            Optional<int> copyDuration = default;
-            Optional<int> familySequenceNumber = default;
+            string fileName = default;
+            string status = default;
+            long? totalSize = default;
+            long? dataRead = default;
+            long? dataWritten = default;
+            double? copyThroughput = default;
+            int? copyDuration = default;
+            int? familySequenceNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileName"u8))
@@ -182,11 +182,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlBackupFileInfo(fileName.Value, status.Value, Optional.ToNullable(totalSize), Optional.ToNullable(dataRead), Optional.ToNullable(dataWritten), Optional.ToNullable(copyThroughput), Optional.ToNullable(copyDuration), Optional.ToNullable(familySequenceNumber), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SqlBackupFileInfo(
+                fileName,
+                status,
+                totalSize,
+                dataRead,
+                dataWritten,
+                copyThroughput,
+                copyDuration,
+                familySequenceNumber,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlBackupFileInfo>.Write(ModelReaderWriterOptions options)
@@ -198,7 +207,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +223,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeSqlBackupFileInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,10 +20,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> key = default;
-            Optional<string> label = default;
-            Optional<string> etag = default;
-            Optional<string> syncToken = default;
+            string key = default;
+            string label = default;
+            string etag = default;
+            string syncToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -48,7 +47,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AppConfigurationKeyValueModifiedEventData(key.Value, label.Value, etag.Value, syncToken.Value);
+            return new AppConfigurationKeyValueModifiedEventData(key, label, etag, syncToken);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AppConfigurationKeyValueModifiedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAppConfigurationKeyValueModifiedEventData(document.RootElement);
         }
 
         internal partial class AppConfigurationKeyValueModifiedEventDataConverter : JsonConverter<AppConfigurationKeyValueModifiedEventData>
@@ -57,6 +64,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override AppConfigurationKeyValueModifiedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

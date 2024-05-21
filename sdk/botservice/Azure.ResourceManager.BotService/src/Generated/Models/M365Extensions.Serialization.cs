@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     public partial class M365Extensions : IUtf8JsonSerializable, IJsonModel<M365Extensions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<M365Extensions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<M365Extensions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<M365Extensions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<M365Extensions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(M365Extensions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(M365Extensions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<M365Extensions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(M365Extensions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(M365Extensions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,18 +82,18 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static M365Extensions DeserializeM365Extensions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string channelName = default;
-            Optional<ETag?> etag = default;
-            Optional<string> provisioningState = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            string provisioningState = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("channelName"u8))
@@ -128,11 +127,11 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new M365Extensions(channelName, Optional.ToNullable(etag), provisioningState.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new M365Extensions(channelName, etag, provisioningState, location, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<M365Extensions>.Write(ModelReaderWriterOptions options)
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(M365Extensions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(M365Extensions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeM365Extensions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(M365Extensions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(M365Extensions)} does not support reading '{options.Format}' format.");
             }
         }
 

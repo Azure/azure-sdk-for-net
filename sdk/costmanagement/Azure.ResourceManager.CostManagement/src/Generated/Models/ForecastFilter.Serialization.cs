@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class ForecastFilter : IUtf8JsonSerializable, IJsonModel<ForecastFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForecastFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForecastFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ForecastFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ForecastFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForecastFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForecastFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in And)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Or)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions);
+                writer.WriteObjectValue(Dimensions, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags);
+                writer.WriteObjectValue(Tags, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForecastFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForecastFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForecastFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,18 +88,18 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static ForecastFilter DeserializeForecastFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<ForecastFilter>> and = default;
-            Optional<IList<ForecastFilter>> or = default;
-            Optional<ForecastComparisonExpression> dimensions = default;
-            Optional<ForecastComparisonExpression> tags = default;
+            IList<ForecastFilter> and = default;
+            IList<ForecastFilter> or = default;
+            ForecastComparisonExpression dimensions = default;
+            ForecastComparisonExpression tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("and"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ForecastFilter> array = new List<ForecastFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeForecastFilter(item));
+                        array.Add(DeserializeForecastFilter(item, options));
                     }
                     and = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ForecastFilter> array = new List<ForecastFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeForecastFilter(item));
+                        array.Add(DeserializeForecastFilter(item, options));
                     }
                     or = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    dimensions = ForecastComparisonExpression.DeserializeForecastComparisonExpression(property.Value);
+                    dimensions = ForecastComparisonExpression.DeserializeForecastComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -145,16 +145,16 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    tags = ForecastComparisonExpression.DeserializeForecastComparisonExpression(property.Value);
+                    tags = ForecastComparisonExpression.DeserializeForecastComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastFilter(Optional.ToList(and), Optional.ToList(or), dimensions.Value, tags.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ForecastFilter(and ?? new ChangeTrackingList<ForecastFilter>(), or ?? new ChangeTrackingList<ForecastFilter>(), dimensions, tags, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastFilter>.Write(ModelReaderWriterOptions options)
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ForecastFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForecastFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeForecastFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ForecastFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForecastFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

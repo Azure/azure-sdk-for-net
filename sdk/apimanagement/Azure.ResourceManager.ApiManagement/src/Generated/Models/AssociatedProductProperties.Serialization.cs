@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class AssociatedProductProperties : IUtf8JsonSerializable, IJsonModel<AssociatedProductProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssociatedProductProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssociatedProductProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AssociatedProductProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AssociatedProductProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssociatedProductProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,22 +95,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static AssociatedProductProperties DeserializeAssociatedProductProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string name = default;
-            Optional<string> description = default;
-            Optional<string> terms = default;
-            Optional<bool> subscriptionRequired = default;
-            Optional<bool> approvalRequired = default;
-            Optional<int> subscriptionsLimit = default;
-            Optional<ApiManagementProductState> state = default;
+            string description = default;
+            string terms = default;
+            bool? subscriptionRequired = default;
+            bool? approvalRequired = default;
+            int? subscriptionsLimit = default;
+            ApiManagementProductState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -171,11 +171,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssociatedProductProperties(description.Value, terms.Value, Optional.ToNullable(subscriptionRequired), Optional.ToNullable(approvalRequired), Optional.ToNullable(subscriptionsLimit), Optional.ToNullable(state), serializedAdditionalRawData, id.Value, name);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AssociatedProductProperties(
+                description,
+                terms,
+                subscriptionRequired,
+                approvalRequired,
+                subscriptionsLimit,
+                state,
+                serializedAdditionalRawData,
+                id,
+                name);
         }
 
         BinaryData IPersistableModel<AssociatedProductProperties>.Write(ModelReaderWriterOptions options)
@@ -187,7 +196,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeAssociatedProductProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -200,7 +198,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteDeploymentWebAppsRestClient.DeleteDeploymentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(response);
+                var uri = _siteDeploymentWebAppsRestClient.CreateDeleteDeploymentRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -242,7 +242,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteDeploymentWebAppsRestClient.DeleteDeployment(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppServiceArmOperation(response);
+                var uri = _siteDeploymentWebAppsRestClient.CreateDeleteDeploymentRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -288,7 +290,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteDeploymentWebAppsRestClient.CreateDeploymentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteDeploymentResource>(Response.FromValue(new SiteDeploymentResource(Client, response), response.GetRawResponse()));
+                var uri = _siteDeploymentWebAppsRestClient.CreateCreateDeploymentRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<SiteDeploymentResource>(Response.FromValue(new SiteDeploymentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -334,7 +338,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteDeploymentWebAppsRestClient.CreateDeployment(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteDeploymentResource>(Response.FromValue(new SiteDeploymentResource(Client, response), response.GetRawResponse()));
+                var uri = _siteDeploymentWebAppsRestClient.CreateCreateDeploymentRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<SiteDeploymentResource>(Response.FromValue(new SiteDeploymentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

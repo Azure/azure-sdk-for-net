@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,14 +16,14 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionTagsResult : IUtf8JsonSerializable, IJsonModel<ConsumptionTagsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionTagsResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionTagsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionTagsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionTagsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionTagsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionTagsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionTagsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionTagsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionTagsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,22 +107,22 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionTagsResult DeserializeConsumptionTagsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<ConsumptionTag>> tags = default;
-            Optional<string> nextLink = default;
-            Optional<string> previousLink = default;
+            SystemData systemData = default;
+            IList<ConsumptionTag> tags = default;
+            string nextLink = default;
+            string previousLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<ConsumptionTag> array = new List<ConsumptionTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConsumptionTag.DeserializeConsumptionTag(item));
+                                array.Add(ConsumptionTag.DeserializeConsumptionTag(item, options));
                             }
                             tags = array;
                             continue;
@@ -197,11 +196,20 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionTagsResult(id, name, type, systemData.Value, Optional.ToList(tags), nextLink.Value, previousLink.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionTagsResult(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingList<ConsumptionTag>(),
+                nextLink,
+                previousLink,
+                eTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionTagsResult>.Write(ModelReaderWriterOptions options)
@@ -213,7 +221,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionTagsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionTagsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +237,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionTagsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionTagsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionTagsResult)} does not support reading '{options.Format}' format.");
             }
         }
 

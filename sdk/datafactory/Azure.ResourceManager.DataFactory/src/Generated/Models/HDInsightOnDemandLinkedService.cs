@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class HDInsightOnDemandLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="HDInsightOnDemandLinkedService"/>. </summary>
-        /// <param name="clusterSize"> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string). </param>
+        /// <param name="clusterSize"> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: int (or Expression with resultType int). </param>
         /// <param name="timeToLiveExpression"> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </param>
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tenant"> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterResourceGroup"> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="timeToLiveExpression"/>, <paramref name="version"/>, <paramref name="linkedServiceName"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/> or <paramref name="clusterResourceGroup"/> is null. </exception>
-        public HDInsightOnDemandLinkedService(DataFactoryElement<string> clusterSize, DataFactoryElement<string> timeToLiveExpression, DataFactoryElement<string> version, DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> hostSubscriptionId, DataFactoryElement<string> tenant, DataFactoryElement<string> clusterResourceGroup)
+        public HDInsightOnDemandLinkedService(DataFactoryElement<int> clusterSize, DataFactoryElement<string> timeToLiveExpression, DataFactoryElement<string> version, DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> hostSubscriptionId, DataFactoryElement<string> tenant, DataFactoryElement<string> clusterResourceGroup)
         {
             Argument.AssertNotNull(clusterSize, nameof(clusterSize));
             Argument.AssertNotNull(timeToLiveExpression, nameof(timeToLiveExpression));
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="clusterSize"> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string). </param>
+        /// <param name="clusterSize"> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: int (or Expression with resultType int). </param>
         /// <param name="timeToLiveExpression"> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </param>
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="virtualNetworkId"> The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string). </param>
         /// <param name="subnetName"> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal HDInsightOnDemandLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> clusterSize, DataFactoryElement<string> timeToLiveExpression, DataFactoryElement<string> version, DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> hostSubscriptionId, DataFactoryElement<string> servicePrincipalId, DataFactorySecretBaseDefinition servicePrincipalKey, DataFactoryElement<string> tenant, DataFactoryElement<string> clusterResourceGroup, DataFactoryElement<string> clusterNamePrefix, DataFactoryElement<string> clusterUserName, DataFactorySecretBaseDefinition clusterPassword, DataFactoryElement<string> clusterSshUserName, DataFactorySecretBaseDefinition clusterSshPassword, IList<DataFactoryLinkedServiceReference> additionalLinkedServiceNames, DataFactoryLinkedServiceReference hcatalogLinkedServiceName, DataFactoryElement<string> clusterType, DataFactoryElement<string> sparkVersion, BinaryData coreConfiguration, BinaryData hBaseConfiguration, BinaryData hdfsConfiguration, BinaryData hiveConfiguration, BinaryData mapReduceConfiguration, BinaryData oozieConfiguration, BinaryData stormConfiguration, BinaryData yarnConfiguration, string encryptedCredential, BinaryData headNodeSize, BinaryData dataNodeSize, BinaryData zookeeperNodeSize, IList<DataFactoryScriptAction> scriptActions, DataFactoryElement<string> virtualNetworkId, DataFactoryElement<string> subnetName, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal HDInsightOnDemandLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> clusterSize, DataFactoryElement<string> timeToLiveExpression, DataFactoryElement<string> version, DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> hostSubscriptionId, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, DataFactoryElement<string> clusterResourceGroup, DataFactoryElement<string> clusterNamePrefix, DataFactoryElement<string> clusterUserName, DataFactorySecret clusterPassword, DataFactoryElement<string> clusterSshUserName, DataFactorySecret clusterSshPassword, IList<DataFactoryLinkedServiceReference> additionalLinkedServiceNames, DataFactoryLinkedServiceReference hcatalogLinkedServiceName, DataFactoryElement<string> clusterType, DataFactoryElement<string> sparkVersion, BinaryData coreConfiguration, BinaryData hBaseConfiguration, BinaryData hdfsConfiguration, BinaryData hiveConfiguration, BinaryData mapReduceConfiguration, BinaryData oozieConfiguration, BinaryData stormConfiguration, BinaryData yarnConfiguration, string encryptedCredential, BinaryData headNodeSize, BinaryData dataNodeSize, BinaryData zookeeperNodeSize, IList<DataFactoryScriptAction> scriptActions, DataFactoryElement<string> virtualNetworkId, DataFactoryElement<string> subnetName, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterSize = clusterSize;
             TimeToLiveExpression = timeToLiveExpression;
@@ -126,8 +125,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "HDInsightOnDemand";
         }
 
-        /// <summary> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ClusterSize { get; set; }
+        /// <summary> Initializes a new instance of <see cref="HDInsightOnDemandLinkedService"/> for deserialization. </summary>
+        internal HDInsightOnDemandLinkedService()
+        {
+        }
+
+        /// <summary> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: int (or Expression with resultType int). </summary>
+        public DataFactoryElement<int> ClusterSize { get; set; }
         /// <summary> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TimeToLiveExpression { get; set; }
         /// <summary> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </summary>
@@ -139,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The key for the service principal id. </summary>
-        public DataFactorySecretBaseDefinition ServicePrincipalKey { get; set; }
+        public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Tenant { get; set; }
         /// <summary> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </summary>
@@ -149,11 +153,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The username to access the cluster. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClusterUserName { get; set; }
         /// <summary> The password to access the cluster. </summary>
-        public DataFactorySecretBaseDefinition ClusterPassword { get; set; }
+        public DataFactorySecret ClusterPassword { get; set; }
         /// <summary> The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClusterSshUserName { get; set; }
         /// <summary> The password to SSH remotely connect cluster’s node (for Linux). </summary>
-        public DataFactorySecretBaseDefinition ClusterSshPassword { get; set; }
+        public DataFactorySecret ClusterSshPassword { get; set; }
         /// <summary> Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf. </summary>
         public IList<DataFactoryLinkedServiceReference> AdditionalLinkedServiceNames { get; }
         /// <summary> The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database as the metastore. </summary>

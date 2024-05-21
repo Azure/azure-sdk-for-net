@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.BotService.Models
 {
     public partial class BotServiceProviderParameter : IUtf8JsonSerializable, IJsonModel<BotServiceProviderParameter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotServiceProviderParameter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotServiceProviderParameter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BotServiceProviderParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BotServiceProviderParameter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotServiceProviderParameter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServiceProviderParameter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue(Metadata, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotServiceProviderParameter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotServiceProviderParameter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServiceProviderParameter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,21 +93,21 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static BotServiceProviderParameter DeserializeBotServiceProviderParameter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> helpUrl = default;
-            Optional<string> @default = default;
-            Optional<ServiceProviderParameterMetadata> metadata = default;
+            string name = default;
+            string type = default;
+            string displayName = default;
+            string description = default;
+            Uri helpUrl = default;
+            string @default = default;
+            ServiceProviderParameterMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -150,16 +150,24 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    metadata = ServiceProviderParameterMetadata.DeserializeServiceProviderParameterMetadata(property.Value);
+                    metadata = ServiceProviderParameterMetadata.DeserializeServiceProviderParameterMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotServiceProviderParameter(name.Value, type.Value, displayName.Value, description.Value, helpUrl.Value, @default.Value, metadata.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BotServiceProviderParameter(
+                name,
+                type,
+                displayName,
+                description,
+                helpUrl,
+                @default,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotServiceProviderParameter>.Write(ModelReaderWriterOptions options)
@@ -171,7 +179,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BotServiceProviderParameter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServiceProviderParameter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +195,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeBotServiceProviderParameter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BotServiceProviderParameter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServiceProviderParameter)} does not support reading '{options.Format}' format.");
             }
         }
 

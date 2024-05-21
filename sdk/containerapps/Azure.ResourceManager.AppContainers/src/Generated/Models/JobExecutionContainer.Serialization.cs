@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class JobExecutionContainer : IUtf8JsonSerializable, IJsonModel<JobExecutionContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobExecutionContainer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobExecutionContainer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<JobExecutionContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<JobExecutionContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobExecutionContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobExecutionContainer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Env)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources);
+                writer.WriteObjectValue(Resources, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobExecutionContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobExecutionContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobExecutionContainer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,20 +103,20 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static JobExecutionContainer DeserializeJobExecutionContainer(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> image = default;
-            Optional<string> name = default;
-            Optional<IList<string>> command = default;
-            Optional<IList<string>> args = default;
-            Optional<IList<ContainerAppEnvironmentVariable>> env = default;
-            Optional<AppContainerResources> resources = default;
+            string image = default;
+            string name = default;
+            IList<string> command = default;
+            IList<string> args = default;
+            IList<ContainerAppEnvironmentVariable> env = default;
+            AppContainerResources resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("image"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppEnvironmentVariable> array = new List<ContainerAppEnvironmentVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppEnvironmentVariable.DeserializeContainerAppEnvironmentVariable(item));
+                        array.Add(ContainerAppEnvironmentVariable.DeserializeContainerAppEnvironmentVariable(item, options));
                     }
                     env = array;
                     continue;
@@ -177,16 +177,23 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    resources = AppContainerResources.DeserializeAppContainerResources(property.Value);
+                    resources = AppContainerResources.DeserializeAppContainerResources(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobExecutionContainer(image.Value, name.Value, Optional.ToList(command), Optional.ToList(args), Optional.ToList(env), resources.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new JobExecutionContainer(
+                image,
+                name,
+                command ?? new ChangeTrackingList<string>(),
+                args ?? new ChangeTrackingList<string>(),
+                env ?? new ChangeTrackingList<ContainerAppEnvironmentVariable>(),
+                resources,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobExecutionContainer>.Write(ModelReaderWriterOptions options)
@@ -198,7 +205,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JobExecutionContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobExecutionContainer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +221,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeJobExecutionContainer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobExecutionContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobExecutionContainer)} does not support reading '{options.Format}' format.");
             }
         }
 

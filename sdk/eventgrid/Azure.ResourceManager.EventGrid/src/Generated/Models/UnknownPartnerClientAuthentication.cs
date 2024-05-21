@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> The UnknownPartnerClientAuthentication. </summary>
+    /// <summary> Unknown version of PartnerClientAuthentication. </summary>
     internal partial class UnknownPartnerClientAuthentication : PartnerClientAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPartnerClientAuthentication"/>. </summary>
         /// <param name="clientAuthenticationType"> Type of client authentication. </param>
-        internal UnknownPartnerClientAuthentication(PartnerClientAuthenticationType clientAuthenticationType) : base(clientAuthenticationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownPartnerClientAuthentication(PartnerClientAuthenticationType clientAuthenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(clientAuthenticationType, serializedAdditionalRawData)
         {
             ClientAuthenticationType = clientAuthenticationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownPartnerClientAuthentication"/> for deserialization. </summary>
+        internal UnknownPartnerClientAuthentication()
+        {
         }
     }
 }

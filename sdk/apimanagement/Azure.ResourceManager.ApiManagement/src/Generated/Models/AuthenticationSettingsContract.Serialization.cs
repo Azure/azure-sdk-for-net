@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class AuthenticationSettingsContract : IUtf8JsonSerializable, IJsonModel<AuthenticationSettingsContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthenticationSettingsContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthenticationSettingsContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AuthenticationSettingsContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AuthenticationSettingsContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthenticationSettingsContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthenticationSettingsContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(OAuth2))
             {
                 writer.WritePropertyName("oAuth2"u8);
-                writer.WriteObjectValue(OAuth2);
+                writer.WriteObjectValue(OAuth2, options);
             }
             if (Optional.IsDefined(OpenId))
             {
                 writer.WritePropertyName("openid"u8);
-                writer.WriteObjectValue(OpenId);
+                writer.WriteObjectValue(OpenId, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthenticationSettingsContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthenticationSettingsContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthenticationSettingsContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static AuthenticationSettingsContract DeserializeAuthenticationSettingsContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<OAuth2AuthenticationSettingsContract> oAuth2 = default;
-            Optional<OpenIdAuthenticationSettingsContract> openid = default;
+            OAuth2AuthenticationSettingsContract oAuth2 = default;
+            OpenIdAuthenticationSettingsContract openid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("oAuth2"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    oAuth2 = OAuth2AuthenticationSettingsContract.DeserializeOAuth2AuthenticationSettingsContract(property.Value);
+                    oAuth2 = OAuth2AuthenticationSettingsContract.DeserializeOAuth2AuthenticationSettingsContract(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("openid"u8))
@@ -95,16 +95,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    openid = OpenIdAuthenticationSettingsContract.DeserializeOpenIdAuthenticationSettingsContract(property.Value);
+                    openid = OpenIdAuthenticationSettingsContract.DeserializeOpenIdAuthenticationSettingsContract(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthenticationSettingsContract(oAuth2.Value, openid.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AuthenticationSettingsContract(oAuth2, openid, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthenticationSettingsContract>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthenticationSettingsContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthenticationSettingsContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeAuthenticationSettingsContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthenticationSettingsContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthenticationSettingsContract)} does not support reading '{options.Format}' format.");
             }
         }
 

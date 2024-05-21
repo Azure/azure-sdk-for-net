@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Secrets related to a Machine Learning compute based on AKS. </summary>
@@ -18,10 +21,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningAksComputeSecrets"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="userKubeConfig"> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </param>
         /// <param name="adminKubeConfig"> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </param>
         /// <param name="imagePullSecretName"> Image registry pull secret. </param>
-        internal MachineLearningAksComputeSecrets(ComputeType computeType, string userKubeConfig, string adminKubeConfig, string imagePullSecretName) : base(computeType)
+        internal MachineLearningAksComputeSecrets(ComputeType computeType, IDictionary<string, BinaryData> serializedAdditionalRawData, string userKubeConfig, string adminKubeConfig, string imagePullSecretName) : base(computeType, serializedAdditionalRawData)
         {
             UserKubeConfig = userKubeConfig;
             AdminKubeConfig = adminKubeConfig;

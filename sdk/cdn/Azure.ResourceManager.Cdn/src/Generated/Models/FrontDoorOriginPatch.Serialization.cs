@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class FrontDoorOriginPatch : IUtf8JsonSerializable, IJsonModel<FrontDoorOriginPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorOriginPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorOriginPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorOriginPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorOriginPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorOriginPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (SharedPrivateLinkResource != null)
                 {
                     writer.WritePropertyName("sharedPrivateLinkResource"u8);
-                    writer.WriteObjectValue(SharedPrivateLinkResource);
+                    writer.WriteObjectValue(SharedPrivateLinkResource, options);
                 }
                 else
                 {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorOriginPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorOriginPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,25 +138,25 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static FrontDoorOriginPatch DeserializeFrontDoorOriginPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> originGroupName = default;
-            Optional<WritableSubResource> azureOrigin = default;
-            Optional<string> hostName = default;
-            Optional<int> httpPort = default;
-            Optional<int> httpsPort = default;
-            Optional<string> originHostHeader = default;
-            Optional<int?> priority = default;
-            Optional<int?> weight = default;
-            Optional<SharedPrivateLinkResourceProperties> sharedPrivateLinkResource = default;
-            Optional<EnabledState> enabledState = default;
-            Optional<bool> enforceCertificateNameCheck = default;
+            string originGroupName = default;
+            WritableSubResource azureOrigin = default;
+            string hostName = default;
+            int? httpPort = default;
+            int? httpsPort = default;
+            string originHostHeader = default;
+            int? priority = default;
+            int? weight = default;
+            SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default;
+            EnabledState? enabledState = default;
+            bool? enforceCertificateNameCheck = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 sharedPrivateLinkResource = null;
                                 continue;
                             }
-                            sharedPrivateLinkResource = SharedPrivateLinkResourceProperties.DeserializeSharedPrivateLinkResourceProperties(property0.Value);
+                            sharedPrivateLinkResource = SharedPrivateLinkResourceProperties.DeserializeSharedPrivateLinkResourceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enabledState"u8))
@@ -263,11 +263,23 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorOriginPatch(originGroupName.Value, azureOrigin, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), sharedPrivateLinkResource.Value, Optional.ToNullable(enabledState), Optional.ToNullable(enforceCertificateNameCheck), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FrontDoorOriginPatch(
+                originGroupName,
+                azureOrigin,
+                hostName,
+                httpPort,
+                httpsPort,
+                originHostHeader,
+                priority,
+                weight,
+                sharedPrivateLinkResource,
+                enabledState,
+                enforceCertificateNameCheck,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorOriginPatch>.Write(ModelReaderWriterOptions options)
@@ -279,7 +291,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorOriginPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorOriginPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -295,7 +307,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeFrontDoorOriginPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorOriginPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorOriginPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

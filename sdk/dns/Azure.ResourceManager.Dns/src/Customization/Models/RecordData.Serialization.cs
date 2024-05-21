@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,15 +15,37 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    public partial class DnsRecordData : IUtf8JsonSerializable
+    public partial class DnsRecordData : IUtf8JsonSerializable, IJsonModel<DnsRecordData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsRecordData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DnsRecordData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -41,15 +65,15 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("TTL"u8);
                 writer.WriteNumberValue(TtlInSeconds.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
             if (Optional.IsDefined(TargetResource))
             {
                 writer.WritePropertyName("targetResource"u8);
                 JsonSerializer.Serialize(writer, TargetResource);
-            }
-            if (Optional.IsDefined(TrafficManagementProfile))
-            {
-                writer.WritePropertyName("trafficManagementProfile"u8);
-                JsonSerializer.Serialize(writer, TrafficManagementProfile);
             }
             if (Optional.IsCollectionDefined(DnsARecords))
             {
@@ -128,7 +152,7 @@ namespace Azure.ResourceManager.Dns
             }
             if (Optional.IsDefined(DnsSoaRecordInfo))
             {
-                writer.WritePropertyName("SOARecord"u8);
+                writer.WritePropertyName("DnsSOARecord"u8);
                 writer.WriteObjectValue(DnsSoaRecordInfo);
             }
             if (Optional.IsCollectionDefined(DnsCaaRecords))
@@ -141,70 +165,66 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DnsDSRecords))
-            {
-                writer.WritePropertyName("DSRecords"u8);
-                writer.WriteStartArray();
-                foreach (var item in DnsDSRecords)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(DnsTlsaRecords))
-            {
-                writer.WritePropertyName("TLSARecords"u8);
-                writer.WriteStartArray();
-                foreach (var item in DnsTlsaRecords)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(DnsNaptrRecords))
-            {
-                writer.WritePropertyName("NAPTRRecords"u8);
-                writer.WriteStartArray();
-                foreach (var item in DnsNaptrRecords)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
-
-        internal static DnsRecordData DeserializeDnsRecordData(JsonElement element)
+        DnsRecordData IJsonModel<DnsRecordData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsRecordData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DnsRecordData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsRecordData(document.RootElement, options);
+        }
+
+        internal static DnsRecordData DeserializeDnsRecordData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<ResourceManager.Models.SystemData> systemData = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<long> ttl = default;
-            Optional<string> fqdn = default;
-            Optional<string> provisioningState = default;
-            Optional<WritableSubResource> targetResource = default;
-            Optional<WritableSubResource> trafficManagementProfile = default;
-            Optional<IList<DnsARecordInfo>> aRecords = default;
-            Optional<IList<DnsAaaaRecordInfo>> aaaaRecords = default;
-            Optional<IList<DnsMXRecordInfo>> mxRecords = default;
-            Optional<IList<DnsNSRecordInfo>> nsRecords = default;
-            Optional<IList<DnsPtrRecordInfo>> ptrRecords = default;
-            Optional<IList<DnsSrvRecordInfo>> srvRecords = default;
-            Optional<IList<DnsTxtRecordInfo>> txtRecords = default;
-            Optional<DnsCnameRecordInfo> cnameRecord = default;
-            Optional<DnsSoaRecordInfo> soaRecord = default;
-            Optional<IList<DnsCaaRecordInfo>> caaRecords = default;
-            Optional<IList<DnsDSRecordInfo>> dsRecords = default;
-            Optional<IList<DnsTlsaRecordInfo>> tlsARecords = default;
-            Optional<IList<DnsNaptrRecordInfo>> naptrRecords = default;
+            SystemData systemData = default;
+            IDictionary<string, string> metadata = default;
+            long? ttl = default;
+            string fqdn = default;
+            string provisioningState = default;
+            WritableSubResource targetResource = default;
+            IList<DnsARecordInfo> aRecords = default;
+            IList<DnsAaaaRecordInfo> aaaaRecords = default;
+            IList<DnsMXRecordInfo> mxRecords = default;
+            IList<DnsNSRecordInfo> nsRecords = default;
+            IList<DnsPtrRecordInfo> ptrRecords = default;
+            IList<DnsSrvRecordInfo> srvRecords = default;
+            IList<DnsTxtRecordInfo> txtRecords = default;
+            DnsCnameRecordInfo cnameRecord = default;
+            DnsSoaRecordInfo soaRecord = default;
+            IList<DnsCaaRecordInfo> caaRecords = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -237,14 +257,13 @@ namespace Azure.ResourceManager.Dns
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
@@ -288,16 +307,7 @@ namespace Azure.ResourceManager.Dns
                             {
                                 continue;
                             }
-                            targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("trafficManagementProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            trafficManagementProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("ARecords"u8))
@@ -430,53 +440,67 @@ namespace Azure.ResourceManager.Dns
                             caaRecords = array;
                             continue;
                         }
-                        if (property0.NameEquals("DSRecords"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DnsDSRecordInfo> array = new List<DnsDSRecordInfo>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DnsDSRecordInfo.DeserializeDnsDSRecordInfo(item));
-                            }
-                            dsRecords = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("TLSARecords"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DnsTlsaRecordInfo> array = new List<DnsTlsaRecordInfo>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DnsTlsaRecordInfo.DeserializeDnsTlsaRecordInfo(item));
-                            }
-                            tlsARecords = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("NAPTRRecords"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DnsNaptrRecordInfo> array = new List<DnsNaptrRecordInfo>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DnsNaptrRecordInfo.DeserializeDnsNaptrRecordInfo(item));
-                            }
-                            naptrRecords = array;
-                            continue;
-                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DnsRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, trafficManagementProfile, Optional.ToList(aRecords), Optional.ToList(aaaaRecords), Optional.ToList(mxRecords), Optional.ToList(nsRecords), Optional.ToList(ptrRecords), Optional.ToList(srvRecords), Optional.ToList(txtRecords), cnameRecord.Value, soaRecord.Value, Optional.ToList(caaRecords), Optional.ToList(dsRecords), Optional.ToList(tlsARecords), Optional.ToList(naptrRecords));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DnsRecordData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                ttl,
+                fqdn,
+                provisioningState,
+                targetResource,
+                aRecords ?? new ChangeTrackingList<DnsARecordInfo>(),
+                aaaaRecords ?? new ChangeTrackingList<DnsAaaaRecordInfo>(),
+                mxRecords ?? new ChangeTrackingList<DnsMXRecordInfo>(),
+                nsRecords ?? new ChangeTrackingList<DnsNSRecordInfo>(),
+                ptrRecords ?? new ChangeTrackingList<DnsPtrRecordInfo>(),
+                srvRecords ?? new ChangeTrackingList<DnsSrvRecordInfo>(),
+                txtRecords ?? new ChangeTrackingList<DnsTxtRecordInfo>(),
+                cnameRecord,
+                soaRecord,
+                caaRecords ?? new ChangeTrackingList<DnsCaaRecordInfo>(),
+                serializedAdditionalRawData);
         }
+        BinaryData IPersistableModel<DnsRecordData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsRecordData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DnsRecordData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DnsRecordData IPersistableModel<DnsRecordData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsRecordData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDnsRecordData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DnsRecordData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DnsRecordData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -19,7 +18,7 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<long> count = default;
+            long? count = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -36,7 +35,15 @@ namespace Azure.Search.Documents.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FacetResult(Optional.ToNullable(count), additionalProperties);
+            return new FacetResult(count, additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static FacetResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFacetResult(document.RootElement);
         }
     }
 }

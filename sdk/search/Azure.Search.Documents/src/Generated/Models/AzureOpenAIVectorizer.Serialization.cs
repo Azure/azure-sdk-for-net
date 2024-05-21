@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<AzureOpenAIParameters> azureOpenAIParameters = default;
+            AzureOpenAIParameters azureOpenAIParameters = default;
             string name = default;
             VectorSearchVectorizerKind kind = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new AzureOpenAIVectorizer(name, kind, azureOpenAIParameters.Value);
+            return new AzureOpenAIVectorizer(name, kind, azureOpenAIParameters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureOpenAIVectorizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureOpenAIVectorizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

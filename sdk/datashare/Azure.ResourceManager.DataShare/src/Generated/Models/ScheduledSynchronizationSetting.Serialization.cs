@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class ScheduledSynchronizationSetting : IUtf8JsonSerializable, IJsonModel<ScheduledSynchronizationSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledSynchronizationSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledSynchronizationSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScheduledSynchronizationSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledSynchronizationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledSynchronizationSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledSynchronizationSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledSynchronizationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledSynchronizationSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledSynchronizationSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static ScheduledSynchronizationSetting DeserializeScheduledSynchronizationSetting(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdAt = default;
+            DataShareProvisioningState? provisioningState = default;
             DataShareSynchronizationRecurrenceInterval recurrenceInterval = default;
             DateTimeOffset synchronizationTime = default;
-            Optional<string> userName = default;
+            string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -199,11 +199,22 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledSynchronizationSetting(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(createdAt), Optional.ToNullable(provisioningState), recurrenceInterval, synchronizationTime, userName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ScheduledSynchronizationSetting(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                createdAt,
+                provisioningState,
+                recurrenceInterval,
+                synchronizationTime,
+                userName);
         }
 
         BinaryData IPersistableModel<ScheduledSynchronizationSetting>.Write(ModelReaderWriterOptions options)
@@ -215,7 +226,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledSynchronizationSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledSynchronizationSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +242,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeScheduledSynchronizationSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledSynchronizationSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledSynchronizationSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     public partial class DataLakeAnalyticsHiveMetastore : IUtf8JsonSerializable, IJsonModel<DataLakeAnalyticsHiveMetastore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsHiveMetastore>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsHiveMetastore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataLakeAnalyticsHiveMetastore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsHiveMetastore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsHiveMetastore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsHiveMetastore)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsHiveMetastore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsHiveMetastore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsHiveMetastore)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         internal static DataLakeAnalyticsHiveMetastore DeserializeDataLakeAnalyticsHiveMetastore(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,15 +121,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> serverUri = default;
-            Optional<string> databaseName = default;
-            Optional<string> runtimeVersion = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
-            Optional<NestedResourceProvisioningState> nestedResourceProvisioningState = default;
+            SystemData systemData = default;
+            Uri serverUri = default;
+            string databaseName = default;
+            string runtimeVersion = default;
+            string userName = default;
+            string password = default;
+            NestedResourceProvisioningState? nestedResourceProvisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -208,11 +208,22 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsHiveMetastore(id, name, type, systemData.Value, serverUri.Value, databaseName.Value, runtimeVersion.Value, userName.Value, password.Value, Optional.ToNullable(nestedResourceProvisioningState), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataLakeAnalyticsHiveMetastore(
+                id,
+                name,
+                type,
+                systemData,
+                serverUri,
+                databaseName,
+                runtimeVersion,
+                userName,
+                password,
+                nestedResourceProvisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsHiveMetastore>.Write(ModelReaderWriterOptions options)
@@ -224,7 +235,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsHiveMetastore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsHiveMetastore)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -240,7 +251,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         return DeserializeDataLakeAnalyticsHiveMetastore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsHiveMetastore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsHiveMetastore)} does not support reading '{options.Format}' format.");
             }
         }
 

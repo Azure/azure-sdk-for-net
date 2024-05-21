@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     public partial class ConsumptionEndpointsProperties : IUtf8JsonSerializable, IJsonModel<ConsumptionEndpointsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionEndpointsProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionEndpointsProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionEndpointsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEndpointsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEndpointsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,20 +88,20 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 
         internal static ConsumptionEndpointsProperties DeserializeConsumptionEndpointsProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Uri> ingestionUrl = default;
-            Optional<ResourceIdentifier> ingestionResourceId = default;
-            Optional<Uri> fileAccessUrl = default;
-            Optional<ResourceIdentifier> fileAccessResourceId = default;
-            Optional<Uri> queryUrl = default;
-            Optional<ResourceIdentifier> queryResourceId = default;
+            Uri ingestionUrl = default;
+            ResourceIdentifier ingestionResourceId = default;
+            Uri fileAccessUrl = default;
+            ResourceIdentifier fileAccessResourceId = default;
+            Uri queryUrl = default;
+            ResourceIdentifier queryResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ingestionUrl"u8))
@@ -160,11 +160,18 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionEndpointsProperties(ingestionUrl.Value, ingestionResourceId.Value, fileAccessUrl.Value, fileAccessResourceId.Value, queryUrl.Value, queryResourceId.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionEndpointsProperties(
+                ingestionUrl,
+                ingestionResourceId,
+                fileAccessUrl,
+                fileAccessResourceId,
+                queryUrl,
+                queryResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionEndpointsProperties>.Write(ModelReaderWriterOptions options)
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +199,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                         return DeserializeConsumptionEndpointsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionEndpointsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

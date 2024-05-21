@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.GuestConfiguration.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
@@ -206,7 +204,9 @@ namespace Azure.ResourceManager.GuestConfiguration
             try
             {
                 var response = await _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new GuestConfigurationArmOperation(response);
+                var uri = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new GuestConfigurationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -248,7 +248,9 @@ namespace Azure.ResourceManager.GuestConfiguration
             try
             {
                 var response = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new GuestConfigurationArmOperation(response);
+                var uri = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new GuestConfigurationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -294,7 +296,9 @@ namespace Azure.ResourceManager.GuestConfiguration
             try
             {
                 var response = await _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new GuestConfigurationArmOperation<GuestConfigurationVmAssignmentResource>(Response.FromValue(new GuestConfigurationVmAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new GuestConfigurationArmOperation<GuestConfigurationVmAssignmentResource>(Response.FromValue(new GuestConfigurationVmAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -340,7 +344,9 @@ namespace Azure.ResourceManager.GuestConfiguration
             try
             {
                 var response = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new GuestConfigurationArmOperation<GuestConfigurationVmAssignmentResource>(Response.FromValue(new GuestConfigurationVmAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new GuestConfigurationArmOperation<GuestConfigurationVmAssignmentResource>(Response.FromValue(new GuestConfigurationVmAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -374,7 +380,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         public virtual AsyncPageable<GuestConfigurationAssignmentReport> GetReportsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationAssignmentReportsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, GuestConfigurationAssignmentReport.DeserializeGuestConfigurationAssignmentReport, _guestConfigurationAssignmentReportsClientDiagnostics, Pipeline, "GuestConfigurationVmAssignmentResource.GetReports", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => GuestConfigurationAssignmentReport.DeserializeGuestConfigurationAssignmentReport(e), _guestConfigurationAssignmentReportsClientDiagnostics, Pipeline, "GuestConfigurationVmAssignmentResource.GetReports", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -399,7 +405,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         public virtual Pageable<GuestConfigurationAssignmentReport> GetReports(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationAssignmentReportsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, GuestConfigurationAssignmentReport.DeserializeGuestConfigurationAssignmentReport, _guestConfigurationAssignmentReportsClientDiagnostics, Pipeline, "GuestConfigurationVmAssignmentResource.GetReports", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => GuestConfigurationAssignmentReport.DeserializeGuestConfigurationAssignmentReport(e), _guestConfigurationAssignmentReportsClientDiagnostics, Pipeline, "GuestConfigurationVmAssignmentResource.GetReports", "value", null, cancellationToken);
         }
 
         /// <summary>

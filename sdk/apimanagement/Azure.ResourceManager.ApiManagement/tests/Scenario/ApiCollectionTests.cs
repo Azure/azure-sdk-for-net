@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        public async Task CreateOrUpdate_GetAll_Get_Exists_Delete ()
+        public async Task CreateOrUpdate_GetAll_Get_Exists_Delete()
         {
             await CreateApiService();
             var collection = ApiServiceResource.GetApis();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                     Query = "query3037"
                 },
                 DisplayName = "apiname1463",
-                ServiceUri = new Uri("http://newechoapi.cloudapp.net/api"),
+                ServiceLink = "http://newechoapi.cloudapp.net/api",
                 Path = "newapiPath",
                 Protocols = { ApiOperationInvokableProtocol.Https, ApiOperationInvokableProtocol.Http }
             };
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                     Query = "query3037"
                 },
                 DisplayName = "apiname1463",
-                ServiceUri = new Uri("http://newechoapi.cloudapp.net/api"),
+                ServiceLink = "http://newechoapi.cloudapp.net/api",
                 Path = "newapiPath",
                 Protocols = { ApiOperationInvokableProtocol.Https, ApiOperationInvokableProtocol.Http }
             };
@@ -101,6 +101,18 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var apiRevisionContracts = await api.GetApiRevisionsByServiceAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(apiRevisionContracts.FirstOrDefault().PrivateUriString);
+        }
+
+        [Test]
+        public async Task ListApiByApiMgmtService()
+        {
+            await CreateApiService();
+            var sum = 0;
+            await foreach (var api in ApiServiceResource.GetApis())
+            {
+                sum++;
+            }
+            Assert.IsTrue(sum > 0);
         }
     }
 }

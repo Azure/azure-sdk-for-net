@@ -7,21 +7,23 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class QueryResult : IUtf8JsonSerializable, IJsonModel<QueryResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QueryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QueryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +86,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,11 +146,180 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeQueryResult(document.RootElement, options);
+        }
+
+        internal static QueryResult DeserializeQueryResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AzureLocation? location = default;
+            string sku = default;
+            ETag? eTag = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            SystemData systemData = default;
+            string nextLink = default;
+            IReadOnlyList<QueryColumn> columns = default;
+            IReadOnlyList<IList<BinaryData>> rows = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    sku = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("eTag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    ReadId(property, ref id);
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("nextLink"u8))
+                        {
+                            nextLink = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("columns"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<QueryColumn> array = new List<QueryColumn>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(QueryColumn.DeserializeQueryColumn(item, options));
+                            }
+                            columns = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("rows"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<IList<BinaryData>> array = new List<IList<BinaryData>>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    List<BinaryData> array0 = new List<BinaryData>();
+                                    foreach (var item0 in item.EnumerateArray())
+                                    {
+                                        if (item0.ValueKind == JsonValueKind.Null)
+                                        {
+                                            array0.Add(null);
+                                        }
+                                        else
+                                        {
+                                            array0.Add(BinaryData.FromString(item0.GetRawText()));
+                                        }
+                                    }
+                                    array.Add(array0);
+                                }
+                            }
+                            rows = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new QueryResult(
+                id,
+                name,
+                type,
+                systemData,
+                nextLink,
+                columns ?? new ChangeTrackingList<QueryColumn>(),
+                rows ?? new ChangeTrackingList<IList<BinaryData>>(),
+                location,
+                sku,
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryResult>.Write(ModelReaderWriterOptions options)
@@ -160,7 +331,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +347,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeQueryResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryResult)} does not support reading '{options.Format}' format.");
             }
         }
 

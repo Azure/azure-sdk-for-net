@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,14 +16,14 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     internal partial class UnknownUsageDetail : IUtf8JsonSerializable, IJsonModel<ConsumptionUsageDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionUsageDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionUsageDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionUsageDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,30 +88,30 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownUsageDetail(document.RootElement, options);
+            return DeserializeConsumptionUsageDetail(document.RootElement, options);
         }
 
         internal static UnknownUsageDetail DeserializeUnknownUsageDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             UsageDetailsKind kind = "Unknown";
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -169,11 +168,19 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownUsageDetail(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownUsageDetail(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionUsageDetail>.Write(ModelReaderWriterOptions options)
@@ -185,7 +192,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -198,10 +205,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownUsageDetail(document.RootElement, options);
+                        return DeserializeConsumptionUsageDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

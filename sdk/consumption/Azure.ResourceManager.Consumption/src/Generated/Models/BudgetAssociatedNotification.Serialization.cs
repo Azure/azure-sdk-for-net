@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class BudgetAssociatedNotification : IUtf8JsonSerializable, IJsonModel<BudgetAssociatedNotification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BudgetAssociatedNotification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BudgetAssociatedNotification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BudgetAssociatedNotification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BudgetAssociatedNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<BudgetAssociatedNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static BudgetAssociatedNotification DeserializeBudgetAssociatedNotification(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.Consumption.Models
             NotificationAlertTriggerType @operator = default;
             decimal threshold = default;
             IList<string> contactEmails = default;
-            Optional<IList<string>> contactRoles = default;
-            Optional<IList<string>> contactGroups = default;
-            Optional<NotificationThresholdType> thresholdType = default;
-            Optional<RecipientNotificationLanguageCode> locale = default;
+            IList<string> contactRoles = default;
+            IList<string> contactGroups = default;
+            NotificationThresholdType? thresholdType = default;
+            RecipientNotificationLanguageCode? locale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -192,11 +192,20 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BudgetAssociatedNotification(enabled, @operator, threshold, contactEmails, Optional.ToList(contactRoles), Optional.ToList(contactGroups), Optional.ToNullable(thresholdType), Optional.ToNullable(locale), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BudgetAssociatedNotification(
+                enabled,
+                @operator,
+                threshold,
+                contactEmails,
+                contactRoles ?? new ChangeTrackingList<string>(),
+                contactGroups ?? new ChangeTrackingList<string>(),
+                thresholdType,
+                locale,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BudgetAssociatedNotification>.Write(ModelReaderWriterOptions options)
@@ -208,7 +217,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +233,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeBudgetAssociatedNotification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support reading '{options.Format}' format.");
             }
         }
 

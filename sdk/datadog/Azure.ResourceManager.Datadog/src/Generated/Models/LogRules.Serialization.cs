@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Datadog.Models
 {
     public partial class LogRules : IUtf8JsonSerializable, IJsonModel<LogRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogRules>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogRules)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WriteStartArray();
                 foreach (var item in FilteringTags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogRules)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,18 +83,18 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static LogRules DeserializeLogRules(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> sendAadLogs = default;
-            Optional<bool> sendSubscriptionLogs = default;
-            Optional<bool> sendResourceLogs = default;
-            Optional<IList<FilteringTag>> filteringTags = default;
+            bool? sendAadLogs = default;
+            bool? sendSubscriptionLogs = default;
+            bool? sendResourceLogs = default;
+            IList<FilteringTag> filteringTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sendAadLogs"u8))
@@ -133,18 +133,18 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<FilteringTag> array = new List<FilteringTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FilteringTag.DeserializeFilteringTag(item));
+                        array.Add(FilteringTag.DeserializeFilteringTag(item, options));
                     }
                     filteringTags = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogRules(Optional.ToNullable(sendAadLogs), Optional.ToNullable(sendSubscriptionLogs), Optional.ToNullable(sendResourceLogs), Optional.ToList(filteringTags), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LogRules(sendAadLogs, sendSubscriptionLogs, sendResourceLogs, filteringTags ?? new ChangeTrackingList<FilteringTag>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogRules>.Write(ModelReaderWriterOptions options)
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogRules)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeLogRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogRules)} does not support reading '{options.Format}' format.");
             }
         }
 

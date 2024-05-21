@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabGalleryImageReference : IUtf8JsonSerializable, IJsonModel<DevTestLabGalleryImageReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabGalleryImageReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabGalleryImageReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevTestLabGalleryImageReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabGalleryImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabGalleryImageReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabGalleryImageReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabGalleryImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabGalleryImageReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabGalleryImageReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,19 +83,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabGalleryImageReference DeserializeDevTestLabGalleryImageReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> offer = default;
-            Optional<string> publisher = default;
-            Optional<string> sku = default;
-            Optional<string> osType = default;
-            Optional<string> version = default;
+            string offer = default;
+            string publisher = default;
+            string sku = default;
+            string osType = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offer"u8))
@@ -125,11 +125,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabGalleryImageReference(offer.Value, publisher.Value, sku.Value, osType.Value, version.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevTestLabGalleryImageReference(
+                offer,
+                publisher,
+                sku,
+                osType,
+                version,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabGalleryImageReference>.Write(ModelReaderWriterOptions options)
@@ -141,7 +147,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabGalleryImageReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabGalleryImageReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabGalleryImageReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabGalleryImageReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabGalleryImageReference)} does not support reading '{options.Format}' format.");
             }
         }
 

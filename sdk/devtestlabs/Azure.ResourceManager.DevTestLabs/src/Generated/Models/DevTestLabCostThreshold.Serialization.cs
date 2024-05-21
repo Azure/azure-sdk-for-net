@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabCostThreshold : IUtf8JsonSerializable, IJsonModel<DevTestLabCostThreshold>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabCostThreshold>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabCostThreshold>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevTestLabCostThreshold>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCostThreshold>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(PercentageThreshold))
             {
                 writer.WritePropertyName("percentageThreshold"u8);
-                writer.WriteObjectValue(PercentageThreshold);
+                writer.WriteObjectValue(PercentageThreshold, options);
             }
             if (Optional.IsDefined(DisplayOnChart))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCostThreshold>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,19 +83,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabCostThreshold DeserializeDevTestLabCostThreshold(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> thresholdId = default;
-            Optional<PercentageCostThresholdProperties> percentageThreshold = default;
-            Optional<DevTestLabCostThresholdStatus> displayOnChart = default;
-            Optional<DevTestLabCostThresholdStatus> sendNotificationWhenExceeded = default;
-            Optional<string> notificationSent = default;
+            string thresholdId = default;
+            PercentageCostThresholdProperties percentageThreshold = default;
+            DevTestLabCostThresholdStatus? displayOnChart = default;
+            DevTestLabCostThresholdStatus? sendNotificationWhenExceeded = default;
+            string notificationSent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("thresholdId"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    percentageThreshold = PercentageCostThresholdProperties.DeserializePercentageCostThresholdProperties(property.Value);
+                    percentageThreshold = PercentageCostThresholdProperties.DeserializePercentageCostThresholdProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayOnChart"u8))
@@ -137,11 +137,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCostThreshold(thresholdId.Value, percentageThreshold.Value, Optional.ToNullable(displayOnChart), Optional.ToNullable(sendNotificationWhenExceeded), notificationSent.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevTestLabCostThreshold(
+                thresholdId,
+                percentageThreshold,
+                displayOnChart,
+                sendNotificationWhenExceeded,
+                notificationSent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCostThreshold>.Write(ModelReaderWriterOptions options)
@@ -153,7 +159,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabCostThreshold(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support reading '{options.Format}' format.");
             }
         }
 

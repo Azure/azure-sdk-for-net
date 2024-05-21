@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI
 {
@@ -26,10 +26,16 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ChatMessageTextContentItem"/>. </summary>
         /// <param name="type"> The discriminated object type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The content of the message. </param>
-        internal ChatMessageTextContentItem(string type, string text) : base(type)
+        internal ChatMessageTextContentItem(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string text) : base(type, serializedAdditionalRawData)
         {
             Text = text;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatMessageTextContentItem"/> for deserialization. </summary>
+        internal ChatMessageTextContentItem()
+        {
         }
 
         /// <summary> The content of the message. </summary>

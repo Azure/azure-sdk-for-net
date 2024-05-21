@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrationStatusDetails : IUtf8JsonSerializable, IJsonModel<MigrationStatusDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrationStatusDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrationStatusDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrationStatusDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrationStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationStatusDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrationStatusDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(FullBackupSetInfo))
             {
                 writer.WritePropertyName("fullBackupSetInfo"u8);
-                writer.WriteObjectValue(FullBackupSetInfo);
+                writer.WriteObjectValue(FullBackupSetInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastRestoredBackupSetInfo))
             {
                 writer.WritePropertyName("lastRestoredBackupSetInfo"u8);
-                writer.WriteObjectValue(LastRestoredBackupSetInfo);
+                writer.WriteObjectValue(LastRestoredBackupSetInfo, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ActiveBackupSets))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ActiveBackupSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrationStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationStatusDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrationStatusDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,27 +138,27 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrationStatusDetails DeserializeMigrationStatusDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> migrationState = default;
-            Optional<SqlBackupSetInfo> fullBackupSetInfo = default;
-            Optional<SqlBackupSetInfo> lastRestoredBackupSetInfo = default;
-            Optional<IReadOnlyList<SqlBackupSetInfo>> activeBackupSets = default;
-            Optional<IReadOnlyList<string>> invalidFiles = default;
-            Optional<string> blobContainerName = default;
-            Optional<bool> isFullBackupRestored = default;
-            Optional<string> restoreBlockingReason = default;
-            Optional<string> completeRestoreErrorMessage = default;
-            Optional<IReadOnlyList<string>> fileUploadBlockingErrors = default;
-            Optional<string> currentRestoringFilename = default;
-            Optional<string> lastRestoredFilename = default;
-            Optional<int> pendingLogBackupsCount = default;
+            string migrationState = default;
+            SqlBackupSetInfo fullBackupSetInfo = default;
+            SqlBackupSetInfo lastRestoredBackupSetInfo = default;
+            IReadOnlyList<SqlBackupSetInfo> activeBackupSets = default;
+            IReadOnlyList<string> invalidFiles = default;
+            string blobContainerName = default;
+            bool? isFullBackupRestored = default;
+            string restoreBlockingReason = default;
+            string completeRestoreErrorMessage = default;
+            IReadOnlyList<string> fileUploadBlockingErrors = default;
+            string currentRestoringFilename = default;
+            string lastRestoredFilename = default;
+            int? pendingLogBackupsCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("migrationState"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    fullBackupSetInfo = SqlBackupSetInfo.DeserializeSqlBackupSetInfo(property.Value);
+                    fullBackupSetInfo = SqlBackupSetInfo.DeserializeSqlBackupSetInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastRestoredBackupSetInfo"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    lastRestoredBackupSetInfo = SqlBackupSetInfo.DeserializeSqlBackupSetInfo(property.Value);
+                    lastRestoredBackupSetInfo = SqlBackupSetInfo.DeserializeSqlBackupSetInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("activeBackupSets"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<SqlBackupSetInfo> array = new List<SqlBackupSetInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlBackupSetInfo.DeserializeSqlBackupSetInfo(item));
+                        array.Add(SqlBackupSetInfo.DeserializeSqlBackupSetInfo(item, options));
                     }
                     activeBackupSets = array;
                     continue;
@@ -271,11 +271,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationStatusDetails(migrationState.Value, fullBackupSetInfo.Value, lastRestoredBackupSetInfo.Value, Optional.ToList(activeBackupSets), Optional.ToList(invalidFiles), blobContainerName.Value, Optional.ToNullable(isFullBackupRestored), restoreBlockingReason.Value, completeRestoreErrorMessage.Value, Optional.ToList(fileUploadBlockingErrors), currentRestoringFilename.Value, lastRestoredFilename.Value, Optional.ToNullable(pendingLogBackupsCount), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrationStatusDetails(
+                migrationState,
+                fullBackupSetInfo,
+                lastRestoredBackupSetInfo,
+                activeBackupSets ?? new ChangeTrackingList<SqlBackupSetInfo>(),
+                invalidFiles ?? new ChangeTrackingList<string>(),
+                blobContainerName,
+                isFullBackupRestored,
+                restoreBlockingReason,
+                completeRestoreErrorMessage,
+                fileUploadBlockingErrors ?? new ChangeTrackingList<string>(),
+                currentRestoringFilename,
+                lastRestoredFilename,
+                pendingLogBackupsCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationStatusDetails>.Write(ModelReaderWriterOptions options)
@@ -287,7 +301,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrationStatusDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrationStatusDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -303,7 +317,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrationStatusDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrationStatusDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrationStatusDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

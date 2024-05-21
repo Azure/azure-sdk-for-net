@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,14 +17,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CognitiveServicesNetworkRuleSet : IUtf8JsonSerializable, IJsonModel<CognitiveServicesNetworkRuleSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesNetworkRuleSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesNetworkRuleSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CognitiveServicesNetworkRuleSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesNetworkRuleSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesNetworkRuleSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +49,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesNetworkRuleSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesNetworkRuleSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,17 +85,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesNetworkRuleSet DeserializeCognitiveServicesNetworkRuleSet(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<CognitiveServicesNetworkRuleAction> defaultAction = default;
-            Optional<IList<CognitiveServicesIPRule>> ipRules = default;
-            Optional<IList<CognitiveServicesVirtualNetworkRule>> virtualNetworkRules = default;
+            CognitiveServicesNetworkRuleAction? defaultAction = default;
+            IList<CognitiveServicesIPRule> ipRules = default;
+            IList<CognitiveServicesVirtualNetworkRule> virtualNetworkRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultAction"u8))
@@ -114,7 +116,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesIPRule> array = new List<CognitiveServicesIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesIPRule.DeserializeCognitiveServicesIPRule(item));
+                        array.Add(CognitiveServicesIPRule.DeserializeCognitiveServicesIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -128,18 +130,94 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesVirtualNetworkRule> array = new List<CognitiveServicesVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesVirtualNetworkRule.DeserializeCognitiveServicesVirtualNetworkRule(item));
+                        array.Add(CognitiveServicesVirtualNetworkRule.DeserializeCognitiveServicesVirtualNetworkRule(item, options));
                     }
                     virtualNetworkRules = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesNetworkRuleSet(Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CognitiveServicesNetworkRuleSet(defaultAction, ipRules ?? new ChangeTrackingList<CognitiveServicesIPRule>(), virtualNetworkRules ?? new ChangeTrackingList<CognitiveServicesVirtualNetworkRule>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultAction), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  defaultAction: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultAction))
+                {
+                    builder.Append("  defaultAction: ");
+                    builder.AppendLine($"'{DefaultAction.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPRules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ipRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IPRules))
+                {
+                    if (IPRules.Any())
+                    {
+                        builder.Append("  ipRules: ");
+                        builder.AppendLine("[");
+                        foreach (var item in IPRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  ipRules: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualNetworkRules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  virtualNetworkRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(VirtualNetworkRules))
+                {
+                    if (VirtualNetworkRules.Any())
+                    {
+                        builder.Append("  virtualNetworkRules: ");
+                        builder.AppendLine("[");
+                        foreach (var item in VirtualNetworkRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  virtualNetworkRules: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CognitiveServicesNetworkRuleSet>.Write(ModelReaderWriterOptions options)
@@ -150,8 +228,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesNetworkRuleSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesNetworkRuleSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +247,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCognitiveServicesNetworkRuleSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesNetworkRuleSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesNetworkRuleSet)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class SupportedOptimizationTypesListResult : IUtf8JsonSerializable, IJsonModel<SupportedOptimizationTypesListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportedOptimizationTypesListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportedOptimizationTypesListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SupportedOptimizationTypesListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SupportedOptimizationTypesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportedOptimizationTypesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportedOptimizationTypesListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<SupportedOptimizationTypesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportedOptimizationTypesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportedOptimizationTypesListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,15 +68,15 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static SupportedOptimizationTypesListResult DeserializeSupportedOptimizationTypesListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<OptimizationType>> supportedOptimizationTypes = default;
+            IReadOnlyList<OptimizationType> supportedOptimizationTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedOptimizationTypes"u8))
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportedOptimizationTypesListResult(Optional.ToList(supportedOptimizationTypes), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SupportedOptimizationTypesListResult(supportedOptimizationTypes ?? new ChangeTrackingList<OptimizationType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportedOptimizationTypesListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SupportedOptimizationTypesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportedOptimizationTypesListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeSupportedOptimizationTypesListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SupportedOptimizationTypesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportedOptimizationTypesListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

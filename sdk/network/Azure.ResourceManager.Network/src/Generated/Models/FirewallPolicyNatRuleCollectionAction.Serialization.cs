@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal partial class FirewallPolicyNatRuleCollectionAction : IUtf8JsonSerializable, IJsonModel<FirewallPolicyNatRuleCollectionAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyNatRuleCollectionAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyNatRuleCollectionAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirewallPolicyNatRuleCollectionAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyNatRuleCollectionAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyNatRuleCollectionAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyNatRuleCollectionAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyNatRuleCollectionAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyNatRuleCollectionAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyNatRuleCollectionAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,15 +63,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyNatRuleCollectionAction DeserializeFirewallPolicyNatRuleCollectionAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<FirewallPolicyNatRuleCollectionActionType> type = default;
+            FirewallPolicyNatRuleCollectionActionType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyNatRuleCollectionAction(Optional.ToNullable(type), serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FirewallPolicyNatRuleCollectionAction(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyNatRuleCollectionAction>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyNatRuleCollectionAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyNatRuleCollectionAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeFirewallPolicyNatRuleCollectionAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyNatRuleCollectionAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyNatRuleCollectionAction)} does not support reading '{options.Format}' format.");
             }
         }
 

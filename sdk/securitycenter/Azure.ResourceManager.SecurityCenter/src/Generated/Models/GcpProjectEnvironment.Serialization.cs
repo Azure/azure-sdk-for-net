@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class GcpProjectEnvironment : IUtf8JsonSerializable, IJsonModel<GcpProjectEnvironment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GcpProjectEnvironment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GcpProjectEnvironment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GcpProjectEnvironment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GcpProjectEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GcpProjectEnvironment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GcpProjectEnvironment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(OrganizationalData))
             {
                 writer.WritePropertyName("organizationalData"u8);
-                writer.WriteObjectValue(OrganizationalData);
+                writer.WriteObjectValue(OrganizationalData, options);
             }
             if (Optional.IsDefined(ProjectDetails))
             {
                 writer.WritePropertyName("projectDetails"u8);
-                writer.WriteObjectValue(ProjectDetails);
+                writer.WriteObjectValue(ProjectDetails, options);
             }
             if (Optional.IsDefined(ScanInterval))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GcpProjectEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GcpProjectEnvironment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GcpProjectEnvironment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,18 +75,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GcpProjectEnvironment DeserializeGcpProjectEnvironment(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<GcpOrganizationalInfo> organizationalData = default;
-            Optional<GcpProjectDetails> projectDetails = default;
-            Optional<long> scanInterval = default;
+            GcpOrganizationalInfo organizationalData = default;
+            GcpProjectDetails projectDetails = default;
+            long? scanInterval = default;
             EnvironmentType environmentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("organizationalData"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    organizationalData = GcpOrganizationalInfo.DeserializeGcpOrganizationalInfo(property.Value);
+                    organizationalData = GcpOrganizationalInfo.DeserializeGcpOrganizationalInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("projectDetails"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    projectDetails = GcpProjectDetails.DeserializeGcpProjectDetails(property.Value);
+                    projectDetails = GcpProjectDetails.DeserializeGcpProjectDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scanInterval"u8))
@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GcpProjectEnvironment(environmentType, serializedAdditionalRawData, organizationalData.Value, projectDetails.Value, Optional.ToNullable(scanInterval));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GcpProjectEnvironment(environmentType, serializedAdditionalRawData, organizationalData, projectDetails, scanInterval);
         }
 
         BinaryData IPersistableModel<GcpProjectEnvironment>.Write(ModelReaderWriterOptions options)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GcpProjectEnvironment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GcpProjectEnvironment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeGcpProjectEnvironment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GcpProjectEnvironment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GcpProjectEnvironment)} does not support reading '{options.Format}' format.");
             }
         }
 

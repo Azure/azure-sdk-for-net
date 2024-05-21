@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Filtering criteria for querying threat intelligence indicators. </summary>
     public partial class ThreatIntelligenceFilteringCriteria
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceFilteringCriteria"/>. </summary>
         public ThreatIntelligenceFilteringCriteria()
         {
@@ -39,7 +70,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="ids"> Ids of threat intelligence indicators. </param>
         /// <param name="keywords"> Keywords for searching threat intelligence indicators. </param>
         /// <param name="skipToken"> Skip token. </param>
-        internal ThreatIntelligenceFilteringCriteria(int? pageSize, int? minConfidence, int? maxConfidence, DateTimeOffset? minValidUntil, DateTimeOffset? maxValidUntil, bool? isIncludeDisabled, IList<ThreatIntelligenceSortingCriteria> sortBy, IList<string> sources, IList<string> patternTypes, IList<string> threatTypes, IList<string> ids, IList<string> keywords, string skipToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThreatIntelligenceFilteringCriteria(int? pageSize, int? minConfidence, int? maxConfidence, DateTimeOffset? minValidUntil, DateTimeOffset? maxValidUntil, bool? isIncludeDisabled, IList<ThreatIntelligenceSortingCriteria> sortBy, IList<string> sources, IList<string> patternTypes, IList<string> threatTypes, IList<string> ids, IList<string> keywords, string skipToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PageSize = pageSize;
             MinConfidence = minConfidence;
@@ -54,6 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Ids = ids;
             Keywords = keywords;
             SkipToken = skipToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Page size. </summary>
