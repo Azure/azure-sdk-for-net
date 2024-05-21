@@ -21,7 +21,7 @@ namespace Azure.Core.Tests
             var headerSource = "None";
             string lastKnownLocation = null;
             var finalStateVia = OperationFinalStateVia.OperationLocation.ToString();
-            var token = NextLinkOperationImplementation.GetRehydrationToken(requetMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, NextLinkOperationImplementation.NotSet);
+            var token = NextLinkOperationImplementation.GetRehydrationToken(requetMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia);
             Assert.AreEqual(requetMethod, token.RequestMethod);
             Assert.AreEqual(startRequestUri, token.InitialUri);
             Assert.AreEqual(nextRequestUri, token.NextRequestUri);

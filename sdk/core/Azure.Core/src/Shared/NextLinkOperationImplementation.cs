@@ -214,7 +214,7 @@ namespace Azure.Core
             {
                 lastKnownLocation = null;
             }
-            return GetRehydrationToken(requestMethod, startRequestUri, nextRequestUri, headerSource.ToString(), lastKnownLocation, finalStateVia.ToString(), NotSet);
+            return GetRehydrationToken(requestMethod, startRequestUri, nextRequestUri, headerSource.ToString(), lastKnownLocation, finalStateVia.ToString());
         }
 
         public static RehydrationToken GetRehydrationToken(
@@ -224,17 +224,17 @@ namespace Azure.Core
             string headerSource,
             string? lastKnownLocation,
             string finalStateVia,
-            string operationId)
+            string? operationId = null)
         {
             // TODO: Once we remove NextLinkOperationImplementation from internal shared and make it internal to Azure.Core only, we can access the internal members from RehydrationToken directly
             var json = $$"""
-            {"version":"{{RehydrationTokenVersion}}","id":"{{operationId}}","requestMethod":"{{requestMethod}}","initialUri":"{{startRequestUri.AbsoluteUri}}","nextRequestUri":"{{nextRequestUri}}","headerSource":"{{headerSource}}","finalStateVia":"{{finalStateVia}}","lastKnownLocation":{{ConstructStringValue(lastKnownLocation)}}}
+            {"version":"{{RehydrationTokenVersion}}","id":"{{ConstructStringValue(operationId)}}","requestMethod":"{{requestMethod}}","initialUri":"{{startRequestUri.AbsoluteUri}}","nextRequestUri":"{{nextRequestUri}}","headerSource":"{{headerSource}}","finalStateVia":"{{finalStateVia}}","lastKnownLocation":{{ConstructStringValue(lastKnownLocation)}}}
             """;
             var data = new BinaryData(json);
             return ModelReaderWriter.Read<RehydrationToken>(data);
         }
 
-        private static string? ConstructStringValue(string? value) => value is null ? "null" : $"\"{value}\"";
+        private static string? ConstructStringValue(string? value) => value is null ? "null" : $$"""{{value}}""";
 
         public async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
