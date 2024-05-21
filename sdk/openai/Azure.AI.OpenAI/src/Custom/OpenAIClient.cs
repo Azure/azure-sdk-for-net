@@ -130,6 +130,31 @@ public partial class OpenAIClient
         _isConfiguredForAzureOpenAI = false;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the OpenAIClient class with an end point and API key for used with non-Azure OpenAI-compatible endpoints.
+    /// </summary>
+    /// <param name="endpoint">The URI of the OpenAI endpoint.</param>
+    /// <param name="openAIApiKey">The API key for OpenAI.</param>
+    /// <param name="options">The options for configuring the client.</param>
+    /// <remarks>
+    ///     <see cref="OpenAIClient"/> objects initialized with this constructor can only be used with the
+    ///     non-Azure OpenAI inference endpoint. To use <see cref="OpenAIClient"/> with an Azure OpenAI resource,
+    ///     use a constructor that accepts a resource URI and Azure authentication credential, instead.
+    /// </remarks>
+    /// <exception cref="ArgumentNullException"> <paramref name="openAIApiKey"/> is null. </exception>
+    public OpenAIClient(Uri endpoint, string openAIApiKey, OpenAIClientOptions options)
+        : this(endpoint, CreateDelegatedToken(openAIApiKey), options)
+    {
+        _isConfiguredForAzureOpenAI = false;
+    }
+
+    /// <inheritdoc cref="OpenAIClient(Uri, string, OpenAIClientOptions)"/>
+    public OpenAIClient(Uri endpoint, string openAIApiKey)
+        : this(endpoint, CreateDelegatedToken(openAIApiKey), new OpenAIClientOptions())
+    {
+        _isConfiguredForAzureOpenAI = false;
+    }
+
     /// <summary> Return textual completions as configured for a given prompt. </summary>
     /// <param name="completionsOptions">
     ///     The options for this completions request.

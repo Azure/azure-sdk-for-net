@@ -1393,6 +1393,8 @@ namespace Azure.AI.OpenAI
         public OpenAIClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.AI.OpenAI.OpenAIClientOptions options) { }
         public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential) { }
         public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.AI.OpenAI.OpenAIClientOptions options) { }
+        public OpenAIClient(System.Uri endpoint, string openAIApiKey) { }
+        public OpenAIClient(System.Uri endpoint, string openAIApiKey, Azure.AI.OpenAI.OpenAIClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<System.BinaryData> GenerateSpeechFromText(Azure.AI.OpenAI.SpeechGenerationOptions speechGenerationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GenerateSpeechFromTextAsync(Azure.AI.OpenAI.SpeechGenerationOptions speechGenerationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
