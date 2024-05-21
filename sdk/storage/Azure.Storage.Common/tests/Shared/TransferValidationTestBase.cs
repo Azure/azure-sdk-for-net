@@ -2029,6 +2029,53 @@ namespace Azure.Storage.Test.Shared
             Assert.False(response.Headers.Contains("x-ms-content-crc64"));
             Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
+
+        [Test]
+        public virtual async Task DownloadRecoversFromInterruptWithValidation(
+            [ValueSource(nameof(GetValidationAlgorithms))] StorageChecksumAlgorithm algorithm)
+        {
+            using var _ = AzureEventSourceListener.CreateConsoleLogger();
+            int dataLen = algorithm.ResolveAuto() switch {
+                StorageChecksumAlgorithm.StorageCrc64 => 5 * Constants.MB, // >4MB for multisegment
+                _ => Constants.KB,
+            };
+
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(dataLen);
+
+            TClientOptions options = ClientBuilder.GetOptions();
+            options.AddPolicy(new FaultyDownloadPipelinePolicy(dataLen - 512, new IOException(), () => { }), HttpPipelinePosition.BeforeTransport);
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLen,
+                createResource: true,
+                options: options);
+            await SetupDataAsync(client, new MemoryStream(data));
+
+            var validationOptions = new DownloadTransferValidationOptions { ChecksumAlgorithm = algorithm };
+
+            // Act
+            var dest = new MemoryStream();
+            var response = await DownloadPartitionAsync(client, dest, validationOptions, new HttpRange(length: data.Length));
+
+            // Assert
+            // no policies this time; just check response headers
+            switch (algorithm.ResolveAuto())
+            {
+                case StorageChecksumAlgorithm.MD5:
+                    Assert.True(response.Headers.Contains("Content-MD5"));
+                    break;
+                case StorageChecksumAlgorithm.StorageCrc64:
+                    Assert.True(response.Headers.Contains(Constants.StructuredMessage.CrcStructuredMessageHeader));
+                    break;
+                default:
+                    Assert.Fail("Test can't validate given algorithm type.");
+                    break;
+            }
+            Assert.IsTrue(dest.ToArray().SequenceEqual(data));
+        }
         #endregion
 
         #region Auto-Algorithm Tests
