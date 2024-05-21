@@ -7,6 +7,7 @@ parameters:
   ServiceConnection: not-specified
   ResourceType: test
   UseFederatedAuth: false
+  SubscriptionConfigurationFilePath: ''
 
 # SubscriptionConfiguration will be splat into the parameters of the test
 # resources script. It should be JSON in the form:
@@ -39,6 +40,12 @@ steps:
           $subscriptionConfiguration = @"
             ${{ parameters.SubscriptionConfiguration }}
           "@ | ConvertFrom-Json -AsHashtable;
+
+          if ('${{ parameters.SubscriptionConfigurationFilePath }}' -ne '') {
+            $subscriptionConfiguration = `
+              Get-Content '${{ parameters.SubscriptionConfigurationFilePath }}' `
+              | ConvertFrom-Json -AsHashtable;
+          }
 
           eng/common/TestResources/Remove-TestResources.ps1 `
             @subscriptionConfiguration `

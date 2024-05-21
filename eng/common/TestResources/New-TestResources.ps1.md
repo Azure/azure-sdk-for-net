@@ -29,7 +29,7 @@ New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-Servi
  [-TestResourcesDirectory <String>] [-TestApplicationId <String>] [-TestApplicationSecret <String>]
  [-TestApplicationOid <String>] -TenantId <String> [-SubscriptionId <String>]
  -ProvisionerApplicationId <String> [-ProvisionerApplicationOid <String>]
- -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>] [-Location <String>]
+ [-ProvisionerApplicationSecret <String>] [-DeleteAfterHours <Int32>] [-Location <String>]
  [-Environment <String>] [-ResourceType <String>] [-ArmTemplateParameters <Hashtable>]
  [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile]
  [-SuppressVsoCommands] [-ServicePrincipalAuth] [-NewTestResourcesRemainingArguments <Object>]
@@ -426,7 +426,7 @@ Type: String
 Parameter Sets: Provisioner
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -712,7 +712,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
