@@ -41,7 +41,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
-                writer.WriteNumberValue(Convert.ToDouble(Duration.Value.ToString("s\\.fff")));
+                writer.WriteNumberValue(Convert.ToDouble(Duration.Value.ToString("s\\.FFF")));
             }
             if (Optional.IsCollectionDefined(Segments))
             {

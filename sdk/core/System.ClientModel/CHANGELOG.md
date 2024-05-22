@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.1.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.4 (2024-05-16)
+
+### Features Added
+
+- Added `BufferResponse` property to `RequestOptions` so protocol method callers can turn off response buffering if desired.
+- Added `AsyncResultCollection<T>` and `ResultCollection<T>` for clients to return from service methods where the service response contains a collection of values.
+- Added `AsyncPageableCollection<T>`, `PageableCollection<T>` and `ResultPage<T>` for clients to return from service methods where collection values are delivered to the client over one or more service responses.
+- Added `SetRawResponse` method to `ClientResult` to allow the response held by the result to be changed, for example by derived types that obtain multiple responses from polling the service.
+
+### Breaking Changes
+
+- `ClientResult.GetRawResponse` will now throw `InvalidOperationException` if called before the result's raw response is set, for example by collection result types that delay sending a request to the service until the collection is enumerated.
 
 ## 1.1.0-beta.3 (2024-04-04)
 

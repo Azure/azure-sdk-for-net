@@ -1,5 +1,15 @@
 # Release History
 
+## 0.3.0 (2024-05-14)
+
+### Features Added
+
+- Added support for all Bicep parameter/output types.
+
+### Other Changes
+
+- Updated dependency on Azure Resource Manager libraries to leverage serialization fix involving property assignments.
+
 ## 0.2.0 (2024-04-24)
 
 ### Features Added
