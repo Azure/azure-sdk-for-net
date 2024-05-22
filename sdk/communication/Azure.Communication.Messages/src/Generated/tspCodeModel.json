@@ -35,7 +35,7 @@
    "Description": "The type of message. Supports text, image, template.",
    "IsExtensible": true,
    "IsNullable": false,
-   "Usage": "Input"
+   "Usage": 2
   },
   {
    "$id": "6",
@@ -60,7 +60,7 @@
    "Description": "Repeatability Result header options",
    "IsExtensible": false,
    "IsNullable": false,
-   "Usage": "Output"
+   "Usage": 4
   },
   {
    "$id": "9",
@@ -97,7 +97,7 @@
    "Description": "The aggregated template status.",
    "IsExtensible": true,
    "IsNullable": false,
-   "Usage": "Output"
+   "Usage": 4
   },
   {
    "$id": "14",
@@ -116,7 +116,7 @@
    "Description": "The type of the communication messages channel.",
    "IsExtensible": true,
    "IsNullable": false,
-   "Usage": "Output"
+   "Usage": 4
   },
   {
    "$id": "16",
@@ -165,7 +165,7 @@
    "Description": "The type of the template parameter.",
    "IsExtensible": true,
    "IsNullable": false,
-   "Usage": "Input"
+   "Usage": 2
   },
   {
    "$id": "23",
@@ -184,7 +184,7 @@
    "Description": "The type of the message template.",
    "IsExtensible": true,
    "IsNullable": false,
-   "Usage": "Input"
+   "Usage": 2
   },
   {
    "$id": "25",
@@ -209,7 +209,7 @@
    "Description": "The WhatsApp button sub type.",
    "IsExtensible": true,
    "IsNullable": false,
-   "Usage": "Input"
+   "Usage": 2
   },
   {
    "$id": "28",
@@ -228,7 +228,7 @@
    "Description": "Azure Communication Messages Versions",
    "IsExtensible": false,
    "IsNullable": false,
-   "Usage": "None"
+   "Usage": 8
   }
  ],
  "Models": [
@@ -240,7 +240,7 @@
    "Description": "Details of the message to send.",
    "IsNullable": false,
    "DiscriminatorPropertyName": "kind",
-   "Usage": "Input",
+   "Usage": 2,
    "Properties": [
     {
      "$id": "31",
@@ -297,7 +297,7 @@
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "Result of the send message operation.",
    "IsNullable": false,
-   "Usage": "Output",
+   "Usage": 4,
    "Properties": [
     {
      "$id": "38",
@@ -315,7 +315,7 @@
        "Namespace": "Azure.Communication.MessagesService",
        "Description": "Receipt of the sending one message.",
        "IsNullable": false,
-       "Usage": "Output",
+       "Usage": 4,
        "Properties": [
         {
          "$id": "41",
@@ -364,7 +364,7 @@
    "Namespace": "Azure.Core.Foundations",
    "Description": "Paged collection of MessageTemplateItem items",
    "IsNullable": false,
-   "Usage": "Output",
+   "Usage": 4,
    "Properties": [
     {
      "$id": "46",
@@ -383,7 +383,7 @@
        "Description": "The message template as returned from the service.",
        "IsNullable": false,
        "DiscriminatorPropertyName": "kind",
-       "Usage": "Output",
+       "Usage": 4,
        "Properties": [
         {
          "$id": "49",
@@ -470,7 +470,7 @@
    "Description": "A request to send a text notification.",
    "IsNullable": false,
    "DiscriminatorValue": "text",
-   "Usage": "Input",
+   "Usage": 2,
    "BaseModel": {
     "$ref": "30"
    },
@@ -499,7 +499,7 @@
    "Description": "A request to send a media notification.",
    "IsNullable": false,
    "DiscriminatorValue": "image",
-   "Usage": "Input",
+   "Usage": 2,
    "BaseModel": {
     "$ref": "30"
    },
@@ -542,7 +542,7 @@
    "Description": "A request to send a template notification.",
    "IsNullable": false,
    "DiscriminatorValue": "template",
-   "Usage": "Input",
+   "Usage": 2,
    "BaseModel": {
     "$ref": "30"
    },
@@ -559,7 +559,7 @@
       "Namespace": "Azure.Communication.MessagesService",
       "Description": "The template object used to create templates.",
       "IsNullable": false,
-      "Usage": "Input",
+      "Usage": 2,
       "Properties": [
        {
         "$id": "68",
@@ -606,7 +606,7 @@
           "Description": "The class describes a parameter of a template.",
           "IsNullable": false,
           "DiscriminatorPropertyName": "kind",
-          "Usage": "Input",
+          "Usage": 2,
           "Properties": [
            {
             "$id": "75",
@@ -654,7 +654,7 @@
          "Description": "The binding object to link values to the template specific locations",
          "IsNullable": false,
          "DiscriminatorPropertyName": "kind",
-         "Usage": "Input",
+         "Usage": 2,
          "Properties": [
           {
            "$id": "80",
@@ -697,7 +697,7 @@
    "Description": "The message template's text value information.",
    "IsNullable": false,
    "DiscriminatorValue": "text",
-   "Usage": "Input",
+   "Usage": 2,
    "BaseModel": {
     "$ref": "74"
    },
@@ -726,7 +726,7 @@
    "Description": "The message template's image value information.",
    "IsNullable": false,
    "DiscriminatorValue": "image",
-   "Usage": "Input",
+   "Usage": 2,
    "BaseModel": {
     "$ref": "74"
    },
@@ -783,7 +783,7 @@
    "Description": "The message template's document value information.",
    "IsNullable": false,
    "DiscriminatorValue": "document",
-   "Usage": "Input",
+   "Usage": 2,
    "BaseModel": {
     "$ref": "74"
    },
@@ -840,7 +840,7 @@
    "Description": "The message template's video value information.",
    "IsNullable": false,
    "DiscriminatorValue": "video",
-   "Usage": "Input",
+   "Usage": 2,
    "BaseModel": {
     "$ref": "74"
    },
@@ -897,7 +897,7 @@
    "Description": "The message template's location value information.",
    "IsNullable": false,
    "DiscriminatorValue": "location",
-   "Usage": "Input",
+   "Usage": 2,
    "BaseModel": {
     "$ref": "74"
    },
@@ -968,7 +968,7 @@
    "Description": "The message template's quick action value information.",
    "IsNullable": false,
    "DiscriminatorValue": "quickAction",
-   "Usage": "Input",
+   "Usage": 2,
    "BaseModel": {
     "$ref": "74"
    },
@@ -1011,7 +1011,7 @@
    "Description": "The template bindings for WhatsApp",
    "IsNullable": false,
    "DiscriminatorValue": "whatsApp",
-   "Usage": "Input",
+   "Usage": 2,
    "BaseModel": {
     "$ref": "79"
    },
@@ -1032,7 +1032,7 @@
        "Namespace": "Azure.Communication.MessagesService",
        "Description": "The template bindings component for WhatsApp",
        "IsNullable": false,
-       "Usage": "Input",
+       "Usage": 2,
        "Properties": [
         {
          "$id": "123",
@@ -1105,7 +1105,7 @@
        "Namespace": "Azure.Communication.MessagesService",
        "Description": "The template bindings component button for WhatsApp",
        "IsNullable": false,
-       "Usage": "Input",
+       "Usage": 2,
        "Properties": [
         {
          "$id": "132",
@@ -1155,7 +1155,7 @@
    "Description": "The WhatsApp-specific template response contract",
    "IsNullable": false,
    "DiscriminatorValue": "whatsApp",
-   "Usage": "Output",
+   "Usage": 4,
    "BaseModel": {
     "$ref": "48"
    },
