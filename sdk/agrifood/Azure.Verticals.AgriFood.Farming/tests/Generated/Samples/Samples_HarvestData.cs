@@ -19,7 +19,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCascadeDeleteJobDetails_ShortVersion()
+        public void Example_HarvestData_GetCascadeDeleteJobDetails_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -35,7 +35,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCascadeDeleteJobDetails_ShortVersion_Async()
+        public async Task Example_HarvestData_GetCascadeDeleteJobDetails_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -51,7 +51,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCascadeDeleteJobDetails_AllParameters()
+        public void Example_HarvestData_GetCascadeDeleteJobDetails_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -76,7 +76,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCascadeDeleteJobDetails_AllParameters_Async()
+        public async Task Example_HarvestData_GetCascadeDeleteJobDetails_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -101,7 +101,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetHarvestData_ShortVersion()
+        public void Example_HarvestData_GetHarvestData_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -115,7 +115,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetHarvestData_ShortVersion_Async()
+        public async Task Example_HarvestData_GetHarvestData_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -129,7 +129,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetHarvestData_AllParameters()
+        public void Example_HarvestData_GetHarvestData_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -186,7 +186,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetHarvestData_AllParameters_Async()
+        public async Task Example_HarvestData_GetHarvestData_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -243,7 +243,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate_ShortVersion()
+        public void Example_HarvestData_CreateOrUpdate_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -258,7 +258,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_ShortVersion_Async()
+        public async Task Example_HarvestData_CreateOrUpdate_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -273,7 +273,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate_AllParameters()
+        public void Example_HarvestData_CreateOrUpdate_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -357,7 +357,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_AllParameters_Async()
+        public async Task Example_HarvestData_CreateOrUpdate_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -441,7 +441,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_ShortVersion()
+        public void Example_HarvestData_Delete_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -454,7 +454,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_ShortVersion_Async()
+        public async Task Example_HarvestData_Delete_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -467,7 +467,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_AllParameters()
+        public void Example_HarvestData_Delete_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -480,7 +480,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_AllParameters_Async()
+        public async Task Example_HarvestData_Delete_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -493,7 +493,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllHarvestData_ShortVersion()
+        public void Example_HarvestData_GetAllHarvestData_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -508,7 +508,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllHarvestData_ShortVersion_Async()
+        public async Task Example_HarvestData_GetAllHarvestData_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -523,7 +523,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllHarvestData_AllParameters()
+        public void Example_HarvestData_GetAllHarvestData_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -581,7 +581,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllHarvestData_AllParameters_Async()
+        public async Task Example_HarvestData_GetAllHarvestData_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -639,7 +639,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllHarvestDataByPartyId_ShortVersion()
+        public void Example_HarvestData_GetAllHarvestDataByPartyId_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -654,7 +654,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllHarvestDataByPartyId_ShortVersion_Async()
+        public async Task Example_HarvestData_GetAllHarvestDataByPartyId_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -669,7 +669,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllHarvestDataByPartyId_AllParameters()
+        public void Example_HarvestData_GetAllHarvestDataByPartyId_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -727,7 +727,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllHarvestDataByPartyId_AllParameters_Async()
+        public async Task Example_HarvestData_GetAllHarvestDataByPartyId_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -785,7 +785,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateCascadeDeleteJob_ShortVersion()
+        public void Example_HarvestData_CreateCascadeDeleteJob_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -802,7 +802,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateCascadeDeleteJob_ShortVersion_Async()
+        public async Task Example_HarvestData_CreateCascadeDeleteJob_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -819,7 +819,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateCascadeDeleteJob_AllParameters()
+        public void Example_HarvestData_CreateCascadeDeleteJob_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -845,7 +845,7 @@ productName = "<productName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateCascadeDeleteJob_AllParameters_Async()
+        public async Task Example_HarvestData_CreateCascadeDeleteJob_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();

@@ -20,7 +20,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Download_ShortVersion()
+        public void Example_Scenes_Download_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -37,7 +37,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Download_ShortVersion_Async()
+        public async Task Example_Scenes_Download_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -54,7 +54,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Download_AllParameters()
+        public void Example_Scenes_Download_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -71,7 +71,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Download_AllParameters_Async()
+        public async Task Example_Scenes_Download_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -88,7 +88,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSatelliteDataIngestionJobDetails_ShortVersion()
+        public void Example_Scenes_GetSatelliteDataIngestionJobDetails_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -106,7 +106,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSatelliteDataIngestionJobDetails_ShortVersion_Async()
+        public async Task Example_Scenes_GetSatelliteDataIngestionJobDetails_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -124,7 +124,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSatelliteDataIngestionJobDetails_AllParameters()
+        public void Example_Scenes_GetSatelliteDataIngestionJobDetails_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -160,7 +160,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSatelliteDataIngestionJobDetails_AllParameters_Async()
+        public async Task Example_Scenes_GetSatelliteDataIngestionJobDetails_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -196,7 +196,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SearchFeatures_ShortVersion()
+        public void Example_Scenes_SearchFeatures_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -221,7 +221,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SearchFeatures_ShortVersion_Async()
+        public async Task Example_Scenes_SearchFeatures_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -246,7 +246,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SearchFeatures_AllParameters()
+        public void Example_Scenes_SearchFeatures_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -307,7 +307,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SearchFeatures_AllParameters_Async()
+        public async Task Example_Scenes_SearchFeatures_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -368,7 +368,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetStacFeature_ShortVersion()
+        public void Example_Scenes_GetStacFeature_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -388,7 +388,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetStacFeature_ShortVersion_Async()
+        public async Task Example_Scenes_GetStacFeature_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -408,7 +408,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetStacFeature_AllParameters()
+        public void Example_Scenes_GetStacFeature_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -438,7 +438,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetStacFeature_AllParameters_Async()
+        public async Task Example_Scenes_GetStacFeature_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -468,7 +468,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetScenes_ShortVersion()
+        public void Example_Scenes_GetScenes_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -483,7 +483,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetScenes_ShortVersion_Async()
+        public async Task Example_Scenes_GetScenes_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -498,7 +498,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetScenes_AllParameters()
+        public void Example_Scenes_GetScenes_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -527,7 +527,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetScenes_AllParameters_Async()
+        public async Task Example_Scenes_GetScenes_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -556,7 +556,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateSatelliteDataIngestionJob_ShortVersion()
+        public void Example_Scenes_CreateSatelliteDataIngestionJob_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -583,7 +583,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateSatelliteDataIngestionJob_ShortVersion_Async()
+        public async Task Example_Scenes_CreateSatelliteDataIngestionJob_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -610,7 +610,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateSatelliteDataIngestionJob_AllParameters()
+        public void Example_Scenes_CreateSatelliteDataIngestionJob_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -677,7 +677,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateSatelliteDataIngestionJob_AllParameters_Async()
+        public async Task Example_Scenes_CreateSatelliteDataIngestionJob_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
