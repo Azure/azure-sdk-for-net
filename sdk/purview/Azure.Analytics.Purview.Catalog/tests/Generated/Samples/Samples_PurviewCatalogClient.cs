@@ -18,7 +18,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Search_ShortVersion()
+        public void Example_Search_Search_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Search_ShortVersion_Async()
+        public async Task Example_Search_Search_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Search_AllParameters()
+        public void Example_Search_Search_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -121,7 +121,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Search_AllParameters_Async()
+        public async Task Example_Search_Search_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -194,7 +194,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Suggest_ShortVersion()
+        public void Example_Suggest_Suggest_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -209,7 +209,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Suggest_ShortVersion_Async()
+        public async Task Example_Suggest_Suggest_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -224,7 +224,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Suggest_AllParameters()
+        public void Example_Suggest_Suggest_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -260,7 +260,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Suggest_AllParameters_Async()
+        public async Task Example_Suggest_Suggest_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -296,7 +296,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Browse_ShortVersion()
+        public void Example_Browse_Browse_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -311,7 +311,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Browse_ShortVersion_Async()
+        public async Task Example_Browse_Browse_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -326,7 +326,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Browse_AllParameters()
+        public void Example_Browse_Browse_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -357,7 +357,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Browse_AllParameters_Async()
+        public async Task Example_Browse_Browse_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -388,7 +388,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AutoComplete_ShortVersion()
+        public void Example_AutoComplete_AutoComplete_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -403,7 +403,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AutoComplete_ShortVersion_Async()
+        public async Task Example_AutoComplete_AutoComplete_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -418,7 +418,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AutoComplete_AllParameters()
+        public void Example_AutoComplete_AutoComplete_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -439,7 +439,7 @@ sort = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AutoComplete_AllParameters_Async()
+        public async Task Example_AutoComplete_AutoComplete_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

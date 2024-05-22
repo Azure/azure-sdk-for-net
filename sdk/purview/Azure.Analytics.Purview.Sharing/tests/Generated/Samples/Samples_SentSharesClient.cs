@@ -18,7 +18,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSentShare_ShortVersion()
+        public void Example_SentShares_GetSentShare_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSentShare_ShortVersion_Async()
+        public async Task Example_SentShares_GetSentShare_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSentShare_AllParameters()
+        public void Example_SentShares_GetSentShare_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSentShare_AllParameters_Async()
+        public async Task Example_SentShares_GetSentShare_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSentShareInvitation_ShortVersion()
+        public void Example_SentShares_GetSentShareInvitation_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSentShareInvitation_ShortVersion_Async()
+        public async Task Example_SentShares_GetSentShareInvitation_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSentShareInvitation_AllParameters()
+        public void Example_SentShares_GetSentShareInvitation_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSentShareInvitation_AllParameters_Async()
+        public async Task Example_SentShares_GetSentShareInvitation_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -138,7 +138,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateSentShareInvitation_ShortVersion()
+        public void Example_SentShares_CreateSentShareInvitation_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -161,7 +161,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateSentShareInvitation_ShortVersion_Async()
+        public async Task Example_SentShares_CreateSentShareInvitation_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -184,7 +184,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateSentShareInvitation_AllParameters()
+        public void Example_SentShares_CreateSentShareInvitation_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -211,7 +211,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateSentShareInvitation_AllParameters_Async()
+        public async Task Example_SentShares_CreateSentShareInvitation_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -238,7 +238,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_NotifyUserSentShareInvitation_ShortVersion()
+        public void Example_SentShares_NotifyUserSentShareInvitation_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -252,7 +252,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_NotifyUserSentShareInvitation_ShortVersion_Async()
+        public async Task Example_SentShares_NotifyUserSentShareInvitation_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -266,7 +266,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_NotifyUserSentShareInvitation_AllParameters()
+        public void Example_SentShares_NotifyUserSentShareInvitation_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -282,7 +282,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_NotifyUserSentShareInvitation_AllParameters_Async()
+        public async Task Example_SentShares_NotifyUserSentShareInvitation_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -298,7 +298,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllSentShares_ShortVersion()
+        public void Example_SentShares_GetAllSentShares_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -313,7 +313,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllSentShares_ShortVersion_Async()
+        public async Task Example_SentShares_GetAllSentShares_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -328,7 +328,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllSentShares_AllParameters()
+        public void Example_SentShares_GetAllSentShares_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -345,7 +345,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllSentShares_AllParameters_Async()
+        public async Task Example_SentShares_GetAllSentShares_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -362,7 +362,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllSentShareInvitations_ShortVersion()
+        public void Example_SentShares_GetAllSentShareInvitations_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -377,7 +377,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllSentShareInvitations_ShortVersion_Async()
+        public async Task Example_SentShares_GetAllSentShareInvitations_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -392,7 +392,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllSentShareInvitations_AllParameters()
+        public void Example_SentShares_GetAllSentShareInvitations_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -409,7 +409,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllSentShareInvitations_AllParameters_Async()
+        public async Task Example_SentShares_GetAllSentShareInvitations_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -426,7 +426,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrReplaceSentShare_ShortVersion()
+        public void Example_SentShares_CreateOrReplaceSentShare_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -464,7 +464,7 @@ containerName = "<containerName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrReplaceSentShare_ShortVersion_Async()
+        public async Task Example_SentShares_CreateOrReplaceSentShare_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -502,7 +502,7 @@ containerName = "<containerName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrReplaceSentShare_AllParameters()
+        public void Example_SentShares_CreateOrReplaceSentShare_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -549,7 +549,7 @@ senderPath = "<senderPath>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrReplaceSentShare_AllParameters_Async()
+        public async Task Example_SentShares_CreateOrReplaceSentShare_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -596,7 +596,7 @@ senderPath = "<senderPath>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteSentShare_ShortVersion()
+        public void Example_SentShares_DeleteSentShare_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -611,7 +611,7 @@ senderPath = "<senderPath>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteSentShare_ShortVersion_Async()
+        public async Task Example_SentShares_DeleteSentShare_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -626,7 +626,7 @@ senderPath = "<senderPath>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteSentShare_AllParameters()
+        public void Example_SentShares_DeleteSentShare_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -647,7 +647,7 @@ senderPath = "<senderPath>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteSentShare_AllParameters_Async()
+        public async Task Example_SentShares_DeleteSentShare_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -668,7 +668,7 @@ senderPath = "<senderPath>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteSentShareInvitation_ShortVersion()
+        public void Example_SentShares_DeleteSentShareInvitation_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -683,7 +683,7 @@ senderPath = "<senderPath>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteSentShareInvitation_ShortVersion_Async()
+        public async Task Example_SentShares_DeleteSentShareInvitation_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -698,7 +698,7 @@ senderPath = "<senderPath>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteSentShareInvitation_AllParameters()
+        public void Example_SentShares_DeleteSentShareInvitation_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -719,7 +719,7 @@ senderPath = "<senderPath>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteSentShareInvitation_AllParameters_Async()
+        public async Task Example_SentShares_DeleteSentShareInvitation_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

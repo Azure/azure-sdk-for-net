@@ -18,7 +18,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWorkflow_ShortVersion()
+        public void Example_Workflow_GetWorkflow_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflow_ShortVersion_Async()
+        public async Task Example_Workflow_GetWorkflow_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWorkflow_AllParameters()
+        public void Example_Workflow_GetWorkflow_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflow_AllParameters_Async()
+        public async Task Example_Workflow_GetWorkflow_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrReplace_ShortVersion()
+        public void Example_Workflow_CreateOrReplace_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -140,7 +140,7 @@ type = "when_term_creation_is_requested",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrReplace_ShortVersion_Async()
+        public async Task Example_Workflow_CreateOrReplace_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -172,7 +172,7 @@ type = "when_term_creation_is_requested",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrReplace_AllParameters()
+        public void Example_Workflow_CreateOrReplace_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -215,7 +215,7 @@ underGlossary = "<underGlossary>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrReplace_AllParameters_Async()
+        public async Task Example_Workflow_CreateOrReplace_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -258,7 +258,7 @@ underGlossary = "<underGlossary>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_ShortVersion()
+        public void Example_Workflow_Delete_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -271,7 +271,7 @@ underGlossary = "<underGlossary>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_ShortVersion_Async()
+        public async Task Example_Workflow_Delete_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -284,7 +284,7 @@ underGlossary = "<underGlossary>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_AllParameters()
+        public void Example_Workflow_Delete_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -297,7 +297,7 @@ underGlossary = "<underGlossary>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_AllParameters_Async()
+        public async Task Example_Workflow_Delete_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -310,7 +310,7 @@ underGlossary = "<underGlossary>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Validate_ShortVersion()
+        public void Example_Workflow_Validate_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -339,7 +339,7 @@ type = "when_term_creation_is_requested",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Validate_ShortVersion_Async()
+        public async Task Example_Workflow_Validate_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -368,7 +368,7 @@ type = "when_term_creation_is_requested",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Validate_AllParameters()
+        public void Example_Workflow_Validate_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -403,7 +403,7 @@ underGlossary = "<underGlossary>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Validate_AllParameters_Async()
+        public async Task Example_Workflow_Validate_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

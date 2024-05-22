@@ -18,7 +18,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Submit_ShortVersion()
+        public void Example_UserRequests_Submit_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -47,7 +47,7 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Submit_ShortVersion_Async()
+        public async Task Example_UserRequests_Submit_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -76,7 +76,7 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Submit_AllParameters()
+        public void Example_UserRequests_Submit_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -108,7 +108,7 @@ payload = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Submit_AllParameters_Async()
+        public async Task Example_UserRequests_Submit_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

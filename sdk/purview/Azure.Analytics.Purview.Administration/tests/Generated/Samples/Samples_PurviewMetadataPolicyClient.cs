@@ -18,7 +18,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateMetadataPolicy_ShortVersion()
+        public void Example_PurviewMetadataPolicy_UpdateMetadataPolicy_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateMetadataPolicy_ShortVersion_Async()
+        public async Task Example_PurviewMetadataPolicy_UpdateMetadataPolicy_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateMetadataPolicy_AllParameters()
+        public void Example_PurviewMetadataPolicy_UpdateMetadataPolicy_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -141,7 +141,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateMetadataPolicy_AllParameters_Async()
+        public async Task Example_PurviewMetadataPolicy_UpdateMetadataPolicy_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -234,7 +234,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetadataPolicy_ShortVersion()
+        public void Example_PurviewMetadataPolicy_GetMetadataPolicy_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -248,7 +248,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetadataPolicy_ShortVersion_Async()
+        public async Task Example_PurviewMetadataPolicy_GetMetadataPolicy_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -262,7 +262,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetadataPolicy_AllParameters()
+        public void Example_PurviewMetadataPolicy_GetMetadataPolicy_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -297,7 +297,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetadataPolicy_AllParameters_Async()
+        public async Task Example_PurviewMetadataPolicy_GetMetadataPolicy_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -332,7 +332,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetadataPolicies_ShortVersion()
+        public void Example_PurviewMetadataPolicy_GetMetadataPolicies_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -347,7 +347,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetadataPolicies_ShortVersion_Async()
+        public async Task Example_PurviewMetadataPolicy_GetMetadataPolicies_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -362,7 +362,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetadataPolicies_AllParameters()
+        public void Example_PurviewMetadataPolicy_GetMetadataPolicies_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -398,7 +398,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetadataPolicies_AllParameters_Async()
+        public async Task Example_PurviewMetadataPolicy_GetMetadataPolicies_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
