@@ -2,6 +2,7 @@
   "name": "azure-sdk-for-net",
   "version": "1.0.0",
   "dependencies": {
+    "@azure-tools/typespec-client-generator-cli": "^0.7.1",
     "autorest": "^3.7.1"
   }
 }
