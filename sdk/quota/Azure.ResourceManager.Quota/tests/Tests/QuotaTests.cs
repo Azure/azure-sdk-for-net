@@ -139,5 +139,85 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             // fail if request doesn't fail
             Assert.Fail();
         }
+
+        [TestCase]
+        public async Task SetGroupQuota()
+        {
+            // invoke the operation
+            GroupQuotasEntityPatch patch = new GroupQuotasEntityPatch()
+            {
+                Properties = new GroupQuotasEntityBasePatch()
+                {
+                    DisplayName = "UpdatedGroupQuota1",
+                    AdditionalAttributes = new AdditionalAttributesPatch()
+                    {
+                        GroupId = new GroupingId()
+                        {
+                            GroupingIdType = GroupingIdType.BillingId,
+                            Value = "billingId1234",
+                        }
+                    },
+                },
+            };
+
+            try
+            {
+                string managementGroupId = "testMgIdRoot";
+                string groupQuotaName = "gq-tejas-canary-validation";
+                ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
+                GroupQuotasEntityResource groupQuotasEntity = Client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
+
+                ArmOperation<GroupQuotasEntityResource> lro = await groupQuotasEntity.UpdateAsync(WaitUntil.Completed, patch);
+                GroupQuotasEntityResource result = lro.Value;
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.AreEqual(400, ex.Status);
+                Assert.AreEqual("InvalidResourceName", ex.ErrorCode);
+                return;
+            }
+
+            // fail if request doesn't fail
+            Assert.Fail();
+        }
+
+        [TestCase]
+        public async Task SetGroupQuotaLimit()
+        {
+            // invoke the operation
+            SubmittedResourceRequestStatusData patch = new SubmittedResourceRequestStatusData()
+            {
+                Properties = new SubmittedResourceRequestStatusProperties()
+                {
+                    RequestedResource =
+                    {
+                        Limit = 100,
+                        Region = "westus",
+                        Comments = "ticketComments"
+                    }
+                },
+            };
+
+            try
+            {
+                string managementGroupId = "testMgIdRoot";
+                string groupQuotaName = "gq-tejas-canary-validation";
+                ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
+                GroupQuotasEntityResource groupQuotasEntity = Client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
+                //"Microsoft.Compute", "standardDv4family", data= patch
+
+                ArmOperation<GroupQuotasEntityResource> lro = await groupQuotasEntity.CreateOrUpdateGroupQuotaLimitsRequest(WaitUntil.Completed, "Microsoft.Compute", "standardDv4Family", patch);
+                GroupQuotasEntityResource result = lro.Value;
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.AreEqual(400, ex.Status);
+                Assert.AreEqual("InvalidResourceName", ex.ErrorCode);
+                return;
+            }
+
+            // fail if request doesn't fail
+            Assert.Fail();
+        }
     }
 }

@@ -9,7 +9,8 @@ csharp: true
 library-name: Quota
 namespace: Azure.ResourceManager.Quota
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/57e0f495d521002e883f5357db0dfdfdaaff0208/specification/quota/resource-manager/readme.md
+tag: package-2023-06-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/d1f4d6fcf1bbb2e71a32bb2079de12f17fedf56a/specification/quota/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -75,5 +76,9 @@ directive:
     transform: >
       $.QuotaProperties.properties.quotaPeriod['format'] = 'duration';
       $.UsagesProperties.properties.quotaPeriod['format'] = 'duration';
+
+list-exception:
+- /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}
+- /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/quotaAllocationRequests/{allocationId}
 
 ```
