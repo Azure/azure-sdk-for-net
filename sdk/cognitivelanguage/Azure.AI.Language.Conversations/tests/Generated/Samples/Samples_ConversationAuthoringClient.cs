@@ -19,7 +19,7 @@ namespace Azure.AI.Language.Conversations.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateProject_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_CreateProject_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -43,7 +43,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateProject_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_CreateProject_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateProject_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_CreateProject_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -102,7 +102,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateProject_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_CreateProject_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -137,7 +137,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProject_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetProject_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -155,7 +155,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProject_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetProject_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -173,7 +173,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProject_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetProject_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -196,7 +196,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProject_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetProject_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -219,7 +219,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeployment_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetDeployment_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -238,7 +238,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployment_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetDeployment_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -257,7 +257,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeployment_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetDeployment_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -276,7 +276,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployment_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetDeployment_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -295,7 +295,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeploymentJobStatus_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetDeploymentJobStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -312,7 +312,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeploymentJobStatus_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetDeploymentJobStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -329,7 +329,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeploymentJobStatus_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetDeploymentJobStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -363,7 +363,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeploymentJobStatus_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetDeploymentJobStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -397,7 +397,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSwapDeploymentsJobStatus_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetSwapDeploymentsJobStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -414,7 +414,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSwapDeploymentsJobStatus_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetSwapDeploymentsJobStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -431,7 +431,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSwapDeploymentsJobStatus_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetSwapDeploymentsJobStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -465,7 +465,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSwapDeploymentsJobStatus_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetSwapDeploymentsJobStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -499,7 +499,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetExportProjectJobStatus_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetExportProjectJobStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -516,7 +516,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetExportProjectJobStatus_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetExportProjectJobStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -533,7 +533,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetExportProjectJobStatus_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetExportProjectJobStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -568,7 +568,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetExportProjectJobStatus_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetExportProjectJobStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -603,7 +603,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetImportProjectJobStatus_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetImportProjectJobStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -620,7 +620,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetImportProjectJobStatus_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetImportProjectJobStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -637,7 +637,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetImportProjectJobStatus_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetImportProjectJobStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -671,7 +671,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetImportProjectJobStatus_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetImportProjectJobStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -705,7 +705,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTrainedModel_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetTrainedModel_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -725,7 +725,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrainedModel_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetTrainedModel_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -745,7 +745,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTrainedModel_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetTrainedModel_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -765,7 +765,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrainedModel_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetTrainedModel_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -785,7 +785,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTrainedModel_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_DeleteTrainedModel_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -798,7 +798,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteTrainedModel_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_DeleteTrainedModel_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -811,7 +811,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTrainedModel_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_DeleteTrainedModel_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -824,7 +824,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteTrainedModel_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_DeleteTrainedModel_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -837,7 +837,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetModelEvaluationSummary_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetModelEvaluationSummary_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -880,7 +880,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetModelEvaluationSummary_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetModelEvaluationSummary_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -923,7 +923,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetModelEvaluationSummary_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetModelEvaluationSummary_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -969,7 +969,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetModelEvaluationSummary_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetModelEvaluationSummary_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1015,7 +1015,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetLoadSnapshotJobStatus_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetLoadSnapshotJobStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1032,7 +1032,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLoadSnapshotJobStatus_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetLoadSnapshotJobStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1049,7 +1049,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetLoadSnapshotJobStatus_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetLoadSnapshotJobStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1083,7 +1083,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLoadSnapshotJobStatus_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetLoadSnapshotJobStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1117,7 +1117,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTrainingJobStatus_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetTrainingJobStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1138,7 +1138,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrainingJobStatus_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetTrainingJobStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1159,7 +1159,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTrainingJobStatus_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetTrainingJobStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1205,7 +1205,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrainingJobStatus_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetTrainingJobStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1251,7 +1251,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProjectDeletionJobStatus_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetProjectDeletionJobStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1268,7 +1268,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjectDeletionJobStatus_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetProjectDeletionJobStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1285,7 +1285,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProjectDeletionJobStatus_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetProjectDeletionJobStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1319,7 +1319,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjectDeletionJobStatus_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetProjectDeletionJobStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1353,7 +1353,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProjects_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetProjects_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1372,7 +1372,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjects_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetProjects_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1391,7 +1391,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProjects_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetProjects_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1415,7 +1415,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjects_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetProjects_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1439,7 +1439,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeployments_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetDeployments_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1459,7 +1459,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployments_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetDeployments_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1479,7 +1479,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeployments_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetDeployments_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1499,7 +1499,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployments_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetDeployments_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1519,7 +1519,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTrainedModels_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetTrainedModels_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1540,7 +1540,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrainedModels_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetTrainedModels_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1561,7 +1561,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTrainedModels_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetTrainedModels_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1582,7 +1582,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrainedModels_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetTrainedModels_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1603,7 +1603,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetModelEvaluationResults_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetModelEvaluationResults_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1627,7 +1627,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetModelEvaluationResults_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetModelEvaluationResults_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1651,7 +1651,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetModelEvaluationResults_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetModelEvaluationResults_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1675,7 +1675,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetModelEvaluationResults_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetModelEvaluationResults_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1699,7 +1699,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTrainingJobs_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetTrainingJobs_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1721,7 +1721,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrainingJobs_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetTrainingJobs_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1743,7 +1743,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTrainingJobs_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetTrainingJobs_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1790,7 +1790,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrainingJobs_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetTrainingJobs_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1837,7 +1837,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSupportedLanguages_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetSupportedLanguages_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1853,7 +1853,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSupportedLanguages_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetSupportedLanguages_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1869,7 +1869,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSupportedLanguages_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetSupportedLanguages_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1885,7 +1885,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSupportedLanguages_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetSupportedLanguages_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1901,7 +1901,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSupportedPrebuiltEntities_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetSupportedPrebuiltEntities_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1918,7 +1918,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSupportedPrebuiltEntities_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetSupportedPrebuiltEntities_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1935,7 +1935,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSupportedPrebuiltEntities_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetSupportedPrebuiltEntities_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1952,7 +1952,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSupportedPrebuiltEntities_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetSupportedPrebuiltEntities_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1969,7 +1969,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTrainingConfigVersions_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_GetTrainingConfigVersions_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1985,7 +1985,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrainingConfigVersions_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetTrainingConfigVersions_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2001,7 +2001,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetTrainingConfigVersions_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_GetTrainingConfigVersions_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2017,7 +2017,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrainingConfigVersions_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_GetTrainingConfigVersions_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2033,7 +2033,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteProject_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_DeleteProject_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2051,7 +2051,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteProject_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_DeleteProject_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2069,7 +2069,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteProject_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_DeleteProject_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2104,7 +2104,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteProject_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_DeleteProject_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2139,7 +2139,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ExportProject_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_ExportProject_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2157,7 +2157,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ExportProject_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_ExportProject_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2175,7 +2175,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ExportProject_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_ExportProject_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2211,7 +2211,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ExportProject_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_ExportProject_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2247,7 +2247,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ImportProject_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_ImportProject_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2276,7 +2276,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ImportProject_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_ImportProject_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2305,7 +2305,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ImportProject_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_ImportProject_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2439,7 +2439,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ImportProject_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_ImportProject_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2573,7 +2573,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Train_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_Train_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2600,7 +2600,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Train_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_Train_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2627,7 +2627,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Train_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_Train_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2686,7 +2686,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Train_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_Train_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2745,7 +2745,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SwapDeployments_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_SwapDeployments_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2768,7 +2768,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SwapDeployments_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_SwapDeployments_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2791,7 +2791,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SwapDeployments_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_SwapDeployments_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2831,7 +2831,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SwapDeployments_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_SwapDeployments_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2871,7 +2871,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeployProject_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_DeployProject_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2895,7 +2895,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeployProject_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_DeployProject_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2919,7 +2919,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeployProject_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_DeployProject_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2943,7 +2943,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeployProject_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_DeployProject_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2967,7 +2967,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteDeployment_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_DeleteDeployment_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -2985,7 +2985,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteDeployment_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_DeleteDeployment_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -3003,7 +3003,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteDeployment_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_DeleteDeployment_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -3038,7 +3038,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteDeployment_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_DeleteDeployment_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -3073,7 +3073,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_LoadSnapshot_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_LoadSnapshot_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -3084,7 +3084,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_LoadSnapshot_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_LoadSnapshot_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -3095,7 +3095,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_LoadSnapshot_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_LoadSnapshot_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -3106,7 +3106,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_LoadSnapshot_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_LoadSnapshot_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -3117,7 +3117,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CancelTrainingJob_ShortVersion()
+        public void Example_ConversationalAnalysisAuthoring_CancelTrainingJob_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -3139,7 +3139,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CancelTrainingJob_ShortVersion_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_CancelTrainingJob_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -3161,7 +3161,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CancelTrainingJob_AllParameters()
+        public void Example_ConversationalAnalysisAuthoring_CancelTrainingJob_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -3208,7 +3208,7 @@ dataset = "<dataset>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CancelTrainingJob_AllParameters_Async()
+        public async Task Example_ConversationalAnalysisAuthoring_CancelTrainingJob_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");

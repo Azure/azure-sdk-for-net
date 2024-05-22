@@ -19,7 +19,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProjectDetails_ShortVersion()
+        public void Example_QuestionAnsweringProjects_GetProjectDetails_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjectDetails_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_GetProjectDetails_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -47,7 +47,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProjectDetails_AllParameters()
+        public void Example_QuestionAnsweringProjects_GetProjectDetails_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjectDetails_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_GetProjectDetails_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -89,7 +89,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateProject_ShortVersion()
+        public void Example_QuestionAnsweringProjects_CreateProject_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -107,7 +107,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateProject_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_CreateProject_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -125,7 +125,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateProject_AllParameters()
+        public void Example_QuestionAnsweringProjects_CreateProject_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -156,7 +156,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateProject_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_CreateProject_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -187,7 +187,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeleteStatus_ShortVersion()
+        public void Example_QuestionAnsweringProjects_GetDeleteStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -204,7 +204,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeleteStatus_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_GetDeleteStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -221,7 +221,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeleteStatus_AllParameters()
+        public void Example_QuestionAnsweringProjects_GetDeleteStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -239,7 +239,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeleteStatus_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_GetDeleteStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -257,7 +257,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetExportStatus_ShortVersion()
+        public void Example_QuestionAnsweringProjects_GetExportStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -274,7 +274,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetExportStatus_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_GetExportStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -291,7 +291,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetExportStatus_AllParameters()
+        public void Example_QuestionAnsweringProjects_GetExportStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -309,7 +309,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetExportStatus_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_GetExportStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -327,7 +327,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetImportStatus_ShortVersion()
+        public void Example_QuestionAnsweringProjects_GetImportStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -344,7 +344,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetImportStatus_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_GetImportStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -361,7 +361,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetImportStatus_AllParameters()
+        public void Example_QuestionAnsweringProjects_GetImportStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -379,7 +379,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetImportStatus_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_GetImportStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -397,7 +397,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeployStatus_ShortVersion()
+        public void Example_QuestionAnsweringProjects_GetDeployStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -414,7 +414,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployStatus_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_GetDeployStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -431,7 +431,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeployStatus_AllParameters()
+        public void Example_QuestionAnsweringProjects_GetDeployStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -449,7 +449,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployStatus_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_GetDeployStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -467,7 +467,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateSynonyms_ShortVersion()
+        public void Example_QuestionAnsweringProjects_UpdateSynonyms_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -481,7 +481,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateSynonyms_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_UpdateSynonyms_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -495,7 +495,7 @@ namespace Azure.AI.Language.QuestionAnswering.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateSynonyms_AllParameters()
+        public void Example_QuestionAnsweringProjects_UpdateSynonyms_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -522,7 +522,7 @@ alterations = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateSynonyms_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_UpdateSynonyms_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -549,7 +549,7 @@ alterations = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetUpdateSourcesStatus_ShortVersion()
+        public void Example_QuestionAnsweringProjects_GetUpdateSourcesStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -566,7 +566,7 @@ alterations = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetUpdateSourcesStatus_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_GetUpdateSourcesStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -583,7 +583,7 @@ alterations = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetUpdateSourcesStatus_AllParameters()
+        public void Example_QuestionAnsweringProjects_GetUpdateSourcesStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -601,7 +601,7 @@ alterations = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetUpdateSourcesStatus_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_GetUpdateSourcesStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -619,7 +619,7 @@ alterations = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetUpdateQnasStatus_ShortVersion()
+        public void Example_QuestionAnsweringProjects_GetUpdateQnasStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -636,7 +636,7 @@ alterations = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetUpdateQnasStatus_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_GetUpdateQnasStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -653,7 +653,7 @@ alterations = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetUpdateQnasStatus_AllParameters()
+        public void Example_QuestionAnsweringProjects_GetUpdateQnasStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -671,7 +671,7 @@ alterations = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetUpdateQnasStatus_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_GetUpdateQnasStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -689,7 +689,7 @@ alterations = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AddFeedback_ShortVersion()
+        public void Example_QuestionAnsweringProjects_AddFeedback_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -703,7 +703,7 @@ alterations = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddFeedback_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_AddFeedback_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -717,7 +717,7 @@ alterations = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AddFeedback_AllParameters()
+        public void Example_QuestionAnsweringProjects_AddFeedback_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -742,7 +742,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AddFeedback_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_AddFeedback_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -767,7 +767,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProjects_ShortVersion()
+        public void Example_QuestionAnsweringProjects_GetProjects_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -782,7 +782,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjects_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_GetProjects_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -797,7 +797,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProjects_AllParameters()
+        public void Example_QuestionAnsweringProjects_GetProjects_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -819,7 +819,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProjects_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_GetProjects_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -841,7 +841,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeployments_ShortVersion()
+        public void Example_QuestionAnsweringProjects_GetDeployments_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -856,7 +856,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployments_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_GetDeployments_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -871,7 +871,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetDeployments_AllParameters()
+        public void Example_QuestionAnsweringProjects_GetDeployments_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -887,7 +887,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetDeployments_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_GetDeployments_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -903,7 +903,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSynonyms_ShortVersion()
+        public void Example_QuestionAnsweringProjects_GetSynonyms_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -918,7 +918,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSynonyms_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_GetSynonyms_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -933,7 +933,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSynonyms_AllParameters()
+        public void Example_QuestionAnsweringProjects_GetSynonyms_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -948,7 +948,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSynonyms_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_GetSynonyms_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -963,7 +963,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSources_ShortVersion()
+        public void Example_QuestionAnsweringProjects_GetSources_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -979,7 +979,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSources_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_GetSources_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -995,7 +995,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSources_AllParameters()
+        public void Example_QuestionAnsweringProjects_GetSources_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1014,7 +1014,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSources_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_GetSources_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1033,7 +1033,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetQnas_ShortVersion()
+        public void Example_QuestionAnsweringProjects_GetQnas_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1048,7 +1048,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetQnas_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_GetQnas_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1063,7 +1063,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetQnas_AllParameters()
+        public void Example_QuestionAnsweringProjects_GetQnas_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1099,7 +1099,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetQnas_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_GetQnas_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1135,7 +1135,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteProject_ShortVersion()
+        public void Example_QuestionAnsweringProjects_DeleteProject_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1146,7 +1146,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteProject_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_DeleteProject_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1157,7 +1157,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteProject_AllParameters()
+        public void Example_QuestionAnsweringProjects_DeleteProject_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1168,7 +1168,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteProject_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_DeleteProject_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1179,7 +1179,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Export_ShortVersion()
+        public void Example_QuestionAnsweringProjects_Export_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1197,7 +1197,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Export_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_Export_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1215,7 +1215,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Export_AllParameters()
+        public void Example_QuestionAnsweringProjects_Export_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1234,7 +1234,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Export_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_Export_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1253,7 +1253,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Import_ShortVersion()
+        public void Example_QuestionAnsweringProjects_Import_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1272,7 +1272,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Import_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_Import_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1291,7 +1291,7 @@ qnaId = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Import_AllParameters()
+        public void Example_QuestionAnsweringProjects_Import_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1401,7 +1401,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Import_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_Import_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1511,7 +1511,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeployProject_ShortVersion()
+        public void Example_QuestionAnsweringProjects_DeployProject_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1526,7 +1526,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeployProject_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_DeployProject_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1541,7 +1541,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeployProject_AllParameters()
+        public void Example_QuestionAnsweringProjects_DeployProject_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1557,7 +1557,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeployProject_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_DeployProject_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1573,7 +1573,7 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateSources_ShortVersion()
+        public void Example_QuestionAnsweringProjects_UpdateSources_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1603,7 +1603,7 @@ sourceKind = "file",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateSources_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_UpdateSources_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1633,7 +1633,7 @@ sourceKind = "file",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateSources_AllParameters()
+        public void Example_QuestionAnsweringProjects_UpdateSources_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1669,7 +1669,7 @@ contentStructureKind = "unstructured",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateSources_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_UpdateSources_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1705,7 +1705,7 @@ contentStructureKind = "unstructured",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateQnas_ShortVersion()
+        public void Example_QuestionAnsweringProjects_UpdateQnas_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1730,7 +1730,7 @@ value = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateQnas_ShortVersion_Async()
+        public async Task Example_QuestionAnsweringProjects_UpdateQnas_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1755,7 +1755,7 @@ value = new object(),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_UpdateQnas_AllParameters()
+        public void Example_QuestionAnsweringProjects_UpdateQnas_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1843,7 +1843,7 @@ autoSuggestedCount = 1234,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_UpdateQnas_AllParameters_Async()
+        public async Task Example_QuestionAnsweringProjects_UpdateQnas_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
