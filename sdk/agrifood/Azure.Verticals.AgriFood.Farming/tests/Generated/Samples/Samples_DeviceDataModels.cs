@@ -23,7 +23,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<sensorPartnerId>", "<deviceDataModelId>", content);
@@ -38,7 +38,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<sensorPartnerId>", "<deviceDataModelId>", content);
@@ -53,7 +53,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -103,7 +103,7 @@ type = "<type>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -153,7 +153,7 @@ type = "<type>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient();
 
             Response response = client.GetDeviceDataModel("<sensorPartnerId>", "<deviceDataModelId>", null);
 
@@ -167,7 +167,7 @@ type = "<type>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient();
 
             Response response = await client.GetDeviceDataModelAsync("<sensorPartnerId>", "<deviceDataModelId>", null);
 
@@ -181,7 +181,7 @@ type = "<type>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient();
 
             Response response = client.GetDeviceDataModel("<sensorPartnerId>", "<deviceDataModelId>", null);
 
@@ -210,7 +210,7 @@ type = "<type>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient();
 
             Response response = await client.GetDeviceDataModelAsync("<sensorPartnerId>", "<deviceDataModelId>", null);
 
@@ -239,7 +239,7 @@ type = "<type>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient();
 
             Response response = client.Delete("<sensorPartnerId>", "<deviceDataModelId>");
 
@@ -252,7 +252,7 @@ type = "<type>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient();
 
             Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceDataModelId>");
 
@@ -265,7 +265,7 @@ type = "<type>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient();
 
             Response response = client.Delete("<sensorPartnerId>", "<deviceDataModelId>");
 
@@ -278,7 +278,7 @@ type = "<type>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient();
 
             Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceDataModelId>");
 
@@ -291,7 +291,7 @@ type = "<type>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient();
 
             foreach (BinaryData item in client.GetDeviceDataModels("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -306,7 +306,7 @@ type = "<type>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient();
 
             await foreach (BinaryData item in client.GetDeviceDataModelsAsync("<sensorPartnerId>", null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -321,7 +321,7 @@ type = "<type>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient();
 
             foreach (BinaryData item in client.GetDeviceDataModels("<sensorPartnerId>", new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -351,7 +351,7 @@ type = "<type>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient(apiVersion: "2022-11-01-preview");
+            DeviceDataModels client = new FarmBeatsClient(endpoint, credential).GetDeviceDataModelsClient();
 
             await foreach (BinaryData item in client.GetDeviceDataModelsAsync("<sensorPartnerId>", new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
