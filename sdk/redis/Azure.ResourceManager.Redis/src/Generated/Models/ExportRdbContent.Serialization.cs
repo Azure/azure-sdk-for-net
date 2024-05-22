@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -132,6 +133,136 @@ namespace Azure.ResourceManager.Redis.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Format), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  format: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Format))
+                {
+                    builder.Append("  format: ");
+                    if (Format.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Format}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Format}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Prefix), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  prefix: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Prefix))
+                {
+                    builder.Append("  prefix: ");
+                    if (Prefix.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Prefix}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Prefix}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Container), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  container: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Container))
+                {
+                    builder.Append("  container: ");
+                    if (Container.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Container}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Container}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreferredDataArchiveAuthMethod), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  preferred-data-archive-auth-method: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PreferredDataArchiveAuthMethod))
+                {
+                    builder.Append("  preferred-data-archive-auth-method: ");
+                    if (PreferredDataArchiveAuthMethod.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PreferredDataArchiveAuthMethod}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PreferredDataArchiveAuthMethod}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageSubscriptionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storage-subscription-id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageSubscriptionId))
+                {
+                    builder.Append("  storage-subscription-id: ");
+                    if (StorageSubscriptionId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StorageSubscriptionId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StorageSubscriptionId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ExportRdbContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExportRdbContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -140,6 +271,8 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExportRdbContent)} does not support writing '{options.Format}' format.");
             }

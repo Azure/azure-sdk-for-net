@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -144,6 +145,109 @@ namespace Azure.ResourceManager.Redis.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedRedisCacheId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    linkedRedisCacheId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinkedRedisCacheId))
+                {
+                    builder.Append("    linkedRedisCacheId: ");
+                    builder.AppendLine($"'{LinkedRedisCacheId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedRedisCacheLocation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    linkedRedisCacheLocation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("    linkedRedisCacheLocation: ");
+                builder.AppendLine($"'{LinkedRedisCacheLocation.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerRole), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serverRole: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("    serverRole: ");
+                builder.AppendLine($"'{ServerRole.ToSerialString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoReplicatedPrimaryHostName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    geoReplicatedPrimaryHostName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GeoReplicatedPrimaryHostName))
+                {
+                    builder.Append("    geoReplicatedPrimaryHostName: ");
+                    if (GeoReplicatedPrimaryHostName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GeoReplicatedPrimaryHostName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GeoReplicatedPrimaryHostName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryHostName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    primaryHostName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryHostName))
+                {
+                    builder.Append("    primaryHostName: ");
+                    if (PrimaryHostName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryHostName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryHostName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RedisLinkedServerWithPropertyCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -152,6 +256,8 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }

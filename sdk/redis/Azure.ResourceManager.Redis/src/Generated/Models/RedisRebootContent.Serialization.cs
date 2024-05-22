@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -132,6 +134,74 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisRebootContent(rebootType, shardId, ports ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RebootType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rebootType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RebootType))
+                {
+                    builder.Append("  rebootType: ");
+                    builder.AppendLine($"'{RebootType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShardId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  shardId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ShardId))
+                {
+                    builder.Append("  shardId: ");
+                    builder.AppendLine($"{ShardId.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Ports), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ports: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Ports))
+                {
+                    if (Ports.Any())
+                    {
+                        builder.Append("  ports: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Ports)
+                        {
+                            builder.AppendLine($"    {item}");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RedisRebootContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RedisRebootContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -140,6 +210,8 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RedisRebootContent)} does not support writing '{options.Format}' format.");
             }
