@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -3182,7 +3181,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="filename"> A filename to associate with the uploaded data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<OpenAIFile>> UploadFileAsync(Stream data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OpenAIFile>> UploadFileAsync(BinaryData data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -3199,7 +3198,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="filename"> A filename to associate with the uploaded data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<OpenAIFile> UploadFile(Stream data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
+        public virtual Response<OpenAIFile> UploadFile(BinaryData data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

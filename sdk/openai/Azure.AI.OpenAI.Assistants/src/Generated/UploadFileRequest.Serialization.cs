@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using Azure.Core;
 
@@ -28,14 +27,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             writer.WriteStartObject();
             writer.WritePropertyName("file"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(global::System.BinaryData.FromStream(Data));
-#else
-            using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(Data)))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            writer.WriteBase64StringValue(Data.ToArray(), "D");
             writer.WritePropertyName("purpose"u8);
             writer.WriteStringValue(Purpose.ToString());
             if (Optional.IsDefined(Filename))
@@ -81,7 +73,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            Stream file = default;
+            BinaryData file = default;
             OpenAIFilePurpose purpose = default;
             string filename = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -90,7 +82,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("file"u8))
                 {
-                    file = BinaryData.FromString(property.Value.GetRawText()).ToStream();
+                    file = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (property.NameEquals("purpose"u8))
@@ -112,33 +104,6 @@ namespace Azure.AI.OpenAI.Assistants
             return new UploadFileRequest(file, purpose, filename, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeMultipart(ModelReaderWriterOptions options)
-        {
-            using MultipartFormDataRequestContent content = ToMultipartRequestContent();
-            using MemoryStream stream = new MemoryStream();
-            content.WriteTo(stream);
-            if (stream.Position > int.MaxValue)
-            {
-                return BinaryData.FromStream(stream);
-            }
-            else
-            {
-                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-            }
-        }
-
-        internal virtual MultipartFormDataRequestContent ToMultipartRequestContent()
-        {
-            MultipartFormDataRequestContent content = new MultipartFormDataRequestContent();
-            content.Add(Data, "file", "file", "application/octet-stream");
-            content.Add(Purpose.ToString(), "purpose");
-            if (Optional.IsDefined(Filename))
-            {
-                content.Add(Filename, "filename");
-            }
-            return content;
-        }
-
         BinaryData IPersistableModel<UploadFileRequest>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UploadFileRequest>)this).GetFormatFromOptions(options) : options.Format;
@@ -147,8 +112,6 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "MFD":
-                    return SerializeMultipart(options);
                 default:
                     throw new FormatException($"The model {nameof(UploadFileRequest)} does not support writing '{options.Format}' format.");
             }
@@ -170,7 +133,7 @@ namespace Azure.AI.OpenAI.Assistants
             }
         }
 
-        string IPersistableModel<UploadFileRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "MFD";
+        string IPersistableModel<UploadFileRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
