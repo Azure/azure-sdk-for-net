@@ -20,5 +20,7 @@
     <PackageReference Include="CloudNative.CloudEvents" />
     <PackageReference Include="CloudNative.CloudEvents.SystemTextJson" />
 		<PackageReference Include="Azure.Core"/>
+    <!-- TODO: Remove this pacakge reference when new version of Azure.Core is released -->
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
   </ItemGroup>
 </Project>

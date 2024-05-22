@@ -7,4 +7,8 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.EventGrid.</Description>
     <PackageTags>azure;management;arm;resource manager;eventgrid</PackageTags>
   </PropertyGroup>
+  <ItemGroup>
+    <!-- TODO: Remove this pacakge reference when new version of Azure.Core is released -->
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+  </ItemGroup>
 </Project>
