@@ -874,7 +874,7 @@
 # ServiceOwners:                                                   @wonner @yanjungao718
 
 # PRLabel: %Tables
-/sdk/tables/                                                       @christothes, @JonathanCrd
+/sdk/tables/                                                       @christothes @JonathanCrd
 
 # ServiceLabel: %Tables
 # AzureSdkOwners:                                                  @christothes, @JonathanCrd
