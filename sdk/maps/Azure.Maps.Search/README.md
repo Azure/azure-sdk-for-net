@@ -26,7 +26,7 @@ az maps account create --kind "Gen2" --account-name "myMapAccountName" --resourc
 
 ### Authenticate the client
 
-There are 2 ways to authenticate the client: Shared key authentication and Azure AD.
+There are 3 ways to authenticate the client: Shared key authentication, Microsoft Entra authentication and shared access signature (SAS) authentication.
 
 #### Shared Key Authentication
 
@@ -39,16 +39,16 @@ AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
 MapsSearchClient client = new MapsSearchClient(credential);
 ```
 
-#### Azure AD Authentication
+#### Microsoft Entra Authentication
 
 In order to interact with the Azure Maps service, you'll need to create an instance of the MapsSearchClient class. The Azure Identity library makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
 
-To use AAD authentication, set `TENANT_ID`, `CLIENT_ID`, and `CLIENT_SECRET` to environment variable and call `DefaultAzureCredential()` method to get credential. `CLIENT_ID` and `CLIENT_SECRET` are the service principal ID and secret that can access Azure Maps account.
+To use Microsoft Entra authentication, set `TENANT_ID`, `CLIENT_ID`, and `CLIENT_SECRET` to environment variable and call `DefaultAzureCredential()` method to get credential. `CLIENT_ID` and `CLIENT_SECRET` are the service principal ID and secret that can access Azure Maps account.
 
 We also need **Azure Maps Client ID** which can get from Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
 
-```C# Snippet:InstantiateSearchClientViaAAD
-// Create a MapsSearchClient that will authenticate through AAD
+```C# Snippet:InstantiateSearchClientViaMicrosoft Entra
+// Create a MapsSearchClient that will authenticate through Microsoft Entra
 DefaultAzureCredential credential = new DefaultAzureCredential();
 string clientId = "<My Map Account Client Id>";
 MapsSearchClient client = new MapsSearchClient(credential, clientId);

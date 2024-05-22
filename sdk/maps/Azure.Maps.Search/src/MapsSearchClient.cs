@@ -36,6 +36,8 @@ namespace Azure.Maps.Search
 
         /// <summary> Initializes a new instance of MapsSearchClient. </summary>
         /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Search Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
+
         public MapsSearchClient(AzureKeyCredential credential)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -50,6 +52,7 @@ namespace Azure.Maps.Search
         /// <summary> Initializes a new instance of MapsSearchClient. </summary>
         /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Search Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
         public MapsSearchClient(AzureKeyCredential credential, MapsSearchClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -64,6 +67,7 @@ namespace Azure.Maps.Search
         /// <summary> Initializes a new instance of MapsSearchClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Maps Search Service. </param>
         /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="clientId"/> is null. </exception>
         public MapsSearchClient(TokenCredential credential, string clientId)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -80,6 +84,7 @@ namespace Azure.Maps.Search
         /// <param name="credential"> A credential used to authenticate to an Azure Maps Search Service. </param>
         /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
         /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="clientId"/> is null. </exception>
         public MapsSearchClient(TokenCredential credential, string clientId, MapsSearchClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -95,6 +100,7 @@ namespace Azure.Maps.Search
         /// <summary> Initializes a new instance of MapsSearchClient. </summary>
         /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
         /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
         public MapsSearchClient(AzureSasCredential credential)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -110,6 +116,7 @@ namespace Azure.Maps.Search
         /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
         /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
         /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
         public MapsSearchClient(AzureSasCredential credential, MapsSearchClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -121,23 +128,15 @@ namespace Azure.Maps.Search
             RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
         }
         /// <summary>
-        /// **Geocoding**
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
         /// In many cases, the complete search service might be too much, for instance if you are only interested in traditional geocoding. Search can also be accessed for address look up exclusively. The geocoding is performed by hitting the geocoding endpoint with just the address or partial address in question. The geocoding search index will be queried for everything above the street level data. No Point of Interest (POIs) will be returned. Note that the geocoder is very tolerant of typos and incomplete addresses. It will also handle everything from exact street addresses or street or intersections as well as higher level geographies such as city centers, counties, states etc.
         /// </summary>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 5, minimum: 1 and maximum: 20. </param>
         /// <param name="query"> A string that contains information about a location, such as an address or landmark name. </param>
         /// <param name="addressLine">
-        /// The official street line of an address relative to the area, as specified by the locality, or postalCode, properties. Typical use of this element would be to provide a street address or any official address.
-        ///
-        /// **If query is given, should not use this parameter.**
+        /// The official street line of an address relative to the area, as specified by the locality, or postalCode, properties. Typical use of this element would be to provide a street address or any official address. If query is given, should not use this parameter.
         /// </param>
         /// <param name="countryRegion">
-        /// Signal for the geocoding result to an [ISO 3166-1 Alpha-2 region/country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) that is specified e.g. FR./
-        ///
-        /// **If query is given, should not use this parameter.**
+        /// Signal for the geocoding result to an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see> that is specified e.g. FR./ If query is given, should not use this parameter.
         /// </param>
         /// <param name="bbox">
         /// A rectangular area on the earth defined as a bounding box object. The sides of the rectangles are defined by longitude and latitude values. When you specify this parameter, the geographical area is taken into account when computing the results of a location query.
@@ -145,35 +144,25 @@ namespace Azure.Maps.Search
         /// Example: lon1,lat1,lon2,lat2
         /// </param>
         /// <param name="view">
-        /// A string that represents an [ISO 3166-1 Alpha-2 region/country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
+        /// A string that represents an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see>. This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
         ///
-        /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
+        /// Please refer to <see href="https://aka.ms/AzureMapsLocalizationViews">Supported Views</see> for details and to see the available Views.
         /// </param>
         /// <param name="coordinates"> A point on the earth specified as a longitude and latitude. When you specify this parameter, the user’s location is taken into account and the results returned may be more relevant to the user. Example: &amp;coordinates=lon,lat. </param>
         /// <param name="adminDistrict">
-        /// The country subdivision portion of an address, such as WA.
-        ///
-        /// **If query is given, should not use this parameter.**
+        /// The country subdivision portion of an address, such as WA. If query is given, should not use this parameter.
         /// </param>
         /// <param name="adminDistrict2">
-        /// The county for the structured address, such as King.
-        ///
-        /// **If query is given, should not use this parameter.**
+        /// The county for the structured address, such as King. If query is given, should not use this parameter.
         /// </param>
         /// <param name="adminDistrict3">
-        /// The named area for the structured address.
-        ///
-        /// **If query is given, should not use this parameter.**
+        /// The named area for the structured address. If query is given, should not use this parameter.
         /// </param>
         /// <param name="locality">
-        /// The locality portion of an address, such as Seattle.
-        ///
-        /// **If query is given, should not use this parameter.**
+        /// The locality portion of an address, such as Seattle. If query is given, should not use this parameter.
         /// </param>
         /// <param name="postalCode">
-        /// The postal code portion of an address.
-        ///
-        /// **If query is given, should not use this parameter.**
+        /// The postal code portion of an address. If query is given, should not use this parameter.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GeocodingResponse>> GetGeocodingAsync(string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> bbox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, int? top = null, CancellationToken cancellationToken = default)
@@ -192,23 +181,17 @@ namespace Azure.Maps.Search
         }
 
         /// <summary>
-        /// **Geocoding**
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
         /// In many cases, the complete search service might be too much, for instance if you are only interested in traditional geocoding. Search can also be accessed for address look up exclusively. The geocoding is performed by hitting the geocoding endpoint with just the address or partial address in question. The geocoding search index will be queried for everything above the street level data. No Point of Interest (POIs) will be returned. Note that the geocoder is very tolerant of typos and incomplete addresses. It will also handle everything from exact street addresses or street or intersections as well as higher level geographies such as city centers, counties, states etc.
         /// </summary>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 5, minimum: 1 and maximum: 20. </param>
         /// <param name="query"> A string that contains information about a location, such as an address or landmark name. </param>
         /// <param name="addressLine">
-        /// The official street line of an address relative to the area, as specified by the locality, or postalCode, properties. Typical use of this element would be to provide a street address or any official address.
-        ///
-        /// **If query is given, should not use this parameter.**
+        /// The official street line of an address relative to the area, as specified by the locality, or postalCode, properties. Typical use of this element would be to provide a street address or any official address. If query is given, should not use this parameter.
         /// </param>
         /// <param name="countryRegion">
-        /// Signal for the geocoding result to an [ISO 3166-1 Alpha-2 region/country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) that is specified e.g. FR./
+        /// Signal for the geocoding result to an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see> that is specified e.g. FR./
         ///
-        /// **If query is given, should not use this parameter.**
+        /// If query is given, should not use this parameter.
         /// </param>
         /// <param name="bbox">
         /// A rectangular area on the earth defined as a bounding box object. The sides of the rectangles are defined by longitude and latitude values. When you specify this parameter, the geographical area is taken into account when computing the results of a location query.
@@ -216,35 +199,27 @@ namespace Azure.Maps.Search
         /// Example: lon1,lat1,lon2,lat2
         /// </param>
         /// <param name="view">
-        /// A string that represents an [ISO 3166-1 Alpha-2 region/country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
+        /// A string that represents an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see>. This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
         ///
-        /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
+        /// Please refer to <see href="https://aka.ms/AzureMapsLocalizationViews">Supported Views</see> for details and to see the available Views.
         /// </param>
         /// <param name="coordinates"> A point on the earth specified as a longitude and latitude. When you specify this parameter, the user’s location is taken into account and the results returned may be more relevant to the user. Example: &amp;coordinates=lon,lat. </param>
         /// <param name="adminDistrict">
-        /// The country subdivision portion of an address, such as WA.
-        ///
-        /// **If query is given, should not use this parameter.**
+        /// The country subdivision portion of an address, such as WA. If query is given, should not use this parameter.
         /// </param>
         /// <param name="adminDistrict2">
         /// The county for the structured address, such as King.
         ///
-        /// **If query is given, should not use this parameter.**
+        /// If query is given, should not use this parameter.
         /// </param>
         /// <param name="adminDistrict3">
-        /// The named area for the structured address.
-        ///
-        /// **If query is given, should not use this parameter.**
+        /// The named area for the structured address. If query is given, should not use this parameter.
         /// </param>
         /// <param name="locality">
-        /// The locality portion of an address, such as Seattle.
-        ///
-        /// **If query is given, should not use this parameter.**
+        /// The locality portion of an address, such as Seattle. If query is given, should not use this parameter.
         /// </param>
         /// <param name="postalCode">
-        /// The postal code portion of an address.
-        ///
-        /// **If query is given, should not use this parameter.**
+        /// The postal code portion of an address. If query is given, should not use this parameter.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GeocodingResponse> GetGeocoding(string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> bbox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, int? top = null, CancellationToken cancellationToken = default)
@@ -299,17 +274,13 @@ namespace Azure.Maps.Search
         }
 
         /// <summary>
-        /// **Get Polygon**
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
         /// Supplies polygon data of a geographical area outline such as a city or a country region.
         /// </summary>
         /// <param name="coordinates"> A point on the earth specified as a longitude and latitude. Example: &amp;coordinates=lon,lat. </param>
         /// <param name="view">
-        /// A string that represents an [ISO 3166-1 Alpha-2 region/country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
+        /// A string that represents an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see>. This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
         ///
-        /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
+        /// Please refer to <see href="https://aka.ms/AzureMapsLocalizationViews">Supported Views</see> for details and to see the available Views.
         /// </param>
         /// <param name="resultType"> The geopolitical concept to return a boundary for. </param>
         /// <param name="resolution"> Resolution determines the amount of points to send back. </param>
@@ -330,17 +301,13 @@ namespace Azure.Maps.Search
         }
 
         /// <summary>
-        /// **Get Polygon**
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
         /// Supplies polygon data of a geographical area outline such as a city or a country region.
         /// </summary>
         /// <param name="coordinates"> A point on the earth specified as a longitude and latitude. Example: &amp;coordinates=lon,lat. </param>
         /// <param name="view">
-        /// A string that represents an [ISO 3166-1 Alpha-2 region/country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
+        /// A string that represents an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see>. This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
         ///
-        /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
+        /// Please refer to <see href="https://aka.ms/AzureMapsLocalizationViews">Supported Views</see> for details and to see the available Views.
         /// </param>
         /// <param name="resultType"> The geopolitical concept to return a boundary for. </param>
         /// <param name="resolution"> Resolution determines the amount of points to send back. </param>
@@ -361,10 +328,6 @@ namespace Azure.Maps.Search
         }
 
         /// <summary>
-        /// **Reverse Geocoding**
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
         /// Translate a coordinate (example: 37.786505, -122.3862) into a human understandable street address. Most often this is needed in tracking applications where you receive a GPS feed from the device or asset and wish to know what address where the coordinate is located. This endpoint will return address information for a given coordinate.
         /// </summary>
         /// <param name="coordinates"> The coordinates of the location that you want to reverse geocode. Example: &amp;coordinates=lon,lat. </param>
@@ -373,20 +336,21 @@ namespace Azure.Maps.Search
         /// Default value is all possible entities.
         /// A comma separated list of entity types selected from the following options.
         ///
-        /// - Address
-        /// - Neighborhood
-        /// - PopulatedPlace
-        /// - Postcode1
-        /// - AdminDivision1
-        /// - AdminDivision2
-        /// - CountryRegion
-        ///
+        /// <list type="bullet">
+        /// <item>Address</item>
+        /// <item>Neighborhood</item>
+        /// <item>PopulatedPlace</item>
+        /// <item>Postcode1</item>
+        /// <item>AdminDivision1</item>
+        /// <item>AdminDivision2</item>
+        /// <item>CountryRegion</item>
+        /// </list>
         /// These entity types are ordered from the most specific entity to the least specific entity. When entities of more than one entity type are found, only the most specific entity is returned. For example, if you specify Address and AdminDistrict1 as entity types and entities were found for both types, only the Address entity information is returned in the response.
         /// </param>
         /// <param name="view">
-        /// A string that represents an [ISO 3166-1 Alpha-2 region/country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
+        /// A string that represents an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see>. This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
         ///
-        /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
+        /// Please refer to <see href="https://aka.ms/AzureMapsLocalizationViews">Supported Views</see> for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
@@ -406,10 +370,6 @@ namespace Azure.Maps.Search
         }
 
         /// <summary>
-        /// **Reverse Geocoding**
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
         /// Translate a coordinate (example: 37.786505, -122.3862) into a human understandable street address. Most often this is needed in tracking applications where you receive a GPS feed from the device or asset and wish to know what address where the coordinate is located. This endpoint will return address information for a given coordinate.
         /// </summary>
         /// <param name="coordinates"> The coordinates of the location that you want to reverse geocode. Example: &amp;coordinates=lon,lat. </param>
@@ -418,20 +378,21 @@ namespace Azure.Maps.Search
         /// Default value is all possible entities.
         /// A comma separated list of entity types selected from the following options.
         ///
-        /// - Address
-        /// - Neighborhood
-        /// - PopulatedPlace
-        /// - Postcode1
-        /// - AdminDivision1
-        /// - AdminDivision2
-        /// - CountryRegion
-        ///
+        /// <list type="bullet">
+        /// <item>Address</item>
+        /// <item>Neighborhood</item>
+        /// <item>PopulatedPlace</item>
+        /// <item>Postcode1</item>
+        /// <item>AdminDivision1</item>
+        /// <item>AdminDivision2</item>
+        /// <item>CountryRegion</item>
+        /// </list>
         /// These entity types are ordered from the most specific entity to the least specific entity. When entities of more than one entity type are found, only the most specific entity is returned. For example, if you specify Address and AdminDistrict1 as entity types and entities were found for both types, only the Address entity information is returned in the response.
         /// </param>
         /// <param name="view">
-        /// A string that represents an [ISO 3166-1 Alpha-2 region/country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
+        /// A string that represents an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see>. This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
         ///
-        /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
+        /// Please refer to <see href="https://aka.ms/AzureMapsLocalizationViews">Supported Views</see> for details and to see the available Views.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
@@ -451,25 +412,18 @@ namespace Azure.Maps.Search
         }
 
         /// <summary>
-        /// **Reverse Geocoding Batch API**
         ///
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
-        ///
-        /// The Reverse Geocoding Batch API sends batches of queries to [Reverse Geocoding API](/rest/api/maps/search/get-reverse-geocoding) using just a single API call. The API allows caller to batch up to **100** queries.
+        /// The Reverse Geocoding Batch API sends batches of queries to [Reverse Geocoding API](/rest/api/maps/search/get-reverse-geocoding) using just a single API call. The API allows caller to batch up to <c>100</c> queries.
         ///
         /// ### Submit Synchronous Batch Request
-        /// The Synchronous API is recommended for lightweight batch requests. When the service receives a request, it will respond as soon as the batch items are calculated and there will be no possibility to retrieve the results later. The Synchronous API will return a timeout error (a 408 response) if the request takes longer than 60 seconds. The number of batch items is limited to **100** for this API.
+        /// The Synchronous API is recommended for lightweight batch requests. When the service receives a request, it will respond as soon as the batch items are calculated and there will be no possibility to retrieve the results later. The Synchronous API will return a timeout error (a 408 response) if the request takes longer than 60 seconds. The number of batch items is limited to <c>100</c> for this API.
         /// ```
         /// POST https://atlas.microsoft.com/reverseGeocode:batch?api-version=2023-06-01
         /// ```
         /// ### POST Body for Batch Request
         /// To send the _reverse geocoding_ queries you will use a `POST` request where the request body will contain the `batchItems` array in `json` format and the `Content-Type` header will be set to `application/json`. Here's a sample request body containing 2 _reverse geocoding_ queries:
         ///
-        ///
-        /// ```
+        /// <code>
         /// {
         ///   "batchItems": [
         ///     {
@@ -481,12 +435,12 @@ namespace Azure.Maps.Search
         ///     }
         ///   ]
         /// }
-        /// ```
+        ///</code>
         ///
         /// A _reverse geocoding_ batchItem object can accept any of the supported _reverse geocoding_ [URI parameters](/rest/api/maps/search/get-reverse-geocoding#uri-parameters).
         ///
         ///
-        /// The batch should contain at least **1** query.
+        /// The batch should contain at least <c>1</c> query.
         ///
         ///
         /// ### Batch Response Model
@@ -518,42 +472,12 @@ namespace Azure.Maps.Search
         }
 
         /// <summary>
-        /// **Reverse Geocoding Batch API**
-        ///
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
-        ///
-        /// The Reverse Geocoding Batch API sends batches of queries to [Reverse Geocoding API](/rest/api/maps/search/get-reverse-geocoding) using just a single API call. The API allows caller to batch up to **100** queries.
-        ///
-        /// ### Submit Synchronous Batch Request
-        /// The Synchronous API is recommended for lightweight batch requests. When the service receives a request, it will respond as soon as the batch items are calculated and there will be no possibility to retrieve the results later. The Synchronous API will return a timeout error (a 408 response) if the request takes longer than 60 seconds. The number of batch items is limited to **100** for this API.
-        /// ```
-        /// POST https://atlas.microsoft.com/reverseGeocode:batch?api-version=2023-06-01
-        /// ```
-        /// ### POST Body for Batch Request
-        /// To send the _reverse geocoding_ queries you will use a `POST` request where the request body will contain the `batchItems` array in `json` format and the `Content-Type` header will be set to `application/json`. Here's a sample request body containing 2 _reverse geocoding_ queries:
-        ///
-        ///
-        /// ```
-        /// {
-        ///   "batchItems": [
-        ///     {
-        ///       "coordinates": [-122.128275, 47.639429],
-        ///       "resultTypes": ["Address", "PopulatedPlace"]
-        ///     },
-        ///     {
-        ///       "coordinates": [-122.341979399674, 47.6095253501216]
-        ///     }
-        ///   ]
-        /// }
-        /// ```
+        /// The Reverse Geocoding Batch API sends batches of queries to [Reverse Geocoding API](/rest/api/maps/search/get-reverse-geocoding) using just a single API call. The API allows caller to batch up to <c>100</c> queries.
         ///
         /// A _reverse geocoding_ batchItem object can accept any of the supported _reverse geocoding_ [URI parameters](/rest/api/maps/search/get-reverse-geocoding#uri-parameters).
         ///
         ///
-        /// The batch should contain at least **1** query.
+        /// The batch should contain at least <c>1</c> query.
         ///
         ///
         /// ### Batch Response Model
