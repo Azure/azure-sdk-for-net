@@ -63,7 +63,7 @@ The authentication events trigger output binding allows a function to send authe
 
 To test token augmentation, please do the following.
 
-* Open the project that was created in the prior step. [How to get started](#How-to-get-started)
+* Open the project that was created in the prior step. [How to get started](#how-to-get-started)
 * Follow [these steps](https://learn.microsoft.com/entra/identity-platform/custom-extension-tokenissuancestart-setup?tabs=visual-studio%2Cazure-portal&pivots=nuget-library#build-and-run-the-project-locally) to test your app locally.
 
 ## Troubleshooting
