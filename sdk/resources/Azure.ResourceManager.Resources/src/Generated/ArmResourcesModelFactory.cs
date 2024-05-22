@@ -830,6 +830,26 @@ namespace Azure.ResourceManager.Resources.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DecompileOperationSuccessResponse"/>. </summary>
+        /// <param name="files"> An array of key-value pairs containing the entryPoint string as the key for the Bicep file decompiled from the ARM json template. </param>
+        /// <param name="entryPoint"> The file path to the main Bicep file generated from the decompiled ARM json template. </param>
+        /// <returns> A new <see cref="Models.DecompileOperationSuccessResponse"/> instance for mocking. </returns>
+        public static DecompileOperationSuccessResponse DecompileOperationSuccessResponse(IEnumerable<FileDefinition> files = null, string entryPoint = null)
+        {
+            files ??= new List<FileDefinition>();
+
+            return new DecompileOperationSuccessResponse(files?.ToList(), entryPoint, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FileDefinition"/>. </summary>
+        /// <param name="path"></param>
+        /// <param name="contents"></param>
+        /// <returns> A new <see cref="Models.FileDefinition"/> instance for mocking. </returns>
+        public static FileDefinition FileDefinition(string path = null, string contents = null)
+        {
+            return new FileDefinition(path, contents, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.AzurePowerShellScript"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
