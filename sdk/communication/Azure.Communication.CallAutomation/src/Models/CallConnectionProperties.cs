@@ -45,7 +45,7 @@ namespace Azure.Communication.CallAutomation
             ServerCallId = callConnectionPropertiesDtoInternal.ServerCallId;
             Targets = callConnectionPropertiesDtoInternal.Targets.Select(t => CommunicationIdentifierSerializer.Deserialize(t)).ToList();
 
-            if (callConnectionPropertiesDtoInternal.CallConnectionState == null || callConnectionPropertiesDtoInternal.CallConnectionState ==  default(CallConnectionState))
+            if (callConnectionPropertiesDtoInternal.CallConnectionState == null || callConnectionPropertiesDtoInternal.CallConnectionState == default(CallConnectionState))
             {
                 CallConnectionState = CallConnectionState.Unknown;
             }
@@ -55,12 +55,22 @@ namespace Azure.Communication.CallAutomation
             }
 
             CallbackUri = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
-            MediaStreamingSubscription = null; // #TODO callConnectionPropertiesDtoInternal.MediaStreamingSubscription;
-            TranscriptionSubscription = null; // #TODO callConnectionPropertiesDtoInternal.TranscriptionSubscription;
-            Source = callConnectionPropertiesDtoInternal.Source == null? null : CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source);
+            MediaStreamingSubscription = callConnectionPropertiesDtoInternal.MediaStreamingSubscription != null ?
+               new MediaStreamingSubscription(
+                   callConnectionPropertiesDtoInternal.MediaStreamingSubscription.Id,
+                   callConnectionPropertiesDtoInternal.MediaStreamingSubscription.State,
+                   callConnectionPropertiesDtoInternal.MediaStreamingSubscription.SubscribedContentTypes)
+               : null;
+            TranscriptionSubscription = callConnectionPropertiesDtoInternal.TranscriptionSubscription != null ?
+                new TranscriptionSubscription(
+                    callConnectionPropertiesDtoInternal.TranscriptionSubscription.Id,
+                    callConnectionPropertiesDtoInternal.TranscriptionSubscription.State,
+                    callConnectionPropertiesDtoInternal.TranscriptionSubscription.SubscribedResultTypes)
+                : null;
+            Source = callConnectionPropertiesDtoInternal.Source == null ? null : CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source);
             SourceDisplayName = callConnectionPropertiesDtoInternal.SourceDisplayName;
             CorrelationId = callConnectionPropertiesDtoInternal.CorrelationId;
-            AnsweredBy = callConnectionPropertiesDtoInternal.AnsweredBy == null? null : new CommunicationUserIdentifier(callConnectionPropertiesDtoInternal.AnsweredBy.Id);
+            AnsweredBy = callConnectionPropertiesDtoInternal.AnsweredBy == null ? null : new CommunicationUserIdentifier(callConnectionPropertiesDtoInternal.AnsweredBy.Id);
 
             if (callConnectionPropertiesDtoInternal.SourceCallerIdNumber != null)
             {
@@ -84,7 +94,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The callback URI. </summary>
         public Uri CallbackUri { get; }
         /// <summary> SubscriptionId for media streaming. </summary>
-        public MediaStreamingSubscription MediaStreamingSubscription{ get; }
+        public MediaStreamingSubscription MediaStreamingSubscription { get; }
         /// <summary> SubscriptionId for transcription. </summary>
         public TranscriptionSubscription TranscriptionSubscription { get; }
         /// <summary>
