@@ -128,7 +128,8 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                if (options == null) throw new ArgumentNullException(nameof(options));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
 
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
 
@@ -175,7 +176,8 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                if (options == null) throw new ArgumentNullException(nameof(options));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
 
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
 
@@ -457,7 +459,8 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                if (options == null) throw new ArgumentNullException(nameof(options));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
 
                 CreateCallRequestInternal request = CreateCallRequest(options);
 
@@ -621,7 +624,8 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
-        private static bool IsValidHttpsUri(Uri uri) {
+        private static bool IsValidHttpsUri(Uri uri)
+        {
             if (uri == null)
                 return false;
             var uriString = uri.AbsoluteUri;
@@ -640,7 +644,11 @@ namespace Azure.Communication.CallAutomation
             return configuration == default
                 ? default
                 : new TranscriptionOptionsInternal(configuration.TransportUrl.AbsoluteUri, configuration.TranscriptionTransport, configuration.Locale,
-                configuration.StartTranscription);
+                configuration.StartTranscription)
+                {
+                    EnableIntermediateResults = configuration.EnableIntermediateResults,
+                    SpeechRecognitionModelEndpointId = configuration.SpeechRecognitionModelEndpointId
+                };
         }
 
         /// <summary> Initializes a new instance of CallConnection. <see cref="CallConnection"/>.</summary>

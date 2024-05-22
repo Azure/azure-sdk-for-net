@@ -119,9 +119,12 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CommunicationUserIdentifier Source { get { throw null; } set { } }
         public enum ServiceVersion
         {
-            V2023_06_15_Preview = 1,
-            V2023_10_03_Preview = 2,
-            V2024_06_15_Preview = 3,
+            V2023_03_06 = 1,
+            V2023_06_15_Preview = 2,
+            V2023_10_15 = 3,
+            V2023_10_03_Preview = 4,
+            V2024_04_15 = 5,
+            V2024_06_15_Preview = 6,
         }
     }
     public abstract partial class CallAutomationEventBase
@@ -361,7 +364,9 @@ namespace Azure.Communication.CallAutomation
         public virtual Azure.Response Unhold(Azure.Communication.CommunicationIdentifier targetParticipant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UnholdAsync(Azure.Communication.CallAutomation.UnholdOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UnholdAsync(Azure.Communication.CommunicationIdentifier targetParticipant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateTranscription(string locale, string speechRecognitionModelEndpointId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateTranscription(string locale, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateTranscriptionAsync(string locale, string speechRecognitionModelEndpointId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateTranscriptionAsync(string locale, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1319,6 +1324,7 @@ namespace Azure.Communication.CallAutomation
         public StartTranscriptionOptions() { }
         public string Locale { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
+        public string SpeechRecognitionModelEndpointId { get { throw null; } set { } }
     }
     public partial class StopMediaStreamingOptions
     {
@@ -1389,7 +1395,9 @@ namespace Azure.Communication.CallAutomation
     public partial class TranscriptionOptions
     {
         public TranscriptionOptions(System.Uri transportUri, Azure.Communication.CallAutomation.TranscriptionTransport transportType, string locale, bool startTranscription) { }
+        public bool? EnableIntermediateResults { get { throw null; } set { } }
         public string Locale { get { throw null; } }
+        public string SpeechRecognitionModelEndpointId { get { throw null; } set { } }
         public bool StartTranscription { get { throw null; } }
         public Azure.Communication.CallAutomation.TranscriptionTransport TranscriptionTransport { get { throw null; } }
         public System.Uri TransportUrl { get { throw null; } }

@@ -1034,6 +1034,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 new Func<CallMedia, Task<Response>>?[]
                 {
                    callMedia => callMedia.UpdateTranscriptionAsync("locale")
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.UpdateTranscriptionAsync("locale", "customEndpoint")
                 }
             };
         }

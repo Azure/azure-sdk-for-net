@@ -38,5 +38,9 @@ namespace Azure.Communication.CallAutomation
         public string Locale { get; }
         /// <summary> Determines if the transcription should be started immediately after call is answered or not. </summary>
         public bool StartTranscription { get; }
+        /// <summary> Endpoint where the custom model was deployed. </summary>
+        public string SpeechRecognitionModelEndpointId { get; set; }
+        /// <summary> Enables intermediate results for the transcribed speech. </summary>
+        public bool? EnableIntermediateResults { get; set; }
     }
 }

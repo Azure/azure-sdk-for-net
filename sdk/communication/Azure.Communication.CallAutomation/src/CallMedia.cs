@@ -1271,7 +1271,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new StartTranscriptionRequestInternal()
-                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext };
+                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext, SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId };
 
                 return CallMediaRestClient.StartTranscription(CallConnectionId, request, cancellationToken);
             }
@@ -1296,7 +1296,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new StartTranscriptionRequestInternal()
-                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext };
+                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext, SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId };
 
                 return await CallMediaRestClient.StartTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
@@ -1383,6 +1383,29 @@ namespace Azure.Communication.CallAutomation
         /// API to change transcription language.
         /// </summary>
         /// <param name="locale">Defines new locale for transcription.</param>
+        /// <param name="speechRecognitionModelEndpointId">Sets Endpoint id where the custom model was deployed.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual Response UpdateTranscription(string locale, string speechRecognitionModelEndpointId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(UpdateTranscription)}");
+            scope.Start();
+            try
+            {
+                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal(locale) { SpeechRecognitionModelEndpointId = speechRecognitionModelEndpointId };
+                return CallMediaRestClient.UpdateTranscription(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// API to change transcription language.
+        /// </summary>
+        /// <param name="locale">Defines new locale for transcription.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
         public virtual async Task<Response> UpdateTranscriptionAsync(string locale, CancellationToken cancellationToken = default)
@@ -1392,6 +1415,29 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal(locale);
+                return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// API to change transcription language.
+        /// </summary>
+        /// <param name="locale">Defines new locale for transcription.</param>
+        /// <param name="speechRecognitionModelEndpointId">Sets Endpoint id where the custom model was deployed.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual async Task<Response> UpdateTranscriptionAsync(string locale, string speechRecognitionModelEndpointId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(UpdateTranscription)}");
+            scope.Start();
+            try
+            {
+                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal(locale) { SpeechRecognitionModelEndpointId = speechRecognitionModelEndpointId };
                 return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
