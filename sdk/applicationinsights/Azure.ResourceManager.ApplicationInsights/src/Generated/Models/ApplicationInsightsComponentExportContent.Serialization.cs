@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -194,6 +195,212 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecordTypes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  RecordTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RecordTypes))
+                {
+                    builder.Append("  RecordTypes: ");
+                    if (RecordTypes.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RecordTypes}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RecordTypes}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  DestinationType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DestinationType))
+                {
+                    builder.Append("  DestinationType: ");
+                    if (DestinationType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DestinationType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DestinationType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  DestinationAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DestinationAddress))
+                {
+                    builder.Append("  DestinationAddress: ");
+                    if (DestinationAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DestinationAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DestinationAddress}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  IsEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsEnabled))
+                {
+                    builder.Append("  IsEnabled: ");
+                    if (IsEnabled.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IsEnabled}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IsEnabled}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsNotificationQueueEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  NotificationQueueEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsNotificationQueueEnabled))
+                {
+                    builder.Append("  NotificationQueueEnabled: ");
+                    if (IsNotificationQueueEnabled.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IsNotificationQueueEnabled}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IsNotificationQueueEnabled}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotificationQueueUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  NotificationQueueUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NotificationQueueUri))
+                {
+                    builder.Append("  NotificationQueueUri: ");
+                    builder.AppendLine($"'{NotificationQueueUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationStorageSubscriptionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  DestinationStorageSubscriptionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DestinationStorageSubscriptionId))
+                {
+                    builder.Append("  DestinationStorageSubscriptionId: ");
+                    if (DestinationStorageSubscriptionId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DestinationStorageSubscriptionId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DestinationStorageSubscriptionId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationStorageLocationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  DestinationStorageLocationId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DestinationStorageLocationId))
+                {
+                    builder.Append("  DestinationStorageLocationId: ");
+                    if (DestinationStorageLocationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DestinationStorageLocationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DestinationStorageLocationId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationAccountId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  DestinationAccountId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DestinationAccountId))
+                {
+                    builder.Append("  DestinationAccountId: ");
+                    builder.AppendLine($"'{DestinationAccountId.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ApplicationInsightsComponentExportContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentExportContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -202,6 +409,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportContent)} does not support writing '{options.Format}' format.");
             }
