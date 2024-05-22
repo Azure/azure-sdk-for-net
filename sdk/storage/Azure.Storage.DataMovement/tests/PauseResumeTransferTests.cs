@@ -645,15 +645,46 @@ namespace Azure.Storage.DataMovement.Tests
         {
             for (int i = 0; i < blobCount; i++)
             {
-                BlockBlobClient blobClient = container.GetBlockBlobClient(string.Join("/", directoryPath, GetNewBlobName()));
-                // create a new file and copy contents of stream into it, and then close the FileStream
-                // so the StagedUploadAsync call is not prevented from reading using its FileStream.
-                using (Stream originalStream = await CreateLimitedMemoryStream(size))
+                /*
+                if (i % 3 == 0)
                 {
-                    // Upload blob to storage account
-                    originalStream.Position = 0;
-                    await blobClient.UploadAsync(originalStream);
+                    BlockBlobClient blobClient = container.GetBlockBlobClient(string.Join("/", directoryPath, GetNewBlobName()));
+                    // create a new file and copy contents of stream into it, and then close the FileStream
+                    // so the StagedUploadAsync call is not prevented from reading using its FileStream.
+                    using (Stream originalStream = await CreateLimitedMemoryStream(size))
+                    {
+                        // Upload blob to storage account
+                        originalStream.Position = 0;
+                        await blobClient.UploadAsync(originalStream);
+                    }
                 }
+                else if (i % 3 == 1)
+                {
+                    AppendBlobClient blobClient = container.GetAppendBlobClient(string.Join("/", directoryPath, GetNewBlobName()));
+                    await blobClient.CreateAsync();
+                    // create a new file and copy contents of stream into it, and then close the FileStream
+                    // so the StagedUploadAsync call is not prevented from reading using its FileStream.
+                    using (Stream originalStream = await CreateLimitedMemoryStream(size))
+                    {
+                        // Upload blob to storage account
+                        originalStream.Position = 0;
+                        await blobClient.AppendBlockAsync(originalStream);
+                    }
+                }
+                else
+                {
+                */
+                    PageBlobClient blobClient = container.GetPageBlobClient(string.Join("/", directoryPath, GetNewBlobName()));
+                    await blobClient.CreateAsync(size);
+                    // create a new file and copy contents of stream into it, and then close the FileStream
+                    // so the StagedUploadAsync call is not prevented from reading using its FileStream.
+                    using (Stream originalStream = await CreateLimitedMemoryStream(size))
+                    {
+                        // Upload blob to storage account
+                        originalStream.Position = 0;
+                        await blobClient.UploadPagesAsync(originalStream, 0);
+                    }
+                //}
             }
             options ??= new();
             options.BlobDirectoryPrefix = directoryPath;

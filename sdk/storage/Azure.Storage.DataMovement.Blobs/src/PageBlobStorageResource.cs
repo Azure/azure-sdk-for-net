@@ -320,13 +320,13 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            return new BlobSourceCheckpointData(BlobType.Page);
+            return new BlobSourceCheckpointData(new(BlobType.Page));
         }
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new BlobDestinationCheckpointData(
-                blobType: BlobType.Page,
+                blobType: new(BlobType.Page),
                 contentType: _options?.ContentType,
                 contentEncoding: _options?.ContentEncoding,
                 contentLanguage: _options?.ContentLanguage,

@@ -66,7 +66,19 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="path">The path to the storage resource, relative to the directory prefix if any.</param>
         /// <param name="resourceId">Defines the resource id type.</param>
         protected override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
-            => GetBlobAsStorageResource(ApplyOptionalPrefix(path), type: _options?.BlobType ?? ToBlobType(resourceId));
+        {
+            BlobType type = BlobType.Block;
+            if (_options?.BlobType?.Preserve ?? true)
+            {
+                type = ToBlobType(resourceId);
+            }
+            else
+            {
+                // If the user has set the blob type in the options, use that instead of the resourceId
+                type = _options?.BlobType?.Value ?? BlobType.Block;
+            }
+            return GetBlobAsStorageResource(ApplyOptionalPrefix(path), type: type);
+        }
 
         private BlobType ToBlobType(string resourceId)
         {
@@ -202,13 +214,12 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
             // Source blob type does not matter for container
-            return new BlobSourceCheckpointData(BlobType.Block);
+            return new BlobSourceCheckpointData(_options?.BlobType);
         }
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
-        {
-            return new BlobDestinationCheckpointData(
-                blobType: _options?.BlobType ?? BlobType.Block,
+            => new BlobDestinationCheckpointData(
+                blobType: _options?.BlobType,
                 contentType: _options?.BlobOptions?.ContentType,
                 contentEncoding: _options?.BlobOptions?.ContentEncoding,
                 contentLanguage: _options?.BlobOptions?.ContentLanguage,
@@ -217,7 +228,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 accessTier: _options?.BlobOptions?.AccessTier,
                 metadata: _options?.BlobOptions?.Metadata,
                 tags: default);
-        }
 
         private string ApplyOptionalPrefix(string path)
             => IsDirectory
