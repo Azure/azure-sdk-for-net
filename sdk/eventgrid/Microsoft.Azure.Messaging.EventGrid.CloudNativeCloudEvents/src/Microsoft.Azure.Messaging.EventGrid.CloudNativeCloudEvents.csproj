@@ -19,9 +19,8 @@
     <PackageReference Include="Azure.Messaging.EventGrid" />
     <PackageReference Include="CloudNative.CloudEvents" />
     <PackageReference Include="CloudNative.CloudEvents.SystemTextJson" />
-<!-- This is required to prevent version conflict stemming from The CloudNative.CloudEvents.SystemTestJson depending on -->
-<!-- version 5.0.0.-->
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="5.0.0" />
+    <!-- TODO: Remove this pacakge reference when new version of Azure.Core is released -->
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="6.0.0" />
 		<PackageReference Include="Azure.Core"/>
   </ItemGroup>
 </Project>
