@@ -9,10 +9,10 @@ namespace Azure.Core
 {
     internal class RehydrationOperation : Operation
     {
-        private readonly NextLinkOperationImplementation _nextLinkOperation;
+        private readonly Operation.RehydratedOperation _nextLinkOperation;
         private readonly OperationInternal _operation;
 
-        public RehydrationOperation(NextLinkOperationImplementation nextLinkOperation, OperationState operationState, ClientOptions? options = null)
+        public RehydrationOperation(Operation.RehydratedOperation nextLinkOperation, OperationState operationState, ClientOptions? options = null)
         {
             _nextLinkOperation = nextLinkOperation;
             _operation = operationState.HasCompleted

@@ -15,7 +15,7 @@ namespace Azure
     /// Represents a long-running operation.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Operation
+    public abstract partial class Operation
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>
@@ -31,8 +31,8 @@ namespace Azure
             Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
 
             IOperationSource<T> source = new GenericOperationSource<T>();
-            var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
-            var operation = NextLinkOperationImplementation.Create(source, nextLinkOperation);
+            var nextLinkOperation = (RehydratedOperation)RehydratedOperation.Create(pipeline, rehydrationToken);
+            var operation = RehydratedOperation.Create(source, nextLinkOperation);
             var operationState = operation.UpdateStateAsync(async: false, default).EnsureCompleted();
             return new RehydrationOperation<T>(nextLinkOperation, operationState, operation, options);
         }
@@ -49,7 +49,7 @@ namespace Azure
             Argument.AssertNotNull(pipeline, nameof(pipeline));
             Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
 
-            var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
+            var nextLinkOperation = (RehydratedOperation)RehydratedOperation.Create(pipeline, rehydrationToken);
             var operationState = nextLinkOperation.UpdateStateAsync(async: false, default).EnsureCompleted();
             return new RehydrationOperation(nextLinkOperation, operationState);
         }
@@ -67,8 +67,8 @@ namespace Azure
             Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
 
             IOperationSource<T> source = new GenericOperationSource<T>();
-            var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
-            var operation = NextLinkOperationImplementation.Create(source, nextLinkOperation);
+            var nextLinkOperation = (RehydratedOperation)RehydratedOperation.Create(pipeline, rehydrationToken);
+            var operation = RehydratedOperation.Create(source, nextLinkOperation);
             var operationState = await operation.UpdateStateAsync(async: true, default).ConfigureAwait(false);
             return new RehydrationOperation<T>(nextLinkOperation, operationState, operation, options);
         }
@@ -85,7 +85,7 @@ namespace Azure
             Argument.AssertNotNull(pipeline, nameof(pipeline));
             Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
 
-            var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
+            var nextLinkOperation = (RehydratedOperation)RehydratedOperation.Create(pipeline, rehydrationToken);
             var operationState = await nextLinkOperation.UpdateStateAsync(async: true, default).ConfigureAwait(false);
             return new RehydrationOperation(nextLinkOperation, operationState);
         }

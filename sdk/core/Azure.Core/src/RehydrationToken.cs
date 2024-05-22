@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using static Azure.Operation;
+
 namespace Azure.Core
 {
     /// <summary>
@@ -13,10 +15,10 @@ namespace Azure.Core
         /// the status of the long-running operation.
         /// There are cases that operation id is not available, we return "NOT_SET" for unavailable operation id.
         /// </summary>
-        public string Id { get; } = NextLinkOperationImplementation.NotSet;
+        public string Id { get; } = RehydratedOperation.NotSet;
 
         // Version for this contract itself since we might change the members in the future.
-        internal string Version { get; } = NextLinkOperationImplementation.RehydrationTokenVersion;
+        internal string Version { get; } = RehydratedOperation.RehydrationTokenVersion;
 
         // The below members are used to re-construct <cref="NextLinkOperationImplemenation">.
         // Value of <cref="NextLinkOperationImplemenration.HeaderSrouce">.
