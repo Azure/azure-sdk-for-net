@@ -645,7 +645,6 @@ namespace Azure.Storage.DataMovement.Tests
         {
             for (int i = 0; i < blobCount; i++)
             {
-                /*
                 if (i % 3 == 0)
                 {
                     BlockBlobClient blobClient = container.GetBlockBlobClient(string.Join("/", directoryPath, GetNewBlobName()));
@@ -673,7 +672,6 @@ namespace Azure.Storage.DataMovement.Tests
                 }
                 else
                 {
-                */
                     PageBlobClient blobClient = container.GetPageBlobClient(string.Join("/", directoryPath, GetNewBlobName()));
                     await blobClient.CreateAsync(size);
                     // create a new file and copy contents of stream into it, and then close the FileStream
@@ -684,7 +682,7 @@ namespace Azure.Storage.DataMovement.Tests
                         originalStream.Position = 0;
                         await blobClient.UploadPagesAsync(originalStream, 0);
                     }
-                //}
+                }
             }
             options ??= new();
             options.BlobDirectoryPrefix = directoryPath;
