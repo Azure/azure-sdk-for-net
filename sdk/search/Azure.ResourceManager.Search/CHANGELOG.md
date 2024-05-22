@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.3.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.3 (2024-05-16)
+
+### Bugs Fixed
+
+- Correct casing of SkuName when using the ArmSearchModelFactory.
 
 ## 1.3.0-beta.2 (2024-04-29)
 

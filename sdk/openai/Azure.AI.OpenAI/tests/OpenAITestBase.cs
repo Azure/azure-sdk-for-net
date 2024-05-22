@@ -37,10 +37,10 @@ namespace Azure.AI.OpenAI.Tests
 
         protected OpenAITestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer("(\"key\" *: *\")[^ \n\"]*(\")", "$1placeholder$2"));
-            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("api-key", "***********"));
-            UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer("sig=[^\"]*") { Value = "sig=Sanitized" });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer("(\"key\" *: *\")[^ \n\"]*(\")") { Value = "$1placeholder$2" });
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("api-key") { Value = "***********" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*") { Value = "sig=Sanitized" });
             JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
             SanitizedQueryParameters.Add("sig");
         }

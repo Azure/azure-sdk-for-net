@@ -19,7 +19,7 @@ New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-Servi
  [-TestApplicationOid <String>] [-SubscriptionId <String>] [-DeleteAfterHours <Int32>] [-Location <String>]
  [-Environment <String>] [-ResourceType <String>] [-ArmTemplateParameters <Hashtable>]
  [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile]
- [-SuppressVsoCommands] [-UserAuth] [-NewTestResourcesRemainingArguments <Object>]
+ [-SuppressVsoCommands] [-ServicePrincipalAuth] [-NewTestResourcesRemainingArguments <Object>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -32,7 +32,7 @@ New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-Servi
  -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>] [-Location <String>]
  [-Environment <String>] [-ResourceType <String>] [-ArmTemplateParameters <Hashtable>]
  [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile]
- [-SuppressVsoCommands] [-UserAuth] [-NewTestResourcesRemainingArguments <Object>]
+ [-SuppressVsoCommands] [-ServicePrincipalAuth] [-NewTestResourcesRemainingArguments <Object>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -629,15 +629,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -UserAuth
-Create the resource group and deploy the template using the signed in user's credentials.
-No service principal will be created or used.
-
-The environment file will be named for the test resources template that it was
-generated for.
-For ARM templates, it will be test-resources.json.env.
-For
-Bicep templates, test-resources.bicep.env.
+### -ServicePrincipalAuth
+Use the provisioner SP credentials to deploy, and pass the test SP credentials
+to tests.
+If provisioner and test SP are not set, provision an SP with user
+credentials and pass the new SP to tests.
 
 ```yaml
 Type: SwitchParameter

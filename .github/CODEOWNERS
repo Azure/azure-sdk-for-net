@@ -202,10 +202,13 @@
 # ServiceOwners:                                                   @ryogok @TFR258 @tburns10 @areddish @toothache
 
 # PRLabel: %Cognitive - Face
-/sdk/cognitiveservices/Vision.Face/                                @JinyuID @dipidoo @SteveMSFT @msyache @longli0 @ShaoAnLin @lulululululu
+/sdk/cognitiveservices/Vision.Face/                                @dipidoo @longli0 @ShaoAnLin @lulululululu @leareai @Han-msft
+
+# PRLabel: %Cognitive - Face
+/sdk/face/                                                         @dipidoo @longli0 @ShaoAnLin @lulululululu @leareai @Han-msft
 
 # ServiceLabel: %Cognitive - Face
-# ServiceOwners:                                                   @JinyuID @dipidoo @SteveMSFT @msyache @longli0 @ShaoAnLin @lulululululu
+# ServiceOwners:                                                   @dipidoo @longli0 @ShaoAnLin @lulululululu @leareai @Han-msft
 
 # PRLabel: %Cognitive - Form Recognizer
 /sdk/documentintelligence/                                         @kinelski @pallavit @joseharriaga
@@ -509,6 +512,12 @@
 # AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @serkantkaraca @sjkwak
 
+# PRLabel: %Extension - WCF
+/sdk/extension-wcf/                                                @mconnew @subhra231
+
+# ServiceLabel: %Extension - WCF
+# ServiceOwners:                                                   @mconnew @subhra231
+
 # ServiceLabel: %Functions
 # AzureSdkOwners:                                                  @JoshLove-msft
 # ServiceOwners:                                                   @ahmedelnably @fabiocav
@@ -710,12 +719,6 @@
 
 # ServiceLabel: %Network - Private Link
 # ServiceOwners:                                                   @privlinksuppgithub
-
-# PRLabel: %Nginx
-/sdk/nginx/                                                        @spencerofwiti @bangbingsyb
-
-# ServiceLabel: %Nginx
-# ServiceOwners:                                                   @spencerofwiti @bangbingsyb
 
 # ServiceLabel: %Notification Hub
 # ServiceOwners:                                                   @tjsomasundaram
@@ -955,6 +958,13 @@
 
 # ServiceLabel: %Network - Front Door %Mgmt
 # ServiceOwners:                                                   @ptnan7
+
+# PRLabel: %Nginx
+/sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti
+
+# ServiceLabel: %Nginx %Mgmt
+# ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
+
 
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
