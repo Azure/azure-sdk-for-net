@@ -18,7 +18,7 @@ namespace Azure.Template.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSecret_ShortVersion()
+        public void Example_GetSecret_GetSecret_ShortVersion()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TemplateClient client = new TemplateClient("<VaultBaseUrl>", credential);
@@ -31,7 +31,7 @@ namespace Azure.Template.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSecret_ShortVersion_Async()
+        public async Task Example_GetSecret_GetSecret_ShortVersion_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TemplateClient client = new TemplateClient("<VaultBaseUrl>", credential);
@@ -44,7 +44,7 @@ namespace Azure.Template.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSecret_AllParameters()
+        public void Example_GetSecret_GetSecret_AllParameters()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TemplateClient client = new TemplateClient("<VaultBaseUrl>", credential);
@@ -62,7 +62,7 @@ namespace Azure.Template.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSecret_AllParameters_Async()
+        public async Task Example_GetSecret_GetSecret_AllParameters_Async()
         {
             TokenCredential credential = new DefaultAzureCredential();
             TemplateClient client = new TemplateClient("<VaultBaseUrl>", credential);

@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CheckPrincipalAccess_ShortVersion()
+        public void Example_RoleAssignments_CheckPrincipalAccess_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -48,7 +48,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CheckPrincipalAccess_ShortVersion_Async()
+        public async Task Example_RoleAssignments_CheckPrincipalAccess_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -78,7 +78,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CheckPrincipalAccess_AllParameters()
+        public void Example_RoleAssignments_CheckPrincipalAccess_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -118,7 +118,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CheckPrincipalAccess_AllParameters_Async()
+        public async Task Example_RoleAssignments_CheckPrincipalAccess_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -158,7 +158,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRoleAssignments_ShortVersion()
+        public void Example_RoleAssignments_GetRoleAssignments_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -172,7 +172,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRoleAssignments_ShortVersion_Async()
+        public async Task Example_RoleAssignments_GetRoleAssignments_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -186,7 +186,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRoleAssignments_AllParameters()
+        public void Example_RoleAssignments_GetRoleAssignments_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -205,7 +205,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRoleAssignments_AllParameters_Async()
+        public async Task Example_RoleAssignments_GetRoleAssignments_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -224,7 +224,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateRoleAssignment_ShortVersion()
+        public void Example_RoleAssignments_CreateRoleAssignment_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -244,7 +244,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateRoleAssignment_ShortVersion_Async()
+        public async Task Example_RoleAssignments_CreateRoleAssignment_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -264,7 +264,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateRoleAssignment_AllParameters()
+        public void Example_RoleAssignments_CreateRoleAssignment_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -289,7 +289,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateRoleAssignment_AllParameters_Async()
+        public async Task Example_RoleAssignments_CreateRoleAssignment_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -314,7 +314,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRoleAssignmentById_ShortVersion()
+        public void Example_RoleAssignments_GetRoleAssignmentById_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -328,7 +328,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRoleAssignmentById_ShortVersion_Async()
+        public async Task Example_RoleAssignments_GetRoleAssignmentById_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -342,7 +342,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRoleAssignmentById_AllParameters()
+        public void Example_RoleAssignments_GetRoleAssignmentById_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -360,7 +360,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRoleAssignmentById_AllParameters_Async()
+        public async Task Example_RoleAssignments_GetRoleAssignmentById_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -378,7 +378,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteRoleAssignmentById_ShortVersion()
+        public void Example_RoleAssignments_DeleteRoleAssignmentById_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -391,7 +391,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteRoleAssignmentById_ShortVersion_Async()
+        public async Task Example_RoleAssignments_DeleteRoleAssignmentById_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -404,7 +404,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteRoleAssignmentById_AllParameters()
+        public void Example_RoleAssignments_DeleteRoleAssignmentById_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -417,7 +417,7 @@ isDataAction = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteRoleAssignmentById_AllParameters_Async()
+        public async Task Example_RoleAssignments_DeleteRoleAssignmentById_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
