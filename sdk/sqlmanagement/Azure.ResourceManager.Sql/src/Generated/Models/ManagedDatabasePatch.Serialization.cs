@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -456,6 +458,428 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    if (Tags.Any())
+                    {
+                        builder.Append("  tags: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Collation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    collation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Collation))
+                {
+                    builder.Append("    collation: ");
+                    if (Collation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Collation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Collation}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("    status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    creationDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    builder.Append("    creationDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EarliestRestorePoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    earliestRestorePoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EarliestRestorePoint))
+                {
+                    builder.Append("    earliestRestorePoint: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(EarliestRestorePoint.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestorePointInTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    restorePointInTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RestorePointInTime))
+                {
+                    builder.Append("    restorePointInTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(RestorePointInTime.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultSecondaryLocation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    defaultSecondaryLocation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultSecondaryLocation))
+                {
+                    builder.Append("    defaultSecondaryLocation: ");
+                    builder.AppendLine($"'{DefaultSecondaryLocation.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CatalogCollation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    catalogCollation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CatalogCollation))
+                {
+                    builder.Append("    catalogCollation: ");
+                    builder.AppendLine($"'{CatalogCollation.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreateMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    createMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreateMode))
+                {
+                    builder.Append("    createMode: ");
+                    builder.AppendLine($"'{CreateMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageContainerUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageContainerUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageContainerUri))
+                {
+                    builder.Append("    storageContainerUri: ");
+                    builder.AppendLine($"'{StorageContainerUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceDatabaseId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sourceDatabaseId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceDatabaseId))
+                {
+                    builder.Append("    sourceDatabaseId: ");
+                    builder.AppendLine($"'{SourceDatabaseId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CrossSubscriptionSourceDatabaseId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    crossSubscriptionSourceDatabaseId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CrossSubscriptionSourceDatabaseId))
+                {
+                    builder.Append("    crossSubscriptionSourceDatabaseId: ");
+                    builder.AppendLine($"'{CrossSubscriptionSourceDatabaseId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestorableDroppedDatabaseId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    restorableDroppedDatabaseId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RestorableDroppedDatabaseId))
+                {
+                    builder.Append("    restorableDroppedDatabaseId: ");
+                    builder.AppendLine($"'{RestorableDroppedDatabaseId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CrossSubscriptionRestorableDroppedDatabaseId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    crossSubscriptionRestorableDroppedDatabaseId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CrossSubscriptionRestorableDroppedDatabaseId))
+                {
+                    builder.Append("    crossSubscriptionRestorableDroppedDatabaseId: ");
+                    builder.AppendLine($"'{CrossSubscriptionRestorableDroppedDatabaseId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageContainerIdentity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageContainerIdentity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageContainerIdentity))
+                {
+                    builder.Append("    storageContainerIdentity: ");
+                    if (StorageContainerIdentity.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StorageContainerIdentity}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StorageContainerIdentity}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageContainerSasToken), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageContainerSasToken: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageContainerSasToken))
+                {
+                    builder.Append("    storageContainerSasToken: ");
+                    if (StorageContainerSasToken.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StorageContainerSasToken}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StorageContainerSasToken}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverGroupId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    failoverGroupId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FailoverGroupId))
+                {
+                    builder.Append("    failoverGroupId: ");
+                    builder.AppendLine($"'{FailoverGroupId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecoverableDatabaseId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    recoverableDatabaseId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RecoverableDatabaseId))
+                {
+                    builder.Append("    recoverableDatabaseId: ");
+                    builder.AppendLine($"'{RecoverableDatabaseId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LongTermRetentionBackupResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    longTermRetentionBackupResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LongTermRetentionBackupResourceId))
+                {
+                    builder.Append("    longTermRetentionBackupResourceId: ");
+                    builder.AppendLine($"'{LongTermRetentionBackupResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowAutoCompleteRestore), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    autoCompleteRestore: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowAutoCompleteRestore))
+                {
+                    builder.Append("    autoCompleteRestore: ");
+                    var boolValue = AllowAutoCompleteRestore.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastBackupName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lastBackupName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastBackupName))
+                {
+                    builder.Append("    lastBackupName: ");
+                    if (LastBackupName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LastBackupName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LastBackupName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CrossSubscriptionTargetManagedInstanceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    crossSubscriptionTargetManagedInstanceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CrossSubscriptionTargetManagedInstanceId))
+                {
+                    builder.Append("    crossSubscriptionTargetManagedInstanceId: ");
+                    builder.AppendLine($"'{CrossSubscriptionTargetManagedInstanceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLedgerOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isLedgerOn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsLedgerOn))
+                {
+                    builder.Append("    isLedgerOn: ");
+                    var boolValue = IsLedgerOn.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedDatabasePatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabasePatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -464,6 +888,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support writing '{options.Format}' format.");
             }

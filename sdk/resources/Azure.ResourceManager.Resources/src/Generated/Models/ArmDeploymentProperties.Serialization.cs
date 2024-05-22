@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -213,6 +214,144 @@ namespace Azure.ResourceManager.Resources.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Template), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  template: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Template))
+                {
+                    builder.Append("  template: ");
+                    builder.AppendLine($"'{Template.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateLink), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  templateLink: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TemplateLink))
+                {
+                    builder.Append("  templateLink: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TemplateLink, options, 2, false, "  templateLink: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameters), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  parameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Parameters))
+                {
+                    builder.Append("  parameters: ");
+                    builder.AppendLine($"'{Parameters.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParametersLink), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  parametersLink: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ParametersLink))
+                {
+                    builder.Append("  parametersLink: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ParametersLink, options, 2, false, "  parametersLink: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  mode: ");
+                builder.AppendLine($"'{Mode.ToSerialString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DebugSettingDetailLevel", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  debugSetting: ");
+                builder.AppendLine("{");
+                builder.Append("    detailLevel: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(DebugSetting))
+                {
+                    builder.Append("  debugSetting: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DebugSetting, options, 2, false, "  debugSetting: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorDeployment), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  onErrorDeployment: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ErrorDeployment))
+                {
+                    builder.Append("  onErrorDeployment: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ErrorDeployment, options, 2, false, "  onErrorDeployment: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ExpressionEvaluationScope", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  expressionEvaluationOptions: ");
+                builder.AppendLine("{");
+                builder.Append("    scope: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ExpressionEvaluation))
+                {
+                    builder.Append("  expressionEvaluationOptions: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ExpressionEvaluation, options, 2, false, "  expressionEvaluationOptions: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ArmDeploymentProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -221,6 +360,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ArmDeploymentProperties)} does not support writing '{options.Format}' format.");
             }

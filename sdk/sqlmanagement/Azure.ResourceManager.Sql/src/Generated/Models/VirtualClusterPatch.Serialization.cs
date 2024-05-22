@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -169,6 +171,135 @@ namespace Azure.ResourceManager.Sql.Models
             return new VirtualClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), subnetId, version, childResources ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    if (Tags.Any())
+                    {
+                        builder.Append("  tags: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubnetId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    subnetId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubnetId))
+                {
+                    builder.Append("    subnetId: ");
+                    builder.AppendLine($"'{SubnetId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    version: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    builder.Append("    version: ");
+                    if (Version.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Version}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Version}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChildResources), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    childResources: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ChildResources))
+                {
+                    if (ChildResources.Any())
+                    {
+                        builder.Append("    childResources: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ChildResources)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<VirtualClusterPatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -177,6 +308,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualClusterPatch)} does not support writing '{options.Format}' format.");
             }

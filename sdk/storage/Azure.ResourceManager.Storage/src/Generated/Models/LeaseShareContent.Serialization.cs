@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -143,6 +144,109 @@ namespace Azure.ResourceManager.Storage.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Action), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  action: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  action: ");
+                builder.AppendLine($"'{Action.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeaseId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  leaseId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LeaseId))
+                {
+                    builder.Append("  leaseId: ");
+                    if (LeaseId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LeaseId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LeaseId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BreakPeriod), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  breakPeriod: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BreakPeriod))
+                {
+                    builder.Append("  breakPeriod: ");
+                    builder.AppendLine($"{BreakPeriod.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeaseDuration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  leaseDuration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LeaseDuration))
+                {
+                    builder.Append("  leaseDuration: ");
+                    builder.AppendLine($"{LeaseDuration.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProposedLeaseId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  proposedLeaseId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProposedLeaseId))
+                {
+                    builder.Append("  proposedLeaseId: ");
+                    if (ProposedLeaseId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProposedLeaseId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProposedLeaseId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<LeaseShareContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LeaseShareContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -151,6 +255,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LeaseShareContent)} does not support writing '{options.Format}' format.");
             }

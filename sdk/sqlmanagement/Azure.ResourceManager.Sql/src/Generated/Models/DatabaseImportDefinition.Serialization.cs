@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -199,6 +200,247 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  databaseName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DatabaseName))
+                {
+                    builder.Append("  databaseName: ");
+                    if (DatabaseName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DatabaseName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DatabaseName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Edition), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  edition: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Edition))
+                {
+                    builder.Append("  edition: ");
+                    if (Edition.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Edition}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Edition}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceObjectiveName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceObjectiveName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceObjectiveName))
+                {
+                    builder.Append("  serviceObjectiveName: ");
+                    if (ServiceObjectiveName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceObjectiveName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceObjectiveName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxSizeBytes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxSizeBytes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxSizeBytes))
+                {
+                    builder.Append("  maxSizeBytes: ");
+                    if (MaxSizeBytes.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MaxSizeBytes}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MaxSizeBytes}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageKeyType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageKeyType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  storageKeyType: ");
+                builder.AppendLine($"'{StorageKeyType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageKey))
+                {
+                    builder.Append("  storageKey: ");
+                    if (StorageKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StorageKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StorageKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageUri))
+                {
+                    builder.Append("  storageUri: ");
+                    builder.AppendLine($"'{StorageUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdministratorLogin), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  administratorLogin: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdministratorLogin))
+                {
+                    builder.Append("  administratorLogin: ");
+                    if (AdministratorLogin.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdministratorLogin}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdministratorLogin}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdministratorLoginPassword), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  administratorLoginPassword: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdministratorLoginPassword))
+                {
+                    builder.Append("  administratorLoginPassword: ");
+                    if (AdministratorLoginPassword.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdministratorLoginPassword}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdministratorLoginPassword}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  authenticationType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthenticationType))
+                {
+                    builder.Append("  authenticationType: ");
+                    if (AuthenticationType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AuthenticationType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AuthenticationType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkIsolation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  networkIsolation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkIsolation))
+                {
+                    builder.Append("  networkIsolation: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NetworkIsolation, options, 2, false, "  networkIsolation: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DatabaseImportDefinition>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseImportDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -207,6 +449,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support writing '{options.Format}' format.");
             }

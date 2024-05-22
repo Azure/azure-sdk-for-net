@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -597,6 +599,601 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sku: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sku))
+                {
+                    builder.Append("  sku: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identity))
+                {
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    if (Tags.Any())
+                    {
+                        builder.Append("  tags: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedInstanceCreateMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    managedInstanceCreateMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedInstanceCreateMode))
+                {
+                    builder.Append("    managedInstanceCreateMode: ");
+                    builder.AppendLine($"'{ManagedInstanceCreateMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FullyQualifiedDomainName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    fullyQualifiedDomainName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FullyQualifiedDomainName))
+                {
+                    builder.Append("    fullyQualifiedDomainName: ");
+                    if (FullyQualifiedDomainName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FullyQualifiedDomainName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FullyQualifiedDomainName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdministratorLogin), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    administratorLogin: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdministratorLogin))
+                {
+                    builder.Append("    administratorLogin: ");
+                    if (AdministratorLogin.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdministratorLogin}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdministratorLogin}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdministratorLoginPassword), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    administratorLoginPassword: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdministratorLoginPassword))
+                {
+                    builder.Append("    administratorLoginPassword: ");
+                    if (AdministratorLoginPassword.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdministratorLoginPassword}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdministratorLoginPassword}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubnetId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    subnetId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubnetId))
+                {
+                    builder.Append("    subnetId: ");
+                    builder.AppendLine($"'{SubnetId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("    state: ");
+                    if (State.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{State}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{State}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LicenseType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    licenseType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LicenseType))
+                {
+                    builder.Append("    licenseType: ");
+                    builder.AppendLine($"'{LicenseType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VCores), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    vCores: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VCores))
+                {
+                    builder.Append("    vCores: ");
+                    builder.AppendLine($"{VCores.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageSizeInGB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageSizeInGB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageSizeInGB))
+                {
+                    builder.Append("    storageSizeInGB: ");
+                    builder.AppendLine($"{StorageSizeInGB.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Collation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    collation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Collation))
+                {
+                    builder.Append("    collation: ");
+                    if (Collation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Collation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Collation}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsZone), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    dnsZone: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DnsZone))
+                {
+                    builder.Append("    dnsZone: ");
+                    if (DnsZone.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DnsZone}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DnsZone}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedDnsZonePartner), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    dnsZonePartner: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedDnsZonePartner))
+                {
+                    builder.Append("    dnsZonePartner: ");
+                    builder.AppendLine($"'{ManagedDnsZonePartner.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPublicDataEndpointEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    publicDataEndpointEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsPublicDataEndpointEnabled))
+                {
+                    builder.Append("    publicDataEndpointEnabled: ");
+                    var boolValue = IsPublicDataEndpointEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceManagedInstanceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sourceManagedInstanceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceManagedInstanceId))
+                {
+                    builder.Append("    sourceManagedInstanceId: ");
+                    builder.AppendLine($"'{SourceManagedInstanceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestorePointInTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    restorePointInTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RestorePointInTime))
+                {
+                    builder.Append("    restorePointInTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(RestorePointInTime.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProxyOverride), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    proxyOverride: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProxyOverride))
+                {
+                    builder.Append("    proxyOverride: ");
+                    builder.AppendLine($"'{ProxyOverride.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimezoneId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    timezoneId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimezoneId))
+                {
+                    builder.Append("    timezoneId: ");
+                    if (TimezoneId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TimezoneId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TimezoneId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstancePoolId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    instancePoolId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstancePoolId))
+                {
+                    builder.Append("    instancePoolId: ");
+                    builder.AppendLine($"'{InstancePoolId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaintenanceConfigurationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    maintenanceConfigurationId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaintenanceConfigurationId))
+                {
+                    builder.Append("    maintenanceConfigurationId: ");
+                    builder.AppendLine($"'{MaintenanceConfigurationId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateEndpointConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    if (PrivateEndpointConnections.Any())
+                    {
+                        builder.Append("    privateEndpointConnections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PrivateEndpointConnections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimalTlsVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    minimalTlsVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinimalTlsVersion))
+                {
+                    builder.Append("    minimalTlsVersion: ");
+                    if (MinimalTlsVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MinimalTlsVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MinimalTlsVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentBackupStorageRedundancy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    currentBackupStorageRedundancy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CurrentBackupStorageRedundancy))
+                {
+                    builder.Append("    currentBackupStorageRedundancy: ");
+                    builder.AppendLine($"'{CurrentBackupStorageRedundancy.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedBackupStorageRedundancy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestedBackupStorageRedundancy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestedBackupStorageRedundancy))
+                {
+                    builder.Append("    requestedBackupStorageRedundancy: ");
+                    builder.AppendLine($"'{RequestedBackupStorageRedundancy.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsZoneRedundant), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    zoneRedundant: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsZoneRedundant))
+                {
+                    builder.Append("    zoneRedundant: ");
+                    var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryUserAssignedIdentityId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    primaryUserAssignedIdentityId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
+                {
+                    builder.Append("    primaryUserAssignedIdentityId: ");
+                    builder.AppendLine($"'{PrimaryUserAssignedIdentityId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    keyId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyId))
+                {
+                    builder.Append("    keyId: ");
+                    builder.AppendLine($"'{KeyId.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Administrators), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    administrators: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Administrators))
+                {
+                    builder.Append("    administrators: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Administrators, options, 4, false, "    administrators: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServicePrincipal), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    servicePrincipal: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServicePrincipal))
+                {
+                    builder.Append("    servicePrincipal: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ServicePrincipal, options, 4, false, "    servicePrincipal: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedInstancePatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -605,6 +1202,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support writing '{options.Format}' format.");
             }

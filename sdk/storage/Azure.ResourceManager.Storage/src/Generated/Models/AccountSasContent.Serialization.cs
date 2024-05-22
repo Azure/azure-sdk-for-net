@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -170,6 +171,147 @@ namespace Azure.ResourceManager.Storage.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Services), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  signedServices: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  signedServices: ");
+                builder.AppendLine($"'{Services.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceTypes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  signedResourceTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  signedResourceTypes: ");
+                builder.AppendLine($"'{ResourceTypes.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Permissions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  signedPermission: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  signedPermission: ");
+                builder.AppendLine($"'{Permissions.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPAddressOrRange), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  signedIp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPAddressOrRange))
+                {
+                    builder.Append("  signedIp: ");
+                    if (IPAddressOrRange.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IPAddressOrRange}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IPAddressOrRange}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocols), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  signedProtocol: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Protocols))
+                {
+                    builder.Append("  signedProtocol: ");
+                    builder.AppendLine($"'{Protocols.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedAccessStartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  signedStart: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SharedAccessStartOn))
+                {
+                    builder.Append("  signedStart: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(SharedAccessStartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedAccessExpireOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  signedExpiry: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  signedExpiry: ");
+                var formattedDateTimeString = TypeFormatters.ToString(SharedAccessExpireOn, "o");
+                builder.AppendLine($"'{formattedDateTimeString}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyToSign), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keyToSign: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyToSign))
+                {
+                    builder.Append("  keyToSign: ");
+                    if (KeyToSign.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KeyToSign}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KeyToSign}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AccountSasContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -178,6 +320,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AccountSasContent)} does not support writing '{options.Format}' format.");
             }
