@@ -56,7 +56,6 @@ steps:
           eng/common/scripts/Import-AzModules.ps1
 
 
-
           if ('${{ parameters.SubscriptionConfigurationFilePath }}' -ne '') {
             $subscriptionConfiguration = `
               Get-Content '${{ parameters.SubscriptionConfigurationFilePath }}' `
