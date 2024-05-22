@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -316,6 +317,340 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidateResourceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  type: ");
+                builder.AppendLine($"'{ValidateResourceType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  location: ");
+                builder.AppendLine($"'{Location.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerFarmId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serverFarmId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerFarmId))
+                {
+                    builder.Append("    serverFarmId: ");
+                    builder.AppendLine($"'{ServerFarmId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkuName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    skuName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SkuName))
+                {
+                    builder.Append("    skuName: ");
+                    if (SkuName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SkuName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SkuName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NeedLinuxWorkers), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    needLinuxWorkers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NeedLinuxWorkers))
+                {
+                    builder.Append("    needLinuxWorkers: ");
+                    var boolValue = NeedLinuxWorkers.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSpot), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isSpot: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsSpot))
+                {
+                    builder.Append("    isSpot: ");
+                    var boolValue = IsSpot.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Capacity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    capacity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Capacity))
+                {
+                    builder.Append("    capacity: ");
+                    builder.AppendLine($"{Capacity.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingEnvironment), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    hostingEnvironment: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HostingEnvironment))
+                {
+                    builder.Append("    hostingEnvironment: ");
+                    if (HostingEnvironment.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HostingEnvironment}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HostingEnvironment}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsXenon), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isXenon: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsXenon))
+                {
+                    builder.Append("    isXenon: ");
+                    var boolValue = IsXenon.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerRegistryBaseUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    containerRegistryBaseUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerRegistryBaseUri))
+                {
+                    builder.Append("    containerRegistryBaseUrl: ");
+                    builder.AppendLine($"'{ContainerRegistryBaseUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerRegistryUsername), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    containerRegistryUsername: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerRegistryUsername))
+                {
+                    builder.Append("    containerRegistryUsername: ");
+                    if (ContainerRegistryUsername.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContainerRegistryUsername}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContainerRegistryUsername}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerRegistryPassword), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    containerRegistryPassword: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerRegistryPassword))
+                {
+                    builder.Append("    containerRegistryPassword: ");
+                    if (ContainerRegistryPassword.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContainerRegistryPassword}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContainerRegistryPassword}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerImageRepository), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    containerImageRepository: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerImageRepository))
+                {
+                    builder.Append("    containerImageRepository: ");
+                    if (ContainerImageRepository.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContainerImageRepository}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContainerImageRepository}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerImageTag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    containerImageTag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerImageTag))
+                {
+                    builder.Append("    containerImageTag: ");
+                    if (ContainerImageTag.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContainerImageTag}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContainerImageTag}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerImagePlatform), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    containerImagePlatform: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerImagePlatform))
+                {
+                    builder.Append("    containerImagePlatform: ");
+                    if (ContainerImagePlatform.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContainerImagePlatform}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContainerImagePlatform}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppServiceEnvironment), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    appServiceEnvironment: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AppServiceEnvironment))
+                {
+                    builder.Append("    appServiceEnvironment: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AppServiceEnvironment, options, 4, false, "    appServiceEnvironment: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AppServiceValidateContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceValidateContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -324,6 +659,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support writing '{options.Format}' format.");
             }

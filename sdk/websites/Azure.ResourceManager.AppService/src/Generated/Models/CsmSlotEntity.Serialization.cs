@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -93,6 +94,57 @@ namespace Azure.ResourceManager.AppService.Models
             return new CsmSlotEntity(targetSlot, preserveVnet, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetSlot), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetSlot: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetSlot))
+                {
+                    builder.Append("  targetSlot: ");
+                    if (TargetSlot.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TargetSlot}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TargetSlot}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreserveVnet), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  preserveVnet: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  preserveVnet: ");
+                var boolValue = PreserveVnet == true ? "true" : "false";
+                builder.AppendLine($"{boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CsmSlotEntity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CsmSlotEntity>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,6 +153,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CsmSlotEntity)} does not support writing '{options.Format}' format.");
             }
