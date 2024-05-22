@@ -19,7 +19,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNutrientAnalysis_ShortVersion()
+        public void Example_NutrientAnalyses_GetNutrientAnalysis_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -33,7 +33,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNutrientAnalysis_ShortVersion_Async()
+        public async Task Example_NutrientAnalyses_GetNutrientAnalysis_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -47,7 +47,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNutrientAnalysis_AllParameters()
+        public void Example_NutrientAnalyses_GetNutrientAnalysis_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -83,7 +83,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNutrientAnalysis_AllParameters_Async()
+        public async Task Example_NutrientAnalyses_GetNutrientAnalysis_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -119,7 +119,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate_ShortVersion()
+        public void Example_NutrientAnalyses_CreateOrUpdate_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -134,7 +134,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_ShortVersion_Async()
+        public async Task Example_NutrientAnalyses_CreateOrUpdate_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -149,7 +149,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate_AllParameters()
+        public void Example_NutrientAnalyses_CreateOrUpdate_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -213,7 +213,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_AllParameters_Async()
+        public async Task Example_NutrientAnalyses_CreateOrUpdate_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -277,7 +277,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_ShortVersion()
+        public void Example_NutrientAnalyses_Delete_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -290,7 +290,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_ShortVersion_Async()
+        public async Task Example_NutrientAnalyses_Delete_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -303,7 +303,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_AllParameters()
+        public void Example_NutrientAnalyses_Delete_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -316,7 +316,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_AllParameters_Async()
+        public async Task Example_NutrientAnalyses_Delete_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -329,7 +329,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNutrientAnalyses_ShortVersion()
+        public void Example_NutrientAnalyses_GetNutrientAnalyses_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -344,7 +344,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNutrientAnalyses_ShortVersion_Async()
+        public async Task Example_NutrientAnalyses_GetNutrientAnalyses_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -359,7 +359,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNutrientAnalyses_AllParameters()
+        public void Example_NutrientAnalyses_GetNutrientAnalyses_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -396,7 +396,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNutrientAnalyses_AllParameters_Async()
+        public async Task Example_NutrientAnalyses_GetNutrientAnalyses_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -433,7 +433,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNutrientAnalysesByPartyId_ShortVersion()
+        public void Example_NutrientAnalyses_GetNutrientAnalysesByPartyId_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -448,7 +448,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNutrientAnalysesByPartyId_ShortVersion_Async()
+        public async Task Example_NutrientAnalyses_GetNutrientAnalysesByPartyId_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -463,7 +463,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetNutrientAnalysesByPartyId_AllParameters()
+        public void Example_NutrientAnalyses_GetNutrientAnalysesByPartyId_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -500,7 +500,7 @@ product = "<product>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetNutrientAnalysesByPartyId_AllParameters_Async()
+        public async Task Example_NutrientAnalyses_GetNutrientAnalysesByPartyId_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();

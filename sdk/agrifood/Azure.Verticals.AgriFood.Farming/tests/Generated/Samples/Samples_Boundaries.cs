@@ -19,7 +19,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCascadeDeleteJobDetails_ShortVersion()
+        public void Example_Boundaries_GetCascadeDeleteJobDetails_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -35,7 +35,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCascadeDeleteJobDetails_ShortVersion_Async()
+        public async Task Example_Boundaries_GetCascadeDeleteJobDetails_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -51,7 +51,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCascadeDeleteJobDetails_AllParameters()
+        public void Example_Boundaries_GetCascadeDeleteJobDetails_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -76,7 +76,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCascadeDeleteJobDetails_AllParameters_Async()
+        public async Task Example_Boundaries_GetCascadeDeleteJobDetails_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -101,7 +101,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate_ShortVersion()
+        public void Example_Boundaries_CreateOrUpdate_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -116,7 +116,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_ShortVersion_Async()
+        public async Task Example_Boundaries_CreateOrUpdate_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -131,7 +131,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate_AllParameters()
+        public void Example_Boundaries_CreateOrUpdate_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -201,7 +201,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_AllParameters_Async()
+        public async Task Example_Boundaries_CreateOrUpdate_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -271,7 +271,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetBoundary_ShortVersion()
+        public void Example_Boundaries_GetBoundary_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -285,7 +285,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBoundary_ShortVersion_Async()
+        public async Task Example_Boundaries_GetBoundary_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -299,7 +299,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetBoundary_AllParameters()
+        public void Example_Boundaries_GetBoundary_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -333,7 +333,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBoundary_AllParameters_Async()
+        public async Task Example_Boundaries_GetBoundary_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -367,7 +367,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_ShortVersion()
+        public void Example_Boundaries_Delete_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -380,7 +380,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_ShortVersion_Async()
+        public async Task Example_Boundaries_Delete_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -393,7 +393,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete_AllParameters()
+        public void Example_Boundaries_Delete_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -406,7 +406,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_AllParameters_Async()
+        public async Task Example_Boundaries_Delete_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -419,7 +419,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetOverlap_ShortVersion()
+        public void Example_Boundaries_GetOverlap_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -433,7 +433,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetOverlap_ShortVersion_Async()
+        public async Task Example_Boundaries_GetOverlap_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -447,7 +447,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetOverlap_AllParameters()
+        public void Example_Boundaries_GetOverlap_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -463,7 +463,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetOverlap_AllParameters_Async()
+        public async Task Example_Boundaries_GetOverlap_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -479,7 +479,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetBoundaries_ShortVersion()
+        public void Example_Boundaries_GetBoundaries_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -494,7 +494,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBoundaries_ShortVersion_Async()
+        public async Task Example_Boundaries_GetBoundaries_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -509,7 +509,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetBoundaries_AllParameters()
+        public void Example_Boundaries_GetBoundaries_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -540,7 +540,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBoundaries_AllParameters_Async()
+        public async Task Example_Boundaries_GetBoundaries_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -571,7 +571,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Search_ShortVersion()
+        public void Example_Boundaries_Search_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -587,7 +587,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Search_ShortVersion_Async()
+        public async Task Example_Boundaries_Search_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -603,7 +603,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Search_AllParameters()
+        public void Example_Boundaries_Search_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -684,7 +684,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Search_AllParameters_Async()
+        public async Task Example_Boundaries_Search_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -765,7 +765,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetBoundariesByPartyId_ShortVersion()
+        public void Example_Boundaries_GetBoundariesByPartyId_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -780,7 +780,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBoundariesByPartyId_ShortVersion_Async()
+        public async Task Example_Boundaries_GetBoundariesByPartyId_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -795,7 +795,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetBoundariesByPartyId_AllParameters()
+        public void Example_Boundaries_GetBoundariesByPartyId_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -826,7 +826,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBoundariesByPartyId_AllParameters_Async()
+        public async Task Example_Boundaries_GetBoundariesByPartyId_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -857,7 +857,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SearchByPartyId_ShortVersion()
+        public void Example_Boundaries_SearchByPartyId_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -873,7 +873,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SearchByPartyId_ShortVersion_Async()
+        public async Task Example_Boundaries_SearchByPartyId_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -889,7 +889,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_SearchByPartyId_AllParameters()
+        public void Example_Boundaries_SearchByPartyId_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -970,7 +970,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_SearchByPartyId_AllParameters_Async()
+        public async Task Example_Boundaries_SearchByPartyId_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1051,7 +1051,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateCascadeDeleteJob_ShortVersion()
+        public void Example_Boundaries_CreateCascadeDeleteJob_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1068,7 +1068,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateCascadeDeleteJob_ShortVersion_Async()
+        public async Task Example_Boundaries_CreateCascadeDeleteJob_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1085,7 +1085,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateCascadeDeleteJob_AllParameters()
+        public void Example_Boundaries_CreateCascadeDeleteJob_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -1111,7 +1111,7 @@ new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateCascadeDeleteJob_AllParameters_Async()
+        public async Task Example_Boundaries_CreateCascadeDeleteJob_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();

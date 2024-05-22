@@ -18,7 +18,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWorkflowTask_ShortVersion()
+        public void Example_WorkflowTask_GetWorkflowTask_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflowTask_ShortVersion_Async()
+        public async Task Example_WorkflowTask_GetWorkflowTask_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWorkflowTask_AllParameters()
+        public void Example_WorkflowTask_GetWorkflowTask_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflowTask_AllParameters_Async()
+        public async Task Example_WorkflowTask_GetWorkflowTask_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -126,7 +126,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Reassign_ShortVersion()
+        public void Example_WorkflowTask_Reassign_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -140,7 +140,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Reassign_ShortVersion_Async()
+        public async Task Example_WorkflowTask_Reassign_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -154,7 +154,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Reassign_AllParameters()
+        public void Example_WorkflowTask_Reassign_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -178,7 +178,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Reassign_AllParameters_Async()
+        public async Task Example_WorkflowTask_Reassign_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

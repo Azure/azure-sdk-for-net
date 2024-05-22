@@ -18,7 +18,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllShareResources_ShortVersion()
+        public void Example_ShareResources_GetAllShareResources_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllShareResources_ShortVersion_Async()
+        public async Task Example_ShareResources_GetAllShareResources_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllShareResources_AllParameters()
+        public void Example_ShareResources_GetAllShareResources_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllShareResources_AllParameters_Async()
+        public async Task Example_ShareResources_GetAllShareResources_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

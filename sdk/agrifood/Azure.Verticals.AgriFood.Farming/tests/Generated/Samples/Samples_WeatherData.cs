@@ -18,7 +18,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWeatherData_ShortVersion()
+        public void Example_WeatherData_GetWeatherData_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -43,7 +43,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWeatherData_ShortVersion_Async()
+        public async Task Example_WeatherData_GetWeatherData_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -68,7 +68,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWeatherData_AllParameters()
+        public void Example_WeatherData_GetWeatherData_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -166,7 +166,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWeatherData_AllParameters_Async()
+        public async Task Example_WeatherData_GetWeatherData_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();

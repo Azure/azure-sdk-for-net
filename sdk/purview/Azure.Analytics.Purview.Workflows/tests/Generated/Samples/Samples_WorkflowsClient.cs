@@ -18,7 +18,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWorkflows_ShortVersion()
+        public void Example_Workflows_GetWorkflows_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflows_ShortVersion_Async()
+        public async Task Example_Workflows_GetWorkflows_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWorkflows_AllParameters()
+        public void Example_Workflows_GetWorkflows_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Purview.Workflows.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWorkflows_AllParameters_Async()
+        public async Task Example_Workflows_GetWorkflows_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

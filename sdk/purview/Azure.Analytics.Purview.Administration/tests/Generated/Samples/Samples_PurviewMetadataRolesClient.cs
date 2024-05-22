@@ -18,7 +18,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetadataRoles_ShortVersion()
+        public void Example_PurviewMetadataRoles_GetMetadataRoles_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetadataRoles_ShortVersion_Async()
+        public async Task Example_PurviewMetadataRoles_GetMetadataRoles_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetMetadataRoles_AllParameters()
+        public void Example_PurviewMetadataRoles_GetMetadataRoles_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetMetadataRoles_AllParameters_Async()
+        public async Task Example_PurviewMetadataRoles_GetMetadataRoles_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

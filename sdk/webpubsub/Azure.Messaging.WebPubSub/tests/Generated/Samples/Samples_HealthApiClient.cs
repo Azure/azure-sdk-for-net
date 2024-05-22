@@ -16,7 +16,7 @@ namespace Azure.Messaging.WebPubSub.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetServiceStatus_ShortVersion()
+        public void Example_HealthApi_GetServiceStatus_ShortVersion()
         {
             HealthApiClient client = new HealthApiClient("<Endpoint>");
 
@@ -27,7 +27,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetServiceStatus_ShortVersion_Async()
+        public async Task Example_HealthApi_GetServiceStatus_ShortVersion_Async()
         {
             HealthApiClient client = new HealthApiClient("<Endpoint>");
 
@@ -38,7 +38,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetServiceStatus_AllParameters()
+        public void Example_HealthApi_GetServiceStatus_AllParameters()
         {
             HealthApiClient client = new HealthApiClient("<Endpoint>");
 
@@ -49,7 +49,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetServiceStatus_AllParameters_Async()
+        public async Task Example_HealthApi_GetServiceStatus_AllParameters_Async()
         {
             HealthApiClient client = new HealthApiClient("<Endpoint>");
 

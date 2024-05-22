@@ -18,7 +18,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetLedgerIdentity_ShortVersion()
+        public void Example_ConfidentialLedgerCertificate_GetLedgerIdentity_ShortVersion()
         {
             ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
 
@@ -30,7 +30,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLedgerIdentity_ShortVersion_Async()
+        public async Task Example_ConfidentialLedgerCertificate_GetLedgerIdentity_ShortVersion_Async()
         {
             ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
 
@@ -42,7 +42,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetLedgerIdentity_AllParameters()
+        public void Example_ConfidentialLedgerCertificate_GetLedgerIdentity_AllParameters()
         {
             ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
 
@@ -55,7 +55,7 @@ namespace Azure.Security.ConfidentialLedger.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLedgerIdentity_AllParameters_Async()
+        public async Task Example_ConfidentialLedgerCertificate_GetLedgerIdentity_AllParameters_Async()
         {
             ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
 

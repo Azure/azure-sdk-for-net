@@ -19,7 +19,7 @@ namespace Azure.AI.Language.Conversations.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeConversation_ShortVersion()
+        public void Example_ConversationAnalysis_AnalyzeConversation_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -50,7 +50,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeConversation_ShortVersion_Async()
+        public async Task Example_ConversationAnalysis_AnalyzeConversation_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -81,7 +81,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeConversation_AllParameters()
+        public void Example_ConversationAnalysis_AnalyzeConversation_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -137,7 +137,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeConversation_AllParameters_Async()
+        public async Task Example_ConversationAnalysis_AnalyzeConversation_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -193,7 +193,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAnalyzeConversationJobStatus_ShortVersion()
+        public void Example_ConversationAnalysis_GetAnalyzeConversationJobStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -210,7 +210,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAnalyzeConversationJobStatus_ShortVersion_Async()
+        public async Task Example_ConversationAnalysis_GetAnalyzeConversationJobStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -227,7 +227,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAnalyzeConversationJobStatus_AllParameters()
+        public void Example_ConversationAnalysis_GetAnalyzeConversationJobStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -261,7 +261,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAnalyzeConversationJobStatus_AllParameters_Async()
+        public async Task Example_ConversationAnalysis_GetAnalyzeConversationJobStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -295,7 +295,7 @@ namespace Azure.AI.Language.Conversations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeConversations_ShortVersion()
+        public void Example_ConversationAnalysis_AnalyzeConversations_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -344,7 +344,7 @@ kind = "ConversationalSummarizationTask",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeConversations_ShortVersion_Async()
+        public async Task Example_ConversationAnalysis_AnalyzeConversations_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -393,7 +393,7 @@ kind = "ConversationalSummarizationTask",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeConversations_AllParameters()
+        public void Example_ConversationAnalysis_AnalyzeConversations_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -474,7 +474,7 @@ taskName = "<taskName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeConversations_AllParameters_Async()
+        public async Task Example_ConversationAnalysis_AnalyzeConversations_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -555,7 +555,7 @@ taskName = "<taskName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CancelAnalyzeConversations_ShortVersion()
+        public void Example_ConversationAnalysis_CancelAnalyzeConversations_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -566,7 +566,7 @@ taskName = "<taskName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CancelAnalyzeConversations_ShortVersion_Async()
+        public async Task Example_ConversationAnalysis_CancelAnalyzeConversations_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -577,7 +577,7 @@ taskName = "<taskName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CancelAnalyzeConversations_AllParameters()
+        public void Example_ConversationAnalysis_CancelAnalyzeConversations_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -588,7 +588,7 @@ taskName = "<taskName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CancelAnalyzeConversations_AllParameters_Async()
+        public async Task Example_ConversationAnalysis_CancelAnalyzeConversations_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
