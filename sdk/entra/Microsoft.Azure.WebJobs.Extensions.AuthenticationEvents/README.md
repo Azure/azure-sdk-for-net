@@ -10,7 +10,7 @@ The authentication events trigger for Azure Functions allows you to implement a 
 
 ### Install the package
 
-Install the authentication events trigger for Azure Functions with [NuGet](https://www.nuget.org/):
+Install the authentication events trigger for Azure Functions with [NuGet](https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents/):
 
 ```dotnetcli
 dotnet add package Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
@@ -18,7 +18,7 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
 ### Prerequisites
 
-- **Azure Subscription:** To use Azure services, including Azure Functions, you'll need a subscription. If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you create an account.
+- **Azure Subscription:** To use Azure services, including Azure Functions, you'll need a subscription. If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://azure.microsoft.com/account).
 
 ### Authenticate the client
 
@@ -31,7 +31,7 @@ When the Microsoft Entra authentication events service calls your custom extensi
 
 There are different approaches to authenticating HTTP requests to your function app and validating the token which can be found [here](https://learn.microsoft.com/entra/identity-platform/custom-extension-tokenissuancestart-setup?tabs=visual-studio%2Cazure-portal&pivots=nuget-library#configure-authentication-for-your-azure-function).
 
-#### No token validation
+#### Bypass token validation
 
 If you would like to _not_ authenticate the token while in local development, set the following application settings in the [local.settings.json](https://learn.microsoft.com/azure/azure-functions/functions-develop-local#local-settings-file) file:
 
@@ -61,31 +61,30 @@ The authentication events trigger output binding allows a function to send authe
 
 ## Examples
 
-To Test Token Augmentation, please do the following.
+To test token augmentation, please do the following.
 
-* Open the project that was created in the prior step. (How to get started)
-* Follow [these](https://learn.microsoft.com/entra/identity-platform/custom-extension-tokenissuancestart-setup?tabs=visual-studio%2Cazure-portal&pivots=nuget-library#build-and-run-the-project-locally) steps to test your app locally.
+* Open the project that was created in the prior step. [How to get started](#How-to-get-started)
+* Follow [these steps](https://learn.microsoft.com/entra/identity-platform/custom-extension-tokenissuancestart-setup?tabs=visual-studio%2Cazure-portal&pivots=nuget-library#build-and-run-the-project-locally) to test your app locally.
 
 ## Troubleshooting
 
-* Visual Studio Code
+### Visual studio code
   * If running in Visual Studio Code, you get an error along the lines of the local Azure Storage Emulator is unavailable, you can start the emulator manually. (Note: Azure Storage emulator is now deprecated and the suggested replacement is [Azurite](https://learn.microsoft.com/azure/storage/common/storage-use-azurite?tabs=visual-studio))
   * If using Visual Studio Code on Mac please use [Azurite](https://learn.microsoft.com/azure/storage/common/storage-use-azurite?tabs=visual-studio)
 
-## Publish
+### Azure function endpoint
 
-* Follow the instruction [here](https://learn.microsoft.com/entra/identity-platform/custom-extension-tokenissuancestart-setup?tabs=visual-studio%2Cazure-portal&pivots=nuget-library#deploy-the-function-and-publish-to-azure) to create and publish your Azure Application.
 * To determine your published posting endpoint, combine the azure function endpoint you created, route to the listener and listener code, the listen code can be found by navigating to your azure function application, selecting "App Keys" and copying the value of AuthenticationEvents_extension.
   * For example: "https://azureautheventstriggerdemo.azurewebsites.net/runtime/webhooks/AuthenticationEvents?code=(AuthenticationEvents_extension_key)&function=OnTokenIssuanceStart"
-* Make sure your production environment has the correct application settings for token authentication.
 
 ## Next steps
+
+Follow [Configure a custom claim provider for a token issuance event](https://learn.microsoft.com/entra/identity-platform/custom-extension-tokenissuancestart-configuration?tabs=azure-portal%2Cworkforce-tenant) to create a custom extension that will call your function.
 
 For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/)
 
 Information about logging and metrics for the deployed function can be found [here](https://learn.microsoft.com/azure/azure-functions/monitor-functions?tabs=portal)
 
-[Configure a custom claim provider for a token issuance event](https://learn.microsoft.com/entra/identity-platform/custom-extension-tokenissuancestart-configuration?tabs=azure-portal%2Cworkforce-tenant)
 
 ## Contributing
 
