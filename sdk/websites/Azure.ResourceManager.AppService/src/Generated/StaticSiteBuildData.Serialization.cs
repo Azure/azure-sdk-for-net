@@ -587,17 +587,18 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedBackends), out propertyOverride);
-            if (Optional.IsCollectionDefined(LinkedBackends) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (LinkedBackends.Any() || hasPropertyOverride)
+                builder.Append("    linkedBackends: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LinkedBackends))
                 {
-                    builder.Append("    linkedBackends: ");
-                    if (hasPropertyOverride)
+                    if (LinkedBackends.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    linkedBackends: ");
                         builder.AppendLine("[");
                         foreach (var item in LinkedBackends)
                         {
@@ -609,17 +610,18 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseConnections), out propertyOverride);
-            if (Optional.IsCollectionDefined(DatabaseConnections) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (DatabaseConnections.Any() || hasPropertyOverride)
+                builder.Append("    databaseConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DatabaseConnections))
                 {
-                    builder.Append("    databaseConnections: ");
-                    if (hasPropertyOverride)
+                    if (DatabaseConnections.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    databaseConnections: ");
                         builder.AppendLine("[");
                         foreach (var item in DatabaseConnections)
                         {

@@ -157,30 +157,32 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
-            if (Optional.IsDefined(Enabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  enabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Enabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  enabled: ");
                     var boolValue = Enabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppId), out propertyOverride);
-            if (Optional.IsDefined(AppId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  appId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AppId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  appId: ");
                     if (AppId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -194,31 +196,33 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppPort), out propertyOverride);
-            if (Optional.IsDefined(AppPort) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  appPort: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AppPort))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  appPort: ");
                     builder.AppendLine($"{AppPort.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Components), out propertyOverride);
-            if (Optional.IsCollectionDefined(Components) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Components.Any() || hasPropertyOverride)
+                builder.Append("  components: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Components))
                 {
-                    builder.Append("  components: ");
-                    if (hasPropertyOverride)
+                    if (Components.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  components: ");
                         builder.AppendLine("[");
                         foreach (var item in Components)
                         {

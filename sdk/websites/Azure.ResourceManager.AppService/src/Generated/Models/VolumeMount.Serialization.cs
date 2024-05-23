@@ -132,15 +132,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VolumeSubPath), out propertyOverride);
-            if (Optional.IsDefined(VolumeSubPath) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  volumeSubPath: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VolumeSubPath))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  volumeSubPath: ");
                     if (VolumeSubPath.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -154,15 +155,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerMountPath), out propertyOverride);
-            if (Optional.IsDefined(ContainerMountPath) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  containerMountPath: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerMountPath))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  containerMountPath: ");
                     if (ContainerMountPath.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -176,15 +178,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Data), out propertyOverride);
-            if (Optional.IsDefined(Data) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  data: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Data))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  data: ");
                     if (Data.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -198,15 +201,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReadOnly), out propertyOverride);
-            if (Optional.IsDefined(ReadOnly) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  readOnly: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReadOnly))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  readOnly: ");
                     var boolValue = ReadOnly.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

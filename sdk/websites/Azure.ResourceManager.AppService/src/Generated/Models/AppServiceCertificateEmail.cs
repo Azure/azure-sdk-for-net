@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceCertificateEmail"/>. </summary>
-        internal AppServiceCertificateEmail()
+        public AppServiceCertificateEmail()
         {
         }
 
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Email id. </summary>
         [WirePath("emailId")]
-        public string EmailId { get; }
+        public string EmailId { get; set; }
         /// <summary> Time stamp. </summary>
         [WirePath("timeStamp")]
-        public DateTimeOffset? TimeStamp { get; }
+        public DateTimeOffset? TimeStamp { get; set; }
     }
 }

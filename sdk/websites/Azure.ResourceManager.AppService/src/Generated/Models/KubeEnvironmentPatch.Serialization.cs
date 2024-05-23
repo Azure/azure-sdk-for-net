@@ -511,15 +511,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerAppsConfiguration), out propertyOverride);
-            if (Optional.IsDefined(ContainerAppsConfiguration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    containerAppsConfiguration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerAppsConfiguration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    containerAppsConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ContainerAppsConfiguration, options, 4, false, "    containerAppsConfiguration: ");
                 }
             }

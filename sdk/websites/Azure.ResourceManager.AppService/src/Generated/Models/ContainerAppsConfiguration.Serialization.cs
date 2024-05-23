@@ -163,15 +163,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaprAIInstrumentationKey), out propertyOverride);
-            if (Optional.IsDefined(DaprAIInstrumentationKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  daprAIInstrumentationKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DaprAIInstrumentationKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  daprAIInstrumentationKey: ");
                     if (DaprAIInstrumentationKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -185,15 +186,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PlatformReservedCidr), out propertyOverride);
-            if (Optional.IsDefined(PlatformReservedCidr) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  platformReservedCidr: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PlatformReservedCidr))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  platformReservedCidr: ");
                     if (PlatformReservedCidr.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -207,15 +209,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PlatformReservedDnsIP), out propertyOverride);
-            if (Optional.IsDefined(PlatformReservedDnsIP) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  platformReservedDnsIP: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PlatformReservedDnsIP))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  platformReservedDnsIP: ");
                     if (PlatformReservedDnsIP.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -229,15 +232,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ControlPlaneSubnetResourceId), out propertyOverride);
-            if (Optional.IsDefined(ControlPlaneSubnetResourceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  controlPlaneSubnetResourceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ControlPlaneSubnetResourceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  controlPlaneSubnetResourceId: ");
                     if (ControlPlaneSubnetResourceId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -251,15 +255,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppSubnetResourceId), out propertyOverride);
-            if (Optional.IsDefined(AppSubnetResourceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  appSubnetResourceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AppSubnetResourceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  appSubnetResourceId: ");
                     if (AppSubnetResourceId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -273,15 +278,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DockerBridgeCidr), out propertyOverride);
-            if (Optional.IsDefined(DockerBridgeCidr) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dockerBridgeCidr: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DockerBridgeCidr))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dockerBridgeCidr: ");
                     if (DockerBridgeCidr.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -194,17 +194,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsServers), out propertyOverride);
-            if (Optional.IsCollectionDefined(DnsServers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (DnsServers.Any() || hasPropertyOverride)
+                builder.Append("  dnsServers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DnsServers))
                 {
-                    builder.Append("  dnsServers: ");
-                    if (hasPropertyOverride)
+                    if (DnsServers.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  dnsServers: ");
                         builder.AppendLine("[");
                         foreach (var item in DnsServers)
                         {
@@ -229,15 +230,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsAltServer), out propertyOverride);
-            if (Optional.IsDefined(DnsAltServer) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dnsAltServer: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DnsAltServer))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dnsAltServer: ");
                     if (DnsAltServer.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -251,57 +253,61 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsRetryAttemptTimeout), out propertyOverride);
-            if (Optional.IsDefined(DnsRetryAttemptTimeout) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dnsRetryAttemptTimeout: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DnsRetryAttemptTimeout))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dnsRetryAttemptTimeout: ");
                     builder.AppendLine($"{DnsRetryAttemptTimeout.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsRetryAttemptCount), out propertyOverride);
-            if (Optional.IsDefined(DnsRetryAttemptCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dnsRetryAttemptCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DnsRetryAttemptCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dnsRetryAttemptCount: ");
                     builder.AppendLine($"{DnsRetryAttemptCount.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsMaxCacheTimeout), out propertyOverride);
-            if (Optional.IsDefined(DnsMaxCacheTimeout) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dnsMaxCacheTimeout: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DnsMaxCacheTimeout))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dnsMaxCacheTimeout: ");
                     builder.AppendLine($"{DnsMaxCacheTimeout.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsLegacySortOrder), out propertyOverride);
-            if (Optional.IsDefined(DnsLegacySortOrder) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dnsLegacySortOrder: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DnsLegacySortOrder))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dnsLegacySortOrder: ");
                     var boolValue = DnsLegacySortOrder.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

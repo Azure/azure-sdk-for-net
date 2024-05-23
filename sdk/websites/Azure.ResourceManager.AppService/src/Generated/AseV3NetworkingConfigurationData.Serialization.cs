@@ -591,45 +591,48 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FtpEnabled), out propertyOverride);
-            if (Optional.IsDefined(FtpEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    ftpEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FtpEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    ftpEnabled: ");
                     var boolValue = FtpEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteDebugEnabled), out propertyOverride);
-            if (Optional.IsDefined(RemoteDebugEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    remoteDebugEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RemoteDebugEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    remoteDebugEnabled: ");
                     var boolValue = RemoteDebugEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InboundIPAddressOverride), out propertyOverride);
-            if (Optional.IsDefined(InboundIPAddressOverride) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    inboundIpAddressOverride: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InboundIPAddressOverride))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    inboundIpAddressOverride: ");
                     if (InboundIPAddressOverride.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

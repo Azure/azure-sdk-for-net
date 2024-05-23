@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Storage), out propertyOverride);
-            if (Optional.IsDefined(Storage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  storage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Storage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  storage: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Storage, options, 2, false, "  storage: ");
                 }
             }

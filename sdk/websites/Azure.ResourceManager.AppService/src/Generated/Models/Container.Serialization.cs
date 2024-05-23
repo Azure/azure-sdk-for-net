@@ -210,15 +210,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Image), out propertyOverride);
-            if (Optional.IsDefined(Image) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  image: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Image))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  image: ");
                     if (Image.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -232,15 +233,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -254,17 +256,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Command), out propertyOverride);
-            if (Optional.IsCollectionDefined(Command) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Command.Any() || hasPropertyOverride)
+                builder.Append("  command: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Command))
                 {
-                    builder.Append("  command: ");
-                    if (hasPropertyOverride)
+                    if (Command.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  command: ");
                         builder.AppendLine("[");
                         foreach (var item in Command)
                         {
@@ -289,17 +292,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Args), out propertyOverride);
-            if (Optional.IsCollectionDefined(Args) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Args.Any() || hasPropertyOverride)
+                builder.Append("  args: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Args))
                 {
-                    builder.Append("  args: ");
-                    if (hasPropertyOverride)
+                    if (Args.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  args: ");
                         builder.AppendLine("[");
                         foreach (var item in Args)
                         {
@@ -324,17 +328,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Env), out propertyOverride);
-            if (Optional.IsCollectionDefined(Env) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Env.Any() || hasPropertyOverride)
+                builder.Append("  env: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Env))
                 {
-                    builder.Append("  env: ");
-                    if (hasPropertyOverride)
+                    if (Env.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  env: ");
                         builder.AppendLine("[");
                         foreach (var item in Env)
                         {
@@ -346,15 +351,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Resources), out propertyOverride);
-            if (Optional.IsDefined(Resources) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resources: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Resources))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resources: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Resources, options, 2, false, "  resources: ");
                 }
             }

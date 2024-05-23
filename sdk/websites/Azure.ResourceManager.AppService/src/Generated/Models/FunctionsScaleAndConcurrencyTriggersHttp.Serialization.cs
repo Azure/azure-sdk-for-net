@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PerInstanceConcurrency), out propertyOverride);
-            if (Optional.IsDefined(PerInstanceConcurrency) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  perInstanceConcurrency: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PerInstanceConcurrency))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  perInstanceConcurrency: ");
                     builder.AppendLine($"'{PerInstanceConcurrency.Value.ToString()}'");
                 }
             }

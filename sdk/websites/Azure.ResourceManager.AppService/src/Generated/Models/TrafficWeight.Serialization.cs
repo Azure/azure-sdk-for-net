@@ -131,15 +131,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RevisionName), out propertyOverride);
-            if (Optional.IsDefined(RevisionName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  revisionName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RevisionName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  revisionName: ");
                     if (RevisionName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -153,29 +154,31 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Weight), out propertyOverride);
-            if (Optional.IsDefined(Weight) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  weight: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Weight))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  weight: ");
                     builder.AppendLine($"{Weight.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LatestRevision), out propertyOverride);
-            if (Optional.IsDefined(LatestRevision) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  latestRevision: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LatestRevision))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  latestRevision: ");
                     var boolValue = LatestRevision.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

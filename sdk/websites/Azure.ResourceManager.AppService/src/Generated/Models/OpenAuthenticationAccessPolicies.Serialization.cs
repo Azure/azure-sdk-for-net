@@ -117,17 +117,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OpenAuthenticationPolicyList), out propertyOverride);
-            if (Optional.IsCollectionDefined(OpenAuthenticationPolicyList) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (OpenAuthenticationPolicyList.Any() || hasPropertyOverride)
+                builder.Append("  policies: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(OpenAuthenticationPolicyList))
                 {
-                    builder.Append("  policies: ");
-                    if (hasPropertyOverride)
+                    if (OpenAuthenticationPolicyList.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  policies: ");
                         builder.AppendLine("{");
                         foreach (var item in OpenAuthenticationPolicyList)
                         {

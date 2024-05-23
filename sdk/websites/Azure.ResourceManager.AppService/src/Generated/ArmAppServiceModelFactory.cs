@@ -313,15 +313,6 @@ namespace Azure.ResourceManager.AppService.Models
             return new CertificateOrderAction(actionType, createdOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificateEmail"/>. </summary>
-        /// <param name="emailId"> Email id. </param>
-        /// <param name="timeStamp"> Time stamp. </param>
-        /// <returns> A new <see cref="Models.AppServiceCertificateEmail"/> instance for mocking. </returns>
-        public static AppServiceCertificateEmail AppServiceCertificateEmail(string emailId = null, DateTimeOffset? timeStamp = null)
-        {
-            return new AppServiceCertificateEmail(emailId, timeStamp, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="AppService.AppServiceDetectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

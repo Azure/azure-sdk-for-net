@@ -109,15 +109,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScopeName), out propertyOverride);
-            if (Optional.IsDefined(ScopeName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  scopeName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScopeName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  scopeName: ");
                     if (ScopeName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -131,13 +132,14 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ItemIndex), out propertyOverride);
-            builder.Append("  itemIndex: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  itemIndex: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  itemIndex: ");
                 builder.AppendLine($"{ItemIndex}");
             }
 

@@ -194,15 +194,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Fqdn), out propertyOverride);
-            if (Optional.IsDefined(Fqdn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  fqdn: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Fqdn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  fqdn: ");
                     if (Fqdn.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -216,60 +217,64 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(External), out propertyOverride);
-            if (Optional.IsDefined(External) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  external: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(External))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  external: ");
                     var boolValue = External.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetPort), out propertyOverride);
-            if (Optional.IsDefined(TargetPort) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  targetPort: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetPort))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  targetPort: ");
                     builder.AppendLine($"{TargetPort.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Transport), out propertyOverride);
-            if (Optional.IsDefined(Transport) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  transport: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Transport))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  transport: ");
                     builder.AppendLine($"'{Transport.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Traffic), out propertyOverride);
-            if (Optional.IsCollectionDefined(Traffic) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Traffic.Any() || hasPropertyOverride)
+                builder.Append("  traffic: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Traffic))
                 {
-                    builder.Append("  traffic: ");
-                    if (hasPropertyOverride)
+                    if (Traffic.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  traffic: ");
                         builder.AppendLine("[");
                         foreach (var item in Traffic)
                         {
@@ -281,15 +286,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowInsecure), out propertyOverride);
-            if (Optional.IsDefined(AllowInsecure) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  allowInsecure: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowInsecure))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  allowInsecure: ");
                     var boolValue = AllowInsecure.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

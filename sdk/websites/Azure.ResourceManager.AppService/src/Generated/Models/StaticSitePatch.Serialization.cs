@@ -833,17 +833,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedBackends), out propertyOverride);
-            if (Optional.IsCollectionDefined(LinkedBackends) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (LinkedBackends.Any() || hasPropertyOverride)
+                builder.Append("    linkedBackends: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LinkedBackends))
                 {
-                    builder.Append("    linkedBackends: ");
-                    if (hasPropertyOverride)
+                    if (LinkedBackends.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    linkedBackends: ");
                         builder.AppendLine("[");
                         foreach (var item in LinkedBackends)
                         {
@@ -878,29 +879,31 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnterpriseGradeCdnStatus), out propertyOverride);
-            if (Optional.IsDefined(EnterpriseGradeCdnStatus) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    enterpriseGradeCdnStatus: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnterpriseGradeCdnStatus))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    enterpriseGradeCdnStatus: ");
                     builder.AppendLine($"'{EnterpriseGradeCdnStatus.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
-            if (Optional.IsDefined(PublicNetworkAccess) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    publicNetworkAccess: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetworkAccess))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    publicNetworkAccess: ");
                     if (PublicNetworkAccess.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -914,17 +917,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseConnections), out propertyOverride);
-            if (Optional.IsCollectionDefined(DatabaseConnections) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (DatabaseConnections.Any() || hasPropertyOverride)
+                builder.Append("    databaseConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DatabaseConnections))
                 {
-                    builder.Append("    databaseConnections: ");
-                    if (hasPropertyOverride)
+                    if (DatabaseConnections.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    databaseConnections: ");
                         builder.AppendLine("[");
                         foreach (var item in DatabaseConnections)
                         {

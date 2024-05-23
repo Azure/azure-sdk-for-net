@@ -123,15 +123,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileName), out propertyOverride);
-            if (Optional.IsDefined(FileName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  fileName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FileName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  fileName: ");
                     if (FileName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -145,15 +146,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Contents), out propertyOverride);
-            if (Optional.IsDefined(Contents) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  contents: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Contents))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  contents: ");
                     if (Contents.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -167,15 +169,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StaticSiteDatabaseConnectionConfigurationFileOverviewType), out propertyOverride);
-            if (Optional.IsDefined(StaticSiteDatabaseConnectionConfigurationFileOverviewType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StaticSiteDatabaseConnectionConfigurationFileOverviewType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  type: ");
                     if (StaticSiteDatabaseConnectionConfigurationFileOverviewType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

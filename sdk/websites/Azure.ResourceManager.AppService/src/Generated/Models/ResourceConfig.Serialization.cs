@@ -116,29 +116,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cpu), out propertyOverride);
-            if (Optional.IsDefined(Cpu) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  cpu: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Cpu))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  cpu: ");
                     builder.AppendLine($"'{Cpu.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Memory), out propertyOverride);
-            if (Optional.IsDefined(Memory) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  memory: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Memory))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  memory: ");
                     if (Memory.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

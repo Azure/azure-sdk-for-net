@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Day), out propertyOverride);
-            if (Optional.IsDefined(Day) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  day: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Day))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  day: ");
                     builder.AppendLine($"'{Day.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Occurrence), out propertyOverride);
-            if (Optional.IsDefined(Occurrence) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  occurrence: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Occurrence))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  occurrence: ");
                     builder.AppendLine($"{Occurrence.Value}");
                 }
             }

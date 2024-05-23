@@ -182,15 +182,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (Optional.IsDefined(Value) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  value: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Value))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  value: ");
                     if (Value.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -204,15 +205,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Method), out propertyOverride);
-            if (Optional.IsDefined(Method) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  method: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Method))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  method: ");
                     if (Method.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -226,15 +228,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BasePath), out propertyOverride);
-            if (Optional.IsDefined(BasePath) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  basePath: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BasePath))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  basePath: ");
                     if (BasePath.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -248,15 +251,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RelativePath), out propertyOverride);
-            if (Optional.IsDefined(RelativePath) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  relativePath: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RelativePath))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  relativePath: ");
                     if (RelativePath.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -270,17 +274,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RelativePathParameters), out propertyOverride);
-            if (Optional.IsCollectionDefined(RelativePathParameters) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (RelativePathParameters.Any() || hasPropertyOverride)
+                builder.Append("  relativePathParameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RelativePathParameters))
                 {
-                    builder.Append("  relativePathParameters: ");
-                    if (hasPropertyOverride)
+                    if (RelativePathParameters.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  relativePathParameters: ");
                         builder.AppendLine("[");
                         foreach (var item in RelativePathParameters)
                         {
@@ -305,15 +310,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Queries), out propertyOverride);
-            if (Optional.IsDefined(Queries) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  queries: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Queries))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  queries: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Queries, options, 2, false, "  queries: ");
                 }
             }

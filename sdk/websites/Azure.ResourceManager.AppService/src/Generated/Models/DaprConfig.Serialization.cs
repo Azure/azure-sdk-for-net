@@ -199,30 +199,32 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
-            if (Optional.IsDefined(Enabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  enabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Enabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  enabled: ");
                     var boolValue = Enabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppId), out propertyOverride);
-            if (Optional.IsDefined(AppId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  appId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AppId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  appId: ");
                     if (AppId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -236,71 +238,76 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppPort), out propertyOverride);
-            if (Optional.IsDefined(AppPort) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  appPort: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AppPort))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  appPort: ");
                     builder.AppendLine($"{AppPort.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpReadBufferSize), out propertyOverride);
-            if (Optional.IsDefined(HttpReadBufferSize) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  httpReadBufferSize: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HttpReadBufferSize))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  httpReadBufferSize: ");
                     builder.AppendLine($"{HttpReadBufferSize.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpMaxRequestSize), out propertyOverride);
-            if (Optional.IsDefined(HttpMaxRequestSize) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  httpMaxRequestSize: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HttpMaxRequestSize))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  httpMaxRequestSize: ");
                     builder.AppendLine($"{HttpMaxRequestSize.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogLevel), out propertyOverride);
-            if (Optional.IsDefined(LogLevel) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  logLevel: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogLevel))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  logLevel: ");
                     builder.AppendLine($"'{LogLevel.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableApiLogging), out propertyOverride);
-            if (Optional.IsDefined(EnableApiLogging) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  enableApiLogging: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableApiLogging))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  enableApiLogging: ");
                     var boolValue = EnableApiLogging.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

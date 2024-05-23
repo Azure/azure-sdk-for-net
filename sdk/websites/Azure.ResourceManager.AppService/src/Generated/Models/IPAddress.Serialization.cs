@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Address), out propertyOverride);
-            if (Optional.IsDefined(Address) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  address: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Address))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  address: ");
                     if (Address.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

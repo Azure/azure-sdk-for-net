@@ -1541,74 +1541,79 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsConfiguration), out propertyOverride);
-            if (Optional.IsDefined(DnsConfiguration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    dnsConfiguration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DnsConfiguration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    dnsConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, DnsConfiguration, options, 4, false, "    dnsConfiguration: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetRouteAllEnabled), out propertyOverride);
-            if (Optional.IsDefined(VnetRouteAllEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    vnetRouteAllEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VnetRouteAllEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    vnetRouteAllEnabled: ");
                     var boolValue = VnetRouteAllEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetImagePullEnabled), out propertyOverride);
-            if (Optional.IsDefined(VnetImagePullEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    vnetImagePullEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VnetImagePullEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    vnetImagePullEnabled: ");
                     var boolValue = VnetImagePullEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetContentShareEnabled), out propertyOverride);
-            if (Optional.IsDefined(VnetContentShareEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    vnetContentShareEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VnetContentShareEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    vnetContentShareEnabled: ");
                     var boolValue = VnetContentShareEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetBackupRestoreEnabled), out propertyOverride);
-            if (Optional.IsDefined(VnetBackupRestoreEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    vnetBackupRestoreEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VnetBackupRestoreEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    vnetBackupRestoreEnabled: ");
                     var boolValue = VnetBackupRestoreEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
@@ -1630,43 +1635,46 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionAppConfig), out propertyOverride);
-            if (Optional.IsDefined(FunctionAppConfig) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    functionAppConfig: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FunctionAppConfig))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    functionAppConfig: ");
                     BicepSerializationHelpers.AppendChildObject(builder, FunctionAppConfig, options, 4, false, "    functionAppConfig: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaprConfig), out propertyOverride);
-            if (Optional.IsDefined(DaprConfig) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    daprConfig: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DaprConfig))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    daprConfig: ");
                     BicepSerializationHelpers.AppendChildObject(builder, DaprConfig, options, 4, false, "    daprConfig: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkloadProfileName), out propertyOverride);
-            if (Optional.IsDefined(WorkloadProfileName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    workloadProfileName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkloadProfileName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    workloadProfileName: ");
                     if (WorkloadProfileName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -1680,15 +1688,16 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceConfig), out propertyOverride);
-            if (Optional.IsDefined(ResourceConfig) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    resourceConfig: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceConfig))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    resourceConfig: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ResourceConfig, options, 4, false, "    resourceConfig: ");
                 }
             }
@@ -2138,15 +2147,16 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
-            if (Optional.IsDefined(PublicNetworkAccess) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    publicNetworkAccess: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetworkAccess))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    publicNetworkAccess: ");
                     if (PublicNetworkAccess.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -2214,15 +2224,16 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedEnvironmentId), out propertyOverride);
-            if (Optional.IsDefined(ManagedEnvironmentId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    managedEnvironmentId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedEnvironmentId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    managedEnvironmentId: ");
                     if (ManagedEnvironmentId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

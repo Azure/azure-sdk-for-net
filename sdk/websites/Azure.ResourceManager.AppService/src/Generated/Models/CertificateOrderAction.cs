@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CertificateOrderAction"/>. </summary>
-        internal CertificateOrderAction()
+        public CertificateOrderAction()
         {
         }
 

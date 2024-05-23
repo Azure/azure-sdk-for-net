@@ -166,17 +166,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Files), out propertyOverride);
-            if (Optional.IsCollectionDefined(Files) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Files.Any() || hasPropertyOverride)
+                builder.Append("  files: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Files))
                 {
-                    builder.Append("  files: ");
-                    if (hasPropertyOverride)
+                    if (Files.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  files: ");
                         builder.AppendLine("{");
                         foreach (var item in Files)
                         {
@@ -194,29 +195,31 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FlowState), out propertyOverride);
-            if (Optional.IsDefined(FlowState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  flowState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FlowState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  flowState: ");
                     builder.AppendLine($"'{FlowState.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Health), out propertyOverride);
-            if (Optional.IsDefined(Health) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  health: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Health))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  health: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Health, options, 2, false, "  health: ");
                 }
             }

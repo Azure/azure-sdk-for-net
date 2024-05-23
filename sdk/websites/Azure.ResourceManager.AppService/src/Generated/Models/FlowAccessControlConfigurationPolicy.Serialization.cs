@@ -128,25 +128,21 @@ namespace Azure.ResourceManager.AppService.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedCallerIPAddresses), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedCallerIPAddresses) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedCallerIPAddresses.Any() || hasPropertyOverride)
+                builder.Append("  allowedCallerIpAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedCallerIPAddresses))
                 {
-                    builder.Append("  allowedCallerIpAddresses: ");
-                    if (hasPropertyOverride)
+                    if (AllowedCallerIPAddresses.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedCallerIpAddresses: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedCallerIPAddresses)
                         {
@@ -157,39 +153,26 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OpenAuthenticationPolicies), out propertyOverride);
-            if (Optional.IsDefined(OpenAuthenticationPolicies) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("OpenAuthenticationPolicyList", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  openAuthenticationPolicies: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    policies: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(OpenAuthenticationPolicies))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  openAuthenticationPolicies: ");
                     BicepSerializationHelpers.AppendChildObject(builder, OpenAuthenticationPolicies, options, 2, false, "  openAuthenticationPolicies: ");
                 }
             }
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "OpenAuthenticationPolicyList":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("OpenAuthenticationPolicyList", item.Value);
-                        bicepOptions.PropertyOverrides.Add(OpenAuthenticationPolicies, propertyDictionary);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<FlowAccessControlConfigurationPolicy>.Write(ModelReaderWriterOptions options)

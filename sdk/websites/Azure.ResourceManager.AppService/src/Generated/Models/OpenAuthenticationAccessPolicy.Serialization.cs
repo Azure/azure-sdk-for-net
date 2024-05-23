@@ -131,31 +131,33 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderType), out propertyOverride);
-            if (Optional.IsDefined(ProviderType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProviderType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  type: ");
                     builder.AppendLine($"'{ProviderType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Claims), out propertyOverride);
-            if (Optional.IsCollectionDefined(Claims) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Claims.Any() || hasPropertyOverride)
+                builder.Append("  claims: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Claims))
                 {
-                    builder.Append("  claims: ");
-                    if (hasPropertyOverride)
+                    if (Claims.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  claims: ");
                         builder.AppendLine("[");
                         foreach (var item in Claims)
                         {

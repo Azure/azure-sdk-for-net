@@ -2485,17 +2485,18 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metadata), out propertyOverride);
-            if (Optional.IsCollectionDefined(Metadata) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Metadata.Any() || hasPropertyOverride)
+                builder.Append("    metadata: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Metadata))
                 {
-                    builder.Append("    metadata: ");
-                    if (hasPropertyOverride)
+                    if (Metadata.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    metadata: ");
                         builder.AppendLine("[");
                         foreach (var item in Metadata)
                         {
@@ -3127,15 +3128,16 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPSecurityRestrictionsDefaultAction), out propertyOverride);
-            if (Optional.IsDefined(IPSecurityRestrictionsDefaultAction) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    ipSecurityRestrictionsDefaultAction: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPSecurityRestrictionsDefaultAction))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    ipSecurityRestrictionsDefaultAction: ");
                     builder.AppendLine($"'{IPSecurityRestrictionsDefaultAction.Value.ToString()}'");
                 }
             }
@@ -3164,15 +3166,16 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScmIPSecurityRestrictionsDefaultAction), out propertyOverride);
-            if (Optional.IsDefined(ScmIPSecurityRestrictionsDefaultAction) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    scmIpSecurityRestrictionsDefaultAction: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScmIPSecurityRestrictionsDefaultAction))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    scmIpSecurityRestrictionsDefaultAction: ");
                     builder.AppendLine($"'{ScmIPSecurityRestrictionsDefaultAction.Value.ToString()}'");
                 }
             }
@@ -3225,15 +3228,16 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinTlsCipherSuite), out propertyOverride);
-            if (Optional.IsDefined(MinTlsCipherSuite) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    minTlsCipherSuite: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinTlsCipherSuite))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    minTlsCipherSuite: ");
                     builder.AppendLine($"'{MinTlsCipherSuite.Value.ToString()}'");
                 }
             }
@@ -3299,15 +3303,16 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ElasticWebAppScaleLimit), out propertyOverride);
-            if (Optional.IsDefined(ElasticWebAppScaleLimit) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    elasticWebAppScaleLimit: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ElasticWebAppScaleLimit))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    elasticWebAppScaleLimit: ");
                     builder.AppendLine($"{ElasticWebAppScaleLimit.Value}");
                 }
             }

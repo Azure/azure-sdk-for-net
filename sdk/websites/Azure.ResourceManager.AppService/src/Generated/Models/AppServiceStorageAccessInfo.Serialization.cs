@@ -309,15 +309,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocol), out propertyOverride);
-            if (Optional.IsDefined(Protocol) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  protocol: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Protocol))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  protocol: ");
                     builder.AppendLine($"'{Protocol.Value.ToString()}'");
                 }
             }

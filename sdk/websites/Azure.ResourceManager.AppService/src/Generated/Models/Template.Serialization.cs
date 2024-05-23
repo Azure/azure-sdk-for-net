@@ -157,15 +157,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RevisionSuffix), out propertyOverride);
-            if (Optional.IsDefined(RevisionSuffix) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  revisionSuffix: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RevisionSuffix))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  revisionSuffix: ");
                     if (RevisionSuffix.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -179,17 +180,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Containers), out propertyOverride);
-            if (Optional.IsCollectionDefined(Containers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Containers.Any() || hasPropertyOverride)
+                builder.Append("  containers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Containers))
                 {
-                    builder.Append("  containers: ");
-                    if (hasPropertyOverride)
+                    if (Containers.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  containers: ");
                         builder.AppendLine("[");
                         foreach (var item in Containers)
                         {
@@ -201,29 +203,31 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scale), out propertyOverride);
-            if (Optional.IsDefined(Scale) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  scale: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Scale))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  scale: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Scale, options, 2, false, "  scale: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Dapr), out propertyOverride);
-            if (Optional.IsDefined(Dapr) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dapr: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Dapr))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dapr: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Dapr, options, 2, false, "  dapr: ");
                 }
             }

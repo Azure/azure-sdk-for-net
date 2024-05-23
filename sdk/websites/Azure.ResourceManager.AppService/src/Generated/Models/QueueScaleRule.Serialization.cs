@@ -142,15 +142,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueueName), out propertyOverride);
-            if (Optional.IsDefined(QueueName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  queueName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QueueName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  queueName: ");
                     if (QueueName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -164,31 +165,33 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueueLength), out propertyOverride);
-            if (Optional.IsDefined(QueueLength) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  queueLength: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QueueLength))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  queueLength: ");
                     builder.AppendLine($"{QueueLength.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Auth), out propertyOverride);
-            if (Optional.IsCollectionDefined(Auth) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Auth.Any() || hasPropertyOverride)
+                builder.Append("  auth: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Auth))
                 {
-                    builder.Append("  auth: ");
-                    if (hasPropertyOverride)
+                    if (Auth.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  auth: ");
                         builder.AppendLine("[");
                         foreach (var item in Auth)
                         {

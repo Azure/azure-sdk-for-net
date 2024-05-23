@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Workflow), out propertyOverride);
-            if (Optional.IsDefined(Workflow) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  workflow: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Workflow))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  workflow: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Workflow, options, 2, false, "  workflow: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Connector), out propertyOverride);
-            if (Optional.IsDefined(Connector) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  connector: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Connector))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  connector: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Connector, options, 2, false, "  connector: ");
                 }
             }

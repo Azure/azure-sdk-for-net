@@ -839,15 +839,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpgradePreference), out propertyOverride);
-            if (Optional.IsDefined(UpgradePreference) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    upgradePreference: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UpgradePreference))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    upgradePreference: ");
                     builder.AppendLine($"'{UpgradePreference.Value.ToString()}'");
                 }
             }
@@ -884,43 +885,46 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomDnsSuffixConfiguration), out propertyOverride);
-            if (Optional.IsDefined(CustomDnsSuffixConfiguration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    customDnsSuffixConfiguration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomDnsSuffixConfiguration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    customDnsSuffixConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, CustomDnsSuffixConfiguration, options, 4, false, "    customDnsSuffixConfiguration: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkingConfiguration), out propertyOverride);
-            if (Optional.IsDefined(NetworkingConfiguration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    networkingConfiguration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkingConfiguration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    networkingConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, NetworkingConfiguration, options, 4, false, "    networkingConfiguration: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpgradeAvailability), out propertyOverride);
-            if (Optional.IsDefined(UpgradeAvailability) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    upgradeAvailability: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UpgradeAvailability))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    upgradeAvailability: ");
                     builder.AppendLine($"'{UpgradeAvailability.Value.ToString()}'");
                 }
             }

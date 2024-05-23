@@ -158,25 +158,21 @@ namespace Azure.ResourceManager.AppService.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlwaysReady), out propertyOverride);
-            if (Optional.IsCollectionDefined(AlwaysReady) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AlwaysReady.Any() || hasPropertyOverride)
+                builder.Append("  alwaysReady: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AlwaysReady))
                 {
-                    builder.Append("  alwaysReady: ");
-                    if (hasPropertyOverride)
+                    if (AlwaysReady.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  alwaysReady: ");
                         builder.AppendLine("[");
                         foreach (var item in AlwaysReady)
                         {
@@ -188,66 +184,57 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumInstanceCount), out propertyOverride);
-            if (Optional.IsDefined(MaximumInstanceCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maximumInstanceCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaximumInstanceCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maximumInstanceCount: ");
                     builder.AppendLine($"'{MaximumInstanceCount.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceMemoryMB), out propertyOverride);
-            if (Optional.IsDefined(InstanceMemoryMB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  instanceMemoryMB: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstanceMemoryMB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  instanceMemoryMB: ");
                     builder.AppendLine($"'{InstanceMemoryMB.Value.ToString()}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Triggers), out propertyOverride);
-            if (Optional.IsDefined(Triggers) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("HttpPerInstanceConcurrency", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  triggers: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.AppendLine("    http: {");
+                builder.Append("      perInstanceConcurrency: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("    }");
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Triggers))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  triggers: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Triggers, options, 2, false, "  triggers: ");
                 }
             }
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "HttpPerInstanceConcurrency":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("PerInstanceConcurrency", item.Value);
-                        bicepOptions.PropertyOverrides.Add(Triggers, propertyDictionary);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<FunctionsScaleAndConcurrency>.Write(ModelReaderWriterOptions options)

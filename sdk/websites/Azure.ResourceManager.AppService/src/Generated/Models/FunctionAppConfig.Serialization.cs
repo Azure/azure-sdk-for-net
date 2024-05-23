@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -133,74 +132,58 @@ namespace Azure.ResourceManager.AppService.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Deployment), out propertyOverride);
-            if (Optional.IsDefined(Deployment) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DeploymentStorage", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  deployment: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    storage: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Deployment))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  deployment: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Deployment, options, 2, false, "  deployment: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Runtime), out propertyOverride);
-            if (Optional.IsDefined(Runtime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  runtime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Runtime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  runtime: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Runtime, options, 2, false, "  runtime: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleAndConcurrency), out propertyOverride);
-            if (Optional.IsDefined(ScaleAndConcurrency) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  scaleAndConcurrency: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScaleAndConcurrency))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  scaleAndConcurrency: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ScaleAndConcurrency, options, 2, false, "  scaleAndConcurrency: ");
                 }
             }
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "DeploymentStorage":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("Storage", item.Value);
-                        bicepOptions.PropertyOverrides.Add(Deployment, propertyDictionary);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<FunctionAppConfig>.Write(ModelReaderWriterOptions options)

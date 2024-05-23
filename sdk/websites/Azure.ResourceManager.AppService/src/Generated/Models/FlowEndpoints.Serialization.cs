@@ -141,17 +141,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutgoingIPAddresses), out propertyOverride);
-            if (Optional.IsCollectionDefined(OutgoingIPAddresses) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (OutgoingIPAddresses.Any() || hasPropertyOverride)
+                builder.Append("  outgoingIpAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(OutgoingIPAddresses))
                 {
-                    builder.Append("  outgoingIpAddresses: ");
-                    if (hasPropertyOverride)
+                    if (OutgoingIPAddresses.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  outgoingIpAddresses: ");
                         builder.AppendLine("[");
                         foreach (var item in OutgoingIPAddresses)
                         {
@@ -163,17 +164,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessEndpointIPAddresses), out propertyOverride);
-            if (Optional.IsCollectionDefined(AccessEndpointIPAddresses) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AccessEndpointIPAddresses.Any() || hasPropertyOverride)
+                builder.Append("  accessEndpointIpAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AccessEndpointIPAddresses))
                 {
-                    builder.Append("  accessEndpointIpAddresses: ");
-                    if (hasPropertyOverride)
+                    if (AccessEndpointIPAddresses.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  accessEndpointIpAddresses: ");
                         builder.AppendLine("[");
                         foreach (var item in AccessEndpointIPAddresses)
                         {

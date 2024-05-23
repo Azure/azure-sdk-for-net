@@ -150,57 +150,61 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Triggers), out propertyOverride);
-            if (Optional.IsDefined(Triggers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  triggers: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Triggers))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  triggers: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Triggers, options, 2, false, "  triggers: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Contents), out propertyOverride);
-            if (Optional.IsDefined(Contents) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  contents: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Contents))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  contents: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Contents, options, 2, false, "  contents: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Actions), out propertyOverride);
-            if (Optional.IsDefined(Actions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  actions: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Actions))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  actions: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Actions, options, 2, false, "  actions: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkflowManagement), out propertyOverride);
-            if (Optional.IsDefined(WorkflowManagement) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  workflowManagement: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkflowManagement))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  workflowManagement: ");
                     BicepSerializationHelpers.AppendChildObject(builder, WorkflowManagement, options, 2, false, "  workflowManagement: ");
                 }
             }

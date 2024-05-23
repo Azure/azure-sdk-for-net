@@ -222,17 +222,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Minutes), out propertyOverride);
-            if (Optional.IsCollectionDefined(Minutes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Minutes.Any() || hasPropertyOverride)
+                builder.Append("  minutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Minutes))
                 {
-                    builder.Append("  minutes: ");
-                    if (hasPropertyOverride)
+                    if (Minutes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  minutes: ");
                         builder.AppendLine("[");
                         foreach (var item in Minutes)
                         {
@@ -244,17 +245,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Hours), out propertyOverride);
-            if (Optional.IsCollectionDefined(Hours) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Hours.Any() || hasPropertyOverride)
+                builder.Append("  hours: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Hours))
                 {
-                    builder.Append("  hours: ");
-                    if (hasPropertyOverride)
+                    if (Hours.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  hours: ");
                         builder.AppendLine("[");
                         foreach (var item in Hours)
                         {
@@ -266,17 +268,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WeekDays), out propertyOverride);
-            if (Optional.IsCollectionDefined(WeekDays) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (WeekDays.Any() || hasPropertyOverride)
+                builder.Append("  weekDays: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(WeekDays))
                 {
-                    builder.Append("  weekDays: ");
-                    if (hasPropertyOverride)
+                    if (WeekDays.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  weekDays: ");
                         builder.AppendLine("[");
                         foreach (var item in WeekDays)
                         {
@@ -288,17 +291,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MonthDays), out propertyOverride);
-            if (Optional.IsCollectionDefined(MonthDays) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (MonthDays.Any() || hasPropertyOverride)
+                builder.Append("  monthDays: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MonthDays))
                 {
-                    builder.Append("  monthDays: ");
-                    if (hasPropertyOverride)
+                    if (MonthDays.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  monthDays: ");
                         builder.AppendLine("[");
                         foreach (var item in MonthDays)
                         {
@@ -310,17 +314,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MonthlyOccurrences), out propertyOverride);
-            if (Optional.IsCollectionDefined(MonthlyOccurrences) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (MonthlyOccurrences.Any() || hasPropertyOverride)
+                builder.Append("  monthlyOccurrences: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MonthlyOccurrences))
                 {
-                    builder.Append("  monthlyOccurrences: ");
-                    if (hasPropertyOverride)
+                    if (MonthlyOccurrences.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  monthlyOccurrences: ");
                         builder.AppendLine("[");
                         foreach (var item in MonthlyOccurrences)
                         {

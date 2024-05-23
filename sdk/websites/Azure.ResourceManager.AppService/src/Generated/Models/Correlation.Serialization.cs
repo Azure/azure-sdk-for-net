@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientTrackingId), out propertyOverride);
-            if (Optional.IsDefined(ClientTrackingId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  clientTrackingId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientTrackingId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  clientTrackingId: ");
                     if (ClientTrackingId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -1219,15 +1219,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsConfiguration), out propertyOverride);
-            if (Optional.IsDefined(DnsConfiguration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    dnsConfiguration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DnsConfiguration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    dnsConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, DnsConfiguration, options, 4, false, "    dnsConfiguration: ");
                 }
             }

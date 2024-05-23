@@ -151,15 +151,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiVersion), out propertyOverride);
-            if (Optional.IsDefined(ApiVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  api-version: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  api-version: ");
                     if (ApiVersion.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -173,15 +174,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sp), out propertyOverride);
-            if (Optional.IsDefined(Sp) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sp: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sp))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sp: ");
                     if (Sp.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -195,15 +197,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sv), out propertyOverride);
-            if (Optional.IsDefined(Sv) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sv: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sv))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sv: ");
                     if (Sv.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -217,15 +220,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sig), out propertyOverride);
-            if (Optional.IsDefined(Sig) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sig: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sig))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sig: ");
                     if (Sig.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -239,15 +243,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Se), out propertyOverride);
-            if (Optional.IsDefined(Se) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  se: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Se))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  se: ");
                     if (Se.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

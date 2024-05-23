@@ -874,15 +874,16 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfWorkers), out propertyOverride);
-            if (Optional.IsDefined(NumberOfWorkers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    numberOfWorkers: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NumberOfWorkers))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    numberOfWorkers: ");
                     builder.AppendLine($"{NumberOfWorkers.Value}");
                 }
             }

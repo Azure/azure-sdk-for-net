@@ -171,17 +171,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Secrets), out propertyOverride);
-            if (Optional.IsCollectionDefined(Secrets) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Secrets.Any() || hasPropertyOverride)
+                builder.Append("  secrets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Secrets))
                 {
-                    builder.Append("  secrets: ");
-                    if (hasPropertyOverride)
+                    if (Secrets.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  secrets: ");
                         builder.AppendLine("[");
                         foreach (var item in Secrets)
                         {
@@ -193,45 +194,48 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActiveRevisionsMode), out propertyOverride);
-            if (Optional.IsDefined(ActiveRevisionsMode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  activeRevisionsMode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActiveRevisionsMode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  activeRevisionsMode: ");
                     builder.AppendLine($"'{ActiveRevisionsMode.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Ingress), out propertyOverride);
-            if (Optional.IsDefined(Ingress) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ingress: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Ingress))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ingress: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Ingress, options, 2, false, "  ingress: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Registries), out propertyOverride);
-            if (Optional.IsCollectionDefined(Registries) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Registries.Any() || hasPropertyOverride)
+                builder.Append("  registries: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Registries))
                 {
-                    builder.Append("  registries: ");
-                    if (hasPropertyOverride)
+                    if (Registries.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  registries: ");
                         builder.AppendLine("[");
                         foreach (var item in Registries)
                         {

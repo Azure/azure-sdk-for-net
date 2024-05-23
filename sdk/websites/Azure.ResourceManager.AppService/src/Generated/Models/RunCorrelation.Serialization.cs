@@ -127,15 +127,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientTrackingId), out propertyOverride);
-            if (Optional.IsDefined(ClientTrackingId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  clientTrackingId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientTrackingId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  clientTrackingId: ");
                     if (ClientTrackingId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,17 +150,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientKeywords), out propertyOverride);
-            if (Optional.IsCollectionDefined(ClientKeywords) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ClientKeywords.Any() || hasPropertyOverride)
+                builder.Append("  clientKeywords: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ClientKeywords))
                 {
-                    builder.Append("  clientKeywords: ");
-                    if (hasPropertyOverride)
+                    if (ClientKeywords.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  clientKeywords: ");
                         builder.AppendLine("[");
                         foreach (var item in ClientKeywords)
                         {

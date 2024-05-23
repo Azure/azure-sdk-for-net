@@ -142,43 +142,46 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Headers), out propertyOverride);
-            if (Optional.IsDefined(Headers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  headers: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Headers))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  headers: ");
                     builder.AppendLine($"'{Headers.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusCode), out propertyOverride);
-            if (Optional.IsDefined(StatusCode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  statusCode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StatusCode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  statusCode: ");
                     builder.AppendLine($"{StatusCode.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BodyLink), out propertyOverride);
-            if (Optional.IsDefined(BodyLink) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  bodyLink: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BodyLink))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  bodyLink: ");
                     BicepSerializationHelpers.AppendChildObject(builder, BodyLink, options, 2, false, "  bodyLink: ");
                 }
             }

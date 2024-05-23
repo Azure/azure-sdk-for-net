@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretRef), out propertyOverride);
-            if (Optional.IsDefined(SecretRef) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  secretRef: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecretRef))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  secretRef: ");
                     if (SecretRef.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TriggerParameter), out propertyOverride);
-            if (Optional.IsDefined(TriggerParameter) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  triggerParameter: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TriggerParameter))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  triggerParameter: ");
                     if (TriggerParameter.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
