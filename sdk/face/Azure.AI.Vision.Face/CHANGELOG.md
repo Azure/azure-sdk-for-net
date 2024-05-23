@@ -16,9 +16,3 @@ This package's [documentation](https://github.com/Azure/azure-sdk-for-net/tree/m
 ### Features Added
 
 - Added support for Liveness detection.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
