@@ -38,6 +38,7 @@ Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("status").ToStri
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("termGuid").ToString());
 Console.WriteLine(result[0].GetProperty("usage").ToString());
+Console.WriteLine(result[0].GetProperty("guid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -94,6 +95,7 @@ Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("status").ToStri
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("termGuid").ToString());
 Console.WriteLine(result[0].GetProperty("usage").ToString());
+Console.WriteLine(result[0].GetProperty("guid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -162,6 +164,7 @@ using RequestContent content = RequestContent.Create(new
         }
     },
     usage = "<usage>",
+    guid = "<guid>",
     classifications = new object[]
     {
         new
@@ -196,7 +199,6 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    guid = "<guid>",
 });
 Response response = await client.CreateGlossaryAsync(content);
 
@@ -216,6 +218,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
 Console.WriteLine(result.GetProperty("usage").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -284,6 +287,7 @@ using RequestContent content = RequestContent.Create(new
         }
     },
     usage = "<usage>",
+    guid = "<guid>",
     classifications = new object[]
     {
         new
@@ -318,7 +322,6 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    guid = "<guid>",
 });
 Response response = client.CreateGlossary(content);
 
@@ -338,6 +341,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
 Console.WriteLine(result.GetProperty("usage").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -415,6 +419,7 @@ using RequestContent content = RequestContent.Create(new object[]
                 termGuid = "<termGuid>",
             }
         },
+        guid = "<guid>",
         classifications = new object[]
         {
             new
@@ -449,7 +454,6 @@ using RequestContent content = RequestContent.Create(new object[]
         qualifiedName = "<qualifiedName>",
         shortDescription = "<shortDescription>",
         lastModifiedTS = "<lastModifiedTS>",
-        guid = "<guid>",
     }
 });
 Response response = await client.CreateGlossaryCategoriesAsync(content);
@@ -476,6 +480,7 @@ Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("source").ToStri
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("status").ToString());
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result[0].GetProperty("guid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -553,6 +558,7 @@ using RequestContent content = RequestContent.Create(new object[]
                 termGuid = "<termGuid>",
             }
         },
+        guid = "<guid>",
         classifications = new object[]
         {
             new
@@ -587,7 +593,6 @@ using RequestContent content = RequestContent.Create(new object[]
         qualifiedName = "<qualifiedName>",
         shortDescription = "<shortDescription>",
         lastModifiedTS = "<lastModifiedTS>",
-        guid = "<guid>",
     }
 });
 Response response = client.CreateGlossaryCategories(content);
@@ -614,6 +619,7 @@ Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("source").ToStri
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("status").ToString());
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result[0].GetProperty("guid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -686,6 +692,7 @@ using RequestContent content = RequestContent.Create(new
             termGuid = "<termGuid>",
         }
     },
+    guid = "<guid>",
     classifications = new object[]
     {
         new
@@ -720,7 +727,6 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    guid = "<guid>",
 });
 Response response = await client.CreateGlossaryCategoryAsync(content);
 
@@ -746,6 +752,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -818,6 +825,7 @@ using RequestContent content = RequestContent.Create(new
             termGuid = "<termGuid>",
         }
     },
+    guid = "<guid>",
     classifications = new object[]
     {
         new
@@ -852,7 +860,6 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    guid = "<guid>",
 });
 Response response = client.CreateGlossaryCategory(content);
 
@@ -878,6 +885,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -940,6 +948,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -1002,6 +1011,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -1074,6 +1084,7 @@ using RequestContent content = RequestContent.Create(new
             termGuid = "<termGuid>",
         }
     },
+    guid = "<guid>",
     classifications = new object[]
     {
         new
@@ -1108,7 +1119,6 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    guid = "<guid>",
 });
 Response response = await client.UpdateGlossaryCategoryAsync("<categoryGuid>", content);
 
@@ -1134,6 +1144,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -1206,6 +1217,7 @@ using RequestContent content = RequestContent.Create(new
             termGuid = "<termGuid>",
         }
     },
+    guid = "<guid>",
     classifications = new object[]
     {
         new
@@ -1240,7 +1252,6 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    guid = "<guid>",
 });
 Response response = client.UpdateGlossaryCategory("<categoryGuid>", content);
 
@@ -1266,6 +1277,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -1382,6 +1394,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -1452,6 +1465,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -1761,6 +1775,7 @@ using RequestContent content = RequestContent.Create(new
     {
         null
     },
+    guid = "<guid>",
     classifications = new object[]
     {
         new
@@ -1795,7 +1810,6 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    guid = "<guid>",
 });
 Response response = await client.CreateGlossaryTermAsync(content, includeTermHierarchy: true);
 
@@ -1937,6 +1951,7 @@ Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("source").
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -2124,6 +2139,7 @@ using RequestContent content = RequestContent.Create(new
     {
         null
     },
+    guid = "<guid>",
     classifications = new object[]
     {
         new
@@ -2158,7 +2174,6 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    guid = "<guid>",
 });
 Response response = client.CreateGlossaryTerm(content, includeTermHierarchy: true);
 
@@ -2300,6 +2315,7 @@ Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("source").
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -2478,6 +2494,7 @@ Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("source").
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -2656,6 +2673,7 @@ Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("source").
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -2843,6 +2861,7 @@ using RequestContent content = RequestContent.Create(new
     {
         null
     },
+    guid = "<guid>",
     classifications = new object[]
     {
         new
@@ -2877,7 +2896,6 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    guid = "<guid>",
 });
 Response response = await client.UpdateGlossaryTermAsync("<termGuid>", content, includeTermHierarchy: true);
 
@@ -3019,6 +3037,7 @@ Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("source").
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -3206,6 +3225,7 @@ using RequestContent content = RequestContent.Create(new
     {
         null
     },
+    guid = "<guid>",
     classifications = new object[]
     {
         new
@@ -3240,7 +3260,6 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    guid = "<guid>",
 });
 Response response = client.UpdateGlossaryTerm("<termGuid>", content, includeTermHierarchy: true);
 
@@ -3382,6 +3401,7 @@ Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("source").
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -3614,6 +3634,7 @@ Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("source").
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -3800,6 +3821,7 @@ Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("source").
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -3992,6 +4014,7 @@ using RequestContent content = RequestContent.Create(new object[]
         {
             null
         },
+        guid = "<guid>",
         classifications = new object[]
         {
             new
@@ -4026,7 +4049,6 @@ using RequestContent content = RequestContent.Create(new object[]
         qualifiedName = "<qualifiedName>",
         shortDescription = "<shortDescription>",
         lastModifiedTS = "<lastModifiedTS>",
-        guid = "<guid>",
     }
 });
 Response response = await client.CreateGlossaryTermsAsync(content, includeTermHierarchy: true);
@@ -4169,6 +4191,7 @@ Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("source
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("status").ToString());
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result[0].GetProperty("guid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -4361,6 +4384,7 @@ using RequestContent content = RequestContent.Create(new object[]
         {
             null
         },
+        guid = "<guid>",
         classifications = new object[]
         {
             new
@@ -4395,7 +4419,6 @@ using RequestContent content = RequestContent.Create(new object[]
         qualifiedName = "<qualifiedName>",
         shortDescription = "<shortDescription>",
         lastModifiedTS = "<lastModifiedTS>",
-        guid = "<guid>",
     }
 });
 Response response = client.CreateGlossaryTerms(content, includeTermHierarchy: true);
@@ -4538,6 +4561,7 @@ Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("source
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("status").ToString());
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result[0].GetProperty("guid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5046,6 +5070,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
 Console.WriteLine(result.GetProperty("usage").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5102,6 +5127,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
 Console.WriteLine(result.GetProperty("usage").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5170,6 +5196,7 @@ using RequestContent content = RequestContent.Create(new
         }
     },
     usage = "<usage>",
+    guid = "<guid>",
     classifications = new object[]
     {
         new
@@ -5204,7 +5231,6 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    guid = "<guid>",
 });
 Response response = await client.UpdateGlossaryAsync("<glossaryGuid>", content);
 
@@ -5224,6 +5250,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
 Console.WriteLine(result.GetProperty("usage").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5292,6 +5319,7 @@ using RequestContent content = RequestContent.Create(new
         }
     },
     usage = "<usage>",
+    guid = "<guid>",
     classifications = new object[]
     {
         new
@@ -5326,7 +5354,6 @@ using RequestContent content = RequestContent.Create(new
     qualifiedName = "<qualifiedName>",
     shortDescription = "<shortDescription>",
     lastModifiedTS = "<lastModifiedTS>",
-    guid = "<guid>",
 });
 Response response = client.UpdateGlossary("<glossaryGuid>", content);
 
@@ -5346,6 +5373,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
 Console.WriteLine(result.GetProperty("usage").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5454,6 +5482,7 @@ Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("source").ToStri
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("status").ToString());
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result[0].GetProperty("guid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5516,6 +5545,7 @@ Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("source").ToStri
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("status").ToString());
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result[0].GetProperty("guid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5636,6 +5666,7 @@ Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetPro
 Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5790,6 +5821,7 @@ Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5807,6 +5839,23 @@ Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("shortDescription").ToString());
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("guid").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+Console.WriteLine(result.GetProperty("longDescription").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+Console.WriteLine(result.GetProperty("shortDescription").ToString());
+Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
 Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -5822,6 +5871,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
 Console.WriteLine(result.GetProperty("usage").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5884,6 +5934,7 @@ Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetPro
 Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("terms")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -6038,6 +6089,7 @@ Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -6055,6 +6107,23 @@ Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("shortDescription").ToString());
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("lastModifiedTS").ToString());
 Console.WriteLine(result.GetProperty("termInfo").GetProperty("<key>").GetProperty("guid").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+Console.WriteLine(result.GetProperty("longDescription").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+Console.WriteLine(result.GetProperty("shortDescription").ToString());
+Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
 Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
@@ -6070,6 +6139,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
 Console.WriteLine(result.GetProperty("usage").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -6134,6 +6204,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
 Console.WriteLine(result.GetProperty("usage").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -6198,6 +6269,7 @@ Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString(
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
 Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
 Console.WriteLine(result.GetProperty("usage").ToString());
+Console.WriteLine(result.GetProperty("guid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -6376,6 +6448,7 @@ Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("source
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("status").ToString());
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result[0].GetProperty("guid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -6554,6 +6627,7 @@ Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("source
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("status").ToString());
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result[0].GetProperty("guid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -6926,6 +7000,7 @@ Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("source
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("status").ToString());
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result[0].GetProperty("guid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -7104,6 +7179,7 @@ Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("source
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("status").ToString());
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
 Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+Console.WriteLine(result[0].GetProperty("guid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
 Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());

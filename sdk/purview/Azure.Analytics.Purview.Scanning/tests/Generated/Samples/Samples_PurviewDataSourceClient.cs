@@ -58,11 +58,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             {
                 properties = new
                 {
-                    subscriptionId = "<subscriptionId>",
                     collection = new
                     {
                         referenceName = "<referenceName>",
                     },
+                    subscriptionId = "<subscriptionId>",
                 },
                 kind = "AzureSubscription",
             });
@@ -114,11 +114,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             {
                 properties = new
                 {
-                    subscriptionId = "<subscriptionId>",
                     collection = new
                     {
                         referenceName = "<referenceName>",
                     },
+                    subscriptionId = "<subscriptionId>",
                 },
                 kind = "AzureSubscription",
             });

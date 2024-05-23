@@ -210,6 +210,8 @@ Response response = await client.GetScanRulesetAsync("<scanRulesetName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("version").ToString());
@@ -240,6 +242,8 @@ Response response = client.GetScanRuleset("<scanRulesetName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("version").ToString());
@@ -281,13 +285,15 @@ using RequestContent content = RequestContent.Create(new
             "<includedCustomClassificationRuleNames>"
         },
     },
-    kind = "AzureSubscription",
     scanRulesetType = "Custom",
+    kind = "AzureSubscription",
 });
 Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("version").ToString());
@@ -329,13 +335,15 @@ using RequestContent content = RequestContent.Create(new
             "<includedCustomClassificationRuleNames>"
         },
     },
-    kind = "AzureSubscription",
     scanRulesetType = "Custom",
+    kind = "AzureSubscription",
 });
 Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("version").ToString());
@@ -366,6 +374,8 @@ Response response = await client.DeleteScanRulesetAsync("<scanRulesetName>", nul
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("version").ToString());
@@ -396,6 +406,8 @@ Response response = client.DeleteScanRuleset("<scanRulesetName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("version").ToString());
@@ -426,6 +438,8 @@ Response response = await client.GetSystemRulesetsForDataSourceAsync("None", nul
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("version").ToString());
@@ -456,6 +470,8 @@ Response response = client.GetSystemRulesetsForDataSource("None", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("version").ToString());
@@ -486,6 +502,8 @@ Response response = await client.GetSystemRulesetsForVersionAsync(1234, "None", 
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("version").ToString());
@@ -516,6 +534,8 @@ Response response = client.GetSystemRulesetsForVersion(1234, "None", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("version").ToString());
@@ -546,6 +566,8 @@ Response response = await client.GetLatestSystemRulesetsAsync("None", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("version").ToString());
@@ -576,6 +598,8 @@ Response response = client.GetLatestSystemRulesets("None", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("version").ToString());
@@ -839,6 +863,8 @@ await foreach (BinaryData item in client.GetScanRulesetsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("version").ToString());
@@ -871,6 +897,8 @@ foreach (BinaryData item in client.GetScanRulesets(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("version").ToString());
@@ -903,6 +931,8 @@ await foreach (BinaryData item in client.GetSystemRulesetsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("version").ToString());
@@ -935,6 +965,8 @@ foreach (BinaryData item in client.GetSystemRulesets(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("version").ToString());
@@ -967,6 +999,8 @@ await foreach (BinaryData item in client.GetSystemRulesetsVersionsAsync("None", 
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("version").ToString());
@@ -999,6 +1033,8 @@ foreach (BinaryData item in client.GetSystemRulesetsVersions("None", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("version").ToString());

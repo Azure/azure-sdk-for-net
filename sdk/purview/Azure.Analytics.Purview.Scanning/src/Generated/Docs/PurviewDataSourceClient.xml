@@ -25,11 +25,11 @@ using RequestContent content = RequestContent.Create(new
 {
     properties = new
     {
-        subscriptionId = "<subscriptionId>",
         collection = new
         {
             referenceName = "<referenceName>",
         },
+        subscriptionId = "<subscriptionId>",
     },
     kind = "AzureSubscription",
 });
@@ -93,11 +93,11 @@ using RequestContent content = RequestContent.Create(new
 {
     properties = new
     {
-        subscriptionId = "<subscriptionId>",
         collection = new
         {
             referenceName = "<referenceName>",
         },
+        subscriptionId = "<subscriptionId>",
     },
     kind = "AzureSubscription",
 });
