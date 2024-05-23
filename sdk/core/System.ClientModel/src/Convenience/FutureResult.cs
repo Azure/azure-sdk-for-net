@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace System.ClientModel;
 
 #pragma warning disable CS1591 // public XML comments
-public abstract class PollableResult : ClientResult
+public abstract class FutureResult : ClientResult
 {
-    protected PollableResult(string id)
+    protected FutureResult(string id, PipelineResponse response) : base(response)
     {
         Id = id;
     }

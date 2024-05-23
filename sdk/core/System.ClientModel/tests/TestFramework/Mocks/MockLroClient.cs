@@ -10,7 +10,7 @@ namespace ClientModel.Tests.Mocks;
 
 public class MockLroClient
 {
-    public virtual PollableResult<MockJsonModel> GetModelLater(ReturnWhen returnWhen, string content)
+    public virtual FutureResult<MockJsonModel> GetModelLater(ReturnWhen returnWhen, string content)
     {
         throw new NotImplementedException();
     }

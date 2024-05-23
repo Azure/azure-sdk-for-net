@@ -54,15 +54,9 @@ namespace System.ClientModel
         public virtual T Value { get { throw null; } }
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
-    public abstract partial class PageableCollection<T> : System.ClientModel.ResultCollection<T>
+    public abstract partial class FutureResult : System.ClientModel.ClientResult
     {
-        protected PageableCollection() { }
-        public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ResultPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
-        public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
-    }
-    public abstract partial class PollableResult : System.ClientModel.ClientResult
-    {
-        protected PollableResult(string id) { }
+        protected FutureResult(string id, System.ClientModel.Primitives.PipelineResponse response) { }
         public bool HasCompleted { get { throw null; } protected set { } }
         public string Id { get { throw null; } protected set { } }
         public abstract System.ClientModel.Primitives.PipelineResponse UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -72,14 +66,20 @@ namespace System.ClientModel
         public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.PipelineResponse> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.PipelineResponse> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
-    public abstract partial class PollableResult<T> : System.ClientModel.PollableResult
+    public abstract partial class FutureResult<T> : System.ClientModel.FutureResult
     {
-        protected PollableResult(string id) : base (default(string)) { }
+        protected FutureResult(string id, System.ClientModel.Primitives.PipelineResponse response) : base (default(string), default(System.ClientModel.Primitives.PipelineResponse)) { }
         public T? Value { get { throw null; } protected set { } }
         public abstract System.ClientModel.ClientResult<T> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.ClientModel.ClientResult<T> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.Task<System.ClientModel.ClientResult<T>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task<System.ClientModel.ClientResult<T>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken);
+    }
+    public abstract partial class PageableCollection<T> : System.ClientModel.ResultCollection<T>
+    {
+        protected PageableCollection() { }
+        public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ResultPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
+        public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
     }
     public abstract partial class ResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {

@@ -1,15 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace System.ClientModel;
 
 #pragma warning disable CS1591 // public XML comments
-public abstract class PollableResult<T> : PollableResult
+public abstract class FutureResult<T> : FutureResult
 {
-    protected PollableResult(string id) : base(id)
+    protected FutureResult(string id, PipelineResponse response) : base(id, response)
     {
     }
 
