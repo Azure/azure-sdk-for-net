@@ -30,27 +30,6 @@ namespace System.ClientModel
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
-    public abstract partial class ClientOperation : System.ClientModel.ClientResult
-    {
-        protected ClientOperation(string id) { }
-        public bool HasCompleted { get { throw null; } protected set { } }
-        public string Id { get { throw null; } }
-        public abstract System.ClientModel.Primitives.PipelineResponse UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.PipelineResponse> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.ClientModel.Primitives.PipelineResponse WaitForCompletionResponse(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.ClientModel.Primitives.PipelineResponse WaitForCompletionResponse(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.PipelineResponse> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.PipelineResponse> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-    }
-    public abstract partial class ClientOperation<T> : System.ClientModel.ClientOperation
-    {
-        protected ClientOperation(string id) : base (default(string)) { }
-        public T? Value { get { throw null; } protected set { } }
-        public abstract System.ClientModel.ClientResult<T> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.ClientModel.ClientResult<T> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.Task<System.ClientModel.ClientResult<T>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.Task<System.ClientModel.ClientResult<T>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken);
-    }
     public partial class ClientResult
     {
         protected ClientResult() { }
@@ -80,6 +59,27 @@ namespace System.ClientModel
         protected PageableCollection() { }
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ResultPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
         public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
+    }
+    public abstract partial class PollableResult : System.ClientModel.ClientResult
+    {
+        protected PollableResult(string id) { }
+        public bool HasCompleted { get { throw null; } protected set { } }
+        public string Id { get { throw null; } protected set { } }
+        public abstract System.ClientModel.Primitives.PipelineResponse UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.PipelineResponse> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.ClientModel.Primitives.PipelineResponse WaitForCompletionResponse(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.ClientModel.Primitives.PipelineResponse WaitForCompletionResponse(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.PipelineResponse> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.PipelineResponse> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
+    public abstract partial class PollableResult<T> : System.ClientModel.PollableResult
+    {
+        protected PollableResult(string id) : base (default(string)) { }
+        public T? Value { get { throw null; } protected set { } }
+        public abstract System.ClientModel.ClientResult<T> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.ClientModel.ClientResult<T> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.Task<System.ClientModel.ClientResult<T>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.Task<System.ClientModel.ClientResult<T>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken);
     }
     public abstract partial class ResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {

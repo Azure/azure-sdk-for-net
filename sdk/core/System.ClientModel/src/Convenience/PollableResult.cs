@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 namespace System.ClientModel;
 
 #pragma warning disable CS1591 // public XML comments
-public abstract class ClientOperation : ClientResult
+public abstract class PollableResult : ClientResult
 {
-    protected ClientOperation(string id)
+    protected PollableResult(string id)
     {
         Id = id;
     }
 
-    public string Id { get; }
+    public string Id { get; protected set; }
 
     public bool HasCompleted { get; protected set; }
 

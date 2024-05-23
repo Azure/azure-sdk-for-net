@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace System.ClientModel;
 
 #pragma warning disable CS1591 // public XML comments
-public abstract class ClientOperation<T> : ClientOperation
+public abstract class PollableResult<T> : PollableResult
 {
-    protected ClientOperation(string id) : base(id)
+    protected PollableResult(string id) : base(id)
     {
     }
 
