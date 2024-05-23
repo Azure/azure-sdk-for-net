@@ -16,12 +16,12 @@ public abstract class ResultOperation<T> : ResultOperation
 
     public T? Value { get; protected set; }
 
-    public abstract Task<ClientResult<T>> WaitForCompletionAsync();
+    public abstract Task<ClientResult<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default);
 
-    public abstract ClientResult<T> WaitForCompletion();
+    public abstract ClientResult<T> WaitForCompletion(CancellationToken cancellationToken = default);
 
-    public abstract Task<ClientResult<T>> WaitForCompletionAsync(TimeSpan pollingInterval);
+    public abstract Task<ClientResult<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default);
 
-    public abstract ClientResult<T> WaitForCompletion(TimeSpan pollingInterval);
+    public abstract ClientResult<T> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default);
 }
 #pragma warning restore CS1591 // public XML comments

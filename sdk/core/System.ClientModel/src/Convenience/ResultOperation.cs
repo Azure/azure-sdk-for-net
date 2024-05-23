@@ -28,13 +28,13 @@ public abstract class ResultOperation : ClientResult
     public abstract ClientResult UpdateStatus();
 
     // TODO: what is the use case for these?  How do they differ from GetRawResponse() ?
-    public abstract ValueTask<ClientResult> WaitForCompletionResultAsync(TimeSpan pollingInterval);
+    public abstract ValueTask<ClientResult> WaitForCompletionResultAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default);
 
-    public abstract ClientResult WaitForCompletionResult(TimeSpan pollingInterval);
+    public abstract ClientResult WaitForCompletionResult(TimeSpan pollingInterval, CancellationToken cancellationToken = default);
 
-    public abstract ValueTask<ClientResult> WaitForCompletionResultAsync();
+    public abstract ValueTask<ClientResult> WaitForCompletionResultAsync(CancellationToken cancellationToken = default);
 
-    public abstract ClientResult WaitForCompletionResult();
+    public abstract ClientResult WaitForCompletionResult(CancellationToken cancellationToken = default);
 
     // TODO: should these be virtual with an internal poller implementation?
     // TODO: should we have something like DelayStrategy?
