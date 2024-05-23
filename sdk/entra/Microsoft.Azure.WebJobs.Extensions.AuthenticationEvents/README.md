@@ -35,7 +35,17 @@ There are different approaches to authenticating HTTP requests to your function 
 
 If you would like to _not_ authenticate the token while in local development, set the following application settings in the [local.settings.json](https://learn.microsoft.com/azure/azure-functions/functions-develop-local#local-settings-file) file:
 
-* **AuthenticationEvents__BypassTokenValidation** - value of `true` will make the trigger not check for a validation of the token.
+```json
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "AzureWebJobsSecretStorageType": "files",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "AuthenticationEvents__BypassTokenValidation" : true
+  }
+}
+```
 
 ### How to get started
 
@@ -68,7 +78,7 @@ To test token augmentation, please do the following.
 
 ## Troubleshooting
 
-### Visual studio code
+### Visual Studio Code
   * If running in Visual Studio Code, you get an error along the lines of the local Azure Storage Emulator is unavailable, you can start the emulator manually. (Note: Azure Storage emulator is now deprecated and the suggested replacement is [Azurite](https://learn.microsoft.com/azure/storage/common/storage-use-azurite?tabs=visual-studio))
   * If using Visual Studio Code on Mac please use [Azurite](https://learn.microsoft.com/azure/storage/common/storage-use-azurite?tabs=visual-studio)
 
@@ -105,6 +115,8 @@ our CLA.
 This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For
 more information see the [Code of Conduct FAQ][coc_faq] or contact
 <opencode@microsoft.com> with any additional questions or comments.
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fentra%2FMicrosoft.Azure.WebJobs.Extensions.AuthenticationEvents%2FREADME.png)
 
 <!-- LINKS -->
 [cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
