@@ -19,16 +19,12 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="sentenceCount"> It controls the approximate number of sentences in the output summaries. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="modelVersion"></param>
-        /// <param name="loggingOptOut"></param>
-        internal AbstractiveSummarizationTaskParameters(int? sentenceCount, StringIndexType? stringIndexType, string modelVersion, bool? loggingOptOut) : base(sentenceCount, stringIndexType)
+        internal AbstractiveSummarizationTaskParameters(int? sentenceCount, StringIndexType? stringIndexType, string modelVersion) : base(sentenceCount, stringIndexType)
         {
             ModelVersion = modelVersion;
-            LoggingOptOut = loggingOptOut;
         }
 
         /// <summary> Gets or sets the model version. </summary>
         public string ModelVersion { get; set; }
-        /// <summary> Gets or sets the logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
     }
 }

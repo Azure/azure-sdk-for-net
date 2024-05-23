@@ -20,11 +20,6 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
-            if (Optional.IsDefined(LoggingOptOut))
-            {
-                writer.WritePropertyName("loggingOptOut"u8);
-                writer.WriteBooleanValue(LoggingOptOut.Value);
-            }
             if (Optional.IsDefined(SentenceCount))
             {
                 writer.WritePropertyName("sentenceCount"u8);
@@ -45,7 +40,6 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             string modelVersion = default;
-            bool? loggingOptOut = default;
             int? sentenceCount = default;
             StringIndexType? stringIndexType = default;
             foreach (var property in element.EnumerateObject())
@@ -53,15 +47,6 @@ namespace Azure.AI.TextAnalytics.Models
                 if (property.NameEquals("modelVersion"u8))
                 {
                     modelVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("loggingOptOut"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    loggingOptOut = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("sentenceCount"u8))
@@ -83,7 +68,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummarizationTaskParameters(sentenceCount, stringIndexType, modelVersion, loggingOptOut);
+            return new AbstractiveSummarizationTaskParameters(sentenceCount, stringIndexType, modelVersion);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
