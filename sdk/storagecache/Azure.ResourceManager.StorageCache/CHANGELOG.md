@@ -6,8 +6,6 @@
 - Adding import jobs resource type.
 - Upgrading api-version to '2024-03-01'
 
-### Other Changes
-
 ## 1.3.0-beta.1 (2024-02-01)
 
 ### Features Added
