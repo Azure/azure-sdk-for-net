@@ -26,7 +26,7 @@ steps:
       packageType: sdk
       performMultiLevelLookup: true
       version: "8.0.x"
-  - task: UseDotNet@ # We need both 6 and 8 because the azure-sdk-tools repo only uses 6, so all tools from there fail without it
+  - task: UseDotNet@2 # We need both 6 and 8 because the azure-sdk-tools repo only uses 6, so all tools from there fail without it
     condition: and(succeeded(), ne(variables['Agent.OS'], 'Windows_NT')) # Windows supports MultiLevelLookup and doesn't need explicit framework installation
     displayName: 'Use .NET 6.0 SDK'
     retryCountOnTaskFailure: 3
