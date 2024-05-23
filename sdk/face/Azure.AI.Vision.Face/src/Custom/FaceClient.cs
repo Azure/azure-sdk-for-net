@@ -52,7 +52,14 @@ namespace Azure.AI.Vision.Face
             bool? returnRecognitionModel = null,
             int? faceIdTimeToLive = null,
             CancellationToken cancellationToken = default)
-            => DetectFromUrlImplAsync(url, detectionModel, recognitionModel, returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, cancellationToken);
+        {
+            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(detectionModel, nameof(detectionModel));
+            Argument.AssertNotNull(recognitionModel, nameof(recognitionModel));
+            Argument.AssertNotNull(returnFaceId, nameof(returnFaceId));
+
+            return DetectFromUrlImplAsync(url, detectionModel, recognitionModel, returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, cancellationToken);
+        }
 
         /// <summary> Detect human faces in an image, return face rectangles, and optionally with faceIds, landmarks, and attributes. </summary>
         /// <param name="url"> URL of input image. </param>
@@ -92,7 +99,14 @@ namespace Azure.AI.Vision.Face
             bool? returnRecognitionModel = null,
             int? faceIdTimeToLive = null,
             CancellationToken cancellationToken = default)
-            => DetectFromUrlImpl(url, detectionModel, recognitionModel, returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, cancellationToken);
+        {
+            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(detectionModel, nameof(detectionModel));
+            Argument.AssertNotNull(recognitionModel, nameof(recognitionModel));
+            Argument.AssertNotNull(returnFaceId, nameof(returnFaceId));
+
+            return DetectFromUrlImpl(url, detectionModel, recognitionModel, returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, cancellationToken);
+        }
 
         /// <summary> Detect human faces in an image, return face rectangles, and optionally with faceIds, landmarks, and attributes. </summary>
         /// <param name="imageContent"> The input image binary. </param>
@@ -132,7 +146,14 @@ namespace Azure.AI.Vision.Face
             bool? returnRecognitionModel = null,
             int? faceIdTimeToLive = null,
             CancellationToken cancellationToken = default)
-            => DetectImplAsync(imageContent, detectionModel, recognitionModel, returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, cancellationToken);
+        {
+            Argument.AssertNotNull(imageContent, nameof(imageContent));
+            Argument.AssertNotNull(detectionModel, nameof(detectionModel));
+            Argument.AssertNotNull(recognitionModel, nameof(recognitionModel));
+            Argument.AssertNotNull(returnFaceId, nameof(returnFaceId));
+
+            return DetectImplAsync(imageContent, detectionModel, recognitionModel, returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, cancellationToken);
+        }
 
         /// <summary> Detect human faces in an image, return face rectangles, and optionally with faceIds, landmarks, and attributes. </summary>
         /// <param name="imageContent"> The input image binary. </param>
@@ -172,6 +193,13 @@ namespace Azure.AI.Vision.Face
             bool? returnRecognitionModel = null,
             int? faceIdTimeToLive = null,
             CancellationToken cancellationToken = default)
-            => DetectImpl(imageContent, detectionModel, recognitionModel, returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, cancellationToken);
+        {
+            Argument.AssertNotNull(imageContent, nameof(imageContent));
+            Argument.AssertNotNull(detectionModel, nameof(detectionModel));
+            Argument.AssertNotNull(recognitionModel, nameof(recognitionModel));
+            Argument.AssertNotNull(returnFaceId, nameof(returnFaceId));
+
+            return DetectImpl(imageContent, detectionModel, recognitionModel, returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, cancellationToken);
+        }
     }
 }
