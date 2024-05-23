@@ -47,7 +47,7 @@ To use Microsoft Entra authentication, set `TENANT_ID`, `CLIENT_ID`, and `CLIENT
 
 We also need **Azure Maps Client ID** which can get from Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
 
-```C# Snippet:InstantiateSearchClientViaMicrosoft Entra
+```C# Snippet:InstantiateSearchClientViaMicrosoftEntra
 // Create a MapsSearchClient that will authenticate through Microsoft Entra
 DefaultAzureCredential credential = new DefaultAzureCredential();
 string clientId = "<My Map Account Client Id>";
