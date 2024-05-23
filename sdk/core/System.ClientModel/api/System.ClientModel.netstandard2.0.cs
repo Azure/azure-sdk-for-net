@@ -72,21 +72,21 @@ namespace System.ClientModel
         protected ResultOperation(string id, System.ClientModel.Primitives.PipelineResponse response) { }
         public bool HasCompleted { get { throw null; } protected set { } }
         public string Id { get { throw null; } protected set { } }
-        public abstract System.ClientModel.Primitives.PipelineResponse UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.PipelineResponse> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.ClientModel.Primitives.PipelineResponse WaitForCompletionResponse(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.ClientModel.Primitives.PipelineResponse WaitForCompletionResponse(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.PipelineResponse> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.PipelineResponse> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.ClientModel.ClientResult UpdateStatus();
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.ClientResult> UpdateStatusAsync();
+        public abstract System.ClientModel.ClientResult WaitForCompletionResult();
+        public abstract System.ClientModel.ClientResult WaitForCompletionResult(System.TimeSpan pollingInterval);
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.ClientResult> WaitForCompletionResultAsync();
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.ClientResult> WaitForCompletionResultAsync(System.TimeSpan pollingInterval);
     }
     public abstract partial class ResultOperation<T> : System.ClientModel.ResultOperation
     {
         protected ResultOperation(string id, System.ClientModel.Primitives.PipelineResponse response) : base (default(string), default(System.ClientModel.Primitives.PipelineResponse)) { }
         public T? Value { get { throw null; } protected set { } }
-        public abstract System.ClientModel.ClientResult<T> WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.ClientModel.ClientResult<T> WaitForCompletion(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.Task<System.ClientModel.ClientResult<T>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.Task<System.ClientModel.ClientResult<T>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken);
+        public abstract System.ClientModel.ClientResult<T> WaitForCompletion();
+        public abstract System.ClientModel.ClientResult<T> WaitForCompletion(System.TimeSpan pollingInterval);
+        public abstract System.Threading.Tasks.Task<System.ClientModel.ClientResult<T>> WaitForCompletionAsync();
+        public abstract System.Threading.Tasks.Task<System.ClientModel.ClientResult<T>> WaitForCompletionAsync(System.TimeSpan pollingInterval);
     }
     public partial class ResultPage<T> : System.ClientModel.ResultCollection<T>
     {

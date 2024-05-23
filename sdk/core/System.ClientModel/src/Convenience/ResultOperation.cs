@@ -19,18 +19,22 @@ public abstract class ResultOperation : ClientResult
 
     public bool HasCompleted { get; protected set; }
 
-    public abstract ValueTask<PipelineResponse> UpdateStatusAsync(CancellationToken cancellationToken = default);
+    // TODO: Should we take a cancellationToken, since third-party convenience methods don't?
+    // TODO: Should we take a RequestOptions?
+    //   i.e. Is the non-T version of this for protocol-level, or only for operations that
+    //   don't have an output value?
+    public abstract ValueTask<ClientResult> UpdateStatusAsync();
 
-    public abstract PipelineResponse UpdateStatus(CancellationToken cancellationToken = default);
+    public abstract ClientResult UpdateStatus();
 
     // TODO: what is the use case for these?  How do they differ from GetRawResponse() ?
-    public abstract ValueTask<PipelineResponse> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default);
+    public abstract ValueTask<ClientResult> WaitForCompletionResultAsync(TimeSpan pollingInterval);
 
-    public abstract PipelineResponse WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken = default);
+    public abstract ClientResult WaitForCompletionResult(TimeSpan pollingInterval);
 
-    public abstract ValueTask<PipelineResponse> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default);
+    public abstract ValueTask<ClientResult> WaitForCompletionResultAsync();
 
-    public abstract PipelineResponse WaitForCompletionResponse(CancellationToken cancellationToken = default);
+    public abstract ClientResult WaitForCompletionResult();
 
     // TODO: should these be virtual with an internal poller implementation?
     // TODO: should we have something like DelayStrategy?
