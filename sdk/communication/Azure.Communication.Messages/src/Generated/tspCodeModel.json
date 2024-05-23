@@ -1,6 +1,7 @@
 {
  "$id": "1",
  "Name": "Azure.Communication.MessagesService",
+ "Description": "Azure Communication Messages Service",
  "ApiVersions": [
   "2024-02-01"
  ],
