@@ -11,21 +11,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WorkflowEnvelopeData : IUtf8JsonSerializable, IJsonModel<WorkflowEnvelopeData>
+    public partial class PrivateLinkConnectionApprovalRequestInfo : IUtf8JsonSerializable, IJsonModel<PrivateLinkConnectionApprovalRequestInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkflowEnvelopeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkConnectionApprovalRequestInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<WorkflowEnvelopeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PrivateLinkConnectionApprovalRequestInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkflowEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkConnectionApprovalRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkflowEnvelopeData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkConnectionApprovalRequestInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,16 +32,6 @@ namespace Azure.ResourceManager.AppService
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -64,6 +53,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            {
+                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
+                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -82,19 +79,19 @@ namespace Azure.ResourceManager.AppService
             writer.WriteEndObject();
         }
 
-        WorkflowEnvelopeData IJsonModel<WorkflowEnvelopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PrivateLinkConnectionApprovalRequestInfo IJsonModel<PrivateLinkConnectionApprovalRequestInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkflowEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkConnectionApprovalRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkflowEnvelopeData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkConnectionApprovalRequestInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWorkflowEnvelopeData(document.RootElement, options);
+            return DeserializePrivateLinkConnectionApprovalRequestInfo(document.RootElement, options);
         }
 
-        internal static WorkflowEnvelopeData DeserializeWorkflowEnvelopeData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PrivateLinkConnectionApprovalRequestInfo DeserializePrivateLinkConnectionApprovalRequestInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -103,12 +100,11 @@ namespace Azure.ResourceManager.AppService
                 return null;
             }
             string kind = default;
-            AzureLocation? location = default;
-            WorkflowEnvelopeProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            PrivateLinkConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,24 +112,6 @@ namespace Azure.ResourceManager.AppService
                 if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = WorkflowEnvelopeProperties.DeserializeWorkflowEnvelopeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -160,20 +138,40 @@ namespace Azure.ResourceManager.AppService
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("privateLinkServiceConnectionState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            privateLinkServiceConnectionState = PrivateLinkConnectionState.DeserializePrivateLinkConnectionState(property0.Value, options);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WorkflowEnvelopeData(
+            return new PrivateLinkConnectionApprovalRequestInfo(
                 id,
                 name,
                 type,
                 systemData,
+                privateLinkServiceConnectionState,
                 kind,
-                location,
-                properties,
                 serializedAdditionalRawData);
         }
 
@@ -189,15 +187,16 @@ namespace Azure.ResourceManager.AppService
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -210,30 +209,17 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  kind: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  kind: ");
                     if (Kind.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -246,55 +232,61 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
-            if (Optional.IsDefined(Properties) || hasPropertyOverride)
-            {
-                builder.Append("  properties: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    BicepSerializationHelpers.AppendChildObject(builder, Properties, options, 2, false, "  properties: ");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
 
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkServiceConnectionState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateLinkServiceConnectionState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+                {
+                    builder.Append("    privateLinkServiceConnectionState: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PrivateLinkServiceConnectionState, options, 4, false, "    privateLinkServiceConnectionState: ");
+                }
+            }
+
+            builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<WorkflowEnvelopeData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PrivateLinkConnectionApprovalRequestInfo>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkflowEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkConnectionApprovalRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -303,26 +295,26 @@ namespace Azure.ResourceManager.AppService
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkflowEnvelopeData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkConnectionApprovalRequestInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
-        WorkflowEnvelopeData IPersistableModel<WorkflowEnvelopeData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PrivateLinkConnectionApprovalRequestInfo IPersistableModel<PrivateLinkConnectionApprovalRequestInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkflowEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkConnectionApprovalRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeWorkflowEnvelopeData(document.RootElement, options);
+                        return DeserializePrivateLinkConnectionApprovalRequestInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkflowEnvelopeData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkConnectionApprovalRequestInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<WorkflowEnvelopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PrivateLinkConnectionApprovalRequestInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

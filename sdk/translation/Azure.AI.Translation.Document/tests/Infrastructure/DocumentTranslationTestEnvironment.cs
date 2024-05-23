@@ -37,8 +37,8 @@ namespace Azure.AI.Translation.Document.Tests
             var client = new DocumentTranslationClient(new Uri(endpoint), Credential);
             try
             {
-                await client.GetSupportedDocumentFormatsAsync();
-                await client.GetSupportedGlossaryFormatsAsync();
+                await client.GetSupportedFormatsAsync("document");
+                await client.GetSupportedFormatsAsync("glossary");
                 client.GetTranslationStatuses().Take(2);
             }
             catch (RequestFailedException e) when (e.Status == 401)

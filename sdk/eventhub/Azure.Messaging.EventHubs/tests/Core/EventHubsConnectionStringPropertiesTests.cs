@@ -347,7 +347,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("amqp://test.endpoint.com")]
         [TestCase("http://test.endpoint.com")]
         [TestCase("https://test.endpoint.com:8443")]
-        public void ParseDoesAcceptsHostNamesAndUrisForTheEndpoint(string endpointValue)
+        public void ParseAcceptsHostNamesAndUrisForTheEndpoint(string endpointValue)
         {
             var connectionString = $"Endpoint={ endpointValue };EntityPath=dummy";
             var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
@@ -371,7 +371,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase("test.endpoint.com:443")]
+        [TestCase("test-endpoint|com:443")]
         [TestCase("notvalid=[broke]")]
         public void ParseDoesNotAllowAnInvalidEndpointFormat(string endpointValue)
         {
@@ -402,6 +402,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   method.
         /// </summary>
         ///
+        [Test]
         public void ParseDetectsDevelopmentEmulatorUse()
         {
             var connectionString = "Endpoint=localhost:1234;SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator=true";
@@ -416,6 +417,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   method.
         /// </summary>
         ///
+        [Test]
         public void ParseRespectsDevelopmentEmulatorValue()
         {
             var connectionString = "Endpoint=localhost:1234;SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator=false";
@@ -423,6 +425,57 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(parsed.Endpoint.IsLoopback, Is.True, "The endpoint should be a local address.");
             Assert.That(parsed.UseDevelopmentEmulator, Is.False, "The development emulator flag should have been unset.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubsConnectionStringProperties.Parse" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase("localhost")]
+        [TestCase("localhost:9084")]
+        [TestCase("127.0.0.1")]
+        [TestCase("local.docker.com")]
+        [TestCase("local.docker.com:8080")]
+        [TestCase("www.fake.com")]
+        [TestCase("www.fake.com:443")]
+        public void ParseRespectsTheEndpointForDevelopmentEmulatorValue(string host)
+        {
+            var connectionString = $"Endpoint={ host };SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator=true";
+            var endpoint = new Uri(string.Concat(GetEventHubsEndpointScheme(), host));
+            var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
+
+            Assert.That(parsed.Endpoint.Host, Is.EqualTo(endpoint.Host), "The endpoint hosts should match.");
+            Assert.That(parsed.Endpoint.Port, Is.EqualTo(endpoint.Port), "The endpoint ports should match.");
+            Assert.That(parsed.UseDevelopmentEmulator, Is.True, "The development emulator flag should have been set.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubsConnectionStringProperties.Parse" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase("sb://localhost")]
+        [TestCase("http://localhost:9084")]
+        [TestCase("sb://local.docker.com")]
+        [TestCase("amqps://local.docker.com:8080")]
+        [TestCase("sb://www.fake.com")]
+        [TestCase("amqp://www.fake.com:443")]
+        public void ParseRespectsTheUrlFormatEndpointForDevelopmentEmulatorValue(string host)
+        {
+            var endpoint = new UriBuilder(host)
+            {
+                Scheme = GetEventHubsEndpointScheme()
+            };
+
+            var connectionString = $"Endpoint={ host };SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator=true";
+            var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
+
+            Assert.That(parsed.Endpoint.Host, Is.EqualTo(endpoint.Host), "The endpoint hosts should match.");
+            Assert.That(parsed.Endpoint.Port, Is.EqualTo(endpoint.Port), "The endpoint ports should match.");
+            Assert.That(parsed.UseDevelopmentEmulator, Is.True, "The development emulator flag should have been set.");
         }
 
         /// <summary>
@@ -655,33 +708,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var properties = EventHubsConnectionStringProperties.Parse(fakeConnection);
 
             Assert.That(() => properties.Validate(eventHubName, "dummy"), Throws.Nothing, "Validation should accept the shared access signature authorization.");
-        }
-
-        /// <summary>
-        ///    Verifies functionality of the <see cref="EventHubsConnectionStringProperties.Validate" />
-        ///    method.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase("localhost", true)]
-        [TestCase("127.0.0.1", true)]
-        [TestCase("www.microsoft.com", false)]
-        [TestCase("fake.servicebus.windows.net", false)]
-        [TestCase("weirdname:8080", false)]
-        public void ValidateRequiresLocalEndpointForDevelopmentEmulator(string endpoint,
-                                                                        bool isValid)
-        {
-            var fakeConnection = $"Endpoint=sb://{ endpoint };SharedAccessSignature=[not_real];UseDevelopmentEmulator=true";
-            var properties = EventHubsConnectionStringProperties.Parse(fakeConnection);
-
-            if (isValid)
-            {
-                Assert.That(() => properties.Validate("fake", "dummy"), Throws.Nothing, "Validation should allow a local endpoint.");
-            }
-            else
-            {
-                Assert.That(() => properties.Validate("fake", "dummy"), Throws.ArgumentException.And.Message.StartsWith(Resources.InvalidEmulatorEndpoint), "Validation should enforce that the endpoint is a local address.");
-            }
         }
 
         /// <summary>

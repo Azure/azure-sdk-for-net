@@ -135,43 +135,46 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Periods), out propertyOverride);
-            if (Optional.IsDefined(Periods) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  periods: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Periods))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  periods: ");
                     builder.AppendLine($"{Periods.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThrottledPeriods), out propertyOverride);
-            if (Optional.IsDefined(ThrottledPeriods) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  throttledPeriods: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ThrottledPeriods))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  throttledPeriods: ");
                     builder.AppendLine($"{ThrottledPeriods.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThrottledTime), out propertyOverride);
-            if (Optional.IsDefined(ThrottledTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  throttledTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ThrottledTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  throttledTime: ");
                     builder.AppendLine($"{ThrottledTime.Value}");
                 }
             }

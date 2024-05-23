@@ -50,6 +50,9 @@
     <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceContainerInternal.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\src\Shared\ShareModelExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
   <ItemGroup>

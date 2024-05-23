@@ -1,14 +1,16 @@
 # Release History
 
-## 0.1.0-beta.2 (Unreleased)
+## 0.2.0 (2024-05-14)
+
+### Other Changes
+
+- Updated dependency on Azure.ResourceManager.KeyVault to leverage serialization fix involving property assignments.
+
+## 0.1.0 (2024-04-24)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Initial non-beta release.
 
 ## 0.1.0-beta.1 (2024-04-04)
 

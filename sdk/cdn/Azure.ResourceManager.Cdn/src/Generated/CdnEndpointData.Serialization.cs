@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CustomDomains))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DeepCreatedCustomDomains))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
-                foreach (var item in CustomDomains)
+                foreach (var item in DeepCreatedCustomDomains)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Cdn
             string hostName = default;
             IList<DeepCreatedOrigin> origins = default;
             IList<DeepCreatedOriginGroup> originGroups = default;
-            IReadOnlyList<CdnCustomDomainData> customDomains = default;
+            IReadOnlyList<DeepCreatedCustomDomain> customDomains = default;
             EndpointResourceState? resourceState = default;
             CdnEndpointProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -522,10 +522,10 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            List<CdnCustomDomainData> array = new List<CdnCustomDomainData>();
+                            List<DeepCreatedCustomDomain> array = new List<DeepCreatedCustomDomain>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CdnCustomDomainData.DeserializeCdnCustomDomainData(item, options));
+                                array.Add(DeepCreatedCustomDomain.DeserializeDeepCreatedCustomDomain(item, options));
                             }
                             customDomains = array;
                             continue;
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.Cdn
                 hostName,
                 origins ?? new ChangeTrackingList<DeepCreatedOrigin>(),
                 originGroups ?? new ChangeTrackingList<DeepCreatedOriginGroup>(),
-                customDomains ?? new ChangeTrackingList<CdnCustomDomainData>(),
+                customDomains ?? new ChangeTrackingList<DeepCreatedCustomDomain>(),
                 resourceState,
                 provisioningState,
                 serializedAdditionalRawData);

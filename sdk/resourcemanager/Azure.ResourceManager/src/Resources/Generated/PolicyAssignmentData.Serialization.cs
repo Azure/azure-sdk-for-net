@@ -411,15 +411,16 @@ namespace Azure.ResourceManager.Resources
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -433,57 +434,61 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  location: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Location))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  location: ");
                     builder.AppendLine($"'{Location.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedIdentity), out propertyOverride);
-            if (Optional.IsDefined(ManagedIdentity) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  identity: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedIdentity))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  identity: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ManagedIdentity, options, 2, false, "  identity: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -491,15 +496,16 @@ namespace Azure.ResourceManager.Resources
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
-            if (Optional.IsDefined(DisplayName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    displayName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    displayName: ");
                     if (DisplayName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -513,15 +519,16 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyDefinitionId), out propertyOverride);
-            if (Optional.IsDefined(PolicyDefinitionId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    policyDefinitionId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PolicyDefinitionId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    policyDefinitionId: ");
                     if (PolicyDefinitionId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -535,15 +542,16 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scope), out propertyOverride);
-            if (Optional.IsDefined(Scope) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    scope: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Scope))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    scope: ");
                     if (Scope.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -557,17 +565,18 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExcludedScopes), out propertyOverride);
-            if (Optional.IsCollectionDefined(ExcludedScopes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ExcludedScopes.Any() || hasPropertyOverride)
+                builder.Append("    notScopes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ExcludedScopes))
                 {
-                    builder.Append("    notScopes: ");
-                    if (hasPropertyOverride)
+                    if (ExcludedScopes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    notScopes: ");
                         builder.AppendLine("[");
                         foreach (var item in ExcludedScopes)
                         {
@@ -592,17 +601,18 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameters), out propertyOverride);
-            if (Optional.IsCollectionDefined(Parameters) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Parameters.Any() || hasPropertyOverride)
+                builder.Append("    parameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Parameters))
                 {
-                    builder.Append("    parameters: ");
-                    if (hasPropertyOverride)
+                    if (Parameters.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    parameters: ");
                         builder.AppendLine("{");
                         foreach (var item in Parameters)
                         {
@@ -615,15 +625,16 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (Optional.IsDefined(Description) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    description: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    description: ");
                     if (Description.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -637,45 +648,48 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metadata), out propertyOverride);
-            if (Optional.IsDefined(Metadata) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    metadata: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Metadata))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    metadata: ");
                     builder.AppendLine($"'{Metadata.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnforcementMode), out propertyOverride);
-            if (Optional.IsDefined(EnforcementMode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    enforcementMode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnforcementMode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    enforcementMode: ");
                     builder.AppendLine($"'{EnforcementMode.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NonComplianceMessages), out propertyOverride);
-            if (Optional.IsCollectionDefined(NonComplianceMessages) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (NonComplianceMessages.Any() || hasPropertyOverride)
+                builder.Append("    nonComplianceMessages: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NonComplianceMessages))
                 {
-                    builder.Append("    nonComplianceMessages: ");
-                    if (hasPropertyOverride)
+                    if (NonComplianceMessages.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    nonComplianceMessages: ");
                         builder.AppendLine("[");
                         foreach (var item in NonComplianceMessages)
                         {
@@ -687,17 +701,18 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceSelectors), out propertyOverride);
-            if (Optional.IsCollectionDefined(ResourceSelectors) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ResourceSelectors.Any() || hasPropertyOverride)
+                builder.Append("    resourceSelectors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ResourceSelectors))
                 {
-                    builder.Append("    resourceSelectors: ");
-                    if (hasPropertyOverride)
+                    if (ResourceSelectors.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    resourceSelectors: ");
                         builder.AppendLine("[");
                         foreach (var item in ResourceSelectors)
                         {
@@ -709,17 +724,18 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Overrides), out propertyOverride);
-            if (Optional.IsCollectionDefined(Overrides) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Overrides.Any() || hasPropertyOverride)
+                builder.Append("    overrides: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Overrides))
                 {
-                    builder.Append("    overrides: ");
-                    if (hasPropertyOverride)
+                    if (Overrides.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    overrides: ");
                         builder.AppendLine("[");
                         foreach (var item in Overrides)
                         {

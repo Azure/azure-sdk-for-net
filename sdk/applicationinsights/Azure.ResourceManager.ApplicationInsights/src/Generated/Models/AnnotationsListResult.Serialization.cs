@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            IReadOnlyList<Annotation> value = default;
+            IReadOnlyList<ApplicationInsightsAnnotation> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    List<Annotation> array = new List<Annotation>();
+                    List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Annotation.DeserializeAnnotation(item, options));
+                        array.Add(ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(item, options));
                     }
                     value = array;
                     continue;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AnnotationsListResult(value ?? new ChangeTrackingList<Annotation>(), serializedAdditionalRawData);
+            return new AnnotationsListResult(value ?? new ChangeTrackingList<ApplicationInsightsAnnotation>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (Optional.IsCollectionDefined(Value) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Value.Any() || hasPropertyOverride)
+                builder.Append("  value: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Value))
                 {
-                    builder.Append("  value: ");
-                    if (hasPropertyOverride)
+                    if (Value.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  value: ");
                         builder.AppendLine("[");
                         foreach (var item in Value)
                         {

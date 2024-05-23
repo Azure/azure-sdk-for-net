@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 6.3.2 (2024-04-29)
+
+### Bugs Fixed
+
+- Fixed an issue with scale metrics computation, potentially causing unnecessary scale-up.
+
 ## 6.3.1 (2024-04-17)
 
 ### Other Changes

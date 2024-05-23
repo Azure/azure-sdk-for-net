@@ -106,15 +106,16 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SasExpirationPeriod), out propertyOverride);
-            if (Optional.IsDefined(SasExpirationPeriod) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sasExpirationPeriod: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SasExpirationPeriod))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sasExpirationPeriod: ");
                     if (SasExpirationPeriod.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -128,13 +129,14 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpirationAction), out propertyOverride);
-            builder.Append("  expirationAction: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  expirationAction: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  expirationAction: ");
                 builder.AppendLine($"'{ExpirationAction.ToString()}'");
             }
 

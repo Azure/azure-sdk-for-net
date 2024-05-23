@@ -145,8 +145,7 @@ public partial class AssistantsClient
     {
         FileInfo localFileInfo = new(localFilePath);
         using FileStream localFileStream = localFileInfo.OpenRead();
-        BinaryData localFileData = BinaryData.FromStream(localFileStream);
-        return UploadFile(localFileData, purpose, localFileInfo.Name, cancellationToken);
+        return UploadFile(localFileStream, purpose, localFileInfo.Name, cancellationToken);
     }
 
     /// <summary>
@@ -162,8 +161,6 @@ public partial class AssistantsClient
     {
         FileInfo localFileInfo = new(localFilePath);
         using FileStream localFileStream = localFileInfo.OpenRead();
-        BinaryData localFileData
-            = await BinaryData.FromStreamAsync(localFileStream, cancellationToken).ConfigureAwait(false);
-        return await UploadFileAsync(localFileData, purpose, localFileInfo.Name, cancellationToken).ConfigureAwait(false);
+        return await UploadFileAsync(localFileStream, purpose, localFileInfo.Name, cancellationToken).ConfigureAwait(false);
     }
 }

@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Resources.Models.ExtendedLocationType? ExtendedLocationType { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void WriteExtendedLocationType(Utf8JsonWriter writer)
+        internal void WriteExtendedLocationType(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStringValue(ExtendedLocationType.Value.ToString());
         }

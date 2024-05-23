@@ -15,7 +15,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
     internal partial class Manager
     {
         internal readonly DoubleBuffer _documentBuffer = new();
-        internal readonly bool _isAzureWebApp;
 
         private readonly int _processorCount = Environment.ProcessorCount;
         private readonly Process _process = Process.GetCurrentProcess();
@@ -31,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
                 roleName: LiveMetricsResource?.RoleName ?? "UNKNOWN_NAME",
                 machineName: Environment.MachineName, // TODO: MOVE TO PLATFORM
                 streamId: _streamId,
-                isWebApp: _isAzureWebApp,
+                isWebApp: false,
                 performanceCollectionSupported: true)
             {
                 Timestamp = DateTime.UtcNow, // Represents timestamp sample was created
@@ -56,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
 
                 if (item is Request request)
                 {
-                    matchesDocumentStreamFilter = MatchesDocumentStreamFilters(
+                    matchesDocumentStreamFilter = UpdateTelemetryDocumentIfInterested(request,
                         documentStreams,
                         documentStream => documentStream.RequestQuotaTracker,
                         documentStream => documentStream.CheckFilters(request, out groupErrors));
@@ -72,7 +71,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
                 }
                 else if (item is RemoteDependency remoteDependency)
                 {
-                    matchesDocumentStreamFilter = MatchesDocumentStreamFilters(
+                    matchesDocumentStreamFilter = UpdateTelemetryDocumentIfInterested(remoteDependency,
                         documentStreams,
                         documentStream => documentStream.DependencyQuotaTracker,
                         documentStream => documentStream.CheckFilters(remoteDependency, out groupErrors));
@@ -88,7 +87,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
                 }
                 else if (item is Models.Exception exception)
                 {
-                    matchesDocumentStreamFilter = MatchesDocumentStreamFilters(
+                    matchesDocumentStreamFilter = UpdateTelemetryDocumentIfInterested(exception,
                         documentStreams,
                         documentStream => documentStream.ExceptionQuotaTracker,
                         documentStream => documentStream.CheckFilters(exception, out groupErrors));
@@ -97,7 +96,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
                 }
                 else if (item is Models.Trace trace)
                 {
-                    matchesDocumentStreamFilter = MatchesDocumentStreamFilters(
+                    matchesDocumentStreamFilter = UpdateTelemetryDocumentIfInterested(trace,
                         documentStreams,
                         documentStream => documentStream.TraceQuotaTracker,
                         documentStream => documentStream.CheckFilters(trace, out groupErrors));
@@ -299,7 +298,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             return true;
         }
 
-        private bool MatchesDocumentStreamFilters(
+        private bool UpdateTelemetryDocumentIfInterested(
+            DocumentIngress telemetry,
             IEnumerable<DocumentStream> documentStreams,
             Func<DocumentStream, QuickPulseQuotaTracker> getQuotaTracker,
             Func<DocumentStream, bool> checkDocumentStreamFilters)
@@ -313,6 +313,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
                 if (getQuotaTracker(matchingDocumentStream).ApplyQuota())
                 {
                     interested = true;
+
+                    // this document stream is interested in this telemetry
+                    telemetry.DocumentStreamIds.Add(matchingDocumentStream.Id);
                 }
             }
 

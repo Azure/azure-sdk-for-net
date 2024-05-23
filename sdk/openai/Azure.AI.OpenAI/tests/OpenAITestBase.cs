@@ -37,10 +37,11 @@ namespace Azure.AI.OpenAI.Tests
 
         protected OpenAITestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer("(\"key\" *: *\")[^ \n\"]*(\")", "$1placeholder$2"));
-            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("api-key", "***********"));
-            UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer("sig=[^\"]*") { Value = "sig=Sanitized" });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer("(\"key\" *: *\")[^ \n\"]*(\")") { Value = "$1placeholder$2" });
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("api-key") { Value = "***********" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*") { Value = "sig=Sanitized" });
+            JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
             SanitizedQueryParameters.Add("sig");
         }
 
@@ -117,6 +118,31 @@ namespace Azure.AI.OpenAI.Tests
                 _ => throw new NotImplementedException(),
             });
         }
+
+        protected Uri GetTestImageInternetUri()
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return new Uri("https://sanitized");
+            }
+            return new Uri("https://www.bing.com/th?id=OHR.BradgateFallow_EN-US3932725763_1920x1080.jpg");
+        }
+
+        protected Stream GetTestImageStream(string mimeType)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return new MemoryStream();
+            }
+            return File.OpenRead(mimeType switch
+            {
+                "image/jpg" => TestEnvironment.TestImageJpgInputPath,
+                _ => throw new ArgumentException(nameof(mimeType)),
+            });
+        }
+
+        protected BinaryData GetTestImageData(string mimeType)
+            => BinaryData.FromStream(GetTestImageStream(mimeType));
 
         [SetUp]
         public void CreateDeployment()

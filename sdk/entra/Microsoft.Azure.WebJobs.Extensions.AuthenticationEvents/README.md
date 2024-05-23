@@ -13,7 +13,7 @@ The authentication events trigger for Azure Functions allows you to implement a 
 Install the authentication events trigger for Azure Functions with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents --prerelease
+dotnet add package Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 ```
 
 ### Prerequisites

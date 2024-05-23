@@ -37,9 +37,9 @@ namespace Azure.Identity
         private readonly TokenCredential[] _sources;
 
         /// <summary>
-        /// Constructor for instrumenting in tests
+        /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
-        internal ChainedTokenCredential()
+        protected ChainedTokenCredential()
         {
             _sources = Array.Empty<TokenCredential>();
         }
