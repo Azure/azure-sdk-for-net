@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
             this.DefaultAmlFS = preCreated ?
                 await this.RetrieveExistingAmlFS(
                     resourceGroupName: this.DefaultResourceGroup.Id.Name,
-                    amlFSName: @"testsc5594") :
+                    amlFSName: @"testamlFS3768") :
                 await this.CreateOrUpdateAmlFilesystem();
         }
 

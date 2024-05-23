@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0 (2024-06-01)
+## 1.3.0-beta.2 (2024-06-01)
 
 ### Features Added
 - Adding import jobs resource type.
