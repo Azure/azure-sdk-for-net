@@ -20,10 +20,10 @@ AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
 MapsSearchClient client = new MapsSearchClient(credential);
 ```
 
-Instantiate route client via AAD authentication:
+Instantiate route client via Microsoft Entra authentication:
 
-```C# Snippet:InstantiateSearchClientViaAAD
-// Create a MapsSearchClient that will authenticate through AAD
+```C# Snippet:InstantiateSearchClientViaMicrosoftEntra
+// Create a MapsSearchClient that will authenticate through Microsoft Entra
 DefaultAzureCredential credential = new DefaultAzureCredential();
 string clientId = "<My Map Account Client Id>";
 MapsSearchClient client = new MapsSearchClient(credential, clientId);

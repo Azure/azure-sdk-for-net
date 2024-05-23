@@ -29,10 +29,10 @@ namespace Azure.Maps.Search.Tests
             #endregion
         }
 
-        public void SearchClientViaAAD()
+        public void SearchClientViaMicrosoftEntra()
         {
-            #region Snippet:InstantiateSearchClientViaAAD
-            // Create a MapsSearchClient that will authenticate through AAD
+            #region Snippet:InstantiateSearchClientViaMicrosoftEntra
+            // Create a MapsSearchClient that will authenticate through Microsoft Entra
             DefaultAzureCredential credential = new DefaultAzureCredential();
             string clientId = "<My Map Account Client Id>";
             MapsSearchClient client = new MapsSearchClient(credential, clientId);
