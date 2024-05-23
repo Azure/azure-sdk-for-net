@@ -1,12 +1,10 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.4.0 (2024-06-01)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+- Adding import jobs resource type.
+- Upgrading api-version to '2024-03-01'
 
 ### Other Changes
 
