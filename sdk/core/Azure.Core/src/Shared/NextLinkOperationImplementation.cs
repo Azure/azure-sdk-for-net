@@ -141,7 +141,8 @@ namespace Azure.Core
         private static IReadOnlyDictionary<string, string?> ConstructLroDetails(BinaryData data)
         {
             var lroDetails = new Dictionary<string, string?>();
-            foreach (var property in JsonDocument.Parse(data).RootElement.EnumerateObject())
+            using var document = JsonDocument.Parse(data);
+            foreach (var property in document.RootElement.EnumerateObject())
             {
                 lroDetails[property.Name] = property.Value.GetString();
             }
