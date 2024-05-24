@@ -1349,31 +1349,30 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.DataCollectionRuleAssociationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified ID of the resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="etag"> Resource entity tag (ETag). </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="description"> Description of the association. </param>
         /// <param name="dataCollectionRuleId"> The resource ID of the data collection rule that is to be associated. </param>
         /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that is to be associated. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="metadata"> Metadata about the resource. </param>
         /// <returns> A new <see cref="Monitor.DataCollectionRuleAssociationData"/> instance for mocking. </returns>
-        public static DataCollectionRuleAssociationData DataCollectionRuleAssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string description = null, ResourceIdentifier dataCollectionRuleId = null, ResourceIdentifier dataCollectionEndpointId = null, DataCollectionRuleAssociationProvisioningState? provisioningState = null, DataCollectionRuleAssociationMetadata metadata = null)
+        public static DataCollectionRuleAssociationData DataCollectionRuleAssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ETag? etag = null, SystemData systemData = null, string description = null, ResourceIdentifier dataCollectionRuleId = null, ResourceIdentifier dataCollectionEndpointId = null, DataCollectionRuleAssociationProvisioningState? provisioningState = null, DataCollectionRuleAssociationMetadata metadata = null)
         {
             return new DataCollectionRuleAssociationData(
                 id,
                 name,
                 resourceType,
-                systemData,
                 etag,
+                systemData,
                 description,
                 dataCollectionRuleId,
                 dataCollectionEndpointId,
                 provisioningState,
-                metadata,
-                serializedAdditionalRawData: null);
+                metadata);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataCollectionRuleAssociationMetadata"/>. </summary>
@@ -1386,15 +1385,15 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.DataCollectionRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> The kind of the resource. </param>
         /// <param name="identity"> Managed service identity of the resource. </param>
+        /// <param name="id"> Fully qualified ID of the resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="etag"> Resource entity tag (ETag). </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="description"> Description of the data collection rule. </param>
         /// <param name="immutableId"> The immutable ID of this data collection rule. This property is READ-ONLY. </param>
         /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that this rule can be used with. </param>
@@ -1408,22 +1407,22 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="dataFlows"> The specification of data flows. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <returns> A new <see cref="Monitor.DataCollectionRuleData"/> instance for mocking. </returns>
-        public static DataCollectionRuleData DataCollectionRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DataCollectionRuleResourceKind? kind = null, ManagedServiceIdentity identity = null, ETag? etag = null, string description = null, string immutableId = null, ResourceIdentifier dataCollectionEndpointId = null, DataCollectionRuleMetadata metadata = null, IDictionary<string, DataStreamDeclaration> streamDeclarations = null, DataCollectionRuleDataSources dataSources = null, DataCollectionRuleDestinations destinations = null, IEnumerable<DataFlow> dataFlows = null, DataCollectionRuleProvisioningState? provisioningState = null)
+        public static DataCollectionRuleData DataCollectionRuleData(AzureLocation location = default, IDictionary<string, string> tags = null, DataCollectionRuleResourceKind? kind = null, ManagedServiceIdentity identity = null, ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ETag? etag = null, SystemData systemData = null, string description = null, string immutableId = null, ResourceIdentifier dataCollectionEndpointId = null, DataCollectionRuleMetadata metadata = null, IDictionary<string, DataStreamDeclaration> streamDeclarations = null, DataCollectionRuleDataSources dataSources = null, DataCollectionRuleDestinations destinations = null, IEnumerable<DataFlow> dataFlows = null, DataCollectionRuleProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             streamDeclarations ??= new Dictionary<string, DataStreamDeclaration>();
             dataFlows ??= new List<DataFlow>();
 
             return new DataCollectionRuleData(
+                location,
+                tags,
+                kind,
+                identity,
                 id,
                 name,
                 resourceType,
-                systemData,
-                tags,
-                location,
-                kind,
-                identity,
                 etag,
+                systemData,
                 description,
                 immutableId,
                 dataCollectionEndpointId,
@@ -1432,8 +1431,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 dataSources,
                 destinations,
                 dataFlows?.ToList(),
-                provisioningState,
-                serializedAdditionalRawData: null);
+                provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataCollectionRuleMetadata"/>. </summary>
