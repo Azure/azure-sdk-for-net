@@ -79,7 +79,7 @@ foreach (var detectedFace in detectedFaces)
 You can also detect faces from an image URL. The following code demonstrates how to detect faces from an image URL.
 
 ```C# Snippet:DetectFacesFromUrlAsync
-var detectResponse = await client.DetectFromUrlAsync(
+var detectResponse = await client.DetectAsync(
     imageUri,
     FaceDetectionModel.Detection01,
     FaceRecognitionModel.Recognition04,
