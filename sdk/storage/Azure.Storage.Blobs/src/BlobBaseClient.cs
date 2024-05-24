@@ -1547,30 +1547,47 @@ namespace Azure.Storage.Blobs.Specialized
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
-                    Stream stream = RetriableStream.Create(
-                        response.Value.Content,
-                        startOffset =>
-                            StartDownloadAsync(
-                                    range,
-                                    conditionsWithEtag,
-                                    validationOptions,
-                                    startOffset,
-                                    async,
-                                    cancellationToken)
-                                .EnsureCompleted()
-                            .Value.Content,
-                        async startOffset =>
-                            (await StartDownloadAsync(
-                                range,
-                                conditionsWithEtag,
-                                validationOptions,
-                                startOffset,
-                                async,
-                                cancellationToken)
-                                .ConfigureAwait(false))
-                            .Value.Content,
-                        ClientConfiguration.Pipeline.ResponseClassifier,
-                        Constants.MaxReliabilityRetries);
+                    ValueTask<Response<BlobDownloadStreamingResult>> Factory(long offset, bool forceStructuredMessage, bool async, CancellationToken cancellationToken)
+                        => StartDownloadAsync(
+                            range,
+                            conditionsWithEtag,
+                            validationOptions,
+                            offset,
+                            forceStructuredMessage,
+                            async,
+                            cancellationToken);
+                    async ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)> StructuredMessageFactory(
+                        long offset, bool async, CancellationToken cancellationToken)
+                    {
+                        Response<BlobDownloadStreamingResult> result = await Factory(offset, forceStructuredMessage: true, async, cancellationToken).ConfigureAwait(false);
+                        return StructuredMessageDecodingStream.WrapStream(result.Value.Content, result.Value.Details.ContentLength);
+                    }
+                    Stream stream;
+                    if (response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.CrcStructuredMessageHeader))
+                    {
+                        (Stream decodingStream, StructuredMessageDecodingStream.DecodedData decodedData) = StructuredMessageDecodingStream.WrapStream(
+                            response.Value.Content, response.Value.Details.ContentLength);
+                        stream = new StructuredMessageDecodingRetriableStream(
+                            decodingStream,
+                            decodedData,
+                            startOffset => StructuredMessageFactory(startOffset, async: false, cancellationToken)
+                                .EnsureCompleted(),
+                            async startOffset => await StructuredMessageFactory(startOffset, async: true, cancellationToken)
+                                .ConfigureAwait(false),
+                            ClientConfiguration.Pipeline.ResponseClassifier,
+                            Constants.MaxReliabilityRetries);
+                    }
+                    else
+                    {
+                        stream = RetriableStream.Create(
+                            response.Value.Content,
+                            startOffset => Factory(startOffset, forceStructuredMessage: false, async: false, cancellationToken)
+                                .EnsureCompleted().Value.Content,
+                            async startOffset => (await Factory(startOffset, forceStructuredMessage: false, async: true, cancellationToken)
+                                .ConfigureAwait(false)).Value.Content,
+                            ClientConfiguration.Pipeline.ResponseClassifier,
+                            Constants.MaxReliabilityRetries);
+                    }
 
                     stream = stream.WithNoDispose().WithProgress(progressHandler);
 
@@ -1645,6 +1662,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="startOffset">
         /// Starting offset to request - in the event of a retry.
         /// </param>
+        /// <param name="forceStructuredMessage">
+        /// When using transactional CRC, force the request to use structured message.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1666,6 +1686,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions validationOptions,
             long startOffset = 0,
+            bool forceStructuredMessage = false, // TODO all CRC will force structured message in future
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -1702,7 +1723,7 @@ namespace Azure.Storage.Blobs.Specialized
                     rangeGetContentMD5 = true;
                     break;
                 case StorageChecksumAlgorithm.StorageCrc64:
-                    if (pageRange?.Length <= Constants.StructuredMessage.MaxDownloadCrcWithHeader)
+                    if (!forceStructuredMessage && pageRange?.Length <= Constants.StructuredMessage.MaxDownloadCrcWithHeader)
                     {
                         rangeGetContentCRC64 = true;
                     }
@@ -1757,24 +1778,8 @@ namespace Azure.Storage.Blobs.Specialized
             long length = response.IsUnavailable() ? 0 : response.Headers.ContentLength ?? 0;
             ClientConfiguration.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {length}");
 
-            BlobDownloadStreamingResult result = response.ToBlobDownloadStreamingResult();
-            if (response.GetRawResponse().Headers.TryGetValue(Constants.StructuredMessage.CrcStructuredMessageHeader, out string _) &&
-                response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ContentLength, out string rawContentLength))
-            {
-                (result.Content, _) = StructuredMessageDecodingStream.WrapStream(result.Content, long.Parse(rawContentLength));
-            }
-            // if not null, we expected a structured message response
-            // but we didn't find one in the above condition
-            else if (structuredBodyType != null)
-            {
-                // okay to throw here. due to 4MB checksum limit on service downloads, and how we don't
-                // request structured message until we exceed that, we are not throwing on a request
-                // that would have otherwise succeeded and still gotten the desired checksum
-                throw Errors.ExpectedStructuredMessage();
-            }
-
             return Response.FromValue(
-                result,
+                response.ToBlobDownloadStreamingResult(),
                 response.GetRawResponse());
         }
         #endregion
