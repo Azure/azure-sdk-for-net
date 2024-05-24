@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> A TLSA record. For more information about the TLSA record format, see RFC 6698: https://www.rfc-editor.org/rfc/rfc6698. </summary>
     public partial class DnsTlsaRecordInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DnsTlsaRecordInfo"/>. </summary>
         public DnsTlsaRecordInfo()
         {
@@ -20,12 +55,14 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="selector"> The selector specifies which part of the TLS certificate presented by the server will be matched against the association data. </param>
         /// <param name="matchingType"> The matching type specifies how the certificate association is presented. </param>
         /// <param name="certAssociationData"> This specifies the certificate association data to be matched. </param>
-        internal DnsTlsaRecordInfo(int? usage, int? selector, int? matchingType, string certAssociationData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsTlsaRecordInfo(int? usage, int? selector, int? matchingType, string certAssociationData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Usage = usage;
             Selector = selector;
             MatchingType = matchingType;
             CertAssociationData = certAssociationData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The usage specifies the provided association that will be used to match the certificate presented in the TLS handshake. </summary>

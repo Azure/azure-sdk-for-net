@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> A DS record. For more information about the DS record format, see RFC 4034: https://www.rfc-editor.org/rfc/rfc4034. </summary>
     public partial class DnsDSRecordInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DnsDSRecordInfo"/>. </summary>
         public DnsDSRecordInfo()
         {
@@ -19,11 +54,13 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="keyTag"> The key tag value is used to determine which DNSKEY Resource Record is used for signature verification. </param>
         /// <param name="algorithm"> The security algorithm type represents the standard security algorithm number of the DNSKEY Resource Record. See: https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml. </param>
         /// <param name="digest"> The digest entity. </param>
-        internal DnsDSRecordInfo(int? keyTag, int? algorithm, DSRecordDigest digest)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsDSRecordInfo(int? keyTag, int? algorithm, DSRecordDigest digest, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyTag = keyTag;
             Algorithm = algorithm;
             Digest = digest;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The key tag value is used to determine which DNSKEY Resource Record is used for signature verification. </summary>

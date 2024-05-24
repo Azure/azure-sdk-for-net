@@ -5,22 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DelegationSignerInfo
+    public partial class DelegationSignerInfo : IUtf8JsonSerializable, IJsonModel<DelegationSignerInfo>
     {
-        internal static DelegationSignerInfo DeserializeDelegationSignerInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DelegationSignerInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DelegationSignerInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DelegationSignerInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DelegationSignerInfo)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DigestAlgorithmType))
+            {
+                writer.WritePropertyName("digestAlgorithmType"u8);
+                writer.WriteNumberValue(DigestAlgorithmType.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DigestValue))
+            {
+                writer.WritePropertyName("digestValue"u8);
+                writer.WriteStringValue(DigestValue);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Record))
+            {
+                writer.WritePropertyName("record"u8);
+                writer.WriteStringValue(Record);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DelegationSignerInfo IJsonModel<DelegationSignerInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DelegationSignerInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DelegationSignerInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDelegationSignerInfo(document.RootElement, options);
+        }
+
+        internal static DelegationSignerInfo DeserializeDelegationSignerInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> digestAlgorithmType = default;
-            Optional<string> digestValue = default;
-            Optional<string> record = default;
+            int? digestAlgorithmType = default;
+            string digestValue = default;
+            string record = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("digestAlgorithmType"u8))
@@ -42,8 +105,44 @@ namespace Azure.ResourceManager.Dns.Models
                     record = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DelegationSignerInfo(Optional.ToNullable(digestAlgorithmType), digestValue.Value, record.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DelegationSignerInfo(digestAlgorithmType, digestValue, record, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DelegationSignerInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DelegationSignerInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DelegationSignerInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DelegationSignerInfo IPersistableModel<DelegationSignerInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DelegationSignerInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDelegationSignerInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DelegationSignerInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DelegationSignerInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
