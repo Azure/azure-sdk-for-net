@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.20 (2023-06-07)
+## 1.0.0-preview.20 (2024-06-07)
 
 ### Features Added
 - Model Dataset has a new parameter LakeHouseLocation
@@ -48,10 +48,6 @@
 - Model LinkedService parameter ServiceNowV2LinkedService update properties
 - Model Pipeline parameter ExecuteDataFlowActivity update new properties computeType
 - Model Pipeline parameter ScriptActivityScriptBlock update properties type
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-preview.19 (2023-10-30)
 - Fix runNotebook sessionId from int to string
