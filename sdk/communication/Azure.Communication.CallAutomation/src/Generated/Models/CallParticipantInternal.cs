@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="identifier"> Communication identifier of the participant. </param>
         /// <param name="isMuted"> Is participant muted. </param>
         /// <param name="isOnHold"> Is participant on hold. </param>
-        internal CallParticipantInternal(CommunicationIdentifierModel identifier, bool? isMuted, bool? isOnHold)
+        internal CallParticipantInternal(CommunicationIdentifierModel identifier, bool? isMuted, bool isOnHold)
         {
             Identifier = identifier;
             IsMuted = isMuted;
@@ -30,7 +30,5 @@ namespace Azure.Communication.CallAutomation
         public CommunicationIdentifierModel Identifier { get; }
         /// <summary> Is participant muted. </summary>
         public bool? IsMuted { get; }
-        /// <summary> Is participant on hold. </summary>
-        public bool? IsOnHold { get; }
     }
 }

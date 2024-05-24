@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
             }
             CommunicationIdentifierModel identifier = default;
             bool? isMuted = default;
-            bool? isOnHold = default;
+            bool isOnHold = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identifier"u8))

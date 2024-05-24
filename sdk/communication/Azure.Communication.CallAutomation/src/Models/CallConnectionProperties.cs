@@ -91,6 +91,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Identity of the answering entity. Only populated when identity is provided in the request.
         /// </summary>
-        public CommunicationIdentifier AnsweredBy { get; }
+        public CommunicationUserIdentifier AnsweredBy { get; }
     }
 }

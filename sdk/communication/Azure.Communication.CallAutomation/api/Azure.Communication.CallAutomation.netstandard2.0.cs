@@ -217,7 +217,7 @@ namespace Azure.Communication.CallAutomation
     public partial class CallConnectionProperties
     {
         internal CallConnectionProperties() { }
-        public Azure.Communication.CommunicationIdentifier AnsweredBy { get { throw null; } }
+        public Azure.Communication.CommunicationUserIdentifier AnsweredBy { get { throw null; } }
         public System.Uri CallbackUri { get { throw null; } }
         public string CallConnectionId { get { throw null; } }
         public Azure.Communication.CallAutomation.CallConnectionState CallConnectionState { get { throw null; } }
@@ -371,7 +371,6 @@ namespace Azure.Communication.CallAutomation
         internal CallParticipant() { }
         public Azure.Communication.CommunicationIdentifier Identifier { get { throw null; } }
         public bool IsMuted { get { throw null; } }
-        public bool IsOnHold { get { throw null; } }
     }
     public partial class CallRecording
     {
@@ -720,7 +719,6 @@ namespace Azure.Communication.CallAutomation
     public partial class PlayFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal PlayFailed() { }
-        public int? FailedPlaySourceIndex { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
         public static Azure.Communication.CallAutomation.PlayFailed Deserialize(string content) { throw null; }
     }
@@ -777,7 +775,6 @@ namespace Azure.Communication.CallAutomation
     public partial class RecognizeFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal RecognizeFailed() { }
-        public int? FailedPlaySourceIndex { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
         public static Azure.Communication.CallAutomation.RecognizeFailed Deserialize(string content) { throw null; }
     }

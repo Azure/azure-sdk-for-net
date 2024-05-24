@@ -21,7 +21,6 @@ namespace Azure.Communication.CallAutomation
         {
             Identifier = CommunicationIdentifierSerializer.Deserialize(callParticipantInternal.Identifier);
             IsMuted = (bool)callParticipantInternal.IsMuted;
-            IsOnHold = callParticipantInternal.IsOnHold.GetValueOrDefault(false);
         }
 
         /// <summary> The communication identifier. </summary>
@@ -31,6 +30,6 @@ namespace Azure.Communication.CallAutomation
         public bool IsMuted { get; }
 
         /// <summary> Is participant on hold. </summary>
-        public bool IsOnHold { get; }
+        internal bool IsOnHold { get; }
     }
 }
