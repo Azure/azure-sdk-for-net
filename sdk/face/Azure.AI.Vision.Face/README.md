@@ -1,6 +1,6 @@
 # Azure AI Face client library for .NET
 
-Azure.AI.Vision.Face is a managed service that helps developers get secret simply and securely.
+The Azure AI Face service provides AI algorithms that detect, recognize, and analyze human faces in images.
 
 Use the client library for to:
 
@@ -30,9 +30,9 @@ dotnet add package Azure.AI.Vision.Face --prerelease
   - an [Azure Face account][azure_portal_list_face_account] or
   - an [Azure Cognitive Service account][azure_portal_list_cognitive_service_account]
 
-### Create a Face or a Cognitive Services resource
+### Create a Face or a Azure AI services multi-service account
 
-Azure AI Face supports both [multi-service][azure_ai_account] and single-service access. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Face access only, create a Face resource. Please note that you will need a single-service resource if you intend to use [Azure Active Directory authentication](#create-the-client-with-an-azure-active-directory-credential).
+Azure AI Face supports both [multi-service][azure_ai_account] and single-service access. Create a Azure AI services multi-service account if you plan to access multiple cognitive services under a single endpoint/key. For Face access only, create a Face resource. Please note that you will need a single-service resource if you intend to use [Microsoft Entra ID authentication](#create-the-client-with-a-microsoft-entra-id-credential).
 
 - To create a new Face or Cognitive Services account, you can use [Azure Portal][azure_portal_create_face_account], [Azure PowerShell][quick_start_create_account_via_azure_powershell], or [Azure CLI][quick_start_create_account_via_azure_cli].
 
@@ -318,7 +318,7 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 
 ### More sample code
 
-See the [Samples][face_samples] for several code snippets illustrating common patterns used in the Face Python API.
+See the [Samples][face_samples] for several code snippets illustrating common patterns used in the Face .NET SDK.
 
 ### Additional documentation
 
