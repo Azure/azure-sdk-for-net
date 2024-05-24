@@ -100,6 +100,13 @@ namespace System.ClientModel
         Started = 0,
         Completed = 1,
     }
+    public abstract partial class StatusBasedOperation<TStatus, TValue> : System.ClientModel.ResultOperation<TValue>
+    {
+        protected StatusBasedOperation(string id, TStatus status, System.ClientModel.Primitives.PipelineResponse response) : base (default(string), default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public TStatus Status { get { throw null; } protected set { } }
+        public abstract System.ClientModel.ClientResult<(TStatus Status, TValue? Value)> WaitForStatusUpdate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.ClientResult<(TStatus Status, TValue? Value)>> WaitForStatusUpdateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
 }
 namespace System.ClientModel.Primitives
 {
