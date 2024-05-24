@@ -22,7 +22,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient(apiVersion: "2022-11-01-preview");
+            SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient();
 
             Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>", null, null, null, null);
 
@@ -36,7 +36,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient(apiVersion: "2022-11-01-preview");
+            SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient();
 
             Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>", null, null, null, null);
 
@@ -50,7 +50,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient(apiVersion: "2022-11-01-preview");
+            SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient();
 
             Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), true, null);
 
@@ -72,7 +72,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient(apiVersion: "2022-11-01-preview");
+            SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient();
 
             Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), true, null);
 
