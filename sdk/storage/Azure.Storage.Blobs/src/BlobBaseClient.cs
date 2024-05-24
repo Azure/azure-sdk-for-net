@@ -1774,22 +1774,6 @@ namespace Azure.Storage.Blobs.Specialized
             long length = response.IsUnavailable() ? 0 : response.Headers.ContentLength ?? 0;
             ClientConfiguration.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {length}");
 
-            //BlobDownloadStreamingResult result = response.ToBlobDownloadStreamingResult();
-            //if (response.GetRawResponse().Headers.TryGetValue(Constants.StructuredMessage.CrcStructuredMessageHeader, out string _) &&
-            //    response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ContentLength, out string rawContentLength))
-            //{
-            //    (result.Content, _) = StructuredMessageDecodingStream.WrapStream(result.Content, long.Parse(rawContentLength));
-            //}
-            //// if not null, we expected a structured message response
-            //// but we didn't find one in the above condition
-            //else if (structuredBodyType != null)
-            //{
-            //    // okay to throw here. due to 4MB checksum limit on service downloads, and how we don't
-            //    // request structured message until we exceed that, we are not throwing on a request
-            //    // that would have otherwise succeeded and still gotten the desired checksum
-            //    throw Errors.ExpectedStructuredMessage();
-            //}
-
             return Response.FromValue(
                 response.ToBlobDownloadStreamingResult(),
                 response.GetRawResponse());
