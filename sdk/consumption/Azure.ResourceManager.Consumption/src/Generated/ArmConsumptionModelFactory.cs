@@ -388,12 +388,12 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Resource sku. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ConsumptionReservationRecommendation"/> instance for mocking. </returns>
-        public static ConsumptionReservationRecommendation ConsumptionReservationRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation? location = null, string sku = null)
+        public static ConsumptionReservationRecommendation ConsumptionReservationRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, string sku = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -403,10 +403,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 resourceType,
                 systemData,
                 kind == null ? default : new ReservationRecommendationKind(kind),
-                etag,
-                tags,
                 location,
                 sku,
+                etag,
+                tags,
                 serializedAdditionalRawData: null);
         }
 
@@ -1277,10 +1277,10 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The etag for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Resource sku. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="locationPropertiesLocation"> Resource Location. </param>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
@@ -1298,7 +1298,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="skuProperties"> List of sku properties. </param>
         /// <param name="skuName"> This is the ARM Sku name. </param>
         /// <returns> A new <see cref="Models.ConsumptionModernReservationRecommendation"/> instance for mocking. </returns>
-        public static ConsumptionModernReservationRecommendation ConsumptionModernReservationRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation? location = null, string sku = null, string locationPropertiesLocation = null, int? lookBackPeriod = null, float? instanceFlexibilityRatio = null, string instanceFlexibilityGroup = null, string normalizedSize = null, float? recommendedQuantityNormalized = null, Guid? meterId = null, string term = null, ConsumptionAmount costWithNoReservedInstances = null, decimal? recommendedQuantity = null, ConsumptionAmount totalCostWithReservedInstances = null, ConsumptionAmount netSavings = null, DateTimeOffset? firstUsageOn = null, string scope = null, IEnumerable<ConsumptionSkuProperty> skuProperties = null, string skuName = null)
+        public static ConsumptionModernReservationRecommendation ConsumptionModernReservationRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string sku = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, string locationPropertiesLocation = null, int? lookBackPeriod = null, float? instanceFlexibilityRatio = null, string instanceFlexibilityGroup = null, string normalizedSize = null, float? recommendedQuantityNormalized = null, Guid? meterId = null, string term = null, ConsumptionAmount costWithNoReservedInstances = null, decimal? recommendedQuantity = null, ConsumptionAmount totalCostWithReservedInstances = null, ConsumptionAmount netSavings = null, DateTimeOffset? firstUsageOn = null, string scope = null, IEnumerable<ConsumptionSkuProperty> skuProperties = null, string skuName = null)
         {
             tags ??= new Dictionary<string, string>();
             skuProperties ??= new List<ConsumptionSkuProperty>();
@@ -1309,10 +1309,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 resourceType,
                 systemData,
                 ReservationRecommendationKind.Modern,
-                etag,
-                tags,
                 location,
                 sku,
+                etag,
+                tags,
                 serializedAdditionalRawData: null,
                 locationPropertiesLocation,
                 lookBackPeriod,
