@@ -5,6 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics;
 using System.Text.Json;
+using static Azure.Operation;
 
 namespace Azure.Core
 {
@@ -23,7 +24,7 @@ namespace Azure.Core
                 throw new InvalidOperationException("Cannot deserialize a null value to a non-nullable RehydrationToken");
             }
 
-            string id = NextLinkOperationImplementation.NotSet;
+            string id = RehydratedOperation.NotSet;
             string version = string.Empty;
             string headerSource = string.Empty;
             string nextRequestUri = string.Empty;

@@ -13,10 +13,10 @@ namespace Azure.Core
         /// the status of the long-running operation.
         /// There are cases that operation id is not available, we return "NOT_SET" for unavailable operation id.
         /// </summary>
-        public string Id { get; } = NextLinkOperationImplementation.NotSet;
+        public string Id { get; } = Operation.RehydratedOperation.NotSet;
 
         // Version for this contract itself since we might change the members in the future.
-        internal string Version { get; } = NextLinkOperationImplementation.RehydrationTokenVersion;
+        internal string Version { get; } = Operation.RehydratedOperation.RehydrationTokenVersion;
 
         // The below members are used to re-construct <cref="NextLinkOperationImplemenation">.
         // Value of <cref="NextLinkOperationImplemenration.HeaderSrouce">.

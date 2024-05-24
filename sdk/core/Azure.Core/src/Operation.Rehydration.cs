@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,13 +9,19 @@ using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Core
+namespace Azure;
+
+#pragma warning disable AZC0012 // Avoid single word type names
+public abstract partial class Operation
+#pragma warning restore AZC0012 // Avoid single word type names
 {
-    internal class NextLinkOperationImplementation : IOperation
+    internal class RehydratedOperation : IOperation
     {
         internal const string NotSet = "NOT_SET";
+        internal const string RehydrationTokenVersion = "1.0.0";
         private const string ApiVersionParam = "api-version";
         private static readonly string[] FailureStates = { "failed", "canceled" };
         private static readonly string[] SuccessStates = { "succeeded" };
@@ -66,7 +70,7 @@ namespace Azure.Core
             {
                 lastKnownLocation = null;
             }
-            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr);
+            return new RehydratedOperation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr);
         }
 
         public static IOperation<T> Create<T>(
@@ -88,7 +92,49 @@ namespace Azure.Core
             IOperation operation)
             => new OperationToOperationOfT<T>(operationSource, operation);
 
-        private NextLinkOperationImplementation(
+        public static IOperation Create(
+            HttpPipeline pipeline,
+            RehydrationToken rehydrationToken)
+        {
+            AssertNotNull(rehydrationToken, nameof(rehydrationToken));
+            AssertNotNull(pipeline, nameof(pipeline));
+
+            string initialUri = rehydrationToken.InitialUri;
+            if (!Uri.TryCreate(initialUri, UriKind.Absolute, out var startRequestUri))
+            {
+                throw new ArgumentException($"\"initialUri\" property on \"rehydrationToken\" is an invalid Uri", nameof(rehydrationToken));
+            }
+
+            string nextRequestUri = rehydrationToken.NextRequestUri;
+            RequestMethod requestMethod = rehydrationToken.RequestMethod;
+            string? lastKnownLocation = rehydrationToken.LastKnownLocation;
+
+            string finalStateViaStr = rehydrationToken.FinalStateVia;
+            OperationFinalStateVia finalStateVia;
+            if (Enum.IsDefined(typeof(OperationFinalStateVia), finalStateViaStr))
+            {
+                finalStateVia = (OperationFinalStateVia)Enum.Parse(typeof(OperationFinalStateVia), finalStateViaStr);
+            }
+            else
+            {
+                finalStateVia = OperationFinalStateVia.Location;
+            }
+
+            string headerSourceStr = rehydrationToken.HeaderSource;
+            HeaderSource headerSource;
+            if (Enum.IsDefined(typeof(HeaderSource), headerSourceStr))
+            {
+                headerSource = (HeaderSource)Enum.Parse(typeof(HeaderSource), headerSourceStr);
+            }
+            else
+            {
+                headerSource = HeaderSource.None;
+            }
+
+            return new RehydratedOperation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, null, rehydrationToken.Id);
+        }
+
+        private RehydratedOperation(
             HttpPipeline pipeline,
             RequestMethod requestMethod,
             Uri startRequestUri,
@@ -131,6 +177,9 @@ namespace Azure.Core
                 return new Uri(startRequestUri, nextRequestUri).Segments.Last();
             }
         }
+
+        public RehydrationToken GetRehydrationToken() =>
+            new(OperationId, RehydrationTokenVersion, _headerSource.ToString(), _nextRequestUri, _startRequestUri.AbsoluteUri, RequestMethod, _lastKnownLocation, _finalStateVia.ToString());
 
         public async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {

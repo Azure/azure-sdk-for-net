@@ -13,9 +13,9 @@ namespace Azure.Core
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal<T> _operation;
-        private readonly NextLinkOperationImplementation _nextLinkOperation;
+        private readonly Operation.RehydratedOperation _nextLinkOperation;
 
-        public RehydrationOperation(NextLinkOperationImplementation nextLinkOperation, OperationState<T> operationState, IOperation<T> operation, ClientOptions? options = null)
+        public RehydrationOperation(Operation.RehydratedOperation nextLinkOperation, OperationState<T> operationState, IOperation<T> operation, ClientOptions? options = null)
         {
             _nextLinkOperation = nextLinkOperation;
             _operation = operationState.HasCompleted
