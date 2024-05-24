@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
