@@ -20,20 +20,12 @@ namespace Azure.ResourceManager.Resources
     public partial class GenericResourceData : TrackedResourceExtendedData
     {
         /// <summary> Initializes a new instance of <see cref="GenericResourceData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public GenericResourceData(AzureLocation location) : base(location)
+        public GenericResourceData()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GenericResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> Resource extended location. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="plan"> The plan of the resource. </param>
         /// <param name="properties"> The resource properties. </param>
         /// <param name="kind"> The kind of the resource. </param>
@@ -43,7 +35,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="createdOn"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="changedOn"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
-        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmPlan plan, BinaryData properties, string kind, string managedBy, ResourcesSku sku, ManagedServiceIdentity identity, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string provisioningState) : base(id, name, resourceType, systemData, tags, location, extendedLocation, serializedAdditionalRawData)
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="extendedLocation"> Resource extended location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal GenericResourceData(ArmPlan plan, BinaryData properties, string kind, string managedBy, ResourcesSku sku, ManagedServiceIdentity identity, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string provisioningState, ResourceIdentifier id, string name, ResourceType resourceType, AzureLocation location, ExtendedLocation extendedLocation, IDictionary<string, string> tags)
         {
             Plan = plan;
             Properties = properties;
@@ -54,11 +52,12 @@ namespace Azure.ResourceManager.Resources
             CreatedOn = createdOn;
             ChangedOn = changedOn;
             ProvisioningState = provisioningState;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GenericResourceData"/> for deserialization. </summary>
-        internal GenericResourceData()
-        {
+            Id = id;
+            Name = name;
+            ResourceType = resourceType;
+            Location = location;
+            ExtendedLocation = extendedLocation;
+            Tags = tags;
         }
 
         /// <summary> The plan of the resource. </summary>
@@ -117,5 +116,23 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </summary>
         [WirePath("provisioningState")]
         public string ProvisioningState { get; }
+        /// <summary> Resource ID. </summary>
+        [WirePath("id")]
+        public ResourceIdentifier Id { get; }
+        /// <summary> Resource name. </summary>
+        [WirePath("name")]
+        public string Name { get; }
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public ResourceType ResourceType { get; }
+        /// <summary> Resource location. </summary>
+        [WirePath("location")]
+        public AzureLocation Location { get; set; }
+        /// <summary> Resource extended location. </summary>
+        [WirePath("extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
+        /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; }
     }
 }

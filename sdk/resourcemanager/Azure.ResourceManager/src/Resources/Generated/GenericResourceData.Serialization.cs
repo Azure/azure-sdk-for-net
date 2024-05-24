@@ -82,6 +82,23 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
@@ -97,43 +114,6 @@ namespace Azure.ResourceManager.Resources
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
             writer.WriteEndObject();
         }
@@ -167,15 +147,12 @@ namespace Azure.ResourceManager.Resources
             DateTimeOffset? createdTime = default;
             DateTimeOffset? changedTime = default;
             string provisioningState = default;
-            ExtendedLocation extendedLocation = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            AzureLocation location = default;
+            ExtendedLocation extendedLocation = default;
+            IDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("plan"u8))
@@ -247,6 +224,38 @@ namespace Azure.ResourceManager.Resources
                     provisioningState = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("id"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("extendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -270,50 +279,8 @@ namespace Azure.ResourceManager.Resources
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new GenericResourceData(
-                id,
-                name,
-                type,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                extendedLocation,
-                serializedAdditionalRawData,
                 plan,
                 properties,
                 kind,
@@ -322,7 +289,13 @@ namespace Azure.ResourceManager.Resources
                 identity,
                 createdTime,
                 changedTime,
-                provisioningState);
+                provisioningState,
+                id,
+                name,
+                type,
+                location,
+                extendedLocation,
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -569,21 +542,6 @@ namespace Azure.ResourceManager.Resources
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtendedLocation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  extendedLocation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExtendedLocation))
-                {
-                    builder.Append("  extendedLocation: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ExtendedLocation, options, 2, false, "  extendedLocation: ");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -599,18 +557,18 @@ namespace Azure.ResourceManager.Resources
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtendedLocation), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  systemData: ");
+                builder.Append("  extendedLocation: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(SystemData))
+                if (Optional.IsDefined(ExtendedLocation))
                 {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
+                    builder.Append("  extendedLocation: ");
+                    builder.AppendLine($"'{ExtendedLocation.ToString()}'");
                 }
             }
 
