@@ -1,7 +1,6 @@
 # Release History
 
 ## 1.0.0-preview.20 (2024-06-07)
-
 ### Features Added
 - Model Dataset has a new parameter LakeHouseLocation
 - Model Dataset has a new parameter GoogleBigQueryV2ObjectDataset
