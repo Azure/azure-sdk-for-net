@@ -108,14 +108,12 @@ namespace Azure.Communication.CallAutomation
                     return ParticipantsUpdated.Deserialize(eventData);
                 case nameof(RecordingStateChanged):
                     return RecordingStateChanged.Deserialize(eventData);
-                case nameof(TeamsRecordingStateChanged):
-                    return TeamsRecordingStateChanged.Deserialize(eventData);
-                case nameof(TeamsComplianceRecordingStateChanged):
-                    return TeamsComplianceRecordingStateChanged.Deserialize(eventData);
                 case nameof(PlayCompleted):
                     return PlayCompleted.Deserialize(eventData);
                 case nameof(PlayFailed):
                     return PlayFailed.Deserialize(eventData);
+                case nameof(PlayStarted):
+                    return PlayStarted.Deserialize(eventData);
                 case nameof(PlayCanceled):
                     return PlayCanceled.Deserialize(eventData);
                 case nameof(RecognizeCompleted):
@@ -150,10 +148,6 @@ namespace Azure.Communication.CallAutomation
                     return TranscriptionStopped.Deserialize(eventData);
                 case nameof(TranscriptionFailed):
                     return TranscriptionFailed.Deserialize(eventData);
-                case nameof(AnswerFailed):
-                    return AnswerFailed.Deserialize(eventData);
-                case nameof(CreateCallFailed):
-                    return CreateCallFailed.Deserialize(eventData);
                 case nameof(HoldFailed):
                     return HoldFailed.Deserialize(eventData);
                 case nameof(MediaStreamingStarted):
@@ -162,26 +156,6 @@ namespace Azure.Communication.CallAutomation
                     return MediaStreamingStopped.Deserialize(eventData);
                 case nameof(MediaStreamingFailed):
                     return MediaStreamingFailed.Deserialize(eventData);
-                #region Dialog
-                case nameof(DialogCompleted):
-                    return DialogCompleted.Deserialize(eventData);
-                case nameof(DialogFailed):
-                    return DialogFailed.Deserialize(eventData);
-                case nameof(DialogConsent):
-                    return DialogConsent.Deserialize(eventData);
-                case nameof(DialogStarted):
-                    return DialogStarted.Deserialize(eventData);
-                case nameof(DialogHangup):
-                    return DialogHangup.Deserialize(eventData);
-                case nameof(DialogTransfer):
-                    return DialogTransfer.Deserialize(eventData);
-                case nameof(DialogSensitivityUpdate):
-                    return DialogSensitivityUpdate.Deserialize(eventData);
-                case nameof(DialogLanguageChange):
-                    return DialogLanguageChange.Deserialize(eventData);
-                case nameof(DialogUpdated):
-                    return DialogUpdated.Deserialize(eventData);
-                #endregion
                 default:
                     return null;
             }

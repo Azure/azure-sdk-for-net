@@ -48,7 +48,7 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = _evHandler.WaitForEventProcessor(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(CallConnected) || filter.GetType() == typeof(CreateCallFailed)),
+                && (filter.GetType() == typeof(CallConnected)),
                 cancellationToken);
 
             return SetReturnedEvent(returnedEvent);
@@ -69,7 +69,7 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = await _evHandler.WaitForEventProcessorAsync(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(CallConnected) || filter.GetType() == typeof(CreateCallFailed)),
+                && (filter.GetType() == typeof(CallConnected)),
                 cancellationToken).ConfigureAwait(false);
 
             return SetReturnedEvent(returnedEvent);
@@ -77,15 +77,7 @@ namespace Azure.Communication.CallAutomation
 
         private static CreateCallEventResult SetReturnedEvent(CallAutomationEventBase returnedEvent)
         {
-            switch (returnedEvent)
-            {
-                case CallConnected:
-                    return new CreateCallEventResult(true, (CallConnected)returnedEvent, null);
-                case CreateCallFailed:
-                    return new CreateCallEventResult(false, null, (CreateCallFailed)returnedEvent);
-                default:
-                    throw new NotSupportedException(returnedEvent.GetType().Name);
-            }
+            return new CreateCallEventResult(true, (CallConnected)returnedEvent);
         }
     }
 }

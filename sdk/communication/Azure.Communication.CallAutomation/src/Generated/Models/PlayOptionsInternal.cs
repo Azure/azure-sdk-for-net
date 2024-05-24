@@ -17,18 +17,7 @@ namespace Azure.Communication.CallAutomation
             Loop = loop;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlayOptionsInternal"/>. </summary>
-        /// <param name="loop"> The option to play the provided audio source in loop when set to true. </param>
-        /// <param name="interruptCallMediaOperation"> If set play can barge into other existing queued-up/currently-processing requests. </param>
-        internal PlayOptionsInternal(bool loop, bool? interruptCallMediaOperation)
-        {
-            Loop = loop;
-            InterruptCallMediaOperation = interruptCallMediaOperation;
-        }
-
         /// <summary> The option to play the provided audio source in loop when set to true. </summary>
         public bool Loop { get; }
-        /// <summary> If set play can barge into other existing queued-up/currently-processing requests. </summary>
-        public bool? InterruptCallMediaOperation { get; set; }
     }
 }
