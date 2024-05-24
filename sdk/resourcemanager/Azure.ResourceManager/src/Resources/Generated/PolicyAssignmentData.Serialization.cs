@@ -30,6 +30,21 @@ namespace Azure.ResourceManager.Resources
             }
 
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -39,26 +54,6 @@ namespace Azure.ResourceManager.Resources
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, ManagedIdentity);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -151,21 +146,6 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
@@ -189,12 +169,11 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
+            ResourceIdentifier id = default;
+            ResourceType type = default;
+            string name = default;
             AzureLocation? location = default;
             ManagedServiceIdentity identity = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
             string displayName = default;
             string policyDefinitionId = default;
             string scope = default;
@@ -206,10 +185,31 @@ namespace Azure.ResourceManager.Resources
             IList<NonComplianceMessage> nonComplianceMessages = default;
             IList<ResourceSelector> resourceSelectors = default;
             IList<PolicyOverride> overrides = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -226,30 +226,6 @@ namespace Azure.ResourceManager.Resources
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -372,17 +348,11 @@ namespace Azure.ResourceManager.Resources
                     }
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new PolicyAssignmentData(
                 id,
-                name,
                 type,
-                systemData,
+                name,
                 location,
                 identity,
                 displayName,
@@ -395,8 +365,7 @@ namespace Azure.ResourceManager.Resources
                 enforcementMode,
                 nonComplianceMessages ?? new ChangeTrackingList<NonComplianceMessage>(),
                 resourceSelectors ?? new ChangeTrackingList<ResourceSelector>(),
-                overrides ?? new ChangeTrackingList<PolicyOverride>(),
-                serializedAdditionalRawData);
+                overrides ?? new ChangeTrackingList<PolicyOverride>());
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -448,21 +417,6 @@ namespace Azure.ResourceManager.Resources
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedIdentity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  identity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ManagedIdentity))
-                {
-                    builder.Append("  identity: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ManagedIdentity, options, 2, false, "  identity: ");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -478,18 +432,18 @@ namespace Azure.ResourceManager.Resources
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedIdentity), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  systemData: ");
+                builder.Append("  identity: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(SystemData))
+                if (Optional.IsDefined(ManagedIdentity))
                 {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ManagedIdentity, options, 2, false, "  identity: ");
                 }
             }
 

@@ -2114,7 +2114,7 @@ namespace Azure.ResourceManager.NetApp
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetAppVolumePatch(current.Location);
+                    var patch = new NetAppVolumePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -2176,7 +2176,7 @@ namespace Azure.ResourceManager.NetApp
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetAppVolumePatch(current.Location);
+                    var patch = new NetAppVolumePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -2237,7 +2237,7 @@ namespace Azure.ResourceManager.NetApp
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetAppVolumePatch(current.Location);
+                    var patch = new NetAppVolumePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -2294,7 +2294,7 @@ namespace Azure.ResourceManager.NetApp
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetAppVolumePatch(current.Location);
+                    var patch = new NetAppVolumePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -2350,7 +2350,7 @@ namespace Azure.ResourceManager.NetApp
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetAppVolumePatch(current.Location);
+                    var patch = new NetAppVolumePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -2410,7 +2410,7 @@ namespace Azure.ResourceManager.NetApp
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetAppVolumePatch(current.Location);
+                    var patch = new NetAppVolumePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

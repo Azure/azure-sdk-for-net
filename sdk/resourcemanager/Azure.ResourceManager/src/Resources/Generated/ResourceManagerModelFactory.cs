@@ -18,10 +18,9 @@ namespace Azure.ResourceManager.Models
     public static partial class ResourceManagerModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Resources.PolicyAssignmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> The ID of the policy assignment. </param>
+        /// <param name="resourceType"> The type of the policy assignment. </param>
+        /// <param name="name"> The name of the policy assignment. </param>
         /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
         /// <param name="managedIdentity"> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="displayName"> The display name of the policy assignment. </param>
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
         /// <param name="overrides"> The policy property value override. </param>
         /// <returns> A new <see cref="Resources.PolicyAssignmentData"/> instance for mocking. </returns>
-        public static PolicyAssignmentData PolicyAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ManagedServiceIdentity managedIdentity = null, string displayName = null, string policyDefinitionId = null, string scope = null, IEnumerable<string> excludedScopes = null, IDictionary<string, ArmPolicyParameterValue> parameters = null, string description = null, BinaryData metadata = null, EnforcementMode? enforcementMode = null, IEnumerable<NonComplianceMessage> nonComplianceMessages = null, IEnumerable<ResourceSelector> resourceSelectors = null, IEnumerable<PolicyOverride> overrides = null)
+        public static PolicyAssignmentData PolicyAssignmentData(ResourceIdentifier id = null, ResourceType resourceType = default, string name = null, AzureLocation? location = null, ManagedServiceIdentity managedIdentity = null, string displayName = null, string policyDefinitionId = null, string scope = null, IEnumerable<string> excludedScopes = null, IDictionary<string, ArmPolicyParameterValue> parameters = null, string description = null, BinaryData metadata = null, EnforcementMode? enforcementMode = null, IEnumerable<NonComplianceMessage> nonComplianceMessages = null, IEnumerable<ResourceSelector> resourceSelectors = null, IEnumerable<PolicyOverride> overrides = null)
         {
             excludedScopes ??= new List<string>();
             parameters ??= new Dictionary<string, ArmPolicyParameterValue>();
@@ -46,9 +45,8 @@ namespace Azure.ResourceManager.Models
 
             return new PolicyAssignmentData(
                 id,
-                name,
                 resourceType,
-                systemData,
+                name,
                 location,
                 managedIdentity,
                 displayName,
@@ -61,8 +59,7 @@ namespace Azure.ResourceManager.Models
                 enforcementMode,
                 nonComplianceMessages?.ToList(),
                 resourceSelectors?.ToList(),
-                overrides?.ToList(),
-                serializedAdditionalRawData: null);
+                overrides?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.PolicyDefinitionData"/>. </summary>
@@ -431,13 +428,6 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.GenericResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> Resource extended location. </param>
         /// <param name="plan"> The plan of the resource. </param>
         /// <param name="properties"> The resource properties. </param>
         /// <param name="kind"> The kind of the resource. </param>
@@ -447,20 +437,18 @@ namespace Azure.ResourceManager.Models
         /// <param name="createdOn"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="changedOn"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="extendedLocation"> Resource extended location. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Resources.GenericResourceData"/> instance for mocking. </returns>
-        public static GenericResourceData GenericResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, ArmPlan plan = null, BinaryData properties = null, string kind = null, string managedBy = null, ResourcesSku sku = null, ManagedServiceIdentity identity = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, string provisioningState = null)
+        public static GenericResourceData GenericResourceData(ArmPlan plan = null, BinaryData properties = null, string kind = null, string managedBy = null, ResourcesSku sku = null, ManagedServiceIdentity identity = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, string provisioningState = null, ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, AzureLocation location = default, ExtendedLocation extendedLocation = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
             return new GenericResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                extendedLocation,
-                serializedAdditionalRawData: null,
                 plan,
                 properties,
                 kind,
@@ -469,7 +457,13 @@ namespace Azure.ResourceManager.Models
                 identity,
                 createdOn,
                 changedOn,
-                provisioningState);
+                provisioningState,
+                id,
+                name,
+                resourceType,
+                location,
+                extendedLocation,
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.TrackedResourceExtendedData"/>. </summary>

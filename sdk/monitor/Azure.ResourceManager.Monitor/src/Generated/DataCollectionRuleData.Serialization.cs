@@ -28,21 +28,8 @@ namespace Azure.ResourceManager.Monitor
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind.Value.ToString());
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -54,14 +41,22 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -70,6 +65,11 @@ namespace Azure.ResourceManager.Monitor
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
@@ -135,21 +135,6 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
@@ -173,14 +158,14 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
+            AzureLocation location = default;
+            IDictionary<string, string> tags = default;
             DataCollectionRuleResourceKind? kind = default;
             ManagedServiceIdentity identity = default;
-            ETag? etag = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            ETag? etag = default;
             SystemData systemData = default;
             string description = default;
             string immutableId = default;
@@ -191,10 +176,27 @@ namespace Azure.ResourceManager.Monitor
             DataCollectionRuleDestinations destinations = default;
             IList<DataFlow> dataFlows = default;
             DataCollectionRuleProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -213,36 +215,12 @@ namespace Azure.ResourceManager.Monitor
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
@@ -253,7 +231,20 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (property.NameEquals("type"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("etag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))
@@ -360,22 +351,17 @@ namespace Azure.ResourceManager.Monitor
                     }
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataCollectionRuleData(
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                kind,
+                identity,
                 id,
                 name,
                 type,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                kind,
-                identity,
                 etag,
+                systemData,
                 description,
                 immutableId,
                 dataCollectionEndpointId,
@@ -384,8 +370,7 @@ namespace Azure.ResourceManager.Monitor
                 dataSources,
                 destinations,
                 dataFlows ?? new ChangeTrackingList<DataFlow>(),
-                provisioningState,
-                serializedAdditionalRawData);
+                provisioningState);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleData>.Write(ModelReaderWriterOptions options)

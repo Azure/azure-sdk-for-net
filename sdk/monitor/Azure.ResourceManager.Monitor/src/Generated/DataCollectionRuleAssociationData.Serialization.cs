@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -28,17 +27,12 @@ namespace Azure.ResourceManager.Monitor
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -47,6 +41,11 @@ namespace Azure.ResourceManager.Monitor
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
@@ -81,21 +80,6 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteObjectValue(Metadata, options);
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
@@ -119,31 +103,24 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            ETag? etag = default;
             SystemData systemData = default;
             string description = default;
             ResourceIdentifier dataCollectionRuleId = default;
             ResourceIdentifier dataCollectionEndpointId = default;
             DataCollectionRuleAssociationProvisioningState? provisioningState = default;
             DataCollectionRuleAssociationMetadata metadata = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
@@ -154,7 +131,20 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (property.NameEquals("type"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("etag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))
@@ -219,24 +209,18 @@ namespace Azure.ResourceManager.Monitor
                     }
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataCollectionRuleAssociationData(
                 id,
                 name,
                 type,
-                systemData,
                 etag,
+                systemData,
                 description,
                 dataCollectionRuleId,
                 dataCollectionEndpointId,
                 provisioningState,
-                metadata,
-                serializedAdditionalRawData);
+                metadata);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleAssociationData>.Write(ModelReaderWriterOptions options)

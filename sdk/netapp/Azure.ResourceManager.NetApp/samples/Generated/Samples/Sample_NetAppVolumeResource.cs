@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            NetAppVolumePatch patch = new NetAppVolumePatch(new AzureLocation("placeholder"));
+            NetAppVolumePatch patch = new NetAppVolumePatch();
             ArmOperation<NetAppVolumeResource> lro = await netAppVolume.UpdateAsync(WaitUntil.Completed, patch);
             NetAppVolumeResource result = lro.Value;
 
