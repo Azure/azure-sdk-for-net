@@ -8,7 +8,6 @@ Use the client library for to:
 - Liveness detection
 - Face recognition
   - Face verification ("one-to-one" matching)
-  - Face identification ("one-to-many" matching)
   - Find similar faces
   - Group faces
 
@@ -108,20 +107,9 @@ var client = new FaceClient(endpoint, credential);
 
 - Face detection and analysis: Detect human faces in an image and return the rectangle coordinates of their locations, and optionally with landmarks, and face-related attributes. This operation is required as a first step in all the other face recognition scenarios.
 - Face recognition: Confirm that a user is who they claim to be based on how closely their face data matches the target face.
-   It includes Face verification ("one-to-one" matching) and Face identification ("one-to-many" matching).
+   Support Face verification ("one-to-one" matching).
 - Finding similar faces from a smaller set of faces that look similar to the target face.
 - Grouping faces into several smaller groups based on similarity.
-
-### FaceAdministrationClient
-
-`FaceAdministrationClient` is provided to interact with the following data structures that hold data on faces and
-persons for Face recognition:
-
-- PersonDirectory
-- FaceList
-- LargeFaceList
-- PersonGroup
-- LargePersonGroup
 
 ### FaceSessionClient
 
@@ -278,7 +266,7 @@ For example, if you submit a image with an invalid `Uri`, a `400` error is retur
 ```C# Snippet:DetectFacesInvalidUrl
 var invalidUri = new Uri("http://invalid.uri");
 try {
-    var detectResponse = client.DetectFromUrl(
+    var detectResponse = client.Detect(
         invalidUri,
         FaceDetectionModel.Detection01,
         FaceRecognitionModel.Recognition04,
@@ -373,8 +361,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [face_sample_detection]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample1_FaceDetection.md
 [liveness_tutorial]: https://learn.microsoft.com/azure/ai-services/computer-vision/tutorials/liveness
 [integrate_liveness_into_mobile_application]: https://learn.microsoft.com/azure/ai-services/computer-vision/tutorials/liveness#integrate-liveness-into-mobile-application
-[face_sample_liveness_session]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample3_DetectLivenessWithSession.md
-[face_sample_liveness_with_verify_session]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample4_DetectLivenessWithVerifyWithSession.md
+[face_sample_liveness_session]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample2_DetectLivenessWithSession.md
+[face_sample_liveness_with_verify_session]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample3_DetectLivenessWithVerifyWithSession.md
 
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/samples/Diagnostics.md
 
