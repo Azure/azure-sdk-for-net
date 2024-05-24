@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using Azure.ResourceManager.OracleDatabase.Models;
 namespace Azure.ResourceManager.OracleDatabase.Tests
 {
-    public class OracleDatabaseManagementTestBase :ManagementRecordedTestBase<OracleDatabaseManagementTestEnvironment>
+    public class OracleDatabaseManagementTestBase : ManagementRecordedTestBase<OracleDatabaseManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         public SubscriptionResource DefaultSubscription { get; private set; }
