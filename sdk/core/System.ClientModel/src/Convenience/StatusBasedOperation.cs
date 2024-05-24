@@ -17,8 +17,8 @@ public abstract class StatusBasedOperation<TStatus, TValue> : ResultOperation<TV
 
     public TStatus Status { get; protected set; }
 
-    public abstract ValueTask<ClientResult<(TStatus Status, TValue? Value)>> WaitForStatusUpdateAsync(CancellationToken cancellationToken = default);
+    public abstract ValueTask<ClientResult<(TStatus Status, TValue? Value)>> WaitForStatusUpdateAsync(TimeSpan? pollingInterval = default, CancellationToken cancellationToken = default);
 
-    public abstract ClientResult<(TStatus Status, TValue? Value)> WaitForStatusUpdate(CancellationToken cancellationToken = default);
+    public abstract ClientResult<(TStatus Status, TValue? Value)> WaitForStatusUpdate(TimeSpan? pollingInterval = default, CancellationToken cancellationToken = default);
 }
 #pragma warning restore CS1591 // public XML comments
