@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> This property indicates the size of the VHD to be created. </summary>
         public long? OSDiskImageSizeInMB
         {
-            get => StorageProfile is null ? default : StorageProfile.OSDiskImageSizeInMB;
+            get => StorageProfile is null ? default(long?) : StorageProfile.OSDiskImageSizeInMB;
         }
     }
 }

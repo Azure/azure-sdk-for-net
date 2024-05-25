@@ -60,11 +60,6 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> This is the OS disk image. </summary>
-        internal GalleryOSDiskImage OSDiskImage { get; set; }
-        /// <summary> This property indicates the size of the VHD to be created. </summary>
-        public long? OSDiskImageSizeInMB
-        {
-            get => OSDiskImage is null ? default : OSDiskImage.SizeInMB;
-        }
+        public GalleryOSDiskImage OSDiskImage { get; set; }
     }
 }
