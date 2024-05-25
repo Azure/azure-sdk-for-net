@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class GalleryApplicationVersionSafetyProfile : IUtf8JsonSerializable, IJsonModel<GalleryApplicationVersionSafetyProfile>
+    public partial class GalleryApplicationVersionSafetyProfile : IUtf8JsonSerializable, IJsonModel<GalleryApplicationVersionSafetyProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryApplicationVersionSafetyProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

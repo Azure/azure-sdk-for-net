@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The safety profile of the Gallery Application Version. </summary>
-    internal partial class GalleryApplicationVersionSafetyProfile : GalleryArtifactSafetyProfileBase
+    public partial class GalleryApplicationVersionSafetyProfile : GalleryArtifactSafetyProfileBase
     {
         /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionSafetyProfile"/>. </summary>
         public GalleryApplicationVersionSafetyProfile()

@@ -77,7 +77,10 @@ IsExcludedFromLatest = false,
                     EndOfLifeOn = DateTimeOffset.Parse("2019-07-01T07:00:00Z"),
                     StorageAccountType = ImageStorageAccountType.StandardLrs,
                 },
-                AllowDeletionOfReplicatedLocations = false,
+                SafetyProfile = new GalleryApplicationVersionSafetyProfile()
+                {
+                    AllowDeletionOfReplicatedLocations = false,
+                },
             };
             ArmOperation<GalleryApplicationVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryApplicationVersionName, data);
             GalleryApplicationVersionResource result = lro.Value;

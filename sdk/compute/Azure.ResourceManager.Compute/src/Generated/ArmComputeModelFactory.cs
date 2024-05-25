@@ -3515,11 +3515,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="publishingProfile"> The publishing profile of a gallery image version. </param>
-        /// <param name="allowDeletionOfReplicatedLocations"> The safety profile of the Gallery Application Version. </param>
+        /// <param name="safetyProfile"> The safety profile of the Gallery Application Version. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
         /// <returns> A new <see cref="Compute.GalleryApplicationVersionData"/> instance for mocking. </returns>
-        public static GalleryApplicationVersionData GalleryApplicationVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, GalleryApplicationVersionPublishingProfile publishingProfile = null, bool? allowDeletionOfReplicatedLocations = null, GalleryProvisioningState? provisioningState = null, ReplicationStatus replicationStatus = null)
+        public static GalleryApplicationVersionData GalleryApplicationVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, GalleryApplicationVersionPublishingProfile publishingProfile = null, GalleryApplicationVersionSafetyProfile safetyProfile = null, GalleryProvisioningState? provisioningState = null, ReplicationStatus replicationStatus = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -3531,7 +3531,7 @@ namespace Azure.ResourceManager.Compute.Models
                 tags,
                 location,
                 publishingProfile,
-                allowDeletionOfReplicatedLocations != null ? new GalleryApplicationVersionSafetyProfile(allowDeletionOfReplicatedLocations, serializedAdditionalRawData: null) : null,
+                safetyProfile,
                 provisioningState,
                 replicationStatus,
                 serializedAdditionalRawData: null);
@@ -3584,12 +3584,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="publishingProfile"> The publishing profile of a gallery image version. </param>
-        /// <param name="allowDeletionOfReplicatedLocations"> The safety profile of the Gallery Application Version. </param>
+        /// <param name="safetyProfile"> The safety profile of the Gallery Application Version. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryApplicationVersionPatch"/> instance for mocking. </returns>
-        public static GalleryApplicationVersionPatch GalleryApplicationVersionPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GalleryApplicationVersionPublishingProfile publishingProfile = null, bool? allowDeletionOfReplicatedLocations = null, GalleryProvisioningState? provisioningState = null, ReplicationStatus replicationStatus = null, IDictionary<string, string> tags = null)
+        public static GalleryApplicationVersionPatch GalleryApplicationVersionPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GalleryApplicationVersionPublishingProfile publishingProfile = null, GalleryApplicationVersionSafetyProfile safetyProfile = null, GalleryProvisioningState? provisioningState = null, ReplicationStatus replicationStatus = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -3599,7 +3599,7 @@ namespace Azure.ResourceManager.Compute.Models
                 resourceType,
                 systemData,
                 publishingProfile,
-                allowDeletionOfReplicatedLocations != null ? new GalleryApplicationVersionSafetyProfile(allowDeletionOfReplicatedLocations, serializedAdditionalRawData: null) : null,
+                safetyProfile,
                 provisioningState,
                 replicationStatus,
                 tags,
