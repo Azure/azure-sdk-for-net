@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The endpoint used by clients to access their configuration. </summary>
-    internal partial class DataCollectionEndpointConfigurationAccess : ConfigurationAccessEndpointSpec
+    public partial class DataCollectionEndpointConfigurationAccess : ConfigurationAccessEndpointSpec
     {
         /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointConfigurationAccess"/>. </summary>
         public DataCollectionEndpointConfigurationAccess()

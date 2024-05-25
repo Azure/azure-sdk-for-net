@@ -1253,16 +1253,16 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="etag"> Resource entity tag (ETag). </param>
         /// <param name="description"> Description of the data collection endpoint. </param>
         /// <param name="immutableId"> The immutable ID of this data collection endpoint resource. This property is READ-ONLY. </param>
-        /// <param name="configurationAccessEndpoint"> The endpoint used by clients to access their configuration. </param>
-        /// <param name="logsIngestionEndpoint"> The endpoint used by clients to ingest logs. </param>
-        /// <param name="metricsIngestionEndpoint"> The endpoint used by clients to ingest metrics. </param>
-        /// <param name="publicNetworkAccess"> Network access control rules for the endpoints. </param>
+        /// <param name="configurationAccess"> The endpoint used by clients to access their configuration. </param>
+        /// <param name="logsIngestion"> The endpoint used by clients to ingest logs. </param>
+        /// <param name="metricsIngestion"> The endpoint used by clients to ingest metrics. </param>
+        /// <param name="networkAcls"> Network access control rules for the endpoints. </param>
         /// <param name="provisioningState"> The resource provisioning state. This property is READ-ONLY. </param>
         /// <param name="privateLinkScopedResources"> List of Azure Monitor Private Link Scope Resources to which this data collection endpoint resource is associated. This property is READ-ONLY. </param>
         /// <param name="failoverConfiguration"> Failover configuration on this endpoint. This property is READ-ONLY. </param>
         /// <param name="metadata"> Metadata for the resource. This property is READ-ONLY. </param>
         /// <returns> A new <see cref="Monitor.DataCollectionEndpointData"/> instance for mocking. </returns>
-        public static DataCollectionEndpointData DataCollectionEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DataCollectionEndpointResourceKind? kind = null, ManagedServiceIdentity identity = null, ETag? etag = null, string description = null, string immutableId = null, string configurationAccessEndpoint = null, string logsIngestionEndpoint = null, string metricsIngestionEndpoint = null, MonitorPublicNetworkAccess? publicNetworkAccess = null, DataCollectionEndpointProvisioningState? provisioningState = null, IEnumerable<DataCollectionRulePrivateLinkScopedResourceInfo> privateLinkScopedResources = null, DataCollectionEndpointFailoverConfiguration failoverConfiguration = null, DataCollectionEndpointMetadata metadata = null)
+        public static DataCollectionEndpointData DataCollectionEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DataCollectionEndpointResourceKind? kind = null, ManagedServiceIdentity identity = null, ETag? etag = null, string description = null, string immutableId = null, DataCollectionEndpointConfigurationAccess configurationAccess = null, DataCollectionEndpointLogsIngestion logsIngestion = null, DataCollectionEndpointMetricsIngestion metricsIngestion = null, DataCollectionEndpointNetworkAcls networkAcls = null, DataCollectionEndpointProvisioningState? provisioningState = null, IEnumerable<DataCollectionRulePrivateLinkScopedResourceInfo> privateLinkScopedResources = null, DataCollectionEndpointFailoverConfiguration failoverConfiguration = null, DataCollectionEndpointMetadata metadata = null)
         {
             tags ??= new Dictionary<string, string>();
             privateLinkScopedResources ??= new List<DataCollectionRulePrivateLinkScopedResourceInfo>();
@@ -1279,15 +1279,63 @@ namespace Azure.ResourceManager.Monitor.Models
                 etag,
                 description,
                 immutableId,
-                configurationAccessEndpoint != null ? new DataCollectionEndpointConfigurationAccess(configurationAccessEndpoint, serializedAdditionalRawData: null) : null,
-                logsIngestionEndpoint != null ? new DataCollectionEndpointLogsIngestion(logsIngestionEndpoint, serializedAdditionalRawData: null) : null,
-                metricsIngestionEndpoint != null ? new DataCollectionEndpointMetricsIngestion(metricsIngestionEndpoint, serializedAdditionalRawData: null) : null,
-                publicNetworkAccess != null ? new DataCollectionEndpointNetworkAcls(publicNetworkAccess, serializedAdditionalRawData: null) : null,
+                configurationAccess,
+                logsIngestion,
+                metricsIngestion,
+                networkAcls,
                 provisioningState,
                 privateLinkScopedResources?.ToList(),
                 failoverConfiguration,
                 metadata,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataCollectionEndpointConfigurationAccess"/>. </summary>
+        /// <param name="endpoint"> The endpoint. This property is READ-ONLY. </param>
+        /// <returns> A new <see cref="Models.DataCollectionEndpointConfigurationAccess"/> instance for mocking. </returns>
+        public static DataCollectionEndpointConfigurationAccess DataCollectionEndpointConfigurationAccess(string endpoint = null)
+        {
+            return new DataCollectionEndpointConfigurationAccess(endpoint, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationAccessEndpointSpec"/>. </summary>
+        /// <param name="endpoint"> The endpoint. This property is READ-ONLY. </param>
+        /// <returns> A new <see cref="Models.ConfigurationAccessEndpointSpec"/> instance for mocking. </returns>
+        public static ConfigurationAccessEndpointSpec ConfigurationAccessEndpointSpec(string endpoint = null)
+        {
+            return new ConfigurationAccessEndpointSpec(endpoint, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataCollectionEndpointLogsIngestion"/>. </summary>
+        /// <param name="endpoint"> The endpoint. This property is READ-ONLY. </param>
+        /// <returns> A new <see cref="Models.DataCollectionEndpointLogsIngestion"/> instance for mocking. </returns>
+        public static DataCollectionEndpointLogsIngestion DataCollectionEndpointLogsIngestion(string endpoint = null)
+        {
+            return new DataCollectionEndpointLogsIngestion(endpoint, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.LogsIngestionEndpointSpec"/>. </summary>
+        /// <param name="endpoint"> The endpoint. This property is READ-ONLY. </param>
+        /// <returns> A new <see cref="Models.LogsIngestionEndpointSpec"/> instance for mocking. </returns>
+        public static LogsIngestionEndpointSpec LogsIngestionEndpointSpec(string endpoint = null)
+        {
+            return new LogsIngestionEndpointSpec(endpoint, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataCollectionEndpointMetricsIngestion"/>. </summary>
+        /// <param name="endpoint"> The endpoint. This property is READ-ONLY. </param>
+        /// <returns> A new <see cref="Models.DataCollectionEndpointMetricsIngestion"/> instance for mocking. </returns>
+        public static DataCollectionEndpointMetricsIngestion DataCollectionEndpointMetricsIngestion(string endpoint = null)
+        {
+            return new DataCollectionEndpointMetricsIngestion(endpoint, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MetricsIngestionEndpointSpec"/>. </summary>
+        /// <param name="endpoint"> The endpoint. This property is READ-ONLY. </param>
+        /// <returns> A new <see cref="Models.MetricsIngestionEndpointSpec"/> instance for mocking. </returns>
+        public static MetricsIngestionEndpointSpec MetricsIngestionEndpointSpec(string endpoint = null)
+        {
+            return new MetricsIngestionEndpointSpec(endpoint, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataCollectionRulePrivateLinkScopedResourceInfo"/>. </summary>

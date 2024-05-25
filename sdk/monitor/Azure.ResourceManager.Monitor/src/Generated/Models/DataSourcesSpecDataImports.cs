@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specifications of pull based data sources. </summary>
-    internal partial class DataSourcesSpecDataImports : DataImportSources
+    public partial class DataSourcesSpecDataImports : DataImportSources
     {
         /// <summary> Initializes a new instance of <see cref="DataSourcesSpecDataImports"/>. </summary>
         public DataSourcesSpecDataImports()

@@ -170,14 +170,20 @@ PrivateIPAddressVersion = NetworkIPVersion.IPv4,
 Name = "fe-lb",
 }
 },
-                VisibilitySubscriptions =
+                Visibility = new PrivateLinkServicePropertiesVisibility()
+                {
+                    Subscriptions =
 {
 "subscription1","subscription2","subscription3"
 },
-                AutoApprovalSubscriptions =
+                },
+                AutoApproval = new PrivateLinkServicePropertiesAutoApproval()
+                {
+                    Subscriptions =
 {
 "subscription1","subscription2"
 },
+                },
                 Fqdns =
 {
 "fqdn1","fqdn2","fqdn3"

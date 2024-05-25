@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The endpoint used by clients to ingest metrics. </summary>
-    internal partial class DataCollectionEndpointMetricsIngestion : MetricsIngestionEndpointSpec
+    public partial class DataCollectionEndpointMetricsIngestion : MetricsIngestionEndpointSpec
     {
         /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointMetricsIngestion"/>. </summary>
         public DataCollectionEndpointMetricsIngestion()

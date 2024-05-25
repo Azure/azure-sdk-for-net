@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The DataImportSources. </summary>
-    internal partial class DataImportSources
+    public partial class DataImportSources
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

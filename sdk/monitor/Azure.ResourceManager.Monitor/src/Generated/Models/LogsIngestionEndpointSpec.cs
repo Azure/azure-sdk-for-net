@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Definition of the endpoint used for ingesting logs. </summary>
-    internal partial class LogsIngestionEndpointSpec
+    public partial class LogsIngestionEndpointSpec
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

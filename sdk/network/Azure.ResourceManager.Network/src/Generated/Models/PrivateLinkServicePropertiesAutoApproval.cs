@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The auto-approval list of the private link service. </summary>
-    internal partial class PrivateLinkServicePropertiesAutoApproval : ResourceSet
+    public partial class PrivateLinkServicePropertiesAutoApproval : ResourceSet
     {
         /// <summary> Initializes a new instance of <see cref="PrivateLinkServicePropertiesAutoApproval"/>. </summary>
         public PrivateLinkServicePropertiesAutoApproval()

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Definition of the network rules. </summary>
-    internal partial class NetworkRuleSet
+    public partial class NetworkRuleSet
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class DataCollectionEndpointNetworkAcls : IUtf8JsonSerializable, IJsonModel<DataCollectionEndpointNetworkAcls>
+    public partial class DataCollectionEndpointNetworkAcls : IUtf8JsonSerializable, IJsonModel<DataCollectionEndpointNetworkAcls>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionEndpointNetworkAcls>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

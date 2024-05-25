@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class PrivateLinkServicePropertiesAutoApproval : IUtf8JsonSerializable, IJsonModel<PrivateLinkServicePropertiesAutoApproval>
+    public partial class PrivateLinkServicePropertiesAutoApproval : IUtf8JsonSerializable, IJsonModel<PrivateLinkServicePropertiesAutoApproval>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkServicePropertiesAutoApproval>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

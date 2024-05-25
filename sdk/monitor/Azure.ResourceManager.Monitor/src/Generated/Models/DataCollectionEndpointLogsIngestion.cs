@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The endpoint used by clients to ingest logs. </summary>
-    internal partial class DataCollectionEndpointLogsIngestion : LogsIngestionEndpointSpec
+    public partial class DataCollectionEndpointLogsIngestion : LogsIngestionEndpointSpec
     {
         /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointLogsIngestion"/>. </summary>
         public DataCollectionEndpointLogsIngestion()

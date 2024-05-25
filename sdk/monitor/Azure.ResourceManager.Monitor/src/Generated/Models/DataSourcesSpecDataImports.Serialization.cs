@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class DataSourcesSpecDataImports : IUtf8JsonSerializable, IJsonModel<DataSourcesSpecDataImports>
+    public partial class DataSourcesSpecDataImports : IUtf8JsonSerializable, IJsonModel<DataSourcesSpecDataImports>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataSourcesSpecDataImports>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

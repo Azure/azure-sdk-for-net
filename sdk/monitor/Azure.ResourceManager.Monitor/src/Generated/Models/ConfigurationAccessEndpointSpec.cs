@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Definition of the endpoint used for accessing configuration. </summary>
-    internal partial class ConfigurationAccessEndpointSpec
+    public partial class ConfigurationAccessEndpointSpec
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

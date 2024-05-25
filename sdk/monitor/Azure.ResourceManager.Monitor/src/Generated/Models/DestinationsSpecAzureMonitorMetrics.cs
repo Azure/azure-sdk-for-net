@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Azure Monitor Metrics destination. </summary>
-    internal partial class DestinationsSpecAzureMonitorMetrics : AzureMonitorMetricsDestination
+    public partial class DestinationsSpecAzureMonitorMetrics : AzureMonitorMetricsDestination
     {
         /// <summary> Initializes a new instance of <see cref="DestinationsSpecAzureMonitorMetrics"/>. </summary>
         public DestinationsSpecAzureMonitorMetrics()

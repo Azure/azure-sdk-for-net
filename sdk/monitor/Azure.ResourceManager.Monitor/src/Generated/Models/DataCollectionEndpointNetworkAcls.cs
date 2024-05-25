@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Network access control rules for the endpoints. </summary>
-    internal partial class DataCollectionEndpointNetworkAcls : NetworkRuleSet
+    public partial class DataCollectionEndpointNetworkAcls : NetworkRuleSet
     {
         /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointNetworkAcls"/>. </summary>
         public DataCollectionEndpointNetworkAcls()

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Settings for different log file formats. </summary>
-    internal partial class LogFileSettings
+    public partial class LogFileSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -60,15 +60,6 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Text settings. </summary>
-        internal LogFileSettingsText Text { get; set; }
-        /// <summary> One of the supported timestamp formats. </summary>
-        public LogFileTextSettingsRecordStartTimestampFormat? TextRecordStartTimestampFormat
-        {
-            get => Text is null ? default(LogFileTextSettingsRecordStartTimestampFormat?) : Text.RecordStartTimestampFormat;
-            set
-            {
-                Text = value.HasValue ? new LogFileSettingsText(value.Value) : null;
-            }
-        }
+        public LogFileSettingsText Text { get; set; }
     }
 }

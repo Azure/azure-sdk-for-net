@@ -113,43 +113,13 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The immutable ID of this data collection endpoint resource. This property is READ-ONLY. </summary>
         public string ImmutableId { get; set; }
         /// <summary> The endpoint used by clients to access their configuration. </summary>
-        internal DataCollectionEndpointConfigurationAccess ConfigurationAccess { get; set; }
-        /// <summary> The endpoint. This property is READ-ONLY. </summary>
-        public string ConfigurationAccessEndpoint
-        {
-            get => ConfigurationAccess is null ? default : ConfigurationAccess.Endpoint;
-        }
-
+        public DataCollectionEndpointConfigurationAccess ConfigurationAccess { get; set; }
         /// <summary> The endpoint used by clients to ingest logs. </summary>
-        internal DataCollectionEndpointLogsIngestion LogsIngestion { get; set; }
-        /// <summary> The endpoint. This property is READ-ONLY. </summary>
-        public string LogsIngestionEndpoint
-        {
-            get => LogsIngestion is null ? default : LogsIngestion.Endpoint;
-        }
-
+        public DataCollectionEndpointLogsIngestion LogsIngestion { get; set; }
         /// <summary> The endpoint used by clients to ingest metrics. </summary>
-        internal DataCollectionEndpointMetricsIngestion MetricsIngestion { get; set; }
-        /// <summary> The endpoint. This property is READ-ONLY. </summary>
-        public string MetricsIngestionEndpoint
-        {
-            get => MetricsIngestion is null ? default : MetricsIngestion.Endpoint;
-        }
-
+        public DataCollectionEndpointMetricsIngestion MetricsIngestion { get; set; }
         /// <summary> Network access control rules for the endpoints. </summary>
-        internal DataCollectionEndpointNetworkAcls NetworkAcls { get; set; }
-        /// <summary> The configuration to set whether network access from public internet to the endpoints are allowed. </summary>
-        public MonitorPublicNetworkAccess? PublicNetworkAccess
-        {
-            get => NetworkAcls is null ? default : NetworkAcls.PublicNetworkAccess;
-            set
-            {
-                if (NetworkAcls is null)
-                    NetworkAcls = new DataCollectionEndpointNetworkAcls();
-                NetworkAcls.PublicNetworkAccess = value;
-            }
-        }
-
+        public DataCollectionEndpointNetworkAcls NetworkAcls { get; set; }
         /// <summary> The resource provisioning state. This property is READ-ONLY. </summary>
         public DataCollectionEndpointProvisioningState? ProvisioningState { get; }
         /// <summary> List of Azure Monitor Private Link Scope Resources to which this data collection endpoint resource is associated. This property is READ-ONLY. </summary>

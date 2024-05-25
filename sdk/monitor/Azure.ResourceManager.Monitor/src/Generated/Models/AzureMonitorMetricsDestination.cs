@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Azure Monitor Metrics destination. </summary>
-    internal partial class AzureMonitorMetricsDestination
+    public partial class AzureMonitorMetricsDestination
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

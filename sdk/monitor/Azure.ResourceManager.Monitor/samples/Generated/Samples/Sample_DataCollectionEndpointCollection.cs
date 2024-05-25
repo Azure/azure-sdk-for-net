@@ -185,7 +185,10 @@ namespace Azure.ResourceManager.Monitor.Samples
             string dataCollectionEndpointName = "myCollectionEndpoint";
             DataCollectionEndpointData data = new DataCollectionEndpointData(new AzureLocation("eastus"))
             {
-                PublicNetworkAccess = MonitorPublicNetworkAccess.Enabled,
+                NetworkAcls = new DataCollectionEndpointNetworkAcls()
+                {
+                    PublicNetworkAccess = MonitorPublicNetworkAccess.Enabled,
+                },
             };
             ArmOperation<DataCollectionEndpointResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataCollectionEndpointName, data);
             DataCollectionEndpointResource result = lro.Value;

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Text settings. </summary>
-    internal partial class LogFileSettingsText : LogFileTextSettings
+    public partial class LogFileSettingsText : LogFileTextSettings
     {
         /// <summary> Initializes a new instance of <see cref="LogFileSettingsText"/>. </summary>
         /// <param name="recordStartTimestampFormat"> One of the supported timestamp formats. </param>

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class ResourceSet : IUtf8JsonSerializable, IJsonModel<ResourceSet>
+    public partial class ResourceSet : IUtf8JsonSerializable, IJsonModel<ResourceSet>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

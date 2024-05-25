@@ -85,22 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> List of monitoring account destinations. </summary>
         public IList<MonitoringAccountDestination> MonitoringAccounts { get; }
         /// <summary> Azure Monitor Metrics destination. </summary>
-        internal DestinationsSpecAzureMonitorMetrics AzureMonitorMetrics { get; set; }
-        /// <summary>
-        /// A friendly name for the destination.
-        /// This name should be unique across all destinations (regardless of type) within the data collection rule.
-        /// </summary>
-        public string AzureMonitorMetricsName
-        {
-            get => AzureMonitorMetrics is null ? default : AzureMonitorMetrics.Name;
-            set
-            {
-                if (AzureMonitorMetrics is null)
-                    AzureMonitorMetrics = new DestinationsSpecAzureMonitorMetrics();
-                AzureMonitorMetrics.Name = value;
-            }
-        }
-
+        public DestinationsSpecAzureMonitorMetrics AzureMonitorMetrics { get; set; }
         /// <summary> List of Event Hubs destinations. </summary>
         public IList<DataCollectionRuleEventHubDestination> EventHubs { get; }
         /// <summary> List of Event Hubs Direct destinations. </summary>

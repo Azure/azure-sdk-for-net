@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class PrivateLinkServicePropertiesVisibility : IUtf8JsonSerializable, IJsonModel<PrivateLinkServicePropertiesVisibility>
+    public partial class PrivateLinkServicePropertiesVisibility : IUtf8JsonSerializable, IJsonModel<PrivateLinkServicePropertiesVisibility>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkServicePropertiesVisibility>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

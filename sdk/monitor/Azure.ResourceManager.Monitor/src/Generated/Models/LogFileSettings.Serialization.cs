@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class LogFileSettings : IUtf8JsonSerializable, IJsonModel<LogFileSettings>
+    public partial class LogFileSettings : IUtf8JsonSerializable, IJsonModel<LogFileSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogFileSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

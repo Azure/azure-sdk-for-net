@@ -918,21 +918,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="networkInterfaces"> An array of references to the network interfaces created for this private link service. </param>
         /// <param name="provisioningState"> The provisioning state of the private link service resource. </param>
         /// <param name="privateEndpointConnections"> An array of list about connections to the private endpoint. </param>
-        /// <param name="visibilitySubscriptions"> The visibility list of the private link service. </param>
-        /// <param name="autoApprovalSubscriptions"> The auto-approval list of the private link service. </param>
+        /// <param name="visibility"> The visibility list of the private link service. </param>
+        /// <param name="autoApproval"> The auto-approval list of the private link service. </param>
         /// <param name="fqdns"> The list of Fqdn. </param>
         /// <param name="alias"> The alias of the private link service. </param>
         /// <param name="enableProxyProtocol"> Whether the private link service is enabled for proxy protocol or not. </param>
         /// <returns> A new <see cref="Network.PrivateLinkServiceData"/> instance for mocking. </returns>
-        public static PrivateLinkServiceData PrivateLinkServiceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ExtendedLocation extendedLocation = null, ETag? etag = null, IEnumerable<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations = null, IEnumerable<PrivateLinkServiceIPConfiguration> ipConfigurations = null, IEnumerable<NetworkInterfaceData> networkInterfaces = null, NetworkProvisioningState? provisioningState = null, IEnumerable<NetworkPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<string> visibilitySubscriptions = null, IEnumerable<string> autoApprovalSubscriptions = null, IEnumerable<string> fqdns = null, string @alias = null, bool? enableProxyProtocol = null)
+        public static PrivateLinkServiceData PrivateLinkServiceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ExtendedLocation extendedLocation = null, ETag? etag = null, IEnumerable<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations = null, IEnumerable<PrivateLinkServiceIPConfiguration> ipConfigurations = null, IEnumerable<NetworkInterfaceData> networkInterfaces = null, NetworkProvisioningState? provisioningState = null, IEnumerable<NetworkPrivateEndpointConnectionData> privateEndpointConnections = null, PrivateLinkServicePropertiesVisibility visibility = null, PrivateLinkServicePropertiesAutoApproval autoApproval = null, IEnumerable<string> fqdns = null, string @alias = null, bool? enableProxyProtocol = null)
         {
             tags ??= new Dictionary<string, string>();
             loadBalancerFrontendIPConfigurations ??= new List<FrontendIPConfigurationData>();
             ipConfigurations ??= new List<PrivateLinkServiceIPConfiguration>();
             networkInterfaces ??= new List<NetworkInterfaceData>();
             privateEndpointConnections ??= new List<NetworkPrivateEndpointConnectionData>();
-            visibilitySubscriptions ??= new List<string>();
-            autoApprovalSubscriptions ??= new List<string>();
             fqdns ??= new List<string>();
 
             return new PrivateLinkServiceData(
@@ -949,8 +947,8 @@ namespace Azure.ResourceManager.Network.Models
                 networkInterfaces?.ToList(),
                 provisioningState,
                 privateEndpointConnections?.ToList(),
-                visibilitySubscriptions != null ? new PrivateLinkServicePropertiesVisibility(visibilitySubscriptions?.ToList(), serializedAdditionalRawData: null) : null,
-                autoApprovalSubscriptions != null ? new PrivateLinkServicePropertiesAutoApproval(autoApprovalSubscriptions?.ToList(), serializedAdditionalRawData: null) : null,
+                visibility,
+                autoApproval,
                 fqdns?.ToList(),
                 @alias,
                 enableProxyProtocol);

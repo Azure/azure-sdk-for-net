@@ -105,17 +105,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The list of platform telemetry configurations. </summary>
         public IList<PlatformTelemetryDataSource> PlatformTelemetry { get; }
         /// <summary> Specifications of pull based data sources. </summary>
-        internal DataSourcesSpecDataImports DataImports { get; set; }
-        /// <summary> Definition of Event Hub configuration. </summary>
-        public DataImportSourcesEventHub DataImportsEventHub
-        {
-            get => DataImports is null ? default : DataImports.EventHub;
-            set
-            {
-                if (DataImports is null)
-                    DataImports = new DataSourcesSpecDataImports();
-                DataImports.EventHub = value;
-            }
-        }
+        public DataSourcesSpecDataImports DataImports { get; set; }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Definition of the endpoint used for ingesting metrics. </summary>
-    internal partial class MetricsIngestionEndpointSpec
+    public partial class MetricsIngestionEndpointSpec
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

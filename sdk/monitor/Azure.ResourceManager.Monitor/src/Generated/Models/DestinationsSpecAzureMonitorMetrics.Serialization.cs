@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class DestinationsSpecAzureMonitorMetrics : IUtf8JsonSerializable, IJsonModel<DestinationsSpecAzureMonitorMetrics>
+    public partial class DestinationsSpecAzureMonitorMetrics : IUtf8JsonSerializable, IJsonModel<DestinationsSpecAzureMonitorMetrics>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DestinationsSpecAzureMonitorMetrics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

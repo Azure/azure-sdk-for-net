@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Settings for text log files. </summary>
-    internal partial class LogFileTextSettings
+    public partial class LogFileTextSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

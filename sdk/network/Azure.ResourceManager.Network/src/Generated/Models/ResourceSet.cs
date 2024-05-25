@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The base resource set for visibility and auto-approval. </summary>
-    internal partial class ResourceSet
+    public partial class ResourceSet
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

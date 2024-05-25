@@ -102,26 +102,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The data format of the log files. </summary>
         public LogFilesDataSourceFormat Format { get; set; }
         /// <summary> The log files specific settings. </summary>
-        internal LogFilesDataSourceSettings Settings { get; set; }
-        /// <summary> One of the supported timestamp formats. </summary>
-        public LogFileTextSettingsRecordStartTimestampFormat? TextRecordStartTimestampFormat
-        {
-            get => Settings is null ? default : Settings.TextRecordStartTimestampFormat;
-            set
-            {
-                if (value.HasValue)
-                {
-                    if (Settings is null)
-                        Settings = new LogFilesDataSourceSettings();
-                    Settings.TextRecordStartTimestampFormat = value.Value;
-                }
-                else
-                {
-                    Settings = null;
-                }
-            }
-        }
-
+        public LogFilesDataSourceSettings Settings { get; set; }
         /// <summary>
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.

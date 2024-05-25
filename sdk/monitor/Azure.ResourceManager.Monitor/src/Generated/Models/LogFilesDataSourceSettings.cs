@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The log files specific settings. </summary>
-    internal partial class LogFilesDataSourceSettings : LogFileSettings
+    public partial class LogFilesDataSourceSettings : LogFileSettings
     {
         /// <summary> Initializes a new instance of <see cref="LogFilesDataSourceSettings"/>. </summary>
         public LogFilesDataSourceSettings()
