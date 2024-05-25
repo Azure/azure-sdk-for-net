@@ -257,12 +257,12 @@ namespace Azure.ResourceManager.HealthcareApis
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                etag,
+                serializedAdditionalRawData,
                 provisioningState,
                 ingestionEndpointConfiguration,
                 deviceMapping,
-                identity,
-                etag,
-                serializedAdditionalRawData);
+                identity);
         }
 
         BinaryData IPersistableModel<HealthcareApisIotConnectorData>.Write(ModelReaderWriterOptions options)

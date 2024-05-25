@@ -372,6 +372,8 @@ namespace Azure.ResourceManager.HealthcareApis
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                etag,
+                serializedAdditionalRawData,
                 provisioningState,
                 authenticationConfiguration,
                 corsConfiguration,
@@ -382,9 +384,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 encryption,
                 storageConfiguration,
                 enableDataPartitions,
-                identity,
-                etag,
-                serializedAdditionalRawData);
+                identity);
         }
 
         BinaryData IPersistableModel<DicomServiceData>.Write(ModelReaderWriterOptions options)
