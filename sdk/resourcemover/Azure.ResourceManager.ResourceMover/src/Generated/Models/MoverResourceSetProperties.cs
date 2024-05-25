@@ -85,11 +85,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Defines the MoveType. </summary>
         public MoveType? MoveType { get; set; }
         /// <summary> Defines the move collection errors. </summary>
-        internal MoveCollectionPropertiesErrors Errors { get; }
-        /// <summary> The move resource error body. </summary>
-        public ResponseError ErrorsProperties
-        {
-            get => Errors?.Properties;
-        }
+        public MoveCollectionPropertiesErrors Errors { get; }
     }
 }

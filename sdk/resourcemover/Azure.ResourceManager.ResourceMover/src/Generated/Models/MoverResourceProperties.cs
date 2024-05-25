@@ -129,11 +129,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Gets a value indicating whether the resolve action is required over the move collection. </summary>
         public bool? IsResolveRequired { get; }
         /// <summary> Defines the move resource errors. </summary>
-        internal MoveResourcePropertiesErrors Errors { get; }
-        /// <summary> The move resource error body. </summary>
-        public ResponseError ErrorsProperties
-        {
-            get => Errors?.Properties;
-        }
+        public MoveResourcePropertiesErrors Errors { get; }
     }
 }

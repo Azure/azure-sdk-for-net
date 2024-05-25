@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -69,12 +68,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Gets or sets address prefix for the subnet. </summary>
         public string AddressPrefix { get; set; }
         /// <summary> Defines reference to NSG. </summary>
-        internal NetworkSecurityGroupResourceReferenceInfo NetworkSecurityGroup { get; set; }
-        /// <summary> Gets the ARM resource ID of the tracked resource being referenced. </summary>
-        public ResourceIdentifier NetworkSecurityGroupSourceArmResourceId
-        {
-            get => NetworkSecurityGroup is null ? default : NetworkSecurityGroup.SourceArmResourceId;
-            set => NetworkSecurityGroup = new NetworkSecurityGroupResourceReferenceInfo(value);
-        }
+        public NetworkSecurityGroupResourceReferenceInfo NetworkSecurityGroup { get; set; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    internal partial class PublicIPReferenceInfo : IUtf8JsonSerializable, IJsonModel<PublicIPReferenceInfo>
+    public partial class PublicIPReferenceInfo : IUtf8JsonSerializable, IJsonModel<PublicIPReferenceInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublicIPReferenceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    internal partial class MoveCollectionPropertiesErrors : IUtf8JsonSerializable, IJsonModel<MoveCollectionPropertiesErrors>
+    public partial class MoveCollectionPropertiesErrors : IUtf8JsonSerializable, IJsonModel<MoveCollectionPropertiesErrors>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoveCollectionPropertiesErrors>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -91,12 +90,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Gets or sets the references of the load balancer NAT rules. </summary>
         public IList<LoadBalancerNatRuleReferenceInfo> LoadBalancerNatRules { get; }
         /// <summary> Defines reference to a public IP. </summary>
-        internal PublicIPReferenceInfo PublicIP { get; set; }
-        /// <summary> Gets the ARM resource ID of the tracked resource being referenced. </summary>
-        public ResourceIdentifier PublicIPSourceArmResourceId
-        {
-            get => PublicIP is null ? default : PublicIP.SourceArmResourceId;
-            set => PublicIP = new PublicIPReferenceInfo(value);
-        }
+        public PublicIPReferenceInfo PublicIP { get; set; }
     }
 }

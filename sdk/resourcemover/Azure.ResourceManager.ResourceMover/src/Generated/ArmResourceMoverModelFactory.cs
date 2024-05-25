@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="version"> Gets or sets the version of move collection. </param>
         /// <param name="moveType"> Defines the MoveType. </param>
-        /// <param name="errorsProperties"> Defines the move collection errors. </param>
+        /// <param name="errors"> Defines the move collection errors. </param>
         /// <returns> A new <see cref="Models.MoverResourceSetProperties"/> instance for mocking. </returns>
-        public static MoverResourceSetProperties MoverResourceSetProperties(AzureLocation? sourceLocation = null, AzureLocation? targetLocation = null, AzureLocation? moveLocation = null, MoverProvisioningState? provisioningState = null, string version = null, MoveType? moveType = null, ResponseError errorsProperties = null)
+        public static MoverResourceSetProperties MoverResourceSetProperties(AzureLocation? sourceLocation = null, AzureLocation? targetLocation = null, AzureLocation? moveLocation = null, MoverProvisioningState? provisioningState = null, string version = null, MoveType? moveType = null, MoveCollectionPropertiesErrors errors = null)
         {
             return new MoverResourceSetProperties(
                 sourceLocation,
@@ -62,8 +62,24 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 provisioningState,
                 version,
                 moveType,
-                errorsProperties != null ? new MoveCollectionPropertiesErrors(errorsProperties, serializedAdditionalRawData: null) : null,
+                errors,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MoveCollectionPropertiesErrors"/>. </summary>
+        /// <param name="properties"> The move resource error body. </param>
+        /// <returns> A new <see cref="Models.MoveCollectionPropertiesErrors"/> instance for mocking. </returns>
+        public static MoveCollectionPropertiesErrors MoveCollectionPropertiesErrors(ResponseError properties = null)
+        {
+            return new MoveCollectionPropertiesErrors(properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MoveResourceError"/>. </summary>
+        /// <param name="properties"> The move resource error body. </param>
+        /// <returns> A new <see cref="Models.MoveResourceError"/> instance for mocking. </returns>
+        public static MoveResourceError MoveResourceError(ResponseError properties = null)
+        {
+            return new MoveResourceError(properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MoverOperationStatus"/>. </summary>
@@ -162,9 +178,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="dependsOn"> Gets or sets the move resource dependencies. </param>
         /// <param name="dependsOnOverrides"> Gets or sets the move resource dependencies overrides. </param>
         /// <param name="isResolveRequired"> Gets a value indicating whether the resolve action is required over the move collection. </param>
-        /// <param name="errorsProperties"> Defines the move resource errors. </param>
+        /// <param name="errors"> Defines the move resource errors. </param>
         /// <returns> A new <see cref="Models.MoverResourceProperties"/> instance for mocking. </returns>
-        public static MoverResourceProperties MoverResourceProperties(MoverProvisioningState? provisioningState = null, ResourceIdentifier sourceId = null, ResourceIdentifier targetId = null, ResourceIdentifier existingTargetId = null, MoverResourceSettings resourceSettings = null, MoverResourceSettings sourceResourceSettings = null, MoverResourcePropertiesMoveStatus moveStatus = null, IEnumerable<MoverResourceDependency> dependsOn = null, IEnumerable<MoverResourceDependencyOverride> dependsOnOverrides = null, bool? isResolveRequired = null, ResponseError errorsProperties = null)
+        public static MoverResourceProperties MoverResourceProperties(MoverProvisioningState? provisioningState = null, ResourceIdentifier sourceId = null, ResourceIdentifier targetId = null, ResourceIdentifier existingTargetId = null, MoverResourceSettings resourceSettings = null, MoverResourceSettings sourceResourceSettings = null, MoverResourcePropertiesMoveStatus moveStatus = null, IEnumerable<MoverResourceDependency> dependsOn = null, IEnumerable<MoverResourceDependencyOverride> dependsOnOverrides = null, bool? isResolveRequired = null, MoveResourcePropertiesErrors errors = null)
         {
             dependsOn ??= new List<MoverResourceDependency>();
             dependsOnOverrides ??= new List<MoverResourceDependencyOverride>();
@@ -180,7 +196,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 dependsOn?.ToList(),
                 dependsOnOverrides?.ToList(),
                 isResolveRequired,
-                errorsProperties != null ? new MoveResourcePropertiesErrors(errorsProperties, serializedAdditionalRawData: null) : null,
+                errors,
                 serializedAdditionalRawData: null);
         }
 
@@ -233,6 +249,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 automaticResolutionResourceId != null ? new AutomaticResolutionProperties(automaticResolutionResourceId, serializedAdditionalRawData: null) : null,
                 isDependencyOptional,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MoveResourcePropertiesErrors"/>. </summary>
+        /// <param name="properties"> The move resource error body. </param>
+        /// <returns> A new <see cref="Models.MoveResourcePropertiesErrors"/> instance for mocking. </returns>
+        public static MoveResourcePropertiesErrors MoveResourcePropertiesErrors(ResponseError properties = null)
+        {
+            return new MoveResourcePropertiesErrors(properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MoverUnresolvedDependency"/>. </summary>

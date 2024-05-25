@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines reference to a public IP. </summary>
-    internal partial class PublicIPReferenceInfo : MoverResourceReferenceInfo
+    public partial class PublicIPReferenceInfo : MoverResourceReferenceInfo
     {
         /// <summary> Initializes a new instance of <see cref="PublicIPReferenceInfo"/>. </summary>
         /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>

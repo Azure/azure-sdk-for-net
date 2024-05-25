@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> An error response from the azure resource mover service. </summary>
-    internal partial class MoveResourceError
+    public partial class MoveResourceError
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines the move resource errors. </summary>
-    internal partial class MoveResourcePropertiesErrors : MoveResourceError
+    public partial class MoveResourcePropertiesErrors : MoveResourceError
     {
         /// <summary> Initializes a new instance of <see cref="MoveResourcePropertiesErrors"/>. </summary>
         internal MoveResourcePropertiesErrors()
