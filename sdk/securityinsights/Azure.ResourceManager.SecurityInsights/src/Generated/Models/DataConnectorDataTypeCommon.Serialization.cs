@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class DataConnectorDataTypeCommon : IUtf8JsonSerializable, IJsonModel<DataConnectorDataTypeCommon>
+    public partial class DataConnectorDataTypeCommon : IUtf8JsonSerializable, IJsonModel<DataConnectorDataTypeCommon>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataConnectorDataTypeCommon>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

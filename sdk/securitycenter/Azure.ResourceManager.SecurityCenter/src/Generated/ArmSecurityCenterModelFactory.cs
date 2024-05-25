@@ -207,8 +207,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="description"> The security automation description. </param>
         /// <param name="isEnabled"> Indicates whether the security automation is enabled. </param>
         /// <param name="scopes"> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </param>
@@ -218,12 +216,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
         /// </param>
-        /// <param name="kind"> Kind of the resource. </param>
-        /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityAutomationData"/> instance for mocking. </returns>
-        public static SecurityAutomationData SecurityAutomationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string description = null, bool? isEnabled = null, IEnumerable<SecurityAutomationScope> scopes = null, IEnumerable<SecurityAutomationSource> sources = null, IEnumerable<SecurityAutomationAction> actions = null, string kind = null, ETag? eTag = null)
+        public static SecurityAutomationData SecurityAutomationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, bool? isEnabled = null, IEnumerable<SecurityAutomationScope> scopes = null, IEnumerable<SecurityAutomationSource> sources = null, IEnumerable<SecurityAutomationAction> actions = null)
         {
-            tags ??= new Dictionary<string, string>();
             scopes ??= new List<SecurityAutomationScope>();
             sources ??= new List<SecurityAutomationSource>();
             actions ??= new List<SecurityAutomationAction>();
@@ -233,15 +228,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                tags,
-                location,
                 description,
                 isEnabled,
                 scopes?.ToList(),
                 sources?.ToList(),
                 actions?.ToList(),
-                kind,
-                eTag,
                 serializedAdditionalRawData: null);
         }
 
@@ -1470,8 +1461,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="hierarchyIdentifier"> The multi cloud resource identifier (account id in case of AWS connector, project number in case of GCP connector). </param>
         /// <param name="hierarchyIdentifierTrialEndOn"> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </param>
         /// <param name="environmentName"> The multi cloud resource's cloud name. </param>
@@ -1485,12 +1474,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Please note <see cref="SecurityConnectorEnvironment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/> and <see cref="GitlabScopeEnvironment"/>.
         /// </param>
-        /// <param name="kind"> Kind of the resource. </param>
-        /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityConnectorData"/> instance for mocking. </returns>
-        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string hierarchyIdentifier = null, DateTimeOffset? hierarchyIdentifierTrialEndOn = null, SecurityCenterCloudName? environmentName = null, IEnumerable<SecurityCenterCloudOffering> offerings = null, SecurityConnectorEnvironment environmentData = null, string kind = null, ETag? eTag = null)
+        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string hierarchyIdentifier = null, DateTimeOffset? hierarchyIdentifierTrialEndOn = null, SecurityCenterCloudName? environmentName = null, IEnumerable<SecurityCenterCloudOffering> offerings = null, SecurityConnectorEnvironment environmentData = null)
         {
-            tags ??= new Dictionary<string, string>();
             offerings ??= new List<SecurityCenterCloudOffering>();
 
             return new SecurityConnectorData(
@@ -1498,15 +1484,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                tags,
-                location,
                 hierarchyIdentifier,
                 hierarchyIdentifierTrialEndOn,
                 environmentName,
                 offerings?.ToList(),
                 environmentData,
-                kind,
-                eTag,
                 serializedAdditionalRawData: null);
         }
 

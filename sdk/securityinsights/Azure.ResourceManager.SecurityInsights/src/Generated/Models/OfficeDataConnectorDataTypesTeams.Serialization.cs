@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class OfficeDataConnectorDataTypesTeams : IUtf8JsonSerializable, IJsonModel<OfficeDataConnectorDataTypesTeams>
+    public partial class OfficeDataConnectorDataTypesTeams : IUtf8JsonSerializable, IJsonModel<OfficeDataConnectorDataTypesTeams>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OfficeDataConnectorDataTypesTeams>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

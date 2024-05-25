@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// A class representing the SecurityAutomation data model.
     /// The security automation resource.
     /// </summary>
-    public partial class SecurityAutomationData : TrackedResourceData
+    public partial class SecurityAutomationData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,8 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public SecurityAutomationData(AzureLocation location) : base(location)
+        public SecurityAutomationData()
         {
             Scopes = new ChangeTrackingList<SecurityAutomationScope>();
             Sources = new ChangeTrackingList<SecurityAutomationSource>();
@@ -65,8 +64,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="description"> The security automation description. </param>
         /// <param name="isEnabled"> Indicates whether the security automation is enabled. </param>
         /// <param name="scopes"> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </param>
@@ -76,24 +73,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
         /// </param>
-        /// <param name="kind"> Kind of the resource. </param>
-        /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAutomationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, bool? isEnabled, IList<SecurityAutomationScope> scopes, IList<SecurityAutomationSource> sources, IList<SecurityAutomationAction> actions, string kind, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SecurityAutomationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, bool? isEnabled, IList<SecurityAutomationScope> scopes, IList<SecurityAutomationSource> sources, IList<SecurityAutomationAction> actions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             IsEnabled = isEnabled;
             Scopes = scopes;
             Sources = sources;
             Actions = actions;
-            Kind = kind;
-            ETag = eTag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityAutomationData"/> for deserialization. </summary>
-        internal SecurityAutomationData()
-        {
         }
 
         /// <summary> The security automation description. </summary>
@@ -110,9 +98,5 @@ namespace Azure.ResourceManager.SecurityCenter
         /// The available derived classes include <see cref="SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
         /// </summary>
         public IList<SecurityAutomationAction> Actions { get; }
-        /// <summary> Kind of the resource. </summary>
-        public string Kind { get; set; }
-        /// <summary> Entity tag is used for comparing two or more entities from the same requested resource. </summary>
-        public ETag? ETag { get; set; }
     }
 }

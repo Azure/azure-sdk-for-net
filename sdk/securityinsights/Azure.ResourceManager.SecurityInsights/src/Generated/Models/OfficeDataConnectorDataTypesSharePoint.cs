@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> SharePoint data type connection. </summary>
-    internal partial class OfficeDataConnectorDataTypesSharePoint : DataConnectorDataTypeCommon
+    public partial class OfficeDataConnectorDataTypesSharePoint : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="OfficeDataConnectorDataTypesSharePoint"/>. </summary>
         public OfficeDataConnectorDataTypesSharePoint()

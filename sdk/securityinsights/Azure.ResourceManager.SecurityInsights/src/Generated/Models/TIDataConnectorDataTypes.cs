@@ -60,17 +60,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Data type for indicators connection. </summary>
-        internal TIDataConnectorDataTypesIndicators Indicators { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        public SecurityInsightsDataTypeConnectionState? IndicatorsState
-        {
-            get => Indicators is null ? default : Indicators.State;
-            set
-            {
-                if (Indicators is null)
-                    Indicators = new TIDataConnectorDataTypesIndicators();
-                Indicators.State = value;
-            }
-        }
+        public TIDataConnectorDataTypesIndicators Indicators { get; set; }
     }
 }

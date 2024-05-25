@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// A class representing the SecurityConnector data model.
     /// The security connector resource.
     /// </summary>
-    public partial class SecurityConnectorData : TrackedResourceData
+    public partial class SecurityConnectorData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,8 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityConnectorData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public SecurityConnectorData(AzureLocation location) : base(location)
+        public SecurityConnectorData()
         {
             Offerings = new ChangeTrackingList<SecurityCenterCloudOffering>();
         }
@@ -63,8 +62,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="hierarchyIdentifier"> The multi cloud resource identifier (account id in case of AWS connector, project number in case of GCP connector). </param>
         /// <param name="hierarchyIdentifierTrialEndOn"> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </param>
         /// <param name="environmentName"> The multi cloud resource's cloud name. </param>
@@ -78,24 +75,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Please note <see cref="SecurityConnectorEnvironment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/> and <see cref="GitlabScopeEnvironment"/>.
         /// </param>
-        /// <param name="kind"> Kind of the resource. </param>
-        /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string hierarchyIdentifier, DateTimeOffset? hierarchyIdentifierTrialEndOn, SecurityCenterCloudName? environmentName, IList<SecurityCenterCloudOffering> offerings, SecurityConnectorEnvironment environmentData, string kind, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SecurityConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hierarchyIdentifier, DateTimeOffset? hierarchyIdentifierTrialEndOn, SecurityCenterCloudName? environmentName, IList<SecurityCenterCloudOffering> offerings, SecurityConnectorEnvironment environmentData, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             HierarchyIdentifier = hierarchyIdentifier;
             HierarchyIdentifierTrialEndOn = hierarchyIdentifierTrialEndOn;
             EnvironmentName = environmentName;
             Offerings = offerings;
             EnvironmentData = environmentData;
-            Kind = kind;
-            ETag = eTag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityConnectorData"/> for deserialization. </summary>
-        internal SecurityConnectorData()
-        {
         }
 
         /// <summary> The multi cloud resource identifier (account id in case of AWS connector, project number in case of GCP connector). </summary>
@@ -116,9 +104,5 @@ namespace Azure.ResourceManager.SecurityCenter
         /// The available derived classes include <see cref="AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/> and <see cref="GitlabScopeEnvironment"/>.
         /// </summary>
         public SecurityConnectorEnvironment EnvironmentData { get; set; }
-        /// <summary> Kind of the resource. </summary>
-        public string Kind { get; set; }
-        /// <summary> Entity tag is used for comparing two or more entities from the same requested resource. </summary>
-        public ETag? ETag { get; set; }
     }
 }

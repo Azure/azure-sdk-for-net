@@ -60,17 +60,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Logs data type. </summary>
-        internal AwsCloudTrailDataConnectorDataTypesLogs Logs { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        public SecurityInsightsDataTypeConnectionState? LogsState
-        {
-            get => Logs is null ? default : Logs.State;
-            set
-            {
-                if (Logs is null)
-                    Logs = new AwsCloudTrailDataConnectorDataTypesLogs();
-                Logs.State = value;
-            }
-        }
+        public AwsCloudTrailDataConnectorDataTypesLogs Logs { get; set; }
     }
 }

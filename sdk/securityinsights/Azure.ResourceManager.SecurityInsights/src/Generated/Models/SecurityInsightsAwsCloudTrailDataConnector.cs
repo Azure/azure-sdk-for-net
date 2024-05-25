@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
         public SecurityInsightsDataTypeConnectionState? LogsState
         {
-            get => DataTypes is null ? default : DataTypes.LogsState;
+            get => DataTypes is null ? default(SecurityInsightsDataTypeConnectionState?) : DataTypes.LogsState;
             set
             {
                 if (DataTypes is null)

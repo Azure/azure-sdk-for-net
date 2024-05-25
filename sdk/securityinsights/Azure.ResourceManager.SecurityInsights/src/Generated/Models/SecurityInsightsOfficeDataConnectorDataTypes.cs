@@ -64,45 +64,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Exchange data type connection. </summary>
-        internal OfficeDataConnectorDataTypesExchange Exchange { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        public SecurityInsightsDataTypeConnectionState? ExchangeState
-        {
-            get => Exchange is null ? default : Exchange.State;
-            set
-            {
-                if (Exchange is null)
-                    Exchange = new OfficeDataConnectorDataTypesExchange();
-                Exchange.State = value;
-            }
-        }
-
+        public OfficeDataConnectorDataTypesExchange Exchange { get; set; }
         /// <summary> SharePoint data type connection. </summary>
-        internal OfficeDataConnectorDataTypesSharePoint SharePoint { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        public SecurityInsightsDataTypeConnectionState? SharePointState
-        {
-            get => SharePoint is null ? default : SharePoint.State;
-            set
-            {
-                if (SharePoint is null)
-                    SharePoint = new OfficeDataConnectorDataTypesSharePoint();
-                SharePoint.State = value;
-            }
-        }
-
+        public OfficeDataConnectorDataTypesSharePoint SharePoint { get; set; }
         /// <summary> Teams data type connection. </summary>
-        internal OfficeDataConnectorDataTypesTeams Teams { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        public SecurityInsightsDataTypeConnectionState? TeamsState
-        {
-            get => Teams is null ? default : Teams.State;
-            set
-            {
-                if (Teams is null)
-                    Teams = new OfficeDataConnectorDataTypesTeams();
-                Teams.State = value;
-            }
-        }
+        public OfficeDataConnectorDataTypesTeams Teams { get; set; }
     }
 }

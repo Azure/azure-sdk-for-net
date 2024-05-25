@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
             // invoke the operation
             string securityConnectorName = "exampleSecurityConnectorName";
-            SecurityConnectorData data = new SecurityConnectorData(new AzureLocation("Central US"))
+            SecurityConnectorData data = new SecurityConnectorData()
             {
                 HierarchyIdentifier = "exampleHierarchyId",
                 EnvironmentName = SecurityCenterCloudName.Aws,
@@ -198,10 +198,6 @@ CloudRoleArn = "arn:aws:iam::00000000:role/ASCMonitor",
                 {
                     ScanInterval = 4,
                 },
-                ETag = new ETag("etag value (must be supplied for update)"),
-                Tags =
-{
-},
             };
             ArmOperation<SecurityConnectorResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityConnectorName, data);
             SecurityConnectorResource result = lro.Value;

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Common field for data type in data connectors. </summary>
-    internal partial class DataConnectorDataTypeCommon
+    public partial class DataConnectorDataTypeCommon
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

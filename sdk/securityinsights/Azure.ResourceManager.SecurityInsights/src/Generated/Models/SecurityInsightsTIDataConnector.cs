@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
         public SecurityInsightsDataTypeConnectionState? IndicatorsState
         {
-            get => DataTypes is null ? default : DataTypes.IndicatorsState;
+            get => DataTypes is null ? default(SecurityInsightsDataTypeConnectionState?) : DataTypes.IndicatorsState;
             set
             {
                 if (DataTypes is null)
