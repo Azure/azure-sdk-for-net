@@ -20,5 +20,10 @@ public abstract class StatusBasedOperation<TStatus, TValue> : ResultOperation<TV
     public abstract ValueTask<ClientResult<(TStatus Status, TValue? Value)>> WaitForStatusUpdateAsync(TimeSpan? pollingInterval = default, CancellationToken cancellationToken = default);
 
     public abstract ClientResult<(TStatus Status, TValue? Value)> WaitForStatusUpdate(TimeSpan? pollingInterval = default, CancellationToken cancellationToken = default);
+
+    // TODO: Optional APIs to Pause and Resume polling
+    public abstract void Pause();
+
+    public abstract void Resume();
 }
 #pragma warning restore CS1591 // public XML comments

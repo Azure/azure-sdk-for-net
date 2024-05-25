@@ -102,8 +102,10 @@ namespace System.ClientModel
     {
         protected StatusBasedOperation(string id, TStatus status, System.ClientModel.Primitives.PipelineResponse response) : base (default(string), default(System.ClientModel.Primitives.PipelineResponse)) { }
         public TStatus Status { get { throw null; } protected set { } }
-        public abstract System.ClientModel.ClientResult<(TStatus Status, TValue? Value)> WaitForStatusUpdate(TStatus status, System.TimeSpan? pollingInterval = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.ClientResult<(TStatus Status, TValue? Value)>> WaitForStatusUpdateAsync(TStatus status, System.TimeSpan? pollingInterval = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract void Pause();
+        public abstract void Resume();
+        public abstract System.ClientModel.ClientResult<(TStatus Status, TValue? Value)> WaitForStatusUpdate(System.TimeSpan? pollingInterval = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.ClientResult<(TStatus Status, TValue? Value)>> WaitForStatusUpdateAsync(System.TimeSpan? pollingInterval = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }
 namespace System.ClientModel.Primitives
