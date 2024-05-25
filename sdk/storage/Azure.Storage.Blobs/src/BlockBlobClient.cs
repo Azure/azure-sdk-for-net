@@ -3238,14 +3238,18 @@ namespace Azure.Storage.Blobs.Specialized
                             LeaseId = args.Conditions.LeaseId
                         };
                     }
-                    await client.StageBlockInternal(
-                            Shared.StorageExtensions.GenerateBlockId(offset),
-                            content.ToStream(),
-                            validationOptions,
-                            conditions,
-                            progressHandler,
-                            async,
-                            cancellationToken).ConfigureAwait(false);
+
+                    using (var stream = content.ToStream())
+                    {
+                        await client.StageBlockInternal(
+                                Shared.StorageExtensions.GenerateBlockId(offset),
+                                stream,
+                                validationOptions,
+                                conditions,
+                                progressHandler,
+                                async,
+                                cancellationToken).ConfigureAwait(false);
+                    }
                 },
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
                     => await client.CommitBlockListInternal(
