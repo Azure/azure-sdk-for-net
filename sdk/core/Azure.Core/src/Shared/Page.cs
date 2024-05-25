@@ -10,6 +10,9 @@ namespace Azure.Core
 {
     internal static class Page
     {
+        public static Page<T> FromValues<T>(IReadOnlyList<T> values, string? continuationToken, Response response) =>
+            Page<T>.FromValues(values, continuationToken, response);
+
         public static Page<T> FromValues<T>(IEnumerable<T> values, string continuationToken, Response response) =>
             Page<T>.FromValues(values.ToList(), continuationToken, response);
     }

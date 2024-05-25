@@ -1565,19 +1565,23 @@ namespace Azure.Data.Tables
             try
             {
                 Argument.AssertNotNull(transactionalBatch, nameof(transactionalBatch));
-                List<TableTransactionAction> batchItems = transactionalBatch.ToList();
-                if (!batchItems.Any())
+
+                using (IEnumerator<TableTransactionAction> batchEnumerator = transactionalBatch.GetEnumerator())
                 {
-                    throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchIsEmpty);
+                    if (!batchEnumerator.MoveNext())
+                    {
+                        throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchIsEmpty);
+                    }
+
+                    Dictionary<string, HttpMessage> requestLookup = new();
+
+                    var _batch = BuildChangeSet(_batchOperations, batchEnumerator, requestLookup, batchId, changesetId);
+                    var request = _tableOperations.CreateBatchRequest(_batch, null, null);
+
+                    return async
+                        ? await _tableOperations.SendBatchRequestAsync(request, cancellationToken).ConfigureAwait(false)
+                        : _tableOperations.SendBatchRequest(request, cancellationToken);
                 }
-                Dictionary<string, HttpMessage> requestLookup = new();
-
-                var _batch = BuildChangeSet(_batchOperations, batchItems, requestLookup, batchId, changesetId);
-                var request = _tableOperations.CreateBatchRequest(_batch, null, null);
-
-                return async
-                    ? await _tableOperations.SendBatchRequestAsync(request, cancellationToken).ConfigureAwait(false)
-                    : _tableOperations.SendBatchRequest(request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -1592,15 +1596,18 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         private MultipartContent BuildChangeSet(
             TableRestClient batchOperations,
-            IEnumerable<TableTransactionAction> batch,
+            IEnumerator<TableTransactionAction> batchEnumerator,
             Dictionary<string, HttpMessage> requestLookup,
             Guid batchId,
             Guid changesetId)
         {
             var batchContent = TableRestClient.CreateBatchContent(batchId);
             var changeset = batchContent.AddChangeset(changesetId);
-            foreach (var item in batch)
+
+            do
             {
+                TableTransactionAction item = batchEnumerator.Current;
+
                 //var item = batch._requestLookup[key];
                 HttpMessage message = item.ActionType switch
                 {
@@ -1625,7 +1632,8 @@ namespace Azure.Data.Tables
                 };
                 requestLookup[item.Entity.RowKey] = message;
                 changeset.AddContent(new RequestRequestContent(message!.Request));
-            }
+            } while (batchEnumerator.MoveNext());
+
             return batchContent;
         }
 
