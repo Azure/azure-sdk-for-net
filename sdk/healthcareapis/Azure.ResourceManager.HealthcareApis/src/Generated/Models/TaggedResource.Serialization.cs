@@ -10,29 +10,23 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HealthcareApis
+namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisWorkspaceData : IUtf8JsonSerializable, IJsonModel<HealthcareApisWorkspaceData>
+    public partial class TaggedResource : IUtf8JsonSerializable, IJsonModel<TaggedResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisWorkspaceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TaggedResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HealthcareApisWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TaggedResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TaggedResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisWorkspaceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TaggedResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -89,19 +83,19 @@ namespace Azure.ResourceManager.HealthcareApis
             writer.WriteEndObject();
         }
 
-        HealthcareApisWorkspaceData IJsonModel<HealthcareApisWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TaggedResource IJsonModel<TaggedResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TaggedResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisWorkspaceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TaggedResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHealthcareApisWorkspaceData(document.RootElement, options);
+            return DeserializeTaggedResource(document.RootElement, options);
         }
 
-        internal static HealthcareApisWorkspaceData DeserializeHealthcareApisWorkspaceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TaggedResource DeserializeTaggedResource(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -109,7 +103,6 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return null;
             }
-            HealthcareApisWorkspaceProperties properties = default;
             ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -121,15 +114,6 @@ namespace Azure.ResourceManager.HealthcareApis
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = HealthcareApisWorkspaceProperties.DeserializeHealthcareApisWorkspaceProperties(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -188,7 +172,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HealthcareApisWorkspaceData(
+            return new TaggedResource(
                 id,
                 name,
                 type,
@@ -196,39 +180,38 @@ namespace Azure.ResourceManager.HealthcareApis
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 etag,
-                serializedAdditionalRawData,
-                properties);
+                serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HealthcareApisWorkspaceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TaggedResource>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TaggedResource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisWorkspaceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TaggedResource)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HealthcareApisWorkspaceData IPersistableModel<HealthcareApisWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TaggedResource IPersistableModel<TaggedResource>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TaggedResource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHealthcareApisWorkspaceData(document.RootElement, options);
+                        return DeserializeTaggedResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisWorkspaceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TaggedResource)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HealthcareApisWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TaggedResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

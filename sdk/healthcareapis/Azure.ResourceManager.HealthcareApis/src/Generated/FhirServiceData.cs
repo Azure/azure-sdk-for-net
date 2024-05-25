@@ -79,9 +79,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="implementationGuidesConfiguration"> Implementation Guides configuration. </param>
         /// <param name="encryption"> The encryption settings of the FHIR service. </param>
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
-        /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FhirServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FhirServiceKind? kind, HealthcareApisProvisioningState? provisioningState, FhirServiceAcrConfiguration acrConfiguration, FhirServiceAuthenticationConfiguration authenticationConfiguration, FhirServiceCorsConfiguration corsConfiguration, FhirServiceExportConfiguration exportConfiguration, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration, FhirServiceImportConfiguration importConfiguration, ImplementationGuidesConfiguration implementationGuidesConfiguration, Encryption encryption, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal FhirServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FhirServiceKind? kind, HealthcareApisProvisioningState? provisioningState, FhirServiceAcrConfiguration acrConfiguration, FhirServiceAuthenticationConfiguration authenticationConfiguration, FhirServiceCorsConfiguration corsConfiguration, FhirServiceExportConfiguration exportConfiguration, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration, FhirServiceImportConfiguration importConfiguration, ImplementationGuidesConfiguration implementationGuidesConfiguration, Encryption encryption, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             ProvisioningState = provisioningState;
@@ -97,7 +96,6 @@ namespace Azure.ResourceManager.HealthcareApis
             ImplementationGuidesConfiguration = implementationGuidesConfiguration;
             Encryption = encryption;
             Identity = identity;
-            ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -170,7 +168,5 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary> Setting indicating whether the service has a managed identity associated with it. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>
-        public ETag? ETag { get; set; }
     }
 }

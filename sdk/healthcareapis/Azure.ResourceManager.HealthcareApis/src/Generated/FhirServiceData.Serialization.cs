@@ -39,11 +39,6 @@ namespace Azure.ResourceManager.HealthcareApis
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -185,7 +180,6 @@ namespace Azure.ResourceManager.HealthcareApis
             }
             FhirServiceKind? kind = default;
             ManagedServiceIdentity identity = default;
-            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -225,15 +219,6 @@ namespace Azure.ResourceManager.HealthcareApis
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
-                    continue;
-                }
-                if (property.NameEquals("etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -431,7 +416,6 @@ namespace Azure.ResourceManager.HealthcareApis
                 implementationGuidesConfiguration,
                 encryption,
                 identity,
-                etag,
                 serializedAdditionalRawData);
         }
 

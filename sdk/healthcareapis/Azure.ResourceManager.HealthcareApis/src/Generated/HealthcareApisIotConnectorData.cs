@@ -17,40 +17,8 @@ namespace Azure.ResourceManager.HealthcareApis
     /// A class representing the HealthcareApisIotConnector data model.
     /// IoT Connector definition.
     /// </summary>
-    public partial class HealthcareApisIotConnectorData : TrackedResourceData
+    public partial class HealthcareApisIotConnectorData : TaggedResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="HealthcareApisIotConnectorData"/>. </summary>
         /// <param name="location"> The location. </param>
         public HealthcareApisIotConnectorData(AzureLocation location) : base(location)
@@ -64,20 +32,18 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="ingestionEndpointConfiguration"> Source configuration. </param>
         /// <param name="deviceMapping"> Device Mappings. </param>
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
-        /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthcareApisIotConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, HealthcareApisIotConnectorEventHubIngestionConfiguration ingestionEndpointConfiguration, HealthcareApisIotMappingProperties deviceMapping, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal HealthcareApisIotConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, HealthcareApisProvisioningState? provisioningState, HealthcareApisIotConnectorEventHubIngestionConfiguration ingestionEndpointConfiguration, HealthcareApisIotMappingProperties deviceMapping, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location, etag, serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             IngestionEndpointConfiguration = ingestionEndpointConfiguration;
             DeviceMapping = deviceMapping;
             Identity = identity;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthcareApisIotConnectorData"/> for deserialization. </summary>
@@ -134,7 +100,5 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary> Setting indicating whether the service has a managed identity associated with it. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>
-        public ETag? ETag { get; set; }
     }
 }
