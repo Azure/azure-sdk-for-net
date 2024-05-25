@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SecurityAutomationResource securityAutomation = client.GetSecurityAutomationResource(securityAutomationResourceId);
 
             // invoke the operation
-            SecurityAutomationData data = new SecurityAutomationData(new AzureLocation("Central US"))
+            SecurityAutomationData data = new SecurityAutomationData()
             {
                 Description = "An example of a security automation that triggers one LogicApp resource (myTest1) on any security assessment",
                 IsEnabled = true,
@@ -127,10 +127,6 @@ new SecurityAutomationActionLogicApp()
 LogicAppResourceId = new ResourceIdentifier("/subscriptions/e54a4a18-5b94-4f90-9471-bd3decad8a2e/resourceGroups/sample/providers/Microsoft.Logic/workflows/MyTest1"),
 Uri = new Uri("https://exampleTriggerUri1.com"),
 }
-},
-                ETag = new ETag("etag value (must be supplied for update)"),
-                Tags =
-{
 },
             };
             ArmOperation<SecurityAutomationResource> lro = await securityAutomation.UpdateAsync(WaitUntil.Completed, data);
@@ -165,7 +161,7 @@ Uri = new Uri("https://exampleTriggerUri1.com"),
             SecurityAutomationResource securityAutomation = client.GetSecurityAutomationResource(securityAutomationResourceId);
 
             // invoke the operation
-            SecurityAutomationData data = new SecurityAutomationData(new AzureLocation("Central US"))
+            SecurityAutomationData data = new SecurityAutomationData()
             {
                 Description = "An example of a security automation that triggers one LogicApp resource (myTest1) on any high severity security assessment",
                 IsEnabled = true,
@@ -208,10 +204,6 @@ LogicAppResourceId = new ResourceIdentifier("/subscriptions/e54a4a18-5b94-4f90-9
 Uri = new Uri("https://exampleTriggerUri1.com"),
 }
 },
-                ETag = new ETag("etag value (must be supplied for update)"),
-                Tags =
-{
-},
             };
             ArmOperation<SecurityAutomationResource> lro = await securityAutomation.UpdateAsync(WaitUntil.Completed, data);
             SecurityAutomationResource result = lro.Value;
@@ -245,7 +237,7 @@ Uri = new Uri("https://exampleTriggerUri1.com"),
             SecurityAutomationResource securityAutomation = client.GetSecurityAutomationResource(securityAutomationResourceId);
 
             // invoke the operation
-            SecurityAutomationData data = new SecurityAutomationData(new AzureLocation("Central US"))
+            SecurityAutomationData data = new SecurityAutomationData()
             {
                 Description = "An example of a security automation that triggers one LogicApp resource (myTest1) on any security assessment of type customAssessment",
                 IsEnabled = false,
@@ -287,10 +279,6 @@ new SecurityAutomationActionLogicApp()
 LogicAppResourceId = new ResourceIdentifier("/subscriptions/e54a4a18-5b94-4f90-9471-bd3decad8a2e/resourceGroups/sample/providers/Microsoft.Logic/workflows/MyTest1"),
 Uri = new Uri("https://exampleTriggerUri1.com"),
 }
-},
-                ETag = new ETag("etag value (must be supplied for update)"),
-                Tags =
-{
 },
             };
             ArmOperation<SecurityAutomationResource> lro = await securityAutomation.UpdateAsync(WaitUntil.Completed, data);
@@ -352,7 +340,7 @@ Uri = new Uri("https://exampleTriggerUri1.com"),
             SecurityAutomationResource securityAutomation = client.GetSecurityAutomationResource(securityAutomationResourceId);
 
             // invoke the operation
-            SecurityAutomationData data = new SecurityAutomationData(new AzureLocation("Central US"))
+            SecurityAutomationData data = new SecurityAutomationData()
             {
                 Description = "An example of a security automation that triggers one LogicApp resource (myTest1) on any security assessment of type customAssessment",
                 IsEnabled = true,
@@ -394,9 +382,6 @@ new SecurityAutomationActionLogicApp()
 LogicAppResourceId = new ResourceIdentifier("/subscriptions/e54a4a18-5b94-4f90-9471-bd3decad8a2e/resourceGroups/sample/providers/Microsoft.Logic/workflows/MyTest1"),
 Uri = new Uri("https://exampleTriggerUri1.com"),
 }
-},
-                Tags =
-{
 },
             };
             SecurityAutomationValidationStatus result = await securityAutomation.ValidateAsync(data);

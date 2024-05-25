@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SecurityConnectorResource securityConnector = client.GetSecurityConnectorResource(securityConnectorResourceId);
 
             // invoke the operation
-            SecurityConnectorData data = new SecurityConnectorData(new AzureLocation("Central US"))
+            SecurityConnectorData data = new SecurityConnectorData()
             {
                 HierarchyIdentifier = "exampleHierarchyId",
                 EnvironmentName = SecurityCenterCloudName.Aws,
@@ -113,10 +113,6 @@ CloudRoleArn = "arn:aws:iam::00000000:role/ASCMonitor",
 }
 },
                 EnvironmentData = new AwsEnvironment(),
-                ETag = new ETag("etag value (must be supplied for update)"),
-                Tags =
-{
-},
             };
             SecurityConnectorResource result = await securityConnector.UpdateAsync(data);
 
