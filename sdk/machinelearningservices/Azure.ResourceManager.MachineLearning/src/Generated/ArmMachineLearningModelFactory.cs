@@ -3714,14 +3714,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Primary metric for Text-Classification-Multilabel task.
         /// Currently only Accuracy is supported as primary metric, hence user need not set it explicitly.
         /// </param>
-        /// <param name="featurizationDatasetLanguage"> Featurization inputs needed for AutoML job. </param>
+        /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="fixedParameters"> Model/training parameters that will remain constant throughout training. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
         /// <param name="searchSpace"> Search space for sampling different combinations of models and their hyperparameters. </param>
         /// <param name="sweepSettings"> Settings for model sweeping and hyperparameter tuning. </param>
         /// <param name="validationData"> Validation data inputs. </param>
         /// <returns> A new <see cref="Models.TextClassificationMultilabel"/> instance for mocking. </returns>
-        public static TextClassificationMultilabel TextClassificationMultilabel(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationMultilabelPrimaryMetric? primaryMetric = null, string featurizationDatasetLanguage = null, NlpFixedParameters fixedParameters = null, NlpVerticalLimitSettings limitSettings = null, IEnumerable<NlpParameterSubspace> searchSpace = null, NlpSweepSettings sweepSettings = null, MachineLearningTableJobInput validationData = null)
+        public static TextClassificationMultilabel TextClassificationMultilabel(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationMultilabelPrimaryMetric? primaryMetric = null, NlpVerticalFeaturizationSettings featurizationSettings = null, NlpFixedParameters fixedParameters = null, NlpVerticalLimitSettings limitSettings = null, IEnumerable<NlpParameterSubspace> searchSpace = null, NlpSweepSettings sweepSettings = null, MachineLearningTableJobInput validationData = null)
         {
             searchSpace ??= new List<NlpParameterSubspace>();
 
@@ -3732,7 +3732,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 trainingData,
                 serializedAdditionalRawData: null,
                 primaryMetric,
-                featurizationDatasetLanguage != null ? new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage, serializedAdditionalRawData: null) : null,
+                featurizationSettings,
                 fixedParameters,
                 limitSettings,
                 searchSpace?.ToList(),
@@ -3751,14 +3751,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Primary metric for Text-NER task.
         /// Only 'Accuracy' is supported for Text-NER, so user need not set this explicitly.
         /// </param>
-        /// <param name="featurizationDatasetLanguage"> Featurization inputs needed for AutoML job. </param>
+        /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="fixedParameters"> Model/training parameters that will remain constant throughout training. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
         /// <param name="searchSpace"> Search space for sampling different combinations of models and their hyperparameters. </param>
         /// <param name="sweepSettings"> Settings for model sweeping and hyperparameter tuning. </param>
         /// <param name="validationData"> Validation data inputs. </param>
         /// <returns> A new <see cref="Models.TextNer"/> instance for mocking. </returns>
-        public static TextNer TextNer(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationPrimaryMetric? primaryMetric = null, string featurizationDatasetLanguage = null, NlpFixedParameters fixedParameters = null, NlpVerticalLimitSettings limitSettings = null, IEnumerable<NlpParameterSubspace> searchSpace = null, NlpSweepSettings sweepSettings = null, MachineLearningTableJobInput validationData = null)
+        public static TextNer TextNer(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationPrimaryMetric? primaryMetric = null, NlpVerticalFeaturizationSettings featurizationSettings = null, NlpFixedParameters fixedParameters = null, NlpVerticalLimitSettings limitSettings = null, IEnumerable<NlpParameterSubspace> searchSpace = null, NlpSweepSettings sweepSettings = null, MachineLearningTableJobInput validationData = null)
         {
             searchSpace ??= new List<NlpParameterSubspace>();
 
@@ -3769,7 +3769,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 trainingData,
                 serializedAdditionalRawData: null,
                 primaryMetric,
-                featurizationDatasetLanguage != null ? new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage, serializedAdditionalRawData: null) : null,
+                featurizationSettings,
                 fixedParameters,
                 limitSettings,
                 searchSpace?.ToList(),

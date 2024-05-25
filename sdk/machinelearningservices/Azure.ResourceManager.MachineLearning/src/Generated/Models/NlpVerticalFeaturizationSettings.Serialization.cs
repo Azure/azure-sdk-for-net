@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class NlpVerticalFeaturizationSettings : IUtf8JsonSerializable, IJsonModel<NlpVerticalFeaturizationSettings>
+    public partial class NlpVerticalFeaturizationSettings : IUtf8JsonSerializable, IJsonModel<NlpVerticalFeaturizationSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NlpVerticalFeaturizationSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

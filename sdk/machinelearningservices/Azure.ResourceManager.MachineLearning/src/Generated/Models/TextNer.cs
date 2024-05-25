@@ -70,19 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         public ClassificationPrimaryMetric? PrimaryMetric { get; }
         /// <summary> Featurization inputs needed for AutoML job. </summary>
-        internal NlpVerticalFeaturizationSettings FeaturizationSettings { get; set; }
-        /// <summary> Dataset language, useful for the text data. </summary>
-        public string FeaturizationDatasetLanguage
-        {
-            get => FeaturizationSettings is null ? default : FeaturizationSettings.DatasetLanguage;
-            set
-            {
-                if (FeaturizationSettings is null)
-                    FeaturizationSettings = new NlpVerticalFeaturizationSettings();
-                FeaturizationSettings.DatasetLanguage = value;
-            }
-        }
-
+        public NlpVerticalFeaturizationSettings FeaturizationSettings { get; set; }
         /// <summary> Model/training parameters that will remain constant throughout training. </summary>
         public NlpFixedParameters FixedParameters { get; set; }
         /// <summary> Execution constraints for AutoMLJob. </summary>
