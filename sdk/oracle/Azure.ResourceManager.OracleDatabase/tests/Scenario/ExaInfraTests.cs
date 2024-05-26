@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
         public async Task ClearAndInitialize()
         {
             Console.WriteLine("HERE: ClearAndInitialize");
+            Console.WriteLine("HERE: Mode: " + Mode);
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback){
                 await CreateCommonClient();
             }
@@ -56,6 +57,43 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             Response<CloudExadataInfrastructureResource> getExaInfraResponse = await cloudExadataInfrastructureCollection.GetAsync(cloudExadataInfrastructureName);
             CloudExadataInfrastructureResource exaInfraResource = getExaInfraResponse.Value;
             Assert.IsNotNull(exaInfraResource);
+
+            // ListByResourceGroup
+            Console.WriteLine("HERE: TestExaInfraOperations ListByResourceGroup");
+            AsyncPageable<CloudExadataInfrastructureResource> exaInfras = cloudExadataInfrastructureCollection.GetAllAsync();
+            List<CloudExadataInfrastructureResource> exaInfraResult = await exaInfras.ToEnumerableAsync();
+            Assert.NotNull(exaInfraResult);
+            Assert.IsTrue(exaInfraResult.Count >= 1);
+
+            // ListBySubscription
+            Console.WriteLine("HERE: TestExaInfraOperations ListBySubscription");
+            exaInfras = OracleDatabaseExtensions.GetCloudExadataInfrastructuresAsync(DefaultSubscription);
+            exaInfraResult = await exaInfras.ToEnumerableAsync();
+            Assert.NotNull(exaInfraResult);
+            Assert.IsTrue(exaInfraResult.Count >= 1);
+
+            // Update, not implemented
+            var tagName = Recording.GenerateAssetName("TagName");
+            var tagValue = Recording.GenerateAssetName("TagValue");
+            ChangeTrackingDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>
+            {
+                new KeyValuePair<string, string>(tagName, tagValue)
+            };
+            CloudExadataInfrastructurePatch exaInfraParameter = new CloudExadataInfrastructurePatch(
+                default, tags, 2, 3, default, default, default, default);
+            // CloudExadataInfrastructurePatch exaInfraParameter = new() {
+            //     Tags = tags
+            // };
+            var updateExaInfraOperation = await exaInfraResource.UpdateAsync(WaitUntil.Completed, exaInfraParameter);
+            Assert.IsTrue(updateExaInfraOperation.HasCompleted);
+            Assert.IsTrue(updateExaInfraOperation.HasValue);
+
+            // Get
+            Console.WriteLine("HERE: TestExaInfraOperations Get2");
+            getExaInfraResponse = await cloudExadataInfrastructureCollection.GetAsync(cloudExadataInfrastructureName);
+            exaInfraResource = getExaInfraResponse.Value;
+            Assert.IsNotNull(exaInfraResource);
+            Assert.IsTrue(exaInfraResource.Data.Tags.ContainsKey(tagName));
 
             // Delete
             Console.WriteLine("HERE: TestExaInfraOperations Delete");
