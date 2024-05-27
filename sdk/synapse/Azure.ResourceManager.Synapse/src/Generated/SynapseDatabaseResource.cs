@@ -603,11 +603,11 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="synapseDataConnectionValidation"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="synapseDataConnectionValidation"/> is null. </exception>
-        public virtual async Task<ArmOperation<SynapseDataConnectionValidationListResult>> DataConnectionValidationKustoPoolDataConnectionAsync(WaitUntil waitUntil, SynapseDataConnectionValidation synapseDataConnectionValidation, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SynapseDataConnectionValidationListResult>> ValidateDataConnectionAsync(WaitUntil waitUntil, SynapseDataConnectionValidation synapseDataConnectionValidation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(synapseDataConnectionValidation, nameof(synapseDataConnectionValidation));
 
-            using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDatabaseResource.DataConnectionValidationKustoPoolDataConnection");
+            using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDatabaseResource.ValidateDataConnection");
             scope.Start();
             try
             {
@@ -649,11 +649,11 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="synapseDataConnectionValidation"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="synapseDataConnectionValidation"/> is null. </exception>
-        public virtual ArmOperation<SynapseDataConnectionValidationListResult> DataConnectionValidationKustoPoolDataConnection(WaitUntil waitUntil, SynapseDataConnectionValidation synapseDataConnectionValidation, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SynapseDataConnectionValidationListResult> ValidateDataConnection(WaitUntil waitUntil, SynapseDataConnectionValidation synapseDataConnectionValidation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(synapseDataConnectionValidation, nameof(synapseDataConnectionValidation));
 
-            using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDatabaseResource.DataConnectionValidationKustoPoolDataConnection");
+            using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDatabaseResource.ValidateDataConnection");
             scope.Start();
             try
             {
