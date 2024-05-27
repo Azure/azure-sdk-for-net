@@ -28,9 +28,9 @@ dotnet add package Azure.AI.Vision.Face --prerelease
   - an [Azure Face account][azure_portal_list_face_account] or
   - an [Azure AI services multi-service account][azure_portal_list_cognitive_service_account]
 
-### Create a Face or a Azure AI services multi-service account
+### Create a Face or an Azure AI services multi-service account
 
-Azure AI Face supports both [multi-service][azure_ai_account] and single-service access. Create a Azure AI services multi-service account if you plan to access multiple cognitive services under a single endpoint/key. For Face access only, create a Face resource.
+Azure AI Face supports both [multi-service][azure_ai_account] and single-service access. Create an Azure AI services multi-service account if you plan to access multiple cognitive services under a single endpoint/key. For Face access only, create a Face resource.
 
 - To create a new Face or Azure AI services multi-service account, you can use [Azure Portal][azure_portal_create_face_account], [Azure PowerShell][quick_start_create_account_via_azure_powershell], or [Azure CLI][quick_start_create_account_via_azure_cli].
 
