@@ -30,9 +30,9 @@ dotnet add package Azure.AI.Vision.Face --prerelease
 
 ### Create a Face or a Azure AI services multi-service account
 
-Azure AI Face supports both [multi-service][azure_ai_account] and single-service access. Create a Azure AI services multi-service account if you plan to access multiple cognitive services under a single endpoint/key. For Face access only, create a Face resource. Please note that you will need a single-service resource if you intend to use [Microsoft Entra ID authentication](#create-the-client-with-a-microsoft-entra-id-credential).
+Azure AI Face supports both [multi-service][azure_ai_account] and single-service access. Create a Azure AI services multi-service account if you plan to access multiple cognitive services under a single endpoint/key. For Face access only, create a Face resource.
 
-- To create a new Face or Cognitive Services account, you can use [Azure Portal][azure_portal_create_face_account], [Azure PowerShell][quick_start_create_account_via_azure_powershell], or [Azure CLI][quick_start_create_account_via_azure_cli].
+- To create a new Face or Azure AI services multi-service account, you can use [Azure Portal][azure_portal_create_face_account], [Azure PowerShell][quick_start_create_account_via_azure_powershell], or [Azure CLI][quick_start_create_account_via_azure_cli].
 
 ### Authenticate the client
 
@@ -58,7 +58,7 @@ Custom subdomain: https://<resource-name>.cognitiveservices.azure.com/
 
 A regional endpoint is the same for every resource in a region. A complete list of supported regional endpoints can be consulted [here][regional_endpoints]. Please note that regional endpoints do not support Microsoft Entra ID authentication.
 
-A custom subdomain, on the other hand, is a name that is unique to the Face resource. They can only be used by [single-service resources][azure_portal_create_face_account].
+A custom subdomain, on the other hand, is a name that is unique to the Face resource.
 
 #### Create the client with a Microsoft Entra ID credential
 
@@ -206,8 +206,8 @@ Face Liveness detection can be used to determine if a face in an input video str
 The goal of liveness detection is to ensure that the system is interacting with a physically present live person at
 the time of authentication. The whole process of authentication is called a session.
 
-There're two different components in the authentication: a mobile application and an app server/orchestrator.
-Before uploading the video stream, the app server has to create a session, and then the mobile client could upload
+There're two different components in the authentication: a frontend application and an app server/orchestrator.
+Before uploading the video stream, the app server has to create a session, and then the frontend client could upload
 the payload with a `session authorization token` to call the liveness detection. The app server can query for the
 liveness detection result and audit logs anytime until the session is deleted.
 
@@ -216,7 +216,7 @@ belongs to the expected person's face, which is called **liveness detection with
 information, please refer to the [tutorial][liveness_tutorial].
 
 We'll only demonstrates how to create, query, delete a session and get the audit logs here. For how to perform a
-liveness detection, please see the sample of [mobile applications][integrate_liveness_into_mobile_application].
+liveness detection, please see the sample of [frontend applications][integrate_liveness_into_mobile_application].
 
 Here is an example to create the session for liveness detection.
 
