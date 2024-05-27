@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Synapse.Samples
         // KustoPoolDataConnectionValidation
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task DataConnectionValidationKustoPoolDataConnection_KustoPoolDataConnectionValidation()
+        public async Task ValidateDataConnection_KustoPoolDataConnectionValidation()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/preview/2021-06-01-preview/examples/KustoPoolDataConnectionValidation.json
             // this example is just showing the usage of "KustoPoolDataConnections_DataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Synapse.Samples
                 DataConnectionName = "DataConnections8",
                 Properties = new SynapseEventHubDataConnection(),
             };
-            ArmOperation<SynapseDataConnectionValidationListResult> lro = await synapseDatabase.DataConnectionValidationKustoPoolDataConnectionAsync(WaitUntil.Completed, synapseDataConnectionValidation);
+            ArmOperation<SynapseDataConnectionValidationListResult> lro = await synapseDatabase.ValidateDataConnectionAsync(WaitUntil.Completed, synapseDataConnectionValidation);
             SynapseDataConnectionValidationListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

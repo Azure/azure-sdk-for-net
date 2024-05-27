@@ -408,7 +408,7 @@ AppId = "some_guid_app_id",
         // KustoDataConnectionEventGridValidation
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task DataConnectionValidationDataConnection_KustoDataConnectionEventGridValidation()
+        public async Task ValidateDataConnection_KustoDataConnectionEventGridValidation()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDataConnectionEventGridValidationAsync.json
             // this example is just showing the usage of "DataConnections_DataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
@@ -446,7 +446,7 @@ AppId = "some_guid_app_id",
                     DatabaseRouting = KustoDatabaseRouting.Single,
                 },
             };
-            ArmOperation<DataConnectionValidationResults> lro = await kustoDatabase.DataConnectionValidationDataConnectionAsync(WaitUntil.Completed, content);
+            ArmOperation<DataConnectionValidationResults> lro = await kustoDatabase.ValidateDataConnectionAsync(WaitUntil.Completed, content);
             DataConnectionValidationResults result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -455,7 +455,7 @@ AppId = "some_guid_app_id",
         // KustoDataConnectionValidation
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task DataConnectionValidationDataConnection_KustoDataConnectionValidation()
+        public async Task ValidateDataConnection_KustoDataConnectionValidation()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDataConnectionValidationAsync.json
             // this example is just showing the usage of "DataConnections_DataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
@@ -489,7 +489,7 @@ AppId = "some_guid_app_id",
                     ManagedIdentityResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/managedidentityTest1"),
                 },
             };
-            ArmOperation<DataConnectionValidationResults> lro = await kustoDatabase.DataConnectionValidationDataConnectionAsync(WaitUntil.Completed, content);
+            ArmOperation<DataConnectionValidationResults> lro = await kustoDatabase.ValidateDataConnectionAsync(WaitUntil.Completed, content);
             DataConnectionValidationResults result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

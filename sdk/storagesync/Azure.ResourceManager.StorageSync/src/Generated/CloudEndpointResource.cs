@@ -644,9 +644,9 @@ namespace Azure.ResourceManager.StorageSync
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RestoreheartbeatAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RestoreHeartbeatAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.Restoreheartbeat");
+            using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.RestoreHeartbeat");
             scope.Start();
             try
             {
@@ -682,9 +682,9 @@ namespace Azure.ResourceManager.StorageSync
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Restoreheartbeat(CancellationToken cancellationToken = default)
+        public virtual Response RestoreHeartbeat(CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.Restoreheartbeat");
+            using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.RestoreHeartbeat");
             scope.Start();
             try
             {
