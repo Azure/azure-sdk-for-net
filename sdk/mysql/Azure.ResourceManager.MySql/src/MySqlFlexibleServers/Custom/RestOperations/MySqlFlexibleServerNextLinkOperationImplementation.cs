@@ -17,6 +17,8 @@ using Azure.ResourceManager.MySql.MySqlFlexibleServers;
 
 namespace Azure.Core
 {
+    // TODO: To apply the HTTP message policy for the Azure-AsyncOperation header, we made this workaround temporarily.
+    // Issue https://github.com/Azure/azure-sdk-for-net/issues/44251 was openned for Azure.Core to propose the introduction of a method within the IOperation interface that would facilitate the application of policies to particular operations.
     internal class MySqlFlexibleServerNextLinkOperationImplementation : IOperation
     {
         internal const string NotSet = "NOT_SET";

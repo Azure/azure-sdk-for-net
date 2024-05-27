@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="operation"> The long-running operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operation"/> is null or the long-running operation doesn't support get detailed status. </exception>
-        public static Response<OperationProgressResult> GetDetailedStatus<T>(this ArmOperation<MySqlFlexibleServerBackupAndExportResult> operation, CancellationToken cancellationToken = default)
+        public static Response<OperationProgressResult> GetDetailedStatus(this ArmOperation<MySqlFlexibleServerBackupAndExportResult> operation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(operation, nameof(operation));
             Response response = operation.UpdateStatus(cancellationToken);

@@ -14,7 +14,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string serverName, MySqlFlexibleServerBackupAndExportContent content)
         {
             var context = new RequestContext();
-            // Add policy to replace the Azure-AsyncOperation header
+            // TODO: To apply the HTTP message policy for the Azure-AsyncOperation header, we made this workaround temporarily.
+            // Issue https://github.com/Azure/azure-sdk-for-net/issues/44251 was openned for Azure.Core to propose the introduction of a method within the IOperation interface that would facilitate the application of policies to particular operations.
             context.AddPolicy(new LroReplaceAzureAsyncOperationPolicy(), HttpPipelinePosition.PerRetry);
             var message = _pipeline.CreateMessage(context);
             var request = message.Request;
