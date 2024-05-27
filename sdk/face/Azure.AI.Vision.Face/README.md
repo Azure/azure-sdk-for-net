@@ -56,9 +56,9 @@ Regional endpoint: https://<region>.api.cognitive.microsoft.com/
 Custom subdomain: https://<resource-name>.cognitiveservices.azure.com/
 ```
 
-A regional endpoint is the same for every resource in a region. A complete list of supported regional endpoints can be consulted [here][regional_endpoints]. Please note that regional endpoints do not support Microsoft Entra ID authentication.
+A regional endpoint is the same for every resource in a region. A complete list of supported regional endpoints can be consulted [here][regional_endpoints]. Please note that regional endpoints do not support Microsoft Entra ID authentication. If you'd like migrate your resource to use custom subdomain, follow the instructions [here][how_to_migrate_resource_to_custom_subdomain].
 
-A custom subdomain, on the other hand, is a name that is unique to the Face resource.
+A custom subdomain, on the other hand, is a name that is unique to the resource. Once created and linked to a resource, it cannot be modified.
 
 #### Create the client with a Microsoft Entra ID credential
 
@@ -215,8 +215,8 @@ The Liveness detection operation can not only confirm if the input is live or sp
 belongs to the expected person's face, which is called **liveness detection with face verification**. For the detail
 information, please refer to the [tutorial][liveness_tutorial].
 
-We'll only demonstrates how to create, query, delete a session and get the audit logs here. For how to perform a
-liveness detection, please see the sample of [frontend applications][integrate_liveness_into_mobile_application].
+This package is only responsible for app server to create, query, delete a session and get audit logs. For how to
+integrate the UI and the code into your native frontend application, please follow instructions in the [tutorial][liveness_tutorial].
 
 Here is an example to create the session for liveness detection.
 
@@ -348,6 +348,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [quick_start_create_account_via_azure_powershell]: https://learn.microsoft.com/azure/ai-services/multi-service-resource?tabs=windows&pivots=azpowershell
 
 [regional_endpoints]: https://azure.microsoft.com/global-infrastructure/services/?products=cognitive-services
+[how_to_migrate_resource_to_custom_subdomain]: https://learn.microsoft.com/azure/ai-services/cognitive-services-custom-subdomains#how-does-this-impact-existing-resources
 [get_endpoint_via_azure_portal]: https://learn.microsoft.com/azure/ai-services/multi-service-resource?tabs=windows&pivots=azportal#get-the-keys-for-your-resource
 [get_endpoint_via_azure_cli]: https://learn.microsoft.com/azure/ai-services/multi-service-resource?tabs=windows&pivots=azcli#get-the-keys-for-your-resource
 [azure_sdk_net_azure_key_credential]: https://learn.microsoft.com/dotnet/api/azure.azurekeycredential?view=azure-dotnet
@@ -358,7 +359,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [face_sample_detection]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample1_FaceDetection.md
 [liveness_tutorial]: https://learn.microsoft.com/azure/ai-services/computer-vision/tutorials/liveness
-[integrate_liveness_into_mobile_application]: https://learn.microsoft.com/azure/ai-services/computer-vision/tutorials/liveness#integrate-liveness-into-mobile-application
 [face_sample_liveness_session]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample2_DetectLivenessWithSession.md
 [face_sample_liveness_with_verify_session]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample3_DetectLivenessWithVerifyWithSession.md
 
