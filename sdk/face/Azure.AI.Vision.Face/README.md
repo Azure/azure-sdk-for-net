@@ -26,7 +26,7 @@ dotnet add package Azure.AI.Vision.Face --prerelease
 - Your Azure account must have a `Cognitive Services Contributor` role assigned in order for you to agree to the responsible AI terms and create a resource. To get this role assigned to your account, follow the steps in the [Assign roles][steps_assign_an_azure_role] documentation, or contact your administrator.
 - You need an [Azure subscription][azure_sub] to use this package and either
   - an [Azure Face account][azure_portal_list_face_account] or
-  - an [Azure Cognitive Service account][azure_portal_list_cognitive_service_account]
+  - an [Azure AI services multi-service account][azure_portal_list_cognitive_service_account]
 
 ### Create a Face or a Azure AI services multi-service account
 
