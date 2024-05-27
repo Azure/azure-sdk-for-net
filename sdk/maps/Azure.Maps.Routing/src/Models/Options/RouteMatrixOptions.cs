@@ -42,7 +42,7 @@ namespace Azure.Maps.Routing
         /// The default sectionType refers to the travelMode input. By default travelMode is set to car.
         /// Allowed values: <c>SectionType.CarOrTrain</c>, <c>SectionType.Country</c>, <c>SectionType.Ferry</c>, <c>SectionType.MotorWay</c>, <c>SectionType.Pedestrian</c>, <c>SectionType.TollRoad</c>, <c>SectionType.TollVignette</c>, <c>SectionType.Traffic</c>, <c>SectionType.TravelModel</c>, <c>SectionType.Tunnel</c>, <c>SectionType.Carpool</c>, or <c>SectionType.Urban</c>
         /// </summary>
-        public SectionType? SectionFilter { get; set; }
+        public IList<SectionType> SectionFilter { get; } = new List<SectionType>();
 
         /// <summary> The date and time of arrival at the destination point. It must be specified as a dateTime. When a time zone offset is not specified it will be assumed to be that of the destination point. The arriveAt value must be in the future. The arriveAt parameter cannot be used in conjunction with DepartAt, MinDeviationDistance or MinDeviationTime. </summary>
         public DateTimeOffset? ArriveAt { get; set; }

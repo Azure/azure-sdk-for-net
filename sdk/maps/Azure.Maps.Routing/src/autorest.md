@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/3e81da30a1358b6ffcbc7ff222aae5f483971d32/specification/maps/data-plane/Route/preview/1.0/route.json
+- https://github.com/Azure/azure-rest-api-specs/blob/31c94bc93e096644eb9b56af6872ebcfd3043e19/specification/maps/data-plane/Route/preview/1.0/route.json
 title: RouteClient
 openapi-type: data-plane
 tag: 1.0

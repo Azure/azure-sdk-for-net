@@ -43,7 +43,7 @@ namespace Azure.Maps.Routing
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateRequestRouteMatrixRequest(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults, TravelTimeType? computeTravelTime, SectionType? filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType)
+        internal HttpMessage CreateRequestRouteMatrixRequest(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults, TravelTimeType? computeTravelTime, IEnumerable<SectionType> filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -61,9 +61,12 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("computeTravelTimeFor", computeTravelTime.Value.ToString(), true);
             }
-            if (filterSectionType != null)
+            if (filterSectionType != null && !(filterSectionType is Common.ChangeTrackingList<SectionType> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQuery("sectionType", filterSectionType.Value.ToString(), true);
+                foreach (var param in filterSectionType)
+                {
+                    uri.AppendQuery("sectionType", param.ToString(), true);
+                }
             }
             if (arriveAt != null)
             {
@@ -109,7 +112,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -244,7 +247,7 @@ namespace Azure.Maps.Routing
         ///
         ///   &gt; HTTP `200 OK` - Matrix request successfully processed. The response body contains all of the results.
         /// </remarks>
-        public async Task<ResponseWithHeaders<RouteRequestRouteMatrixHeaders>> RequestRouteMatrixAsync(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, SectionType? filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<RouteRequestRouteMatrixHeaders>> RequestRouteMatrixAsync(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, IEnumerable<SectionType> filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
         {
             if (routeMatrixQuery == null)
             {
@@ -367,7 +370,7 @@ namespace Azure.Maps.Routing
         ///
         ///   &gt; HTTP `200 OK` - Matrix request successfully processed. The response body contains all of the results.
         /// </remarks>
-        public ResponseWithHeaders<RouteRequestRouteMatrixHeaders> RequestRouteMatrix(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, SectionType? filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<RouteRequestRouteMatrixHeaders> RequestRouteMatrix(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, IEnumerable<SectionType> filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
         {
             if (routeMatrixQuery == null)
             {
@@ -596,7 +599,7 @@ namespace Azure.Maps.Routing
             }
         }
 
-        internal HttpMessage CreateRequestRouteMatrixSyncRequest(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults, TravelTimeType? computeTravelTime, SectionType? filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType)
+        internal HttpMessage CreateRequestRouteMatrixSyncRequest(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults, TravelTimeType? computeTravelTime, IEnumerable<SectionType> filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -614,9 +617,12 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("computeTravelTimeFor", computeTravelTime.Value.ToString(), true);
             }
-            if (filterSectionType != null)
+            if (filterSectionType != null && !(filterSectionType is Common.ChangeTrackingList<SectionType> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQuery("sectionType", filterSectionType.Value.ToString(), true);
+                foreach (var param in filterSectionType)
+                {
+                    uri.AppendQuery("sectionType", param.ToString(), true);
+                }
             }
             if (arriveAt != null)
             {
@@ -662,7 +668,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -797,7 +803,7 @@ namespace Azure.Maps.Routing
         ///
         ///   &gt; HTTP `200 OK` - Matrix request successfully processed. The response body contains all of the results.
         /// </remarks>
-        public async Task<Response<RouteMatrixResult>> RequestRouteMatrixSyncAsync(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, SectionType? filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RouteMatrixResult>> RequestRouteMatrixSyncAsync(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, IEnumerable<SectionType> filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
         {
             if (routeMatrixQuery == null)
             {
@@ -923,7 +929,7 @@ namespace Azure.Maps.Routing
         ///
         ///   &gt; HTTP `200 OK` - Matrix request successfully processed. The response body contains all of the results.
         /// </remarks>
-        public Response<RouteMatrixResult> RequestRouteMatrixSync(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, SectionType? filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
+        public Response<RouteMatrixResult> RequestRouteMatrixSync(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, IEnumerable<SectionType> filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
         {
             if (routeMatrixQuery == null)
             {
@@ -946,7 +952,7 @@ namespace Azure.Maps.Routing
             }
         }
 
-        internal HttpMessage CreateGetRouteDirectionsRequest(ResponseFormat format, string routePoints, int? maxAlternatives, AlternativeRouteType? alternativeType, int? minDeviationDistance, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? minDeviationTime, RouteInstructionsType? instructionsType, string language, bool? computeBestWaypointOrder, RouteRepresentationForBestOrder? routeRepresentationForBestOrder, TravelTimeType? computeTravelTime, int? vehicleHeading, Report? report, SectionType? filterSectionType, int? vehicleAxleWeight, double? vehicleWidth, double? vehicleHeight, double? vehicleLength, int? vehicleMaxSpeed, int? vehicleWeight, bool? isCommercialVehicle, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType, VehicleEngineType? vehicleEngineType, string constantSpeedConsumptionInLitersPerHundredKm, double? currentFuelInLiters, double? auxiliaryPowerInLitersPerHour, double? fuelEnergyDensityInMegajoulesPerLiter, double? accelerationEfficiency, double? decelerationEfficiency, double? uphillEfficiency, double? downhillEfficiency, string constantSpeedConsumptionInKwHPerHundredKm, double? currentChargeInKwH, double? maxChargeInKwH, double? auxiliaryPowerInKw)
+        internal HttpMessage CreateGetRouteDirectionsRequest(ResponseFormat format, string routePoints, int? maxAlternatives, AlternativeRouteType? alternativeType, int? minDeviationDistance, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? minDeviationTime, RouteInstructionsType? instructionsType, string language, bool? computeBestWaypointOrder, RouteRepresentationForBestOrder? routeRepresentationForBestOrder, TravelTimeType? computeTravelTime, int? vehicleHeading, Report? report, IEnumerable<SectionType> filterSectionType, int? vehicleAxleWeight, double? vehicleWidth, double? vehicleHeight, double? vehicleLength, int? vehicleMaxSpeed, int? vehicleWeight, bool? isCommercialVehicle, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType, VehicleEngineType? vehicleEngineType, string constantSpeedConsumptionInLitersPerHundredKm, double? currentFuelInLiters, double? auxiliaryPowerInLitersPerHour, double? fuelEnergyDensityInMegajoulesPerLiter, double? accelerationEfficiency, double? decelerationEfficiency, double? uphillEfficiency, double? downhillEfficiency, string constantSpeedConsumptionInKwHPerHundredKm, double? currentChargeInKwH, double? maxChargeInKwH, double? auxiliaryPowerInKw)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1009,9 +1015,12 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("report", report.Value.ToString(), true);
             }
-            if (filterSectionType != null)
+            if (filterSectionType != null && !(filterSectionType is Common.ChangeTrackingList<SectionType> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQuery("sectionType", filterSectionType.Value.ToString(), true);
+                foreach (var param in filterSectionType)
+                {
+                    uri.AppendQuery("sectionType", param.ToString(), true);
+                }
             }
             if (vehicleAxleWeight != null)
             {
@@ -1053,7 +1062,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -1342,7 +1351,7 @@ namespace Azure.Maps.Routing
         ///
         /// Routing service provides a set of parameters for a detailed description of a vehicle-specific consumption model. For more information, see [Consumption Model](/azure/azure-maps/consumption-model).
         /// </remarks>
-        public async Task<Response<RouteDirections>> GetRouteDirectionsAsync(ResponseFormat format, string routePoints, int? maxAlternatives = null, AlternativeRouteType? alternativeType = null, int? minDeviationDistance = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? minDeviationTime = null, RouteInstructionsType? instructionsType = null, string language = null, bool? computeBestWaypointOrder = null, RouteRepresentationForBestOrder? routeRepresentationForBestOrder = null, TravelTimeType? computeTravelTime = null, int? vehicleHeading = null, Report? report = null, SectionType? filterSectionType = null, int? vehicleAxleWeight = null, double? vehicleWidth = null, double? vehicleHeight = null, double? vehicleLength = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RouteDirections>> GetRouteDirectionsAsync(ResponseFormat format, string routePoints, int? maxAlternatives = null, AlternativeRouteType? alternativeType = null, int? minDeviationDistance = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? minDeviationTime = null, RouteInstructionsType? instructionsType = null, string language = null, bool? computeBestWaypointOrder = null, RouteRepresentationForBestOrder? routeRepresentationForBestOrder = null, TravelTimeType? computeTravelTime = null, int? vehicleHeading = null, Report? report = null, IEnumerable<SectionType> filterSectionType = null, int? vehicleAxleWeight = null, double? vehicleWidth = null, double? vehicleHeight = null, double? vehicleLength = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
         {
             if (routePoints == null)
             {
@@ -1574,7 +1583,7 @@ namespace Azure.Maps.Routing
         ///
         /// Routing service provides a set of parameters for a detailed description of a vehicle-specific consumption model. For more information, see [Consumption Model](/azure/azure-maps/consumption-model).
         /// </remarks>
-        public Response<RouteDirections> GetRouteDirections(ResponseFormat format, string routePoints, int? maxAlternatives = null, AlternativeRouteType? alternativeType = null, int? minDeviationDistance = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? minDeviationTime = null, RouteInstructionsType? instructionsType = null, string language = null, bool? computeBestWaypointOrder = null, RouteRepresentationForBestOrder? routeRepresentationForBestOrder = null, TravelTimeType? computeTravelTime = null, int? vehicleHeading = null, Report? report = null, SectionType? filterSectionType = null, int? vehicleAxleWeight = null, double? vehicleWidth = null, double? vehicleHeight = null, double? vehicleLength = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
+        public Response<RouteDirections> GetRouteDirections(ResponseFormat format, string routePoints, int? maxAlternatives = null, AlternativeRouteType? alternativeType = null, int? minDeviationDistance = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? minDeviationTime = null, RouteInstructionsType? instructionsType = null, string language = null, bool? computeBestWaypointOrder = null, RouteRepresentationForBestOrder? routeRepresentationForBestOrder = null, TravelTimeType? computeTravelTime = null, int? vehicleHeading = null, Report? report = null, IEnumerable<SectionType> filterSectionType = null, int? vehicleAxleWeight = null, double? vehicleWidth = null, double? vehicleHeight = null, double? vehicleLength = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
         {
             if (routePoints == null)
             {
@@ -1597,7 +1606,7 @@ namespace Azure.Maps.Routing
             }
         }
 
-        internal HttpMessage CreateGetRouteDirectionsWithAdditionalParametersRequest(ResponseFormat format, string routePoints, RouteDirectionParameters routeDirectionParameters, int? maxAlternatives, AlternativeRouteType? alternativeType, int? minDeviationDistance, int? minDeviationTime, RouteInstructionsType? instructionsType, string language, bool? computeBestWaypointOrder, RouteRepresentationForBestOrder? routeRepresentationForBestOrder, TravelTimeType? computeTravelTime, int? vehicleHeading, Report? report, SectionType? filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, bool? isCommercialVehicle, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType, VehicleEngineType? vehicleEngineType, string constantSpeedConsumptionInLitersPerHundredKm, double? currentFuelInLiters, double? auxiliaryPowerInLitersPerHour, double? fuelEnergyDensityInMegajoulesPerLiter, double? accelerationEfficiency, double? decelerationEfficiency, double? uphillEfficiency, double? downhillEfficiency, string constantSpeedConsumptionInKwHPerHundredKm, double? currentChargeInKwH, double? maxChargeInKwH, double? auxiliaryPowerInKw)
+        internal HttpMessage CreateGetRouteDirectionsWithAdditionalParametersRequest(ResponseFormat format, string routePoints, RouteDirectionParameters routeDirectionParameters, int? maxAlternatives, AlternativeRouteType? alternativeType, int? minDeviationDistance, int? minDeviationTime, RouteInstructionsType? instructionsType, string language, bool? computeBestWaypointOrder, RouteRepresentationForBestOrder? routeRepresentationForBestOrder, TravelTimeType? computeTravelTime, int? vehicleHeading, Report? report, IEnumerable<SectionType> filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, bool? isCommercialVehicle, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType, VehicleEngineType? vehicleEngineType, string constantSpeedConsumptionInLitersPerHundredKm, double? currentFuelInLiters, double? auxiliaryPowerInLitersPerHour, double? fuelEnergyDensityInMegajoulesPerLiter, double? accelerationEfficiency, double? decelerationEfficiency, double? uphillEfficiency, double? downhillEfficiency, string constantSpeedConsumptionInKwHPerHundredKm, double? currentChargeInKwH, double? maxChargeInKwH, double? auxiliaryPowerInKw)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1652,9 +1661,12 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("report", report.Value.ToString(), true);
             }
-            if (filterSectionType != null)
+            if (filterSectionType != null && !(filterSectionType is Common.ChangeTrackingList<SectionType> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQuery("sectionType", filterSectionType.Value.ToString(), true);
+                foreach (var param in filterSectionType)
+                {
+                    uri.AppendQuery("sectionType", param.ToString(), true);
+                }
             }
             if (arriveAt != null)
             {
@@ -1704,7 +1716,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -2004,7 +2016,7 @@ namespace Azure.Maps.Routing
         ///
         /// Routing service provides a set of parameters for a detailed description of a vehicle-specific Consumption Model. Please check [Consumption Model](https://docs.microsoft.com/azure/azure-maps/consumption-model) for detailed explanation of the concepts and parameters involved.
         /// </remarks>
-        public async Task<Response<RouteDirections>> GetRouteDirectionsWithAdditionalParametersAsync(ResponseFormat format, string routePoints, RouteDirectionParameters routeDirectionParameters, int? maxAlternatives = null, AlternativeRouteType? alternativeType = null, int? minDeviationDistance = null, int? minDeviationTime = null, RouteInstructionsType? instructionsType = null, string language = null, bool? computeBestWaypointOrder = null, RouteRepresentationForBestOrder? routeRepresentationForBestOrder = null, TravelTimeType? computeTravelTime = null, int? vehicleHeading = null, Report? report = null, SectionType? filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RouteDirections>> GetRouteDirectionsWithAdditionalParametersAsync(ResponseFormat format, string routePoints, RouteDirectionParameters routeDirectionParameters, int? maxAlternatives = null, AlternativeRouteType? alternativeType = null, int? minDeviationDistance = null, int? minDeviationTime = null, RouteInstructionsType? instructionsType = null, string language = null, bool? computeBestWaypointOrder = null, RouteRepresentationForBestOrder? routeRepresentationForBestOrder = null, TravelTimeType? computeTravelTime = null, int? vehicleHeading = null, Report? report = null, IEnumerable<SectionType> filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
         {
             if (routePoints == null)
             {
@@ -2247,7 +2259,7 @@ namespace Azure.Maps.Routing
         ///
         /// Routing service provides a set of parameters for a detailed description of a vehicle-specific Consumption Model. Please check [Consumption Model](https://docs.microsoft.com/azure/azure-maps/consumption-model) for detailed explanation of the concepts and parameters involved.
         /// </remarks>
-        public Response<RouteDirections> GetRouteDirectionsWithAdditionalParameters(ResponseFormat format, string routePoints, RouteDirectionParameters routeDirectionParameters, int? maxAlternatives = null, AlternativeRouteType? alternativeType = null, int? minDeviationDistance = null, int? minDeviationTime = null, RouteInstructionsType? instructionsType = null, string language = null, bool? computeBestWaypointOrder = null, RouteRepresentationForBestOrder? routeRepresentationForBestOrder = null, TravelTimeType? computeTravelTime = null, int? vehicleHeading = null, Report? report = null, SectionType? filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
+        public Response<RouteDirections> GetRouteDirectionsWithAdditionalParameters(ResponseFormat format, string routePoints, RouteDirectionParameters routeDirectionParameters, int? maxAlternatives = null, AlternativeRouteType? alternativeType = null, int? minDeviationDistance = null, int? minDeviationTime = null, RouteInstructionsType? instructionsType = null, string language = null, bool? computeBestWaypointOrder = null, RouteRepresentationForBestOrder? routeRepresentationForBestOrder = null, TravelTimeType? computeTravelTime = null, int? vehicleHeading = null, Report? report = null, IEnumerable<SectionType> filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, bool? isCommercialVehicle = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, VehicleEngineType? vehicleEngineType = null, string constantSpeedConsumptionInLitersPerHundredKm = null, double? currentFuelInLiters = null, double? auxiliaryPowerInLitersPerHour = null, double? fuelEnergyDensityInMegajoulesPerLiter = null, double? accelerationEfficiency = null, double? decelerationEfficiency = null, double? uphillEfficiency = null, double? downhillEfficiency = null, string constantSpeedConsumptionInKwHPerHundredKm = null, double? currentChargeInKwH = null, double? maxChargeInKwH = null, double? auxiliaryPowerInKw = null, CancellationToken cancellationToken = default)
         {
             if (routePoints == null)
             {
@@ -2870,7 +2882,10 @@ namespace Azure.Maps.Routing
         /// The asynchronous responses are stored for **14** days. The redirect URL returns a 404 response if used after the expiration period.
         ///
         /// Please note that asynchronous batch request is a long-running operation. Here's a typical sequence of operations:
-        /// 1. Client sends a Route Directions Batch `POST` request to Azure Maps
+        /// 1. Client sends a Route Directions Batch `POST` request to Azure Maps.
+        /// ```
+        /// POST https://atlas.microsoft.com/route/directions/batch/json?api-version=1.0&amp;subscription-key={subscription-key}
+        /// ```
         /// 2. The server will respond with one of the following:
         ///
         ///     &gt; HTTP `202 Accepted` - Batch request has been accepted.
@@ -2879,9 +2894,9 @@ namespace Azure.Maps.Routing
         ///
         /// 3. If the batch request was accepted successfully, the `Location` header in the response contains the URL to download the results of the batch request.
         ///     This status URI looks like following:
-        ///
-        /// ``` GET https://atlas.microsoft.com/route/directions/batch/{batch-id}?api-version=1.0 ```
-        /// Note:- Please remember to add AUTH information (subscription-key/azure_auth - See [Security](#security)) to the _status URI_ before running it. &lt;br&gt;
+        /// ```
+        /// GET https://atlas.microsoft.com/route/directions/batch/{batch-id}?api-version=1.0&amp;subscription-key={subscription-key}
+        /// ```
         /// 4. Client issues a `GET` request on the _download URL_ obtained in Step 3 to download the batch results.
         ///
         /// ### POST Body for Batch Request
@@ -3041,7 +3056,10 @@ namespace Azure.Maps.Routing
         /// The asynchronous responses are stored for **14** days. The redirect URL returns a 404 response if used after the expiration period.
         ///
         /// Please note that asynchronous batch request is a long-running operation. Here's a typical sequence of operations:
-        /// 1. Client sends a Route Directions Batch `POST` request to Azure Maps
+        /// 1. Client sends a Route Directions Batch `POST` request to Azure Maps.
+        /// ```
+        /// POST https://atlas.microsoft.com/route/directions/batch/json?api-version=1.0&amp;subscription-key={subscription-key}
+        /// ```
         /// 2. The server will respond with one of the following:
         ///
         ///     &gt; HTTP `202 Accepted` - Batch request has been accepted.
@@ -3050,9 +3068,9 @@ namespace Azure.Maps.Routing
         ///
         /// 3. If the batch request was accepted successfully, the `Location` header in the response contains the URL to download the results of the batch request.
         ///     This status URI looks like following:
-        ///
-        /// ``` GET https://atlas.microsoft.com/route/directions/batch/{batch-id}?api-version=1.0 ```
-        /// Note:- Please remember to add AUTH information (subscription-key/azure_auth - See [Security](#security)) to the _status URI_ before running it. &lt;br&gt;
+        /// ```
+        /// GET https://atlas.microsoft.com/route/directions/batch/{batch-id}?api-version=1.0&amp;subscription-key={subscription-key}
+        /// ```
         /// 4. Client issues a `GET` request on the _download URL_ obtained in Step 3 to download the batch results.
         ///
         /// ### POST Body for Batch Request
