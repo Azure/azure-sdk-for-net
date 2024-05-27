@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DnsDSRecordInfo : IUtf8JsonSerializable
+    public partial class DnsDSRecordInfo : IUtf8JsonSerializable, IJsonModel<DnsDSRecordInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsDSRecordInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DnsDSRecordInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsDSRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DnsDSRecordInfo)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyTag))
             {
@@ -28,20 +39,51 @@ namespace Azure.ResourceManager.Dns.Models
             if (Optional.IsDefined(Digest))
             {
                 writer.WritePropertyName("digest"u8);
-                writer.WriteObjectValue(Digest);
+                writer.WriteObjectValue(Digest, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static DnsDSRecordInfo DeserializeDnsDSRecordInfo(JsonElement element)
+        DnsDSRecordInfo IJsonModel<DnsDSRecordInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsDSRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DnsDSRecordInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsDSRecordInfo(document.RootElement, options);
+        }
+
+        internal static DnsDSRecordInfo DeserializeDnsDSRecordInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> keyTag = default;
-            Optional<int> algorithm = default;
-            Optional<DSRecordDigest> digest = default;
+            int? keyTag = default;
+            int? algorithm = default;
+            DSRecordDigest digest = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyTag"u8))
@@ -68,11 +110,47 @@ namespace Azure.ResourceManager.Dns.Models
                     {
                         continue;
                     }
-                    digest = DSRecordDigest.DeserializeDSRecordDigest(property.Value);
+                    digest = DSRecordDigest.DeserializeDSRecordDigest(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DnsDSRecordInfo(Optional.ToNullable(keyTag), Optional.ToNullable(algorithm), digest.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DnsDSRecordInfo(keyTag, algorithm, digest, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DnsDSRecordInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsDSRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DnsDSRecordInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DnsDSRecordInfo IPersistableModel<DnsDSRecordInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsDSRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDnsDSRecordInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DnsDSRecordInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DnsDSRecordInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
