@@ -1913,11 +1913,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="data"> Parameters required in order to resolve a private link service ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<ContainerServicePrivateLinkResourceData>> PostResolvePrivateLinkServiceIdAsync(ContainerServicePrivateLinkResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServicePrivateLinkResourceData>> ResolvePrivateLinkServiceIdAsync(ContainerServicePrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _resolvePrivateLinkServiceIdClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.PostResolvePrivateLinkServiceId");
+            using var scope = _resolvePrivateLinkServiceIdClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.ResolvePrivateLinkServiceId");
             scope.Start();
             try
             {
@@ -1951,11 +1951,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="data"> Parameters required in order to resolve a private link service ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<ContainerServicePrivateLinkResourceData> PostResolvePrivateLinkServiceId(ContainerServicePrivateLinkResourceData data, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServicePrivateLinkResourceData> ResolvePrivateLinkServiceId(ContainerServicePrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _resolvePrivateLinkServiceIdClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.PostResolvePrivateLinkServiceId");
+            using var scope = _resolvePrivateLinkServiceIdClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.ResolvePrivateLinkServiceId");
             scope.Start();
             try
             {
