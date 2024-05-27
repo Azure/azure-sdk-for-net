@@ -1,15 +1,13 @@
 # Azure AI Face client library for .NET
 
-The Azure AI Face service provides AI algorithms that detect, recognize, and analyze human faces in images.
-
-Use the client library for to:
+The Azure AI Face service provides AI algorithms that detect, recognize, and analyze human faces in images. It includes the following main features:
 
 - Face detection and analysis
 - Liveness detection
 - Face recognition
   - Face verification ("one-to-one" matching)
-  - Find similar faces
-  - Group faces
+- Find similar faces
+- Group faces
 
 [Source code][source_code] | [Package (NuGet)][face_nuget] | [API reference documentation][face_ref_docs] | [Product documentation][face_product_docs] | [Samples][face_samples]
 
@@ -42,9 +40,9 @@ In order to interact with the Face service, you will need to create an instance 
 An **endpoint** and **credential** are necessary to instantiate the client object.
 For enhanced security, we strongly recommend utilizing Microsoft Entra ID credential for authentication in the production environment, while AzureKeyCredential should be reserved exclusively for the testing environment.
 
-#### Get the endpoint and API keys
+#### Get the endpoint
 
-You can find the endpoint and keys for your Face resource using the [Azure Portal][get_endpoint_via_azure_portal] or [Azure CLI][get_endpoint_via_azure_cli]:
+You can find the endpoint for your Face resource using the [Azure Portal][get_endpoint_via_azure_portal] or [Azure CLI][get_endpoint_via_azure_cli]:
 
 ```bash
 # Get the endpoint for the Face resource
@@ -62,14 +60,9 @@ A regional endpoint is the same for every resource in a region. A complete list 
 
 A custom subdomain, on the other hand, is a name that is unique to the Face resource. They can only be used by [single-service resources][azure_portal_create_face_account].
 
-```bash
-# Get the API keys for the Face resource
-az cognitiveservices account keys list --name "<resource-name>" --resource-group "<resource-group-name>"
-```
-
 #### Create the client with a Microsoft Entra ID credential
 
-You can authenticate our service with Microsoft Entra ID using the [azure-identity][azure_sdk_net_identity] library.
+You can authenticate our service with Microsoft Entra ID using the [Azure Identity][azure_sdk_net_identity] library.
 Note that regional endpoints do not support Microsoft Entra ID authentication. Create a [custom subdomain][custom_subdomain] name for your resource in order to use this type of authentication.
 
 To use the [DefaultAzureCredential][azure_sdk_net_default_azure_credential] type shown below, or other credential types provided with the Azure SDK, please install the `azure-identity` package:
@@ -91,7 +84,12 @@ var client = new FaceClient(endpoint, credential);
 
 #### Create the client with AzureKeyCredential
 
-To use an API key as the `credential` parameter, pass the key as a string into an instance of [AzureKeyCredential][azure_sdk_net_azure_key_credential].
+To use an API key as the `credential` parameter, pass the key as a string into an instance of [AzureKeyCredential][azure_sdk_net_azure_key_credential]. You can find the key for your Face resource using the [Azure Portal][get_endpoint_via_azure_portal] or [Azure CLI][get_endpoint_via_azure_cli]:
+
+```bash
+# Get the API keys for the Face resource
+az cognitiveservices account keys list --name "<resource-name>" --resource-group "<resource-group-name>"
+```
 
 ```C# Snippet:CreateFaceClientWithKey
 Uri endpoint = new Uri("<your endpoint>");
@@ -235,7 +233,7 @@ Console.WriteLine($"Session created, SessionId: {sessionId}");
 Console.WriteLine($"AuthToken: {createResponse.Value.AuthToken}");
 ```
 
-After you've performed liveness detection with verification , you can retrieve the result by providing the session ID.
+After you've performed liveness detection, you can retrieve the result by providing the session ID.
 
 ```C# Snippet:GetLivenessSessionResult
 var getResultResponse = sessionClient.GetLivenessSessionResult(sessionId);
