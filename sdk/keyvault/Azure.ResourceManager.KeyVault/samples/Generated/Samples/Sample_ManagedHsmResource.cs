@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
         // Validate a managed hsm name
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckManagedHsmNameAvailabilityManagedHsm_ValidateAManagedHsmName()
+        public async Task CheckManagedHsmNameAvailability_ValidateAManagedHsmName()
         {
             // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/examples/ManagedHsm_checkMhsmNameAvailability.json
             // this example is just showing the usage of "ManagedHsms_CheckManagedHsmNameAvailability" operation, for the dependent resources, they will have to be created separately.
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
 
             // invoke the operation
             ManagedHsmNameAvailabilityContent content = new ManagedHsmNameAvailabilityContent("sample-mhsm");
-            ManagedHsmNameAvailabilityResult result = await subscriptionResource.CheckManagedHsmNameAvailabilityManagedHsmAsync(content);
+            ManagedHsmNameAvailabilityResult result = await subscriptionResource.CheckManagedHsmNameAvailabilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

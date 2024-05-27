@@ -241,7 +241,7 @@ IsDirectory = false,
         // CloudEndpoints_restoreheartbeat
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Restoreheartbeat_CloudEndpointsRestoreheartbeat()
+        public async Task RestoreHeartbeat_CloudEndpointsRestoreheartbeat()
         {
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_RestoreHeatbeat.json
             // this example is just showing the usage of "CloudEndpoints_Restoreheartbeat" operation, for the dependent resources, they will have to be created separately.
@@ -262,7 +262,7 @@ IsDirectory = false,
             CloudEndpointResource cloudEndpoint = client.GetCloudEndpointResource(cloudEndpointResourceId);
 
             // invoke the operation
-            await cloudEndpoint.RestoreheartbeatAsync();
+            await cloudEndpoint.RestoreHeartbeatAsync();
 
             Console.WriteLine($"Succeeded");
         }
