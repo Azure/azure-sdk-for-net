@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         // NameAvailabilityV2Test_NameAvailablePOST21
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckTrafficManagerNameAvailabilityV2Profile_NameAvailabilityV2TestNameAvailablePOST21()
+        public async Task CheckTrafficManagerNameAvailabilityV2_NameAvailabilityV2TestNameAvailablePOST21()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/NameAvailabilityV2Test_NameAvailable-POST-example-21.json
             // this example is just showing the usage of "Profiles_CheckTrafficManagerNameAvailabilityV2" operation, for the dependent resources, they will have to be created separately.
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
                 Name = "azsmnet5403",
                 ResourceType = new ResourceType("microsoft.network/trafficmanagerprofiles"),
             };
-            TrafficManagerNameAvailabilityResult result = await subscriptionResource.CheckTrafficManagerNameAvailabilityV2ProfileAsync(content);
+            TrafficManagerNameAvailabilityResult result = await subscriptionResource.CheckTrafficManagerNameAvailabilityV2Async(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
         // NameAvailabilityV2Test_NameNotAvailablePOST23
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckTrafficManagerNameAvailabilityV2Profile_NameAvailabilityV2TestNameNotAvailablePOST23()
+        public async Task CheckTrafficManagerNameAvailabilityV2_NameAvailabilityV2TestNameNotAvailablePOST23()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/NameAvailabilityV2Test_NameNotAvailable-POST-example-23.json
             // this example is just showing the usage of "Profiles_CheckTrafficManagerNameAvailabilityV2" operation, for the dependent resources, they will have to be created separately.
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.TrafficManager.Samples
                 Name = "azsmnet4696",
                 ResourceType = new ResourceType("microsoft.network/trafficmanagerprofiles"),
             };
-            TrafficManagerNameAvailabilityResult result = await subscriptionResource.CheckTrafficManagerNameAvailabilityV2ProfileAsync(content);
+            TrafficManagerNameAvailabilityResult result = await subscriptionResource.CheckTrafficManagerNameAvailabilityV2Async(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
