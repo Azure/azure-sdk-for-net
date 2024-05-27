@@ -61,7 +61,7 @@ namespace Azure.AI.Translation.Text.Tests
             TextTranslationClient client = new TextTranslationClient(Credential, new Uri(endpoint));
             try
             {
-                await client.GetLanguagesAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                await client.GetSupportedLanguagesAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
             }
             catch (RequestFailedException e) when (e.Status == 401)
             {
