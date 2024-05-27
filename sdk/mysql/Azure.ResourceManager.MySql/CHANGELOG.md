@@ -1,14 +1,11 @@
 # Release History
 
-## 1.1.0-beta.6 (Unreleased)
+## 1.1.0-beta.6 (0204-05-27)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Add `GetDetailedStatus` to retrieve the operation detailed status for a long running operation `MySqlFlexibleServerResource.CreateBackupAndExport`.
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ## 1.1.0-beta.5 (2024-03-14)
 
