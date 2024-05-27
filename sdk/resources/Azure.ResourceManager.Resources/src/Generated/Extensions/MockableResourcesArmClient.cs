@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Mocking
@@ -32,6 +35,78 @@ namespace Azure.ResourceManager.Resources.Mocking
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary> Gets a collection of DeploymentStackResources in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of DeploymentStackResources and their operations over a DeploymentStackResource. </returns>
+        public virtual DeploymentStackCollection GetDeploymentStacks(ResourceIdentifier scope)
+        {
+            return new DeploymentStackCollection(Client, scope);
+        }
+
+        /// <summary>
+        /// Gets a Deployment stack with a given name at specific scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DeploymentStackResource>> GetDeploymentStackAsync(ResourceIdentifier scope, string deploymentStackName, CancellationToken cancellationToken = default)
+        {
+            return await GetDeploymentStacks(scope).GetAsync(deploymentStackName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a Deployment stack with a given name at specific scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentStackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DeploymentStackResource> GetDeploymentStack(ResourceIdentifier scope, string deploymentStackName, CancellationToken cancellationToken = default)
+        {
+            return GetDeploymentStacks(scope).Get(deploymentStackName, cancellationToken);
         }
 
         /// <summary>
@@ -128,6 +203,18 @@ namespace Azure.ResourceManager.Resources.Mocking
         {
             JitRequestResource.ValidateResourceId(id);
             return new JitRequestResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DeploymentStackResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeploymentStackResource.CreateResourceIdentifier" /> to create a <see cref="DeploymentStackResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeploymentStackResource"/> object. </returns>
+        public virtual DeploymentStackResource GetDeploymentStackResource(ResourceIdentifier id)
+        {
+            DeploymentStackResource.ValidateResourceId(id);
+            return new DeploymentStackResource(Client, id);
         }
     }
 }
