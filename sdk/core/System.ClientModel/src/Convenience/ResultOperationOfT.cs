@@ -19,5 +19,9 @@ public abstract class ResultOperation<T> : ResultOperation
     public abstract ValueTask<ClientResult<T>> WaitForCompletionAsync(TimeSpan? pollingInterval =default, CancellationToken cancellationToken = default);
 
     public abstract ClientResult<T> WaitForCompletion(TimeSpan? pollingInterval = default, CancellationToken cancellationToken = default);
+
+    public abstract ValueTask<ClientResult<(string Status, T? Value)>> WaitForStatusChangeAsync(TimeSpan? pollingInterval = default, CancellationToken cancellationToken = default);
+
+    public abstract ClientResult<(string Status, T? Value)> WaitForStatusChange(TimeSpan? pollingInterval = default, CancellationToken cancellationToken = default);
 }
 #pragma warning restore CS1591 // public XML comments

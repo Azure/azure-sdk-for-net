@@ -19,6 +19,10 @@ public abstract class ResultOperation : ClientResult
 
     public bool HasCompleted { get; protected set; }
 
+    // TODO: is status nullable, or do we set it to a default
+    // starting/pending status?
+    public string? Status { get; protected set; }
+
     // TODO: Should we take a cancellationToken, since third-party convenience methods don't?
     // TODO: Should we take a RequestOptions?
     //   i.e. Is the non-T version of this for protocol-level, or only for operations that
@@ -34,5 +38,9 @@ public abstract class ResultOperation : ClientResult
 
     // TODO: should these be virtual with an internal poller implementation?
     // TODO: should we have something like DelayStrategy?
+
+    public abstract ValueTask<ClientResult<string>> WaitForStatusChangeResultAsync(TimeSpan? pollingInterval = default, CancellationToken cancellationToken = default);
+
+    public abstract ClientResult<string> WaitForStatusChangeResult(TimeSpan? pollingInterval = default, CancellationToken cancellationToken = default);
 }
 #pragma warning restore CS1591 // public XML comments
