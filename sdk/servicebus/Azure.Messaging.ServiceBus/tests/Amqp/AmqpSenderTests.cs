@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -56,6 +57,40 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.That(batch, Is.Not.Null, "The created batch should be populated.");
             Assert.That(batch, Is.InstanceOf<AmqpMessageBatch>(), $"The created batch should be an {nameof(AmqpMessageBatch)}.");
             Assert.That(GetEventBatchOptions((AmqpMessageBatch)batch), Is.SameAs(options), "The provided options should have been used.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpSender.CreateBatchAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateBatchAsyncThrowsWhenLargeMessageSupportIsEnabled()
+        {
+            var options = new CreateMessageBatchOptions();
+            var retryPolicy = new BasicRetryPolicy(new ServiceBusRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
+            string entityPath = "somePath";
+            int maximumMessageSizeInBytes = 1500;
+
+            var sender = new Mock<AmqpSender>(entityPath, Mock.Of<AmqpConnectionScope>(), retryPolicy, "fake-id", new AmqpMessageConverter())
+            {
+                CallBase = true
+            };
+
+            sender
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureSenderStateAsync",
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Callback(() => SetMaxMessageSize(sender.Object, maximumMessageSizeInBytes))
+                .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())))
+                .Verifiable();
+
+            var serviceBusException = Assert.ThrowsAsync<ServiceBusException>(async () => await sender.Object.CreateMessageBatchAsync(options, default));
+
+            Assert.That(serviceBusException.EntityPath, Is.EqualTo(entityPath), "The entity path should be set.");
+            Assert.That(serviceBusException.Reason, Is.EqualTo(ServiceBusFailureReason.GeneralError), "The failure reason should be set.");
+            Assert.That(serviceBusException.Message, Does.StartWith(string.Format(CultureInfo.CurrentCulture, Resources.BatchingNotAvailableWithLargeMessageSupportEnabled, maximumMessageSizeInBytes)), "The created batch should be populated.");
         }
 
         /// <summary>
