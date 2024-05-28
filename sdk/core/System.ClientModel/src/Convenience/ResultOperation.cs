@@ -21,6 +21,10 @@ public abstract class ResultOperation : ClientResult
 
     // TODO: is status nullable, or do we set it to a default
     // starting/pending status?
+    // Note: one advantage of this is that Status being a string matches Id
+    // being a string and then intention of rehydrating from the Id string.
+    // TODO: intention to rehydrate from ID string?  Confirm.  And note
+    //   similarity to continuation token.
     public string? Status { get; protected set; }
 
     // TODO: Should we take a cancellationToken, since third-party convenience methods don't?
