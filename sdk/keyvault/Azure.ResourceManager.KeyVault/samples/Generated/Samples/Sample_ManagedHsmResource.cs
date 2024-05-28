@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.KeyVault.Samples
         // Validate a managed hsm name
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckManagedHsmNameAvailability_ValidateAManagedHsmName()
+        public async Task CheckManagedHsmNameAvailabilityManagedHsm_ValidateAManagedHsmName()
         {
             // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/examples/ManagedHsm_checkMhsmNameAvailability.json
-            // this example is just showing the usage of "ManagedHsms_CheckMhsmNameAvailability" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ManagedHsms_CheckManagedHsmNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
 
             // invoke the operation
             ManagedHsmNameAvailabilityContent content = new ManagedHsmNameAvailabilityContent("sample-mhsm");
-            ManagedHsmNameAvailabilityResult result = await subscriptionResource.CheckManagedHsmNameAvailabilityAsync(content);
+            ManagedHsmNameAvailabilityResult result = await subscriptionResource.CheckManagedHsmNameAvailabilityManagedHsmAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.KeyVault.Samples
         public async Task GetMHSMPrivateLinkResourcesByManagedHsmResource_KeyVaultListPrivateLinkResources()
         {
             // Generated from example definition: specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2023-02-01/examples/ManagedHsm_listPrivateLinkResources.json
-            // this example is just showing the usage of "MHSMPrivateLinkResources_ListByMHSMResource" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "MHSMPrivateLinkResources_ListByManagedHsmResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
