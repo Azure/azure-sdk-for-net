@@ -332,6 +332,10 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>An <see cref="ServiceBusMessageBatch" /> with the requested <paramref name="options"/>.</returns>
         ///
+        /// <exception cref="Azure.Messaging.ServiceBus.ServiceBusException">
+        ///   Occurs when the entity has large message size support enabled.
+        /// </exception>
+        ///
         /// <seealso cref="CreateMessageBatchAsync(CreateMessageBatchOptions, CancellationToken)" />
         ///
         public virtual async ValueTask<ServiceBusMessageBatch> CreateMessageBatchAsync(
