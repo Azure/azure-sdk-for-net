@@ -20,23 +20,22 @@ function Get-Base64EncodedToken([string]$AuthToken)
 # The AccessToken would be the querying the Azure resource with the following command:
 #   az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv
 # The header for an AccessToken requires Bearer authorization
-function Get-DevOpsApiHeaders ($Base64EncodedToken, $AccessToken) {
+function Get-DevOpsApiHeaders {
+  param (
+    $Base64EncodedToken=$null,
+    $BearerToken=$null
+  )
   $headers = $null
-  if (![string]::IsNullOrWhiteSpace($Base64EncodedToken) -and
-      ![string]::IsNullOrWhiteSpace($AccessToken)) {
-        LogError "Get-DevOpsApiHeaders::Unable to set the Authentication in the header because Base64EncodedToken and AccessToken are both set and only one should be."
-        exit 1
-  }
   if (![string]::IsNullOrWhiteSpace($Base64EncodedToken)) {
     $headers = @{
       Authorization = "Basic $Base64EncodedToken"
     }
-  } elseif (![string]::IsNullOrWhiteSpace($AccessToken)) {
+  } elseif (![string]::IsNullOrWhiteSpace($BearerToken)) {
     $headers = @{
-      Authorization = "Bearer $AccessToken"
+      Authorization = "Bearer $BearerToken"
     }
   } else {
-    LogError "Get-DevOpsApiHeaders::Unable to set the Authentication in the header because neither Base64EncodedToken nor AccessToken are set."
+    LogError "Get-DevOpsApiHeaders::Unable to set the Authentication in the header because neither Base64EncodedToken nor BearerToken are set."
     exit 1
   }
   return $headers
@@ -49,8 +48,8 @@ function Start-DevOpsBuild {
     $SourceBranch,
     [Parameter(Mandatory = $true)]
     $DefinitionId,
-    $Base64EncodedAuthToken=$null,
-    $AccessToken=$null,
+    $Base64EncodedToken=$null,
+    $BearerToken=$null,
     [Parameter(Mandatory = $false)]
     [string]$BuildParametersJson
   )
@@ -63,7 +62,7 @@ function Start-DevOpsBuild {
     parameters = $BuildParametersJson
   }
 
-  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken -AccessToken $AccessToken)
+  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedToken -BearerToken $BearerToken)
 
   return Invoke-RestMethod `
           -Method POST `
@@ -82,8 +81,8 @@ function Update-DevOpsBuild {
     [Parameter(Mandatory = $true)]
     $BuildId,
     $Status, # pass canceling to cancel build
-    $Base64EncodedAuthToken,
-    $AccessToken
+    $Base64EncodedToken=$null,
+    $BearerToken=$null
   )
 
   $uri = "$DevOpsAPIBaseURI" -F $Organization, $Project, "build", "builds/$BuildId", ""
@@ -91,7 +90,7 @@ function Update-DevOpsBuild {
 
   if ($Status) { $parameters["status"] = $Status}
 
-  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken -AccessToken $AccessToken)
+  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedToken -BearerToken $BearerToken)
 
   return Invoke-RestMethod `
           -Method PATCH `
@@ -109,8 +108,8 @@ function Get-DevOpsBuilds {
     $BranchName, # Should start with 'refs/heads/'
     $Definitions, # Comma seperated string of definition IDs
     $StatusFilter, # Comma seperated string 'cancelling, completed, inProgress, notStarted'
-    $Base64EncodedAuthToken,
-    $AccessToken
+    $Base64EncodedToken=$null,
+    $BearerToken=$null
   )
 
   $query = ""
@@ -120,7 +119,7 @@ function Get-DevOpsBuilds {
   if ($StatusFilter) { $query += "statusFilter=$StatusFilter&" }
   $uri = "$DevOpsAPIBaseURI" -F $Organization, $Project , "build" , "builds", $query
 
-  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken -AccessToken $AccessToken)
+  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedToken -BearerToken $BearerToken)
 
   return Invoke-RestMethod `
           -Method GET `
@@ -134,13 +133,13 @@ function Delete-RetentionLease {
     $Organization,
     $Project,
     $LeaseId,
-    $Base64EncodedAuthToken,
-    $AccessToken
+    $Base64EncodedToken=$null,
+    $BearerToken=$null
   )
 
   $uri = "https://dev.azure.com/$Organization/$Project/_apis/build/retention/leases?ids=$LeaseId&api-version=6.0-preview.1"
 
-  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken -AccessToken $AccessToken)
+  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedToken -BearerToken $BearerToken)
 
   return Invoke-RestMethod `
     -Method DELETE `
@@ -156,13 +155,13 @@ function Get-RetentionLeases {
     $DefinitionId,
     $RunId,
     $OwnerId,
-    $Base64EncodedAuthToken,
-    $AccessToken
+    $Base64EncodedToken=$null,
+    $BearerToken=$null
   )
 
   $uri = "https://dev.azure.com/$Organization/$Project/_apis/build/retention/leases?ownerId=$OwnerId&definitionId=$DefinitionId&runId=$RunId&api-version=6.0-preview.1"
 
-  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken -AccessToken $AccessToken)
+  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedToken -BearerToken $BearerToken)
 
   return Invoke-RestMethod `
     -Method GET `
@@ -179,8 +178,8 @@ function Add-RetentionLease {
     $RunId,
     $OwnerId,
     $DaysValid,
-    $Base64EncodedAuthToken,
-    $AccessToken
+    $Base64EncodedToken=$null,
+    $BearerToken=$null
   )
 
   $parameter = @{}
@@ -194,7 +193,7 @@ function Add-RetentionLease {
 
   $uri = "https://dev.azure.com/$Organization/$Project/_apis/build/retention/leases?api-version=6.0-preview.1"
 
-  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken -AccessToken $AccessToken)
+  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedToken -BearerToken $BearerToken)
 
   return Invoke-RestMethod `
           -Method POST `
