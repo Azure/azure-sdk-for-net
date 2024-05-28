@@ -29,10 +29,7 @@ Set-StrictMode -Version 3
 
 . (Join-Path $PSScriptRoot common.ps1)
 
-$Base64EncodedToken=$null
-if (![string]::IsNullOrWhiteSpace($AccessToken)) {
-  $Base64EncodedToken = Get-Base64EncodedToken $AccessToken
-}
+$Base64EncodedToken = Get-Base64EncodedToken $AccessToken
 
 LogDebug "Checking for existing leases on run: $RunId"
 $existingLeases = Get-RetentionLeases -Organization $Organization -Project $Project -DefinitionId $DefinitionId -RunId $RunId -OwnerId $OwnerId -Base64EncodedToken $Base64EncodedToken
