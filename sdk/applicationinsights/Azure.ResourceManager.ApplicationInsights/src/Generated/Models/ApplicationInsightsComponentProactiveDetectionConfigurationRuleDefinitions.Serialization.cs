@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("IsInPreview"u8);
                 writer.WriteBooleanValue(IsInPreview.Value);
             }
-            if (Optional.IsDefined(SupportsEmailNotifications))
+            if (Optional.IsDefined(IsEmailNotificationsSupported))
             {
                 writer.WritePropertyName("SupportsEmailNotifications"u8);
-                writer.WriteBooleanValue(SupportsEmailNotifications.Value);
+                writer.WriteBooleanValue(IsEmailNotificationsSupported.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportsEmailNotifications), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEmailNotificationsSupported), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  SupportsEmailNotifications: ");
@@ -346,10 +346,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             else
             {
-                if (Optional.IsDefined(SupportsEmailNotifications))
+                if (Optional.IsDefined(IsEmailNotificationsSupported))
                 {
                     builder.Append("  SupportsEmailNotifications: ");
-                    var boolValue = SupportsEmailNotifications.Value == true ? "true" : "false";
+                    var boolValue = IsEmailNotificationsSupported.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

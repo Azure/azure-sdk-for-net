@@ -61,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
             Console.WriteLine("Key pressed. Exiting the loop.");
         }
 
-        private static bool GetRandomBool(int percent) => percent >= _random.Next(0, 100);
+        private static bool GetRandomBool(int percent) => percent > _random.Next(0, 100);
 
         private static async Task GenerateTelemetry()
         {
@@ -86,6 +86,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                 Console.WriteLine("Request");
                 using (var activity = s_activitySource.StartActivity("Request", kind: ActivityKind.Server))
                 {
+                    activity?.SetTag("url.scheme", "http");
+                    activity?.SetTag("server.address", "localhost");
+
                     // Exception
                     if (GetRandomBool(percent: 40))
                     {

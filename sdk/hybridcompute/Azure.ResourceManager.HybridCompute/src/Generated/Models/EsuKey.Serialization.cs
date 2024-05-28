@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(LicenseStatus))
             {
                 writer.WritePropertyName("licenseStatus"u8);
-                writer.WriteStringValue(LicenseStatus);
+                writer.WriteNumberValue(LicenseStatus.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             string sku = default;
-            string licenseStatus = default;
+            int? licenseStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (property.NameEquals("licenseStatus"u8))
                 {
-                    licenseStatus = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    licenseStatus = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")

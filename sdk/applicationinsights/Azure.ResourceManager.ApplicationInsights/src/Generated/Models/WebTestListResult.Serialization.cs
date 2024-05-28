@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            IReadOnlyList<WebTestData> value = default;
+            IReadOnlyList<ApplicationInsightsWebTestData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<WebTestData> array = new List<WebTestData>();
+                    List<ApplicationInsightsWebTestData> array = new List<ApplicationInsightsWebTestData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebTestData.DeserializeWebTestData(item, options));
+                        array.Add(ApplicationInsightsWebTestData.DeserializeApplicationInsightsWebTestData(item, options));
                     }
                     value = array;
                     continue;

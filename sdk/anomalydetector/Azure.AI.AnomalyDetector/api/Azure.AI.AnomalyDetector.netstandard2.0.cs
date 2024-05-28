@@ -65,8 +65,8 @@ namespace Azure.AI.AnomalyDetector
         public AnomalyDetectorClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public AnomalyDetectorClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.AI.AnomalyDetector.Multivariate GetMultivariateClient(string apiVersion = "v1.1") { throw null; }
-        public virtual Azure.AI.AnomalyDetector.Univariate GetUnivariateClient(string apiVersion = "v1.1") { throw null; }
+        public virtual Azure.AI.AnomalyDetector.Multivariate GetMultivariateClient() { throw null; }
+        public virtual Azure.AI.AnomalyDetector.Univariate GetUnivariateClient() { throw null; }
     }
     public partial class AnomalyDetectorClientOptions : Azure.Core.ClientOptions
     {

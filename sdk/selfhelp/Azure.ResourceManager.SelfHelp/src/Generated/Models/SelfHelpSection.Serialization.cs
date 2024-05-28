@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
             string title = default;
             string content = default;
-            ReplacementMaps replacementMaps = default;
+            SolutionReplacementMaps replacementMaps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    replacementMaps = ReplacementMaps.DeserializeReplacementMaps(property.Value, options);
+                    replacementMaps = SolutionReplacementMaps.DeserializeSolutionReplacementMaps(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

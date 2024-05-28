@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(WorkbookTemplateGalleryType))
+            if (Optional.IsDefined(WorkbookType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(WorkbookTemplateGalleryType);
+                writer.WriteStringValue(WorkbookType);
             }
             if (Optional.IsDefined(Order))
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkbookTemplateGalleryType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkbookType), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
@@ -208,17 +208,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             else
             {
-                if (Optional.IsDefined(WorkbookTemplateGalleryType))
+                if (Optional.IsDefined(WorkbookType))
                 {
                     builder.Append("  type: ");
-                    if (WorkbookTemplateGalleryType.Contains(Environment.NewLine))
+                    if (WorkbookType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{WorkbookTemplateGalleryType}'''");
+                        builder.AppendLine($"{WorkbookType}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{WorkbookTemplateGalleryType}'");
+                        builder.AppendLine($"'{WorkbookType}'");
                     }
                 }
             }

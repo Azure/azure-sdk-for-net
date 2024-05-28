@@ -173,10 +173,10 @@ namespace Azure.Health.Insights.RadiologyInsights
     }
     public partial class FhirR4Annotation : Azure.Health.Insights.RadiologyInsights.FhirR4Element, System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4Annotation>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.FhirR4Annotation>
     {
-        public FhirR4Annotation(string text) { }
-        public string AuthorString { get { throw null; } set { } }
-        public string Text { get { throw null; } set { } }
-        public string Time { get { throw null; } set { } }
+        internal FhirR4Annotation() { }
+        public string AuthorString { get { throw null; } }
+        public string Text { get { throw null; } }
+        public string Time { get { throw null; } }
         Azure.Health.Insights.RadiologyInsights.FhirR4Annotation System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4Annotation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4Annotation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.RadiologyInsights.FhirR4Annotation System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.FhirR4Annotation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -210,10 +210,10 @@ namespace Azure.Health.Insights.RadiologyInsights
     public abstract partial class FhirR4DomainResource : Azure.Health.Insights.RadiologyInsights.FhirR4Resource, System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4DomainResource>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.FhirR4DomainResource>
     {
         protected FhirR4DomainResource(string resourceType) : base (default(string)) { }
-        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.FhirR4Resource> Contained { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> Extension { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> ModifierExtension { get { throw null; } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4Narrative Text { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.RadiologyInsights.FhirR4Resource> Contained { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> Extension { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> ModifierExtension { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4Narrative Text { get { throw null; } }
         Azure.Health.Insights.RadiologyInsights.FhirR4DomainResource System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4DomainResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4DomainResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.RadiologyInsights.FhirR4DomainResource System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.FhirR4DomainResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -222,9 +222,9 @@ namespace Azure.Health.Insights.RadiologyInsights
     }
     public partial class FhirR4Element : System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4Element>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.FhirR4Element>
     {
-        internal FhirR4Element() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> Extension { get { throw null; } }
-        public string Id { get { throw null; } }
+        public FhirR4Element() { }
+        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> Extension { get { throw null; } }
+        public string Id { get { throw null; } set { } }
         Azure.Health.Insights.RadiologyInsights.FhirR4Element System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4Element>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4Element>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.RadiologyInsights.FhirR4Element System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.FhirR4Element>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -285,9 +285,9 @@ namespace Azure.Health.Insights.RadiologyInsights
     }
     public partial class FhirR4Narrative : Azure.Health.Insights.RadiologyInsights.FhirR4Element, System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4Narrative>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.FhirR4Narrative>
     {
-        public FhirR4Narrative(string status, string div) { }
-        public string Div { get { throw null; } set { } }
-        public string Status { get { throw null; } set { } }
+        internal FhirR4Narrative() { }
+        public string Div { get { throw null; } }
+        public string Status { get { throw null; } }
         Azure.Health.Insights.RadiologyInsights.FhirR4Narrative System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4Narrative>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4Narrative>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.RadiologyInsights.FhirR4Narrative System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.FhirR4Narrative>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -296,37 +296,37 @@ namespace Azure.Health.Insights.RadiologyInsights
     }
     public partial class FhirR4Observation : Azure.Health.Insights.RadiologyInsights.FhirR4DomainResource, System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4Observation>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.FhirR4Observation>
     {
-        public FhirR4Observation(Azure.Health.Insights.RadiologyInsights.ObservationStatusCodeType status, Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept code) : base (default(string)) { }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept BodySite { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept> Category { get { throw null; } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept Code { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationComponent> Component { get { throw null; } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept DataAbsentReason { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.FhirR4Reference> DerivedFrom { get { throw null; } }
-        public string EffectiveDateTime { get { throw null; } set { } }
-        public string EffectiveInstant { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4Period EffectivePeriod { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4Reference Encounter { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.FhirR4Reference> HasMember { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.FhirR4Identifier> Identifier { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept> Interpretation { get { throw null; } }
-        public string Issued { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept Method { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.FhirR4Annotation> Note { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationReferenceRange> ReferenceRange { get { throw null; } }
-        public Azure.Health.Insights.RadiologyInsights.ObservationStatusCodeType Status { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4Reference Subject { get { throw null; } set { } }
-        public bool? ValueBoolean { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept ValueCodeableConcept { get { throw null; } set { } }
-        public string ValueDateTime { get { throw null; } set { } }
-        public int? ValueInteger { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4Period ValuePeriod { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4Quantity ValueQuantity { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4Range ValueRange { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4Ratio ValueRatio { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4SampledData ValueSampledData { get { throw null; } set { } }
-        public string ValueString { get { throw null; } set { } }
-        public System.TimeSpan? ValueTime { get { throw null; } set { } }
+        internal FhirR4Observation() : base (default(string)) { }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept BodySite { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept> Category { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationComponent> Component { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept DataAbsentReason { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.RadiologyInsights.FhirR4Reference> DerivedFrom { get { throw null; } }
+        public string EffectiveDateTime { get { throw null; } }
+        public string EffectiveInstant { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4Period EffectivePeriod { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4Reference Encounter { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.RadiologyInsights.FhirR4Reference> HasMember { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.RadiologyInsights.FhirR4Identifier> Identifier { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept> Interpretation { get { throw null; } }
+        public string Issued { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept Method { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.RadiologyInsights.FhirR4Annotation> Note { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationReferenceRange> ReferenceRange { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.ObservationStatusCodeType Status { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4Reference Subject { get { throw null; } }
+        public bool? ValueBoolean { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept ValueCodeableConcept { get { throw null; } }
+        public string ValueDateTime { get { throw null; } }
+        public int? ValueInteger { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4Period ValuePeriod { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4Quantity ValueQuantity { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4Range ValueRange { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4Ratio ValueRatio { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4SampledData ValueSampledData { get { throw null; } }
+        public string ValueString { get { throw null; } }
+        public System.TimeSpan? ValueTime { get { throw null; } }
         Azure.Health.Insights.RadiologyInsights.FhirR4Observation System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4Observation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4Observation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.RadiologyInsights.FhirR4Observation System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.FhirR4Observation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -335,23 +335,23 @@ namespace Azure.Health.Insights.RadiologyInsights
     }
     public partial class FhirR4ObservationComponent : Azure.Health.Insights.RadiologyInsights.FhirR4Element, System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationComponent>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationComponent>
     {
-        public FhirR4ObservationComponent(Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept code) { }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept Code { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept DataAbsentReason { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept> Interpretation { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationReferenceRange> ReferenceRange { get { throw null; } }
-        public bool? ValueBoolean { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept ValueCodeableConcept { get { throw null; } set { } }
-        public string ValueDateTime { get { throw null; } set { } }
-        public int? ValueInteger { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4Period ValuePeriod { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4Quantity ValueQuantity { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4Range ValueRange { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4Ratio ValueRatio { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4Reference ValueReference { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4SampledData ValueSampledData { get { throw null; } set { } }
-        public string ValueString { get { throw null; } set { } }
-        public System.TimeSpan? ValueTime { get { throw null; } set { } }
+        internal FhirR4ObservationComponent() { }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept Code { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept DataAbsentReason { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept> Interpretation { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationReferenceRange> ReferenceRange { get { throw null; } }
+        public bool? ValueBoolean { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept ValueCodeableConcept { get { throw null; } }
+        public string ValueDateTime { get { throw null; } }
+        public int? ValueInteger { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4Period ValuePeriod { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4Quantity ValueQuantity { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4Range ValueRange { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4Ratio ValueRatio { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4Reference ValueReference { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4SampledData ValueSampledData { get { throw null; } }
+        public string ValueString { get { throw null; } }
+        public System.TimeSpan? ValueTime { get { throw null; } }
         Azure.Health.Insights.RadiologyInsights.FhirR4ObservationComponent System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationComponent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationComponent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.RadiologyInsights.FhirR4ObservationComponent System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationComponent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -360,13 +360,13 @@ namespace Azure.Health.Insights.RadiologyInsights
     }
     public partial class FhirR4ObservationReferenceRange : System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationReferenceRange>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationReferenceRange>
     {
-        public FhirR4ObservationReferenceRange() { }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4Range Age { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept> AppliesTo { get { throw null; } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4Quantity High { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4Quantity Low { get { throw null; } set { } }
-        public string Text { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept Type { get { throw null; } set { } }
+        internal FhirR4ObservationReferenceRange() { }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4Range Age { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept> AppliesTo { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4Quantity High { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4Quantity Low { get { throw null; } }
+        public string Text { get { throw null; } }
+        public Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept Type { get { throw null; } }
         Azure.Health.Insights.RadiologyInsights.FhirR4ObservationReferenceRange System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationReferenceRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationReferenceRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.RadiologyInsights.FhirR4ObservationReferenceRange System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationReferenceRange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -544,19 +544,11 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static Azure.Health.Insights.RadiologyInsights.CriticalResultInference CriticalResultInference(System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, Azure.Health.Insights.RadiologyInsights.CriticalResult result = null) { throw null; }
         public static Azure.Health.Insights.RadiologyInsights.Encounter Encounter(string id = null, Azure.Health.Insights.RadiologyInsights.TimePeriod period = null, Azure.Health.Insights.RadiologyInsights.EncounterClass? @class = default(Azure.Health.Insights.RadiologyInsights.EncounterClass?)) { throw null; }
         public static Azure.Health.Insights.RadiologyInsights.FhirR4Annotation FhirR4Annotation(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, string authorString = null, string time = null, string text = null) { throw null; }
-        public static Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept FhirR4CodeableConcept(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Coding> coding = null, string text = null) { throw null; }
-        public static Azure.Health.Insights.RadiologyInsights.FhirR4Coding FhirR4Coding(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, string system = null, string version = null, string code = null, string display = null) { throw null; }
-        public static Azure.Health.Insights.RadiologyInsights.FhirR4Element FhirR4Element(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null) { throw null; }
-        public static Azure.Health.Insights.RadiologyInsights.FhirR4Extension FhirR4Extension(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, string url = null, Azure.Health.Insights.RadiologyInsights.FhirR4Quantity valueQuantity = null, Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept valueCodeableConcept = null, string valueString = null, bool? valueBoolean = default(bool?), int? valueInteger = default(int?), Azure.Health.Insights.RadiologyInsights.FhirR4Range valueRange = null, Azure.Health.Insights.RadiologyInsights.FhirR4Ratio valueRatio = null, Azure.Health.Insights.RadiologyInsights.FhirR4SampledData valueSampledData = null, System.TimeSpan? valueTime = default(System.TimeSpan?), string valueDateTime = null, Azure.Health.Insights.RadiologyInsights.FhirR4Period valuePeriod = null, Azure.Health.Insights.RadiologyInsights.FhirR4Reference valueReference = null) { throw null; }
-        public static Azure.Health.Insights.RadiologyInsights.FhirR4Identifier FhirR4Identifier(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, string use = null, Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept type = null, string system = null, string value = null, Azure.Health.Insights.RadiologyInsights.FhirR4Period period = null, Azure.Health.Insights.RadiologyInsights.FhirR4Reference assigner = null) { throw null; }
+        public static Azure.Health.Insights.RadiologyInsights.FhirR4DomainResource FhirR4DomainResource(string resourceType = null, string id = null, Azure.Health.Insights.RadiologyInsights.FhirR4Meta meta = null, string implicitRules = null, string language = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null, Azure.Health.Insights.RadiologyInsights.FhirR4Narrative text = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Resource> contained = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> modifierExtension = null) { throw null; }
         public static Azure.Health.Insights.RadiologyInsights.FhirR4Narrative FhirR4Narrative(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, string status = null, string div = null) { throw null; }
+        public static Azure.Health.Insights.RadiologyInsights.FhirR4Observation FhirR4Observation(string id = null, Azure.Health.Insights.RadiologyInsights.FhirR4Meta meta = null, string implicitRules = null, string language = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null, Azure.Health.Insights.RadiologyInsights.FhirR4Narrative text = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Resource> contained = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> modifierExtension = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Identifier> identifier = null, Azure.Health.Insights.RadiologyInsights.ObservationStatusCodeType status = default(Azure.Health.Insights.RadiologyInsights.ObservationStatusCodeType), System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept> category = null, Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept code = null, Azure.Health.Insights.RadiologyInsights.FhirR4Reference subject = null, Azure.Health.Insights.RadiologyInsights.FhirR4Reference encounter = null, string effectiveDateTime = null, Azure.Health.Insights.RadiologyInsights.FhirR4Period effectivePeriod = null, string effectiveInstant = null, string issued = null, Azure.Health.Insights.RadiologyInsights.FhirR4Quantity valueQuantity = null, Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept valueCodeableConcept = null, string valueString = null, bool? valueBoolean = default(bool?), int? valueInteger = default(int?), Azure.Health.Insights.RadiologyInsights.FhirR4Range valueRange = null, Azure.Health.Insights.RadiologyInsights.FhirR4Ratio valueRatio = null, Azure.Health.Insights.RadiologyInsights.FhirR4SampledData valueSampledData = null, System.TimeSpan? valueTime = default(System.TimeSpan?), string valueDateTime = null, Azure.Health.Insights.RadiologyInsights.FhirR4Period valuePeriod = null, Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept dataAbsentReason = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept> interpretation = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Annotation> note = null, Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept bodySite = null, Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept method = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationReferenceRange> referenceRange = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Reference> hasMember = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Reference> derivedFrom = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationComponent> component = null) { throw null; }
         public static Azure.Health.Insights.RadiologyInsights.FhirR4ObservationComponent FhirR4ObservationComponent(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept code = null, Azure.Health.Insights.RadiologyInsights.FhirR4Quantity valueQuantity = null, Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept valueCodeableConcept = null, string valueString = null, bool? valueBoolean = default(bool?), int? valueInteger = default(int?), Azure.Health.Insights.RadiologyInsights.FhirR4Range valueRange = null, Azure.Health.Insights.RadiologyInsights.FhirR4Ratio valueRatio = null, Azure.Health.Insights.RadiologyInsights.FhirR4SampledData valueSampledData = null, System.TimeSpan? valueTime = default(System.TimeSpan?), string valueDateTime = null, Azure.Health.Insights.RadiologyInsights.FhirR4Period valuePeriod = null, Azure.Health.Insights.RadiologyInsights.FhirR4Reference valueReference = null, Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept dataAbsentReason = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept> interpretation = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4ObservationReferenceRange> referenceRange = null) { throw null; }
-        public static Azure.Health.Insights.RadiologyInsights.FhirR4Period FhirR4Period(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, string start = null, string end = null) { throw null; }
-        public static Azure.Health.Insights.RadiologyInsights.FhirR4Quantity FhirR4Quantity(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, double? value = default(double?), string comparator = null, string unit = null, string system = null, string code = null) { throw null; }
-        public static Azure.Health.Insights.RadiologyInsights.FhirR4Range FhirR4Range(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, Azure.Health.Insights.RadiologyInsights.FhirR4Quantity low = null, Azure.Health.Insights.RadiologyInsights.FhirR4Quantity high = null) { throw null; }
-        public static Azure.Health.Insights.RadiologyInsights.FhirR4Ratio FhirR4Ratio(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, Azure.Health.Insights.RadiologyInsights.FhirR4Quantity numerator = null, Azure.Health.Insights.RadiologyInsights.FhirR4Quantity denominator = null) { throw null; }
-        public static Azure.Health.Insights.RadiologyInsights.FhirR4Reference FhirR4Reference(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, string reference = null, string type = null, Azure.Health.Insights.RadiologyInsights.FhirR4Identifier identifier = null, string display = null) { throw null; }
-        public static Azure.Health.Insights.RadiologyInsights.FhirR4SampledData FhirR4SampledData(string id = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, Azure.Health.Insights.RadiologyInsights.FhirR4Quantity origin = null, double period = 0, double? factor = default(double?), double? lowerLimit = default(double?), double? upperLimit = default(double?), int dimensions = 0, string data = null) { throw null; }
+        public static Azure.Health.Insights.RadiologyInsights.FhirR4ObservationReferenceRange FhirR4ObservationReferenceRange(Azure.Health.Insights.RadiologyInsights.FhirR4Quantity low = null, Azure.Health.Insights.RadiologyInsights.FhirR4Quantity high = null, Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept type = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4CodeableConcept> appliesTo = null, Azure.Health.Insights.RadiologyInsights.FhirR4Range age = null, string text = null) { throw null; }
         public static Azure.Health.Insights.RadiologyInsights.FindingInference FindingInference(System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, Azure.Health.Insights.RadiologyInsights.FhirR4Observation finding = null) { throw null; }
         public static Azure.Health.Insights.RadiologyInsights.FollowupCommunicationInference FollowupCommunicationInference(System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, System.Collections.Generic.IEnumerable<System.DateTimeOffset> dateTime = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.MedicalProfessionalType> recipient = null, bool wasAcknowledged = false) { throw null; }
         public static Azure.Health.Insights.RadiologyInsights.FollowupRecommendationInference FollowupRecommendationInference(System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.FhirR4Extension> extension = null, string effectiveDateTime = null, Azure.Health.Insights.RadiologyInsights.FhirR4Period effectivePeriod = null, System.Collections.Generic.IEnumerable<Azure.Health.Insights.RadiologyInsights.RecommendationFinding> findings = null, bool isConditional = false, bool isOption = false, bool isGuideline = false, bool isHedging = false, Azure.Health.Insights.RadiologyInsights.ProcedureRecommendation recommendedProcedure = null) { throw null; }

@@ -15,12 +15,15 @@ using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Queues.Tests
 {
+    [QueueClientTestFixture]
     public class QueueTestBase : StorageTestBase<StorageTestEnvironment>
     {
         /// <summary>
         /// Source of clients.
         /// </summary>
         protected ClientBuilder<QueueServiceClient, QueueClientOptions> QueuesClientBuilder { get; }
+
+        protected readonly QueueClientOptions.ServiceVersion _serviceVersion;
 
         public string GetNewQueueName() => QueuesClientBuilder.GetNewQueueName();
         public string GetNewMessageId() => QueuesClientBuilder.GetNewMessageId();
@@ -33,11 +36,10 @@ namespace Azure.Storage.Queues.Tests
         protected string SecondaryStorageTenantSecondaryHost() =>
             new Uri(Tenants.TestConfigSecondary.QueueServiceSecondaryEndpoint).Host;
 
-        public QueueTestBase(bool async) : this(async, null) { }
-
-        public QueueTestBase(bool async, RecordedTestMode? mode = null)
+        public QueueTestBase(bool async, QueueClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode)
         {
+            _serviceVersion = serviceVersion;
             QueuesClientBuilder = new ClientBuilder<QueueServiceClient, QueueClientOptions>(
                 ServiceEndpoint.Queue,
                 Tenants,
@@ -45,7 +47,7 @@ namespace Azure.Storage.Queues.Tests
                 (uri, sharedKeyCredential, clientOptions) => new QueueServiceClient(uri, sharedKeyCredential, clientOptions),
                 (uri, tokenCredential, clientOptions) => new QueueServiceClient(uri, tokenCredential, clientOptions),
                 (uri, azureSasCredential, clientOptions) => new QueueServiceClient(uri, azureSasCredential, clientOptions),
-                () => new QueueClientOptions());
+                () => new QueueClientOptions(serviceVersion));
         }
 
         public QueueClientOptions GetOptions()
