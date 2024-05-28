@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkToNetworkInterconnects_updateNpbStaticRouteBfdAdministrativeState</description>
+        /// <description>NetworkToNetworkInterconnects_UpdateNpbStaticRouteBfdAdministrativeState</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkToNetworkInterconnects_updateNpbStaticRouteBfdAdministrativeState</description>
+        /// <description>NetworkToNetworkInterconnects_UpdateNpbStaticRouteBfdAdministrativeState</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkToNetworkInterconnects_updateAdministrativeState</description>
+        /// <description>NetworkToNetworkInterconnects_UpdateAdministrativeState</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkToNetworkInterconnects_updateAdministrativeState</description>
+        /// <description>NetworkToNetworkInterconnects_UpdateAdministrativeState</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

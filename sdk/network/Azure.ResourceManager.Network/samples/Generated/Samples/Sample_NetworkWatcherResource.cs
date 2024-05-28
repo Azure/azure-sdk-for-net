@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Network.Samples
         public async Task GetVmSecurityRules_GetSecurityGroupView()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/NetworkWatcherSecurityGroupViewGet.json
-            // this example is just showing the usage of "NetworkWatchers_GetVMSecurityRules" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkWatchers_GetVmSecurityRules" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

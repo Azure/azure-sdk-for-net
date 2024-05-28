@@ -97,7 +97,7 @@ rename-mapping:
   ServerEndpointCloudTieringStatus.healthLastUpdatedTimestamp: HealthLastUpdatedOn
 
 override-operation-name:
-  CloudEndpoints_restoreheartbeat: RestoreHeartbeat
+  CloudEndpoints_Restoreheartbeat: RestoreHeartbeat
   StorageSyncServices_CheckNameAvailability: CheckStorageSyncNameAvailability
 
 directive:

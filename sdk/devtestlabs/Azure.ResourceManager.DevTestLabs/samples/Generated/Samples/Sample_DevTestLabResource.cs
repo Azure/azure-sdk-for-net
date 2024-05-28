@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
         public async Task ImportVm_LabsImportVirtualMachine()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Labs_ImportVirtualMachine.json
-            // this example is just showing the usage of "Labs_ImportVirtualMachine" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Labs_ImportVm" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

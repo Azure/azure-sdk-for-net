@@ -1261,7 +1261,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworkGateways_SetVpnclientIpsecParameters</description>
+        /// <description>VirtualNetworkGateways_SetVpnclientIPsecParameters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1307,7 +1307,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworkGateways_SetVpnclientIpsecParameters</description>
+        /// <description>VirtualNetworkGateways_SetVpnclientIPsecParameters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1353,7 +1353,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworkGateways_GetVpnclientIpsecParameters</description>
+        /// <description>VirtualNetworkGateways_GetVpnclientIPsecParameters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1395,7 +1395,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworkGateways_GetVpnclientIpsecParameters</description>
+        /// <description>VirtualNetworkGateways_GetVpnclientIPsecParameters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

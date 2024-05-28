@@ -214,7 +214,7 @@ request-path-to-scope-resource-types:
     - resourceGroups
     - "*"
 operation-positions:
-  checkResourceName: collection
+  CheckResourceName: collection
 
 operation-groups-to-omit:
   - Deployments

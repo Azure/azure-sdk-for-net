@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetVMSkus</description>
+        /// <description>GetVmSkus</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetVMSkus</description>
+        /// <description>GetVmSkus</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeleteVMSkus</description>
+        /// <description>DeleteVmSkus</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeleteVMSkus</description>
+        /// <description>DeleteVmSkus</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PutVMSkus</description>
+        /// <description>PutVmSkus</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PutVMSkus</description>
+        /// <description>PutVmSkus</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

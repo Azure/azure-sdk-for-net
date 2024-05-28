@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
         public async Task GenerateUploadUri_WorkspacesGenerateUploadUrlMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Workspaces_GenerateUploadUrl_MaximumSet_Gen.json
-            // this example is just showing the usage of "Workspaces_GenerateUploadUrl" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Workspaces_GenerateUploadUri" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
         public async Task GenerateUploadUri_WorkspacesGenerateUploadUrlMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Workspaces_GenerateUploadUrl_MinimumSet_Gen.json
-            // this example is just showing the usage of "Workspaces_GenerateUploadUrl" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Workspaces_GenerateUploadUri" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

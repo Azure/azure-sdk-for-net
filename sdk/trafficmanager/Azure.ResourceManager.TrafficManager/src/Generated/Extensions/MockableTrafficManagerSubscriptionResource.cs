@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
+        /// <description>Profiles_CheckTrafficManagerNameAvailabilityV2</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
+        /// <description>Profiles_CheckTrafficManagerNameAvailabilityV2</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

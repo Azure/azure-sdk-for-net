@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         public async Task Update_UpdateVaultStorageConfiguration()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/Common/BackupStorageConfig_Patch.json
-            // this example is just showing the usage of "BackupResourceStorageConfigsNonCRR_patch" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "BackupResourceStorageConfigsNonCRR_Patch" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

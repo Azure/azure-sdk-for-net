@@ -22,7 +22,7 @@ enable-bicep-serialization: true
 override-operation-name:
   Vaults_CheckNameAvailability: CheckKeyVaultNameAvailability
   MHSMPrivateLinkResources_ListByMhsmResource: GetManagedHsmPrivateLinkResources
-  ManagedHsms_CheckMhsmNameAvailability: CheckManagedHsmNameAvailability
+  ManagedHsms_CheckManagedHsmNameAvailability: CheckManagedHsmNameAvailability
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedManagedHSMs/{name}

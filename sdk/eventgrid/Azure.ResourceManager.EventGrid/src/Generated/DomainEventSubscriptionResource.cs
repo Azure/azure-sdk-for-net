@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DomainEventSubscriptions_GetFullUrl</description>
+        /// <description>DomainEventSubscriptions_GetFullUri</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DomainEventSubscriptions_GetFullUrl</description>
+        /// <description>DomainEventSubscriptions_GetFullUri</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_CheckMhsmNameAvailability</description>
+        /// <description>ManagedHsms_CheckManagedHsmNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedHsms_CheckMhsmNameAvailability</description>
+        /// <description>ManagedHsms_CheckManagedHsmNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
