@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L2IsolationDomains_updateAdministrativeState</description>
+        /// <description>L2IsolationDomains_UpdateAdministrativeState</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L2IsolationDomains_updateAdministrativeState</description>
+        /// <description>L2IsolationDomains_UpdateAdministrativeState</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
