@@ -73,7 +73,7 @@ param(
 
   [boolean]$OpenAsDraft=$false,
 
-  [boolean]$AddBuildSummary=$true
+  [boolean]$AddBuildSummary=($null -ne $env:SYSTEM_TEAMPROJECTID)
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
