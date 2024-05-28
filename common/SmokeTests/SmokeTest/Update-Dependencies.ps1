@@ -13,7 +13,8 @@ param(
 # filter upstream to restrict to the appropriate packages for the running target.
 
 $packageExcludeSet = @(
-    "Microsoft.Azure.WebPubSub.AspNetCore"
+    "Microsoft.Azure.WebPubSub.AspNetCore",
+    "Microsoft.WCF.Azure.StorageQueues"
 )
 
 function Log-Warning($message) {
