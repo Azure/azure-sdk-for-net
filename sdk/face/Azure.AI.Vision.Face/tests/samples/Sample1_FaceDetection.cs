@@ -81,7 +81,7 @@ namespace Azure.AI.Vision.Face.Samples
 
             #region Snippet:DetectFacesFromUrl
 
-            var detectResponse = client.DetectFromUrl(
+            var detectResponse = client.Detect(
                 imageUri,
                 FaceDetectionModel.Detection01,
                 FaceRecognitionModel.Recognition04,
@@ -117,7 +117,7 @@ namespace Azure.AI.Vision.Face.Samples
             #region Snippet:DetectFacesInvalidUrl
             var invalidUri = new Uri("http://invalid.uri");
             try {
-                var detectResponse = client.DetectFromUrl(
+                var detectResponse = client.Detect(
                     invalidUri,
                     FaceDetectionModel.Detection01,
                     FaceRecognitionModel.Recognition04,

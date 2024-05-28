@@ -877,11 +877,11 @@
 # ServiceOwners:                                                   @wonner @yanjungao718
 
 # PRLabel: %Tables
-/sdk/tables/                                                       @christothes
+/sdk/tables/                                                       @christothes @JonathanCrd
 
 # ServiceLabel: %Tables
-# AzureSdkOwners:                                                  @christothes
-# ServiceOwners:                                                   @sakash279, @sivethe, @ThomasWeiss, @PaulCheng
+# AzureSdkOwners:                                                  @christothes @JonathanCrd
+# ServiceOwners:                                                   @sakash279 @sivethe @ThomasWeiss @PaulCheng
 
 # PRLabel: %TimeSeriesInsights
 /sdk/timeseriesinsights/                                           @yeskarthik @rasidhan @dmdenmsft

@@ -12,7 +12,7 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="FaceClient"/>, <see cref="FaceAdministrationClient"/>, <see cref="FaceSessionClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="FaceClient"/>, <see cref="FaceSessionClient"/> to client builder. </summary>
     public static partial class AIVisionFaceClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="FaceClient"/> instance. </summary>
@@ -38,31 +38,6 @@ namespace Microsoft.Extensions.Azure
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<FaceClient, AzureAIVisionFaceClientOptions>((options, cred) => new FaceClient(endpoint, cred, options));
-        }
-
-        /// <summary> Registers a <see cref="FaceAdministrationClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
-        /// https://{resource-name}.cognitiveservices.azure.com).
-        /// </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public static IAzureClientBuilder<FaceAdministrationClient, AzureAIVisionFaceClientOptions> AddFaceAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
-        where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<FaceAdministrationClient, AzureAIVisionFaceClientOptions>((options) => new FaceAdministrationClient(endpoint, credential, options));
-        }
-
-        /// <summary> Registers a <see cref="FaceAdministrationClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
-        /// https://{resource-name}.cognitiveservices.azure.com).
-        /// </param>
-        public static IAzureClientBuilder<FaceAdministrationClient, AzureAIVisionFaceClientOptions> AddFaceAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint)
-        where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            return builder.RegisterClientFactory<FaceAdministrationClient, AzureAIVisionFaceClientOptions>((options, cred) => new FaceAdministrationClient(endpoint, cred, options));
         }
 
         /// <summary> Registers a <see cref="FaceSessionClient"/> instance. </summary>
@@ -97,14 +72,6 @@ namespace Microsoft.Extensions.Azure
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<FaceClient, AzureAIVisionFaceClientOptions>(configuration);
-        }
-        /// <summary> Registers a <see cref="FaceAdministrationClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<FaceAdministrationClient, AzureAIVisionFaceClientOptions> AddFaceAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
-        {
-            return builder.RegisterClientFactory<FaceAdministrationClient, AzureAIVisionFaceClientOptions>(configuration);
         }
         /// <summary> Registers a <see cref="FaceSessionClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
