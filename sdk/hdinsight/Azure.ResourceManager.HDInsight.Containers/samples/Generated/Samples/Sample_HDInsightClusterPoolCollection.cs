@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ClusterPoolGet()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/GetClusterPool.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/GetClusterPool.json
             // this example is just showing the usage of "ClusterPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ClusterPoolGet()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/GetClusterPool.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/GetClusterPool.json
             // this example is just showing the usage of "ClusterPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_ClusterPoolGet()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/GetClusterPool.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/GetClusterPool.json
             // this example is just showing the usage of "ClusterPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ClusterPoolPut()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/CreateClusterPool.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/CreateClusterPool.json
             // this example is just showing the usage of "ClusterPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,8 +149,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             string clusterPoolName = "clusterpool1";
             HDInsightClusterPoolData data = new HDInsightClusterPoolData(new AzureLocation("West US 2"))
             {
-                ClusterPoolVersion = "1.2",
-                ComputeProfile = new ClusterPoolComputeProfile("Standard_D3_v2"),
+                Properties = new ClusterPoolResourceProperties(new ClusterPoolComputeProfile("Standard_D3_v2")
+                {
+                    AvailabilityZones =
+{
+"1","2","3"
+},
+                })
+                {
+                    ClusterPoolVersion = "1.2",
+                },
             };
             ArmOperation<HDInsightClusterPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterPoolName, data);
             HDInsightClusterPoolResource result = lro.Value;
@@ -167,7 +175,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ClusterPoolPutWithPrivateAks()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/CreateClusterPoolWithPrivateAks.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/CreateClusterPoolWithPrivateAks.json
             // this example is just showing the usage of "ClusterPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -189,11 +197,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             string clusterPoolName = "clusterpool1";
             HDInsightClusterPoolData data = new HDInsightClusterPoolData(new AzureLocation("West US 2"))
             {
-                ClusterPoolVersion = "1.2",
-                ComputeProfile = new ClusterPoolComputeProfile("Standard_D3_v2"),
-                NetworkProfile = new ClusterPoolNetworkProfile(new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"))
+                Properties = new ClusterPoolResourceProperties(new ClusterPoolComputeProfile("Standard_D3_v2")
                 {
-                    EnablePrivateApiServer = true,
+                    AvailabilityZones =
+{
+"1","2","3"
+},
+                })
+                {
+                    ClusterPoolVersion = "1.2",
+                    NetworkProfile = new ClusterPoolNetworkProfile(new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"))
+                    {
+                        EnablePrivateApiServer = true,
+                    },
                 },
             };
             ArmOperation<HDInsightClusterPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterPoolName, data);
@@ -211,7 +227,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ClusterPoolPutWithUDRAks()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/CreateClusterPoolWithUDRAks.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/CreateClusterPoolWithUDRAks.json
             // this example is just showing the usage of "ClusterPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -233,11 +249,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             string clusterPoolName = "clusterpool1";
             HDInsightClusterPoolData data = new HDInsightClusterPoolData(new AzureLocation("West US 2"))
             {
-                ClusterPoolVersion = "1.2",
-                ComputeProfile = new ClusterPoolComputeProfile("Standard_D3_v2"),
-                NetworkProfile = new ClusterPoolNetworkProfile(new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"))
+                Properties = new ClusterPoolResourceProperties(new ClusterPoolComputeProfile("Standard_D3_v2")
                 {
-                    OutboundType = OutboundType.UserDefinedRouting,
+                    AvailabilityZones =
+{
+"1","2","3"
+},
+                })
+                {
+                    ClusterPoolVersion = "1.2",
+                    NetworkProfile = new ClusterPoolNetworkProfile(new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"))
+                    {
+                        OutboundType = OutboundType.UserDefinedRouting,
+                    },
                 },
             };
             ArmOperation<HDInsightClusterPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterPoolName, data);
@@ -255,7 +279,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ClusterPoolsListByResourceGroup()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/ListClusterPools.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/ListClusterPools.json
             // this example is just showing the usage of "ClusterPools_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

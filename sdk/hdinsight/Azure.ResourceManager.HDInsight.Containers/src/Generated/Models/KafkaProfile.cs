@@ -60,16 +60,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="enablePublicEndpoints"> Expose worker nodes as public endpoints. </param>
         /// <param name="remoteStorageUri"> Fully qualified path of Azure Storage container used for Tiered Storage. </param>
         /// <param name="diskStorage"> Kafka disk storage profile. </param>
-        /// <param name="clusterIdentity"> Identity of the internal service components inside the Kafka cluster. </param>
         /// <param name="connectivityEndpoints"> Kafka bootstrap server and brokers related connectivity endpoints. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KafkaProfile(bool? enableKRaft, bool? enablePublicEndpoints, Uri remoteStorageUri, DiskStorageProfile diskStorage, HDInsightIdentityProfile clusterIdentity, KafkaConnectivityEndpoints connectivityEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KafkaProfile(bool? enableKRaft, bool? enablePublicEndpoints, Uri remoteStorageUri, DiskStorageProfile diskStorage, KafkaConnectivityEndpoints connectivityEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableKRaft = enableKRaft;
             EnablePublicEndpoints = enablePublicEndpoints;
             RemoteStorageUri = remoteStorageUri;
             DiskStorage = diskStorage;
-            ClusterIdentity = clusterIdentity;
             ConnectivityEndpoints = connectivityEndpoints;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -87,8 +85,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public Uri RemoteStorageUri { get; set; }
         /// <summary> Kafka disk storage profile. </summary>
         public DiskStorageProfile DiskStorage { get; set; }
-        /// <summary> Identity of the internal service components inside the Kafka cluster. </summary>
-        public HDInsightIdentityProfile ClusterIdentity { get; }
         /// <summary> Kafka bootstrap server and brokers related connectivity endpoints. </summary>
         public KafkaConnectivityEndpoints ConnectivityEndpoints { get; }
     }

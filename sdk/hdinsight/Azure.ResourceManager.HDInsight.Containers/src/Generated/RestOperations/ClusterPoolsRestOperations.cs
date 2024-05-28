@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-11-01-preview";
+            _apiVersion = apiVersion ?? "2024-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -367,6 +367,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -392,6 +393,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                 case 204:
                     return message.Response;

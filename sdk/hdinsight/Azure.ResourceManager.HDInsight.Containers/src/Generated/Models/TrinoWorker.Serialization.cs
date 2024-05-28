@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class TrinoWorker : IUtf8JsonSerializable, IJsonModel<TrinoWorker>
+    internal partial class TrinoWorker : IUtf8JsonSerializable, IJsonModel<TrinoWorker>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrinoWorker>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -26,24 +26,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("debug"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(Debug))
             {
-                writer.WritePropertyName("enable"u8);
-                writer.WriteBooleanValue(IsEnabled.Value);
+                writer.WritePropertyName("debug"u8);
+                writer.WriteObjectValue(Debug, options);
             }
-            if (Optional.IsDefined(Port))
-            {
-                writer.WritePropertyName("port"u8);
-                writer.WriteNumberValue(Port.Value);
-            }
-            if (Optional.IsDefined(Suspend))
-            {
-                writer.WritePropertyName("suspend"u8);
-                writer.WriteBooleanValue(Suspend.Value);
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -82,9 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            bool? enable = default;
-            int? port = default;
-            bool? suspend = default;
+            TrinoDebugConfig debug = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,39 +78,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("enable"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enable = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("port"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            port = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("suspend"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            suspend = property0.Value.GetBoolean();
-                            continue;
-                        }
-                    }
+                    debug = TrinoDebugConfig.DeserializeTrinoDebugConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TrinoWorker(enable, port, suspend, serializedAdditionalRawData);
+            return new TrinoWorker(debug, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrinoWorker>.Write(ModelReaderWriterOptions options)

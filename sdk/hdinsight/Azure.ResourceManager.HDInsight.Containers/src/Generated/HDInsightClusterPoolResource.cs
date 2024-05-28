@@ -40,6 +40,8 @@ namespace Azure.ResourceManager.HDInsight.Containers
         private readonly ClusterPoolsRestOperations _hdInsightClusterPoolClusterPoolsRestClient;
         private readonly ClientDiagnostics _clusterPoolAvailableUpgradesClientDiagnostics;
         private readonly ClusterPoolAvailableUpgradesRestOperations _clusterPoolAvailableUpgradesRestClient;
+        private readonly ClientDiagnostics _clusterPoolUpgradeHistoriesClientDiagnostics;
+        private readonly ClusterPoolUpgradeHistoriesRestOperations _clusterPoolUpgradeHistoriesRestClient;
         private readonly HDInsightClusterPoolData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -69,6 +71,8 @@ namespace Azure.ResourceManager.HDInsight.Containers
             _hdInsightClusterPoolClusterPoolsRestClient = new ClusterPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hdInsightClusterPoolClusterPoolsApiVersion);
             _clusterPoolAvailableUpgradesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight.Containers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _clusterPoolAvailableUpgradesRestClient = new ClusterPoolAvailableUpgradesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _clusterPoolUpgradeHistoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight.Containers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _clusterPoolUpgradeHistoriesRestClient = new ClusterPoolUpgradeHistoriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -115,7 +119,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -146,7 +150,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -177,7 +181,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -217,7 +221,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -257,7 +261,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -299,7 +303,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -341,7 +345,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -387,7 +391,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -433,7 +437,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -479,7 +483,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -525,7 +529,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -551,7 +555,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -562,6 +566,58 @@ namespace Azure.ResourceManager.HDInsight.Containers
             HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterPoolAvailableUpgradesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterPoolAvailableUpgradesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClusterPoolAvailableUpgrade.DeserializeClusterPoolAvailableUpgrade(e), _clusterPoolAvailableUpgradesClientDiagnostics, Pipeline, "HDInsightClusterPoolResource.GetClusterPoolAvailableUpgrades", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a list of upgrade history.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusterpools/{clusterPoolName}/upgradeHistories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterPoolUpgradeHistories_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ClusterPoolUpgradeHistory"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ClusterPoolUpgradeHistory> GetClusterPoolUpgradeHistoriesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterPoolUpgradeHistoriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterPoolUpgradeHistoriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ClusterPoolUpgradeHistory.DeserializeClusterPoolUpgradeHistory(e), _clusterPoolUpgradeHistoriesClientDiagnostics, Pipeline, "HDInsightClusterPoolResource.GetClusterPoolUpgradeHistories", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a list of upgrade history.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusterpools/{clusterPoolName}/upgradeHistories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterPoolUpgradeHistories_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ClusterPoolUpgradeHistory"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ClusterPoolUpgradeHistory> GetClusterPoolUpgradeHistories(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterPoolUpgradeHistoriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterPoolUpgradeHistoriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClusterPoolUpgradeHistory.DeserializeClusterPoolUpgradeHistory(e), _clusterPoolUpgradeHistoriesClientDiagnostics, Pipeline, "HDInsightClusterPoolResource.GetClusterPoolUpgradeHistories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -577,7 +633,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -639,7 +695,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -701,7 +757,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -758,7 +814,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -815,7 +871,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -875,7 +931,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="rangerPluginProfile"> Cluster Ranger plugin profile. </param>
         /// <param name="rangerProfile"> The ranger cluster profile. </param>
         /// <param name="scriptActionProfiles"> The script action profile list. </param>
+        /// <param name="secretsProfile"> The cluster secret profile. </param>
+        /// <param name="trinoProfile"> Trino Cluster profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdatableClusterProfile(IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ClusterSshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, AuthorizationProfile authorizationProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, ClusterRangerPluginProfile rangerPluginProfile, RangerProfile rangerProfile, IList<ScriptActionProfile> scriptActionProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UpdatableClusterProfile(IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ClusterSshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, AuthorizationProfile authorizationProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, ClusterRangerPluginProfile rangerPluginProfile, RangerProfile rangerProfile, IList<ScriptActionProfile> scriptActionProfiles, ClusterSecretsProfile secretsProfile, TrinoProfile trinoProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceConfigsProfiles = serviceConfigsProfiles;
             SshProfile = sshProfile;
@@ -74,6 +76,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             RangerPluginProfile = rangerPluginProfile;
             RangerProfile = rangerProfile;
             ScriptActionProfiles = scriptActionProfiles;
+            SecretsProfile = secretsProfile;
+            TrinoProfile = trinoProfile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -115,5 +119,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public RangerProfile RangerProfile { get; set; }
         /// <summary> The script action profile list. </summary>
         public IList<ScriptActionProfile> ScriptActionProfiles { get; }
+        /// <summary> The cluster secret profile. </summary>
+        public ClusterSecretsProfile SecretsProfile { get; set; }
+        /// <summary> Trino Cluster profile. </summary>
+        public TrinoProfile TrinoProfile { get; set; }
     }
 }

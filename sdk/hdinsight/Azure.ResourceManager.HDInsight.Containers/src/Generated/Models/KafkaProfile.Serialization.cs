@@ -43,11 +43,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             writer.WritePropertyName("diskStorage"u8);
             writer.WriteObjectValue(DiskStorage, options);
-            if (options.Format != "W" && Optional.IsDefined(ClusterIdentity))
-            {
-                writer.WritePropertyName("clusterIdentity"u8);
-                writer.WriteObjectValue(ClusterIdentity, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(ConnectivityEndpoints))
             {
                 writer.WritePropertyName("connectivityEndpoints"u8);
@@ -95,7 +90,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             bool? enablePublicEndpoints = default;
             Uri remoteStorageUri = default;
             DiskStorageProfile diskStorage = default;
-            HDInsightIdentityProfile clusterIdentity = default;
             KafkaConnectivityEndpoints connectivityEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -133,15 +127,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     diskStorage = DiskStorageProfile.DeserializeDiskStorageProfile(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("clusterIdentity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    clusterIdentity = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("connectivityEndpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -162,7 +147,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 enablePublicEndpoints,
                 remoteStorageUri,
                 diskStorage,
-                clusterIdentity,
                 connectivityEndpoints,
                 serializedAdditionalRawData);
         }

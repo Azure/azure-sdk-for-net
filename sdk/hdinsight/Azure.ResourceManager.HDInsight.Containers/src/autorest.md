@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: HDInsightContainers
 namespace: Azure.ResourceManager.HDInsight.Containers
-require: https://github.com/Azure/azure-rest-api-specs/blob/a434a5a7ee851abc96218443e66a5ebb57911fee/specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/readme.md
-# tag: package-preview-2023-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/e5e14501b7aef4ba7a58a8a463b7192a2f9b0fe4/specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/readme.md
+# tag: package-2024-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -73,10 +73,9 @@ rename-mapping:
   ServiceStatus: HDInsightServiceStatus
   SparkUserPlugins: SparkUserPluginListResult
   SshProfile: ClusterSshProfile
-  TrinoCoordinator.debug.enable: IsEnabled
   TrinoUserPlugin.enabled: IsEnabled
   TrinoUserPlugins: TrinoUserPluginListResult
-  TrinoWorker.debug.enable: IsEnabled
+  ClusterLibraryProperties.type: LibraryType
   # TODO, remove these when service fix the Uri format before GA
   FlinkHiveCatalogOption.metastoreDbConnectionURL: MetastoreDBConnectionUriString
   FlinkStorageProfile.storageUri: StorageUriString

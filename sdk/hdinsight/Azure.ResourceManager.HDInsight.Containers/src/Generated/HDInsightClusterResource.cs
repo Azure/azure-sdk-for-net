@@ -40,8 +40,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
         private readonly ClustersRestOperations _hdInsightClusterClustersRestClient;
         private readonly ClientDiagnostics _clusterAvailableUpgradesClientDiagnostics;
         private readonly ClusterAvailableUpgradesRestOperations _clusterAvailableUpgradesRestClient;
+        private readonly ClientDiagnostics _clusterUpgradeHistoriesClientDiagnostics;
+        private readonly ClusterUpgradeHistoriesRestOperations _clusterUpgradeHistoriesRestClient;
         private readonly ClientDiagnostics _clusterJobsClientDiagnostics;
         private readonly ClusterJobsRestOperations _clusterJobsRestClient;
+        private readonly ClientDiagnostics _clusterLibrariesClientDiagnostics;
+        private readonly ClusterLibrariesRestOperations _clusterLibrariesRestClient;
         private readonly HDInsightClusterData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -71,8 +75,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
             _hdInsightClusterClustersRestClient = new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hdInsightClusterClustersApiVersion);
             _clusterAvailableUpgradesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight.Containers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _clusterAvailableUpgradesRestClient = new ClusterAvailableUpgradesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _clusterUpgradeHistoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight.Containers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _clusterUpgradeHistoriesRestClient = new ClusterUpgradeHistoriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _clusterJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight.Containers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _clusterJobsRestClient = new ClusterJobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _clusterLibrariesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight.Containers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _clusterLibrariesRestClient = new ClusterLibrariesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,7 +120,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,7 +160,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -192,7 +200,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -234,7 +242,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -276,7 +284,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -322,7 +330,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -368,7 +376,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -414,7 +422,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -448,6 +456,98 @@ namespace Azure.ResourceManager.HDInsight.Containers
         }
 
         /// <summary>
+        /// Manual rollback upgrade for a cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusterpools/{clusterPoolName}/clusters/{clusterName}/rollback</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_UpgradeManualRollback</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterRollbackUpgradeRequest"> Manual rollback upgrade for a cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterRollbackUpgradeRequest"/> is null. </exception>
+        public virtual async Task<ArmOperation<HDInsightClusterResource>> UpgradeManualRollbackAsync(WaitUntil waitUntil, ClusterUpgradeRollback clusterRollbackUpgradeRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(clusterRollbackUpgradeRequest, nameof(clusterRollbackUpgradeRequest));
+
+            using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterResource.UpgradeManualRollback");
+            scope.Start();
+            try
+            {
+                var response = await _hdInsightClusterClustersRestClient.UpgradeManualRollbackAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterRollbackUpgradeRequest, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainersArmOperation<HDInsightClusterResource>(new HDInsightClusterOperationSource(Client), _hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpgradeManualRollbackRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterRollbackUpgradeRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Manual rollback upgrade for a cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusterpools/{clusterPoolName}/clusters/{clusterName}/rollback</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_UpgradeManualRollback</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="clusterRollbackUpgradeRequest"> Manual rollback upgrade for a cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterRollbackUpgradeRequest"/> is null. </exception>
+        public virtual ArmOperation<HDInsightClusterResource> UpgradeManualRollback(WaitUntil waitUntil, ClusterUpgradeRollback clusterRollbackUpgradeRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(clusterRollbackUpgradeRequest, nameof(clusterRollbackUpgradeRequest));
+
+            using var scope = _hdInsightClusterClustersClientDiagnostics.CreateScope("HDInsightClusterResource.UpgradeManualRollback");
+            scope.Start();
+            try
+            {
+                var response = _hdInsightClusterClustersRestClient.UpgradeManualRollback(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterRollbackUpgradeRequest, cancellationToken);
+                var operation = new ContainersArmOperation<HDInsightClusterResource>(new HDInsightClusterOperationSource(Client), _hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateUpgradeManualRollbackRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterRollbackUpgradeRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Resize an existing Cluster.
         /// <list type="bullet">
         /// <item>
@@ -460,7 +560,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -506,7 +606,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -552,7 +652,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -582,7 +682,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -612,7 +712,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -642,7 +742,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -672,7 +772,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -710,7 +810,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -748,7 +848,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -774,7 +874,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -785,6 +885,58 @@ namespace Azure.ResourceManager.HDInsight.Containers
             HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterAvailableUpgradesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterAvailableUpgradesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClusterAvailableUpgrade.DeserializeClusterAvailableUpgrade(e), _clusterAvailableUpgradesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterAvailableUpgrades", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a list of upgrade history.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusterpools/{clusterPoolName}/clusters/{clusterName}/upgradeHistories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterUpgradeHistories_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ClusterUpgradeHistory"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ClusterUpgradeHistory> GetClusterUpgradeHistoriesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterUpgradeHistoriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterUpgradeHistoriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ClusterUpgradeHistory.DeserializeClusterUpgradeHistory(e), _clusterUpgradeHistoriesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterUpgradeHistories", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a list of upgrade history.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusterpools/{clusterPoolName}/clusters/{clusterName}/upgradeHistories</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterUpgradeHistories_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ClusterUpgradeHistory"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ClusterUpgradeHistory> GetClusterUpgradeHistories(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterUpgradeHistoriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterUpgradeHistoriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClusterUpgradeHistory.DeserializeClusterUpgradeHistory(e), _clusterUpgradeHistoriesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterUpgradeHistories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -800,7 +952,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -842,7 +994,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -884,7 +1036,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -911,7 +1063,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -923,6 +1075,144 @@ namespace Azure.ResourceManager.HDInsight.Containers
             HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClusterJob.DeserializeClusterJob(e), _clusterJobsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterJobs", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all libraries of HDInsight on AKS cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusterpools/{clusterPoolName}/clusters/{clusterName}/libraries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterLibraries_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="category"> The system query option to filter libraries returned in the response. Allowed value is 'custom' or 'predefined'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ClusterLibrary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ClusterLibrary> GetClusterLibrariesAsync(Category category, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterLibrariesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, category);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterLibrariesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, category);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ClusterLibrary.DeserializeClusterLibrary(e), _clusterLibrariesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterLibraries", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all libraries of HDInsight on AKS cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusterpools/{clusterPoolName}/clusters/{clusterName}/libraries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterLibraries_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="category"> The system query option to filter libraries returned in the response. Allowed value is 'custom' or 'predefined'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ClusterLibrary"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ClusterLibrary> GetClusterLibraries(Category category, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterLibrariesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, category);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterLibrariesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, category);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClusterLibrary.DeserializeClusterLibrary(e), _clusterLibrariesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterLibraries", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Library management operations on HDInsight on AKS cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusterpools/{clusterPoolName}/clusters/{clusterName}/manageLibraries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterLibraries_ManageLibraries</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="operation"> The library management operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operation"/> is null. </exception>
+        public virtual async Task<ArmOperation> ManageLibrariesClusterLibraryAsync(WaitUntil waitUntil, ClusterLibraryManagementOperation operation, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(operation, nameof(operation));
+
+            using var scope = _clusterLibrariesClientDiagnostics.CreateScope("HDInsightClusterResource.ManageLibrariesClusterLibrary");
+            scope.Start();
+            try
+            {
+                var response = await _clusterLibrariesRestClient.ManageLibrariesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operation, cancellationToken).ConfigureAwait(false);
+                var operation1 = new ContainersArmOperation(_clusterLibrariesClientDiagnostics, Pipeline, _clusterLibrariesRestClient.CreateManageLibrariesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operation).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation1.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation1;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Library management operations on HDInsight on AKS cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusterpools/{clusterPoolName}/clusters/{clusterName}/manageLibraries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterLibraries_ManageLibraries</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="operation"> The library management operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operation"/> is null. </exception>
+        public virtual ArmOperation ManageLibrariesClusterLibrary(WaitUntil waitUntil, ClusterLibraryManagementOperation operation, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(operation, nameof(operation));
+
+            using var scope = _clusterLibrariesClientDiagnostics.CreateScope("HDInsightClusterResource.ManageLibrariesClusterLibrary");
+            scope.Start();
+            try
+            {
+                var response = _clusterLibrariesRestClient.ManageLibraries(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operation, cancellationToken);
+                var operation1 = new ContainersArmOperation(_clusterLibrariesClientDiagnostics, Pipeline, _clusterLibrariesRestClient.CreateManageLibrariesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operation).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation1.WaitForCompletionResponse(cancellationToken);
+                return operation1;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -938,7 +1228,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1000,7 +1290,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1062,7 +1352,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1119,7 +1409,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1176,7 +1466,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1236,7 +1526,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

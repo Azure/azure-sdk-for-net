@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("identityProfile"u8);
                 writer.WriteObjectValue(IdentityProfile, options);
             }
+            if (Optional.IsDefined(ManagedIdentityProfile))
+            {
+                writer.WritePropertyName("managedIdentityProfile"u8);
+                writer.WriteObjectValue(ManagedIdentityProfile, options);
+            }
             writer.WritePropertyName("authorizationProfile"u8);
             writer.WriteObjectValue(AuthorizationProfile, options);
             if (Optional.IsDefined(SecretsProfile))
@@ -220,6 +225,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             string ossVersion = default;
             IReadOnlyList<ClusterComponentItem> components = default;
             HDInsightIdentityProfile identityProfile = default;
+            ManagedIdentityProfile managedIdentityProfile = default;
             AuthorizationProfile authorizationProfile = default;
             ClusterSecretsProfile secretsProfile = default;
             IList<ClusterServiceConfigsProfile> serviceConfigsProfiles = default;
@@ -273,6 +279,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         continue;
                     }
                     identityProfile = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("managedIdentityProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedIdentityProfile = ManagedIdentityProfile.DeserializeManagedIdentityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authorizationProfile"u8))
@@ -478,6 +493,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 ossVersion,
                 components ?? new ChangeTrackingList<ClusterComponentItem>(),
                 identityProfile,
+                managedIdentityProfile,
                 authorizationProfile,
                 secretsProfile,
                 serviceConfigsProfiles ?? new ChangeTrackingList<ClusterServiceConfigsProfile>(),

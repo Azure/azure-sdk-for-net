@@ -57,23 +57,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="clusterPoolVersionValue"> Cluster pool version is a 2-part version. </param>
-        /// <param name="aksVersion"> AKS version. </param>
-        /// <param name="isPreview"> Indicate if this version is in preview or not. </param>
+        /// <param name="properties"> Cluster pool version properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterPoolVersion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string clusterPoolVersionValue, string aksVersion, bool? isPreview, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ClusterPoolVersion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ClusterPoolVersionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            ClusterPoolVersionValue = clusterPoolVersionValue;
-            AksVersion = aksVersion;
-            IsPreview = isPreview;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Cluster pool version is a 2-part version. </summary>
-        public string ClusterPoolVersionValue { get; set; }
-        /// <summary> AKS version. </summary>
-        public string AksVersion { get; set; }
-        /// <summary> Indicate if this version is in preview or not. </summary>
-        public bool? IsPreview { get; set; }
+        /// <summary> Cluster pool version properties. </summary>
+        public ClusterPoolVersionProperties Properties { get; set; }
     }
 }

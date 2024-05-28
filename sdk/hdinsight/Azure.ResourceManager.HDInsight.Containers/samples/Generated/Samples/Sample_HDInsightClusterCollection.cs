@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_HDInsightClustersListByClusterPoolName()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/ListClustersByClusterPoolName.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/ListClustersByClusterPoolName.json
             // this example is just showing the usage of "Clusters_ListByClusterPoolName" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_HDInsightClusterGet()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/GetCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/GetCluster.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_HDInsightClusterGet()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/GetCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/GetCluster.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_HDInsightClusterGet()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/GetCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/GetCluster.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_HDInsightClusterPut()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/CreateAutoscaleCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/CreateAutoscaleCluster.json
             // this example is just showing the usage of "Clusters_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -189,12 +189,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             string clusterName = "cluster1";
             HDInsightClusterData data = new HDInsightClusterData(new AzureLocation("West US 2"))
             {
-                ClusterType = "Trino",
-                ComputeNodes =
-{
+                Properties = new ClusterResourceProperties("Trino", new ComputeProfile(new ClusterComputeNodeProfile[]
+            {
 new ClusterComputeNodeProfile("Head","Standard_E8as_v5",2),new ClusterComputeNodeProfile("Worker","Standard_E8as_v5",3)
+            })
+                {
+                    AvailabilityZones =
+{
+"1","2","3"
 },
-                ClusterProfile = new ClusterProfile("1.0.6", "0.410.0", new AuthorizationProfile()
+                }, new ClusterProfile("1.0.6", "0.410.0", new AuthorizationProfile()
                 {
                     UserIds =
 {
@@ -202,8 +206,14 @@ new ClusterComputeNodeProfile("Head","Standard_E8as_v5",2),new ClusterComputeNod
 },
                 })
                 {
-                    IdentityProfile = new HDInsightIdentityProfile(new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"), "de91f1d8-767f-460a-ac11-3cf103f74b34", "40491351-c240-4042-91e0-f644a1d2b441"),
-                    SshProfile = new ClusterSshProfile(2),
+                    IdentityList =
+{
+new ManagedIdentitySpec(ManagedIdentityType.Cluster,new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"),"de91f1d8-767f-460a-ac11-3cf103f74b34","40491351-c240-4042-91e0-f644a1d2b441")
+},
+                    SshProfile = new ClusterSshProfile(2)
+                    {
+                        VmSize = "Standard_E8as_v5",
+                    },
                     AutoscaleProfile = new ClusterAutoscaleProfile(true)
                     {
                         GracefulDecommissionTimeout = 3600,
@@ -228,7 +238,7 @@ new ScalingRule(ScaleActionType.ScaleUp,3,"cpu",new HDInsightComparisonRule(HDIn
                         },
                     },
                     TrinoProfile = new TrinoProfile(),
-                },
+                }),
             };
             ArmOperation<HDInsightClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             HDInsightClusterResource result = lro.Value;
@@ -245,7 +255,7 @@ new ScalingRule(ScaleActionType.ScaleUp,3,"cpu",new HDInsightComparisonRule(HDIn
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_HDInsightRangerClusterPut()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/CreateRangerCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/CreateRangerCluster.json
             // this example is just showing the usage of "Clusters_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -268,12 +278,16 @@ new ScalingRule(ScaleActionType.ScaleUp,3,"cpu",new HDInsightComparisonRule(HDIn
             string clusterName = "cluster1";
             HDInsightClusterData data = new HDInsightClusterData(new AzureLocation("West US 2"))
             {
-                ClusterType = "ranger",
-                ComputeNodes =
-{
+                Properties = new ClusterResourceProperties("ranger", new ComputeProfile(new ClusterComputeNodeProfile[]
+            {
 new ClusterComputeNodeProfile("head","Standard_D3_v2",2)
+            })
+                {
+                    AvailabilityZones =
+{
+"1","2","3"
 },
-                ClusterProfile = new ClusterProfile("0.0.1", "2.2.3", new AuthorizationProfile()
+                }, new ClusterProfile("0.0.1", "2.2.3", new AuthorizationProfile()
                 {
                     UserIds =
 {
@@ -281,7 +295,10 @@ new ClusterComputeNodeProfile("head","Standard_D3_v2",2)
 },
                 })
                 {
-                    IdentityProfile = new HDInsightIdentityProfile(new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"), "de91f1d8-767f-460a-ac11-3cf103f74b34", "40491351-c240-4042-91e0-f644a1d2b441"),
+                    IdentityList =
+{
+new ManagedIdentitySpec(ManagedIdentityType.Cluster,new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"),"de91f1d8-767f-460a-ac11-3cf103f74b34","40491351-c240-4042-91e0-f644a1d2b441")
+},
                     RangerProfile = new RangerProfile(new RangerAdminSpec(new string[]
             {
 "testuser1@contoso.com","testuser2@contoso.com"
@@ -305,7 +322,7 @@ new ClusterComputeNodeProfile("head","Standard_D3_v2",2)
                     {
                         RangerAuditStorageAccount = "https://teststorage.blob.core.windows.net/testblob",
                     },
-                },
+                }),
             };
             ArmOperation<HDInsightClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             HDInsightClusterResource result = lro.Value;
@@ -322,7 +339,7 @@ new ClusterComputeNodeProfile("head","Standard_D3_v2",2)
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_HDInsightSparkClusterPut()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/CreateSparkCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/CreateSparkCluster.json
             // this example is just showing the usage of "Clusters_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -345,12 +362,16 @@ new ClusterComputeNodeProfile("head","Standard_D3_v2",2)
             string clusterName = "cluster1";
             HDInsightClusterData data = new HDInsightClusterData(new AzureLocation("West US 2"))
             {
-                ClusterType = "spark",
-                ComputeNodes =
-{
+                Properties = new ClusterResourceProperties("spark", new ComputeProfile(new ClusterComputeNodeProfile[]
+            {
 new ClusterComputeNodeProfile("worker","Standard_D3_v2",4)
+            })
+                {
+                    AvailabilityZones =
+{
+"1","2","3"
 },
-                ClusterProfile = new ClusterProfile("0.0.1", "2.2.3", new AuthorizationProfile()
+                }, new ClusterProfile("0.0.1", "2.2.3", new AuthorizationProfile()
                 {
                     UserIds =
 {
@@ -358,7 +379,10 @@ new ClusterComputeNodeProfile("worker","Standard_D3_v2",4)
 },
                 })
                 {
-                    IdentityProfile = new HDInsightIdentityProfile(new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"), "de91f1d8-767f-460a-ac11-3cf103f74b34", "40491351-c240-4042-91e0-f644a1d2b441"),
+                    IdentityList =
+{
+new ManagedIdentitySpec(ManagedIdentityType.Cluster,new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"),"de91f1d8-767f-460a-ac11-3cf103f74b34","40491351-c240-4042-91e0-f644a1d2b441")
+},
                     ServiceConfigsProfiles =
 {
 new ClusterServiceConfigsProfile("spark-service",new ClusterServiceConfig[]
@@ -397,9 +421,12 @@ Values =
 })
 })
 },
-                    SshProfile = new ClusterSshProfile(2),
+                    SshProfile = new ClusterSshProfile(2)
+                    {
+                        VmSize = "Standard_D3_v2",
+                    },
                     SparkProfile = new SparkProfile(),
-                },
+                }),
             };
             ArmOperation<HDInsightClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             HDInsightClusterResource result = lro.Value;
@@ -416,7 +443,7 @@ Values =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_HDInsightSparkClusterPutWithInternalIngress()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/CreateSparkClusterWithInternalIngress.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/stable/2024-05-01/examples/CreateSparkClusterWithInternalIngress.json
             // this example is just showing the usage of "Clusters_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -439,12 +466,16 @@ Values =
             string clusterName = "cluster1";
             HDInsightClusterData data = new HDInsightClusterData(new AzureLocation("West US 2"))
             {
-                ClusterType = "spark",
-                ComputeNodes =
-{
+                Properties = new ClusterResourceProperties("spark", new ComputeProfile(new ClusterComputeNodeProfile[]
+            {
 new ClusterComputeNodeProfile("worker","Standard_D3_v2",4)
+            })
+                {
+                    AvailabilityZones =
+{
+"1","2","3"
 },
-                ClusterProfile = new ClusterProfile("0.0.1", "2.2.3", new AuthorizationProfile()
+                }, new ClusterProfile("0.0.1", "2.2.3", new AuthorizationProfile()
                 {
                     UserIds =
 {
@@ -452,7 +483,10 @@ new ClusterComputeNodeProfile("worker","Standard_D3_v2",4)
 },
                 })
                 {
-                    IdentityProfile = new HDInsightIdentityProfile(new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"), "de91f1d8-767f-460a-ac11-3cf103f74b34", "40491351-c240-4042-91e0-f644a1d2b441"),
+                    IdentityList =
+{
+new ManagedIdentitySpec(ManagedIdentityType.Cluster,new ResourceIdentifier("/subscriptions/subid/resourceGroups/hiloResourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-msi"),"de91f1d8-767f-460a-ac11-3cf103f74b34","40491351-c240-4042-91e0-f644a1d2b441")
+},
                     ServiceConfigsProfiles =
 {
 new ClusterServiceConfigsProfile("spark-service",new ClusterServiceConfig[]
@@ -492,9 +526,12 @@ Values =
 })
 },
                     ClusterAccessProfile = new ClusterAccessProfile(true),
-                    SshProfile = new ClusterSshProfile(2),
+                    SshProfile = new ClusterSshProfile(2)
+                    {
+                        VmSize = "Standard_D3_v2",
+                    },
                     SparkProfile = new SparkProfile(),
-                },
+                }),
             };
             ArmOperation<HDInsightClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             HDInsightClusterResource result = lro.Value;

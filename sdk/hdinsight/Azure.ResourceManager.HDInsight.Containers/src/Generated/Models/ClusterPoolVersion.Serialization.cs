@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -47,24 +52,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterPoolVersionValue))
-            {
-                writer.WritePropertyName("clusterPoolVersion"u8);
-                writer.WriteStringValue(ClusterPoolVersionValue);
-            }
-            if (Optional.IsDefined(AksVersion))
-            {
-                writer.WritePropertyName("aksVersion"u8);
-                writer.WriteStringValue(AksVersion);
-            }
-            if (Optional.IsDefined(IsPreview))
-            {
-                writer.WritePropertyName("isPreview"u8);
-                writer.WriteBooleanValue(IsPreview.Value);
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -103,17 +90,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
+            ClusterPoolVersionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string clusterPoolVersion = default;
-            string aksVersion = default;
-            bool? isPreview = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ClusterPoolVersionProperties.DeserializeClusterPoolVersionProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -138,37 +132,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("clusterPoolVersion"u8))
-                        {
-                            clusterPoolVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("aksVersion"u8))
-                        {
-                            aksVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("isPreview"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isPreview = property0.Value.GetBoolean();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -180,9 +143,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 name,
                 type,
                 systemData,
-                clusterPoolVersion,
-                aksVersion,
-                isPreview,
+                properties,
                 serializedAdditionalRawData);
         }
 

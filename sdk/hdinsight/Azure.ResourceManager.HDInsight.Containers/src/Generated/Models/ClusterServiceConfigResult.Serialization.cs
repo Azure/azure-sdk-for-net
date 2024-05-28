@@ -26,61 +26,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceName))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("serviceName"u8);
-                writer.WriteStringValue(ServiceName);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(FileName))
-            {
-                writer.WritePropertyName("fileName"u8);
-                writer.WriteStringValue(FileName);
-            }
-            if (Optional.IsDefined(Content))
-            {
-                writer.WritePropertyName("content"u8);
-                writer.WriteStringValue(Content);
-            }
-            if (Optional.IsDefined(ComponentName))
-            {
-                writer.WritePropertyName("componentName"u8);
-                writer.WriteStringValue(ComponentName);
-            }
-            if (Optional.IsDefined(ServiceConfigListResultPropertiesType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ServiceConfigListResultPropertiesType);
-            }
-            if (Optional.IsDefined(Path))
-            {
-                writer.WritePropertyName("path"u8);
-                writer.WriteStringValue(Path);
-            }
-            if (Optional.IsCollectionDefined(CustomKeys))
-            {
-                writer.WritePropertyName("customKeys"u8);
-                writer.WriteStartObject();
-                foreach (var item in CustomKeys)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(DefaultKeys))
-            {
-                writer.WritePropertyName("defaultKeys"u8);
-                writer.WriteStartObject();
-                foreach (var item in DefaultKeys)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -119,14 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            string serviceName = default;
-            string fileName = default;
-            string content = default;
-            string componentName = default;
-            string type = default;
-            string path = default;
-            IReadOnlyDictionary<string, string> customKeys = default;
-            IReadOnlyDictionary<string, ClusterServiceConfigValueEntity> defaultKeys = default;
+            ServiceConfigResultProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,70 +78,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("serviceName"u8))
-                        {
-                            serviceName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("fileName"u8))
-                        {
-                            fileName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("content"u8))
-                        {
-                            content = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("componentName"u8))
-                        {
-                            componentName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("type"u8))
-                        {
-                            type = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("path"u8))
-                        {
-                            path = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("customKeys"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            customKeys = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("defaultKeys"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, ClusterServiceConfigValueEntity> dictionary = new Dictionary<string, ClusterServiceConfigValueEntity>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, ClusterServiceConfigValueEntity.DeserializeClusterServiceConfigValueEntity(property1.Value, options));
-                            }
-                            defaultKeys = dictionary;
-                            continue;
-                        }
-                    }
+                    properties = ServiceConfigResultProperties.DeserializeServiceConfigResultProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -207,16 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ClusterServiceConfigResult(
-                serviceName,
-                fileName,
-                content,
-                componentName,
-                type,
-                path,
-                customKeys ?? new ChangeTrackingDictionary<string, string>(),
-                defaultKeys ?? new ChangeTrackingDictionary<string, ClusterServiceConfigValueEntity>(),
-                serializedAdditionalRawData);
+            return new ClusterServiceConfigResult(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterServiceConfigResult>.Write(ModelReaderWriterOptions options)

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Trino worker. </summary>
-    public partial class TrinoWorker
+    internal partial class TrinoWorker
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,23 +51,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TrinoWorker"/>. </summary>
-        /// <param name="isEnabled"> The flag that if enable debug or not. </param>
-        /// <param name="port"> The debug port. </param>
-        /// <param name="suspend"> The flag that if suspend debug or not. </param>
+        /// <param name="debug"> Trino debug configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrinoWorker(bool? isEnabled, int? port, bool? suspend, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrinoWorker(TrinoDebugConfig debug, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            IsEnabled = isEnabled;
-            Port = port;
-            Suspend = suspend;
+            Debug = debug;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The flag that if enable debug or not. </summary>
-        public bool? IsEnabled { get; set; }
-        /// <summary> The debug port. </summary>
-        public int? Port { get; set; }
-        /// <summary> The flag that if suspend debug or not. </summary>
-        public bool? Suspend { get; set; }
+        /// <summary> Trino debug configuration. </summary>
+        public TrinoDebugConfig Debug { get; set; }
     }
 }

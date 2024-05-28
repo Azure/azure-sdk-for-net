@@ -26,29 +26,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Debug))
+            {
+                writer.WritePropertyName("debug"u8);
+                writer.WriteObjectValue(Debug, options);
+            }
             if (Optional.IsDefined(HighAvailabilityEnabled))
             {
                 writer.WritePropertyName("highAvailabilityEnabled"u8);
                 writer.WriteBooleanValue(HighAvailabilityEnabled.Value);
             }
-            writer.WritePropertyName("debug"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
-            {
-                writer.WritePropertyName("enable"u8);
-                writer.WriteBooleanValue(IsEnabled.Value);
-            }
-            if (Optional.IsDefined(Port))
-            {
-                writer.WritePropertyName("port"u8);
-                writer.WriteNumberValue(Port.Value);
-            }
-            if (Optional.IsDefined(Suspend))
-            {
-                writer.WritePropertyName("suspend"u8);
-                writer.WriteBooleanValue(Suspend.Value);
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -87,14 +74,21 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
+            TrinoDebugConfig debug = default;
             bool? highAvailabilityEnabled = default;
-            bool? enable = default;
-            int? port = default;
-            bool? suspend = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("debug"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    debug = TrinoDebugConfig.DeserializeTrinoDebugConfig(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("highAvailabilityEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -104,52 +98,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     highAvailabilityEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("debug"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("enable"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enable = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("port"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            port = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("suspend"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            suspend = property0.Value.GetBoolean();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TrinoCoordinator(highAvailabilityEnabled, enable, port, suspend, serializedAdditionalRawData);
+            return new TrinoCoordinator(debug, highAvailabilityEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrinoCoordinator>.Write(ModelReaderWriterOptions options)

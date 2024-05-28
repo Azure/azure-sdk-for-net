@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
     [RunFrequency(RunTestFrequency.Manually)]
     public class ClusterPoolOperationTests : HDInsightContainersOperationTestsBase
     {
-        public ClusterPoolOperationTests(bool isAsync) : base(isAsync)
+        public ClusterPoolOperationTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             string clusterPoolName = Recording.GenerateAssetName("sdk-testpool-");
 
             HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location);
-            clusterPoolData.ClusterPoolVersion = "1.0";
+            clusterPoolData.Properties.ClusterPoolVersion = "1.2";
 
             string clusterPoolVmSize = "Standard_E4s_v3";
-            clusterPoolData.ComputeProfile = new ClusterPoolComputeProfile(clusterPoolVmSize);
+            clusterPoolData.Properties.ComputeProfile = new ClusterPoolComputeProfile(clusterPoolVmSize);
 
             HDInsightClusterPoolCollection clusterPoolCollection = ResourceGroup.GetHDInsightClusterPools();
             var clusterPoolResult = await clusterPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterPoolName, clusterPoolData).ConfigureAwait(false);
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             string clusterPoolName = Recording.GenerateAssetName("sdk-testpool-");
 
             HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location);
-            clusterPoolData.ClusterPoolVersion = "1.0";
+            clusterPoolData.Properties.ClusterPoolVersion = "1.0";
 
             string clusterPoolVmSize = "Standard_E4s_v3";
-            clusterPoolData.ComputeProfile = new ClusterPoolComputeProfile(clusterPoolVmSize);
+            clusterPoolData.Properties.ComputeProfile = new ClusterPoolComputeProfile(clusterPoolVmSize);
 
             HDInsightClusterPoolCollection clusterPoolCollection = ResourceGroup.GetHDInsightClusterPools();
 
@@ -103,15 +103,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
             string clusterPoolName = Recording.GenerateAssetName("sdk-testpool-");
 
             HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location);
-            clusterPoolData.ClusterPoolVersion = "1.1";
+            clusterPoolData.Properties.ClusterPoolVersion = "1.1";
 
             string clusterPoolVmSize = "Standard_E4s_v3";
-            clusterPoolData.ComputeProfile = new ClusterPoolComputeProfile(clusterPoolVmSize);
+            clusterPoolData.Properties.ComputeProfile = new ClusterPoolComputeProfile(clusterPoolVmSize);
 
             ClusterPoolNetworkProfile clusterPoolNetworkProfile = new ClusterPoolNetworkProfile(
                 new Core.ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testGroup/providers/Microsoft.Network/virtualNetworks/hilonetwork/subnets/default"));
             clusterPoolNetworkProfile.EnablePrivateApiServer = true;
-            clusterPoolData.NetworkProfile = clusterPoolNetworkProfile;
+            clusterPoolData.Properties.NetworkProfile = clusterPoolNetworkProfile;
 
             HDInsightClusterPoolCollection clusterPoolCollection = ResourceGroup.GetHDInsightClusterPools();
 
