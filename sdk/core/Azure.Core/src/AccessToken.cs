@@ -22,6 +22,19 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// Creates a new instance of <see cref="AccessToken"/> using the provided <paramref name="accessToken"/> and <paramref name="expiresOn"/>.
+        /// </summary>
+        /// <param name="accessToken">The bearer access token value.</param>
+        /// <param name="expiresOn">The bearer access token expiry date.</param>
+        /// <param name="refreshOn">Specifies the time when the cached token should be proactively refreshed.</param>
+        public AccessToken(string accessToken, DateTimeOffset expiresOn, DateTimeOffset? refreshOn)
+        {
+            Token = accessToken;
+            ExpiresOn = expiresOn;
+            RefreshOn = refreshOn;
+        }
+
+        /// <summary>
         /// Get the access token value.
         /// </summary>
         public string Token { get; }
@@ -30,6 +43,11 @@ namespace Azure.Core
         /// Gets the time when the provided token expires.
         /// </summary>
         public DateTimeOffset ExpiresOn { get; }
+
+        /// <summary>
+        /// Gets the time when the token should be refreshed.
+        /// </summary>
+        public DateTimeOffset? RefreshOn { get; }
 
         /// <inheritdoc />
         public override bool Equals(object? obj)
