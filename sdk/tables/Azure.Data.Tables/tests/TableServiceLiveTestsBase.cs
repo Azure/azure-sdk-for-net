@@ -31,7 +31,7 @@ namespace Azure.Data.Tables.Tests
             _enableTenantDiscovery = enableTenantDiscovery;
             SanitizedHeaders.Add("My-Custom-Auth-Header");
             UriRegexSanitizers.Add(
-                new UriRegexSanitizer(@"([\x0026|&|?]sig=)(?<group>[\w\d%]+)", SanitizeValue)
+                new UriRegexSanitizer(@"([\x0026|&|?]sig=)(?<group>[\w\d%]+)")
                 {
                     GroupForReplace = "group"
                 });

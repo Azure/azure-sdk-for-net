@@ -51,7 +51,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsCollectionDefined(TokenSelectionBiases))
             {
                 writer.WritePropertyName("logit_bias"u8);
-                SerializeTokenSelectionBiases(writer);
+                SerializeTokenSelectionBiases(writer, options);
             }
             if (Optional.IsDefined(User))
             {

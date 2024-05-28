@@ -21,7 +21,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="context"/> is null. </exception>
         public PowerVirtualAgentsDialog(string botAppId, IDictionary<string, object> context, string language = null) : base(DialogInputType.PowerVirtualAgents)
         {
-            Argument.AssertNotNull(botAppId, nameof(botAppId));
+            Argument.AssertNotNullOrEmpty(botAppId, nameof(botAppId));
             Argument.AssertNotNull(context, nameof(context));
 
             BotAppId = botAppId;

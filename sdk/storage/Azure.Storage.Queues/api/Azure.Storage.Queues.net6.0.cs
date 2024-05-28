@@ -101,6 +101,7 @@ namespace Azure.Storage.Queues
             V2023_11_03 = 20,
             V2024_02_04 = 21,
             V2024_05_04 = 22,
+            V2024_08_04 = 23,
         }
     }
     public partial class QueueMessageDecodingFailedEventArgs : Azure.SyncAsyncEventArgs
