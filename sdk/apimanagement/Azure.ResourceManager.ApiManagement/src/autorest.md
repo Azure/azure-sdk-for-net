@@ -8,7 +8,8 @@ azure-arm: true
 csharp: true
 library-name: ApiManagement
 namespace: Azure.ResourceManager.ApiManagement
-require: https://github.com/Azure/azure-rest-api-specs/blob/2f28b5026a4b44adefd0237087acb0c48cfe31a6/specification/apimanagement/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481e9760fa12b2334216e21/specification/apimanagement/resource-manager/readme.md
+tag: package-2022-08
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -555,9 +556,57 @@ directive:
               }
           ]
         }
-    reason: Modify the original swagger since the id in the real response is slightly different from the ApiManagementGroupResource.
+    # reason: Modify the original swagger since the id in the real response is slightly different from the ApiManagementGroupResource.
   - from: swagger-document
     where: $..[?(@.name=='$orderby')]
     transform: $['x-ms-client-name'] = 'orderBy'
-
+  - from: apimcontenttypes.json
+    where: $.paths.['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}'].put
+    transform: >
+                $['parameters']=[
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/ServiceNameParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/ContentTypeIdParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/IfMatchOptionalParameter"
+                      },
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+                      },
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+                      }
+                ]
+  - from: apimcontenttypes.json
+    where: $.paths.['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}'].put
+    transform: >
+                $['parameters']=[      
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ResourceGroupNameParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/ServiceNameParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/ContentTypeIdParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/ContentItemIdParameter"
+                      },
+                      {
+                        "$ref": "./apimanagement.json#/parameters/IfMatchOptionalParameter"
+                      },
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/ApiVersionParameter"
+                      },
+                      {
+                        "$ref": "../../../../../common-types/resource-management/v3/types.json#/parameters/SubscriptionIdParameter"
+                      }
+                ]
 ```

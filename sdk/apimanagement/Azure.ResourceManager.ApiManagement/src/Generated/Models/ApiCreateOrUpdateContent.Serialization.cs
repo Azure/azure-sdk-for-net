@@ -158,6 +158,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("apiType"u8);
                 writer.WriteStringValue(SoapApiType.Value.ToString());
             }
+            if (Optional.IsDefined(TranslateRequiredQueryParametersConduct))
+            {
+                writer.WritePropertyName("translateRequiredQueryParameters"u8);
+                writer.WriteStringValue(TranslateRequiredQueryParametersConduct.Value.ToString());
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -222,6 +227,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ContentFormat? format = default;
             ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default;
             SoapApiType? apiType = default;
+            TranslateRequiredQueryParametersConduct? translateRequiredQueryParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -425,6 +431,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             apiType = new SoapApiType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("translateRequiredQueryParameters"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            translateRequiredQueryParameters = new TranslateRequiredQueryParametersConduct(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -460,6 +475,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 format,
                 wsdlSelector,
                 apiType,
+                translateRequiredQueryParameters,
                 serializedAdditionalRawData);
         }
 

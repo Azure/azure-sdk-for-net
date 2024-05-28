@@ -124,6 +124,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
+            if (Optional.IsDefined(UseInTestConsole))
+            {
+                writer.WritePropertyName("useInTestConsole"u8);
+                writer.WriteBooleanValue(UseInTestConsole.Value);
+            }
+            if (Optional.IsDefined(UseInApiDocumentation))
+            {
+                writer.WritePropertyName("useInApiDocumentation"u8);
+                writer.WriteBooleanValue(UseInApiDocumentation.Value);
+            }
             if (Optional.IsDefined(ClientRegistrationEndpoint))
             {
                 writer.WritePropertyName("clientRegistrationEndpoint"u8);
@@ -208,6 +218,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string resourceOwnerUsername = default;
             string resourceOwnerPassword = default;
             string displayName = default;
+            bool? useInTestConsole = default;
+            bool? useInApiDocumentation = default;
             string clientRegistrationEndpoint = default;
             string authorizationEndpoint = default;
             IList<GrantType> grantTypes = default;
@@ -345,6 +357,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             displayName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("useInTestConsole"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useInTestConsole = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("useInApiDocumentation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useInApiDocumentation = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("clientRegistrationEndpoint"u8))
                         {
                             clientRegistrationEndpoint = property0.Value.GetString();
@@ -404,6 +434,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 resourceOwnerUsername,
                 resourceOwnerPassword,
                 displayName,
+                useInTestConsole,
+                useInApiDocumentation,
                 clientRegistrationEndpoint,
                 authorizationEndpoint,
                 grantTypes ?? new ChangeTrackingList<GrantType>(),

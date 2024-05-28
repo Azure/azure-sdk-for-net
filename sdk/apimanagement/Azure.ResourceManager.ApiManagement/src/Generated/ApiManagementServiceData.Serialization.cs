@@ -227,6 +227,21 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("enableClientCertificate"u8);
                 writer.WriteBooleanValue(EnableClientCertificate.Value);
             }
+            if (Optional.IsDefined(NatGatewayState))
+            {
+                writer.WritePropertyName("natGatewayState"u8);
+                writer.WriteStringValue(NatGatewayState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(OutboundPublicIPAddresses))
+            {
+                writer.WritePropertyName("outboundPublicIPAddresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in OutboundPublicIPAddresses)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(DisableGateway))
             {
                 writer.WritePropertyName("disableGateway"u8);
@@ -335,6 +350,8 @@ namespace Azure.ResourceManager.ApiManagement
             IDictionary<string, string> customProperties = default;
             IList<CertificateConfiguration> certificates = default;
             bool? enableClientCertificate = default;
+            NatGatewayState? natGatewayState = default;
+            IReadOnlyList<string> outboundPublicIPAddresses = default;
             bool? disableGateway = default;
             VirtualNetworkType? virtualNetworkType = default;
             ApiVersionConstraint apiVersionConstraint = default;
@@ -648,6 +665,29 @@ namespace Azure.ResourceManager.ApiManagement
                             enableClientCertificate = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("natGatewayState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            natGatewayState = new NatGatewayState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("outboundPublicIPAddresses"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            outboundPublicIPAddresses = array;
+                            continue;
+                        }
                         if (property0.NameEquals("disableGateway"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -757,6 +797,8 @@ namespace Azure.ResourceManager.ApiManagement
                 customProperties ?? new ChangeTrackingDictionary<string, string>(),
                 certificates ?? new ChangeTrackingList<CertificateConfiguration>(),
                 enableClientCertificate,
+                natGatewayState,
+                outboundPublicIPAddresses ?? new ChangeTrackingList<string>(),
                 disableGateway,
                 virtualNetworkType,
                 apiVersionConstraint,

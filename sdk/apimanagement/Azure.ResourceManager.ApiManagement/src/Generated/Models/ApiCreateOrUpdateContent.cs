@@ -84,8 +84,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         ///  * `websocket` creates websocket API
         ///  * `graphql` creates GraphQL API.
         /// </param>
+        /// <param name="translateRequiredQueryParametersConduct"> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCreateOrUpdateContent(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IList<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string value, ContentFormat? format, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector, SoapApiType? soapApiType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiCreateOrUpdateContent(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IList<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string value, ContentFormat? format, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector, SoapApiType? soapApiType, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -112,6 +113,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Format = format;
             WsdlSelector = wsdlSelector;
             SoapApiType = soapApiType;
+            TranslateRequiredQueryParametersConduct = translateRequiredQueryParametersConduct;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -171,5 +173,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         ///  * `graphql` creates GraphQL API.
         /// </summary>
         public SoapApiType? SoapApiType { get; set; }
+        /// <summary> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </summary>
+        public TranslateRequiredQueryParametersConduct? TranslateRequiredQueryParametersConduct { get; set; }
     }
 }

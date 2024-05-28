@@ -86,6 +86,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("gatewayRegionalUrl"u8);
                 writer.WriteStringValue(GatewayRegionalUri.AbsoluteUri);
             }
+            if (Optional.IsDefined(NatGatewayState))
+            {
+                writer.WritePropertyName("natGatewayState"u8);
+                writer.WriteStringValue(NatGatewayState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(OutboundPublicIPAddresses))
+            {
+                writer.WritePropertyName("outboundPublicIPAddresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in OutboundPublicIPAddresses)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(DisableGateway))
             {
                 writer.WritePropertyName("disableGateway"u8);
@@ -142,6 +157,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier publicIPAddressId = default;
             VirtualNetworkConfiguration virtualNetworkConfiguration = default;
             Uri gatewayRegionalUri = default;
+            NatGatewayState? natGatewayState = default;
+            IReadOnlyList<string> outboundPublicIPAddresses = default;
             bool? disableGateway = default;
             PlatformVersion? platformVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -241,6 +258,29 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     gatewayRegionalUri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("natGatewayState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    natGatewayState = new NatGatewayState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("outboundPublicIPAddresses"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    outboundPublicIPAddresses = array;
+                    continue;
+                }
                 if (property.NameEquals("disableGateway"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -274,6 +314,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 publicIPAddressId,
                 virtualNetworkConfiguration,
                 gatewayRegionalUri,
+                natGatewayState,
+                outboundPublicIPAddresses ?? new ChangeTrackingList<string>(),
                 disableGateway,
                 platformVersion,
                 serializedAdditionalRawData);

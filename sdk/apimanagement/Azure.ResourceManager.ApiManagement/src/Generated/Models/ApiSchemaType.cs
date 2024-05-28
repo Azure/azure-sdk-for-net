@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string XmlValue = "xml";
         private const string JsonValue = "json";
 
-        /// <summary> Xml schema type. </summary>
+        /// <summary> XML schema type. </summary>
         public static ApiSchemaType Xml { get; } = new ApiSchemaType(XmlValue);
         /// <summary> Json schema type. </summary>
         public static ApiSchemaType Json { get; } = new ApiSchemaType(JsonValue);
