@@ -15,14 +15,14 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="TranscriptionSubscriptionInternal"/>. </summary>
         internal TranscriptionSubscriptionInternal()
         {
-            SubscribedResultTypes = new ChangeTrackingList<TranscriptionResultType>();
+            SubscribedResultTypes = new ChangeTrackingList<TranscriptionResultState>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionSubscriptionInternal"/>. </summary>
         /// <param name="id"> Subscription Id. </param>
         /// <param name="state"> Transcription subscription state. </param>
         /// <param name="subscribedResultTypes"> Subscribed transcription result types. </param>
-        internal TranscriptionSubscriptionInternal(string id, TranscriptionSubscriptionState? state, IReadOnlyList<TranscriptionResultType> subscribedResultTypes)
+        internal TranscriptionSubscriptionInternal(string id, TranscriptionSubscriptionState? state, IReadOnlyList<TranscriptionResultState> subscribedResultTypes)
         {
             Id = id;
             State = state;
@@ -34,6 +34,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Transcription subscription state. </summary>
         public TranscriptionSubscriptionState? State { get; }
         /// <summary> Subscribed transcription result types. </summary>
-        public IReadOnlyList<TranscriptionResultType> SubscribedResultTypes { get; }
+        public IReadOnlyList<TranscriptionResultState> SubscribedResultTypes { get; }
     }
 }

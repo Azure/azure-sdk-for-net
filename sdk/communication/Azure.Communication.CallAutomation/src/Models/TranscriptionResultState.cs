@@ -8,8 +8,8 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     [CodeGenModel("TranscriptionResultType", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    [JsonConverter(typeof(EquatableEnumJsonConverter<TranscriptionResultType>))]
-    public readonly partial struct TranscriptionResultType : IEquatable<TranscriptionResultType>
+    [JsonConverter(typeof(EquatableEnumJsonConverter<TranscriptionResultState>))]
+    public readonly partial struct TranscriptionResultState : IEquatable<TranscriptionResultState>
     {
     }
 }

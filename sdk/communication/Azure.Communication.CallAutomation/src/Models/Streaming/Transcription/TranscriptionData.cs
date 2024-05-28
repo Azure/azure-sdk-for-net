@@ -11,7 +11,7 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class TranscriptionData : StreamingData
     {
-        internal TranscriptionData(string text, string format, double confidence, ulong offset, ulong duration, IEnumerable<WordData> words, string participantRawID, string resultStatus)
+        internal TranscriptionData(string text, string format, double confidence, ulong offset, ulong duration, IEnumerable<WordData> words, string participantRawID, TranscriptionResultState resultState)
         {
             Text = text;
             Format = ConvertToTextFormatEnum(format);
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
             {
                 Participant = CommunicationIdentifier.FromRawId(participantRawID);
             }
-            ResultStatus = ConvertToResultStatusEnum(resultStatus);
+            ResultState = resultState;
         }
 
         /// <summary>
@@ -65,21 +65,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Status of the result of transcription
         /// </summary>
-        public ResultStatus ResultStatus { get; set; }
-
-        private static ResultStatus ConvertToResultStatusEnum(string resultStatus)
-        {
-            if ("Intermediate".Equals(resultStatus, StringComparison.OrdinalIgnoreCase))
-                return ResultStatus.Intermediate;
-            else if ("Final".Equals(resultStatus, StringComparison.OrdinalIgnoreCase))
-                return ResultStatus.Final;
-            else
-                throw new NotSupportedException(resultStatus);
-        }
+        public TranscriptionResultState ResultState { get; set; }
 
         private static TextFormat ConvertToTextFormatEnum(string format)
         {
-            if ("Display".Equals(format, StringComparison.OrdinalIgnoreCase))
+            if (TextFormat.Display.ToString().Equals(format, StringComparison.OrdinalIgnoreCase))
                 return TextFormat.Display;
             else
                 throw new NotSupportedException(format);

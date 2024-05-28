@@ -20,9 +20,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
         private readonly TranscriptionOptions _transcriptionConfiguration = new TranscriptionOptions(
             new Uri("https://websocket"),
-            TranscriptionTransport.Websocket,
             "en-CA",
-            true);
+            true,
+            TranscriptionTransport.Websocket);
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public async Task AnswerCallAsync_200OK(string incomingCallContext, Uri callbackUri)

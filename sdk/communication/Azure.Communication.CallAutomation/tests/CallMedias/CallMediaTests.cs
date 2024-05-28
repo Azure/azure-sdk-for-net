@@ -1059,7 +1059,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.StartMediaStreamingAsync(new StartMediaStreamingOptions(){OperationCallbackUrl = "https://localhost", OperationContext = "OperationContext"})
+                   callMedia => callMedia.StartMediaStreamingAsync(new StartMediaStreamingOptions(){OperationCallbackUri = new Uri("https://localhost"), OperationContext = "OperationContext"})
                 }
             };
         }
@@ -1081,7 +1081,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.StopMediaStreamingAsync(new StopMediaStreamingOptions(){ OperationCallbackUrl = "https://localhost"})
+                   callMedia => callMedia.StopMediaStreamingAsync(new StopMediaStreamingOptions(){ OperationCallbackUri = new Uri("https://localhost")})
                 }
             };
         }

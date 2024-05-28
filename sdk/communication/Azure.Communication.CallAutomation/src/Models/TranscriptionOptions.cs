@@ -15,17 +15,17 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of TranscriptionOptions. </summary>
         /// <param name="transportUri"> Transport URL for live transcription. </param>
-        /// <param name="transportType"> The type of transport to be used for live transcription, eg. Websocket. </param>
         /// <param name="locale"> Defines the locale for the data e.g en-CA, en-AU. </param>
         /// <param name="startTranscription"> Determines if the transcription should be started immediately after call is answered or not. </param>
+        /// <param name="transcriptionTransport"> The type of transport to be used for live transcription, eg. Websocket. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transportUri"/> or <paramref name="locale"/> is null. </exception>
-        public TranscriptionOptions(Uri transportUri, TranscriptionTransport transportType, string locale, bool startTranscription)
+        public TranscriptionOptions(Uri transportUri, string locale, bool startTranscription, TranscriptionTransport transcriptionTransport = default)
         {
             Argument.AssertNotNull(transportUri, nameof(transportUri));
             Argument.AssertNotNull(locale, nameof(locale));
 
             TransportUrl = transportUri;
-            TranscriptionTransport = transportType;
+            TranscriptionTransport = transcriptionTransport;
             Locale = locale;
             StartTranscription = startTranscription;
         }

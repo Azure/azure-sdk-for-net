@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation
             }
             string id = default;
             TranscriptionSubscriptionState? state = default;
-            IReadOnlyList<TranscriptionResultType> subscribedResultTypes = default;
+            IReadOnlyList<TranscriptionResultState> subscribedResultTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -43,16 +43,16 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    List<TranscriptionResultType> array = new List<TranscriptionResultType>();
+                    List<TranscriptionResultState> array = new List<TranscriptionResultState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new TranscriptionResultType(item.GetString()));
+                        array.Add(new TranscriptionResultState(item.GetString()));
                     }
                     subscribedResultTypes = array;
                     continue;
                 }
             }
-            return new TranscriptionSubscriptionInternal(id, state, subscribedResultTypes ?? new ChangeTrackingList<TranscriptionResultType>());
+            return new TranscriptionSubscriptionInternal(id, state, subscribedResultTypes ?? new ChangeTrackingList<TranscriptionResultState>());
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

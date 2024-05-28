@@ -1461,7 +1461,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new StartMediaStreamingRequestInternal()
-                    : new StartMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUrl, OperationContext = options.OperationContext };
+                    : new StartMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri, OperationContext = options.OperationContext };
 
                 return CallMediaRestClient.StartMediaStreaming(CallConnectionId, request, cancellationToken);
             }
@@ -1486,7 +1486,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new StartMediaStreamingRequestInternal()
-                    : new StartMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUrl, OperationContext = options.OperationContext };
+                    : new StartMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri, OperationContext = options.OperationContext };
 
                 return await CallMediaRestClient.StartMediaStreamingAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
@@ -1511,7 +1511,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new StopMediaStreamingRequestInternal()
-                    : new StopMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUrl };
+                    : new StopMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri };
 
                 return CallMediaRestClient.StopMediaStreaming(CallConnectionId, request, cancellationToken);
             }
@@ -1536,7 +1536,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new StopMediaStreamingRequestInternal()
-                    : new StopMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUrl };
+                    : new StopMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri };
 
                 return await CallMediaRestClient.StopMediaStreamingAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }

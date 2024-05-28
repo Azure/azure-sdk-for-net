@@ -74,7 +74,7 @@ namespace Azure.Communication.CallAutomation
                         transcriptionDataInternal.Duration,
                         transcriptionDataInternal.Words,
                         transcriptionDataInternal.ParticipantRawID,
-                        transcriptionDataInternal.ResultStatus
+                        transcriptionDataInternal.ResultState
                         );
 
                     #endregion

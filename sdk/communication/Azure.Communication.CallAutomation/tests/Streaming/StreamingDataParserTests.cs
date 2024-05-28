@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 {
@@ -298,8 +299,8 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 
             Assert.IsTrue(transcription.Participant is CommunicationIdentifier);
             Assert.AreEqual("abc12345", transcription.Participant.RawId);
-            Console.WriteLine(transcription.ResultStatus.ToString());
-            Assert.AreEqual(ResultStatus.Final, transcription.ResultStatus);
+            Console.WriteLine(transcription.ResultState.ToString());
+            Assert.AreEqual(TranscriptionResultState.Final, transcription.ResultState);
         }
         #endregion
     }

@@ -58,6 +58,6 @@ namespace Azure.Communication.CallAutomation
         /// Status of the result of transcription
         /// </summary>
         [JsonPropertyName("resultStatus")]
-        public string ResultStatus { get; set; }
+        public TranscriptionResultState ResultState{ get; set; }
     }
 }
