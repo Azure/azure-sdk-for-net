@@ -125,18 +125,8 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>
         public float? ThroughputMibps { get; set; }
-        /// <summary> Snapshot Policy ResourceId. </summary>
-        public ResourceIdentifier SnapshotPolicyId
-        {
-            get => DataProtection is null ? default : DataProtection.SnapshotPolicyId;
-            set
-            {
-                if (DataProtection is null)
-                    DataProtection = new NetAppVolumePatchDataProtection();
-                DataProtection.SnapshotPolicyId = value;
-            }
-        }
-
+        /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
+        public NetAppVolumePatchDataProtection DataProtection { get; set; }
         /// <summary> Specifies if default quota is enabled for the volume. </summary>
         public bool? IsDefaultQuotaEnabled { get; set; }
         /// <summary> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </summary>

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(DataProtection))
             {
                 writer.WritePropertyName("dataProtection"u8);
-                writer.WriteObjectValue<NetAppVolumePatchDataProtection>(DataProtection, options);
+                writer.WriteObjectValue(DataProtection, options);
             }
             if (Optional.IsDefined(IsDefaultQuotaEnabled))
             {
