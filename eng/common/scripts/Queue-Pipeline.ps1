@@ -58,10 +58,13 @@ param(
   [string]$VsoQueuedPipelines,
 
   # Already base 64 encoded authentication token
-  [string]$Base64EncodedAuthToken,
+  [string]$Base64EncodedAuthToken=$null,
 
-  # Unencoded authentication token
-  [string]$AuthToken,
+  # Unencoded authentication token from a PAT
+  [string]$AuthToken=$null,
+
+  # Temp access token from the logged in az cli user for azure devops resource
+  [string]$AccessToken=$null,
 
   [Parameter(Mandatory = $false)]
   [string]$BuildParametersJson
@@ -71,7 +74,9 @@ param(
 
 if (!$Base64EncodedAuthToken)
 {
-  $Base64EncodedAuthToken = Get-Base64EncodedToken $AuthToken
+  if (![string]::IsNullOrWhiteSpace($AuthToken)) {
+    $Base64EncodedAuthToken = Get-Base64EncodedToken $AuthToken
+  }
 }
 
 # Skip if SourceBranch is empty because it we cannot generate a target branch
@@ -105,6 +110,7 @@ try {
     -SourceBranch $SourceBranch `
     -DefinitionId $DefinitionId `
     -Base64EncodedAuthToken $Base64EncodedAuthToken `
+    -AccessToken $AccessToken `
     -BuildParametersJson $BuildParametersJson
 }
 catch {

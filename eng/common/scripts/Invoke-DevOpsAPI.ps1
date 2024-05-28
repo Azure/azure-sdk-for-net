@@ -16,9 +16,28 @@ function Get-Base64EncodedToken([string]$AuthToken)
   return $encodedAuthToken
 }
 
-function Get-DevOpsApiHeaders ($Base64EncodedToken) {
-  $headers = @{
-    Authorization = "Basic $Base64EncodedToken"
+# The Base64EncodedToken would be from a PAT that was passed in and the header requires Basic authorization
+# The AccessToken would be the querying the Azure resource with the following command:
+#   az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv
+# The header for an AccessToken requires Bearer authorization
+function Get-DevOpsApiHeaders ($Base64EncodedToken, $AccessToken) {
+  $headers = $null
+  if (![string]::IsNullOrWhiteSpace($Base64EncodedToken) -and
+      ![string]::IsNullOrWhiteSpace($AccessToken)) {
+        LogError "Get-DevOpsApiHeaders::Unable to set the Authentication in the header because Base64EncodedToken and AccessToken are both set and only one should be."
+        exit 1
+  }
+  if (![string]::IsNullOrWhiteSpace($Base64EncodedToken)) {
+    $headers = @{
+      Authorization = "Basic $Base64EncodedToken"
+    }
+  } elseif (![string]::IsNullOrWhiteSpace($AccessToken)) {
+    $headers = @{
+      Authorization = "Bearer $AccessToken"
+    }
+  } else {
+    LogError "Get-DevOpsApiHeaders::Unable to set the Authentication in the header because neither Base64EncodedToken nor AccessToken are set."
+    exit 1
   }
   return $headers
 }
@@ -30,9 +49,8 @@ function Start-DevOpsBuild {
     $SourceBranch,
     [Parameter(Mandatory = $true)]
     $DefinitionId,
-    [ValidateNotNullOrEmpty()]
-    [Parameter(Mandatory = $true)]
-    $Base64EncodedAuthToken,
+    $Base64EncodedAuthToken=$null,
+    $AccessToken=$null,
     [Parameter(Mandatory = $false)]
     [string]$BuildParametersJson
   )
@@ -45,11 +63,13 @@ function Start-DevOpsBuild {
     parameters = $BuildParametersJson
   }
 
+  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken -AccessToken $AccessToken)
+
   return Invoke-RestMethod `
           -Method POST `
           -Body ($parameters | ConvertTo-Json) `
           -Uri $uri `
-          -Headers (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken) `
+          -Headers $headers `
           -MaximumRetryCount 3 `
           -ContentType "application/json"
 }
@@ -62,9 +82,8 @@ function Update-DevOpsBuild {
     [Parameter(Mandatory = $true)]
     $BuildId,
     $Status, # pass canceling to cancel build
-    [ValidateNotNullOrEmpty()]
-    [Parameter(Mandatory = $true)]
-    $Base64EncodedAuthToken
+    $Base64EncodedAuthToken,
+    $AccessToken
   )
 
   $uri = "$DevOpsAPIBaseURI" -F $Organization, $Project, "build", "builds/$BuildId", ""
@@ -72,11 +91,13 @@ function Update-DevOpsBuild {
 
   if ($Status) { $parameters["status"] = $Status}
 
+  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken -AccessToken $AccessToken)
+
   return Invoke-RestMethod `
           -Method PATCH `
           -Body ($parameters | ConvertTo-Json) `
           -Uri $uri `
-          -Headers (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken) `
+          -Headers $headers `
           -MaximumRetryCount 3 `
           -ContentType "application/json"
 }
@@ -88,9 +109,8 @@ function Get-DevOpsBuilds {
     $BranchName, # Should start with 'refs/heads/'
     $Definitions, # Comma seperated string of definition IDs
     $StatusFilter, # Comma seperated string 'cancelling, completed, inProgress, notStarted'
-    [ValidateNotNullOrEmpty()]
-    [Parameter(Mandatory = $true)]
-    $Base64EncodedAuthToken
+    $Base64EncodedAuthToken,
+    $AccessToken
   )
 
   $query = ""
@@ -100,10 +120,12 @@ function Get-DevOpsBuilds {
   if ($StatusFilter) { $query += "statusFilter=$StatusFilter&" }
   $uri = "$DevOpsAPIBaseURI" -F $Organization, $Project , "build" , "builds", $query
 
+  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken -AccessToken $AccessToken)
+
   return Invoke-RestMethod `
           -Method GET `
           -Uri $uri `
-          -Headers (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken) `
+          -Headers $headers `
           -MaximumRetryCount 3
 }
 
@@ -112,15 +134,18 @@ function Delete-RetentionLease {
     $Organization,
     $Project,
     $LeaseId,
-    $Base64EncodedAuthToken
+    $Base64EncodedAuthToken,
+    $AccessToken
   )
 
   $uri = "https://dev.azure.com/$Organization/$Project/_apis/build/retention/leases?ids=$LeaseId&api-version=6.0-preview.1"
 
+  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken -AccessToken $AccessToken)
+
   return Invoke-RestMethod `
     -Method DELETE `
     -Uri $uri `
-    -Headers (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken) `
+    -Headers $headers `
     -MaximumRetryCount 3
 }
 
@@ -131,15 +156,18 @@ function Get-RetentionLeases {
     $DefinitionId,
     $RunId,
     $OwnerId,
-    $Base64EncodedAuthToken
+    $Base64EncodedAuthToken,
+    $AccessToken
   )
 
   $uri = "https://dev.azure.com/$Organization/$Project/_apis/build/retention/leases?ownerId=$OwnerId&definitionId=$DefinitionId&runId=$RunId&api-version=6.0-preview.1"
 
+  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken -AccessToken $AccessToken)
+
   return Invoke-RestMethod `
     -Method GET `
     -Uri $uri `
-    -Headers (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken) `
+    -Headers $headers `
     -MaximumRetryCount 3
 }
 
@@ -151,7 +179,8 @@ function Add-RetentionLease {
     $RunId,
     $OwnerId,
     $DaysValid,
-    $Base64EncodedAuthToken
+    $Base64EncodedAuthToken,
+    $AccessToken
   )
 
   $parameter = @{}
@@ -165,12 +194,13 @@ function Add-RetentionLease {
 
   $uri = "https://dev.azure.com/$Organization/$Project/_apis/build/retention/leases?api-version=6.0-preview.1"
 
+  $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken -AccessToken $AccessToken)
+
   return Invoke-RestMethod `
           -Method POST `
           -Body "[$body]" `
           -Uri $uri `
-          -Headers (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedAuthToken) `
+          -Headers $headers `
           -MaximumRetryCount 3 `
           -ContentType "application/json"
-
 }
