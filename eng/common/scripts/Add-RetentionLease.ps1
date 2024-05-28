@@ -19,18 +19,18 @@ param(
   [string]$OwnerId = "azure-sdk-pipeline-automation",
 
   [Parameter(Mandatory = $false)]
-  [string]$AuthToken = $env:DEVOPS_PAT,
+  [string]$AccessToken = $env:DEVOPS_PAT,
 
   [Parameter(Mandatory = $false)]
-  [string]$AccessToken=$null
+  [string]$AuthToken=$null
 )
 
 Set-StrictMode -Version 3
 
 . (Join-Path $PSScriptRoot common.ps1)
 
-if (![string]::IsNullOrWhiteSpace($AuthToken)) {
-  $encodedAuthToken = Get-Base64EncodedToken $AuthToken
+if (![string]::IsNullOrWhiteSpace($AccessToken)) {
+  $encodedAuthToken = Get-Base64EncodedToken $AccessToken
 }
 
 LogDebug "Checking for existing leases on run: $RunId"
@@ -41,11 +41,11 @@ if ($existingLeases.count -ne 0) {
 
     foreach ($lease in $existingLeases.value) {
         LogDebug "Deleting lease: $($lease.leaseId)"
-        Delete-RetentionLease -Organization $Organization -Project $Project -LeaseId $lease.leaseId -Base64EncodedAuthToken $encodedAuthToken -AccessToken $AccessToken
+        Delete-RetentionLease -Organization $Organization -Project $Project -LeaseId $lease.leaseId -Base64EncodedAuthToken $encodedAuthToken -AccessToken $AuthToken
     }
 
 }
 
 LogDebug "Creating new lease on run: $RunId"
-$lease = Add-RetentionLease -Organization $Organization -Project $Project -DefinitionId $DefinitionId -RunId $RunId -OwnerId $OwnerId -DaysValid $DaysValid -Base64EncodedAuthToken $encodedAuthToken -AccessToken $AccessToken
+$lease = Add-RetentionLease -Organization $Organization -Project $Project -DefinitionId $DefinitionId -RunId $RunId -OwnerId $OwnerId -DaysValid $DaysValid -Base64EncodedAuthToken $encodedAuthToken -AccessToken $AuthToken
 LogDebug "Lease ID is: $($lease.value.leaseId)"
