@@ -10,8 +10,14 @@ steps:
     inputs:
       solution: eng/InstallDevopsLogger.proj
       msbuildArguments: /p:WorkFolder="$(Agent.WorkFolder)" /p:BuildDirectory="$(Agent.BuildDirectory)"
+  # Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
   - task: UseDotNet@2
-    condition: and(succeeded(), ne(variables['Agent.OS'], 'Windows_NT')) # Windows supports MultiLevelLookup and doesn't need explicit framework installation
+    displayName: 'Use .NET SDK'
+    retryCountOnTaskFailure: 3
+    inputs:
+      useGlobalJson: true
+      performMultiLevelLookup: true
+  - task: UseDotNet@2
     displayName: 'Use .NET 7.0 SDK'
     retryCountOnTaskFailure: 3
     inputs:
@@ -19,13 +25,6 @@ steps:
       packageType: sdk
       performMultiLevelLookup: true
       version: "7.0.x"
-  # Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
-  - task: UseDotNet@2
-    displayName: 'Use .NET 8.0 SDK'
-    retryCountOnTaskFailure: 3
-    inputs:
-      useGlobalJson: true
-      performMultiLevelLookup: true
   - task: UseDotNet@2 # We need both 6 and 8 because the azure-sdk-tools repo only uses 6, so all tools from there fail without it
     condition: and(succeeded(), ne(variables['Agent.OS'], 'Windows_NT')) # Windows supports MultiLevelLookup and doesn't need explicit framework installation
     displayName: 'Use .NET 6.0 SDK'
