@@ -6,6 +6,5 @@
     "ProvisionerApplicationId": "f850650c-1fcf-4489-b46f-71af2e30d360",
     "ProvisionerApplicationOid": "30511c9d-ba1a-4c7b-b422-5b543da11b3f",
     "Environment": "AzureCloud",
-    "AzureSubscription": "Azure SDK Test Resources",
-    "EnvironmentVariables": {}
+    "AzureSubscription": "Azure SDK Test Resources"
 }
