@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Samples
         // GenerateVirtualWanVpnServerConfigurationVpnProfile
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Generatevirtualwanvpnserverconfigurationvpnprofile_GenerateVirtualWanVpnServerConfigurationVpnProfile()
+        public async Task GenerateVirtualWanVpnServerConfigurationVpnProfile_GenerateVirtualWanVpnServerConfigurationVpnProfile()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/GenerateVirtualWanVpnServerConfigurationVpnProfile.json
             // this example is just showing the usage of "Generatevirtualwanvpnserverconfigurationvpnprofile" operation, for the dependent resources, they will have to be created separately.
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Samples
                 VpnServerConfigurationResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/vpnServerConfigurations/vpnconfig1"),
                 AuthenticationMethod = NetworkAuthenticationMethod.Eaptls,
             };
-            ArmOperation<VpnProfileResponse> lro = await virtualWan.GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(WaitUntil.Completed, content);
+            ArmOperation<VpnProfileResponse> lro = await virtualWan.GenerateVirtualWanVpnServerConfigurationVpnProfileAsync(WaitUntil.Completed, content);
             VpnProfileResponse result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
