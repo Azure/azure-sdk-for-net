@@ -515,7 +515,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer sourceResource = new LocalDirectoryStorageResourceContainer(localDirectory);
             BlobStorageResourceContainerOptions options = new BlobStorageResourceContainerOptions()
             {
-                BlobType = blobType,
+                BlobType = new(blobType),
                 BlobDirectoryPrefix = destinationPrefix,
             };
             StorageResourceContainer destinationResource = new BlobStorageResourceContainer(
