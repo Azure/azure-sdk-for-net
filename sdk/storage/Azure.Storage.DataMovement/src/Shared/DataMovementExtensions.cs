@@ -140,8 +140,8 @@ namespace Azure.Storage.DataMovement
             StreamToUriJobPart jobPart = StreamToUriJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                sourceResource: sourceResource.GetStorageResourceReference(childSourceName),
-                destinationResource: destinationResource.GetStorageResourceReference(childDestinationName),
+                sourceResource: sourceResource.GetStorageResourceReference(childSourceName, header.SourceTypeId),
+                destinationResource: destinationResource.GetStorageResourceReference(childDestinationName, header.DestinationTypeId),
                 jobPartStatus: header.JobPartStatus,
                 initialTransferSize: initialTransferSize,
                 transferChunkSize: transferChunkSize,
@@ -174,8 +174,8 @@ namespace Azure.Storage.DataMovement
             ServiceToServiceJobPart jobPart = ServiceToServiceJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                sourceResource: sourceResource.GetStorageResourceReference(childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1)),
-                destinationResource: destinationResource.GetStorageResourceReference(childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1)),
+                sourceResource: sourceResource.GetStorageResourceReference(childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1), header.SourceTypeId),
+                destinationResource: destinationResource.GetStorageResourceReference(childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1), header.DestinationTypeId),
                 jobPartStatus: header.JobPartStatus,
                 initialTransferSize: initialTransferSize,
                 transferChunkSize: transferChunkSize,
@@ -211,8 +211,8 @@ namespace Azure.Storage.DataMovement
             UriToStreamJobPart jobPart = UriToStreamJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                sourceResource: sourceResource.GetStorageResourceReference(childSourceName),
-                destinationResource: destinationResource.GetStorageResourceReference(childDestinationName),
+                sourceResource: sourceResource.GetStorageResourceReference(childSourceName, header.SourceTypeId),
+                destinationResource: destinationResource.GetStorageResourceReference(childDestinationName, header.DestinationTypeId),
                 jobPartStatus: header.JobPartStatus,
                 initialTransferSize: initialTransferSize,
                 transferChunkSize: transferChunkSize,
