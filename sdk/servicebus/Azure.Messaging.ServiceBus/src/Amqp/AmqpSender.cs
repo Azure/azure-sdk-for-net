@@ -185,12 +185,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 await _sendLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
             }
 
+            // The premium tier supports large messages but doesn't support batching when large messages are enabled.
+            if (MaxMessageSize > 1024)
+            {
+                throw new ServiceBusException(string.Format(CultureInfo.InvariantCulture,
+                    Resources.BatchingNotAvailableWithLargeMessageSupportEnabled, MaxMessageSize), ServiceBusFailureReason.GeneralError, _entityPath);
+            }
+
             // Ensure that there was a maximum size populated; if none was provided,
             // default to the maximum size allowed by the link.
 
             options.MaxSizeInBytes ??= MaxMessageSize;
 
             Argument.AssertInRange(options.MaxSizeInBytes.Value, ServiceBusSender.MinimumBatchSizeLimit, MaxMessageSize.Value, nameof(options.MaxSizeInBytes));
+
             return new AmqpMessageBatch(_messageConverter, options);
         }
 
