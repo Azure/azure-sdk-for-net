@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_listValidSkus</description>
+        /// <description>IotDpsResource_ListValidSkus</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_listValidSkus</description>
+        /// <description>IotDpsResource_ListValidSkus</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
