@@ -16,3 +16,5 @@ extends:
           - $(sub-config-azure-cloud-test-resources)
           # Contains alternate tenant, AAD app and cert info for testing
           - $(sub-config-identity-test-resources)
+    EnvVars:
+        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
