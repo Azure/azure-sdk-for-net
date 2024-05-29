@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.ClientModel.Options;
+using System.ClientModel;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -46,7 +46,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         _assemblyName = loggingOptions.LoggedClientAssemblyName;
         _clientRequestIdHeaderName = loggingOptions.RequestIdHeaderName;
         _isLoggingEnabled = loggingOptions.IsLoggingEnabled;
-        _sanitizer = new PipelineMessageSanitizer(loggingOptions.LoggedQueryParameters, loggingOptions.LoggedHeaderNames);
+        _sanitizer = new PipelineMessageSanitizer(loggingOptions.AllowedQueryParameters, loggingOptions.AllowedHeaderNames);
 
         string logNameToUse = logName ?? DefaultEventSourceName;
         EventSourceSingleton = s_singletonEventSources.GetOrAdd(logNameToUse, _ => ClientModelEventSource.Create(logNameToUse, logTraits));

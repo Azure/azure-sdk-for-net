@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel.Internal;
-using System.ClientModel.Options;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
@@ -40,8 +39,6 @@ namespace System.ClientModel.Tests.Internal
 
         private TestClientEventListener _listener;
 
-        private static readonly string[] s_allowedHeaders = new[] { "Date", "Custom-Header", "Custom-Response-Header" };
-        private static readonly string[] s_allowedQueryParameters = new[] { "api-version" };
         private const string SystemClientModelEventSourceName = "System.ClientModel";
         private const string AzureCoreEventSourceName = "Azure-Core";
         private const string ClientRequestIdHeaderName = "Client-Id";
@@ -136,10 +133,10 @@ namespace System.ClientModel.Tests.Internal
             {
                 IsLoggingEnabled = true,
                 IsLoggingContentEnabled = true,
-                LoggedHeaderNames = new List<string> { clientIdHeaderName },
                 LoggedClientAssemblyName = clientAssemblyName,
                 RequestIdHeaderName = clientIdHeaderName
             };
+            loggingOptions.AllowedHeaderNames.Add(clientIdHeaderName);
 
             ClientPipelineOptions options = new()
             {
@@ -205,11 +202,11 @@ namespace System.ClientModel.Tests.Internal
                 {
                     IsLoggingEnabled = true,
                     IsLoggingContentEnabled = true,
-                    LoggedHeaderNames = s_allowedHeaders,
                     LoggedClientAssemblyName = "Test-SDK",
                     RequestIdHeaderName = ClientRequestIdHeaderName
                 }
             };
+            options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -270,7 +267,6 @@ namespace System.ClientModel.Tests.Internal
                 {
                     IsLoggingEnabled = true,
                     IsLoggingContentEnabled = true,
-                    LoggedHeaderNames = s_allowedHeaders,
                     LoggedClientAssemblyName = "Test-SDK",
                     RequestIdHeaderName = ClientRequestIdHeaderName
                 }
@@ -315,9 +311,10 @@ namespace System.ClientModel.Tests.Internal
                     LoggedContentSizeLimit = int.MaxValue,
                     LoggedClientAssemblyName = "Test-SDK",
                     RequestIdHeaderName = ClientRequestIdHeaderName,
-                    LoggedHeaderNames = s_allowedHeaders
                 }
             };
+            options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
+            options.LoggingOptions.AllowedHeaderNames.Add("Date");
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -365,8 +362,7 @@ namespace System.ClientModel.Tests.Internal
                     IsLoggingContentEnabled = true,
                     LoggedContentSizeLimit = int.MaxValue,
                     LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName,
-                    LoggedHeaderNames = s_allowedHeaders
+                    RequestIdHeaderName = ClientRequestIdHeaderName
                 }
             };
 
@@ -409,9 +405,9 @@ namespace System.ClientModel.Tests.Internal
                     LoggedContentSizeLimit = int.MaxValue,
                     LoggedClientAssemblyName = "Test-SDK",
                     RequestIdHeaderName = ClientRequestIdHeaderName,
-                    LoggedHeaderNames = s_allowedHeaders
                 }
             };
+            options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -441,8 +437,7 @@ namespace System.ClientModel.Tests.Internal
                 LoggingOptions = new LoggingOptions
                 {
                     LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName,
-                    LoggedHeaderNames = s_allowedHeaders
+                    RequestIdHeaderName = ClientRequestIdHeaderName
                 }
             };
 
@@ -471,8 +466,7 @@ namespace System.ClientModel.Tests.Internal
                 LoggingOptions = new LoggingOptions
                 {
                     LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName,
-                    LoggedHeaderNames = s_allowedHeaders
+                    RequestIdHeaderName = ClientRequestIdHeaderName
                 }
             };
 
@@ -684,8 +678,7 @@ namespace System.ClientModel.Tests.Internal
                     IsLoggingContentEnabled = true,
                     LoggedContentSizeLimit = 5,
                     LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName,
-                    LoggedHeaderNames = s_allowedHeaders
+                    RequestIdHeaderName = ClientRequestIdHeaderName
                 }
             };
 
@@ -749,11 +742,11 @@ namespace System.ClientModel.Tests.Internal
                 LoggingOptions = new LoggingOptions
                 {
                     LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName,
-                    LoggedHeaderNames = s_allowedHeaders,
-                    LoggedQueryParameters = s_allowedQueryParameters
+                    RequestIdHeaderName = ClientRequestIdHeaderName
                 }
             };
+            options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
+            options.LoggingOptions.AllowedHeaderNames.Add("Custom-Response-Header");
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -806,10 +799,10 @@ namespace System.ClientModel.Tests.Internal
                 {
                     LoggedClientAssemblyName = "Test-SDK",
                     RequestIdHeaderName = ClientRequestIdHeaderName,
-                    LoggedHeaderNames = new List<string>() { "*" },
-                    LoggedQueryParameters = new List<string>() { "*" }
                 }
             };
+            options.LoggingOptions.AllowedQueryParameters.Add("*");
+            options.LoggingOptions.AllowedHeaderNames.Add("*");
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -868,8 +861,7 @@ namespace System.ClientModel.Tests.Internal
                     IsLoggingContentEnabled = true,
                     LoggedContentSizeLimit = maxLength,
                     LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = ClientRequestIdHeaderName,
-                    LoggedHeaderNames = s_allowedHeaders
+                    RequestIdHeaderName = ClientRequestIdHeaderName
                 }
             };
 

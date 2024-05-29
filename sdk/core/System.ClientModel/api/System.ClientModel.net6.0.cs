@@ -42,22 +42,6 @@ namespace System.ClientModel
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
 }
-namespace System.ClientModel.Options
-{
-    public partial class LoggingOptions
-    {
-        public LoggingOptions() { }
-        public bool IsLoggingContentEnabled { get { throw null; } set { } }
-        public bool IsLoggingEnabled { get { throw null; } set { } }
-        public string? LoggedClientAssemblyName { get { throw null; } set { } }
-        public int LoggedContentSizeLimit { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> LoggedHeaderNames { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> LoggedQueryParameters { get { throw null; } set { } }
-        public string? RequestIdHeaderName { get { throw null; } set { } }
-        protected void AssertNotFrozen() { }
-        public virtual void Freeze() { }
-    }
-}
 namespace System.ClientModel.Primitives
 {
     public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
@@ -77,8 +61,8 @@ namespace System.ClientModel.Primitives
     }
     public partial class ClientLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public ClientLoggingPolicy(System.ClientModel.Options.LoggingOptions? options = null) { }
-        protected ClientLoggingPolicy(string logName, string[]? logTraits = null, System.ClientModel.Options.LoggingOptions? options = null) { }
+        public ClientLoggingPolicy(System.ClientModel.Primitives.LoggingOptions? options = null) { }
+        protected ClientLoggingPolicy(string logName, string[]? logTraits = null, System.ClientModel.Primitives.LoggingOptions? options = null) { }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
@@ -94,7 +78,7 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
-        public System.ClientModel.Options.LoggingOptions? LoggingOptions { get { throw null; } set { } }
+        public System.ClientModel.Primitives.LoggingOptions? LoggingOptions { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? LoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
@@ -143,6 +127,19 @@ namespace System.ClientModel.Primitives
         T Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
         string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
         System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
+    }
+    public partial class LoggingOptions
+    {
+        public LoggingOptions() { }
+        public System.Collections.Generic.IList<string> AllowedHeaderNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> AllowedQueryParameters { get { throw null; } }
+        public bool IsLoggingContentEnabled { get { throw null; } set { } }
+        public bool IsLoggingEnabled { get { throw null; } set { } }
+        public string? LoggedClientAssemblyName { get { throw null; } set { } }
+        public int LoggedContentSizeLimit { get { throw null; } set { } }
+        public string? RequestIdHeaderName { get { throw null; } set { } }
+        protected void AssertNotFrozen() { }
+        public virtual void Freeze() { }
     }
     public static partial class ModelReaderWriter
     {

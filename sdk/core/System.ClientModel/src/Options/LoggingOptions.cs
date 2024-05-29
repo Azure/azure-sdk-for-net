@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace System.ClientModel.Primitives;
 
@@ -17,7 +16,7 @@ public class LoggingOptions
     private const int DefaultLoggedContentSizeLimit = 4 * 1024;
     private const bool DefaultIsLoggingEnabled = true;
     private const bool DefaultIsLoggingContentEnabled = false;
-    private static readonly string[] s_defaultLoggedHeaderNames =
+    private static readonly string[] s_defaultAllowedHeaderNames =
         new[] {
             "traceparent",
             "Accept",
@@ -40,13 +39,13 @@ public class LoggingOptions
             "Transfer-Encoding",
             "User-Agent",
             "WWW-Authenticate" };
-    private static readonly string[] s_defaultLoggedQueryParameters = new[] { "api-version" };
+    private static readonly string[] s_defaultAllowedQueryParameters = new[] { "api-version" };
 
     private bool _isLoggingEnabled = DefaultIsLoggingEnabled;
     private int _loggedContentSizeLimit = DefaultLoggedContentSizeLimit;
     private bool _isLoggingContentEnabled = DefaultIsLoggingContentEnabled;
-    private IList<string> _loggedHeaderNames = new List<string>(s_defaultLoggedHeaderNames);
-    private IList<string> _loggedQueryParameters = new List<string>(s_defaultLoggedQueryParameters);
+    private IList<string> _allowedHeaderNames = new List<string>(s_defaultAllowedHeaderNames);
+    private IList<string> _allowedQueryParameters = new List<string>(s_defaultAllowedQueryParameters);
     private string? _clientAssembly;
     private string? _requestIdHeaderName;
 
@@ -97,13 +96,7 @@ public class LoggingOptions
     /// </summary>
     public IList<string> AllowedHeaderNames
     {
-        get => _loggedHeaderNames;
-        set
-        {
-            AssertNotFrozen();
-
-            _loggedHeaderNames = value;
-        }
+        get => _allowedHeaderNames;
     }
 
     /// <summary>
@@ -111,13 +104,7 @@ public class LoggingOptions
     /// </summary>
     public IList<string> AllowedQueryParameters
     {
-        get => _loggedQueryParameters;
-        set
-        {
-            AssertNotFrozen();
-
-            _loggedQueryParameters = value;
-        }
+        get => _allowedQueryParameters;
     }
 
     /// <summary>
@@ -156,8 +143,8 @@ public class LoggingOptions
     public virtual void Freeze()
     {
         _frozen = true;
-        _loggedHeaderNames = new ReadOnlyCollection<string>(_loggedHeaderNames.ToArray());
-        _loggedQueryParameters = new ReadOnlyCollection<string>(_loggedQueryParameters.ToArray());
+        _allowedHeaderNames = new ReadOnlyCollection<string>(_allowedHeaderNames);
+        _allowedQueryParameters = new ReadOnlyCollection<string>(_allowedQueryParameters);
     }
 
     /// <summary>

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.ClientModel.Options;
+using System.ClientModel;
 
 namespace System.ClientModel.Primitives;
 
