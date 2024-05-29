@@ -10,19 +10,19 @@ using System;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The ExternalStorage. </summary>
-    internal partial class ExternalStorageInternal
+    internal partial class RecordingStorageInternal
     {
-        /// <summary> Initializes a new instance of <see cref="ExternalStorageInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecordingStorageInternal"/>. </summary>
         /// <param name="recordingStorageKind"> Defines the kind of external storage. </param>
-        public ExternalStorageInternal(RecordingStorageKind recordingStorageKind)
+        public RecordingStorageInternal(RecordingStorageKind recordingStorageKind)
         {
             RecordingStorageKind = recordingStorageKind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExternalStorageInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecordingStorageInternal"/>. </summary>
         /// <param name="recordingStorageKind"> Defines the kind of external storage. </param>
         /// <param name="recordingDestinationContainerUrl"> Uri of a container or a location within a container. </param>
-        internal ExternalStorageInternal(RecordingStorageKind recordingStorageKind, Uri recordingDestinationContainerUrl)
+        internal RecordingStorageInternal(RecordingStorageKind recordingStorageKind, Uri recordingDestinationContainerUrl)
         {
             RecordingStorageKind = recordingStorageKind;
             RecordingDestinationContainerUrl = recordingDestinationContainerUrl;
