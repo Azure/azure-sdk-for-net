@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/c4e661cdf92c8f579574008d0cd11874cc303da0/specification/network/resource-manager/readme.md
-# tag: package-2023-11
+require: https://github.com/nipati-p/azure-rest-api-specs/blob/f09d5caba6a3359cc631060c14e656f8b94ab9b5/specification/network/resource-manager/readme.md
+tag: package-2023-11-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -27,6 +27,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 model-namespace: true
 public-clients: false
@@ -373,6 +374,49 @@ directive:
     transform: >
       $.ServiceEndpointPolicyDefinition.properties['type']['readOnly'] = true;
     reason: Resource type should be readonly for this resource.
+  - from: networkManager.json
+    where: $.definitions
+    transform: >
+      $.ConfigurationType['x-ms-enum']['values'] = [
+        { value: 'SecurityAdmin',   name: 'SecurityAdmin' },
+        { value: 'Connectivity',    name: 'Connectivity' },
+        { value: 'SecurityUser',    name: 'SecurityUser' },
+        { value: 'Routing',         name: 'Routing' }
+      ];
+  - from: networkManagerRoutingConfiguration.json
+    where: $.definitions
+    transform: >
+      $.RoutingRuleNextHopType['x-ms-enum']['values'] = [
+        { value: 'Internet',              name: 'Internet' },
+        { value: 'NoNextHop',             name: 'NoNextHop' },
+        { value: 'VirtualAppliance',      name: 'VirtualAppliance' },
+        { value: 'VirtualNetworkGateway', name: 'VirtualNetworkGateway' },
+        { value: 'VnetLocal',             name: 'VnetLocal' }
+      ];
+  - from: networkManagerGroup.json
+    where: $.definitions
+    transform: >
+      $.NetworkGroupProperties = {
+        'properties':{
+            'description':{
+              'type':'string',
+              'description':'A description of the network group.'
+            },
+            'memberType':{
+              'type':'string',
+              'description':'Group member type.'
+            },
+            'provisioningState':{
+              'readOnly': true,
+              'description':'Resource type.',
+              '$ref':'./network.json#/definitions/ProvisioningState'
+            }
+        },
+        'required':[
+            'memberType'
+        ],
+        'description':'Properties of network group'
+      };
   - from: virtualNetworkGateway.json
     where: $.definitions
     transform: >
