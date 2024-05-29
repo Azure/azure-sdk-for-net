@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests
         [SetUp]
         public async Task CreateCommonClient()
         {
-            Console.WriteLine("HERE: CreateCommonClient");
             Client = GetArmClient();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             ResourceGroupsOperations = DefaultSubscription.GetResourceGroups();
