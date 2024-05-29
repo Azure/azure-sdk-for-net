@@ -279,3 +279,6 @@ JieZhou000 is not a public member of Azure.
 ethanann-ms is not a public member of Azure.
 tmahmood-microsoft is not a public member of Azure.
 Aviv-Yaniv is not a public member of Azure.
+sakash279 is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
+sivethe is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
+ThomasWeiss is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
