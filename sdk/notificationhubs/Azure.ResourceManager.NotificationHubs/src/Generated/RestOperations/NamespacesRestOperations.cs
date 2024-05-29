@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +36,17 @@ namespace Azure.ResourceManager.NotificationHubs
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckAvailabilityRequestUri(string subscriptionId, NotificationHubAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.NotificationHubs/checkNamespaceAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckAvailabilityRequest(string subscriptionId, NotificationHubAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -52,7 +62,7 @@ namespace Azure.ResourceManager.NotificationHubs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<NotificationHubAvailabilityContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -110,6 +120,20 @@ namespace Azure.ResourceManager.NotificationHubs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string namespaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NotificationHubs/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string namespaceName)
@@ -194,6 +218,20 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, NotificationHubNamespaceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NotificationHubs/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, NotificationHubNamespaceData data)
         {
             var message = _pipeline.CreateMessage();
@@ -212,7 +250,7 @@ namespace Azure.ResourceManager.NotificationHubs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<NotificationHubNamespaceData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -272,6 +310,20 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, NotificationHubNamespacePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NotificationHubs/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, NotificationHubNamespacePatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -290,7 +342,7 @@ namespace Azure.ResourceManager.NotificationHubs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<NotificationHubNamespacePatch>(patch, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -356,6 +408,20 @@ namespace Azure.ResourceManager.NotificationHubs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string namespaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NotificationHubs/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string namespaceName)
@@ -426,6 +492,25 @@ namespace Azure.ResourceManager.NotificationHubs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAllRequestUri(string subscriptionId, string skipToken, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.NotificationHubs/namespaces", false);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListAllRequest(string subscriptionId, string skipToken, int? top)
@@ -505,6 +590,27 @@ namespace Azure.ResourceManager.NotificationHubs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string skipToken, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NotificationHubs/namespaces", false);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string skipToken, int? top)
@@ -592,6 +698,22 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateAuthorizationRuleRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, NotificationHubAuthorizationRuleData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NotificationHubs/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/authorizationRules/", false);
+            uri.AppendPath(authorizationRuleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateAuthorizationRuleRequest(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, NotificationHubAuthorizationRuleData data)
         {
             var message = _pipeline.CreateMessage();
@@ -612,7 +734,7 @@ namespace Azure.ResourceManager.NotificationHubs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<NotificationHubAuthorizationRuleData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -684,6 +806,22 @@ namespace Azure.ResourceManager.NotificationHubs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteAuthorizationRuleRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NotificationHubs/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/authorizationRules/", false);
+            uri.AppendPath(authorizationRuleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteAuthorizationRuleRequest(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName)
@@ -760,6 +898,22 @@ namespace Azure.ResourceManager.NotificationHubs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAuthorizationRuleRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NotificationHubs/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/authorizationRules/", false);
+            uri.AppendPath(authorizationRuleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAuthorizationRuleRequest(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName)
@@ -850,6 +1004,21 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
+        internal RequestUriBuilder CreateListAuthorizationRulesRequestUri(string subscriptionId, string resourceGroupName, string namespaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NotificationHubs/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/authorizationRules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListAuthorizationRulesRequest(string subscriptionId, string resourceGroupName, string namespaceName)
         {
             var message = _pipeline.CreateMessage();
@@ -927,6 +1096,23 @@ namespace Azure.ResourceManager.NotificationHubs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListKeysRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NotificationHubs/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/authorizationRules/", false);
+            uri.AppendPath(authorizationRuleName, true);
+            uri.AppendPath("/listKeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListKeysRequest(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName)
@@ -1014,6 +1200,23 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
+        internal RequestUriBuilder CreateRegenerateKeysRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, NotificationHubPolicyKey notificationHubPolicyKey)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NotificationHubs/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/authorizationRules/", false);
+            uri.AppendPath(authorizationRuleName, true);
+            uri.AppendPath("/regenerateKeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string namespaceName, string authorizationRuleName, NotificationHubPolicyKey notificationHubPolicyKey)
         {
             var message = _pipeline.CreateMessage();
@@ -1035,7 +1238,7 @@ namespace Azure.ResourceManager.NotificationHubs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<NotificationHubPolicyKey>(notificationHubPolicyKey, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(notificationHubPolicyKey, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1105,6 +1308,21 @@ namespace Azure.ResourceManager.NotificationHubs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPnsCredentialsRequestUri(string subscriptionId, string resourceGroupName, string namespaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NotificationHubs/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/pnsCredentials", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPnsCredentialsRequest(string subscriptionId, string resourceGroupName, string namespaceName)
@@ -1186,6 +1404,14 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
+        internal RequestUriBuilder CreateListAllNextPageRequestUri(string nextLink, string subscriptionId, string skipToken, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListAllNextPageRequest(string nextLink, string subscriptionId, string skipToken, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -1256,6 +1482,14 @@ namespace Azure.ResourceManager.NotificationHubs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string skipToken, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string skipToken, int? top)
@@ -1332,6 +1566,14 @@ namespace Azure.ResourceManager.NotificationHubs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAuthorizationRulesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAuthorizationRulesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName)

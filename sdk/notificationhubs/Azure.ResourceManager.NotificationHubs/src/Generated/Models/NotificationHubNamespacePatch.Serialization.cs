@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<NotificationHubSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<NotificationHubNamespaceProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

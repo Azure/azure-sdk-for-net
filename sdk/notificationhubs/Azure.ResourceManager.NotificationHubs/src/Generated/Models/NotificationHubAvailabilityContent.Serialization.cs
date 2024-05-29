@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<NotificationHubSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

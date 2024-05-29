@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 {
     public partial class NotificationHubNetworkAcls : IUtf8JsonSerializable, IJsonModel<NotificationHubNetworkAcls>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubNetworkAcls>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubNetworkAcls>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationHubNetworkAcls>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue<NotificationHubIPRule>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PublicNetworkRule))
             {
                 writer.WritePropertyName("publicNetworkRule"u8);
-                writer.WriteObjectValue<PublicInternetAuthorizationRule>(PublicNetworkRule, options);
+                writer.WriteObjectValue(PublicNetworkRule, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubNetworkAcls DeserializeNotificationHubNetworkAcls(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             IList<NotificationHubIPRule> ipRules = default;
             PublicInternetAuthorizationRule publicNetworkRule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipRules"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NotificationHubNetworkAcls(ipRules ?? new ChangeTrackingList<NotificationHubIPRule>(), publicNetworkRule, serializedAdditionalRawData);
         }
 

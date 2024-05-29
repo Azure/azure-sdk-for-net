@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             if (Optional.IsDefined(AdmCredential))
             {
                 writer.WritePropertyName("admCredential"u8);
-                writer.WriteObjectValue<NotificationHubAdmCredential>(AdmCredential, options);
+                writer.WriteObjectValue(AdmCredential, options);
             }
             if (Optional.IsDefined(ApnsCredential))
             {
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             if (Optional.IsDefined(BaiduCredential))
             {
                 writer.WritePropertyName("baiduCredential"u8);
-                writer.WriteObjectValue<NotificationHubBaiduCredential>(BaiduCredential, options);
+                writer.WriteObjectValue(BaiduCredential, options);
             }
             if (Optional.IsDefined(BrowserCredential))
             {
                 writer.WritePropertyName("browserCredential"u8);
-                writer.WriteObjectValue<BrowserCredential>(BrowserCredential, options);
+                writer.WriteObjectValue(BrowserCredential, options);
             }
             if (Optional.IsDefined(GcmCredential))
             {
@@ -95,17 +95,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             if (Optional.IsDefined(WnsCredential))
             {
                 writer.WritePropertyName("wnsCredential"u8);
-                writer.WriteObjectValue<NotificationHubWnsCredential>(WnsCredential, options);
+                writer.WriteObjectValue(WnsCredential, options);
             }
             if (Optional.IsDefined(XiaomiCredential))
             {
                 writer.WritePropertyName("xiaomiCredential"u8);
-                writer.WriteObjectValue<XiaomiCredential>(XiaomiCredential, options);
+                writer.WriteObjectValue(XiaomiCredential, options);
             }
             if (Optional.IsDefined(FcmV1Credential))
             {
                 writer.WritePropertyName("fcmV1Credential"u8);
-                writer.WriteObjectValue<FcmV1Credential>(FcmV1Credential, options);
+                writer.WriteObjectValue(FcmV1Credential, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

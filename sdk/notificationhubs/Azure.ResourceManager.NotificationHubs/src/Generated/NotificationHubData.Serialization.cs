@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.NotificationHubs
             if (Optional.IsDefined(BrowserCredential))
             {
                 writer.WritePropertyName("browserCredential"u8);
-                writer.WriteObjectValue<BrowserCredential>(BrowserCredential, options);
+                writer.WriteObjectValue(BrowserCredential, options);
             }
             if (Optional.IsDefined(XiaomiCredential))
             {
                 writer.WritePropertyName("xiaomiCredential"u8);
-                writer.WriteObjectValue<XiaomiCredential>(XiaomiCredential, options);
+                writer.WriteObjectValue(XiaomiCredential, options);
             }
             if (Optional.IsDefined(FcmV1Credential))
             {
                 writer.WritePropertyName("fcmV1Credential"u8);
-                writer.WriteObjectValue<FcmV1Credential>(FcmV1Credential, options);
+                writer.WriteObjectValue(FcmV1Credential, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DailyMaxActiveDevices))
             {

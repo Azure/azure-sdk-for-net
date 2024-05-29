@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in FailureDescription)
                 {
-                    writer.WriteObjectValue<NotificationHubPubRegistrationResult>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
