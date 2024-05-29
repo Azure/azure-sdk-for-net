@@ -78,47 +78,47 @@ public class PageableCollectionTests
         Assert.AreEqual(PageCount, pageCount);
     }
 
-    [Test]
-    public void CanStartPageEnumerationMidwayThrough()
-    {
-        MockPageableClient client = new();
-        PageableCollection<MockJsonModel> models = client.GetModels(MockPageContents);
+    //[Test]
+    //public void CanStartPageEnumerationMidwayThrough()
+    //{
+    //    MockPageableClient client = new();
+    //    PageableCollection<MockJsonModel> models = client.GetModels(MockPageContents);
 
-        int pageCount = 0;
-        int i = 6;
+    //    int pageCount = 0;
+    //    int i = 6;
 
-        // Request just the last page by starting at the last seen value
-        // on the prior page -- i.e. item 5.
-        foreach (PageResult<MockJsonModel> page in models.AsPages(continuationToken: "5"))
-        {
-            foreach (MockJsonModel model in page.Values)
-            {
-                Assert.AreEqual(i, model.IntValue);
-                Assert.AreEqual(i.ToString(), model.StringValue);
+    //    // Request just the last page by starting at the last seen value
+    //    // on the prior page -- i.e. item 5.
+    //    foreach (PageResult<MockJsonModel> page in models.AsPages(continuationToken: "5"))
+    //    {
+    //        foreach (MockJsonModel model in page.Values)
+    //        {
+    //            Assert.AreEqual(i, model.IntValue);
+    //            Assert.AreEqual(i.ToString(), model.StringValue);
 
-                i++;
-            }
+    //            i++;
+    //        }
 
-            pageCount++;
-        }
+    //        pageCount++;
+    //    }
 
-        Assert.AreEqual(ItemCount, i);
-        Assert.AreEqual(1, pageCount);
-    }
+    //    Assert.AreEqual(ItemCount, i);
+    //    Assert.AreEqual(1, pageCount);
+    //}
 
-    [Test]
-    public void CanSetPageSizeHint()
-    {
-        MockPageableClient client = new();
-        PageableCollection<MockJsonModel> models = client.GetModels(MockPageContents);
-        var pages = models.AsPages(pageSizeHint: 10);
-        foreach (var _ in pages)
-        {
-            // page size hint is ignored in this mock
-        }
+    //[Test]
+    //public void CanSetPageSizeHint()
+    //{
+    //    MockPageableClient client = new();
+    //    PageableCollection<MockJsonModel> models = client.GetModels(MockPageContents);
+    //    var pages = models.AsPages(pageSizeHint: 10);
+    //    foreach (var _ in pages)
+    //    {
+    //        // page size hint is ignored in this mock
+    //    }
 
-        Assert.AreEqual(10, client.RequestedPageSize);
-    }
+    //    Assert.AreEqual(10, client.RequestedPageSize);
+    //}
 
     [Test]
     public void CanGetRawResponses()
@@ -195,47 +195,47 @@ public class PageableCollectionTests
         Assert.AreEqual(PageCount, pageCount);
     }
 
-    [Test]
-    public async Task CanStartPageEnumerationMidwayThroughAsync()
-    {
-        MockPageableClient client = new();
-        AsyncPageableCollection<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
+    //[Test]
+    //public async Task CanStartPageEnumerationMidwayThroughAsync()
+    //{
+    //    MockPageableClient client = new();
+    //    AsyncPageableCollection<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
 
-        int pageCount = 0;
-        int i = 6;
+    //    int pageCount = 0;
+    //    int i = 6;
 
-        // Request just the last page by starting at the last seen value
-        // on the prior page -- i.e. item 5.
-        await foreach (PageResult<MockJsonModel> page in models.AsPagesAsync(continuationToken: "5"))
-        {
-            foreach (MockJsonModel model in page.Values)
-            {
-                Assert.AreEqual(i, model.IntValue);
-                Assert.AreEqual(i.ToString(), model.StringValue);
+    //    // Request just the last page by starting at the last seen value
+    //    // on the prior page -- i.e. item 5.
+    //    await foreach (PageResult<MockJsonModel> page in models.AsPagesAsync(continuationToken: "5"))
+    //    {
+    //        foreach (MockJsonModel model in page.Values)
+    //        {
+    //            Assert.AreEqual(i, model.IntValue);
+    //            Assert.AreEqual(i.ToString(), model.StringValue);
 
-                i++;
-            }
+    //            i++;
+    //        }
 
-            pageCount++;
-        }
+    //        pageCount++;
+    //    }
 
-        Assert.AreEqual(ItemCount, i);
-        Assert.AreEqual(1, pageCount);
-    }
+    //    Assert.AreEqual(ItemCount, i);
+    //    Assert.AreEqual(1, pageCount);
+    //}
 
-    [Test]
-    public async Task CanSetPageSizeHintAsync()
-    {
-        MockPageableClient client = new();
-        AsyncPageableCollection<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
-        var pages = models.AsPagesAsync(pageSizeHint: 10);
-        await foreach (var _ in pages)
-        {
-            // page size hint is ignored in this mock
-        }
+    //[Test]
+    //public async Task CanSetPageSizeHintAsync()
+    //{
+    //    MockPageableClient client = new();
+    //    AsyncPageableCollection<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
+    //    var pages = models.AsPagesAsync(pageSizeHint: 10);
+    //    await foreach (var _ in pages)
+    //    {
+    //        // page size hint is ignored in this mock
+    //    }
 
-        Assert.AreEqual(10, client.RequestedPageSize);
-    }
+    //    Assert.AreEqual(10, client.RequestedPageSize);
+    //}
 
     [Test]
     public async Task CanGetRawResponsesAsync()

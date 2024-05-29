@@ -29,7 +29,7 @@ public class MockPageableClient
         int pageNumber = 0;
         JsonModelList<MockJsonModel> values = new();
 
-        async Task<PageResult<MockJsonModel>> firstPageFuncAsync(int? pageSize)
+        async Task<PageResult<MockJsonModel>> firstPageFuncAsync()
         {
             ClientResult result = await GetModelsAsync(pageContents[pageNumber++], options: null).ConfigureAwait(false);
             lastResponse = result.GetRawResponse();
@@ -38,10 +38,8 @@ public class MockPageableClient
             return PageResult<MockJsonModel>.Create(values, continuationToken, lastResponse);
         }
 
-        async Task<PageResult<MockJsonModel>> nextPageFuncAsync(string? continuationToken, int? pageSize)
+        async Task<PageResult<MockJsonModel>> nextPageFuncAsync(string? continuationToken)
         {
-            RequestedPageSize = pageSize;
-
             bool atRequestedPage = values.Count > 0 && values.Last().StringValue == continuationToken;
             while (!atRequestedPage && pageNumber < pageContents.Length)
             {
@@ -74,7 +72,7 @@ public class MockPageableClient
         int pageNumber = 0;
         JsonModelList<MockJsonModel> values = new();
 
-        PageResult<MockJsonModel> firstPageFunc(int? pageSize)
+        PageResult<MockJsonModel> firstPageFunc()
         {
             ClientResult result = GetModels(pageContents[pageNumber++], options: null);
             lastResponse = result.GetRawResponse();
@@ -83,10 +81,8 @@ public class MockPageableClient
             return PageResult<MockJsonModel>.Create(values, continuationToken, lastResponse);
         }
 
-        PageResult<MockJsonModel> nextPageFunc(string? continuationToken, int? pageSize)
+        PageResult<MockJsonModel> nextPageFunc(string? continuationToken)
         {
-            RequestedPageSize = pageSize;
-
             bool atRequestedPage = values.Count > 0 && values.Last().StringValue == continuationToken;
             while (!atRequestedPage && pageNumber < pageContents.Length)
             {

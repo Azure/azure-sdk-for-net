@@ -11,44 +11,45 @@ namespace ClientModel.Tests.Internal;
 
 internal class PageableResultHelpers
 {
-    public static PageableCollection<T> Create<T>(Func<int?, PageResult<T>> firstPageFunc, Func<string?, int?, PageResult<T>>? nextPageFunc, int? pageSize = default) where T : notnull
+    public static PageableCollection<T> Create<T>(Func<PageResult<T>> firstPageFunc, Func<string?, PageResult<T>>? nextPageFunc) where T : notnull
     {
-        PageResult<T> first(string? _, int? pageSizeHint) => firstPageFunc(pageSizeHint);
-        return new FuncPageable<T>(first, nextPageFunc, pageSize);
+        PageResult<T> first(string? _) => firstPageFunc();
+        return new FuncPageable<T>(first, nextPageFunc);
     }
 
-    public static AsyncPageableCollection<T> Create<T>(Func<int?, Task<PageResult<T>>> firstPageFunc, Func<string?, int?, Task<PageResult<T>>>? nextPageFunc, int? pageSize = default) where T : notnull
+    public static AsyncPageableCollection<T> Create<T>(Func<Task<PageResult<T>>> firstPageFunc, Func<string?, Task<PageResult<T>>>? nextPageFunc) where T : notnull
     {
-        Task<PageResult<T>> first(string? _, int? pageSizeHint) => firstPageFunc(pageSizeHint);
-        return new FuncAsyncPageable<T>(first, nextPageFunc, pageSize);
+        Task<PageResult<T>> first(string? _) => firstPageFunc();
+        return new FuncAsyncPageable<T>(first, nextPageFunc);
     }
 
     private class FuncAsyncPageable<T> : AsyncPageableCollection<T> where T : notnull
     {
-        private readonly Func<string?, int?, Task<PageResult<T>>> _firstPageFunc;
-        private readonly Func<string?, int?, Task<PageResult<T>>>? _nextPageFunc;
-        private readonly int? _defaultPageSize;
+        private readonly Func<string?, Task<PageResult<T>>> _firstPageFunc;
+        private readonly Func<string?, Task<PageResult<T>>>? _nextPageFunc;
 
-        public FuncAsyncPageable(Func<string?, int?, Task<PageResult<T>>> firstPageFunc, Func<string?, int?, Task<PageResult<T>>>? nextPageFunc, int? defaultPageSize = default)
+        public FuncAsyncPageable(Func<string?, Task<PageResult<T>>> firstPageFunc, Func<string?, Task<PageResult<T>>>? nextPageFunc)
         {
             _firstPageFunc = firstPageFunc;
             _nextPageFunc = nextPageFunc;
-            _defaultPageSize = defaultPageSize;
         }
 
-        public override async IAsyncEnumerable<PageResult<T>> AsPagesAsync(string? continuationToken = default, int? pageSizeHint = default)
+        public override async IAsyncEnumerable<PageResult<T>> AsPagesAsync()
         {
-            Func<string?, int?, Task<PageResult<T>>>? pageFunc = string.IsNullOrEmpty(continuationToken) ? _firstPageFunc : _nextPageFunc;
+            Func<string?, Task<PageResult<T>>>? pageFunc = _firstPageFunc;
 
             if (pageFunc == null)
             {
                 yield break;
             }
 
-            int? pageSize = pageSizeHint ?? _defaultPageSize;
+            // contract in this experiment is that first call to pagefunc includes
+            // the collection's page offset in a closure.
+            string? continuationToken = null;
+
             do
             {
-                PageResult<T> page = await pageFunc(continuationToken, pageSize).ConfigureAwait(false);
+                PageResult<T> page = await pageFunc(continuationToken).ConfigureAwait(false);
                 SetRawResponse(page.GetRawResponse());
                 yield return page;
                 continuationToken = page.ContinuationToken;
@@ -60,30 +61,29 @@ internal class PageableResultHelpers
 
     private class FuncPageable<T> : PageableCollection<T> where T : notnull
     {
-        private readonly Func<string?, int?, PageResult<T>> _firstPageFunc;
-        private readonly Func<string?, int?, PageResult<T>>? _nextPageFunc;
-        private readonly int? _defaultPageSize;
+        private readonly Func<string?, PageResult<T>> _firstPageFunc;
+        private readonly Func<string?, PageResult<T>>? _nextPageFunc;
 
-        public FuncPageable(Func<string?, int?, PageResult<T>> firstPageFunc, Func<string?, int?, PageResult<T>>? nextPageFunc, int? defaultPageSize = default)
+        public FuncPageable(Func<string?, PageResult<T>> firstPageFunc, Func<string?, PageResult<T>>? nextPageFunc, int? defaultPageSize = default)
         {
             _firstPageFunc = firstPageFunc;
             _nextPageFunc = nextPageFunc;
-            _defaultPageSize = defaultPageSize;
         }
 
-        public override IEnumerable<PageResult<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default)
+        public override IEnumerable<PageResult<T>> AsPages()
         {
-            Func<string?, int?, PageResult<T>>? pageFunc = string.IsNullOrEmpty(continuationToken) ? _firstPageFunc : _nextPageFunc;
+            Func<string?, PageResult<T>>? pageFunc = _firstPageFunc;
 
             if (pageFunc == null)
             {
                 yield break;
             }
 
-            int? pageSize = pageSizeHint ?? _defaultPageSize;
+            string? continuationToken = null;
+
             do
             {
-                PageResult<T> page = pageFunc(continuationToken, pageSize);
+                PageResult<T> page = pageFunc(continuationToken);
                 SetRawResponse(page.GetRawResponse());
                 yield return page;
                 continuationToken = page.ContinuationToken;
