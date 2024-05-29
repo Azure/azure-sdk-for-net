@@ -52,38 +52,42 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             Assert.IsTrue(createExadataOperation.HasCompleted);
             Assert.IsTrue(createExadataOperation.HasValue);
 
-            // // Get
-            // Console.WriteLine("HERE: TestExaInfraOperations Get");
-            // Response<CloudExadataInfrastructureResource> getExaInfraResponse = await cloudExadataInfrastructureCollection.GetAsync(cloudExadataInfrastructureName);
-            // CloudExadataInfrastructureResource exaInfraResource = getExaInfraResponse.Value;
-            // Assert.IsNotNull(exaInfraResource);
+            // Get
+            Console.WriteLine("HERE: TestExaInfraOperations Get");
+            Response<CloudExadataInfrastructureResource> getExaInfraResponse = await cloudExadataInfrastructureCollection.GetAsync(cloudExadataInfrastructureName);
+            CloudExadataInfrastructureResource exaInfraResource = getExaInfraResponse.Value;
+            Assert.IsNotNull(exaInfraResource);
 
-            // // ListByResourceGroup
-            // Console.WriteLine("HERE: TestExaInfraOperations ListByResourceGroup");
-            // AsyncPageable<CloudExadataInfrastructureResource> exaInfras = cloudExadataInfrastructureCollection.GetAllAsync();
-            // List<CloudExadataInfrastructureResource> exaInfraResult = await exaInfras.ToEnumerableAsync();
-            // Assert.NotNull(exaInfraResult);
-            // Assert.IsTrue(exaInfraResult.Count >= 1);
+            // ListByResourceGroup
+            Console.WriteLine("HERE: TestExaInfraOperations ListByResourceGroup");
+            AsyncPageable<CloudExadataInfrastructureResource> exaInfras = cloudExadataInfrastructureCollection.GetAllAsync();
+            List<CloudExadataInfrastructureResource> exaInfraResult = await exaInfras.ToEnumerableAsync();
+            Assert.NotNull(exaInfraResult);
+            Assert.IsTrue(exaInfraResult.Count >= 1);
 
-            // // ListBySubscription
-            // Console.WriteLine("HERE: TestExaInfraOperations ListBySubscription");
-            // exaInfras = OracleDatabaseExtensions.GetCloudExadataInfrastructuresAsync(DefaultSubscription);
-            // exaInfraResult = await exaInfras.ToEnumerableAsync();
-            // Assert.NotNull(exaInfraResult);
-            // Assert.IsTrue(exaInfraResult.Count >= 1);
+            // ListBySubscription
+            Console.WriteLine("HERE: TestExaInfraOperations ListBySubscription");
+            exaInfras = OracleDatabaseExtensions.GetCloudExadataInfrastructuresAsync(DefaultSubscription);
+            exaInfraResult = await exaInfras.ToEnumerableAsync();
+            Assert.NotNull(exaInfraResult);
+            Assert.IsTrue(exaInfraResult.Count >= 1);
 
-            // // Update, not implemented
+            // // Update
             // var tagName = Recording.GenerateAssetName("TagName");
             // var tagValue = Recording.GenerateAssetName("TagValue");
             // ChangeTrackingDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>
             // {
             //     new KeyValuePair<string, string>(tagName, tagValue)
             // };
-            // CloudExadataInfrastructurePatch exaInfraParameter = new CloudExadataInfrastructurePatch(
-            //     default, tags, 2, 3, default, default, default, default);
-            // // CloudExadataInfrastructurePatch exaInfraParameter = new() {
-            // //     Tags = tags
+            // // var customerContact = new CustomerContact() {
+            // //     Email = Recording.GenerateAssetName("Email")
             // // };
+            // // IList<CustomerContact> customerContacts = new List<CustomerContact>{customerContact};
+            // // CloudExadataInfrastructurePatch exaInfraParameter = new CloudExadataInfrastructurePatch(
+            // //     new List<string>{ "2" }, tags, 2, 3, default, customerContact, cloudExadataInfrastructureName, default);
+            // CloudExadataInfrastructurePatch exaInfraParameter = new() {
+            //     Tags = tags
+            // };
             // var updateExaInfraOperation = await exaInfraResource.UpdateAsync(WaitUntil.Completed, exaInfraParameter);
             // Assert.IsTrue(updateExaInfraOperation.HasCompleted);
             // Assert.IsTrue(updateExaInfraOperation.HasValue);
@@ -95,11 +99,11 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             // Assert.IsNotNull(exaInfraResource);
             // Assert.IsTrue(exaInfraResource.Data.Tags.ContainsKey(tagName));
 
-            // // Delete
-            // Console.WriteLine("HERE: TestExaInfraOperations Delete");
-            // var deleteExaInfraOperation = await exaInfraResource.DeleteAsync(WaitUntil.Completed);
-            // await deleteExaInfraOperation.WaitForCompletionResponseAsync();
-            // Assert.IsTrue(deleteExaInfraOperation.HasCompleted);
+            // Delete
+            Console.WriteLine("HERE: TestExaInfraOperations Delete");
+            var deleteExaInfraOperation = await exaInfraResource.DeleteAsync(WaitUntil.Completed);
+            await deleteExaInfraOperation.WaitForCompletionResponseAsync();
+            Assert.IsTrue(deleteExaInfraOperation.HasCompleted);
         }
     }
 }
