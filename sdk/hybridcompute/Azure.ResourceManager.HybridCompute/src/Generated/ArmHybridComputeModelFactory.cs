@@ -16,6 +16,58 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmHybridComputeModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeLicense"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="tenantId"> Describes the tenant id. </param>
+        /// <param name="licenseType"> The type of the license resource. </param>
+        /// <param name="licenseDetails"> Describes the properties of a License. </param>
+        /// <returns> A new <see cref="Models.HybridComputeLicense"/> instance for mocking. </returns>
+        public static HybridComputeLicense HybridComputeLicense(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = null, Guid? tenantId = null, HybridComputeLicenseType? licenseType = null, HybridComputeLicenseDetails licenseDetails = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new HybridComputeLicense(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                tenantId,
+                licenseType,
+                licenseDetails,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeLicenseDetails"/>. </summary>
+        /// <param name="state"> Describes the state of the license. </param>
+        /// <param name="target"> Describes the license target server. </param>
+        /// <param name="edition"> Describes the edition of the license. The values are either Standard or Datacenter. </param>
+        /// <param name="licenseCoreType"> Describes the license core type (pCore or vCore). </param>
+        /// <param name="processors"> Describes the number of processors. </param>
+        /// <param name="assignedLicenses"> Describes the number of assigned licenses. </param>
+        /// <param name="immutableId"> Describes the immutable id. </param>
+        /// <returns> A new <see cref="Models.HybridComputeLicenseDetails"/> instance for mocking. </returns>
+        public static HybridComputeLicenseDetails HybridComputeLicenseDetails(HybridComputeLicenseState? state = null, HybridComputeLicenseTarget? target = null, HybridComputeLicenseEdition? edition = null, LicenseCoreType? licenseCoreType = null, int? processors = null, int? assignedLicenses = null, string immutableId = null)
+        {
+            return new HybridComputeLicenseDetails(
+                state,
+                target,
+                edition,
+                licenseCoreType,
+                processors,
+                assignedLicenses,
+                immutableId,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.HybridComputeOSProfile"/>. </summary>
         /// <param name="computerName"> Specifies the host OS name of the hybrid machine. </param>
         /// <param name="windowsConfiguration"> Specifies the windows configuration for update management. </param>
@@ -233,58 +285,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 esuKeyState,
                 assignedLicense,
                 licenseAssignmentState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeLicense"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="tenantId"> Describes the tenant id. </param>
-        /// <param name="licenseType"> The type of the license resource. </param>
-        /// <param name="licenseDetails"> Describes the properties of a License. </param>
-        /// <returns> A new <see cref="Models.HybridComputeLicense"/> instance for mocking. </returns>
-        public static HybridComputeLicense HybridComputeLicense(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = null, Guid? tenantId = null, HybridComputeLicenseType? licenseType = null, HybridComputeLicenseDetails licenseDetails = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new HybridComputeLicense(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                provisioningState,
-                tenantId,
-                licenseType,
-                licenseDetails,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeLicenseDetails"/>. </summary>
-        /// <param name="state"> Describes the state of the license. </param>
-        /// <param name="target"> Describes the license target server. </param>
-        /// <param name="edition"> Describes the edition of the license. The values are either Standard or Datacenter. </param>
-        /// <param name="licenseCoreType"> Describes the license core type (pCore or vCore). </param>
-        /// <param name="processors"> Describes the number of processors. </param>
-        /// <param name="assignedLicenses"> Describes the number of assigned licenses. </param>
-        /// <param name="immutableId"> Describes the immutable id. </param>
-        /// <returns> A new <see cref="Models.HybridComputeLicenseDetails"/> instance for mocking. </returns>
-        public static HybridComputeLicenseDetails HybridComputeLicenseDetails(HybridComputeLicenseState? state = null, HybridComputeLicenseTarget? target = null, HybridComputeLicenseEdition? edition = null, LicenseCoreType? licenseCoreType = null, int? processors = null, int? assignedLicenses = null, string immutableId = null)
-        {
-            return new HybridComputeLicenseDetails(
-                state,
-                target,
-                edition,
-                licenseCoreType,
-                processors,
-                assignedLicenses,
-                immutableId,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LicenseProfileArmEsuPropertiesWithoutAssignedLicense"/>. </summary>
@@ -803,6 +803,109 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 linkIdentifier,
                 groupId,
                 memberName,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.NetworkSecurityPerimeterConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> Current state of this NetworkSecurityPerimeter: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
+        /// <param name="provisioningIssues"> Provisioning issues. </param>
+        /// <param name="networkSecurityPerimeter"> The Network Security Perimeter associated with this configuration. </param>
+        /// <param name="resourceAssociation"> The Resource Association. </param>
+        /// <param name="profile"> Network Security Perimeter profile. </param>
+        /// <returns> A new <see cref="HybridCompute.NetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, IEnumerable<ProvisioningIssue> provisioningIssues = null, NetworkSecurityPerimeter networkSecurityPerimeter = null, ResourceAssociation resourceAssociation = null, NetworkSecurityPerimeterProfile profile = null)
+        {
+            provisioningIssues ??= new List<ProvisioningIssue>();
+
+            return new NetworkSecurityPerimeterConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                provisioningIssues?.ToList(),
+                networkSecurityPerimeter,
+                resourceAssociation,
+                profile,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProvisioningIssue"/>. </summary>
+        /// <param name="name"> Name of the provisioning issue. </param>
+        /// <param name="issueType"> Issue type. </param>
+        /// <param name="severity"> Severity of the provisioning issue. </param>
+        /// <param name="description"> Description of the provisioning issue. </param>
+        /// <param name="suggestedResourceIds"> ARM Ids of the resources that can be associated to the same perimeter to remediate the issue. </param>
+        /// <param name="suggestedAccessRules"> Access rules that can be added to the perimeter to remediate the issue. </param>
+        /// <returns> A new <see cref="Models.ProvisioningIssue"/> instance for mocking. </returns>
+        public static ProvisioningIssue ProvisioningIssue(string name = null, ProvisioningIssueType? issueType = null, ProvisioningIssueSeverity? severity = null, string description = null, IEnumerable<string> suggestedResourceIds = null, IEnumerable<AccessRule> suggestedAccessRules = null)
+        {
+            suggestedResourceIds ??= new List<string>();
+            suggestedAccessRules ??= new List<AccessRule>();
+
+            return new ProvisioningIssue(
+                name,
+                issueType,
+                severity,
+                description,
+                suggestedResourceIds?.ToList(),
+                suggestedAccessRules?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AccessRule"/>. </summary>
+        /// <param name="name"> Name of the access rule. </param>
+        /// <param name="direction"> Direction of the access rule. </param>
+        /// <param name="addressPrefixes"> Address prefixes that are allowed access. </param>
+        /// <returns> A new <see cref="Models.AccessRule"/> instance for mocking. </returns>
+        public static AccessRule AccessRule(string name = null, AccessRuleDirection? direction = null, IEnumerable<string> addressPrefixes = null)
+        {
+            addressPrefixes ??= new List<string>();
+
+            return new AccessRule(name, direction, addressPrefixes?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeter"/>. </summary>
+        /// <param name="id"> Azure resource Id. </param>
+        /// <param name="perimeterGuid"> Guid of the Network Security Perimeter. </param>
+        /// <param name="location"> Regional location of the perimeter. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeter"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(string id = null, string perimeterGuid = null, AzureLocation? location = null)
+        {
+            return new NetworkSecurityPerimeter(id, perimeterGuid, location, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceAssociation"/>. </summary>
+        /// <param name="name"> Name of the Resource Association. </param>
+        /// <param name="accessMode"> The access mode. </param>
+        /// <returns> A new <see cref="Models.ResourceAssociation"/> instance for mocking. </returns>
+        public static ResourceAssociation ResourceAssociation(string name = null, AccessMode? accessMode = null)
+        {
+            return new ResourceAssociation(name, accessMode, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterProfile"/>. </summary>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="accessRulesVersion"> Access rules version number. </param>
+        /// <param name="accessRules"> Collection of access rules for the profile. </param>
+        /// <param name="diagnosticSettingsVersion"> Diagnostic settings version number. </param>
+        /// <param name="enabledLogCategories"> Collection of enabled log categories for the profile. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterProfile"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterProfile NetworkSecurityPerimeterProfile(string name = null, string accessRulesVersion = null, IEnumerable<AccessRule> accessRules = null, string diagnosticSettingsVersion = null, IEnumerable<string> enabledLogCategories = null)
+        {
+            accessRules ??= new List<AccessRule>();
+            enabledLogCategories ??= new List<string>();
+
+            return new NetworkSecurityPerimeterProfile(
+                name,
+                accessRulesVersion,
+                accessRules?.ToList(),
+                diagnosticSettingsVersion,
+                enabledLogCategories?.ToList(),
                 serializedAdditionalRawData: null);
         }
     }

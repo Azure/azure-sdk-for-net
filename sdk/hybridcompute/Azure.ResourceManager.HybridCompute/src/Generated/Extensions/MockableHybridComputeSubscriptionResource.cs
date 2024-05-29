@@ -18,6 +18,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableHybridComputeSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _licensesClientDiagnostics;
+        private LicensesRestOperations _licensesRestClient;
         private ClientDiagnostics _hybridComputeMachineMachinesClientDiagnostics;
         private MachinesRestOperations _hybridComputeMachineMachinesRestClient;
         private ClientDiagnostics _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics;
@@ -35,6 +37,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         {
         }
 
+        private ClientDiagnostics LicensesClientDiagnostics => _licensesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private LicensesRestOperations LicensesRestClient => _licensesRestClient ??= new LicensesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics HybridComputeMachineMachinesClientDiagnostics => _hybridComputeMachineMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeMachineResource.ResourceType.Namespace, Diagnostics);
         private MachinesRestOperations HybridComputeMachineMachinesRestClient => _hybridComputeMachineMachinesRestClient ??= new MachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridComputeMachineResource.ResourceType));
         private ClientDiagnostics HybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics => _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputePrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
@@ -124,6 +128,58 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         public virtual Response<HybridComputeExtensionValueResource> GetHybridComputeExtensionValue(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
             return GetHybridComputeExtensionValues(location, publisher, extensionType).Get(version, cancellationToken);
+        }
+
+        /// <summary>
+        /// The operation to get all licenses of a non-Azure machine
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/licenses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HybridComputeLicense"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridComputeLicense> GetLicensesBySubscriptionAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LicensesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LicensesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => HybridComputeLicense.DeserializeHybridComputeLicense(e), LicensesClientDiagnostics, Pipeline, "MockableHybridComputeSubscriptionResource.GetLicensesBySubscription", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// The operation to get all licenses of a non-Azure machine
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/licenses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HybridComputeLicense"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridComputeLicense> GetLicensesBySubscription(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LicensesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LicensesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => HybridComputeLicense.DeserializeHybridComputeLicense(e), LicensesClientDiagnostics, Pipeline, "MockableHybridComputeSubscriptionResource.GetLicensesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
