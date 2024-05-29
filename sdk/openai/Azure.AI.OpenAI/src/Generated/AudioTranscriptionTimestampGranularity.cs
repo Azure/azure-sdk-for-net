@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Defines the timestamp granularities that can be requested on a verbose transcription response. </summary>
-    internal readonly partial struct AudioTranscriptionTimestampGranularity : IEquatable<AudioTranscriptionTimestampGranularity>
+    public readonly partial struct AudioTranscriptionTimestampGranularity : IEquatable<AudioTranscriptionTimestampGranularity>
     {
         private readonly string _value;
 

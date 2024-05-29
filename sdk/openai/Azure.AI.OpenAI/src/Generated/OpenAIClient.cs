@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -34,6 +36,118 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of OpenAIClient for mocking. </summary>
         protected OpenAIClient()
         {
+        }
+
+        /// <summary>
+        /// Gets transcribed text and associated metadata from provided spoken audio data. Audio will be transcribed in the
+        /// written language corresponding to the language it was spoken in.
+        /// </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="audioData">
+        /// The audio data to transcribe. This must be the binary content of a file in one of the supported media formats:
+        ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
+        /// </param>
+        /// <param name="filename"> The optional filename or descriptive identifier to associate with with the audio data. </param>
+        /// <param name="responseFormat"> The requested format of the transcription response data, which will influence the content and detail of the result. </param>
+        /// <param name="language">
+        /// The primary spoken language of the audio data to be transcribed, supplied as a two-letter ISO-639-1 language code
+        /// such as 'en' or 'fr'.
+        /// Providing this known input language is optional but may improve the accuracy and/or latency of transcription.
+        /// </param>
+        /// <param name="prompt">
+        /// An optional hint to guide the model's style or continue from a prior audio segment. The written language of the
+        /// prompt should match the primary spoken language of the audio data.
+        /// </param>
+        /// <param name="temperature">
+        /// The sampling temperature, between 0 and 1.
+        /// Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
+        /// </param>
+        /// <param name="timestampGranularities">
+        /// The timestamp granularities to populate for this transcription.
+        /// `response_format` must be set `verbose_json` to use timestamp granularities.
+        /// Either or both of these options are supported: `word`, or `segment`.
+        /// Note: There is no additional latency for segment timestamps, but generating word timestamps incurs additional latency.
+        /// </param>
+        /// <param name="deploymentName"> The model to use for this transcription request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioData"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<string>> GetAudioTranscriptionAsPlainTextAsync(string deploymentId, BinaryData audioData, string filename = null, AudioTranscriptionFormat? responseFormat = null, string language = null, string prompt = null, float? temperature = null, IEnumerable<AudioTranscriptionTimestampGranularity> timestampGranularities = null, string deploymentName = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(audioData, nameof(audioData));
+
+            AudioTranscriptionOptions audioTranscriptionOptions = new AudioTranscriptionOptions(
+                audioData,
+                filename,
+                responseFormat,
+                language,
+                prompt,
+                temperature,
+                timestampGranularities?.ToList() as IList<AudioTranscriptionTimestampGranularity> ?? new ChangeTrackingList<AudioTranscriptionTimestampGranularity>(),
+                deploymentName,
+                null);
+            using MultipartFormDataRequestContent content = audioTranscriptionOptions.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetAudioTranscriptionAsPlainTextAsync(deploymentId, content, content.ContentType, context).ConfigureAwait(false);
+            return Response.FromValue(response.Content.ToString(), response);
+        }
+
+        /// <summary>
+        /// Gets transcribed text and associated metadata from provided spoken audio data. Audio will be transcribed in the
+        /// written language corresponding to the language it was spoken in.
+        /// </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="audioData">
+        /// The audio data to transcribe. This must be the binary content of a file in one of the supported media formats:
+        ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
+        /// </param>
+        /// <param name="filename"> The optional filename or descriptive identifier to associate with with the audio data. </param>
+        /// <param name="responseFormat"> The requested format of the transcription response data, which will influence the content and detail of the result. </param>
+        /// <param name="language">
+        /// The primary spoken language of the audio data to be transcribed, supplied as a two-letter ISO-639-1 language code
+        /// such as 'en' or 'fr'.
+        /// Providing this known input language is optional but may improve the accuracy and/or latency of transcription.
+        /// </param>
+        /// <param name="prompt">
+        /// An optional hint to guide the model's style or continue from a prior audio segment. The written language of the
+        /// prompt should match the primary spoken language of the audio data.
+        /// </param>
+        /// <param name="temperature">
+        /// The sampling temperature, between 0 and 1.
+        /// Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
+        /// </param>
+        /// <param name="timestampGranularities">
+        /// The timestamp granularities to populate for this transcription.
+        /// `response_format` must be set `verbose_json` to use timestamp granularities.
+        /// Either or both of these options are supported: `word`, or `segment`.
+        /// Note: There is no additional latency for segment timestamps, but generating word timestamps incurs additional latency.
+        /// </param>
+        /// <param name="deploymentName"> The model to use for this transcription request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioData"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<string> GetAudioTranscriptionAsPlainText(string deploymentId, BinaryData audioData, string filename = null, AudioTranscriptionFormat? responseFormat = null, string language = null, string prompt = null, float? temperature = null, IEnumerable<AudioTranscriptionTimestampGranularity> timestampGranularities = null, string deploymentName = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(audioData, nameof(audioData));
+
+            AudioTranscriptionOptions audioTranscriptionOptions = new AudioTranscriptionOptions(
+                audioData,
+                filename,
+                responseFormat,
+                language,
+                prompt,
+                temperature,
+                timestampGranularities?.ToList() as IList<AudioTranscriptionTimestampGranularity> ?? new ChangeTrackingList<AudioTranscriptionTimestampGranularity>(),
+                deploymentName,
+                null);
+            using MultipartFormDataRequestContent content = audioTranscriptionOptions.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetAudioTranscriptionAsPlainText(deploymentId, content, content.ContentType, context);
+            return Response.FromValue(response.Content.ToString(), response);
         }
 
         /// <summary>
@@ -113,6 +227,118 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary>
+        /// Gets transcribed text and associated metadata from provided spoken audio data. Audio will be transcribed in the
+        /// written language corresponding to the language it was spoken in.
+        /// </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="audioData">
+        /// The audio data to transcribe. This must be the binary content of a file in one of the supported media formats:
+        ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
+        /// </param>
+        /// <param name="filename"> The optional filename or descriptive identifier to associate with with the audio data. </param>
+        /// <param name="responseFormat"> The requested format of the transcription response data, which will influence the content and detail of the result. </param>
+        /// <param name="language">
+        /// The primary spoken language of the audio data to be transcribed, supplied as a two-letter ISO-639-1 language code
+        /// such as 'en' or 'fr'.
+        /// Providing this known input language is optional but may improve the accuracy and/or latency of transcription.
+        /// </param>
+        /// <param name="prompt">
+        /// An optional hint to guide the model's style or continue from a prior audio segment. The written language of the
+        /// prompt should match the primary spoken language of the audio data.
+        /// </param>
+        /// <param name="temperature">
+        /// The sampling temperature, between 0 and 1.
+        /// Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
+        /// </param>
+        /// <param name="timestampGranularities">
+        /// The timestamp granularities to populate for this transcription.
+        /// `response_format` must be set `verbose_json` to use timestamp granularities.
+        /// Either or both of these options are supported: `word`, or `segment`.
+        /// Note: There is no additional latency for segment timestamps, but generating word timestamps incurs additional latency.
+        /// </param>
+        /// <param name="deploymentName"> The model to use for this transcription request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioData"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AudioTranscription>> GetAudioTranscriptionAsResponseObjectAsync(string deploymentId, BinaryData audioData, string filename = null, AudioTranscriptionFormat? responseFormat = null, string language = null, string prompt = null, float? temperature = null, IEnumerable<AudioTranscriptionTimestampGranularity> timestampGranularities = null, string deploymentName = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(audioData, nameof(audioData));
+
+            AudioTranscriptionOptions audioTranscriptionOptions = new AudioTranscriptionOptions(
+                audioData,
+                filename,
+                responseFormat,
+                language,
+                prompt,
+                temperature,
+                timestampGranularities?.ToList() as IList<AudioTranscriptionTimestampGranularity> ?? new ChangeTrackingList<AudioTranscriptionTimestampGranularity>(),
+                deploymentName,
+                null);
+            using MultipartFormDataRequestContent content = audioTranscriptionOptions.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetAudioTranscriptionAsResponseObjectAsync(deploymentId, content, content.ContentType, context).ConfigureAwait(false);
+            return Response.FromValue(AudioTranscription.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// Gets transcribed text and associated metadata from provided spoken audio data. Audio will be transcribed in the
+        /// written language corresponding to the language it was spoken in.
+        /// </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="audioData">
+        /// The audio data to transcribe. This must be the binary content of a file in one of the supported media formats:
+        ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
+        /// </param>
+        /// <param name="filename"> The optional filename or descriptive identifier to associate with with the audio data. </param>
+        /// <param name="responseFormat"> The requested format of the transcription response data, which will influence the content and detail of the result. </param>
+        /// <param name="language">
+        /// The primary spoken language of the audio data to be transcribed, supplied as a two-letter ISO-639-1 language code
+        /// such as 'en' or 'fr'.
+        /// Providing this known input language is optional but may improve the accuracy and/or latency of transcription.
+        /// </param>
+        /// <param name="prompt">
+        /// An optional hint to guide the model's style or continue from a prior audio segment. The written language of the
+        /// prompt should match the primary spoken language of the audio data.
+        /// </param>
+        /// <param name="temperature">
+        /// The sampling temperature, between 0 and 1.
+        /// Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
+        /// </param>
+        /// <param name="timestampGranularities">
+        /// The timestamp granularities to populate for this transcription.
+        /// `response_format` must be set `verbose_json` to use timestamp granularities.
+        /// Either or both of these options are supported: `word`, or `segment`.
+        /// Note: There is no additional latency for segment timestamps, but generating word timestamps incurs additional latency.
+        /// </param>
+        /// <param name="deploymentName"> The model to use for this transcription request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioData"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AudioTranscription> GetAudioTranscriptionAsResponseObject(string deploymentId, BinaryData audioData, string filename = null, AudioTranscriptionFormat? responseFormat = null, string language = null, string prompt = null, float? temperature = null, IEnumerable<AudioTranscriptionTimestampGranularity> timestampGranularities = null, string deploymentName = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(audioData, nameof(audioData));
+
+            AudioTranscriptionOptions audioTranscriptionOptions = new AudioTranscriptionOptions(
+                audioData,
+                filename,
+                responseFormat,
+                language,
+                prompt,
+                temperature,
+                timestampGranularities?.ToList() as IList<AudioTranscriptionTimestampGranularity> ?? new ChangeTrackingList<AudioTranscriptionTimestampGranularity>(),
+                deploymentName,
+                null);
+            using MultipartFormDataRequestContent content = audioTranscriptionOptions.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetAudioTranscriptionAsResponseObject(deploymentId, content, content.ContentType, context);
+            return Response.FromValue(AudioTranscription.FromResponse(response), response);
+        }
+
+        /// <summary>
         /// [Protocol Method] Gets transcribed text and associated metadata from provided spoken audio data. Audio will be transcribed in the
         /// written language corresponding to the language it was spoken in.
         /// <list type="bullet">
@@ -186,6 +412,86 @@ namespace Azure.AI.OpenAI
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets English language transcribed text and associated metadata from provided spoken audio data. </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="audioData">
+        /// The audio data to translate. This must be the binary content of a file in one of the supported media formats:
+        ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
+        /// </param>
+        /// <param name="filename"> The optional filename or descriptive identifier to associate with with the audio data. </param>
+        /// <param name="responseFormat"> The requested format of the translation response data, which will influence the content and detail of the result. </param>
+        /// <param name="prompt">
+        /// An optional hint to guide the model's style or continue from a prior audio segment. The written language of the
+        /// prompt should match the primary spoken language of the audio data.
+        /// </param>
+        /// <param name="temperature">
+        /// The sampling temperature, between 0 and 1.
+        /// Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
+        /// </param>
+        /// <param name="deploymentName"> The model to use for this translation request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioData"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<string>> GetAudioTranslationAsPlainTextAsync(string deploymentId, BinaryData audioData, string filename = null, AudioTranslationFormat? responseFormat = null, string prompt = null, float? temperature = null, string deploymentName = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(audioData, nameof(audioData));
+
+            AudioTranslationOptions audioTranslationOptions = new AudioTranslationOptions(
+                audioData,
+                filename,
+                responseFormat,
+                prompt,
+                temperature,
+                deploymentName,
+                null);
+            using MultipartFormDataRequestContent content = audioTranslationOptions.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetAudioTranslationAsPlainTextAsync(deploymentId, content, content.ContentType, context).ConfigureAwait(false);
+            return Response.FromValue(response.Content.ToString(), response);
+        }
+
+        /// <summary> Gets English language transcribed text and associated metadata from provided spoken audio data. </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="audioData">
+        /// The audio data to translate. This must be the binary content of a file in one of the supported media formats:
+        ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
+        /// </param>
+        /// <param name="filename"> The optional filename or descriptive identifier to associate with with the audio data. </param>
+        /// <param name="responseFormat"> The requested format of the translation response data, which will influence the content and detail of the result. </param>
+        /// <param name="prompt">
+        /// An optional hint to guide the model's style or continue from a prior audio segment. The written language of the
+        /// prompt should match the primary spoken language of the audio data.
+        /// </param>
+        /// <param name="temperature">
+        /// The sampling temperature, between 0 and 1.
+        /// Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
+        /// </param>
+        /// <param name="deploymentName"> The model to use for this translation request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioData"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<string> GetAudioTranslationAsPlainText(string deploymentId, BinaryData audioData, string filename = null, AudioTranslationFormat? responseFormat = null, string prompt = null, float? temperature = null, string deploymentName = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(audioData, nameof(audioData));
+
+            AudioTranslationOptions audioTranslationOptions = new AudioTranslationOptions(
+                audioData,
+                filename,
+                responseFormat,
+                prompt,
+                temperature,
+                deploymentName,
+                null);
+            using MultipartFormDataRequestContent content = audioTranslationOptions.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetAudioTranslationAsPlainText(deploymentId, content, content.ContentType, context);
+            return Response.FromValue(response.Content.ToString(), response);
         }
 
         /// <summary>
@@ -262,6 +568,86 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <summary> Gets English language transcribed text and associated metadata from provided spoken audio data. </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="audioData">
+        /// The audio data to translate. This must be the binary content of a file in one of the supported media formats:
+        ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
+        /// </param>
+        /// <param name="filename"> The optional filename or descriptive identifier to associate with with the audio data. </param>
+        /// <param name="responseFormat"> The requested format of the translation response data, which will influence the content and detail of the result. </param>
+        /// <param name="prompt">
+        /// An optional hint to guide the model's style or continue from a prior audio segment. The written language of the
+        /// prompt should match the primary spoken language of the audio data.
+        /// </param>
+        /// <param name="temperature">
+        /// The sampling temperature, between 0 and 1.
+        /// Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
+        /// </param>
+        /// <param name="deploymentName"> The model to use for this translation request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioData"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AudioTranslation>> GetAudioTranslationAsResponseObjectAsync(string deploymentId, BinaryData audioData, string filename = null, AudioTranslationFormat? responseFormat = null, string prompt = null, float? temperature = null, string deploymentName = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(audioData, nameof(audioData));
+
+            AudioTranslationOptions audioTranslationOptions = new AudioTranslationOptions(
+                audioData,
+                filename,
+                responseFormat,
+                prompt,
+                temperature,
+                deploymentName,
+                null);
+            using MultipartFormDataRequestContent content = audioTranslationOptions.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetAudioTranslationAsResponseObjectAsync(deploymentId, content, content.ContentType, context).ConfigureAwait(false);
+            return Response.FromValue(AudioTranslation.FromResponse(response), response);
+        }
+
+        /// <summary> Gets English language transcribed text and associated metadata from provided spoken audio data. </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="audioData">
+        /// The audio data to translate. This must be the binary content of a file in one of the supported media formats:
+        ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
+        /// </param>
+        /// <param name="filename"> The optional filename or descriptive identifier to associate with with the audio data. </param>
+        /// <param name="responseFormat"> The requested format of the translation response data, which will influence the content and detail of the result. </param>
+        /// <param name="prompt">
+        /// An optional hint to guide the model's style or continue from a prior audio segment. The written language of the
+        /// prompt should match the primary spoken language of the audio data.
+        /// </param>
+        /// <param name="temperature">
+        /// The sampling temperature, between 0 and 1.
+        /// Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
+        /// </param>
+        /// <param name="deploymentName"> The model to use for this translation request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioData"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AudioTranslation> GetAudioTranslationAsResponseObject(string deploymentId, BinaryData audioData, string filename = null, AudioTranslationFormat? responseFormat = null, string prompt = null, float? temperature = null, string deploymentName = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(audioData, nameof(audioData));
+
+            AudioTranslationOptions audioTranslationOptions = new AudioTranslationOptions(
+                audioData,
+                filename,
+                responseFormat,
+                prompt,
+                temperature,
+                deploymentName,
+                null);
+            using MultipartFormDataRequestContent content = audioTranslationOptions.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetAudioTranslationAsResponseObject(deploymentId, content, content.ContentType, context);
+            return Response.FromValue(AudioTranslation.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Gets English language transcribed text and associated metadata from provided spoken audio data.
         /// <list type="bullet">
@@ -334,6 +720,704 @@ namespace Azure.AI.OpenAI
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets completions for the provided input prompts.
+        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
+        /// provided prompt data.
+        /// </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="prompts"> The prompts to generate completions from. </param>
+        /// <param name="maxTokens"> The maximum number of tokens to generate. </param>
+        /// <param name="temperature">
+        /// The sampling temperature to use that controls the apparent creativity of generated completions.
+        /// Higher values will make output more random while lower values will make results more focused
+        /// and deterministic.
+        /// It is not recommended to modify temperature and top_p for the same completions request as the
+        /// interaction of these two settings is difficult to predict.
+        /// </param>
+        /// <param name="nucleusSamplingFactor">
+        /// An alternative to sampling with temperature called nucleus sampling. This value causes the
+        /// model to consider the results of tokens with the provided probability mass. As an example, a
+        /// value of 0.15 will cause only the tokens comprising the top 15% of probability mass to be
+        /// considered.
+        /// It is not recommended to modify temperature and top_p for the same completions request as the
+        /// interaction of these two settings is difficult to predict.
+        /// </param>
+        /// <param name="tokenSelectionBiases">
+        /// A map between GPT token IDs and bias scores that influences the probability of specific tokens
+        /// appearing in a completions response. Token IDs are computed via external tokenizer tools, while
+        /// bias scores reside in the range of -100 to 100 with minimum and maximum values corresponding to
+        /// a full ban or exclusive selection of a token, respectively. The exact behavior of a given bias
+        /// score varies by model.
+        /// </param>
+        /// <param name="user">
+        /// An identifier for the caller or end user of the operation. This may be used for tracking
+        /// or rate-limiting purposes.
+        /// </param>
+        /// <param name="choicesPerPrompt">
+        /// The number of completions choices that should be generated per provided prompt as part of an
+        /// overall completions response.
+        /// Because this setting can generate many completions, it may quickly consume your token quota.
+        /// Use carefully and ensure reasonable settings for max_tokens and stop.
+        /// </param>
+        /// <param name="logProbabilityCount">
+        /// A value that controls the emission of log probabilities for the provided number of most likely
+        /// tokens within a completions response.
+        /// </param>
+        /// <param name="suffix"> The suffix that comes after a completion of inserted text. </param>
+        /// <param name="echo">
+        /// A value specifying whether completions responses should include input prompts as prefixes to
+        /// their generated output.
+        /// </param>
+        /// <param name="stopSequences"> A collection of textual sequences that will end completions generation. </param>
+        /// <param name="presencePenalty">
+        /// A value that influences the probability of generated tokens appearing based on their existing
+        /// presence in generated text.
+        /// Positive values will make tokens less likely to appear when they already exist and increase the
+        /// model's likelihood to output new topics.
+        /// </param>
+        /// <param name="frequencyPenalty">
+        /// A value that influences the probability of generated tokens appearing based on their cumulative
+        /// frequency in generated text.
+        /// Positive values will make tokens less likely to appear as their frequency increases and
+        /// decrease the likelihood of the model repeating the same statements verbatim.
+        /// </param>
+        /// <param name="generationSampleCount">
+        /// A value that controls how many completions will be internally generated prior to response
+        /// formulation.
+        /// When used together with n, best_of controls the number of candidate completions and must be
+        /// greater than n.
+        /// Because this setting can generate many completions, it may quickly consume your token quota.
+        /// Use carefully and ensure reasonable settings for max_tokens and stop.
+        /// </param>
+        /// <param name="internalShouldStreamResponse"> A value indicating whether chat completions should be streamed for this request. </param>
+        /// <param name="deploymentName">
+        /// The model name to provide as part of this completions request.
+        /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
+        /// resource URI that's connected to.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="prompts"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<Completions>> GetCompletionsAsync(string deploymentId, IEnumerable<string> prompts, int? maxTokens = null, float? temperature = null, float? nucleusSamplingFactor = null, IDictionary<int, int> tokenSelectionBiases = null, string user = null, int? choicesPerPrompt = null, int? logProbabilityCount = null, string suffix = null, bool? echo = null, IEnumerable<string> stopSequences = null, float? presencePenalty = null, float? frequencyPenalty = null, int? generationSampleCount = null, bool? internalShouldStreamResponse = null, string deploymentName = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(prompts, nameof(prompts));
+
+            CompletionsOptions completionsOptions = new CompletionsOptions(
+                prompts.ToList(),
+                maxTokens,
+                temperature,
+                nucleusSamplingFactor,
+                tokenSelectionBiases ?? new ChangeTrackingDictionary<int, int>(),
+                user,
+                choicesPerPrompt,
+                logProbabilityCount,
+                suffix,
+                echo,
+                stopSequences?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                presencePenalty,
+                frequencyPenalty,
+                generationSampleCount,
+                internalShouldStreamResponse,
+                deploymentName,
+                null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetCompletionsAsync(deploymentId, completionsOptions.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(Completions.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// Gets completions for the provided input prompts.
+        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
+        /// provided prompt data.
+        /// </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="prompts"> The prompts to generate completions from. </param>
+        /// <param name="maxTokens"> The maximum number of tokens to generate. </param>
+        /// <param name="temperature">
+        /// The sampling temperature to use that controls the apparent creativity of generated completions.
+        /// Higher values will make output more random while lower values will make results more focused
+        /// and deterministic.
+        /// It is not recommended to modify temperature and top_p for the same completions request as the
+        /// interaction of these two settings is difficult to predict.
+        /// </param>
+        /// <param name="nucleusSamplingFactor">
+        /// An alternative to sampling with temperature called nucleus sampling. This value causes the
+        /// model to consider the results of tokens with the provided probability mass. As an example, a
+        /// value of 0.15 will cause only the tokens comprising the top 15% of probability mass to be
+        /// considered.
+        /// It is not recommended to modify temperature and top_p for the same completions request as the
+        /// interaction of these two settings is difficult to predict.
+        /// </param>
+        /// <param name="tokenSelectionBiases">
+        /// A map between GPT token IDs and bias scores that influences the probability of specific tokens
+        /// appearing in a completions response. Token IDs are computed via external tokenizer tools, while
+        /// bias scores reside in the range of -100 to 100 with minimum and maximum values corresponding to
+        /// a full ban or exclusive selection of a token, respectively. The exact behavior of a given bias
+        /// score varies by model.
+        /// </param>
+        /// <param name="user">
+        /// An identifier for the caller or end user of the operation. This may be used for tracking
+        /// or rate-limiting purposes.
+        /// </param>
+        /// <param name="choicesPerPrompt">
+        /// The number of completions choices that should be generated per provided prompt as part of an
+        /// overall completions response.
+        /// Because this setting can generate many completions, it may quickly consume your token quota.
+        /// Use carefully and ensure reasonable settings for max_tokens and stop.
+        /// </param>
+        /// <param name="logProbabilityCount">
+        /// A value that controls the emission of log probabilities for the provided number of most likely
+        /// tokens within a completions response.
+        /// </param>
+        /// <param name="suffix"> The suffix that comes after a completion of inserted text. </param>
+        /// <param name="echo">
+        /// A value specifying whether completions responses should include input prompts as prefixes to
+        /// their generated output.
+        /// </param>
+        /// <param name="stopSequences"> A collection of textual sequences that will end completions generation. </param>
+        /// <param name="presencePenalty">
+        /// A value that influences the probability of generated tokens appearing based on their existing
+        /// presence in generated text.
+        /// Positive values will make tokens less likely to appear when they already exist and increase the
+        /// model's likelihood to output new topics.
+        /// </param>
+        /// <param name="frequencyPenalty">
+        /// A value that influences the probability of generated tokens appearing based on their cumulative
+        /// frequency in generated text.
+        /// Positive values will make tokens less likely to appear as their frequency increases and
+        /// decrease the likelihood of the model repeating the same statements verbatim.
+        /// </param>
+        /// <param name="generationSampleCount">
+        /// A value that controls how many completions will be internally generated prior to response
+        /// formulation.
+        /// When used together with n, best_of controls the number of candidate completions and must be
+        /// greater than n.
+        /// Because this setting can generate many completions, it may quickly consume your token quota.
+        /// Use carefully and ensure reasonable settings for max_tokens and stop.
+        /// </param>
+        /// <param name="internalShouldStreamResponse"> A value indicating whether chat completions should be streamed for this request. </param>
+        /// <param name="deploymentName">
+        /// The model name to provide as part of this completions request.
+        /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
+        /// resource URI that's connected to.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="prompts"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<Completions> GetCompletions(string deploymentId, IEnumerable<string> prompts, int? maxTokens = null, float? temperature = null, float? nucleusSamplingFactor = null, IDictionary<int, int> tokenSelectionBiases = null, string user = null, int? choicesPerPrompt = null, int? logProbabilityCount = null, string suffix = null, bool? echo = null, IEnumerable<string> stopSequences = null, float? presencePenalty = null, float? frequencyPenalty = null, int? generationSampleCount = null, bool? internalShouldStreamResponse = null, string deploymentName = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(prompts, nameof(prompts));
+
+            CompletionsOptions completionsOptions = new CompletionsOptions(
+                prompts.ToList(),
+                maxTokens,
+                temperature,
+                nucleusSamplingFactor,
+                tokenSelectionBiases ?? new ChangeTrackingDictionary<int, int>(),
+                user,
+                choicesPerPrompt,
+                logProbabilityCount,
+                suffix,
+                echo,
+                stopSequences?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                presencePenalty,
+                frequencyPenalty,
+                generationSampleCount,
+                internalShouldStreamResponse,
+                deploymentName,
+                null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetCompletions(deploymentId, completionsOptions.ToRequestContent(), context);
+            return Response.FromValue(Completions.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// Gets chat completions for the provided chat messages.
+        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
+        /// provided prompt data.
+        /// </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="messages">
+        /// The collection of context messages associated with this chat completions request.
+        /// Typical usage begins with a chat message for the System role that provides instructions for
+        /// the behavior of the assistant, followed by alternating messages between the User and
+        /// Assistant roles.
+        /// </param>
+        /// <param name="functions"> A list of functions the model may generate JSON inputs for. </param>
+        /// <param name="functionCall">
+        /// Controls how the model responds to function calls. "none" means the model does not call a function,
+        /// and responds to the end-user. "auto" means the model can pick between an end-user or calling a function.
+        ///  Specifying a particular function via `{"name": "my_function"}` forces the model to call that function.
+        ///  "none" is the default when no functions are present. "auto" is the default if functions are present.
+        /// </param>
+        /// <param name="maxTokens"> The maximum number of tokens to generate. </param>
+        /// <param name="temperature">
+        /// The sampling temperature to use that controls the apparent creativity of generated completions.
+        /// Higher values will make output more random while lower values will make results more focused
+        /// and deterministic.
+        /// It is not recommended to modify temperature and top_p for the same completions request as the
+        /// interaction of these two settings is difficult to predict.
+        /// </param>
+        /// <param name="nucleusSamplingFactor">
+        /// An alternative to sampling with temperature called nucleus sampling. This value causes the
+        /// model to consider the results of tokens with the provided probability mass. As an example, a
+        /// value of 0.15 will cause only the tokens comprising the top 15% of probability mass to be
+        /// considered.
+        /// It is not recommended to modify temperature and top_p for the same completions request as the
+        /// interaction of these two settings is difficult to predict.
+        /// </param>
+        /// <param name="tokenSelectionBiases">
+        /// A map between GPT token IDs and bias scores that influences the probability of specific tokens
+        /// appearing in a completions response. Token IDs are computed via external tokenizer tools, while
+        /// bias scores reside in the range of -100 to 100 with minimum and maximum values corresponding to
+        /// a full ban or exclusive selection of a token, respectively. The exact behavior of a given bias
+        /// score varies by model.
+        /// </param>
+        /// <param name="user">
+        /// An identifier for the caller or end user of the operation. This may be used for tracking
+        /// or rate-limiting purposes.
+        /// </param>
+        /// <param name="choiceCount">
+        /// The number of chat completions choices that should be generated for a chat completions
+        /// response.
+        /// Because this setting can generate many completions, it may quickly consume your token quota.
+        /// Use carefully and ensure reasonable settings for max_tokens and stop.
+        /// </param>
+        /// <param name="stopSequences"> A collection of textual sequences that will end completions generation. </param>
+        /// <param name="presencePenalty">
+        /// A value that influences the probability of generated tokens appearing based on their existing
+        /// presence in generated text.
+        /// Positive values will make tokens less likely to appear when they already exist and increase the
+        /// model's likelihood to output new topics.
+        /// </param>
+        /// <param name="frequencyPenalty">
+        /// A value that influences the probability of generated tokens appearing based on their cumulative
+        /// frequency in generated text.
+        /// Positive values will make tokens less likely to appear as their frequency increases and
+        /// decrease the likelihood of the model repeating the same statements verbatim.
+        /// </param>
+        /// <param name="internalShouldStreamResponse"> A value indicating whether chat completions should be streamed for this request. </param>
+        /// <param name="deploymentName">
+        /// The model name to provide as part of this completions request.
+        /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
+        /// resource URI that's connected to.
+        /// </param>
+        /// <param name="internalAzureExtensionsDataSources">
+        ///   The configuration entries for Azure OpenAI chat extensions that use them.
+        ///   This additional specification is only compatible with Azure OpenAI.
+        /// </param>
+        /// <param name="enhancements"> If provided, the configuration options for available Azure OpenAI chat enhancements. </param>
+        /// <param name="seed">
+        /// If specified, the system will make a best effort to sample deterministically such that repeated requests with the
+        /// same seed and parameters should return the same result. Determinism is not guaranteed, and you should refer to the
+        /// system_fingerprint response parameter to monitor changes in the backend."
+        /// </param>
+        /// <param name="enableLogProbabilities"> Whether to return log probabilities of the output tokens or not. If true, returns the log probabilities of each output token returned in the `content` of `message`. This option is currently not available on the `gpt-4-vision-preview` model. </param>
+        /// <param name="logProbabilitiesPerToken"> An integer between 0 and 5 specifying the number of most likely tokens to return at each token position, each with an associated log probability. `logprobs` must be set to `true` if this parameter is used. </param>
+        /// <param name="responseFormat"> An object specifying the format that the model must output. Used to enable JSON mode. </param>
+        /// <param name="tools"> The available tool definitions that the chat completions request can use, including caller-defined functions. </param>
+        /// <param name="internalSuppressedToolChoice"> If specified, the model will configure which of the provided tools it can use for the chat completions response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="messages"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ChatCompletions>> GetChatCompletionsAsync(string deploymentId, IEnumerable<ChatRequestMessage> messages, IEnumerable<FunctionDefinition> functions = null, FunctionDefinition functionCall = null, int? maxTokens = null, float? temperature = null, float? nucleusSamplingFactor = null, IDictionary<int, int> tokenSelectionBiases = null, string user = null, int? choiceCount = null, IEnumerable<string> stopSequences = null, float? presencePenalty = null, float? frequencyPenalty = null, bool? internalShouldStreamResponse = null, string deploymentName = null, IEnumerable<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources = null, AzureChatEnhancementConfiguration enhancements = null, long? seed = null, bool? enableLogProbabilities = null, int? logProbabilitiesPerToken = null, ChatCompletionsResponseFormat responseFormat = null, IEnumerable<ChatCompletionsToolDefinition> tools = null, BinaryData internalSuppressedToolChoice = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(messages, nameof(messages));
+
+            ChatCompletionsOptions chatCompletionsOptions = new ChatCompletionsOptions(
+                messages.ToList(),
+                functions?.ToList() as IList<FunctionDefinition> ?? new ChangeTrackingList<FunctionDefinition>(),
+                functionCall,
+                maxTokens,
+                temperature,
+                nucleusSamplingFactor,
+                tokenSelectionBiases ?? new ChangeTrackingDictionary<int, int>(),
+                user,
+                choiceCount,
+                stopSequences?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                presencePenalty,
+                frequencyPenalty,
+                internalShouldStreamResponse,
+                deploymentName,
+                internalAzureExtensionsDataSources?.ToList() as IList<AzureChatExtensionConfiguration> ?? new ChangeTrackingList<AzureChatExtensionConfiguration>(),
+                enhancements,
+                seed,
+                enableLogProbabilities,
+                logProbabilitiesPerToken,
+                responseFormat,
+                tools?.ToList() as IList<ChatCompletionsToolDefinition> ?? new ChangeTrackingList<ChatCompletionsToolDefinition>(),
+                internalSuppressedToolChoice,
+                null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetChatCompletionsAsync(deploymentId, chatCompletionsOptions.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(ChatCompletions.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// Gets chat completions for the provided chat messages.
+        /// Completions support a wide variety of tasks and generate text that continues from or "completes"
+        /// provided prompt data.
+        /// </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="messages">
+        /// The collection of context messages associated with this chat completions request.
+        /// Typical usage begins with a chat message for the System role that provides instructions for
+        /// the behavior of the assistant, followed by alternating messages between the User and
+        /// Assistant roles.
+        /// </param>
+        /// <param name="functions"> A list of functions the model may generate JSON inputs for. </param>
+        /// <param name="functionCall">
+        /// Controls how the model responds to function calls. "none" means the model does not call a function,
+        /// and responds to the end-user. "auto" means the model can pick between an end-user or calling a function.
+        ///  Specifying a particular function via `{"name": "my_function"}` forces the model to call that function.
+        ///  "none" is the default when no functions are present. "auto" is the default if functions are present.
+        /// </param>
+        /// <param name="maxTokens"> The maximum number of tokens to generate. </param>
+        /// <param name="temperature">
+        /// The sampling temperature to use that controls the apparent creativity of generated completions.
+        /// Higher values will make output more random while lower values will make results more focused
+        /// and deterministic.
+        /// It is not recommended to modify temperature and top_p for the same completions request as the
+        /// interaction of these two settings is difficult to predict.
+        /// </param>
+        /// <param name="nucleusSamplingFactor">
+        /// An alternative to sampling with temperature called nucleus sampling. This value causes the
+        /// model to consider the results of tokens with the provided probability mass. As an example, a
+        /// value of 0.15 will cause only the tokens comprising the top 15% of probability mass to be
+        /// considered.
+        /// It is not recommended to modify temperature and top_p for the same completions request as the
+        /// interaction of these two settings is difficult to predict.
+        /// </param>
+        /// <param name="tokenSelectionBiases">
+        /// A map between GPT token IDs and bias scores that influences the probability of specific tokens
+        /// appearing in a completions response. Token IDs are computed via external tokenizer tools, while
+        /// bias scores reside in the range of -100 to 100 with minimum and maximum values corresponding to
+        /// a full ban or exclusive selection of a token, respectively. The exact behavior of a given bias
+        /// score varies by model.
+        /// </param>
+        /// <param name="user">
+        /// An identifier for the caller or end user of the operation. This may be used for tracking
+        /// or rate-limiting purposes.
+        /// </param>
+        /// <param name="choiceCount">
+        /// The number of chat completions choices that should be generated for a chat completions
+        /// response.
+        /// Because this setting can generate many completions, it may quickly consume your token quota.
+        /// Use carefully and ensure reasonable settings for max_tokens and stop.
+        /// </param>
+        /// <param name="stopSequences"> A collection of textual sequences that will end completions generation. </param>
+        /// <param name="presencePenalty">
+        /// A value that influences the probability of generated tokens appearing based on their existing
+        /// presence in generated text.
+        /// Positive values will make tokens less likely to appear when they already exist and increase the
+        /// model's likelihood to output new topics.
+        /// </param>
+        /// <param name="frequencyPenalty">
+        /// A value that influences the probability of generated tokens appearing based on their cumulative
+        /// frequency in generated text.
+        /// Positive values will make tokens less likely to appear as their frequency increases and
+        /// decrease the likelihood of the model repeating the same statements verbatim.
+        /// </param>
+        /// <param name="internalShouldStreamResponse"> A value indicating whether chat completions should be streamed for this request. </param>
+        /// <param name="deploymentName">
+        /// The model name to provide as part of this completions request.
+        /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
+        /// resource URI that's connected to.
+        /// </param>
+        /// <param name="internalAzureExtensionsDataSources">
+        ///   The configuration entries for Azure OpenAI chat extensions that use them.
+        ///   This additional specification is only compatible with Azure OpenAI.
+        /// </param>
+        /// <param name="enhancements"> If provided, the configuration options for available Azure OpenAI chat enhancements. </param>
+        /// <param name="seed">
+        /// If specified, the system will make a best effort to sample deterministically such that repeated requests with the
+        /// same seed and parameters should return the same result. Determinism is not guaranteed, and you should refer to the
+        /// system_fingerprint response parameter to monitor changes in the backend."
+        /// </param>
+        /// <param name="enableLogProbabilities"> Whether to return log probabilities of the output tokens or not. If true, returns the log probabilities of each output token returned in the `content` of `message`. This option is currently not available on the `gpt-4-vision-preview` model. </param>
+        /// <param name="logProbabilitiesPerToken"> An integer between 0 and 5 specifying the number of most likely tokens to return at each token position, each with an associated log probability. `logprobs` must be set to `true` if this parameter is used. </param>
+        /// <param name="responseFormat"> An object specifying the format that the model must output. Used to enable JSON mode. </param>
+        /// <param name="tools"> The available tool definitions that the chat completions request can use, including caller-defined functions. </param>
+        /// <param name="internalSuppressedToolChoice"> If specified, the model will configure which of the provided tools it can use for the chat completions response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="messages"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ChatCompletions> GetChatCompletions(string deploymentId, IEnumerable<ChatRequestMessage> messages, IEnumerable<FunctionDefinition> functions = null, FunctionDefinition functionCall = null, int? maxTokens = null, float? temperature = null, float? nucleusSamplingFactor = null, IDictionary<int, int> tokenSelectionBiases = null, string user = null, int? choiceCount = null, IEnumerable<string> stopSequences = null, float? presencePenalty = null, float? frequencyPenalty = null, bool? internalShouldStreamResponse = null, string deploymentName = null, IEnumerable<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources = null, AzureChatEnhancementConfiguration enhancements = null, long? seed = null, bool? enableLogProbabilities = null, int? logProbabilitiesPerToken = null, ChatCompletionsResponseFormat responseFormat = null, IEnumerable<ChatCompletionsToolDefinition> tools = null, BinaryData internalSuppressedToolChoice = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(messages, nameof(messages));
+
+            ChatCompletionsOptions chatCompletionsOptions = new ChatCompletionsOptions(
+                messages.ToList(),
+                functions?.ToList() as IList<FunctionDefinition> ?? new ChangeTrackingList<FunctionDefinition>(),
+                functionCall,
+                maxTokens,
+                temperature,
+                nucleusSamplingFactor,
+                tokenSelectionBiases ?? new ChangeTrackingDictionary<int, int>(),
+                user,
+                choiceCount,
+                stopSequences?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                presencePenalty,
+                frequencyPenalty,
+                internalShouldStreamResponse,
+                deploymentName,
+                internalAzureExtensionsDataSources?.ToList() as IList<AzureChatExtensionConfiguration> ?? new ChangeTrackingList<AzureChatExtensionConfiguration>(),
+                enhancements,
+                seed,
+                enableLogProbabilities,
+                logProbabilitiesPerToken,
+                responseFormat,
+                tools?.ToList() as IList<ChatCompletionsToolDefinition> ?? new ChangeTrackingList<ChatCompletionsToolDefinition>(),
+                internalSuppressedToolChoice,
+                null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetChatCompletions(deploymentId, chatCompletionsOptions.ToRequestContent(), context);
+            return Response.FromValue(ChatCompletions.FromResponse(response), response);
+        }
+
+        /// <summary> Creates an image given a prompt. </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="prompt"> A description of the desired images. </param>
+        /// <param name="deploymentName">
+        /// The model name or Azure OpenAI model deployment name to use for image generation. If not specified, dall-e-2 will be
+        /// inferred as a default.
+        /// </param>
+        /// <param name="imageCount">
+        /// The number of images to generate.
+        /// Dall-e-2 models support values between 1 and 10.
+        /// Dall-e-3 models only support a value of 1.
+        /// </param>
+        /// <param name="size">
+        /// The desired dimensions for generated images.
+        /// Dall-e-2 models support 256x256, 512x512, or 1024x1024.
+        /// Dall-e-3 models support 1024x1024, 1792x1024, or 1024x1792.
+        /// </param>
+        /// <param name="responseFormat"> The format in which image generation response items should be presented. </param>
+        /// <param name="quality">
+        /// The desired image generation quality level to use.
+        /// Only configurable with dall-e-3 models.
+        /// </param>
+        /// <param name="style">
+        /// The desired image generation style to use.
+        /// Only configurable with dall-e-3 models.
+        /// </param>
+        /// <param name="user"> A unique identifier representing your end-user, which can help to monitor and detect abuse. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="prompt"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ImageGenerations>> GetImageGenerationsAsync(string deploymentId, string prompt, string deploymentName = null, int? imageCount = null, ImageSize? size = null, ImageGenerationResponseFormat? responseFormat = null, ImageGenerationQuality? quality = null, ImageGenerationStyle? style = null, string user = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(prompt, nameof(prompt));
+
+            ImageGenerationOptions imageGenerationOptions = new ImageGenerationOptions(
+                deploymentName,
+                prompt,
+                imageCount,
+                size,
+                responseFormat,
+                quality,
+                style,
+                user,
+                null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetImageGenerationsAsync(deploymentId, imageGenerationOptions.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(ImageGenerations.FromResponse(response), response);
+        }
+
+        /// <summary> Creates an image given a prompt. </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="prompt"> A description of the desired images. </param>
+        /// <param name="deploymentName">
+        /// The model name or Azure OpenAI model deployment name to use for image generation. If not specified, dall-e-2 will be
+        /// inferred as a default.
+        /// </param>
+        /// <param name="imageCount">
+        /// The number of images to generate.
+        /// Dall-e-2 models support values between 1 and 10.
+        /// Dall-e-3 models only support a value of 1.
+        /// </param>
+        /// <param name="size">
+        /// The desired dimensions for generated images.
+        /// Dall-e-2 models support 256x256, 512x512, or 1024x1024.
+        /// Dall-e-3 models support 1024x1024, 1792x1024, or 1024x1792.
+        /// </param>
+        /// <param name="responseFormat"> The format in which image generation response items should be presented. </param>
+        /// <param name="quality">
+        /// The desired image generation quality level to use.
+        /// Only configurable with dall-e-3 models.
+        /// </param>
+        /// <param name="style">
+        /// The desired image generation style to use.
+        /// Only configurable with dall-e-3 models.
+        /// </param>
+        /// <param name="user"> A unique identifier representing your end-user, which can help to monitor and detect abuse. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="prompt"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ImageGenerations> GetImageGenerations(string deploymentId, string prompt, string deploymentName = null, int? imageCount = null, ImageSize? size = null, ImageGenerationResponseFormat? responseFormat = null, ImageGenerationQuality? quality = null, ImageGenerationStyle? style = null, string user = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(prompt, nameof(prompt));
+
+            ImageGenerationOptions imageGenerationOptions = new ImageGenerationOptions(
+                deploymentName,
+                prompt,
+                imageCount,
+                size,
+                responseFormat,
+                quality,
+                style,
+                user,
+                null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetImageGenerations(deploymentId, imageGenerationOptions.ToRequestContent(), context);
+            return Response.FromValue(ImageGenerations.FromResponse(response), response);
+        }
+
+        /// <summary> Generates text-to-speech audio from the input text. </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="input"> The text to generate audio for. The maximum length is 4096 characters. </param>
+        /// <param name="voice"> The voice to use for text-to-speech. </param>
+        /// <param name="responseFormat"> The audio output format for the spoken text. By default, the MP3 format will be used. </param>
+        /// <param name="speed"> The speed of speech for generated audio. Values are valid in the range from 0.25 to 4.0, with 1.0 the default and higher values corresponding to faster speech. </param>
+        /// <param name="deploymentName"> The model to use for this text-to-speech request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="input"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<BinaryData>> GenerateSpeechFromTextAsync(string deploymentId, string input, SpeechVoice voice, SpeechGenerationResponseFormat? responseFormat = null, float? speed = null, string deploymentName = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(input, nameof(input));
+
+            SpeechGenerationOptions speechGenerationOptions = new SpeechGenerationOptions(
+                input,
+                voice,
+                responseFormat,
+                speed,
+                deploymentName,
+                null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GenerateSpeechFromTextAsync(deploymentId, speechGenerationOptions.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(response.Content, response);
+        }
+
+        /// <summary> Generates text-to-speech audio from the input text. </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="input"> The text to generate audio for. The maximum length is 4096 characters. </param>
+        /// <param name="voice"> The voice to use for text-to-speech. </param>
+        /// <param name="responseFormat"> The audio output format for the spoken text. By default, the MP3 format will be used. </param>
+        /// <param name="speed"> The speed of speech for generated audio. Values are valid in the range from 0.25 to 4.0, with 1.0 the default and higher values corresponding to faster speech. </param>
+        /// <param name="deploymentName"> The model to use for this text-to-speech request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="input"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<BinaryData> GenerateSpeechFromText(string deploymentId, string input, SpeechVoice voice, SpeechGenerationResponseFormat? responseFormat = null, float? speed = null, string deploymentName = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(input, nameof(input));
+
+            SpeechGenerationOptions speechGenerationOptions = new SpeechGenerationOptions(
+                input,
+                voice,
+                responseFormat,
+                speed,
+                deploymentName,
+                null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GenerateSpeechFromText(deploymentId, speechGenerationOptions.ToRequestContent(), context);
+            return Response.FromValue(response.Content, response);
+        }
+
+        /// <summary> Return the embeddings for a given prompt. </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="input">
+        /// Input texts to get embeddings for, encoded as a an array of strings.
+        /// Each input must not exceed 2048 tokens in length.
+        ///
+        /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
+        /// as we have observed inferior results when newlines are present.
+        /// </param>
+        /// <param name="user">
+        /// An identifier for the caller or end user of the operation. This may be used for tracking
+        /// or rate-limiting purposes.
+        /// </param>
+        /// <param name="deploymentName">
+        /// The model name to provide as part of this embeddings request.
+        /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
+        /// resource URI that's connected to.
+        /// </param>
+        /// <param name="encodingFormat"> The response encoding format to use for embedding data. </param>
+        /// <param name="dimensions"> The number of dimensions the resulting output embeddings should have. Only supported in `text-embedding-3` and later models. </param>
+        /// <param name="inputType"> When using Azure OpenAI, specifies the input type to use for embedding search. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="input"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<Embeddings>> GetEmbeddingsAsync(string deploymentId, IEnumerable<string> input, string user = null, string deploymentName = null, EmbeddingEncodingFormat? encodingFormat = null, int? dimensions = null, string inputType = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(input, nameof(input));
+
+            EmbeddingsOptions embeddingsOptions = new EmbeddingsOptions(
+                user,
+                deploymentName,
+                input.ToList(),
+                encodingFormat,
+                dimensions,
+                inputType,
+                null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetEmbeddingsAsync(deploymentId, embeddingsOptions.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(Embeddings.FromResponse(response), response);
+        }
+
+        /// <summary> Return the embeddings for a given prompt. </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="input">
+        /// Input texts to get embeddings for, encoded as a an array of strings.
+        /// Each input must not exceed 2048 tokens in length.
+        ///
+        /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
+        /// as we have observed inferior results when newlines are present.
+        /// </param>
+        /// <param name="user">
+        /// An identifier for the caller or end user of the operation. This may be used for tracking
+        /// or rate-limiting purposes.
+        /// </param>
+        /// <param name="deploymentName">
+        /// The model name to provide as part of this embeddings request.
+        /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
+        /// resource URI that's connected to.
+        /// </param>
+        /// <param name="encodingFormat"> The response encoding format to use for embedding data. </param>
+        /// <param name="dimensions"> The number of dimensions the resulting output embeddings should have. Only supported in `text-embedding-3` and later models. </param>
+        /// <param name="inputType"> When using Azure OpenAI, specifies the input type to use for embedding search. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="input"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<Embeddings> GetEmbeddings(string deploymentId, IEnumerable<string> input, string user = null, string deploymentName = null, EmbeddingEncodingFormat? encodingFormat = null, int? dimensions = null, string inputType = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(input, nameof(input));
+
+            EmbeddingsOptions embeddingsOptions = new EmbeddingsOptions(
+                user,
+                deploymentName,
+                input.ToList(),
+                encodingFormat,
+                dimensions,
+                inputType,
+                null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetEmbeddings(deploymentId, embeddingsOptions.ToRequestContent(), context);
+            return Response.FromValue(Embeddings.FromResponse(response), response);
         }
 
         internal HttpMessage CreateGetAudioTranscriptionAsPlainTextRequest(string deploymentId, RequestContent content, string contentType, RequestContext context)

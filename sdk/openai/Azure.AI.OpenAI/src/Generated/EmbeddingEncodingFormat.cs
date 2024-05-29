@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Represents the available formats for embeddings data on responses. </summary>
-    internal readonly partial struct EmbeddingEncodingFormat : IEquatable<EmbeddingEncodingFormat>
+    public readonly partial struct EmbeddingEncodingFormat : IEquatable<EmbeddingEncodingFormat>
     {
         private readonly string _value;
 
