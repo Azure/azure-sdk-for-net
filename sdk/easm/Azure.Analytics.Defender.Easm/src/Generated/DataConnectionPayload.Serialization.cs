@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Analytics.Defender.Easm
 {
     [PersistableModelProxy(typeof(UnknownDataConnectionPayload))]
-    public partial class DataConnectionPayload : IUtf8JsonSerializable, IJsonModel<DataConnectionPayload>
+    internal partial class DataConnectionPayload : IUtf8JsonSerializable, IJsonModel<DataConnectionPayload>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataConnectionPayload>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
