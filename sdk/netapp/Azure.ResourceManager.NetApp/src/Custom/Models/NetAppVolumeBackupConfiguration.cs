@@ -10,6 +10,11 @@ namespace Azure.ResourceManager.NetApp.Models
     [CodeGenSuppress("NetAppVolumeBackupConfiguration")]
     public partial class NetAppVolumeBackupConfiguration
     {
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupConfiguration"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetAppVolumeBackupConfiguration()
+        {
+        }
         /// <summary> Vault Resource ID. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier VaultId { get; set; }
