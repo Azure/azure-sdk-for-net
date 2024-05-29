@@ -81,7 +81,7 @@ namespace Azure.Identity
     public partial class AzurePipelinesCredential : Azure.Core.TokenCredential
     {
         protected AzurePipelinesCredential() { }
-        public AzurePipelinesCredential(string systemAccessToken, Azure.Identity.AzurePipelinesCredentialOptions options = null) { }
+        public AzurePipelinesCredential(string systemAccessToken, string clientId = null, string tenantId = null, string serviceConnectionId = null, Azure.Identity.AzurePipelinesCredentialOptions options = null) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
     }

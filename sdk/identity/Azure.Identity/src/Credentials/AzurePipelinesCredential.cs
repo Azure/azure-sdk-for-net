@@ -36,16 +36,16 @@ namespace Azure.Identity
         /// <param name="systemAccessToken">The pipeline's System.AccessToken value.</param>
         /// <param name="clientId">The client ID for the service connection. If not provided, the credential will attempt to read the value from the AZURESUBSCRIPTION_CLIENT_ID environment variable.</param>
         /// <param name="tenantId">The tenant ID for the service connection. If not provided, the credential will attempt to read the value from the AZURESUBSCRIPTION_TENANT_ID environment variable.</param>
+        /// <param name="serviceConnectionId">The service connection Id for the service connection associated with the pipeline. If not provided, the credential will attempt to read the value from the AZURESUBSCRIPTION_SERVICE_CONNECTION_ID environment variable.</param>
         /// <param name="options">An instance of <see cref="AzurePipelinesCredentialOptions"/>.</param>
-        /// <exception cref="System.ArgumentNullException">When <paramref name="systemAccessToken"/> is null.</exception>
-        public AzurePipelinesCredential(string systemAccessToken, string clientId = null, string tenantId = null, AzurePipelinesCredentialOptions options = default)
+        /// <exception cref="ArgumentNullException">When <paramref name="systemAccessToken"/> is null.</exception>
+        public AzurePipelinesCredential(string systemAccessToken, string clientId = null, string tenantId = null, string serviceConnectionId  = null, AzurePipelinesCredentialOptions options = default)
         {
             Argument.AssertNotNull(systemAccessToken, nameof(systemAccessToken));
             SystemAccessToken = systemAccessToken;
 
             options ??= new AzurePipelinesCredentialOptions();
             TenantId = Validations.ValidateTenantId(tenantId ?? options.TenantId, nameof(tenantId));
-            // var clientId = options.ClientId;
             Pipeline = options.Pipeline ?? CredentialPipeline.GetInstance(options);
 
             Func<CancellationToken, Task<string>> _assertionCallback = async (cancellationToken) =>
