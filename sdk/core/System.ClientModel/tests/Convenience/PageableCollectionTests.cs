@@ -63,7 +63,7 @@ public class PageableCollectionTests
         int itemCount = 0;
         foreach (ResultPage<MockJsonModel> page in models.AsPages())
         {
-            foreach (MockJsonModel model in page)
+            foreach (MockJsonModel model in page.Values)
             {
                 Assert.AreEqual(itemCount, model.IntValue);
                 Assert.AreEqual(itemCount.ToString(), model.StringValue);
@@ -91,7 +91,7 @@ public class PageableCollectionTests
         // on the prior page -- i.e. item 5.
         foreach (ResultPage<MockJsonModel> page in models.AsPages(continuationToken: "5"))
         {
-            foreach (MockJsonModel model in page)
+            foreach (MockJsonModel model in page.Values)
             {
                 Assert.AreEqual(i, model.IntValue);
                 Assert.AreEqual(i.ToString(), model.StringValue);
@@ -130,7 +130,7 @@ public class PageableCollectionTests
         int itemCount = 0;
         foreach (ResultPage<MockJsonModel> page in models.AsPages())
         {
-            foreach (MockJsonModel model in page)
+            foreach (MockJsonModel model in page.Values)
             {
                 Assert.AreEqual(itemCount, model.IntValue);
                 Assert.AreEqual(itemCount.ToString(), model.StringValue);
@@ -178,9 +178,9 @@ public class PageableCollectionTests
 
         int pageCount = 0;
         int itemCount = 0;
-        await foreach (ResultPage<MockJsonModel> page in models.AsPages())
+        await foreach (ResultPage<MockJsonModel> page in models.AsPagesAsync())
         {
-            foreach (MockJsonModel model in page)
+            foreach (MockJsonModel model in page.Values)
             {
                 Assert.AreEqual(itemCount, model.IntValue);
                 Assert.AreEqual(itemCount.ToString(), model.StringValue);
@@ -206,9 +206,9 @@ public class PageableCollectionTests
 
         // Request just the last page by starting at the last seen value
         // on the prior page -- i.e. item 5.
-        await foreach (ResultPage<MockJsonModel> page in models.AsPages(continuationToken: "5"))
+        await foreach (ResultPage<MockJsonModel> page in models.AsPagesAsync(continuationToken: "5"))
         {
-            foreach (MockJsonModel model in page)
+            foreach (MockJsonModel model in page.Values)
             {
                 Assert.AreEqual(i, model.IntValue);
                 Assert.AreEqual(i.ToString(), model.StringValue);
@@ -228,7 +228,7 @@ public class PageableCollectionTests
     {
         MockPageableClient client = new();
         AsyncPageableCollection<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
-        var pages = models.AsPages(pageSizeHint: 10);
+        var pages = models.AsPagesAsync(pageSizeHint: 10);
         await foreach (var _ in pages)
         {
             // page size hint is ignored in this mock
@@ -245,9 +245,9 @@ public class PageableCollectionTests
 
         int pageCount = 0;
         int itemCount = 0;
-        await foreach (ResultPage<MockJsonModel> page in models.AsPages())
+        await foreach (ResultPage<MockJsonModel> page in models.AsPagesAsync())
         {
-            foreach (MockJsonModel model in page)
+            foreach (MockJsonModel model in page.Values)
             {
                 Assert.AreEqual(itemCount, model.IntValue);
                 Assert.AreEqual(itemCount.ToString(), model.StringValue);

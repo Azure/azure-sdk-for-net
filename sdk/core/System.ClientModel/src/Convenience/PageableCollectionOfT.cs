@@ -48,7 +48,7 @@ public abstract class PageableCollection<T> : ResultCollection<T>
     {
         foreach (ResultPage<T> page in AsPages())
         {
-            foreach (T value in page)
+            foreach (T value in page.Values)
             {
                 yield return value;
             }

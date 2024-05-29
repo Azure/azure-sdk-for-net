@@ -35,7 +35,7 @@ internal class PageableResultHelpers
             _defaultPageSize = defaultPageSize;
         }
 
-        public override async IAsyncEnumerable<ResultPage<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default)
+        public override async IAsyncEnumerable<ResultPage<T>> AsPagesAsync(string? continuationToken = default, int? pageSizeHint = default)
         {
             Func<string?, int?, Task<ResultPage<T>>>? pageFunc = string.IsNullOrEmpty(continuationToken) ? _firstPageFunc : _nextPageFunc;
 
