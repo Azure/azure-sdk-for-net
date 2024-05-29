@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary> The type used for update operations of the Account. </summary>
-    public partial class PlaywrightTestingAccountPatch
+    /// <summary> The subscription quota resource free-trial properties. </summary>
+    public partial class PlaywrightTestingFreeTrialProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,34 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountPatch"/>. </summary>
-        public PlaywrightTestingAccountPatch()
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingFreeTrialProperties"/>. </summary>
+        /// <param name="accountId"> The Playwright service account id. </param>
+        /// <param name="state"> The free-trial state. </param>
+        public PlaywrightTestingFreeTrialProperties(string accountId, PlaywrightTestingFreeTrialState state)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            AccountId = accountId;
+            State = state;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The updatable properties of the Account. </param>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingFreeTrialProperties"/>. </summary>
+        /// <param name="accountId"> The Playwright service account id. </param>
+        /// <param name="state"> The free-trial state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightTestingAccountPatch(IDictionary<string, string> tags, PlaywrightTestingAccountUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlaywrightTestingFreeTrialProperties(string accountId, PlaywrightTestingFreeTrialState state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
-            Properties = properties;
+            AccountId = accountId;
+            State = state;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> The updatable properties of the Account. </summary>
-        public PlaywrightTestingAccountUpdateProperties Properties { get; set; }
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingFreeTrialProperties"/> for deserialization. </summary>
+        internal PlaywrightTestingFreeTrialProperties()
+        {
+        }
+
+        /// <summary> The Playwright service account id. </summary>
+        public string AccountId { get; }
+        /// <summary> The free-trial state. </summary>
+        public PlaywrightTestingFreeTrialState State { get; }
     }
 }

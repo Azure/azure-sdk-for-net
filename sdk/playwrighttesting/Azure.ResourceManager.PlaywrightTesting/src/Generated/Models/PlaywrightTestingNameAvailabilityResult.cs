@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary> The type used for update operations of the Account. </summary>
-    public partial class PlaywrightTestingAccountPatch
+    /// <summary> The check availability result. </summary>
+    public partial class PlaywrightTestingNameAvailabilityResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,29 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountPatch"/>. </summary>
-        public PlaywrightTestingAccountPatch()
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingNameAvailabilityResult"/>. </summary>
+        internal PlaywrightTestingNameAvailabilityResult()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The updatable properties of the Account. </param>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="reason"> The reason why the given name is not available. </param>
+        /// <param name="message"> Detailed reason why the given name is available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightTestingAccountPatch(IDictionary<string, string> tags, PlaywrightTestingAccountUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlaywrightTestingNameAvailabilityResult(bool? isNameAvailable, PlaywrightTestingNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
-            Properties = properties;
+            IsNameAvailable = isNameAvailable;
+            Reason = reason;
+            Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> The updatable properties of the Account. </summary>
-        public PlaywrightTestingAccountUpdateProperties Properties { get; set; }
+        /// <summary> Indicates if the resource name is available. </summary>
+        public bool? IsNameAvailable { get; }
+        /// <summary> The reason why the given name is not available. </summary>
+        public PlaywrightTestingNameUnavailableReason? Reason { get; }
+        /// <summary> Detailed reason why the given name is available. </summary>
+        public string Message { get; }
     }
 }

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary> The type used for update operations of the Account. </summary>
-    public partial class PlaywrightTestingAccountPatch
+    /// <summary> The response of a AccountQuota list operation. </summary>
+    internal partial class AccountQuotaListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +46,35 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountPatch"/>. </summary>
-        public PlaywrightTestingAccountPatch()
+        /// <summary> Initializes a new instance of <see cref="AccountQuotaListResult"/>. </summary>
+        /// <param name="value"> The AccountQuota items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AccountQuotaListResult(IEnumerable<PlaywrightTestingAccountQuotaData> value)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The updatable properties of the Account. </param>
+        /// <summary> Initializes a new instance of <see cref="AccountQuotaListResult"/>. </summary>
+        /// <param name="value"> The AccountQuota items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightTestingAccountPatch(IDictionary<string, string> tags, PlaywrightTestingAccountUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AccountQuotaListResult(IReadOnlyList<PlaywrightTestingAccountQuotaData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
-            Properties = properties;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> The updatable properties of the Account. </summary>
-        public PlaywrightTestingAccountUpdateProperties Properties { get; set; }
+        /// <summary> Initializes a new instance of <see cref="AccountQuotaListResult"/> for deserialization. </summary>
+        internal AccountQuotaListResult()
+        {
+        }
+
+        /// <summary> The AccountQuota items on this page. </summary>
+        public IReadOnlyList<PlaywrightTestingAccountQuotaData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary> The type used for update operations of the Account. </summary>
-    public partial class PlaywrightTestingAccountPatch
+    /// <summary> The check availability request body. </summary>
+    public partial class PlaywrightTestingNameAvailabilityContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +46,25 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountPatch"/>. </summary>
-        public PlaywrightTestingAccountPatch()
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingNameAvailabilityContent"/>. </summary>
+        public PlaywrightTestingNameAvailabilityContent()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The updatable properties of the Account. </param>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightTestingAccountPatch(IDictionary<string, string> tags, PlaywrightTestingAccountUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlaywrightTestingNameAvailabilityContent(string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
-            Properties = properties;
+            Name = name;
+            ResourceType = resourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> The updatable properties of the Account. </summary>
-        public PlaywrightTestingAccountUpdateProperties Properties { get; set; }
+        /// <summary> The name of the resource for which availability needs to be checked. </summary>
+        public string Name { get; set; }
+        /// <summary> The resource type. </summary>
+        public ResourceType? ResourceType { get; set; }
     }
 }

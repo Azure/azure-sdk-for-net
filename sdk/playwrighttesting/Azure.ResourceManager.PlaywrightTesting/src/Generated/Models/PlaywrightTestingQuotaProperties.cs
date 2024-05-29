@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary> The type used for update operations of the Account. </summary>
-    public partial class PlaywrightTestingAccountPatch
+    /// <summary> The subscription quota resource properties. </summary>
+    public partial class PlaywrightTestingQuotaProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,25 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountPatch"/>. </summary>
-        public PlaywrightTestingAccountPatch()
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaProperties"/>. </summary>
+        public PlaywrightTestingQuotaProperties()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The updatable properties of the Account. </param>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaProperties"/>. </summary>
+        /// <param name="freeTrial"> The subscription quota resource free-trial properties. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightTestingAccountPatch(IDictionary<string, string> tags, PlaywrightTestingAccountUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlaywrightTestingQuotaProperties(PlaywrightTestingFreeTrialProperties freeTrial, PlaywrightTestingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
-            Properties = properties;
+            FreeTrial = freeTrial;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> The updatable properties of the Account. </summary>
-        public PlaywrightTestingAccountUpdateProperties Properties { get; set; }
+        /// <summary> The subscription quota resource free-trial properties. </summary>
+        public PlaywrightTestingFreeTrialProperties FreeTrial { get; set; }
+        /// <summary> The status of the last operation. </summary>
+        public PlaywrightTestingProvisioningState? ProvisioningState { get; }
     }
 }
