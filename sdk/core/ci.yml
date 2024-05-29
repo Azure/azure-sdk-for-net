@@ -54,10 +54,6 @@ extends:
       safeName: AzureCoreAmqp
     - name: System.ClientModel
       safeName: SystemClientModel
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.Core
-      ExpectedWarningsFilepath: None
 
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
