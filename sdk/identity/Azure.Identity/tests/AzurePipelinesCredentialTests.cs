@@ -27,7 +27,7 @@ namespace Azure.Identity.Tests
                 ClientId = ClientId
             };
 
-            return InstrumentClient(new AzurePipelinesCredential("mytoken", pipelineOptions));
+            return InstrumentClient(new AzurePipelinesCredential("mytoken", options: pipelineOptions));
         }
 
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
@@ -68,7 +68,7 @@ namespace Azure.Identity.Tests
 
             var pipeline = CredentialPipeline.GetInstance(options);
             options.Pipeline = pipeline;
-            return InstrumentClient(new AzurePipelinesCredential("mytoken", options));
+            return InstrumentClient(new AzurePipelinesCredential("mytoken", options: options));
         }
 
         [Test]
@@ -95,8 +95,7 @@ namespace Azure.Identity.Tests
             using (new TestEnvVar(new Dictionary<string, string>
             {
                 { "AZURESUBSCRIPTION_CLIENT_ID", "myClientId" },
-                { "AZURESUBSCRIPTION_TENANT_ID", "myTenantId" },
-                { "AZURESUBSCRIPTION_SERVICE_CONNECTION_ID", "myConnectionId" }}))
+                { "AZURESUBSCRIPTION_TENANT_ID", "myTenantId" }}))
             {
                 var chainedCred = new ChainedTokenCredential(new AzurePipelinesCredential("mytoken"), new MockCredential());
 
