@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    public partial class StartTranslationDetails : IUtf8JsonSerializable, IJsonModel<StartTranslationDetails>
+    internal partial class StartTranslationDetails : IUtf8JsonSerializable, IJsonModel<StartTranslationDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StartTranslationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

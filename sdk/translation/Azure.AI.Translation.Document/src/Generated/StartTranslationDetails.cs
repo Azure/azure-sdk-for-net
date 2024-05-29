@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Translation job submission batch request. </summary>
-    public partial class StartTranslationDetails
+    internal partial class StartTranslationDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
