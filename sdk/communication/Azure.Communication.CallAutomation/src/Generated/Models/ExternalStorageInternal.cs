@@ -5,30 +5,32 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The ExternalStorage. </summary>
     internal partial class ExternalStorageInternal
     {
         /// <summary> Initializes a new instance of <see cref="ExternalStorageInternal"/>. </summary>
-        /// <param name="storageType"> Defines the type of external storage. </param>
-        public ExternalStorageInternal(RecordingStorageType storageType)
+        /// <param name="recordingStorageKind"> Defines the kind of external storage. </param>
+        public ExternalStorageInternal(RecordingStorageKind recordingStorageKind)
         {
-            StorageType = storageType;
+            RecordingStorageKind = recordingStorageKind;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExternalStorageInternal"/>. </summary>
-        /// <param name="storageType"> Defines the type of external storage. </param>
-        /// <param name="blobStorage"> Defines the blob storage location where the recording will be stored. </param>
-        internal ExternalStorageInternal(RecordingStorageType storageType, BlobStorageInternal blobStorage)
+        /// <param name="recordingStorageKind"> Defines the kind of external storage. </param>
+        /// <param name="recordingDestinationContainerUrl"> Uri of a container or a location within a container. </param>
+        internal ExternalStorageInternal(RecordingStorageKind recordingStorageKind, Uri recordingDestinationContainerUrl)
         {
-            StorageType = storageType;
-            BlobStorage = blobStorage;
+            RecordingStorageKind = recordingStorageKind;
+            RecordingDestinationContainerUrl = recordingDestinationContainerUrl;
         }
 
-        /// <summary> Defines the type of external storage. </summary>
-        public RecordingStorageType StorageType { get; }
-        /// <summary> Defines the blob storage location where the recording will be stored. </summary>
-        public BlobStorageInternal BlobStorage { get; set; }
+        /// <summary> Defines the kind of external storage. </summary>
+        public RecordingStorageKind RecordingStorageKind { get; }
+        /// <summary> Uri of a container or a location within a container. </summary>
+        public Uri RecordingDestinationContainerUrl { get; set; }
     }
 }
