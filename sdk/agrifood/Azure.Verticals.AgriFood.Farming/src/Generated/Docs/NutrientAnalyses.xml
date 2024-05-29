@@ -7,7 +7,7 @@ This sample shows how to call GetNutrientAnalysisAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 Response response = await client.GetNutrientAnalysisAsync("<partyId>", "<nutrientAnalysisId>", null);
 
@@ -18,7 +18,7 @@ This sample shows how to call GetNutrientAnalysisAsync with all parameters and p
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 Response response = await client.GetNutrientAnalysisAsync("<partyId>", "<nutrientAnalysisId>", null);
 
@@ -54,7 +54,7 @@ This sample shows how to call GetNutrientAnalysis and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 Response response = client.GetNutrientAnalysis("<partyId>", "<nutrientAnalysisId>", null);
 
@@ -65,7 +65,7 @@ This sample shows how to call GetNutrientAnalysis with all parameters and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 Response response = client.GetNutrientAnalysis("<partyId>", "<nutrientAnalysisId>", null);
 
@@ -101,7 +101,7 @@ This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateAsync("<partyId>", "<nutrientAnalysisId>", content);
@@ -113,7 +113,7 @@ This sample shows how to call CreateOrUpdateAsync with all parameters and reques
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -177,7 +177,7 @@ This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdate("<partyId>", "<nutrientAnalysisId>", content);
@@ -189,7 +189,7 @@ This sample shows how to call CreateOrUpdate with all parameters and request con
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -253,7 +253,7 @@ This sample shows how to call DeleteAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 Response response = await client.DeleteAsync("<partyId>", "<nutrientAnalysisId>");
 
@@ -263,7 +263,7 @@ This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 Response response = await client.DeleteAsync("<partyId>", "<nutrientAnalysisId>");
 
@@ -276,7 +276,7 @@ This sample shows how to call Delete.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 Response response = client.Delete("<partyId>", "<nutrientAnalysisId>");
 
@@ -286,7 +286,7 @@ This sample shows how to call Delete with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 Response response = client.Delete("<partyId>", "<nutrientAnalysisId>");
 
@@ -299,7 +299,7 @@ This sample shows how to call GetNutrientAnalysesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 await foreach (BinaryData item in client.GetNutrientAnalysesAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -311,7 +311,7 @@ This sample shows how to call GetNutrientAnalysesAsync with all parameters and p
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 await foreach (BinaryData item in client.GetNutrientAnalysesAsync("<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -348,7 +348,7 @@ This sample shows how to call GetNutrientAnalyses and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 foreach (BinaryData item in client.GetNutrientAnalyses(null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -360,7 +360,7 @@ This sample shows how to call GetNutrientAnalyses with all parameters and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 foreach (BinaryData item in client.GetNutrientAnalyses("<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -397,7 +397,7 @@ This sample shows how to call GetNutrientAnalysesByPartyIdAsync and parse the re
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 await foreach (BinaryData item in client.GetNutrientAnalysesByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -409,7 +409,7 @@ This sample shows how to call GetNutrientAnalysesByPartyIdAsync with all paramet
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 await foreach (BinaryData item in client.GetNutrientAnalysesByPartyIdAsync("<partyId>", "<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -446,7 +446,7 @@ This sample shows how to call GetNutrientAnalysesByPartyId and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 foreach (BinaryData item in client.GetNutrientAnalysesByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -458,7 +458,7 @@ This sample shows how to call GetNutrientAnalysesByPartyId with all parameters a
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
 foreach (BinaryData item in client.GetNutrientAnalysesByPartyId("<partyId>", "<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
