@@ -7,8 +7,8 @@ using System.Collections.Generic;
 namespace System.ClientModel;
 
 /// <summary>
-/// Represents the subset (or page) of results contained in a single response
-/// from a cloud service returning a collection of results sequentially over
+/// Represents the subset (or page) of values contained in a single response
+/// from a cloud service returning a collection of values sequentially over
 /// one or more calls to the service (i.e. a paged collection).
 /// </summary>
 public class PageResult<T> : ClientResult

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace System.ClientModel;
 
 /// <summary>
-/// Represents a collection of results returned from a cloud service operation
+/// Represents a collection of values returned from a cloud service operation
 /// sequentially over one or more calls to the service.
 /// </summary>
 public abstract class AsyncPageableCollection<T> : AsyncCollectionResult<T>
