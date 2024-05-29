@@ -150,57 +150,61 @@ namespace Azure.ResourceManager.PostgreSql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupRetentionDays), out propertyOverride);
-            if (Optional.IsDefined(BackupRetentionDays) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  backupRetentionDays: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupRetentionDays))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  backupRetentionDays: ");
                     builder.AppendLine($"{BackupRetentionDays.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoRedundantBackup), out propertyOverride);
-            if (Optional.IsDefined(GeoRedundantBackup) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  geoRedundantBackup: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GeoRedundantBackup))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  geoRedundantBackup: ");
                     builder.AppendLine($"'{GeoRedundantBackup.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageInMB), out propertyOverride);
-            if (Optional.IsDefined(StorageInMB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  storageMB: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageInMB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  storageMB: ");
                     builder.AppendLine($"{StorageInMB.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAutogrow), out propertyOverride);
-            if (Optional.IsDefined(StorageAutogrow) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  storageAutogrow: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageAutogrow))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  storageAutogrow: ");
                     builder.AppendLine($"'{StorageAutogrow.Value.ToString()}'");
                 }
             }

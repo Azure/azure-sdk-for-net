@@ -243,18 +243,6 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The Event Hubs emulator is only available locally.  The endpoint must reference to the local host..
-        /// </summary>
-        internal static string InvalidEmulatorEndpoint
-        {
-            get
-            {
-                return ResourceManager.GetString("InvalidEmulatorEndpoint", resourceCulture);
-            }
-        }
-
-
-        /// <summary>
         ///   Looks up a localized string similar to The string has an invalid encoding format..
         /// </summary>
         internal static string InvalidEncoding

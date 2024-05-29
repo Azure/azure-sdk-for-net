@@ -18,17 +18,24 @@ namespace Azure.Provisioning.Tests
     [AsyncOnly]
     public class ProvisioningTestBase : ManagementRecordedTestBase<ProvisioningTestEnvironment>
     {
+        private DateTime _testStartTime;
+        protected override DateTime TestStartTime => _testStartTime;
+
         public ProvisioningTestBase(bool async) : base(async)
         {
+            // Ignore the version of the AZ CLI used to generate the ARM template as this will differ based on the environment
+            JsonPathSanitizers.Add("$.._generator.version");
+            JsonPathSanitizers.Add("$.._generator.templateHash");
+        }
+
+        [SetUp]
+        public void Setup()
+        {
+            _testStartTime = base.TestStartTime;
         }
 
         protected async Task ValidateBicepAsync(BinaryData? parameters = null, bool interactiveMode = false)
         {
-            if (CoreTestEnvironment.GlobalIsRunningInCI)
-            {
-                return;
-            }
-
             var testPath = GetOutputPath();
             var client = GetArmClient();
             ResourceGroupResource? rg = null;
@@ -44,7 +51,7 @@ namespace Azure.Provisioning.Tests
                     "eng",
                     "scripts",
                     $"Validate-Bicep.ps1 {bicepPath}");
-                var processInfo = new ProcessStartInfo("pwsh.exe", args)
+                var processInfo = new ProcessStartInfo("pwsh", args)
                 {
                     UseShellExecute = false, RedirectStandardOutput = true, RedirectStandardError = true,
                 };
@@ -58,6 +65,9 @@ namespace Azure.Provisioning.Tests
                         Assert.Fail(error);
                     }
                 }
+
+                // exclude the time taken to validate the bicep file
+                _testStartTime = DateTime.UtcNow;
 
                 ResourceIdentifier scope;
                 if (interactiveMode)
@@ -95,33 +105,6 @@ namespace Azure.Provisioning.Tests
                 if (rg != null)
                 {
                     await rg.DeleteAsync(WaitUntil.Completed);
-                }
-            }
-        }
-
-        private static string GetGitRoot()
-        {
-            ProcessStartInfo startInfo = new ProcessStartInfo
-            {
-                FileName = "git",
-                Arguments = "rev-parse --show-toplevel",
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            using (Process process = Process.Start(startInfo)!)
-            {
-                process.WaitForExit();
-
-                if (process.ExitCode == 0)
-                {
-                    string gitRoot = process.StandardOutput.ReadToEnd().Trim();
-                    return gitRoot;
-                }
-                else
-                {
-                    throw new Exception("Failed to get the root of the Git repository.");
                 }
             }
         }

@@ -9,7 +9,7 @@ Azure.Provisioning.ApplicationInsights simplifies declarative resource provision
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.ApplicationInsights --prerelease
+dotnet add package Azure.Provisioning.ApplicationInsights
 ```
 
 ### Prerequisites
@@ -31,6 +31,9 @@ First create your Infrastructure class.
 ```C# Snippet:SampleInfrastructure
 public class SampleInfrastructure : Infrastructure
 {
+    public SampleInfrastructure() : base(envName: "Sample", tenantId: Guid.Empty, subscriptionId: Guid.Empty, configuration: new Configuration { UseInteractiveMode = true })
+    {
+    }
 }
 ```
 
@@ -43,7 +46,7 @@ var infrastructure = new SampleInfrastructure();
 // Add a new key vault
 var keyVault = infrastructure.AddKeyVault();
 
-// You can call Build to convert the infrastructure into bicep files
+// You can call Build to convert the infrastructure into bicep files.
 infrastructure.Build();
 ```
 
