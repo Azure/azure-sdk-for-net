@@ -17,8 +17,8 @@ namespace Azure.Identity
     public class AzurePipelinesCredential : TokenCredential
     {
         internal readonly string[] AdditionallyAllowedTenantIds;
+        internal string SystemAccessToken { get; }
         internal string TenantId { get; }
-        internal string ClientId { get; }
         internal MsalConfidentialClient Client { get; }
         internal CredentialPipeline Pipeline { get; }
         internal TenantIdResolverBase TenantIdResolver { get; }
@@ -33,29 +33,27 @@ namespace Azure.Identity
         /// <summary>
         /// Creates a new instance of the <see cref="AzurePipelinesCredential"/>.
         /// </summary>
-        /// <param name="tenantId">The tenant ID for the service connection.</param>
-        /// <param name="clientId">The client ID for the service connection.</param>
-        /// <param name="serviceConnectionId">The service connection ID, as found in the querystring's resourceId key.</param>
+        /// <param name="systemAccessToken">The pipeline's System.AccessToken value.</param>
         /// <param name="options">An instance of <see cref="AzurePipelinesCredentialOptions"/>.</param>
-        /// <exception cref="System.ArgumentNullException">When <paramref name="tenantId"/>, <paramref name="clientId"/>, or <paramref name="serviceConnectionId"/> is null.</exception>
-        public AzurePipelinesCredential(string tenantId, string clientId, string serviceConnectionId, AzurePipelinesCredentialOptions options = default)
+        /// <exception cref="System.ArgumentNullException">When <paramref name="systemAccessToken"/> is null.</exception>
+        public AzurePipelinesCredential(string systemAccessToken, AzurePipelinesCredentialOptions options = default)
         {
-            Argument.AssertNotNull(serviceConnectionId, nameof(serviceConnectionId));
-            Argument.AssertNotNull(clientId, nameof(clientId));
-            Argument.AssertNotNull(tenantId, nameof(tenantId));
+            Argument.AssertNotNull(systemAccessToken, nameof(systemAccessToken));
+            SystemAccessToken = systemAccessToken;
 
-            TenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
-            ClientId = clientId;
-            Pipeline = options?.Pipeline ?? CredentialPipeline.GetInstance(options);
+            options ??= new AzurePipelinesCredentialOptions();
+            TenantId = Validations.ValidateTenantId(options.TenantId, nameof(options.TenantId));
+            var clientId = options.ClientId;
+            Pipeline = options.Pipeline ?? CredentialPipeline.GetInstance(options);
 
             Func<CancellationToken, Task<string>> _assertionCallback = async (cancellationToken) =>
             {
-                var message = CreateOidcRequestMessage(serviceConnectionId, options ?? new AzurePipelinesCredentialOptions());
+                var message = CreateOidcRequestMessage(options ?? new AzurePipelinesCredentialOptions());
                 await Pipeline.HttpPipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 return GetOidcTokenResponse(message);
             };
 
-            Client = options?.MsalClient ?? new MsalConfidentialClient(Pipeline, tenantId, clientId, _assertionCallback, options);
+            Client = options?.MsalClient ?? new MsalConfidentialClient(Pipeline, TenantId, clientId, _assertionCallback, options);
             TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
@@ -86,21 +84,19 @@ namespace Azure.Identity
             }
         }
 
-        internal HttpMessage CreateOidcRequestMessage(string serviceConnectionId, AzurePipelinesCredentialOptions options)
+        internal HttpMessage CreateOidcRequestMessage(AzurePipelinesCredentialOptions options)
         {
-            string CollectionUri = options.CollectionUri ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_TEAMFOUNDATIONCOLLECTIONURI is not set.");
-            string projectId = options.TeamProjectId ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_TEAMPROJECTID is not set.");
-            string planId = options.PlanId ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_PLANID is not set.");
-            string jobId = options.JobId ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_JOBID is not set.");
-            string systemToken = options.SystemAccessToken ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_ACCESSTOKEN is not set.");
-            string hubName = options.HubName ?? throw new CredentialUnavailableException("AzurePipelineCredential is not available: environment variable SYSTEM_HOSTTYPE is not set.");
+            string serviceConnectionId = options.ServiceConnectionId ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable AZURESUBSCRIPTION_SERVICE_CONNECTION_ID is not set.");
+            string oidcRequestUri = options.OidcRequestUri ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_OIDCREQUESTURI is not set.");
+            string systemToken = SystemAccessToken;
 
             var message = Pipeline.HttpPipeline.CreateMessage();
 
-            var requestUri = new Uri($"{CollectionUri}{projectId}/_apis/distributedtask/hubs/{hubName}/plans/{planId}/jobs/{jobId}/oidctoken?api-version={OIDC_API_VERSION}&serviceConnectionId={serviceConnectionId}");
+            var requestUri = new Uri($"{oidcRequestUri}?api-version={OIDC_API_VERSION}&serviceConnectionId={serviceConnectionId}");
             message.Request.Uri.Reset(requestUri);
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, $"Bearer {systemToken}");
             message.Request.Headers.SetValue(HttpHeader.Names.ContentType, "application/json");
+            message.Request.Method = RequestMethod.Post;
             return message;
         }
 

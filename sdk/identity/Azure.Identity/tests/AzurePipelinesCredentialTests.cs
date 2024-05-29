@@ -18,9 +18,16 @@ namespace Azure.Identity.Tests
 
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
         {
-            var clientAssertionOptions = new AzurePipelinesCredentialOptions { Diagnostics = { IsAccountIdentifierLoggingEnabled = options.Diagnostics.IsAccountIdentifierLoggingEnabled }, MsalClient = mockConfidentialMsalClient, Pipeline = CredentialPipeline.GetInstance(null) };
+            var pipelineOptions = new AzurePipelinesCredentialOptions
+            {
+                Diagnostics = { IsAccountIdentifierLoggingEnabled = options.Diagnostics.IsAccountIdentifierLoggingEnabled },
+                MsalClient = mockConfidentialMsalClient,
+                Pipeline = CredentialPipeline.GetInstance(null),
+                TenantId = TenantId,
+                ClientId = ClientId
+            };
 
-            return InstrumentClient(new AzurePipelinesCredential(expectedTenantId, ClientId, "serviceConnectionId", clientAssertionOptions));
+            return InstrumentClient(new AzurePipelinesCredential("mytoken", pipelineOptions));
         }
 
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
@@ -36,12 +43,10 @@ namespace Azure.Identity.Tests
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
                 MsalClient = config.MockConfidentialMsalClient,
-                CollectionUri = "https://dev.azure.com/myorg/myproject/_apis/serviceendpoint/endpoints?api-version=2.2.2",
-                PlanId = "myplan",
-                JobId = "myjob",
-                TeamProjectId = "myteamproject",
-                SystemAccessToken = "mytoken",
-                HubName = "myhub",
+                OidcRequestUri = "https://dev.azure.com/myorg/myproject/_apis/serviceendpoint/endpoints?api-version=2.2.2",
+                TenantId = config.TenantId,
+                ClientId = ClientId,
+                ServiceConnectionId = "myConnectionId"
             };
             if (config.Transport != null)
             {
@@ -53,17 +58,17 @@ namespace Azure.Identity.Tests
             }
             config.TransportConfig.ResponseHandler = (req, resp) =>
             {
-                if (options.CollectionUri.Contains(req.Uri.Host))
+                if (options.OidcRequestUri.Contains(req.Uri.Host))
                 {
                     Assert.That(req.Headers.TryGetValue("Authorization", out var authHeader), Is.True);
-                    Assert.That(authHeader, Does.Contain(options.SystemAccessToken));
+                    Assert.That(authHeader, Does.Contain("mytoken"));
                     resp.SetContent("""{"oidcToken": "myoidcToken"}""");
                 }
             };
 
             var pipeline = CredentialPipeline.GetInstance(options);
             options.Pipeline = pipeline;
-            return InstrumentClient(new AzurePipelinesCredential(config.TenantId, ClientId, "serviceConnectionId", options));
+            return InstrumentClient(new AzurePipelinesCredential("mytoken", options));
         }
 
         [Test]
@@ -71,31 +76,34 @@ namespace Azure.Identity.Tests
         {
             using (new TestEnvVar(new Dictionary<string, string>
             {
-                { "SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "mockCollectionUri" },
-                { "SYSTEM_HOSTTYPE", "mockHubName" },
-                { "SYSTEM_JOBID", "mockJobId" },
-                { "SYSTEM_PLANID", "mockPlanId" },
-                { "SYSTEM_ACCESSTOKEN", "mockSystemAccessToken" },
-                { "SYSTEM_TEAMPROJECTID", "mockTeamProjectId" }}))
+                { "SYSTEM_OIDCREQUESTURI", "mockCollectionUri" },
+                { "AZURESUBSCRIPTION_SERVICE_CONNECTION_ID", "myConnectionId" },
+                { "AZURESUBSCRIPTION_TENANT_ID", "myTenantId" },
+                { "AZURESUBSCRIPTION_CLIENT_ID", "myClientId" },
+            }))
             {
                 var options = new AzurePipelinesCredentialOptions();
-                Assert.AreEqual("mockCollectionUri", options.CollectionUri);
-                Assert.AreEqual("mockJobId", options.JobId);
-                Assert.AreEqual("mockPlanId", options.PlanId);
-                Assert.AreEqual("mockSystemAccessToken", options.SystemAccessToken);
-                Assert.AreEqual("mockTeamProjectId", options.TeamProjectId);
-                Assert.AreEqual("mockHubName", options.HubName);
+                Assert.AreEqual("mockCollectionUri", options.OidcRequestUri);
+                Assert.AreEqual("myTenantId", options.TenantId);
+                Assert.AreEqual("myClientId", options.ClientId);
             }
         }
 
         [Test]
         public async Task AzurePipelineCredentialWorksInChainedCredential()
         {
-            var chainedCred = new ChainedTokenCredential(new AzurePipelinesCredential("mockTenantID", "mockClientId", "serviceConnectionId"), new MockCredential());
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURESUBSCRIPTION_CLIENT_ID", "myClientId" },
+                { "AZURESUBSCRIPTION_TENANT_ID", "myTenantId" },
+                { "AZURESUBSCRIPTION_SERVICE_CONNECTION_ID", "myConnectionId" }}))
+            {
+                var chainedCred = new ChainedTokenCredential(new AzurePipelinesCredential("mytoken"), new MockCredential());
 
-            AccessToken token = await chainedCred.GetTokenAsync(new TokenRequestContext(new[] { "scope" }), CancellationToken.None);
+                AccessToken token = await chainedCred.GetTokenAsync(new TokenRequestContext(new[] { "scope" }), CancellationToken.None);
 
-            Assert.AreEqual("mockToken", token.Token);
+                Assert.AreEqual("mockToken", token.Token);
+            }
         }
 
         public class MockCredential : TokenCredential

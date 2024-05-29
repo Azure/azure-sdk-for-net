@@ -12,12 +12,10 @@ namespace Azure.Identity.Tests.samples
         {
             #region Snippet:AzurePipelinesCredential_Example
             // Replace the following values with the actual values for the service connection.
-            string clientId = "<service_connection_client_id>";
-            string tenantId = "<service_connection_tenant_id>";
-            string serviceConnectionId = "<service_connection_id>";
+            string systemAccessToken = "<the value of System.AccessToken>";
 
             // Construct the credential.
-            var credential = new AzurePipelinesCredential(tenantId, clientId, serviceConnectionId);
+            var credential = new AzurePipelinesCredential(systemAccessToken);
 
             // Use the credential to authenticate with the Key Vault client.
             var client = new SecretClient(new Uri("https://keyvault-name.vault.azure.net/"), credential);
