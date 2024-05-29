@@ -3483,7 +3483,7 @@ Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attribu
 Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
 ]]></code></example>
     </member>
-    <member name="BatchCreateAsync(AtlasTypesDef,CancellationToken)">
+    <member name="BatchCreateAsync(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)">
       <example>
 This sample shows how to call BatchCreateAsync.
 <code><![CDATA[
@@ -3491,8 +3491,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-Response<AtlasTypesDef> response = await client.BatchCreateAsync(atlasTypesDef);
+Response<AtlasTypesDef> response = await client.BatchCreateAsync();
 ]]></code>
 This sample shows how to call BatchCreateAsync with all parameters.
 <code><![CDATA[
@@ -3500,9 +3499,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+Response<AtlasTypesDef> response = await client.BatchCreateAsync(businessMetadataDefs: new AtlasBusinessMetadataDef[]
 {
-    BusinessMetadataDefs = {new AtlasBusinessMetadataDef
+    new AtlasBusinessMetadataDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -3582,8 +3581,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             ValuesMaxCount = 1234,
             ValuesMinCount = 1234,
         }},
-    }},
-    ClassificationDefs = {new AtlasClassificationDef
+    }
+}, classificationDefs: new AtlasClassificationDef[]
+{
+    new AtlasClassificationDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -3606,8 +3607,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         EntityTypes = {"<entityTypes>"},
         SubTypes = {"<subTypes>"},
         SuperTypes = {"<superTypes>"},
-    }},
-    EntityDefs = {new AtlasEntityDef
+    }
+}, entityDefs: new AtlasEntityDef[]
+{
+    new AtlasEntityDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -3650,8 +3653,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             IsLegacyAttribute = true,
             RelationshipTypeName = "<relationshipTypeName>",
         }},
-    }},
-    EnumDefs = {new AtlasEnumDef
+    }
+}, enumDefs: new AtlasEnumDef[]
+{
+    new AtlasEnumDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -3677,8 +3682,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             Ordinal = 1234,
             Value = "<value>",
         }},
-    }},
-    RelationshipDefs = {new AtlasRelationshipDef
+    }
+}, relationshipDefs: new AtlasRelationshipDef[]
+{
+    new AtlasRelationshipDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -3710,8 +3717,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         EndDef2 = default,
         RelationshipCategory = RelationshipCategory.Association,
         RelationshipLabel = "<relationshipLabel>",
-    }},
-    StructDefs = {new AtlasStructDef
+    }
+}, structDefs: new AtlasStructDef[]
+{
+    new AtlasStructDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -3731,8 +3740,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
-    }},
-    TermTemplateDefs = {new TermTemplateDef
+    }
+}, termTemplateDefs: new TermTemplateDef[]
+{
+    new TermTemplateDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -3752,12 +3763,11 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
-    }},
-};
-Response<AtlasTypesDef> response = await client.BatchCreateAsync(atlasTypesDef);
+    }
+});
 ]]></code></example>
     </member>
-    <member name="BatchCreate(AtlasTypesDef,CancellationToken)">
+    <member name="BatchCreate(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)">
       <example>
 This sample shows how to call BatchCreate.
 <code><![CDATA[
@@ -3765,8 +3775,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-Response<AtlasTypesDef> response = client.BatchCreate(atlasTypesDef);
+Response<AtlasTypesDef> response = client.BatchCreate();
 ]]></code>
 This sample shows how to call BatchCreate with all parameters.
 <code><![CDATA[
@@ -3774,9 +3783,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+Response<AtlasTypesDef> response = client.BatchCreate(businessMetadataDefs: new AtlasBusinessMetadataDef[]
 {
-    BusinessMetadataDefs = {new AtlasBusinessMetadataDef
+    new AtlasBusinessMetadataDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -3856,8 +3865,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             ValuesMaxCount = 1234,
             ValuesMinCount = 1234,
         }},
-    }},
-    ClassificationDefs = {new AtlasClassificationDef
+    }
+}, classificationDefs: new AtlasClassificationDef[]
+{
+    new AtlasClassificationDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -3880,8 +3891,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         EntityTypes = {"<entityTypes>"},
         SubTypes = {"<subTypes>"},
         SuperTypes = {"<superTypes>"},
-    }},
-    EntityDefs = {new AtlasEntityDef
+    }
+}, entityDefs: new AtlasEntityDef[]
+{
+    new AtlasEntityDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -3924,8 +3937,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             IsLegacyAttribute = true,
             RelationshipTypeName = "<relationshipTypeName>",
         }},
-    }},
-    EnumDefs = {new AtlasEnumDef
+    }
+}, enumDefs: new AtlasEnumDef[]
+{
+    new AtlasEnumDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -3951,8 +3966,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             Ordinal = 1234,
             Value = "<value>",
         }},
-    }},
-    RelationshipDefs = {new AtlasRelationshipDef
+    }
+}, relationshipDefs: new AtlasRelationshipDef[]
+{
+    new AtlasRelationshipDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -3984,8 +4001,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         EndDef2 = default,
         RelationshipCategory = RelationshipCategory.Association,
         RelationshipLabel = "<relationshipLabel>",
-    }},
-    StructDefs = {new AtlasStructDef
+    }
+}, structDefs: new AtlasStructDef[]
+{
+    new AtlasStructDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -4005,8 +4024,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
-    }},
-    TermTemplateDefs = {new TermTemplateDef
+    }
+}, termTemplateDefs: new TermTemplateDef[]
+{
+    new TermTemplateDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -4026,9 +4047,8 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
-    }},
-};
-Response<AtlasTypesDef> response = client.BatchCreate(atlasTypesDef);
+    }
+});
 ]]></code></example>
     </member>
     <member name="BatchCreateAsync(RequestContent,RequestContext)">
@@ -5373,7 +5393,7 @@ Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attribu
 Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
 ]]></code></example>
     </member>
-    <member name="BatchUpdateAsync(AtlasTypesDef,CancellationToken)">
+    <member name="BatchUpdateAsync(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)">
       <example>
 This sample shows how to call BatchUpdateAsync.
 <code><![CDATA[
@@ -5381,8 +5401,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-Response<AtlasTypesDef> response = await client.BatchUpdateAsync(atlasTypesDef);
+Response<AtlasTypesDef> response = await client.BatchUpdateAsync();
 ]]></code>
 This sample shows how to call BatchUpdateAsync with all parameters.
 <code><![CDATA[
@@ -5390,9 +5409,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+Response<AtlasTypesDef> response = await client.BatchUpdateAsync(businessMetadataDefs: new AtlasBusinessMetadataDef[]
 {
-    BusinessMetadataDefs = {new AtlasBusinessMetadataDef
+    new AtlasBusinessMetadataDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -5472,8 +5491,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             ValuesMaxCount = 1234,
             ValuesMinCount = 1234,
         }},
-    }},
-    ClassificationDefs = {new AtlasClassificationDef
+    }
+}, classificationDefs: new AtlasClassificationDef[]
+{
+    new AtlasClassificationDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -5496,8 +5517,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         EntityTypes = {"<entityTypes>"},
         SubTypes = {"<subTypes>"},
         SuperTypes = {"<superTypes>"},
-    }},
-    EntityDefs = {new AtlasEntityDef
+    }
+}, entityDefs: new AtlasEntityDef[]
+{
+    new AtlasEntityDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -5540,8 +5563,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             IsLegacyAttribute = true,
             RelationshipTypeName = "<relationshipTypeName>",
         }},
-    }},
-    EnumDefs = {new AtlasEnumDef
+    }
+}, enumDefs: new AtlasEnumDef[]
+{
+    new AtlasEnumDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -5567,8 +5592,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             Ordinal = 1234,
             Value = "<value>",
         }},
-    }},
-    RelationshipDefs = {new AtlasRelationshipDef
+    }
+}, relationshipDefs: new AtlasRelationshipDef[]
+{
+    new AtlasRelationshipDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -5600,8 +5627,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         EndDef2 = default,
         RelationshipCategory = RelationshipCategory.Association,
         RelationshipLabel = "<relationshipLabel>",
-    }},
-    StructDefs = {new AtlasStructDef
+    }
+}, structDefs: new AtlasStructDef[]
+{
+    new AtlasStructDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -5621,8 +5650,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
-    }},
-    TermTemplateDefs = {new TermTemplateDef
+    }
+}, termTemplateDefs: new TermTemplateDef[]
+{
+    new TermTemplateDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -5642,12 +5673,11 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
-    }},
-};
-Response<AtlasTypesDef> response = await client.BatchUpdateAsync(atlasTypesDef);
+    }
+});
 ]]></code></example>
     </member>
-    <member name="BatchUpdate(AtlasTypesDef,CancellationToken)">
+    <member name="BatchUpdate(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)">
       <example>
 This sample shows how to call BatchUpdate.
 <code><![CDATA[
@@ -5655,8 +5685,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-Response<AtlasTypesDef> response = client.BatchUpdate(atlasTypesDef);
+Response<AtlasTypesDef> response = client.BatchUpdate();
 ]]></code>
 This sample shows how to call BatchUpdate with all parameters.
 <code><![CDATA[
@@ -5664,9 +5693,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+Response<AtlasTypesDef> response = client.BatchUpdate(businessMetadataDefs: new AtlasBusinessMetadataDef[]
 {
-    BusinessMetadataDefs = {new AtlasBusinessMetadataDef
+    new AtlasBusinessMetadataDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -5746,8 +5775,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             ValuesMaxCount = 1234,
             ValuesMinCount = 1234,
         }},
-    }},
-    ClassificationDefs = {new AtlasClassificationDef
+    }
+}, classificationDefs: new AtlasClassificationDef[]
+{
+    new AtlasClassificationDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -5770,8 +5801,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         EntityTypes = {"<entityTypes>"},
         SubTypes = {"<subTypes>"},
         SuperTypes = {"<superTypes>"},
-    }},
-    EntityDefs = {new AtlasEntityDef
+    }
+}, entityDefs: new AtlasEntityDef[]
+{
+    new AtlasEntityDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -5814,8 +5847,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             IsLegacyAttribute = true,
             RelationshipTypeName = "<relationshipTypeName>",
         }},
-    }},
-    EnumDefs = {new AtlasEnumDef
+    }
+}, enumDefs: new AtlasEnumDef[]
+{
+    new AtlasEnumDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -5841,8 +5876,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             Ordinal = 1234,
             Value = "<value>",
         }},
-    }},
-    RelationshipDefs = {new AtlasRelationshipDef
+    }
+}, relationshipDefs: new AtlasRelationshipDef[]
+{
+    new AtlasRelationshipDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -5874,8 +5911,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         EndDef2 = default,
         RelationshipCategory = RelationshipCategory.Association,
         RelationshipLabel = "<relationshipLabel>",
-    }},
-    StructDefs = {new AtlasStructDef
+    }
+}, structDefs: new AtlasStructDef[]
+{
+    new AtlasStructDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -5895,8 +5934,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
-    }},
-    TermTemplateDefs = {new TermTemplateDef
+    }
+}, termTemplateDefs: new TermTemplateDef[]
+{
+    new TermTemplateDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -5916,9 +5957,8 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
-    }},
-};
-Response<AtlasTypesDef> response = client.BatchUpdate(atlasTypesDef);
+    }
+});
 ]]></code></example>
     </member>
     <member name="BatchUpdateAsync(RequestContent,RequestContext)">
@@ -7263,7 +7303,7 @@ Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attribu
 Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
 ]]></code></example>
     </member>
-    <member name="BatchDeleteAsync(AtlasTypesDef,CancellationToken)">
+    <member name="BatchDeleteAsync(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)">
       <example>
 This sample shows how to call BatchDeleteAsync.
 <code><![CDATA[
@@ -7271,8 +7311,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-Response response = await client.BatchDeleteAsync(atlasTypesDef);
+Response response = await client.BatchDeleteAsync();
 ]]></code>
 This sample shows how to call BatchDeleteAsync with all parameters.
 <code><![CDATA[
@@ -7280,9 +7319,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+Response response = await client.BatchDeleteAsync(businessMetadataDefs: new AtlasBusinessMetadataDef[]
 {
-    BusinessMetadataDefs = {new AtlasBusinessMetadataDef
+    new AtlasBusinessMetadataDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -7362,8 +7401,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             ValuesMaxCount = 1234,
             ValuesMinCount = 1234,
         }},
-    }},
-    ClassificationDefs = {new AtlasClassificationDef
+    }
+}, classificationDefs: new AtlasClassificationDef[]
+{
+    new AtlasClassificationDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -7386,8 +7427,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         EntityTypes = {"<entityTypes>"},
         SubTypes = {"<subTypes>"},
         SuperTypes = {"<superTypes>"},
-    }},
-    EntityDefs = {new AtlasEntityDef
+    }
+}, entityDefs: new AtlasEntityDef[]
+{
+    new AtlasEntityDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -7430,8 +7473,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             IsLegacyAttribute = true,
             RelationshipTypeName = "<relationshipTypeName>",
         }},
-    }},
-    EnumDefs = {new AtlasEnumDef
+    }
+}, enumDefs: new AtlasEnumDef[]
+{
+    new AtlasEnumDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -7457,8 +7502,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             Ordinal = 1234,
             Value = "<value>",
         }},
-    }},
-    RelationshipDefs = {new AtlasRelationshipDef
+    }
+}, relationshipDefs: new AtlasRelationshipDef[]
+{
+    new AtlasRelationshipDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -7490,8 +7537,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         EndDef2 = default,
         RelationshipCategory = RelationshipCategory.Association,
         RelationshipLabel = "<relationshipLabel>",
-    }},
-    StructDefs = {new AtlasStructDef
+    }
+}, structDefs: new AtlasStructDef[]
+{
+    new AtlasStructDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -7511,8 +7560,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
-    }},
-    TermTemplateDefs = {new TermTemplateDef
+    }
+}, termTemplateDefs: new TermTemplateDef[]
+{
+    new TermTemplateDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -7532,12 +7583,11 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
-    }},
-};
-Response response = await client.BatchDeleteAsync(atlasTypesDef);
+    }
+});
 ]]></code></example>
     </member>
-    <member name="BatchDelete(AtlasTypesDef,CancellationToken)">
+    <member name="BatchDelete(IEnumerable{AtlasBusinessMetadataDef},IEnumerable{AtlasClassificationDef},IEnumerable{AtlasEntityDef},IEnumerable{AtlasEnumDef},IEnumerable{AtlasRelationshipDef},IEnumerable{AtlasStructDef},IEnumerable{TermTemplateDef},CancellationToken)">
       <example>
 This sample shows how to call BatchDelete.
 <code><![CDATA[
@@ -7545,8 +7595,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-Response response = client.BatchDelete(atlasTypesDef);
+Response response = client.BatchDelete();
 ]]></code>
 This sample shows how to call BatchDelete with all parameters.
 <code><![CDATA[
@@ -7554,9 +7603,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+Response response = client.BatchDelete(businessMetadataDefs: new AtlasBusinessMetadataDef[]
 {
-    BusinessMetadataDefs = {new AtlasBusinessMetadataDef
+    new AtlasBusinessMetadataDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -7636,8 +7685,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             ValuesMaxCount = 1234,
             ValuesMinCount = 1234,
         }},
-    }},
-    ClassificationDefs = {new AtlasClassificationDef
+    }
+}, classificationDefs: new AtlasClassificationDef[]
+{
+    new AtlasClassificationDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -7660,8 +7711,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         EntityTypes = {"<entityTypes>"},
         SubTypes = {"<subTypes>"},
         SuperTypes = {"<superTypes>"},
-    }},
-    EntityDefs = {new AtlasEntityDef
+    }
+}, entityDefs: new AtlasEntityDef[]
+{
+    new AtlasEntityDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -7704,8 +7757,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             IsLegacyAttribute = true,
             RelationshipTypeName = "<relationshipTypeName>",
         }},
-    }},
-    EnumDefs = {new AtlasEnumDef
+    }
+}, enumDefs: new AtlasEnumDef[]
+{
+    new AtlasEnumDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -7731,8 +7786,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             Ordinal = 1234,
             Value = "<value>",
         }},
-    }},
-    RelationshipDefs = {new AtlasRelationshipDef
+    }
+}, relationshipDefs: new AtlasRelationshipDef[]
+{
+    new AtlasRelationshipDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -7764,8 +7821,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         EndDef2 = default,
         RelationshipCategory = RelationshipCategory.Association,
         RelationshipLabel = "<relationshipLabel>",
-    }},
-    StructDefs = {new AtlasStructDef
+    }
+}, structDefs: new AtlasStructDef[]
+{
+    new AtlasStructDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -7785,8 +7844,10 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
-    }},
-    TermTemplateDefs = {new TermTemplateDef
+    }
+}, termTemplateDefs: new TermTemplateDef[]
+{
+    new TermTemplateDef
     {
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
@@ -7806,9 +7867,8 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Version = 1234L,
         LastModifiedTS = "<lastModifiedTS>",
         AttributeDefs = {default},
-    }},
-};
-Response response = client.BatchDelete(atlasTypesDef);
+    }
+});
 ]]></code></example>
     </member>
     <member name="BatchDeleteAsync(RequestContent,RequestContext)">
