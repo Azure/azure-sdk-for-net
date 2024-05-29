@@ -8,13 +8,19 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager.HybridCompute.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableHybridComputeResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _licensesClientDiagnostics;
+        private LicensesRestOperations _licensesRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="MockableHybridComputeResourceGroupResource"/> class for mocking. </summary>
         protected MockableHybridComputeResourceGroupResource()
         {
@@ -26,6 +32,9 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         internal MockableHybridComputeResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics LicensesClientDiagnostics => _licensesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private LicensesRestOperations LicensesRestClient => _licensesRestClient ??= new LicensesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -171,6 +180,234 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         public virtual Response<HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScope(string scopeName, CancellationToken cancellationToken = default)
         {
             return GetHybridComputePrivateLinkScopes().Get(scopeName, cancellationToken);
+        }
+
+        /// <summary>
+        /// The operation to create or update a license.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="licenseName"> The name of the license. </param>
+        /// <param name="hybridComputeLicense"> Parameters supplied to the Create license operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="licenseName"/> or <paramref name="hybridComputeLicense"/> is null. </exception>
+        public virtual async Task<ArmOperation<HybridComputeLicense>> CreateOrUpdateLicenseAsync(WaitUntil waitUntil, string licenseName, HybridComputeLicense hybridComputeLicense, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(licenseName, nameof(licenseName));
+            Argument.AssertNotNull(hybridComputeLicense, nameof(hybridComputeLicense));
+
+            using var scope = LicensesClientDiagnostics.CreateScope("MockableHybridComputeResourceGroupResource.CreateOrUpdateLicense");
+            scope.Start();
+            try
+            {
+                var response = await LicensesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, licenseName, hybridComputeLicense, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridComputeArmOperation<HybridComputeLicense>(new HybridComputeLicenseOperationSource(), LicensesClientDiagnostics, Pipeline, LicensesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, licenseName, hybridComputeLicense).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to create or update a license.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="licenseName"> The name of the license. </param>
+        /// <param name="hybridComputeLicense"> Parameters supplied to the Create license operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="licenseName"/> or <paramref name="hybridComputeLicense"/> is null. </exception>
+        public virtual ArmOperation<HybridComputeLicense> CreateOrUpdateLicense(WaitUntil waitUntil, string licenseName, HybridComputeLicense hybridComputeLicense, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(licenseName, nameof(licenseName));
+            Argument.AssertNotNull(hybridComputeLicense, nameof(hybridComputeLicense));
+
+            using var scope = LicensesClientDiagnostics.CreateScope("MockableHybridComputeResourceGroupResource.CreateOrUpdateLicense");
+            scope.Start();
+            try
+            {
+                var response = LicensesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, licenseName, hybridComputeLicense, cancellationToken);
+                var operation = new HybridComputeArmOperation<HybridComputeLicense>(new HybridComputeLicenseOperationSource(), LicensesClientDiagnostics, Pipeline, LicensesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, licenseName, hybridComputeLicense).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to delete a license.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="licenseName"> The name of the license. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="licenseName"/> is null. </exception>
+        public virtual async Task<ArmOperation> DeleteLicenseAsync(WaitUntil waitUntil, string licenseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(licenseName, nameof(licenseName));
+
+            using var scope = LicensesClientDiagnostics.CreateScope("MockableHybridComputeResourceGroupResource.DeleteLicense");
+            scope.Start();
+            try
+            {
+                var response = await LicensesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, licenseName, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridComputeArmOperation(LicensesClientDiagnostics, Pipeline, LicensesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, licenseName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to delete a license.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses/{licenseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="licenseName"> The name of the license. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="licenseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="licenseName"/> is null. </exception>
+        public virtual ArmOperation DeleteLicense(WaitUntil waitUntil, string licenseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(licenseName, nameof(licenseName));
+
+            using var scope = LicensesClientDiagnostics.CreateScope("MockableHybridComputeResourceGroupResource.DeleteLicense");
+            scope.Start();
+            try
+            {
+                var response = LicensesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, licenseName, cancellationToken);
+                var operation = new HybridComputeArmOperation(LicensesClientDiagnostics, Pipeline, LicensesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, licenseName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to get all licenses of a non-Azure machine
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HybridComputeLicense"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridComputeLicense> GetLicensesByResourceGroupAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LicensesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LicensesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => HybridComputeLicense.DeserializeHybridComputeLicense(e), LicensesClientDiagnostics, Pipeline, "MockableHybridComputeResourceGroupResource.GetLicensesByResourceGroup", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// The operation to get all licenses of a non-Azure machine
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/licenses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HybridComputeLicense"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridComputeLicense> GetLicensesByResourceGroup(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LicensesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LicensesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => HybridComputeLicense.DeserializeHybridComputeLicense(e), LicensesClientDiagnostics, Pipeline, "MockableHybridComputeResourceGroupResource.GetLicensesByResourceGroup", "value", "nextLink", cancellationToken);
         }
     }
 }
