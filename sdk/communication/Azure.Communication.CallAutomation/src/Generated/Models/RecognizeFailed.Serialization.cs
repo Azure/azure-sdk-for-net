@@ -17,27 +17,14 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            string operationContext = default;
-            ResultInformation resultInformation = default;
             string callConnectionId = default;
             string serverCallId = default;
             string correlationId = default;
+            string operationContext = default;
+            ResultInformation resultInformation = default;
+            int? failedPlaySourceIndex = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationContext"u8))
-                {
-                    operationContext = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultInformation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
@@ -53,8 +40,37 @@ namespace Azure.Communication.CallAutomation
                     correlationId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resultInformation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("failedPlaySourceIndex"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failedPlaySourceIndex = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new RecognizeFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
+            return new RecognizeFailed(
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation,
+                failedPlaySourceIndex);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
