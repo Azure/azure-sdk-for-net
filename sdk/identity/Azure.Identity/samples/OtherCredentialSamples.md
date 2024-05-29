@@ -6,8 +6,7 @@ This example demonstrates authenticating the `SecretClient` using the `AzurePipe
 More information about the System.AccessToken can be found [here](https://learn.microsoft.com/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#systemaccesstoken).
 
 ```C# Snippet:AzurePipelinesCredential_Example
-// Replace the following values with the actual value for the service connection.
-
+// Replace the following value with the actual values for the System.AccessToken.
 string systemAccessToken = "<the value of System.AccessToken>";
 
 // Construct the credential.

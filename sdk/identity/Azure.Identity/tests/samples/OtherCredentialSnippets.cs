@@ -11,7 +11,7 @@ namespace Azure.Identity.Tests.samples
         public void AzurePipelinesCredential_Example()
         {
             #region Snippet:AzurePipelinesCredential_Example
-            // Replace the following values with the actual values for the service connection.
+            // Replace the following value with the actual values for the System.AccessToken.
             string systemAccessToken = "<the value of System.AccessToken>";
 
             // Construct the credential.
