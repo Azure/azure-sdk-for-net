@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net7.0;net6.0;net462</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
 
@@ -13,10 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
-    <TrimmerRootAssembly Include="Azure.Monitor.OpenTelemetry.Exporter" />
+      <TrimmerRootAssembly Include="Azure.Monitor.OpenTelemetry.Exporter" />
   </ItemGroup>
 
   <!--Temp fix for "error : No files matching ;NU5105;CA1812;"-->
