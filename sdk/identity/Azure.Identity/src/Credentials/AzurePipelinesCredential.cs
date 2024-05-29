@@ -117,7 +117,7 @@ namespace Azure.Identity
                     }
                 }
             }
-            return oidcToken ?? throw new AuthenticationFailedException("OIDC token not found in response.");
+            return oidcToken ?? throw new AuthenticationFailedException($"OIDC token not found in response.\n\nResponse= {message.Response.Content}");
         }
     }
 }
