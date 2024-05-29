@@ -1,6 +1,20 @@
 # Release History
 
-## 7.18.0-beta.1 (Unreleased)
+## 7.18.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed an error that caused connection strings using host names without a scheme to fail parsing and be considered invalid.
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.7, which contains a fix for decoding messages with a null format code as the body.
+
+## 7.18.0-beta.1 (2024-05-08)
 
 ### Features Added
 
@@ -8,13 +22,13 @@
 
 - `ServiceBusReceiver` now supports the ability to delete messages from an entity in batches using the `DeleteMessagesAsync` method.  The messages selected for deletion will be the oldest in the entity, based on the enqueued date and callers may optionally request to limit them to only those earlier than a given date.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Fixed issue where the `SupportOrdering` property was not being respected when set on `CreateTopicOptions`.
 
 ### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.6, which includes a bug fix for an internal `NullReferenceException` that would sometimes impact creating new links. _(see: [#258](https://github.com/azure/azure-amqp/issues/258))_
 
 ## 7.17.5 (2024-04-09)
 

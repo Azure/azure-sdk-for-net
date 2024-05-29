@@ -4,6 +4,7 @@
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using OpenTelemetry.Logs;
@@ -16,7 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
     /// </summary>
     internal static class DocumentHelper
     {
-        private const int MaxPropertiesCount = 10;
+        internal const int MaxPropertiesCount = 10;
 
         // TODO: NEED TO HANDLE UNIQUE MAXLENGTH VALUES FOR DOCUMENT TYPES. SEE SWAGGER FOR MAXLENGTH VALUES.
 
@@ -104,55 +105,45 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
 
         internal static RemoteDependency ConvertToDependencyDocument(Activity activity)
         {
-            // TODO: Investigate if we can have a minimal/optimized version of ActivityTagsProcessor for LiveMetric.
-            var activityTagsProcessor = new ActivityTagsProcessor();
-            activityTagsProcessor.CategorizeTags(activity);
-
-            RemoteDependency remoteDependencyDocumentIngress = new()
+            RemoteDependency remoteDependencyDocument = new()
             {
                 DocumentType = DocumentType.RemoteDependency,
-
                 // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
                 Extension_Duration = activity.Duration.TotalMilliseconds,
             };
 
-            SetProperties(remoteDependencyDocumentIngress, activityTagsProcessor);
+            var liveMetricsTagsProcessor = new LiveMetricsTagsProcessor();
+            liveMetricsTagsProcessor.CategorizeTagsAndAddProperties(activity, remoteDependencyDocument);
 
-            // HACK: Remove the V2 for now. This Enum should be removed in the future.
-            if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
-            {
-                activityTagsProcessor.activityType &= ~OperationType.V2;
-            }
-
-            switch (activityTagsProcessor.activityType)
+            switch (liveMetricsTagsProcessor.ActivityType)
             {
                 case OperationType.Http:
-                    remoteDependencyDocumentIngress.Name = activity.DisplayName;
-                    remoteDependencyDocumentIngress.CommandName = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeUrlFull)?.ToString();
-                    var httpResponseStatusCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpResponseStatusCode)?.ToString();
-                    remoteDependencyDocumentIngress.ResultCode = httpResponseStatusCode;
-                    remoteDependencyDocumentIngress.Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
+                    remoteDependencyDocument.Name = activity.DisplayName;
+                    remoteDependencyDocument.CommandName = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeUrlFull)?.ToString();
+                    var httpResponseStatusCode = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeHttpResponseStatusCode)?.ToString();
+                    remoteDependencyDocument.ResultCode = httpResponseStatusCode;
+                    remoteDependencyDocument.Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                                                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
                                                                 : SchemaConstants.Duration_MaxValue;
 
                     // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
-                    remoteDependencyDocumentIngress.Extension_IsSuccess = IsHttpSuccess(activity, httpResponseStatusCode);
+                    remoteDependencyDocument.Extension_IsSuccess = IsHttpSuccess(activity, httpResponseStatusCode);
                     break;
                 case OperationType.Db:
                     // Note: The Exception details are recorded in Activity.Events only if the configuration has opt-ed into this (SqlClientInstrumentationOptions.RecordException).
 
-                    var (_, dbTarget) = activityTagsProcessor.MappedTags.GetDbDependencyTargetAndName();
+                    var (_, dbTarget) = liveMetricsTagsProcessor.Tags.GetDbDependencyTargetAndName();
 
-                    remoteDependencyDocumentIngress.Name = dbTarget;
-                    remoteDependencyDocumentIngress.CommandName = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeDbStatement)?.ToString();
-                    remoteDependencyDocumentIngress.Duration = activity.Duration.ToString("c", CultureInfo.InvariantCulture);
+                    remoteDependencyDocument.Name = dbTarget;
+                    remoteDependencyDocument.CommandName = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeDbStatement)?.ToString();
+                    remoteDependencyDocument.Duration = activity.Duration.ToString("c", CultureInfo.InvariantCulture);
 
                     // TODO: remoteDependencyDocumentIngress.ResultCode = "";
                     // AI SDK reads a Number property from Connection or Command objects.
                     // As of Feb 2024, OpenTelemetry doesn't record this. This may change in the future when the semantic convention stabalizes.
 
                     // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
-                    remoteDependencyDocumentIngress.Extension_IsSuccess = activity.Status != ActivityStatusCode.Error;
+                    remoteDependencyDocument.Extension_IsSuccess = activity.Status != ActivityStatusCode.Error;
                     break;
                 case OperationType.Rpc:
                     // TODO RPC
@@ -162,11 +153,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                     break;
                 default:
                     // Unknown or Unexpected Dependency Type
-                    remoteDependencyDocumentIngress.Name = activityTagsProcessor.activityType.ToString();
+                    remoteDependencyDocument.Name = liveMetricsTagsProcessor.ActivityType.ToString();
                     break;
             }
 
-            return remoteDependencyDocumentIngress;
+            liveMetricsTagsProcessor.Return();
+            return remoteDependencyDocument;
         }
 
         internal static Request ConvertToRequestDocument(Activity activity)
@@ -380,18 +372,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             else
             {
                 return activity.Status != ActivityStatusCode.Error;
-            }
-        }
-
-        private static void SetProperties(DocumentIngress documentIngress, ActivityTagsProcessor atp)
-        {
-            for (int i = 0; i < atp.UnMappedTags.Length && i < MaxPropertiesCount; i++)
-            {
-                var tag = atp.UnMappedTags[i];
-                if (tag.Value != null)
-                {
-                    documentIngress.Properties.Add(new KeyValuePairString(tag.Key, tag.Value.ToString()));
-                }
             }
         }
     }

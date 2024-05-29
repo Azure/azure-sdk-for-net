@@ -227,6 +227,44 @@
           }
         }
       }
+    },
+    "/admin/removesanitizers": {
+        "post": {
+          "summary": "Removes sanitizers.",
+          "description": "Removes sanitizers.",
+          "operationId": "TestProxy_RemoveSanitizers",
+          "parameters": [
+              {
+                  "name": "x-recording-id",
+                  "in": "header",
+                  "description": "The recording ID to apply the transform to.",
+                  "type": "string"
+              },
+              {
+                  "name": "sanitizers",
+                  "in": "body",
+                  "description": "Sanitizers to remove.",
+                  "required": true,
+                  "schema": {
+                      "$ref": "#/definitions/SanitizersToRemove"
+                  }
+              }
+          ],
+          "responses": {
+              "200": {
+                  "description": "OK"
+              },
+              "default": {
+                  "description": "An error response received from the Test Proxy.",
+                  "headers": {
+                      "x-ms-error-code": {
+                          "type": "string",
+                          "description": "Error code for specific error that occurred."
+                      }
+                  }
+              }
+          }
+        }
     }
   },
   "x-ms-paths": {
@@ -662,8 +700,7 @@
         }
       },
       "required": [
-        "key",
-        "value"
+        "key"
       ]
     },
     "BodyKeySanitizer": {
@@ -684,7 +721,7 @@
         }
       },
       "required": [
-        "value"
+        "jsonPath"
       ]
     },
     "BodyRegexSanitizer": {
@@ -705,8 +742,7 @@
         }
       },
       "required": [
-        "regex",
-        "value"
+        "regex"
       ]
     },
     "HeaderRegexSanitizer": {
@@ -727,8 +763,7 @@
         }
       },
       "required": [
-        "key",
-        "value"
+        "key"
       ]
     },
     "UriRegexSanitizer": {
@@ -746,8 +781,7 @@
         }
       },
       "required": [
-        "regex",
-        "value"
+        "regex"
       ]
     },
     "Condition": {
@@ -821,6 +855,17 @@
           }
         }
       }
+    },
+    "SanitizersToRemove": {
+        "description": "Sanitizers",
+        "properties": {
+            "sanitizers": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        }
     }
   }
 }

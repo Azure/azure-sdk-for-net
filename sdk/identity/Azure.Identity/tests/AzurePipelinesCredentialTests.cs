@@ -40,7 +40,8 @@ namespace Azure.Identity.Tests
                 PlanId = "myplan",
                 JobId = "myjob",
                 TeamProjectId = "myteamproject",
-                SystemAccessToken = "mytoken"
+                SystemAccessToken = "mytoken",
+                HubName = "myhub",
             };
             if (config.Transport != null)
             {
@@ -83,6 +84,7 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual("mockPlanId", options.PlanId);
                 Assert.AreEqual("mockSystemAccessToken", options.SystemAccessToken);
                 Assert.AreEqual("mockTeamProjectId", options.TeamProjectId);
+                Assert.AreEqual("mockHubName", options.HubName);
             }
         }
 

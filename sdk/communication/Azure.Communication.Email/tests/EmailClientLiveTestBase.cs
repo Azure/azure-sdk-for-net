@@ -18,9 +18,9 @@ namespace Azure.Communication.Email.Tests
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
             SanitizedHeaders.Add("Operation-Id");
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIRoomsIdReplacerRegEx, "emails/operations/sanitizedId?api"));
-            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Location", "https://sanitized.communication.azure.com/emails/operations/sanitizedId?api-version=2023-03-31"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIRoomsIdReplacerRegEx) { Value = "emails/operations/sanitizedId?api" });
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Location") { Value = "https://sanitized.communication.azure.com/emails/operations/sanitizedId?api-version=2023-03-31" });
         }
 
         protected EmailClient CreateEmailClient()

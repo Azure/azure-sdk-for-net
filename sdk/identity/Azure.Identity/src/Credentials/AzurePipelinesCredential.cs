@@ -25,7 +25,7 @@ namespace Azure.Identity
         private const string OIDC_API_VERSION = "7.1";
 
         /// <summary>
-        /// Protected constructor for mocking.
+        /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
         protected AzurePipelinesCredential()
         { }
@@ -78,7 +78,7 @@ namespace Azure.Identity
 
                 AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
 
-                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                return scope.Succeeded(result.ToAccessToken());
             }
             catch (Exception e)
             {
@@ -93,10 +93,11 @@ namespace Azure.Identity
             string planId = options.PlanId ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_PLANID is not set.");
             string jobId = options.JobId ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_JOBID is not set.");
             string systemToken = options.SystemAccessToken ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_ACCESSTOKEN is not set.");
+            string hubName = options.HubName ?? throw new CredentialUnavailableException("AzurePipelineCredential is not available: environment variable SYSTEM_HOSTTYPE is not set.");
 
             var message = Pipeline.HttpPipeline.CreateMessage();
 
-            var requestUri = new Uri($"{CollectionUri}{projectId}/_apis/distributedtask/hubs/build/plans/{planId}/jobs/{jobId}/oidctoken?api-version={OIDC_API_VERSION}&serviceConnectionId={serviceConnectionId}");
+            var requestUri = new Uri($"{CollectionUri}{projectId}/_apis/distributedtask/hubs/{hubName}/plans/{planId}/jobs/{jobId}/oidctoken?api-version={OIDC_API_VERSION}&serviceConnectionId={serviceConnectionId}");
             message.Request.Uri.Reset(requestUri);
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, $"Bearer {systemToken}");
             message.Request.Headers.SetValue(HttpHeader.Names.ContentType, "application/json");

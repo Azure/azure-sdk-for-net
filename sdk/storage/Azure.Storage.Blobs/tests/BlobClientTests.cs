@@ -1337,7 +1337,7 @@ namespace Azure.Storage.Blobs.Test
             });
 
             BlobClientOptions options = GetOptions();
-            options.ExpectContinueBehavior = new() { Mode = ExpectContinueMode.On };
+            options.Request100ContinueOptions = new() { Mode = Request100ContinueMode.Always };
             options.AddPolicy(assertPolicy, Core.HttpPipelinePosition.BeforeTransport);
             await using DisposingContainer test = await GetTestContainerAsync(
                 BlobsClientBuilder.GetServiceClient_SharedKey(options));
