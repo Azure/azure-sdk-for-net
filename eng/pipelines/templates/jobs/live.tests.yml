@@ -93,10 +93,6 @@ jobs:
       container: $[ variables['Container'] ]
 
     steps:
-      - pwsh: |
-          Write-Host '${{ convertToJson(parameters.CloudConfig) }}'
-        displayName: parameters.CloudConfig
-
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
