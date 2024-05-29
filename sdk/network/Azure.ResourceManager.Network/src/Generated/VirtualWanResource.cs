@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>generatevirtualwanvpnserverconfigurationvpnprofile</description>
+        /// <description>Generatevirtualwanvpnserverconfigurationvpnprofile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>generatevirtualwanvpnserverconfigurationvpnprofile</description>
+        /// <description>Generatevirtualwanvpnserverconfigurationvpnprofile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

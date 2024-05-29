@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.AppPlatform.Samples
         public async Task GetLogFileUri_DeploymentsGetLogFileUrl()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_GetLogFileUrl.json
-            // this example is just showing the usage of "Deployments_GetLogFileUrl" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Deployments_GetLogFileUri" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.AppPlatform.Samples
         public async Task StartJfr_DeploymentsStartJFR()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_StartJFR.json
-            // this example is just showing the usage of "Deployments_StartJFR" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Deployments_StartJfr" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

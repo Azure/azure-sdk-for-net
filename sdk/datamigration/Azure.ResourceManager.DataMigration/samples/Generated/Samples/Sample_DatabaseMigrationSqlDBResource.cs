@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         public async Task Cancel_StopOngoingMigrationForTheDatabase()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlDbCancelDatabaseMigration.json
-            // this example is just showing the usage of "DatabaseMigrationsSqlDb_cancel" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DatabaseMigrationsSqlDb_Cancel" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LoadBalancers_MigrateToIpBased</description>
+        /// <description>LoadBalancers_MigrateToIPBased</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LoadBalancers_MigrateToIpBased</description>
+        /// <description>LoadBalancers_MigrateToIPBased</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

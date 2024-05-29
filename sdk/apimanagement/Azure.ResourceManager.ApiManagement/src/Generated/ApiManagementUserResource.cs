@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>User_GenerateSsoUrl</description>
+        /// <description>User_GenerateSsoUri</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>User_GenerateSsoUrl</description>
+        /// <description>User_GenerateSsoUri</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

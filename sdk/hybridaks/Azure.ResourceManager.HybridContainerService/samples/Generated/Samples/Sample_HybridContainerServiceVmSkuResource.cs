@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
         public async Task Get_GetVMSkus()
         {
             // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/GetVmSkus.json
-            // this example is just showing the usage of "GetVMSkus" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "GetVmSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
         public async Task CreateOrUpdate_PutVMSkus()
         {
             // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/PutVmSkus.json
-            // this example is just showing the usage of "PutVMSkus" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PutVmSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
         public async Task Delete_DeleteVMSkus()
         {
             // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/DeleteVmSkus.json
-            // this example is just showing the usage of "DeleteVMSkus" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DeleteVmSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

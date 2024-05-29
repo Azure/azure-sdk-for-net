@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAccounts_ListAccountSAS</description>
+        /// <description>StorageAccounts_ListAccountSas</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAccounts_ListAccountSAS</description>
+        /// <description>StorageAccounts_ListAccountSas</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -886,7 +886,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAccounts_ListServiceSAS</description>
+        /// <description>StorageAccounts_ListServiceSas</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAccounts_ListServiceSAS</description>
+        /// <description>StorageAccounts_ListServiceSas</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

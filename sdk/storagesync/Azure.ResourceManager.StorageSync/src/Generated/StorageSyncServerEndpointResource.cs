@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerEndpoints_recallAction</description>
+        /// <description>ServerEndpoints_RecallAction</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerEndpoints_recallAction</description>
+        /// <description>ServerEndpoints_RecallAction</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

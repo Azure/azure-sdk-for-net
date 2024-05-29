@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateLinkResources_ListByMHSMResource</description>
+        /// <description>MHSMPrivateLinkResources_ListByManagedHsmResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MHSMPrivateLinkResources_ListByMHSMResource</description>
+        /// <description>MHSMPrivateLinkResources_ListByManagedHsmResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

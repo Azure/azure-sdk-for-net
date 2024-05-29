@@ -1496,7 +1496,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_ImportVirtualMachine</description>
+        /// <description>Labs_ImportVm</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1542,7 +1542,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Labs_ImportVirtualMachine</description>
+        /// <description>Labs_ImportVm</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

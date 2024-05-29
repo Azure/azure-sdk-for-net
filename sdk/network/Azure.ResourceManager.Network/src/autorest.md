@@ -18,8 +18,8 @@ sample-gen:
     # Not support generate samples from customized operations
     - VirtualMachineScaleSets_ListPublicIPAddresses
     - VirtualMachineScaleSets_ListNetworkInterfaces
-    - VirtualMachineScaleSets_ListIpConfigurations
-    - VirtualMachineScaleSets_GetIpConfiguration
+    - VirtualMachineScaleSets_ListIPConfigurations
+    - VirtualMachineScaleSets_GetIPConfiguration
     - VirtualMachineScaleSets_GetPublicIPAddress
     - VirtualMachineScaleSetVMs_ListPublicIPAddresses
     - VirtualMachineScaleSetVMs_ListNetworkInterfaces
@@ -304,15 +304,14 @@ override-operation-name:
   VirtualHubs_GetEffectiveVirtualHubRoutes: GetVirtualHubEffectiveRoutes
   VirtualHubs_GetOutboundRoutes: GetVirtualHubOutboundRoutes
   VirtualHubs_GetInboundRoutes: GetVirtualHubInboundRoutes
-  generatevirtualwanvpnserverconfigurationvpnprofile: GenerateVirtualWanVpnServerConfigurationVpnProfile
   VirtualMachineScaleSets_ListNetworkInterfaces: GetNetworkInterfaces
   VirtualMachineScaleSets_ListPublicIPAddresses: GetPublicIPAddresses
   VirtualMachineScaleSets_GetPublicIPAddress: GetPublicIPAddress
   VirtualMachineScaleSets_GetNetworkInterface: GetNetworkInterface
   VirtualMachineScaleSets_ListIpConfigurations: GetIPConfigurations
-  VirtualMachineScaleSets_GetIpConfiguration: GetIPConfiguration
   VirtualMachineScaleSetVMs_ListNetworkInterfaces: GetNetworkInterfaces
   VirtualMachineScaleSetVMs_ListPublicIPAddresses: GetPublicIPAddresses
+  Generatevirtualwanvpnserverconfigurationvpnprofile: GenerateVirtualWanVpnServerConfigurationVpnProfile
 
 suppress-abstract-base-class:
 - BaseAdminRuleData

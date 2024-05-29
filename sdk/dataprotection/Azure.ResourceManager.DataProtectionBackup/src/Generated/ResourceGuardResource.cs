@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ResourceGuards_GetBackupSecurityPINRequestsObjects</description>
+        /// <description>ResourceGuards_GetBackupSecurityPinRequestsObjects</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ResourceGuards_GetBackupSecurityPINRequestsObjects</description>
+        /// <description>ResourceGuards_GetBackupSecurityPinRequestsObjects</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ResourceGuards_GetDefaultBackupSecurityPINRequestsObject</description>
+        /// <description>ResourceGuards_GetDefaultBackupSecurityPinRequestsObject</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ResourceGuards_GetDefaultBackupSecurityPINRequestsObject</description>
+        /// <description>ResourceGuards_GetDefaultBackupSecurityPinRequestsObject</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
