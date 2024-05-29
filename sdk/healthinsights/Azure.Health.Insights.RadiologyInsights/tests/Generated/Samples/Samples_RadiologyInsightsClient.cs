@@ -79,11 +79,10 @@ id = "<id>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
@@ -95,11 +94,10 @@ new PatientRecord("<id>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
@@ -767,7 +765,27 @@ value = "<value>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+            RadiologyInsightsModelConfiguration configuration = new RadiologyInsightsModelConfiguration
+            {
+                Verbose = true,
+                IncludeEvidence = true,
+                InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
+                InferenceOptions = new RadiologyInsightsInferenceOptions
+                {
+                    FollowupRecommendationOptions = new FollowupRecommendationOptions
+                    {
+                        IncludeRecommendationsWithNoSpecifiedModality = true,
+                        IncludeRecommendationsInReferences = true,
+                        ProvideFocusedSentenceEvidence = true,
+                    },
+                    FindingOptions = new FindingOptions
+                    {
+                        ProvideFocusedSentenceEvidence = true,
+                    },
+                },
+                Locale = "<locale>",
+            };
+            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -906,30 +924,7 @@ EncounterId = "<encounterId>",
 },
 }},
 }
-            })
-            {
-                Configuration = new RadiologyInsightsModelConfiguration
-                {
-                    Verbose = true,
-                    IncludeEvidence = true,
-                    InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
-                    InferenceOptions = new RadiologyInsightsInferenceOptions
-                    {
-                        FollowupRecommendationOptions = new FollowupRecommendationOptions
-                        {
-                            IncludeRecommendationsWithNoSpecifiedModality = true,
-                            IncludeRecommendationsInReferences = true,
-                            ProvideFocusedSentenceEvidence = true,
-                        },
-                        FindingOptions = new FindingOptions
-                        {
-                            ProvideFocusedSentenceEvidence = true,
-                        },
-                    },
-                    Locale = "<locale>",
-                },
-            };
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+            }, configuration: configuration);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
@@ -941,7 +936,27 @@ EncounterId = "<encounterId>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
+            RadiologyInsightsModelConfiguration configuration = new RadiologyInsightsModelConfiguration
+            {
+                Verbose = true,
+                IncludeEvidence = true,
+                InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
+                InferenceOptions = new RadiologyInsightsInferenceOptions
+                {
+                    FollowupRecommendationOptions = new FollowupRecommendationOptions
+                    {
+                        IncludeRecommendationsWithNoSpecifiedModality = true,
+                        IncludeRecommendationsInReferences = true,
+                        ProvideFocusedSentenceEvidence = true,
+                    },
+                    FindingOptions = new FindingOptions
+                    {
+                        ProvideFocusedSentenceEvidence = true,
+                    },
+                },
+                Locale = "<locale>",
+            };
+            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -1080,30 +1095,7 @@ EncounterId = "<encounterId>",
 },
 }},
 }
-            })
-            {
-                Configuration = new RadiologyInsightsModelConfiguration
-                {
-                    Verbose = true,
-                    IncludeEvidence = true,
-                    InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
-                    InferenceOptions = new RadiologyInsightsInferenceOptions
-                    {
-                        FollowupRecommendationOptions = new FollowupRecommendationOptions
-                        {
-                            IncludeRecommendationsWithNoSpecifiedModality = true,
-                            IncludeRecommendationsInReferences = true,
-                            ProvideFocusedSentenceEvidence = true,
-                        },
-                        FindingOptions = new FindingOptions
-                        {
-                            ProvideFocusedSentenceEvidence = true,
-                        },
-                    },
-                    Locale = "<locale>",
-                },
-            };
-            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
+            }, configuration: configuration);
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
     }
