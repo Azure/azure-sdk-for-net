@@ -178,7 +178,7 @@ public class PageableCollectionTests
 
         int pageCount = 0;
         int itemCount = 0;
-        await foreach (ResultPage<MockJsonModel> page in models.AsPages())
+        await foreach (ResultPage<MockJsonModel> page in models.AsPagesAsync())
         {
             foreach (MockJsonModel model in page)
             {
@@ -206,7 +206,7 @@ public class PageableCollectionTests
 
         // Request just the last page by starting at the last seen value
         // on the prior page -- i.e. item 5.
-        await foreach (ResultPage<MockJsonModel> page in models.AsPages(continuationToken: "5"))
+        await foreach (ResultPage<MockJsonModel> page in models.AsPagesAsync(continuationToken: "5"))
         {
             foreach (MockJsonModel model in page)
             {
@@ -228,7 +228,7 @@ public class PageableCollectionTests
     {
         MockPageableClient client = new();
         AsyncPageableCollection<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
-        var pages = models.AsPages(pageSizeHint: 10);
+        var pages = models.AsPagesAsync(pageSizeHint: 10);
         await foreach (var _ in pages)
         {
             // page size hint is ignored in this mock
@@ -245,7 +245,7 @@ public class PageableCollectionTests
 
         int pageCount = 0;
         int itemCount = 0;
-        await foreach (ResultPage<MockJsonModel> page in models.AsPages())
+        await foreach (ResultPage<MockJsonModel> page in models.AsPagesAsync())
         {
             foreach (MockJsonModel model in page)
             {

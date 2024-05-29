@@ -39,7 +39,7 @@ public abstract class AsyncPageableCollection<T> : AsyncResultCollection<T>
     /// <returns>An async sequence of <see cref="ResultPage{T}"/>, each holding
     /// the subset of collection values contained in a given service response.
     /// </returns>
-    public abstract IAsyncEnumerable<ResultPage<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default);
+    public abstract IAsyncEnumerable<ResultPage<T>> AsPagesAsync(string? continuationToken = default, int? pageSizeHint = default);
 
     /// <summary>
     /// Return an enumerator that iterates asynchronously through the collection
@@ -51,9 +51,9 @@ public abstract class AsyncPageableCollection<T> : AsyncResultCollection<T>
     /// asynchronously through the collection values.</returns>
     public override async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
-        await foreach (ResultPage<T> page in AsPages().ConfigureAwait(false).WithCancellation(cancellationToken))
+        await foreach (ResultPage<T> page in AsPagesAsync().ConfigureAwait(false).WithCancellation(cancellationToken))
         {
-            foreach (T value in page)
+            foreach (T value in page.Values)
             {
                 yield return value;
             }

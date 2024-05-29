@@ -11,14 +11,12 @@ namespace System.ClientModel;
 /// from a cloud service returning a collection of results sequentially over
 /// one or more calls to the service (i.e. a paged collection).
 /// </summary>
-public class ResultPage<T> : ResultCollection<T>
+public class ResultPage<T> : ClientResult
 {
-    private readonly IEnumerable<T> _values;
-
-    private ResultPage(IEnumerable<T> values, string? continuationToken, PipelineResponse response)
+    private ResultPage(IReadOnlyList<T> values, string? continuationToken, PipelineResponse response)
         : base(response)
     {
-        _values = values;
+        Values = values;
         ContinuationToken = continuationToken;
     }
 
@@ -34,8 +32,13 @@ public class ResultPage<T> : ResultCollection<T>
     /// collection values returned by the service.</param>
     /// <returns>An instance of <see cref="ResultPage{T}"/> holding the provided
     /// values.</returns>
-    public static ResultPage<T> Create(IEnumerable<T> values, string? continuationToken, PipelineResponse response)
+    public static ResultPage<T> Create(IReadOnlyList<T> values, string? continuationToken, PipelineResponse response)
         => new(values, continuationToken, response);
+
+    /// <summary>
+    /// Gets the values in this <see cref="ResultPage{T}"/>.
+    /// </summary>
+    public IReadOnlyList<T> Values { get; }
 
     /// <summary>
     /// Gets the continuation token used to request the next
@@ -43,8 +46,4 @@ public class ResultPage<T> : ResultCollection<T>
     /// remain to be returned from the collection.
     /// </summary>
     public string? ContinuationToken { get; }
-
-    /// <inheritdoc/>
-    public override IEnumerator<T> GetEnumerator()
-        => _values.GetEnumerator();
 }

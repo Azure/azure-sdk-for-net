@@ -10,7 +10,7 @@ namespace System.ClientModel
     public abstract partial class AsyncPageableCollection<T> : System.ClientModel.AsyncResultCollection<T>
     {
         protected AsyncPageableCollection() { }
-        public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ResultPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
+        public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ResultPage<T>> AsPagesAsync(string? continuationToken = null, int? pageSizeHint = default(int?));
         public override System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public abstract partial class AsyncResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>
@@ -89,12 +89,12 @@ namespace System.ClientModel
         public abstract System.ClientModel.ClientResult<(string Status, T? Value)> WaitForStatusChange(System.TimeSpan? pollingInterval = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.ValueTask<System.ClientModel.ClientResult<(string Status, T? Value)>> WaitForStatusChangeAsync(System.TimeSpan? pollingInterval = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
-    public partial class ResultPage<T> : System.ClientModel.ResultCollection<T>
+    public partial class ResultPage<T> : System.ClientModel.ClientResult
     {
         internal ResultPage() { }
         public string? ContinuationToken { get { throw null; } }
-        public static System.ClientModel.ResultPage<T> Create(System.Collections.Generic.IEnumerable<T> values, string? continuationToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
-        public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
+        public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
+        public static System.ClientModel.ResultPage<T> Create(System.Collections.Generic.IReadOnlyList<T> values, string? continuationToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
     }
     public enum ReturnWhen
     {
