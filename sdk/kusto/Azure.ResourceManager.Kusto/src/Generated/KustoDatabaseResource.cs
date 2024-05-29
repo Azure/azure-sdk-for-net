@@ -1017,7 +1017,7 @@ namespace Azure.ResourceManager.Kusto
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DataConnections_dataConnectionValidation</description>
+        /// <description>DataConnections_DataConnectionValidation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1033,11 +1033,11 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="content"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataConnectionValidationResults>> ValidateDataConnectionAsync(WaitUntil waitUntil, DataConnectionValidationContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataConnectionValidationResults>> DataConnectionValidationDataConnectionAsync(WaitUntil waitUntil, DataConnectionValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDatabaseResource.ValidateDataConnection");
+            using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDatabaseResource.DataConnectionValidationDataConnection");
             scope.Start();
             try
             {
@@ -1063,7 +1063,7 @@ namespace Azure.ResourceManager.Kusto
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DataConnections_dataConnectionValidation</description>
+        /// <description>DataConnections_DataConnectionValidation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1079,11 +1079,11 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="content"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<DataConnectionValidationResults> ValidateDataConnection(WaitUntil waitUntil, DataConnectionValidationContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataConnectionValidationResults> DataConnectionValidationDataConnection(WaitUntil waitUntil, DataConnectionValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDatabaseResource.ValidateDataConnection");
+            using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDatabaseResource.DataConnectionValidationDataConnection");
             scope.Start();
             try
             {
