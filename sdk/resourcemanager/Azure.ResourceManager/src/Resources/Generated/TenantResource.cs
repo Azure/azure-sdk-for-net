@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.Resources
         private readonly ProvidersRestOperations _resourceProviderProvidersRestClient;
         private readonly ClientDiagnostics _providersClientDiagnostics;
         private readonly ProvidersRestOperations _providersRestClient;
+        private readonly ClientDiagnostics _defaultClientDiagnostics;
+        private readonly ResourceManagementRestOperations _defaultRestClient;
         private readonly TenantData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.Resources
             _resourceProviderProvidersRestClient = new ProvidersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceProviderProvidersApiVersion);
             _providersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _providersRestClient = new ProvidersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _defaultRestClient = new ResourceManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -494,6 +498,76 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _providersRestClient.GetAtTenantScope(resourceProviderNamespace, expand, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A resource name is valid if it is not a reserved word, does not contains a reserved word and does not start with a reserved word
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Resources/checkResourceName</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckResourceName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Resource object with values for resource name and resource type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ResourceNameValidationResult>> CheckResourceNameAsync(ResourceNameValidationContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _defaultClientDiagnostics.CreateScope("TenantResource.CheckResourceName");
+            scope.Start();
+            try
+            {
+                var response = await _defaultRestClient.CheckResourceNameAsync(content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A resource name is valid if it is not a reserved word, does not contains a reserved word and does not start with a reserved word
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Resources/checkResourceName</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckResourceName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Resource object with values for resource name and resource type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ResourceNameValidationResult> CheckResourceName(ResourceNameValidationContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _defaultClientDiagnostics.CreateScope("TenantResource.CheckResourceName");
+            scope.Start();
+            try
+            {
+                var response = _defaultRestClient.CheckResourceName(content, cancellationToken);
                 return response;
             }
             catch (Exception e)
