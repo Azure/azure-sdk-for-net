@@ -61,7 +61,7 @@ public class PageableCollectionTests
 
         int pageCount = 0;
         int itemCount = 0;
-        foreach (ResultPage<MockJsonModel> page in models.AsPages())
+        foreach (PageResult<MockJsonModel> page in models.AsPages())
         {
             foreach (MockJsonModel model in page.Values)
             {
@@ -89,7 +89,7 @@ public class PageableCollectionTests
 
         // Request just the last page by starting at the last seen value
         // on the prior page -- i.e. item 5.
-        foreach (ResultPage<MockJsonModel> page in models.AsPages(continuationToken: "5"))
+        foreach (PageResult<MockJsonModel> page in models.AsPages(continuationToken: "5"))
         {
             foreach (MockJsonModel model in page.Values)
             {
@@ -128,7 +128,7 @@ public class PageableCollectionTests
 
         int pageCount = 0;
         int itemCount = 0;
-        foreach (ResultPage<MockJsonModel> page in models.AsPages())
+        foreach (PageResult<MockJsonModel> page in models.AsPages())
         {
             foreach (MockJsonModel model in page.Values)
             {
@@ -178,7 +178,7 @@ public class PageableCollectionTests
 
         int pageCount = 0;
         int itemCount = 0;
-        await foreach (ResultPage<MockJsonModel> page in models.AsPagesAsync())
+        await foreach (PageResult<MockJsonModel> page in models.AsPagesAsync())
         {
             foreach (MockJsonModel model in page.Values)
             {
@@ -206,7 +206,7 @@ public class PageableCollectionTests
 
         // Request just the last page by starting at the last seen value
         // on the prior page -- i.e. item 5.
-        await foreach (ResultPage<MockJsonModel> page in models.AsPagesAsync(continuationToken: "5"))
+        await foreach (PageResult<MockJsonModel> page in models.AsPagesAsync(continuationToken: "5"))
         {
             foreach (MockJsonModel model in page.Values)
             {
@@ -245,7 +245,7 @@ public class PageableCollectionTests
 
         int pageCount = 0;
         int itemCount = 0;
-        await foreach (ResultPage<MockJsonModel> page in models.AsPagesAsync())
+        await foreach (PageResult<MockJsonModel> page in models.AsPagesAsync())
         {
             foreach (MockJsonModel model in page.Values)
             {

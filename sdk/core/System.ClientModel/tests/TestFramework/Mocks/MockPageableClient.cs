@@ -29,16 +29,16 @@ public class MockPageableClient
         int pageNumber = 0;
         JsonModelList<MockJsonModel> values = new();
 
-        async Task<ResultPage<MockJsonModel>> firstPageFuncAsync(int? pageSize)
+        async Task<PageResult<MockJsonModel>> firstPageFuncAsync(int? pageSize)
         {
             ClientResult result = await GetModelsAsync(pageContents[pageNumber++], options: null).ConfigureAwait(false);
             lastResponse = result.GetRawResponse();
             values = ModelReaderWriter.Read<JsonModelList<MockJsonModel>>(lastResponse.Content)!;
             string? continuationToken = pageNumber < pageContents.Length ? values[values.Count - 1].StringValue : null;
-            return ResultPage<MockJsonModel>.Create(values, continuationToken, lastResponse);
+            return PageResult<MockJsonModel>.Create(values, continuationToken, lastResponse);
         }
 
-        async Task<ResultPage<MockJsonModel>> nextPageFuncAsync(string? continuationToken, int? pageSize)
+        async Task<PageResult<MockJsonModel>> nextPageFuncAsync(string? continuationToken, int? pageSize)
         {
             RequestedPageSize = pageSize;
 
@@ -56,7 +56,7 @@ public class MockPageableClient
             lastResponse = result.GetRawResponse();
             values = ModelReaderWriter.Read<JsonModelList<MockJsonModel>>(lastResponse.Content)!;
             continuationToken = pageNumber < pageContents.Length ? values[values.Count - 1].StringValue : null;
-            return ResultPage<MockJsonModel>.Create(values, continuationToken, lastResponse);
+            return PageResult<MockJsonModel>.Create(values, continuationToken, lastResponse);
         }
 
         return PageableResultHelpers.Create(firstPageFuncAsync, nextPageFuncAsync);
@@ -74,16 +74,16 @@ public class MockPageableClient
         int pageNumber = 0;
         JsonModelList<MockJsonModel> values = new();
 
-        ResultPage<MockJsonModel> firstPageFunc(int? pageSize)
+        PageResult<MockJsonModel> firstPageFunc(int? pageSize)
         {
             ClientResult result = GetModels(pageContents[pageNumber++], options: null);
             lastResponse = result.GetRawResponse();
             values = ModelReaderWriter.Read<JsonModelList<MockJsonModel>>(lastResponse.Content)!;
             string? continuationToken = pageNumber < pageContents.Length ? values[values.Count - 1].StringValue : null;
-            return ResultPage<MockJsonModel>.Create(values, continuationToken, lastResponse);
+            return PageResult<MockJsonModel>.Create(values, continuationToken, lastResponse);
         }
 
-        ResultPage<MockJsonModel> nextPageFunc(string? continuationToken, int? pageSize)
+        PageResult<MockJsonModel> nextPageFunc(string? continuationToken, int? pageSize)
         {
             RequestedPageSize = pageSize;
 
@@ -101,7 +101,7 @@ public class MockPageableClient
             lastResponse = result.GetRawResponse();
             values = ModelReaderWriter.Read<JsonModelList<MockJsonModel>>(lastResponse.Content)!;
             continuationToken = pageNumber < pageContents.Length ? values[values.Count - 1].StringValue : null;
-            return ResultPage<MockJsonModel>.Create(values, continuationToken, lastResponse);
+            return PageResult<MockJsonModel>.Create(values, continuationToken, lastResponse);
         }
 
         return PageableResultHelpers.Create(firstPageFunc, nextPageFunc);

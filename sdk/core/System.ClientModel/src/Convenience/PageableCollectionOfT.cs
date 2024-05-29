@@ -10,7 +10,7 @@ namespace System.ClientModel;
 /// Represents a collection of results returned from a cloud service operation
 /// sequentially over one or more calls to the service.
 /// </summary>
-public abstract class PageableCollection<T> : ResultCollection<T>
+public abstract class PageableCollection<T> : CollectionResult<T>
 {
     /// <summary>
     /// Create a new instance of <see cref="PageableCollection{T}"/>.
@@ -23,7 +23,7 @@ public abstract class PageableCollection<T> : ResultCollection<T>
     }
 
     /// <summary>
-    /// Return an enumerable of <see cref="ResultPage{T}"/> that enumerates the
+    /// Return an enumerable of <see cref="PageResult{T}"/> that enumerates the
     /// collection's pages instead of the collection's individual values. This
     /// may make multiple service requests.
     /// </summary>
@@ -31,12 +31,12 @@ public abstract class PageableCollection<T> : ResultCollection<T>
     /// of results returned from the service should begin. Passing <c>null</c>
     /// will start the collection at the first page of values.</param>
     /// <param name="pageSizeHint">The number of items to request that the
-    /// service return in a <see cref="ResultPage{T}"/>, if the service supports
+    /// service return in a <see cref="PageResult{T}"/>, if the service supports
     /// such requests.</param>
-    /// <returns>A sequence of <see cref="ResultPage{T}"/>, each holding the
+    /// <returns>A sequence of <see cref="PageResult{T}"/>, each holding the
     /// subset of collection values contained in a given service response.
     /// </returns>
-    public abstract IEnumerable<ResultPage<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default);
+    public abstract IEnumerable<PageResult<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default);
 
     /// <summary>
     /// Return an enumerator that iterates through the collection values. This
@@ -46,7 +46,7 @@ public abstract class PageableCollection<T> : ResultCollection<T>
     /// collection values.</returns>
     public override IEnumerator<T> GetEnumerator()
     {
-        foreach (ResultPage<T> page in AsPages())
+        foreach (PageResult<T> page in AsPages())
         {
             foreach (T value in page.Values)
             {

@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Renamed `ResultPage<T>` to `PageResult<T>`.
+
 ### Bugs Fixed
 
 ### Other Changes
