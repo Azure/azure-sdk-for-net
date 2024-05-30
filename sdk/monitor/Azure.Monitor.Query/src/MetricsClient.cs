@@ -38,7 +38,7 @@ namespace Azure.Monitor.Query
             options ??= new MetricsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
-
+            // check audience here add ./default
             var scope = "https://metrics.monitor.azure.com/.default";
             Endpoint = endpoint;
 

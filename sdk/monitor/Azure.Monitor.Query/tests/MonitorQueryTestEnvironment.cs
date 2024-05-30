@@ -71,5 +71,27 @@ namespace Azure.Monitor.Query.Tests
 
             throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
         }
+
+        public string GetMetricsClientAudience()
+        {
+            Uri authorityHost = new(AuthorityHostUrl);
+
+            if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
+            {
+                return MetricsClientAudience.AzurePublicCloud;
+            }
+
+            if (authorityHost == AzureAuthorityHosts.AzureChina)
+            {
+                return MetricsClientAudience.AzureChina;
+            }
+
+            if (authorityHost == AzureAuthorityHosts.AzureGovernment)
+            {
+                return MetricsClientAudience.AzureGovernment;
+            }
+
+            throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
+        }
     }
 }

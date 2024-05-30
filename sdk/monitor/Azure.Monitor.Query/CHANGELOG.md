@@ -3,6 +3,7 @@
 ## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
+- Add sovereign support for US Gov and China clouds
 
 ### Breaking Changes
 
