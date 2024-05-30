@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of <see cref="ServiceBusCorrelationFilter"/>. </summary>
         public ServiceBusCorrelationFilter()
         {
-            ApplicationProperties = new ChangeTrackingDictionary<string, object>();
+            ApplicationProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusCorrelationFilter"/>. </summary>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="contentType"> Content type of the message. </param>
         /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusCorrelationFilter(IDictionary<string, object> applicationProperties, string correlationId, string messageId, string sendTo, string replyTo, string subject, string sessionId, string replyToSessionId, string contentType, bool? requiresPreprocessing, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceBusCorrelationFilter(IDictionary<string, BinaryData> applicationProperties, string correlationId, string messageId, string sendTo, string replyTo, string subject, string sessionId, string replyToSessionId, string contentType, bool? requiresPreprocessing, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApplicationProperties = applicationProperties;
             CorrelationId = correlationId;
@@ -78,9 +78,38 @@ namespace Azure.ResourceManager.ServiceBus.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> dictionary object for custom filters. </summary>
+        /// <summary>
+        /// dictionary object for custom filters
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         [WirePath("properties")]
-        public IDictionary<string, object> ApplicationProperties { get; }
+        public IDictionary<string, BinaryData> ApplicationProperties { get; }
         /// <summary> Identifier of the correlation. </summary>
         [WirePath("correlationId")]
         public string CorrelationId { get; set; }

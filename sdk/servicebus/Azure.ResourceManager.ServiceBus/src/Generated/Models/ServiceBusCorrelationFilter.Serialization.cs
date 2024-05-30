@@ -40,7 +40,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue<object>(item.Value, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -127,7 +134,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            IDictionary<string, object> properties = default;
+            IDictionary<string, BinaryData> properties = default;
             string correlationId = default;
             string messageId = default;
             string to = default;
@@ -147,7 +154,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     {
                         continue;
                     }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -156,7 +163,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
                         }
                     }
                     properties = dictionary;
@@ -218,7 +225,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new ServiceBusCorrelationFilter(
-                properties ?? new ChangeTrackingDictionary<string, object>(),
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 correlationId,
                 messageId,
                 to,

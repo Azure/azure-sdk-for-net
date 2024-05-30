@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
                 {
                     ApplicationProperties =
 {
-["topicHint"] = "Crop",
+["topicHint"] = BinaryData.FromString("\"Crop\""),
 },
                 },
             };
