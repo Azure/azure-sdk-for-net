@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: SelfHelp
 namespace: Azure.ResourceManager.SelfHelp
-require: https://github.com/Azure/azure-rest-api-specs/blob/d4782cf23e78d441b42d06defad8116fc85d8459/specification/help/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/51031c3dc961c33be93afe1f15d35acfe5999861/specification/help/resource-manager/readme.md
 #tag: package-2024-03-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -118,7 +118,7 @@ rename-mapping:
   WebResult: KBWebResult
 
 override-operation-name:
-  CheckNameAvailability_Post: CheckSelfHelpNameAvailability
+  CheckNameAvailability_CheckAvailability: CheckSelfHelpNameAvailability
   DiscoverySolution_List: GetSelfHelpDiscoverySolutions
   SolutionSelfHelp_Get: GetSelfHelpSolutionById
 

@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.CheckAvailabilityCheckNameAvailability(ResourceIdentifier,SelfHelpNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.CheckSelfHelpNameAvailability(ResourceIdentifier,SelfHelpNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -443,11 +443,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<SelfHelpNameAvailabilityResult>> CheckAvailabilityCheckNameAvailabilityAsync(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SelfHelpNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableSelfHelpArmClient(client).CheckAvailabilityCheckNameAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSelfHelpArmClient(client).CheckSelfHelpNameAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.CheckAvailabilityCheckNameAvailability(ResourceIdentifier,SelfHelpNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.CheckSelfHelpNameAvailability(ResourceIdentifier,SelfHelpNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -476,11 +476,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<SelfHelpNameAvailabilityResult> CheckAvailabilityCheckNameAvailability(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public static Response<SelfHelpNameAvailabilityResult> CheckSelfHelpNameAvailability(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSelfHelpArmClient(client).CheckAvailabilityCheckNameAvailability(scope, content, cancellationToken);
+            return GetMockableSelfHelpArmClient(client).CheckSelfHelpNameAvailability(scope, content, cancellationToken);
         }
 
         /// <summary>

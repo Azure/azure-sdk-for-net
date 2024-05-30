@@ -354,11 +354,11 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<SelfHelpNameAvailabilityResult>> CheckAvailabilityCheckNameAvailabilityAsync(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SelfHelpNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckAvailabilityCheckNameAvailability");
+            using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckSelfHelpNameAvailability");
             scope0.Start();
             try
             {
@@ -393,11 +393,11 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<SelfHelpNameAvailabilityResult> CheckAvailabilityCheckNameAvailability(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<SelfHelpNameAvailabilityResult> CheckSelfHelpNameAvailability(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckAvailabilityCheckNameAvailability");
+            using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckSelfHelpNameAvailability");
             scope0.Start();
             try
             {
