@@ -138,7 +138,7 @@ namespace Azure.Identity.Tests
 
             if (string.IsNullOrEmpty(systemAccessToken) || string.IsNullOrEmpty(tenantId) || string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(serviceConnectionId))
             {
-                Console.WriteLine($"SYSTEM_ACCESSTOKEN: {systemAccessToken}, AZURE_SERVICE_CONNECTION_TENANT_ID: {tenantId}, AZURE_SERVICE_CONNECTION_CLIENT_ID: {clientId}, AZURE_SERVICE_CONNECTION_ID: {serviceConnectionId}");
+                Assert.Fail($"SYSTEM_ACCESSTOKEN: {systemAccessToken}, AZURE_SERVICE_CONNECTION_TENANT_ID: {tenantId}, AZURE_SERVICE_CONNECTION_CLIENT_ID: {clientId}, AZURE_SERVICE_CONNECTION_ID: {serviceConnectionId}");
                 Assert.Ignore("AzurePipelinesCredentialLiveTests disabled because required environment variables are not set");
             }
 
