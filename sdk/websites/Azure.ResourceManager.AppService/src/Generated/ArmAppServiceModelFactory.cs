@@ -305,12 +305,43 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CertificateOrderAction"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="actionType"> Action type. </param>
         /// <param name="createdOn"> Time at which the certificate action was performed. </param>
         /// <returns> A new <see cref="Models.CertificateOrderAction"/> instance for mocking. </returns>
-        public static CertificateOrderAction CertificateOrderAction(CertificateOrderActionType? actionType = null, DateTimeOffset? createdOn = null)
+        public static CertificateOrderAction CertificateOrderAction(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CertificateOrderActionType? actionType = null, DateTimeOffset? createdOn = null)
         {
-            return new CertificateOrderAction(actionType, createdOn, serializedAdditionalRawData: null);
+            return new CertificateOrderAction(
+                id,
+                name,
+                resourceType,
+                systemData,
+                actionType,
+                createdOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificateEmail"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="emailId"> Email id. </param>
+        /// <param name="timeStamp"> Time stamp. </param>
+        /// <returns> A new <see cref="Models.AppServiceCertificateEmail"/> instance for mocking. </returns>
+        public static AppServiceCertificateEmail AppServiceCertificateEmail(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string emailId = null, DateTimeOffset? timeStamp = null)
+        {
+            return new AppServiceCertificateEmail(
+                id,
+                name,
+                resourceType,
+                systemData,
+                emailId,
+                timeStamp,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.AppServiceDetectorData"/>. </summary>
@@ -7088,6 +7119,26 @@ namespace Azure.ResourceManager.AppService.Models
                 integrationAccount,
                 definition,
                 parameters,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PrivateLinkConnectionApprovalRequestInfo"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="Models.PrivateLinkConnectionApprovalRequestInfo"/> instance for mocking. </returns>
+        public static PrivateLinkConnectionApprovalRequestInfo PrivateLinkConnectionApprovalRequestInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, string kind = null)
+        {
+            return new PrivateLinkConnectionApprovalRequestInfo(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateLinkServiceConnectionState,
+                kind,
                 serializedAdditionalRawData: null);
         }
     }

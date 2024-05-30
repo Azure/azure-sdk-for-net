@@ -257,7 +257,7 @@ Value = "InstrumentationKey=Sanitized;IngestionEndpoint=Sanitized;LiveEndpoint=S
                 {
                     DeploymentStorage = new FunctionsDeploymentStorage()
                     {
-                        ArtifactStorageType = ArtifactStorageType.BlobContainer,
+                        FunctionStorageType = FunctionStorageType.BlobContainer,
                         Value = new Uri("https://storageAccountName.blob.core.windows.net/containername"),
                         Authentication = new FunctionsDeploymentStorageAuthentication()
                         {
@@ -334,7 +334,7 @@ Value = "InstrumentationKey=Sanitized;IngestionEndpoint=Sanitized;LiveEndpoint=S
                 {
                     DeploymentStorage = new FunctionsDeploymentStorage()
                     {
-                        ArtifactStorageType = ArtifactStorageType.BlobContainer,
+                        FunctionStorageType = FunctionStorageType.BlobContainer,
                         Value = new Uri("https://storageAccountName.blob.core.windows.net/containername"),
                         Authentication = new FunctionsDeploymentStorageAuthentication()
                         {

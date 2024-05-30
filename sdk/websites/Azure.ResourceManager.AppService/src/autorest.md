@@ -23,6 +23,9 @@ deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
+# csharpgen:
+#   attach: true
+
 # mgmt-debug:
 #  show-serialized-names: true
 
@@ -623,6 +626,8 @@ directive:
   - remove-operation: AppServiceEnvironments_ChangeVnet
   - remove-operation: AppServiceEnvironments_Resume
   - remove-operation: AppServiceEnvironments_Suspend
+  # - remove-operation: WebApps_GetAuthSettingsV2WithoutSecrets
+  # - remove-operation: WebApps_GetAuthSettingsV2WithoutSecretsSlot
 # these operations are apparently not operations in Microsoft.Web RP. Instead, their paths look like operations on resource groups
   - remove-operation: ValidateMove
   - remove-operation: Move
@@ -865,4 +870,57 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionRelays'].get
     transform: >
         $['responses']['200']['schema']['$ref'] = "./AppServicePlans.json#/definitions/HybridConnectionCollection";
+  # The Enum name "StorageType" is shared by artifactsStorageType, cause the apicompat error
+  - from: CommonDefinitions.json
+    where: $.definitions.FunctionsDeployment.properties.storage.properties.type
+    transform: >
+        $["x-ms-enum"] = {
+                "name": "functionStorageType",
+                "modelAsString": true
+              };
+  # - from: CommonDefinitions.json
+  #   where: $.ErrorEntity
+  #   transform: >
+  #       $["properties"] = {
+  #       "extendedCode": {
+  #         "description": "Type of error.",
+  #         "type": "string"
+  #       },
+  #       "messageTemplate": {
+  #         "description": "Message template.",
+  #         "type": "string"
+  #       },
+  #       "parameters": {
+  #         "description": "Parameters for the template.",
+  #         "type": "array",
+  #         "items": {
+  #           "type": "string"
+  #         }
+  #       },
+  #       "innerErrors": {
+  #         "description": "Inner errors.",
+  #         "type": "array",
+  #         "items": {
+  #           "$ref": "#/definitions/ErrorEntity"
+  #         }
+  #       },
+  #       "details": {
+  #         "description": "Error Details.",
+  #         "type": "array",
+  #         "items": {
+  #           "$ref": "#/definitions/ErrorEntity"
+  #         }
+  #       },
+  #       "target": {
+  #         "description": "The error target.",
+  #         "type": "string"
+  #       },
+  #       "code": {
+  #         "description": "Basic error code.",
+  #         "type": "string"
+  #       },
+  #       "message": {
+  #         "description": "Any details of the error.",
+  #         "type": "string"
+  #       }};         
 ```

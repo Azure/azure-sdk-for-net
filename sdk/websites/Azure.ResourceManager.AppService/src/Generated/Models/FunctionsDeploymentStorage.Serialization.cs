@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArtifactStorageType))
+            if (Optional.IsDefined(FunctionStorageType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ArtifactStorageType.Value.ToString());
+                writer.WriteStringValue(FunctionStorageType.Value.ToString());
             }
             if (Optional.IsDefined(Value))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            ArtifactStorageType? type = default;
+            FunctionStorageType? type = default;
             Uri value = default;
             FunctionsDeploymentStorageAuthentication authentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    type = new ArtifactStorageType(property.Value.GetString());
+                    type = new FunctionStorageType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionStorageType), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(ArtifactStorageType))
+                if (Optional.IsDefined(FunctionStorageType))
                 {
                     builder.Append("  type: ");
-                    builder.AppendLine($"'{ArtifactStorageType.Value.ToString()}'");
+                    builder.AppendLine($"'{FunctionStorageType.Value.ToString()}'");
                 }
             }
 

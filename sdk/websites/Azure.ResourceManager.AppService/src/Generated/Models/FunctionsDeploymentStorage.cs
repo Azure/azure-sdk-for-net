@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionsDeploymentStorage"/>. </summary>
-        /// <param name="artifactStorageType"> Property to select Azure Storage type. Available options: blobContainer. </param>
+        /// <param name="functionStorageType"> Property to select Azure Storage type. Available options: blobContainer. </param>
         /// <param name="value"> Property to set the URL for the selected Azure Storage type. Example: For blobContainer, the value could be https://&lt;storageAccountName&gt;.blob.core.windows.net/&lt;containerName&gt;. </param>
         /// <param name="authentication"> Authentication method to access the storage account for deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionsDeploymentStorage(ArtifactStorageType? artifactStorageType, Uri value, FunctionsDeploymentStorageAuthentication authentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FunctionsDeploymentStorage(FunctionStorageType? functionStorageType, Uri value, FunctionsDeploymentStorageAuthentication authentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ArtifactStorageType = artifactStorageType;
+            FunctionStorageType = functionStorageType;
             Value = value;
             Authentication = authentication;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Property to select Azure Storage type. Available options: blobContainer. </summary>
         [WirePath("type")]
-        public ArtifactStorageType? ArtifactStorageType { get; set; }
+        public FunctionStorageType? FunctionStorageType { get; set; }
         /// <summary> Property to set the URL for the selected Azure Storage type. Example: For blobContainer, the value could be https://&lt;storageAccountName&gt;.blob.core.windows.net/&lt;containerName&gt;. </summary>
         [WirePath("value")]
         public Uri Value { get; set; }

@@ -3,11 +3,12 @@
 
 using System.ComponentModel;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     [CodeGenModel(Usage = new[] { "input" })]
-    public partial class CertificateOrderAction
+    public partial class CertificateOrderAction : ResourceData
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Kind { get; set; }
