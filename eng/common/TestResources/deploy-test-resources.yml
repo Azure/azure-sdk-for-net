@@ -60,6 +60,7 @@ steps:
       displayName: Deploy test resources
       env:
         TEMP: $(Agent.TempDirectory)
+        ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
       inputs:
         azureSubscription: ${{ parameters.ServiceConnection }}
         azurePowerShellVersion: LatestVersion
