@@ -12,11 +12,11 @@ namespace Azure.Communication.CallAutomation
     {
         internal AudioData(string data, DateTime timestamp, string participantId, bool silent)
         {
-            Data = data;
+            Data = !string.IsNullOrWhiteSpace(data) ? Convert.FromBase64String(data) : default;
             Timestamp = timestamp;
             if (participantId != null)
             {
-                Participant = CommunicationIdentifier.FromRawId(participantId);;
+                Participant = CommunicationIdentifier.FromRawId(participantId);
             }
             IsSilent = silent;
         }
@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The audio data in base64 string.
         /// </summary>
-        public string Data { get; }
+        public byte[] Data { get; }
 
         /// <summary>
         /// The timestamp of thwn the media was sourced.

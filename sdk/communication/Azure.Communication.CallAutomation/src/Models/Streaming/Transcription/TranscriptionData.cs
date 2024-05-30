@@ -11,13 +11,13 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class TranscriptionData : StreamingData
     {
-        internal TranscriptionData(string text, string format, double confidence, ulong offset, ulong duration, IEnumerable<WordData> words, string participantRawID, TranscriptionResultState resultState)
+        internal TranscriptionData(string text, string format, double confidence, long offset, long duration, IEnumerable<WordData> words, string participantRawID, TranscriptionResultState resultState)
         {
             Text = text;
             Format = ConvertToTextFormatEnum(format);
             Confidence = confidence;
-            Offset = offset;
-            Duration = duration;
+            Offset = TimeSpan.FromTicks(offset);
+            Duration = TimeSpan.FromTicks(duration);
             Words = words;
             if (participantRawID != null)
             {
@@ -45,12 +45,12 @@ namespace Azure.Communication.CallAutomation
         /// The position of this payload
         /// </summary>
 
-        public ulong Offset { get; set; }
+        public TimeSpan Offset { get; set; }
 
         /// <summary>
         /// Duration in ticks. 1 tick = 100 nanoseconds.
         /// </summary>
-        public ulong Duration { get; set; }
+        public TimeSpan Duration { get; set; }
 
         /// <summary>
         /// The result for each word of the phrase

@@ -14,16 +14,6 @@ namespace Azure.Communication.CallAutomation
     public static class StreamingDataParser
     {
         /// <summary>
-        /// Parsing a MediaStreaming package from BinaryData.
-        /// </summary>
-        /// <param name="json"></param>
-        /// <returns></returns>
-        public static StreamingData Parse(BinaryData json)
-        {
-            return Parse(json.ToString());
-        }
-
-        /// <summary>
         /// Parsing a MediaStreaming package from a byte array.
         /// </summary>
         /// <param name="receivedBytes">a UTF8 byte array.</param>
@@ -39,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="stringJson"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public static StreamingData Parse(string stringJson)
+        private static StreamingData Parse(string stringJson)
         {
             JsonElement package = JsonDocument.Parse(stringJson).RootElement;
 
