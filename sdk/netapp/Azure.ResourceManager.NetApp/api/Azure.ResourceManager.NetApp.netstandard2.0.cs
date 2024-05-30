@@ -1809,6 +1809,7 @@ namespace Azure.ResourceManager.NetApp.Models
     }
     public partial class NetAppVolumeBackupConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupConfiguration>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public NetAppVolumeBackupConfiguration() { }
         public Azure.Core.ResourceIdentifier BackupPolicyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier BackupVaultId { get { throw null; } set { } }
