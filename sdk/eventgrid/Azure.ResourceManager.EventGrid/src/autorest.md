@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: EventGrid
 namespace: Azure.ResourceManager.EventGrid
-require: https://github.com/Azure/azure-rest-api-specs/blob/08bbb7fa323c7ac24eab4e4b884148ffb8c330ad/specification/eventgrid/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/82f2cbc667318659fff331022f47b616c01cd2e2/specification/eventgrid/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

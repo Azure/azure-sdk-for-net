@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-12-15-preview";
+            _apiVersion = apiVersion ?? "2024-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="domainName"> Name of the top level domain. </param>
         /// <param name="topicName"> Name of the domain topic. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="domainName"> Name of the top level domain. </param>
         /// <param name="topicName"> Name of the domain topic. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="domainName"> Name of the top level domain. </param>
         /// <param name="topicName"> Name of the domain topic. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 64 characters in length and use alphanumeric letters only. </param>
         /// <param name="data"> Event subscription properties containing the destination and filter information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="domainName"> Name of the top level domain. </param>
         /// <param name="topicName"> Name of the domain topic. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 64 characters in length and use alphanumeric letters only. </param>
         /// <param name="data"> Event subscription properties containing the destination and filter information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="domainName"> Name of the top level domain. </param>
         /// <param name="topicName"> Name of the domain topic. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription to be deleted. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="domainName"> Name of the top level domain. </param>
         /// <param name="topicName"> Name of the domain topic. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription to be deleted. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
