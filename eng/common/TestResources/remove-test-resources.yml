@@ -7,6 +7,7 @@ parameters:
   ServiceConnection: not-specified
   ResourceType: test
   UseFederatedAuth: false
+  SubscriptionConfigurationFilePath: ''
 
 # SubscriptionConfiguration will be splat into the parameters of the test
 # resources script. It should be JSON in the form:
@@ -36,9 +37,19 @@ steps:
         Inline: |
           eng/common/scripts/Import-AzModules.ps1
 
-          $subscriptionConfiguration = @"
-            ${{ parameters.SubscriptionConfiguration }}
+
+          if ('${{ parameters.SubscriptionConfigurationFilePath }}' -ne '') {
+            $subscriptionConfiguration = `
+              Get-Content '${{ parameters.SubscriptionConfigurationFilePath }}' `
+              | ConvertFrom-Json -AsHashtable;
+          } else {
+            # Multiline string termination ("@) needs to be at the beginning
+            # of the line
+            $subscriptionConfiguration = @"
+              ${{ parameters.SubscriptionConfiguration }}
           "@ | ConvertFrom-Json -AsHashtable;
+
+          }
 
           eng/common/TestResources/Remove-TestResources.ps1 `
             @subscriptionConfiguration `

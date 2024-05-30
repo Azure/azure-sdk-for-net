@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal AppendBlobClient BlobClient { get; set; }
         internal AppendBlobStorageResourceOptions _options;
 
-        protected override string ResourceId => "AppendBlob";
+        protected override string ResourceId => DataMovementBlobConstants.ResourceId.AppendBlob;
 
         public override Uri Uri => BlobClient.Uri;
 
@@ -41,6 +41,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
         protected override long? Length => ResourceProperties?.ResourceLength;
+
+        internal AppendBlobStorageResource()
+        {
+        }
 
         /// <summary>
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
@@ -305,13 +309,13 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            return new BlobSourceCheckpointData(BlobType.Append);
+            return new BlobSourceCheckpointData(new(BlobType.Append));
         }
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new BlobDestinationCheckpointData(
-                blobType: BlobType.Append,
+                blobType: new(BlobType.Append),
                 contentType: _options?.ContentType,
                 contentEncoding: _options?.ContentEncoding,
                 contentLanguage: _options?.ContentLanguage,
