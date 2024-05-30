@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.Quota
         /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailData"/>. </summary>
         internal QuotaRequestDetailData()
         {
-            Value = new ChangeTrackingList<QuotaSubRequestDetail>();
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailData"/>. </summary>
@@ -62,31 +61,15 @@ namespace Azure.ResourceManager.Quota
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The quota request status. </param>
-        /// <param name="message"> User-friendly status message. </param>
-        /// <param name="error"> Error details of the quota request. </param>
-        /// <param name="requestSubmitOn"> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="value"> Quota request details. </param>
+        /// <param name="properties"> Quota request details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaRequestDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaRequestState? provisioningState, string message, ServiceErrorDetail error, DateTimeOffset? requestSubmitOn, IReadOnlyList<QuotaSubRequestDetail> value, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal QuotaRequestDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaRequestProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            Message = message;
-            Error = error;
-            RequestSubmitOn = requestSubmitOn;
-            Value = value;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The quota request status. </summary>
-        public QuotaRequestState? ProvisioningState { get; }
-        /// <summary> User-friendly status message. </summary>
-        public string Message { get; }
-        /// <summary> Error details of the quota request. </summary>
-        public ServiceErrorDetail Error { get; }
-        /// <summary> The quota request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </summary>
-        public DateTimeOffset? RequestSubmitOn { get; }
         /// <summary> Quota request details. </summary>
-        public IReadOnlyList<QuotaSubRequestDetail> Value { get; }
+        public QuotaRequestProperties Properties { get; }
     }
 }
