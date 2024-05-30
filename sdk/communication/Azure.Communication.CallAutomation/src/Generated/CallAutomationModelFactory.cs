@@ -83,7 +83,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="mediaStreamingStatus"></param>
         /// <param name="mediaStreamingStatusDetails"></param>
         /// <returns> A new <see cref="CallAutomation.MediaStreamingUpdate"/> instance for mocking. </returns>
-        public static MediaStreamingUpdate MediaStreamingUpdate(string contentType = null, MediaStreamingStatus? mediaStreamingStatus = null, MediaStreamingStatusDetails? mediaStreamingStatusDetails = null)
+        public static MediaStreamingUpdate MediaStreamingUpdate(string contentType = null, MediaStreamingStatus mediaStreamingStatus = default, MediaStreamingStatusDetails mediaStreamingStatusDetails = default)
         {
             return new MediaStreamingUpdate(contentType, mediaStreamingStatus, mediaStreamingStatusDetails);
         }

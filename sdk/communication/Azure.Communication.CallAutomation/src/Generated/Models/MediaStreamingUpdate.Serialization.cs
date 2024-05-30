@@ -18,8 +18,8 @@ namespace Azure.Communication.CallAutomation
                 return null;
             }
             string contentType = default;
-            MediaStreamingStatus? mediaStreamingStatus = default;
-            MediaStreamingStatusDetails? mediaStreamingStatusDetails = default;
+            MediaStreamingStatus mediaStreamingStatus = default;
+            MediaStreamingStatusDetails mediaStreamingStatusDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contentType"u8))
