@@ -9,8 +9,8 @@ namespace Azure.Communication.CallAutomation
     public class MediaStreamingOptions
     {
         /// <summary> Initializes a new instance of MediaStreamingOptions. </summary>
-        public MediaStreamingOptions(Uri transportUri, MediaStreamingTransport transportType,
-            MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, bool? startMediaStreaming = null)
+        public MediaStreamingOptions(Uri transportUri,
+            MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, MediaStreamingTransport transportType = default, bool? startMediaStreaming = null)
         {
             TransportUri = transportUri;
             MediaStreamingTransport = transportType;

@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The timestamp of thwn the media was sourced.
         /// </summary>
-        public DateTime Timestamp { get; }
+        public DateTimeOffset Timestamp { get; }
         /// <summary>
         /// Participant ID
         /// </summary>

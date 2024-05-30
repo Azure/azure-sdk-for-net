@@ -65,10 +65,10 @@ namespace Azure.Communication.CallAutomation
     public partial class AudioData : Azure.Communication.CallAutomation.StreamingData
     {
         internal AudioData() { }
-        public string Data { get { throw null; } }
+        public byte[] Data { get { throw null; } }
         public bool IsSilent { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
-        public System.DateTime Timestamp { get { throw null; } }
+        public System.DateTimeOffset Timestamp { get { throw null; } }
     }
     public partial class AudioMetadata : Azure.Communication.CallAutomation.StreamingData
     {
@@ -201,7 +201,7 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.TranscriptionFailed TranscriptionFailed(string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallAutomation.TranscriptionStarted TranscriptionStarted(string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallAutomation.TranscriptionStopped TranscriptionStopped(string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
-        public static Azure.Communication.CallAutomation.TranscriptionUpdate TranscriptionUpdate(Azure.Communication.CallAutomation.TranscriptionStatus? transcriptionStatus = default(Azure.Communication.CallAutomation.TranscriptionStatus?), Azure.Communication.CallAutomation.TranscriptionStatusDetails? transcriptionStatusDetails = default(Azure.Communication.CallAutomation.TranscriptionStatusDetails?)) { throw null; }
+        public static Azure.Communication.CallAutomation.TranscriptionUpdate TranscriptionUpdate(Azure.Communication.CallAutomation.TranscriptionStatus transcriptionStatus = default(Azure.Communication.CallAutomation.TranscriptionStatus), Azure.Communication.CallAutomation.TranscriptionStatusDetails transcriptionStatusDetails = default(Azure.Communication.CallAutomation.TranscriptionStatusDetails)) { throw null; }
         public static Azure.Communication.CallAutomation.TranscriptionUpdated TranscriptionUpdated(string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallAutomation.TransferCallToParticipantResult TransferCallToParticipantResult(string operationContext = null) { throw null; }
     }
@@ -776,7 +776,7 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class MediaStreamingOptions
     {
-        public MediaStreamingOptions(System.Uri transportUri, Azure.Communication.CallAutomation.MediaStreamingTransport transportType, Azure.Communication.CallAutomation.MediaStreamingContent contentType, Azure.Communication.CallAutomation.MediaStreamingAudioChannel audioChannelType, bool? startMediaStreaming = default(bool?)) { }
+        public MediaStreamingOptions(System.Uri transportUri, Azure.Communication.CallAutomation.MediaStreamingContent contentType, Azure.Communication.CallAutomation.MediaStreamingAudioChannel audioChannelType, Azure.Communication.CallAutomation.MediaStreamingTransport transportType = default(Azure.Communication.CallAutomation.MediaStreamingTransport), bool? startMediaStreaming = default(bool?)) { }
         public Azure.Communication.CallAutomation.MediaStreamingAudioChannel MediaStreamingAudioChannel { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingContent MediaStreamingContent { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingTransport MediaStreamingTransport { get { throw null; } }
@@ -1335,9 +1335,7 @@ namespace Azure.Communication.CallAutomation
     }
     public static partial class StreamingDataParser
     {
-        public static Azure.Communication.CallAutomation.StreamingData Parse(System.BinaryData json) { throw null; }
         public static Azure.Communication.CallAutomation.StreamingData Parse(byte[] receivedBytes) { throw null; }
-        public static Azure.Communication.CallAutomation.StreamingData Parse(string stringJson) { throw null; }
     }
     public enum TextFormat
     {
@@ -1358,9 +1356,9 @@ namespace Azure.Communication.CallAutomation
     {
         internal TranscriptionData() { }
         public double Confidence { get { throw null; } set { } }
-        public ulong Duration { get { throw null; } set { } }
+        public System.TimeSpan Duration { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TextFormat Format { get { throw null; } set { } }
-        public ulong Offset { get { throw null; } set { } }
+        public System.TimeSpan Offset { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TranscriptionResultState ResultState { get { throw null; } set { } }
         public string Text { get { throw null; } set { } }
@@ -1387,11 +1385,11 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class TranscriptionOptions
     {
-        public TranscriptionOptions(System.Uri transportUri, string locale, bool startTranscription, Azure.Communication.CallAutomation.TranscriptionTransport transcriptionTransport = default(Azure.Communication.CallAutomation.TranscriptionTransport)) { }
+        public TranscriptionOptions(System.Uri transportUri, string locale, bool? startTranscription = default(bool?), Azure.Communication.CallAutomation.TranscriptionTransport transcriptionTransport = default(Azure.Communication.CallAutomation.TranscriptionTransport)) { }
         public bool? EnableIntermediateResults { get { throw null; } set { } }
         public string Locale { get { throw null; } }
         public string SpeechRecognitionModelEndpointId { get { throw null; } set { } }
-        public bool StartTranscription { get { throw null; } }
+        public bool? StartTranscription { get { throw null; } }
         public Azure.Communication.CallAutomation.TranscriptionTransport TranscriptionTransport { get { throw null; } }
         public System.Uri TransportUrl { get { throw null; } }
     }
@@ -1524,8 +1522,8 @@ namespace Azure.Communication.CallAutomation
     public partial class TranscriptionUpdate
     {
         internal TranscriptionUpdate() { }
-        public Azure.Communication.CallAutomation.TranscriptionStatus? TranscriptionStatus { get { throw null; } }
-        public Azure.Communication.CallAutomation.TranscriptionStatusDetails? TranscriptionStatusDetails { get { throw null; } }
+        public Azure.Communication.CallAutomation.TranscriptionStatus TranscriptionStatus { get { throw null; } }
+        public Azure.Communication.CallAutomation.TranscriptionStatusDetails TranscriptionStatusDetails { get { throw null; } }
     }
     public partial class TranscriptionUpdated : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
