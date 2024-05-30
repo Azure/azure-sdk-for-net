@@ -16,7 +16,7 @@ namespace System.ClientModel
     public abstract partial class AsyncPageableCollection<T> : System.ClientModel.AsyncCollectionResult<T>
     {
         protected AsyncPageableCollection() { }
-        public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPagesAsync();
+        public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPagesAsync(string? continuationToken = null);
         public override System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public abstract partial class BinaryContent : System.IDisposable
@@ -64,7 +64,7 @@ namespace System.ClientModel
     public abstract partial class PageableCollection<T> : System.ClientModel.CollectionResult<T>
     {
         protected PageableCollection() { }
-        public abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPages();
+        public abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPages(string? continuationToken = null);
         public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
     }
 }

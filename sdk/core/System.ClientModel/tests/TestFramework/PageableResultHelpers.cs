@@ -11,17 +11,11 @@ namespace ClientModel.Tests.Internal;
 
 internal class PageableResultHelpers
 {
-    public static PageableCollection<T> Create<T>(Func<PageResult<T>> firstPageFunc, Func<string?, PageResult<T>>? nextPageFunc) where T : notnull
-    {
-        PageResult<T> first(string? _) => firstPageFunc();
-        return new FuncPageable<T>(first, nextPageFunc);
-    }
+    public static PageableCollection<T> Create<T>(Func<string?, PageResult<T>> firstPageFunc, Func<string?, PageResult<T>>? nextPageFunc) where T : notnull
+        => new FuncPageable<T>(firstPageFunc, nextPageFunc);
 
-    public static AsyncPageableCollection<T> Create<T>(Func<Task<PageResult<T>>> firstPageFunc, Func<string?, Task<PageResult<T>>>? nextPageFunc) where T : notnull
-    {
-        Task<PageResult<T>> first(string? _) => firstPageFunc();
-        return new FuncAsyncPageable<T>(first, nextPageFunc);
-    }
+    public static AsyncPageableCollection<T> Create<T>(Func<string?, Task<PageResult<T>>> firstPageFunc, Func<string?, Task<PageResult<T>>>? nextPageFunc) where T : notnull
+        => new FuncAsyncPageable<T>(firstPageFunc, nextPageFunc);
 
     private class FuncAsyncPageable<T> : AsyncPageableCollection<T> where T : notnull
     {
@@ -34,7 +28,7 @@ internal class PageableResultHelpers
             _nextPageFunc = nextPageFunc;
         }
 
-        public override async IAsyncEnumerable<PageResult<T>> AsPagesAsync()
+        public override async IAsyncEnumerable<PageResult<T>> AsPagesAsync(string? continuationToken = default)
         {
             Func<string?, Task<PageResult<T>>>? pageFunc = _firstPageFunc;
 
@@ -42,10 +36,6 @@ internal class PageableResultHelpers
             {
                 yield break;
             }
-
-            // contract in this experiment is that first call to pagefunc includes
-            // the collection's page offset in a closure.
-            string? continuationToken = null;
 
             do
             {
@@ -64,13 +54,13 @@ internal class PageableResultHelpers
         private readonly Func<string?, PageResult<T>> _firstPageFunc;
         private readonly Func<string?, PageResult<T>>? _nextPageFunc;
 
-        public FuncPageable(Func<string?, PageResult<T>> firstPageFunc, Func<string?, PageResult<T>>? nextPageFunc, int? defaultPageSize = default)
+        public FuncPageable(Func<string?, PageResult<T>> firstPageFunc, Func<string?, PageResult<T>>? nextPageFunc)
         {
             _firstPageFunc = firstPageFunc;
             _nextPageFunc = nextPageFunc;
         }
 
-        public override IEnumerable<PageResult<T>> AsPages()
+        public override IEnumerable<PageResult<T>> AsPages(string? continuationToken = default)
         {
             Func<string?, PageResult<T>>? pageFunc = _firstPageFunc;
 
@@ -78,8 +68,6 @@ internal class PageableResultHelpers
             {
                 yield break;
             }
-
-            string? continuationToken = null;
 
             do
             {
