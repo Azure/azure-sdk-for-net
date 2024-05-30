@@ -1,16 +1,10 @@
 # Release History
 
-## 5.16.0-beta.1 (Unreleased)
+## 5.16.0 (2024-05-30)
 
 ### Features Added
 
-- Update proto for support for `ServiceBusSessionMessageActions` and `RenewMessageLock` method.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Adding support for `ServiceBusSessionMessageActions` and `RenewMessageLock` use in the isolated worker model.
 
 ## 5.15.1 (2024-04-17)
 
