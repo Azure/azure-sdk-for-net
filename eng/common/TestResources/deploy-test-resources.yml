@@ -41,6 +41,20 @@ steps:
 
   - template: /eng/common/TestResources/setup-environments.yml
 
+  - task: AzureCLI@2
+    displayName: Azure CLI Login
+    inputs:
+      azureSubscription: azure-sdk-tests
+      scriptType: pscore
+      scriptLocation: inlineScript
+      addSpnToEnvironment: true
+      inlineScript: |
+        az --version
+        az account show -o json
+        Write-Host "##vso[task.setvariable variable=ARM_CLIENT_ID;issecret=true]$($env:servicePrincipalId)"
+        Write-Host "##vso[task.setvariable variable=ARM_TENANT_ID;issecret=true]$($env:tenantId)"
+        Write-Host "##vso[task.setvariable variable=ARM_OIDC_TOKEN;issecret=true]$($env:idToken)"
+
   - ${{ if eq('true', parameters.UseFederatedAuth) }}:
     - task: AzurePowerShell@5
       displayName: Deploy test resources
