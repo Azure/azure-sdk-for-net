@@ -37,8 +37,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         {
             try
             {
-                QueueTriggerMetrics queueProperties = await GetMetricsAsync().ConfigureAwait(false);
-                return queueProperties.QueueLength;
+                QueueTriggerMetrics queueMetrics = await GetMetricsAsync().ConfigureAwait(false);
+                return queueMetrics.QueueLength;
             }
             catch (RequestFailedException ex)
             {
