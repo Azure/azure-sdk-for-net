@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="InferCancerProfileAsync(WaitUntil,OncoPhenotypeData,CancellationToken)">
+    <member name="InferCancerProfileAsync(WaitUntil,IEnumerable{PatientRecord},OncoPhenotypeModelConfiguration,CancellationToken)">
       <example>
 This sample shows how to call InferCancerProfileAsync.
 <code><![CDATA[
@@ -9,11 +9,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
+Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, new PatientRecord[]
 {
     new PatientRecord("<id>")
 });
-Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
 OncoPhenotypeResults responseData = operation.Value;
 ]]></code>
 This sample shows how to call InferCancerProfileAsync with all parameters.
@@ -22,7 +21,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
+OncoPhenotypeModelConfiguration configuration = new OncoPhenotypeModelConfiguration
+{
+    Verbose = true,
+    IncludeEvidence = true,
+    InferenceTypes = { OncoPhenotypeInferenceType.TumorSite },
+    CheckForCancerCase = true,
+};
+Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, new PatientRecord[]
 {
     new PatientRecord("<id>")
     {
@@ -43,21 +49,11 @@ OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
             CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
         }},
     }
-})
-{
-    Configuration = new OncoPhenotypeModelConfiguration
-    {
-        Verbose = true,
-        IncludeEvidence = true,
-        InferenceTypes = { OncoPhenotypeInferenceType.TumorSite },
-        CheckForCancerCase = true,
-    },
-};
-Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
+}, configuration: configuration);
 OncoPhenotypeResults responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="InferCancerProfile(WaitUntil,OncoPhenotypeData,CancellationToken)">
+    <member name="InferCancerProfile(WaitUntil,IEnumerable{PatientRecord},OncoPhenotypeModelConfiguration,CancellationToken)">
       <example>
 This sample shows how to call InferCancerProfile.
 <code><![CDATA[
@@ -65,11 +61,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
+Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, new PatientRecord[]
 {
     new PatientRecord("<id>")
 });
-Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, oncoPhenotypeData);
 OncoPhenotypeResults responseData = operation.Value;
 ]]></code>
 This sample shows how to call InferCancerProfile with all parameters.
@@ -78,7 +73,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
-OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
+OncoPhenotypeModelConfiguration configuration = new OncoPhenotypeModelConfiguration
+{
+    Verbose = true,
+    IncludeEvidence = true,
+    InferenceTypes = { OncoPhenotypeInferenceType.TumorSite },
+    CheckForCancerCase = true,
+};
+Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, new PatientRecord[]
 {
     new PatientRecord("<id>")
     {
@@ -99,17 +101,7 @@ OncoPhenotypeData oncoPhenotypeData = new OncoPhenotypeData(new PatientRecord[]
             CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
         }},
     }
-})
-{
-    Configuration = new OncoPhenotypeModelConfiguration
-    {
-        Verbose = true,
-        IncludeEvidence = true,
-        InferenceTypes = { OncoPhenotypeInferenceType.TumorSite },
-        CheckForCancerCase = true,
-    },
-};
-Operation<OncoPhenotypeResults> operation = client.InferCancerProfile(WaitUntil.Completed, oncoPhenotypeData);
+}, configuration: configuration);
 OncoPhenotypeResults responseData = operation.Value;
 ]]></code></example>
     </member>

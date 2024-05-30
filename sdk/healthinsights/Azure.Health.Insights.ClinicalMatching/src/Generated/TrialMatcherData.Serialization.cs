@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
-    public partial class TrialMatcherData : IUtf8JsonSerializable, IJsonModel<TrialMatcherData>
+    internal partial class TrialMatcherData : IUtf8JsonSerializable, IJsonModel<TrialMatcherData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrialMatcherData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

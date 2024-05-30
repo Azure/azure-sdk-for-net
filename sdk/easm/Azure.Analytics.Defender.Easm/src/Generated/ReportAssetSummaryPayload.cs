@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> A request body used to retrieve summary asset information. One and only one collection of summary identifiers must be provided: filters, metrics, or metricCategories. </summary>
-    public partial class ReportAssetSummaryPayload
+    internal partial class ReportAssetSummaryPayload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

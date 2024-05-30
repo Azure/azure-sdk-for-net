@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="RetrieveAsync(string,NetworkIdentifier,CancellationToken)">
+    <member name="RetrieveAsync(string,string,string,CancellationToken)">
       <example>
 This sample shows how to call RetrieveAsync.
 <code><![CDATA[
@@ -9,8 +9,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceNetwork client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceNetworkClient(apiVersion: "2024-02-09-preview");
 
-NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
-Response<NetworkRetrievalResult> response = await client.RetrieveAsync("<apcGatewayId>", networkIdentifier);
+Response<NetworkRetrievalResult> response = await client.RetrieveAsync("<apcGatewayId>", "<identifierType>", "<identifier>");
 ]]></code>
 This sample shows how to call RetrieveAsync with all parameters.
 <code><![CDATA[
@@ -18,11 +17,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceNetwork client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceNetworkClient(apiVersion: "2024-02-09-preview");
 
-NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
-Response<NetworkRetrievalResult> response = await client.RetrieveAsync("<apcGatewayId>", networkIdentifier);
+Response<NetworkRetrievalResult> response = await client.RetrieveAsync("<apcGatewayId>", "<identifierType>", "<identifier>");
 ]]></code></example>
     </member>
-    <member name="Retrieve(string,NetworkIdentifier,CancellationToken)">
+    <member name="Retrieve(string,string,string,CancellationToken)">
       <example>
 This sample shows how to call Retrieve.
 <code><![CDATA[
@@ -30,8 +28,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceNetwork client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceNetworkClient(apiVersion: "2024-02-09-preview");
 
-NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
-Response<NetworkRetrievalResult> response = client.Retrieve("<apcGatewayId>", networkIdentifier);
+Response<NetworkRetrievalResult> response = client.Retrieve("<apcGatewayId>", "<identifierType>", "<identifier>");
 ]]></code>
 This sample shows how to call Retrieve with all parameters.
 <code><![CDATA[
@@ -39,8 +36,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeviceNetwork client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceNetworkClient(apiVersion: "2024-02-09-preview");
 
-NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
-Response<NetworkRetrievalResult> response = client.Retrieve("<apcGatewayId>", networkIdentifier);
+Response<NetworkRetrievalResult> response = client.Retrieve("<apcGatewayId>", "<identifierType>", "<identifier>");
 ]]></code></example>
     </member>
     <member name="RetrieveAsync(string,RequestContent,RequestContext)">

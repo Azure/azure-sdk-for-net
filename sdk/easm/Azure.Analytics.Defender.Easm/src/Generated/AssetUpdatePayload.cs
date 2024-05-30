@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> A request body used to update an asset. </summary>
-    public partial class AssetUpdatePayload
+    internal partial class AssetUpdatePayload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

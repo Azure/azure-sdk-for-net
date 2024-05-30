@@ -15,7 +15,7 @@ namespace Azure.Analytics.Defender.Easm
     /// Please note <see cref="DataConnectionPayload"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureDataExplorerDataConnectionPayload"/> and <see cref="LogAnalyticsDataConnectionPayload"/>.
     /// </summary>
-    public abstract partial class DataConnectionPayload
+    internal abstract partial class DataConnectionPayload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

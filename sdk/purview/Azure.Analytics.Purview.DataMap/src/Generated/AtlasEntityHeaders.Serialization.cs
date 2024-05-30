@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    public partial class AtlasEntityHeaders : IUtf8JsonSerializable, IJsonModel<AtlasEntityHeaders>
+    internal partial class AtlasEntityHeaders : IUtf8JsonSerializable, IJsonModel<AtlasEntityHeaders>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtlasEntityHeaders>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

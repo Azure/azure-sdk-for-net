@@ -68,8 +68,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
-            SimSwapRetrievalContent simSwapRetrievalContent = new SimSwapRetrievalContent(new NetworkIdentifier("<identifierType>", "<identifier>"));
-            Response<SimSwapRetrievalResult> response = client.Retrieve("<apcGatewayId>", simSwapRetrievalContent);
+            NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
+            Response<SimSwapRetrievalResult> response = client.Retrieve("<apcGatewayId>", networkIdentifier);
         }
 
         [Test]
@@ -80,8 +80,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
-            SimSwapRetrievalContent simSwapRetrievalContent = new SimSwapRetrievalContent(new NetworkIdentifier("<identifierType>", "<identifier>"));
-            Response<SimSwapRetrievalResult> response = await client.RetrieveAsync("<apcGatewayId>", simSwapRetrievalContent);
+            NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
+            Response<SimSwapRetrievalResult> response = await client.RetrieveAsync("<apcGatewayId>", networkIdentifier);
         }
 
         [Test]
@@ -138,11 +138,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
-            SimSwapRetrievalContent simSwapRetrievalContent = new SimSwapRetrievalContent(new NetworkIdentifier("<identifierType>", "<identifier>"))
-            {
-                PhoneNumber = "<phoneNumber>",
-            };
-            Response<SimSwapRetrievalResult> response = client.Retrieve("<apcGatewayId>", simSwapRetrievalContent);
+            NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
+            Response<SimSwapRetrievalResult> response = client.Retrieve("<apcGatewayId>", networkIdentifier, phoneNumber: "<phoneNumber>");
         }
 
         [Test]
@@ -153,11 +150,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
-            SimSwapRetrievalContent simSwapRetrievalContent = new SimSwapRetrievalContent(new NetworkIdentifier("<identifierType>", "<identifier>"))
-            {
-                PhoneNumber = "<phoneNumber>",
-            };
-            Response<SimSwapRetrievalResult> response = await client.RetrieveAsync("<apcGatewayId>", simSwapRetrievalContent);
+            NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
+            Response<SimSwapRetrievalResult> response = await client.RetrieveAsync("<apcGatewayId>", networkIdentifier, phoneNumber: "<phoneNumber>");
         }
 
         [Test]
@@ -212,8 +206,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
-            SimSwapVerificationContent simSwapVerificationContent = new SimSwapVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"));
-            Response<SimSwapVerificationResult> response = client.Verify("<apcGatewayId>", simSwapVerificationContent);
+            NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
+            Response<SimSwapVerificationResult> response = client.Verify("<apcGatewayId>", networkIdentifier);
         }
 
         [Test]
@@ -224,8 +218,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
-            SimSwapVerificationContent simSwapVerificationContent = new SimSwapVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"));
-            Response<SimSwapVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", simSwapVerificationContent);
+            NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
+            Response<SimSwapVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", networkIdentifier);
         }
 
         [Test]
@@ -284,12 +278,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
-            SimSwapVerificationContent simSwapVerificationContent = new SimSwapVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"))
-            {
-                PhoneNumber = "<phoneNumber>",
-                MaxAgeHours = 1234,
-            };
-            Response<SimSwapVerificationResult> response = client.Verify("<apcGatewayId>", simSwapVerificationContent);
+            NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
+            Response<SimSwapVerificationResult> response = client.Verify("<apcGatewayId>", networkIdentifier, phoneNumber: "<phoneNumber>", maxAgeHours: 1234);
         }
 
         [Test]
@@ -300,12 +290,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
-            SimSwapVerificationContent simSwapVerificationContent = new SimSwapVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"))
-            {
-                PhoneNumber = "<phoneNumber>",
-                MaxAgeHours = 1234,
-            };
-            Response<SimSwapVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", simSwapVerificationContent);
+            NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
+            Response<SimSwapVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", networkIdentifier, phoneNumber: "<phoneNumber>", maxAgeHours: 1234);
         }
     }
 }

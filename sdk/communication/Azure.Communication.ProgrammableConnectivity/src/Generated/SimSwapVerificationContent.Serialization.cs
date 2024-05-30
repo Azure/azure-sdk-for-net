@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Communication.ProgrammableConnectivity
 {
-    public partial class SimSwapVerificationContent : IUtf8JsonSerializable, IJsonModel<SimSwapVerificationContent>
+    internal partial class SimSwapVerificationContent : IUtf8JsonSerializable, IJsonModel<SimSwapVerificationContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SimSwapVerificationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

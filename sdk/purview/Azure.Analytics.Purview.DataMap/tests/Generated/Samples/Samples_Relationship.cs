@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -54,8 +55,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship();
-            Response<AtlasRelationship> response = client.Create(atlasRelationship);
+            Response<AtlasRelationship> response = client.Create();
         }
 
         [Test]
@@ -66,8 +66,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship();
-            Response<AtlasRelationship> response = await client.CreateAsync(atlasRelationship);
+            Response<AtlasRelationship> response = await client.CreateAsync();
         }
 
         [Test]
@@ -198,36 +197,20 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship
+            AtlasObjectId end1 = new AtlasObjectId
             {
-                Attributes =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-                TypeName = "<typeName>",
-                LastModifiedTS = "<lastModifiedTS>",
-                CreateTime = 1234L,
-                CreatedBy = "<createdBy>",
-                End1 = new AtlasObjectId
-                {
-                    Guid = "<guid>",
-                    TypeName = "<typeName>",
-                    UniqueAttributes =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-                },
-                End2 = default,
                 Guid = "<guid>",
-                HomeId = "<homeId>",
-                Label = "<label>",
-                ProvenanceType = 1234,
-                Status = StatusAtlasRelationship.Active,
-                UpdateTime = 1234L,
-                UpdatedBy = "<updatedBy>",
-                Version = 1234L,
+                TypeName = "<typeName>",
+                UniqueAttributes =
+{
+["key"] = BinaryData.FromObjectAsJson(new object())
+},
             };
-            Response<AtlasRelationship> response = client.Create(atlasRelationship);
+            AtlasObjectId end2 = default;
+            Response<AtlasRelationship> response = client.Create(attributes: new Dictionary<string, BinaryData>
+            {
+                ["key"] = BinaryData.FromObjectAsJson(new object())
+            }, typeName: "<typeName>", lastModifiedTS: "<lastModifiedTS>", createTime: 1234L, createdBy: "<createdBy>", end1: end1, end2: end2, guid: "<guid>", homeId: "<homeId>", label: "<label>", provenanceType: 1234, status: StatusAtlasRelationship.Active, updateTime: 1234L, updatedBy: "<updatedBy>", version: 1234L);
         }
 
         [Test]
@@ -238,36 +221,20 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship
+            AtlasObjectId end1 = new AtlasObjectId
             {
-                Attributes =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-                TypeName = "<typeName>",
-                LastModifiedTS = "<lastModifiedTS>",
-                CreateTime = 1234L,
-                CreatedBy = "<createdBy>",
-                End1 = new AtlasObjectId
-                {
-                    Guid = "<guid>",
-                    TypeName = "<typeName>",
-                    UniqueAttributes =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-                },
-                End2 = default,
                 Guid = "<guid>",
-                HomeId = "<homeId>",
-                Label = "<label>",
-                ProvenanceType = 1234,
-                Status = StatusAtlasRelationship.Active,
-                UpdateTime = 1234L,
-                UpdatedBy = "<updatedBy>",
-                Version = 1234L,
+                TypeName = "<typeName>",
+                UniqueAttributes =
+{
+["key"] = BinaryData.FromObjectAsJson(new object())
+},
             };
-            Response<AtlasRelationship> response = await client.CreateAsync(atlasRelationship);
+            AtlasObjectId end2 = default;
+            Response<AtlasRelationship> response = await client.CreateAsync(attributes: new Dictionary<string, BinaryData>
+            {
+                ["key"] = BinaryData.FromObjectAsJson(new object())
+            }, typeName: "<typeName>", lastModifiedTS: "<lastModifiedTS>", createTime: 1234L, createdBy: "<createdBy>", end1: end1, end2: end2, guid: "<guid>", homeId: "<homeId>", label: "<label>", provenanceType: 1234, status: StatusAtlasRelationship.Active, updateTime: 1234L, updatedBy: "<updatedBy>", version: 1234L);
         }
 
         [Test]
@@ -308,8 +275,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship();
-            Response<AtlasRelationship> response = client.Update(atlasRelationship);
+            Response<AtlasRelationship> response = client.Update();
         }
 
         [Test]
@@ -320,8 +286,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship();
-            Response<AtlasRelationship> response = await client.UpdateAsync(atlasRelationship);
+            Response<AtlasRelationship> response = await client.UpdateAsync();
         }
 
         [Test]
@@ -452,36 +417,20 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship
+            AtlasObjectId end1 = new AtlasObjectId
             {
-                Attributes =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-                TypeName = "<typeName>",
-                LastModifiedTS = "<lastModifiedTS>",
-                CreateTime = 1234L,
-                CreatedBy = "<createdBy>",
-                End1 = new AtlasObjectId
-                {
-                    Guid = "<guid>",
-                    TypeName = "<typeName>",
-                    UniqueAttributes =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-                },
-                End2 = default,
                 Guid = "<guid>",
-                HomeId = "<homeId>",
-                Label = "<label>",
-                ProvenanceType = 1234,
-                Status = StatusAtlasRelationship.Active,
-                UpdateTime = 1234L,
-                UpdatedBy = "<updatedBy>",
-                Version = 1234L,
+                TypeName = "<typeName>",
+                UniqueAttributes =
+{
+["key"] = BinaryData.FromObjectAsJson(new object())
+},
             };
-            Response<AtlasRelationship> response = client.Update(atlasRelationship);
+            AtlasObjectId end2 = default;
+            Response<AtlasRelationship> response = client.Update(attributes: new Dictionary<string, BinaryData>
+            {
+                ["key"] = BinaryData.FromObjectAsJson(new object())
+            }, typeName: "<typeName>", lastModifiedTS: "<lastModifiedTS>", createTime: 1234L, createdBy: "<createdBy>", end1: end1, end2: end2, guid: "<guid>", homeId: "<homeId>", label: "<label>", provenanceType: 1234, status: StatusAtlasRelationship.Active, updateTime: 1234L, updatedBy: "<updatedBy>", version: 1234L);
         }
 
         [Test]
@@ -492,36 +441,20 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-            AtlasRelationship atlasRelationship = new AtlasRelationship
+            AtlasObjectId end1 = new AtlasObjectId
             {
-                Attributes =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-                TypeName = "<typeName>",
-                LastModifiedTS = "<lastModifiedTS>",
-                CreateTime = 1234L,
-                CreatedBy = "<createdBy>",
-                End1 = new AtlasObjectId
-                {
-                    Guid = "<guid>",
-                    TypeName = "<typeName>",
-                    UniqueAttributes =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-                },
-                End2 = default,
                 Guid = "<guid>",
-                HomeId = "<homeId>",
-                Label = "<label>",
-                ProvenanceType = 1234,
-                Status = StatusAtlasRelationship.Active,
-                UpdateTime = 1234L,
-                UpdatedBy = "<updatedBy>",
-                Version = 1234L,
+                TypeName = "<typeName>",
+                UniqueAttributes =
+{
+["key"] = BinaryData.FromObjectAsJson(new object())
+},
             };
-            Response<AtlasRelationship> response = await client.UpdateAsync(atlasRelationship);
+            AtlasObjectId end2 = default;
+            Response<AtlasRelationship> response = await client.UpdateAsync(attributes: new Dictionary<string, BinaryData>
+            {
+                ["key"] = BinaryData.FromObjectAsJson(new object())
+            }, typeName: "<typeName>", lastModifiedTS: "<lastModifiedTS>", createTime: 1234L, createdBy: "<createdBy>", end1: end1, end2: end2, guid: "<guid>", homeId: "<homeId>", label: "<label>", provenanceType: 1234, status: StatusAtlasRelationship.Active, updateTime: 1234L, updatedBy: "<updatedBy>", version: 1234L);
         }
 
         [Test]

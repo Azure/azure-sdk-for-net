@@ -80,11 +80,10 @@ id = "<id>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
             TrialMatcherResults responseData = operation.Value;
         }
 
@@ -96,11 +95,10 @@ new PatientRecord("<id>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
             TrialMatcherResults responseData = operation.Value;
         }
 
@@ -566,32 +564,9 @@ radius = 123.45,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            TrialMatcherModelConfiguration configuration = new TrialMatcherModelConfiguration(new ClinicalTrials
             {
-new PatientRecord("<id>")
-{
-Info = new PatientInfo
-{
-Sex = PatientInfoSex.Female,
-BirthDate = DateTimeOffset.Parse("2022-05-10"),
-ClinicalInfo = {new ClinicalCodedElement("<system>", "<code>")
-{
-Name = "<name>",
-Value = "<value>",
-}},
-},
-Data = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
-{
-ClinicalType = ClinicalDocumentType.Consultation,
-Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
-}},
-}
-            })
-            {
-                Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials
-                {
-                    CustomTrials = {new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[]{"<conditions>"})
+                CustomTrials = {new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[]{"<conditions>"})
 {
 Phases = {ClinicalTrialPhase.NotApplicable},
 StudyType = ClinicalTrialStudyType.Interventional,
@@ -621,7 +596,7 @@ MaximumAge = default,
 },
 },
 }},
-                    RegistryFilters = {new ClinicalTrialRegistryFilter
+                RegistryFilters = {new ClinicalTrialRegistryFilter
 {
 Conditions = {"<conditions>"},
 StudyTypes = {ClinicalTrialStudyType.Interventional},
@@ -639,13 +614,33 @@ State = "<state>",
 }},
 FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJsonGeometryType.Point, new float[]{123.45F}), new AreaProperties(GeoJsonPropertiesSubType.Circle, 123.45))},
 }},
-                })
-                {
-                    Verbose = true,
-                    IncludeEvidence = true,
-                },
+            })
+            {
+                Verbose = true,
+                IncludeEvidence = true,
             };
-            Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
+            Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, new PatientRecord[]
+            {
+new PatientRecord("<id>")
+{
+Info = new PatientInfo
+{
+Sex = PatientInfoSex.Female,
+BirthDate = DateTimeOffset.Parse("2022-05-10"),
+ClinicalInfo = {new ClinicalCodedElement("<system>", "<code>")
+{
+Name = "<name>",
+Value = "<value>",
+}},
+},
+Data = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
+{
+ClinicalType = ClinicalDocumentType.Consultation,
+Language = "<language>",
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+}},
+}
+            }, configuration: configuration);
             TrialMatcherResults responseData = operation.Value;
         }
 
@@ -657,32 +652,9 @@ FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJso
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            TrialMatcherModelConfiguration configuration = new TrialMatcherModelConfiguration(new ClinicalTrials
             {
-new PatientRecord("<id>")
-{
-Info = new PatientInfo
-{
-Sex = PatientInfoSex.Female,
-BirthDate = DateTimeOffset.Parse("2022-05-10"),
-ClinicalInfo = {new ClinicalCodedElement("<system>", "<code>")
-{
-Name = "<name>",
-Value = "<value>",
-}},
-},
-Data = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
-{
-ClinicalType = ClinicalDocumentType.Consultation,
-Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
-}},
-}
-            })
-            {
-                Configuration = new TrialMatcherModelConfiguration(new ClinicalTrials
-                {
-                    CustomTrials = {new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[]{"<conditions>"})
+                CustomTrials = {new ClinicalTrialDetails("<id>", new ClinicalTrialMetadata(new string[]{"<conditions>"})
 {
 Phases = {ClinicalTrialPhase.NotApplicable},
 StudyType = ClinicalTrialStudyType.Interventional,
@@ -712,7 +684,7 @@ MaximumAge = default,
 },
 },
 }},
-                    RegistryFilters = {new ClinicalTrialRegistryFilter
+                RegistryFilters = {new ClinicalTrialRegistryFilter
 {
 Conditions = {"<conditions>"},
 StudyTypes = {ClinicalTrialStudyType.Interventional},
@@ -730,13 +702,33 @@ State = "<state>",
 }},
 FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJsonGeometryType.Point, new float[]{123.45F}), new AreaProperties(GeoJsonPropertiesSubType.Circle, 123.45))},
 }},
-                })
-                {
-                    Verbose = true,
-                    IncludeEvidence = true,
-                },
+            })
+            {
+                Verbose = true,
+                IncludeEvidence = true,
             };
-            Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
+            Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, new PatientRecord[]
+            {
+new PatientRecord("<id>")
+{
+Info = new PatientInfo
+{
+Sex = PatientInfoSex.Female,
+BirthDate = DateTimeOffset.Parse("2022-05-10"),
+ClinicalInfo = {new ClinicalCodedElement("<system>", "<code>")
+{
+Name = "<name>",
+Value = "<value>",
+}},
+},
+Data = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
+{
+ClinicalType = ClinicalDocumentType.Consultation,
+Language = "<language>",
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+}},
+}
+            }, configuration: configuration);
             TrialMatcherResults responseData = operation.Value;
         }
     }

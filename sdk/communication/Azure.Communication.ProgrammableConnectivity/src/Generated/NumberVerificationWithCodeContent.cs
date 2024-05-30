@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.ProgrammableConnectivity
 {
     /// <summary> Request to verify number of device - second call. </summary>
-    public partial class NumberVerificationWithCodeContent
+    internal partial class NumberVerificationWithCodeContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

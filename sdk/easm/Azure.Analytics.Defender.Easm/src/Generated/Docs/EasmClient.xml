@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="UpdateAssetsAsync(string,AssetUpdatePayload,CancellationToken)">
+    <member name="UpdateAssetsAsync(string,AssetUpdateState?,string,IDictionary{string,bool},AssetUpdateTransfers?,CancellationToken)">
       <example>
 This sample shows how to call UpdateAssetsAsync.
 <code><![CDATA[
@@ -9,8 +9,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-AssetUpdatePayload assetUpdatePayload = new AssetUpdatePayload();
-Response<TaskResource> response = await client.UpdateAssetsAsync("<filter>", assetUpdatePayload);
+Response<TaskResource> response = await client.UpdateAssetsAsync("<filter>");
 ]]></code>
 This sample shows how to call UpdateAssetsAsync with all parameters.
 <code><![CDATA[
@@ -18,20 +17,13 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-AssetUpdatePayload assetUpdatePayload = new AssetUpdatePayload
+Response<TaskResource> response = await client.UpdateAssetsAsync("<filter>", state: AssetUpdateState.Candidate, externalId: "<externalId>", labels: new Dictionary<string, bool>
 {
-    State = AssetUpdateState.Candidate,
-    ExternalId = "<externalId>",
-    Labels =
-    {
-        ["key"] = true
-    },
-    Transfers = AssetUpdateTransfers.As,
-};
-Response<TaskResource> response = await client.UpdateAssetsAsync("<filter>", assetUpdatePayload);
+    ["key"] = true
+}, transfers: AssetUpdateTransfers.As);
 ]]></code></example>
     </member>
-    <member name="UpdateAssets(string,AssetUpdatePayload,CancellationToken)">
+    <member name="UpdateAssets(string,AssetUpdateState?,string,IDictionary{string,bool},AssetUpdateTransfers?,CancellationToken)">
       <example>
 This sample shows how to call UpdateAssets.
 <code><![CDATA[
@@ -39,8 +31,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-AssetUpdatePayload assetUpdatePayload = new AssetUpdatePayload();
-Response<TaskResource> response = client.UpdateAssets("<filter>", assetUpdatePayload);
+Response<TaskResource> response = client.UpdateAssets("<filter>");
 ]]></code>
 This sample shows how to call UpdateAssets with all parameters.
 <code><![CDATA[
@@ -48,17 +39,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-AssetUpdatePayload assetUpdatePayload = new AssetUpdatePayload
+Response<TaskResource> response = client.UpdateAssets("<filter>", state: AssetUpdateState.Candidate, externalId: "<externalId>", labels: new Dictionary<string, bool>
 {
-    State = AssetUpdateState.Candidate,
-    ExternalId = "<externalId>",
-    Labels =
-    {
-        ["key"] = true
-    },
-    Transfers = AssetUpdateTransfers.As,
-};
-Response<TaskResource> response = client.UpdateAssets("<filter>", assetUpdatePayload);
+    ["key"] = true
+}, transfers: AssetUpdateTransfers.As);
 ]]></code></example>
     </member>
     <member name="UpdateAssetsAsync(string,RequestContent,RequestContext)">
@@ -271,7 +255,7 @@ Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("reason").ToSt
 Console.WriteLine(result.GetProperty("reason").ToString());
 ]]></code></example>
     </member>
-    <member name="ValidateDataConnectionAsync(DataConnectionPayload,CancellationToken)">
+    <member name="ValidateDataConnectionAsync(string,string,DataConnectionContent?,DataConnectionFrequency?,int?,CancellationToken)">
       <example>
 This sample shows how to call ValidateDataConnectionAsync.
 <code><![CDATA[
@@ -279,8 +263,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties());
-Response<ValidateResult> response = await client.ValidateDataConnectionAsync(dataConnectionPayload);
+Response<ValidateResult> response = await client.ValidateDataConnectionAsync("logAnalytics");
 ]]></code>
 This sample shows how to call ValidateDataConnectionAsync with all parameters.
 <code><![CDATA[
@@ -288,21 +271,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties
-{
-    ApiKey = "<apiKey>",
-    WorkspaceId = "<workspaceId>",
-})
-{
-    Name = "<name>",
-    Content = DataConnectionContent.Assets,
-    Frequency = DataConnectionFrequency.Daily,
-    FrequencyOffset = 1234,
-};
-Response<ValidateResult> response = await client.ValidateDataConnectionAsync(dataConnectionPayload);
+Response<ValidateResult> response = await client.ValidateDataConnectionAsync("logAnalytics", name: "<name>", content: DataConnectionContent.Assets, frequency: DataConnectionFrequency.Daily, frequencyOffset: 1234);
 ]]></code></example>
     </member>
-    <member name="ValidateDataConnection(DataConnectionPayload,CancellationToken)">
+    <member name="ValidateDataConnection(string,string,DataConnectionContent?,DataConnectionFrequency?,int?,CancellationToken)">
       <example>
 This sample shows how to call ValidateDataConnection.
 <code><![CDATA[
@@ -310,8 +282,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties());
-Response<ValidateResult> response = client.ValidateDataConnection(dataConnectionPayload);
+Response<ValidateResult> response = client.ValidateDataConnection("logAnalytics");
 ]]></code>
 This sample shows how to call ValidateDataConnection with all parameters.
 <code><![CDATA[
@@ -319,18 +290,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties
-{
-    ApiKey = "<apiKey>",
-    WorkspaceId = "<workspaceId>",
-})
-{
-    Name = "<name>",
-    Content = DataConnectionContent.Assets,
-    Frequency = DataConnectionFrequency.Daily,
-    FrequencyOffset = 1234,
-};
-Response<ValidateResult> response = client.ValidateDataConnection(dataConnectionPayload);
+Response<ValidateResult> response = client.ValidateDataConnection("logAnalytics", name: "<name>", content: DataConnectionContent.Assets, frequency: DataConnectionFrequency.Daily, frequencyOffset: 1234);
 ]]></code></example>
     </member>
     <member name="ValidateDataConnectionAsync(RequestContent,RequestContext)">
@@ -539,7 +499,7 @@ Console.WriteLine(result.GetProperty("active").ToString());
 Console.WriteLine(result.GetProperty("inactiveMessage").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateOrReplaceDataConnectionAsync(string,DataConnectionPayload,CancellationToken)">
+    <member name="CreateOrReplaceDataConnectionAsync(string,string,string,DataConnectionContent?,DataConnectionFrequency?,int?,CancellationToken)">
       <example>
 This sample shows how to call CreateOrReplaceDataConnectionAsync.
 <code><![CDATA[
@@ -547,8 +507,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties());
-Response<DataConnection> response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", dataConnectionPayload);
+Response<DataConnection> response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", "logAnalytics");
 ]]></code>
 This sample shows how to call CreateOrReplaceDataConnectionAsync with all parameters.
 <code><![CDATA[
@@ -556,21 +515,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties
-{
-    ApiKey = "<apiKey>",
-    WorkspaceId = "<workspaceId>",
-})
-{
-    Name = "<name>",
-    Content = DataConnectionContent.Assets,
-    Frequency = DataConnectionFrequency.Daily,
-    FrequencyOffset = 1234,
-};
-Response<DataConnection> response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", dataConnectionPayload);
+Response<DataConnection> response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", "logAnalytics", name: "<name>", content: DataConnectionContent.Assets, frequency: DataConnectionFrequency.Daily, frequencyOffset: 1234);
 ]]></code></example>
     </member>
-    <member name="CreateOrReplaceDataConnection(string,DataConnectionPayload,CancellationToken)">
+    <member name="CreateOrReplaceDataConnection(string,string,string,DataConnectionContent?,DataConnectionFrequency?,int?,CancellationToken)">
       <example>
 This sample shows how to call CreateOrReplaceDataConnection.
 <code><![CDATA[
@@ -578,8 +526,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties());
-Response<DataConnection> response = client.CreateOrReplaceDataConnection("<dataConnectionName>", dataConnectionPayload);
+Response<DataConnection> response = client.CreateOrReplaceDataConnection("<dataConnectionName>", "logAnalytics");
 ]]></code>
 This sample shows how to call CreateOrReplaceDataConnection with all parameters.
 <code><![CDATA[
@@ -587,18 +534,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties
-{
-    ApiKey = "<apiKey>",
-    WorkspaceId = "<workspaceId>",
-})
-{
-    Name = "<name>",
-    Content = DataConnectionContent.Assets,
-    Frequency = DataConnectionFrequency.Daily,
-    FrequencyOffset = 1234,
-};
-Response<DataConnection> response = client.CreateOrReplaceDataConnection("<dataConnectionName>", dataConnectionPayload);
+Response<DataConnection> response = client.CreateOrReplaceDataConnection("<dataConnectionName>", "logAnalytics", name: "<name>", content: DataConnectionContent.Assets, frequency: DataConnectionFrequency.Daily, frequencyOffset: 1234);
 ]]></code></example>
     </member>
     <member name="CreateOrReplaceDataConnectionAsync(string,RequestContent,RequestContext)">
@@ -757,7 +693,7 @@ Response response = client.DeleteDataConnection("<dataConnectionName>");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="ValidateDiscoveryGroupAsync(DiscoveryGroupPayload,CancellationToken)">
+    <member name="ValidateDiscoveryGroupAsync(string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)">
       <example>
 This sample shows how to call ValidateDiscoveryGroupAsync.
 <code><![CDATA[
@@ -765,8 +701,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload();
-Response<ValidateResult> response = await client.ValidateDiscoveryGroupAsync(discoveryGroupPayload);
+Response<ValidateResult> response = await client.ValidateDiscoveryGroupAsync();
 ]]></code>
 This sample shows how to call ValidateDiscoveryGroupAsync with all parameters.
 <code><![CDATA[
@@ -774,25 +709,20 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload
+Response<ValidateResult> response = await client.ValidateDiscoveryGroupAsync(name: "<name>", description: "<description>", tier: "<tier>", frequencyMilliseconds: 1234L, seeds: new DiscoverySource[]
 {
-    Name = "<name>",
-    Description = "<description>",
-    Tier = "<tier>",
-    FrequencyMilliseconds = 1234L,
-    Seeds = {new DiscoverySource
+    new DiscoverySource
     {
         Kind = DiscoverySourceKind.As,
         Name = "<name>",
-    }},
-    Names = { "<names>" },
-    Excludes = { default },
-    TemplateId = "<templateId>",
-};
-Response<ValidateResult> response = await client.ValidateDiscoveryGroupAsync(discoveryGroupPayload);
+    }
+}, names: new string[] { "<names>" }, excludes: new DiscoverySource[]
+{
+    default
+}, templateId: "<templateId>");
 ]]></code></example>
     </member>
-    <member name="ValidateDiscoveryGroup(DiscoveryGroupPayload,CancellationToken)">
+    <member name="ValidateDiscoveryGroup(string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)">
       <example>
 This sample shows how to call ValidateDiscoveryGroup.
 <code><![CDATA[
@@ -800,8 +730,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload();
-Response<ValidateResult> response = client.ValidateDiscoveryGroup(discoveryGroupPayload);
+Response<ValidateResult> response = client.ValidateDiscoveryGroup();
 ]]></code>
 This sample shows how to call ValidateDiscoveryGroup with all parameters.
 <code><![CDATA[
@@ -809,22 +738,17 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload
+Response<ValidateResult> response = client.ValidateDiscoveryGroup(name: "<name>", description: "<description>", tier: "<tier>", frequencyMilliseconds: 1234L, seeds: new DiscoverySource[]
 {
-    Name = "<name>",
-    Description = "<description>",
-    Tier = "<tier>",
-    FrequencyMilliseconds = 1234L,
-    Seeds = {new DiscoverySource
+    new DiscoverySource
     {
         Kind = DiscoverySourceKind.As,
         Name = "<name>",
-    }},
-    Names = { "<names>" },
-    Excludes = { default },
-    TemplateId = "<templateId>",
-};
-Response<ValidateResult> response = client.ValidateDiscoveryGroup(discoveryGroupPayload);
+    }
+}, names: new string[] { "<names>" }, excludes: new DiscoverySource[]
+{
+    default
+}, templateId: "<templateId>");
 ]]></code></example>
     </member>
     <member name="ValidateDiscoveryGroupAsync(RequestContent,RequestContext)">
@@ -1069,7 +993,7 @@ Console.WriteLine(result.GetProperty("createdDate").ToString());
 Console.WriteLine(result.GetProperty("templateId").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateOrReplaceDiscoveryGroupAsync(string,DiscoveryGroupPayload,CancellationToken)">
+    <member name="CreateOrReplaceDiscoveryGroupAsync(string,string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)">
       <example>
 This sample shows how to call CreateOrReplaceDiscoveryGroupAsync.
 <code><![CDATA[
@@ -1077,8 +1001,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload();
-Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", discoveryGroupPayload);
+Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>");
 ]]></code>
 This sample shows how to call CreateOrReplaceDiscoveryGroupAsync with all parameters.
 <code><![CDATA[
@@ -1086,25 +1009,20 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload
+Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", name: "<name>", description: "<description>", tier: "<tier>", frequencyMilliseconds: 1234L, seeds: new DiscoverySource[]
 {
-    Name = "<name>",
-    Description = "<description>",
-    Tier = "<tier>",
-    FrequencyMilliseconds = 1234L,
-    Seeds = {new DiscoverySource
+    new DiscoverySource
     {
         Kind = DiscoverySourceKind.As,
         Name = "<name>",
-    }},
-    Names = { "<names>" },
-    Excludes = { default },
-    TemplateId = "<templateId>",
-};
-Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", discoveryGroupPayload);
+    }
+}, names: new string[] { "<names>" }, excludes: new DiscoverySource[]
+{
+    default
+}, templateId: "<templateId>");
 ]]></code></example>
     </member>
-    <member name="CreateOrReplaceDiscoveryGroup(string,DiscoveryGroupPayload,CancellationToken)">
+    <member name="CreateOrReplaceDiscoveryGroup(string,string,string,string,long?,IEnumerable{DiscoverySource},IEnumerable{string},IEnumerable{DiscoverySource},string,CancellationToken)">
       <example>
 This sample shows how to call CreateOrReplaceDiscoveryGroup.
 <code><![CDATA[
@@ -1112,8 +1030,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload();
-Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("<groupName>", discoveryGroupPayload);
+Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("<groupName>");
 ]]></code>
 This sample shows how to call CreateOrReplaceDiscoveryGroup with all parameters.
 <code><![CDATA[
@@ -1121,22 +1038,17 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload
+Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("<groupName>", name: "<name>", description: "<description>", tier: "<tier>", frequencyMilliseconds: 1234L, seeds: new DiscoverySource[]
 {
-    Name = "<name>",
-    Description = "<description>",
-    Tier = "<tier>",
-    FrequencyMilliseconds = 1234L,
-    Seeds = {new DiscoverySource
+    new DiscoverySource
     {
         Kind = DiscoverySourceKind.As,
         Name = "<name>",
-    }},
-    Names = { "<names>" },
-    Excludes = { default },
-    TemplateId = "<templateId>",
-};
-Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("<groupName>", discoveryGroupPayload);
+    }
+}, names: new string[] { "<names>" }, excludes: new DiscoverySource[]
+{
+    default
+}, templateId: "<templateId>");
 ]]></code></example>
     </member>
     <member name="CreateOrReplaceDiscoveryGroupAsync(string,RequestContent,RequestContext)">
@@ -1533,7 +1445,7 @@ Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("assetBrea
 Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("assetBreakdown")[0].GetProperty("count").ToString());
 ]]></code></example>
     </member>
-    <member name="GetSnapshotAsync(ReportAssetSnapshotPayload,CancellationToken)">
+    <member name="GetSnapshotAsync(string,string,int?,int?,CancellationToken)">
       <example>
 This sample shows how to call GetSnapshotAsync.
 <code><![CDATA[
@@ -1541,8 +1453,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-ReportAssetSnapshotPayload reportAssetSnapshotPayload = new ReportAssetSnapshotPayload();
-Response<ReportAssetSnapshotResult> response = await client.GetSnapshotAsync(reportAssetSnapshotPayload);
+Response<ReportAssetSnapshotResult> response = await client.GetSnapshotAsync();
 ]]></code>
 This sample shows how to call GetSnapshotAsync with all parameters.
 <code><![CDATA[
@@ -1550,17 +1461,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-ReportAssetSnapshotPayload reportAssetSnapshotPayload = new ReportAssetSnapshotPayload
-{
-    Metric = "<metric>",
-    LabelName = "<labelName>",
-    Size = 1234,
-    Page = 1234,
-};
-Response<ReportAssetSnapshotResult> response = await client.GetSnapshotAsync(reportAssetSnapshotPayload);
+Response<ReportAssetSnapshotResult> response = await client.GetSnapshotAsync(metric: "<metric>", labelName: "<labelName>", size: 1234, page: 1234);
 ]]></code></example>
     </member>
-    <member name="GetSnapshot(ReportAssetSnapshotPayload,CancellationToken)">
+    <member name="GetSnapshot(string,string,int?,int?,CancellationToken)">
       <example>
 This sample shows how to call GetSnapshot.
 <code><![CDATA[
@@ -1568,8 +1472,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-ReportAssetSnapshotPayload reportAssetSnapshotPayload = new ReportAssetSnapshotPayload();
-Response<ReportAssetSnapshotResult> response = client.GetSnapshot(reportAssetSnapshotPayload);
+Response<ReportAssetSnapshotResult> response = client.GetSnapshot();
 ]]></code>
 This sample shows how to call GetSnapshot with all parameters.
 <code><![CDATA[
@@ -1577,14 +1480,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-ReportAssetSnapshotPayload reportAssetSnapshotPayload = new ReportAssetSnapshotPayload
-{
-    Metric = "<metric>",
-    LabelName = "<labelName>",
-    Size = 1234,
-    Page = 1234,
-};
-Response<ReportAssetSnapshotResult> response = client.GetSnapshot(reportAssetSnapshotPayload);
+Response<ReportAssetSnapshotResult> response = client.GetSnapshot(metric: "<metric>", labelName: "<labelName>", size: 1234, page: 1234);
 ]]></code></example>
     </member>
     <member name="GetSnapshotAsync(RequestContent,RequestContext)">
@@ -1703,7 +1599,7 @@ Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProper
 Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("reason").ToString());
 ]]></code></example>
     </member>
-    <member name="GetSummaryAsync(ReportAssetSummaryPayload,CancellationToken)">
+    <member name="GetSummaryAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},string,string,string,CancellationToken)">
       <example>
 This sample shows how to call GetSummaryAsync.
 <code><![CDATA[
@@ -1711,8 +1607,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-ReportAssetSummaryPayload reportAssetSummaryPayload = new ReportAssetSummaryPayload();
-Response<ReportAssetSummaryResult> response = await client.GetSummaryAsync(reportAssetSummaryPayload);
+Response<ReportAssetSummaryResult> response = await client.GetSummaryAsync();
 ]]></code>
 This sample shows how to call GetSummaryAsync with all parameters.
 <code><![CDATA[
@@ -1720,19 +1615,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-ReportAssetSummaryPayload reportAssetSummaryPayload = new ReportAssetSummaryPayload
-{
-    MetricCategories = { "<metricCategories>" },
-    Metrics = { "<metrics>" },
-    Filters = { "<filters>" },
-    GroupBy = "<groupBy>",
-    SegmentBy = "<segmentBy>",
-    LabelName = "<labelName>",
-};
-Response<ReportAssetSummaryResult> response = await client.GetSummaryAsync(reportAssetSummaryPayload);
+Response<ReportAssetSummaryResult> response = await client.GetSummaryAsync(metricCategories: new string[] { "<metricCategories>" }, metrics: new string[] { "<metrics>" }, filters: new string[] { "<filters>" }, groupBy: "<groupBy>", segmentBy: "<segmentBy>", labelName: "<labelName>");
 ]]></code></example>
     </member>
-    <member name="GetSummary(ReportAssetSummaryPayload,CancellationToken)">
+    <member name="GetSummary(IEnumerable{string},IEnumerable{string},IEnumerable{string},string,string,string,CancellationToken)">
       <example>
 This sample shows how to call GetSummary.
 <code><![CDATA[
@@ -1740,8 +1626,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-ReportAssetSummaryPayload reportAssetSummaryPayload = new ReportAssetSummaryPayload();
-Response<ReportAssetSummaryResult> response = client.GetSummary(reportAssetSummaryPayload);
+Response<ReportAssetSummaryResult> response = client.GetSummary();
 ]]></code>
 This sample shows how to call GetSummary with all parameters.
 <code><![CDATA[
@@ -1749,16 +1634,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-ReportAssetSummaryPayload reportAssetSummaryPayload = new ReportAssetSummaryPayload
-{
-    MetricCategories = { "<metricCategories>" },
-    Metrics = { "<metrics>" },
-    Filters = { "<filters>" },
-    GroupBy = "<groupBy>",
-    SegmentBy = "<segmentBy>",
-    LabelName = "<labelName>",
-};
-Response<ReportAssetSummaryResult> response = client.GetSummary(reportAssetSummaryPayload);
+Response<ReportAssetSummaryResult> response = client.GetSummary(metricCategories: new string[] { "<metricCategories>" }, metrics: new string[] { "<metrics>" }, filters: new string[] { "<filters>" }, groupBy: "<groupBy>", segmentBy: "<segmentBy>", labelName: "<labelName>");
 ]]></code></example>
     </member>
     <member name="GetSummaryAsync(RequestContent,RequestContext)">
@@ -1961,7 +1837,7 @@ Console.WriteLine(result.GetProperty("filter").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateOrReplaceSavedFilterAsync(string,SavedFilterPayload,CancellationToken)">
+    <member name="CreateOrReplaceSavedFilterAsync(string,string,string,CancellationToken)">
       <example>
 This sample shows how to call CreateOrReplaceSavedFilterAsync.
 <code><![CDATA[
@@ -1969,8 +1845,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-SavedFilterPayload savedFilterPayload = new SavedFilterPayload("<filter>", "<description>");
-Response<SavedFilter> response = await client.CreateOrReplaceSavedFilterAsync("<filterName>", savedFilterPayload);
+Response<SavedFilter> response = await client.CreateOrReplaceSavedFilterAsync("<filterName>", "<filter>", "<description>");
 ]]></code>
 This sample shows how to call CreateOrReplaceSavedFilterAsync with all parameters.
 <code><![CDATA[
@@ -1978,11 +1853,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-SavedFilterPayload savedFilterPayload = new SavedFilterPayload("<filter>", "<description>");
-Response<SavedFilter> response = await client.CreateOrReplaceSavedFilterAsync("<filterName>", savedFilterPayload);
+Response<SavedFilter> response = await client.CreateOrReplaceSavedFilterAsync("<filterName>", "<filter>", "<description>");
 ]]></code></example>
     </member>
-    <member name="CreateOrReplaceSavedFilter(string,SavedFilterPayload,CancellationToken)">
+    <member name="CreateOrReplaceSavedFilter(string,string,string,CancellationToken)">
       <example>
 This sample shows how to call CreateOrReplaceSavedFilter.
 <code><![CDATA[
@@ -1990,8 +1864,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-SavedFilterPayload savedFilterPayload = new SavedFilterPayload("<filter>", "<description>");
-Response<SavedFilter> response = client.CreateOrReplaceSavedFilter("<filterName>", savedFilterPayload);
+Response<SavedFilter> response = client.CreateOrReplaceSavedFilter("<filterName>", "<filter>", "<description>");
 ]]></code>
 This sample shows how to call CreateOrReplaceSavedFilter with all parameters.
 <code><![CDATA[
@@ -1999,8 +1872,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 EasmClient client = new EasmClient(endpoint, credential);
 
-SavedFilterPayload savedFilterPayload = new SavedFilterPayload("<filter>", "<description>");
-Response<SavedFilter> response = client.CreateOrReplaceSavedFilter("<filterName>", savedFilterPayload);
+Response<SavedFilter> response = client.CreateOrReplaceSavedFilter("<filterName>", "<filter>", "<description>");
 ]]></code></example>
     </member>
     <member name="CreateOrReplaceSavedFilterAsync(string,RequestContent,RequestContext)">

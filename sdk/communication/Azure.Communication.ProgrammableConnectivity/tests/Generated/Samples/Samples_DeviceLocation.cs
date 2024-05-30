@@ -76,8 +76,9 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
-            DeviceLocationVerificationContent deviceLocationVerificationContent = new DeviceLocationVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"), 123.45, 123.45, 1234, new LocationDevice());
-            Response<DeviceLocationVerificationResult> response = client.Verify("<apcGatewayId>", deviceLocationVerificationContent);
+            NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
+            LocationDevice device = new LocationDevice();
+            Response<DeviceLocationVerificationResult> response = client.Verify("<apcGatewayId>", networkIdentifier, 123.45, 123.45, 1234, device);
         }
 
         [Test]
@@ -88,8 +89,9 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
-            DeviceLocationVerificationContent deviceLocationVerificationContent = new DeviceLocationVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"), 123.45, 123.45, 1234, new LocationDevice());
-            Response<DeviceLocationVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", deviceLocationVerificationContent);
+            NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
+            LocationDevice device = new LocationDevice();
+            Response<DeviceLocationVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", networkIdentifier, 123.45, 123.45, 1234, device);
         }
 
         [Test]
@@ -180,14 +182,15 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
-            DeviceLocationVerificationContent deviceLocationVerificationContent = new DeviceLocationVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"), 123.45, 123.45, 1234, new LocationDevice
+            NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
+            LocationDevice device = new LocationDevice
             {
                 NetworkAccessIdentifier = "<networkAccessIdentifier>",
                 PhoneNumber = "<phoneNumber>",
                 Ipv4Address = new Ipv4Address("<ipv4>", 1234),
                 Ipv6Address = new Ipv6Address("<ipv6>", 1234),
-            });
-            Response<DeviceLocationVerificationResult> response = client.Verify("<apcGatewayId>", deviceLocationVerificationContent);
+            };
+            Response<DeviceLocationVerificationResult> response = client.Verify("<apcGatewayId>", networkIdentifier, 123.45, 123.45, 1234, device);
         }
 
         [Test]
@@ -198,14 +201,15 @@ namespace Azure.Communication.ProgrammableConnectivity.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
 
-            DeviceLocationVerificationContent deviceLocationVerificationContent = new DeviceLocationVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"), 123.45, 123.45, 1234, new LocationDevice
+            NetworkIdentifier networkIdentifier = new NetworkIdentifier("<identifierType>", "<identifier>");
+            LocationDevice device = new LocationDevice
             {
                 NetworkAccessIdentifier = "<networkAccessIdentifier>",
                 PhoneNumber = "<phoneNumber>",
                 Ipv4Address = new Ipv4Address("<ipv4>", 1234),
                 Ipv6Address = new Ipv6Address("<ipv6>", 1234),
-            });
-            Response<DeviceLocationVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", deviceLocationVerificationContent);
+            };
+            Response<DeviceLocationVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", networkIdentifier, 123.45, 123.45, 1234, device);
         }
     }
 }

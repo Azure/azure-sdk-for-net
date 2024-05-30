@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    public partial class TextNotificationContent : IUtf8JsonSerializable, IJsonModel<TextNotificationContent>
+    internal partial class TextNotificationContent : IUtf8JsonSerializable, IJsonModel<TextNotificationContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextNotificationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

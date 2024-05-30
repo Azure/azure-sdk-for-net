@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The payload of suggest request. </summary>
-    public partial class SuggestConfig
+    internal partial class SuggestConfig
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

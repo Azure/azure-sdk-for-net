@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -66,32 +68,36 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Sends a notification message from Business to User. </summary>
-        /// <param name="notificationContent"> Details of the message to send. </param>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="kind"> The type discriminator describing a notification type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
-        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendAsync(NotificationContent,CancellationToken)']/*" />
-        public virtual async Task<Response<SendMessageResult>> SendAsync(NotificationContent notificationContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
+        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendAsync(Guid,IEnumerable{string},CommunicationMessageKind,CancellationToken)']/*" />
+        public virtual async Task<Response<SendMessageResult>> SendAsync(Guid channelRegistrationId, IEnumerable<string> to, CommunicationMessageKind kind, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(notificationContent, nameof(notificationContent));
+            Argument.AssertNotNull(to, nameof(to));
 
-            using RequestContent content = notificationContent.ToRequestContent();
+            NotificationContent notificationContent = new Messages.NotificationContent(channelRegistrationId, to.ToList(), kind, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await SendAsync(content, context).ConfigureAwait(false);
+            Response response = await SendAsync(notificationContent.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(SendMessageResult.FromResponse(response), response);
         }
 
         /// <summary> Sends a notification message from Business to User. </summary>
-        /// <param name="notificationContent"> Details of the message to send. </param>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="kind"> The type discriminator describing a notification type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
-        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='Send(NotificationContent,CancellationToken)']/*" />
-        public virtual Response<SendMessageResult> Send(NotificationContent notificationContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
+        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='Send(Guid,IEnumerable{string},CommunicationMessageKind,CancellationToken)']/*" />
+        public virtual Response<SendMessageResult> Send(Guid channelRegistrationId, IEnumerable<string> to, CommunicationMessageKind kind, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(notificationContent, nameof(notificationContent));
+            Argument.AssertNotNull(to, nameof(to));
 
-            using RequestContent content = notificationContent.ToRequestContent();
+            NotificationContent notificationContent = new Messages.NotificationContent(channelRegistrationId, to.ToList(), kind, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Send(content, context);
+            Response response = Send(notificationContent.ToRequestContent(), context);
             return Response.FromValue(SendMessageResult.FromResponse(response), response);
         }
 
@@ -105,7 +111,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SendAsync(NotificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="SendAsync(Guid,IEnumerable{string},CommunicationMessageKind,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -144,7 +150,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Send(NotificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Send(Guid,IEnumerable{string},CommunicationMessageKind,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

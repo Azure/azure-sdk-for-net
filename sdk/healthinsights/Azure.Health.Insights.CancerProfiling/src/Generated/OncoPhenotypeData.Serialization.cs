@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Health.Insights.CancerProfiling
 {
-    public partial class OncoPhenotypeData : IUtf8JsonSerializable, IJsonModel<OncoPhenotypeData>
+    internal partial class OncoPhenotypeData : IUtf8JsonSerializable, IJsonModel<OncoPhenotypeData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OncoPhenotypeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

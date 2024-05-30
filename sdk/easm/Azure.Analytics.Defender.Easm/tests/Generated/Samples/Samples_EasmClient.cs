@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -54,8 +55,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            AssetUpdatePayload assetUpdatePayload = new AssetUpdatePayload();
-            Response<TaskResource> response = client.UpdateAssets("<filter>", assetUpdatePayload);
+            Response<TaskResource> response = client.UpdateAssets("<filter>");
         }
 
         [Test]
@@ -66,8 +66,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            AssetUpdatePayload assetUpdatePayload = new AssetUpdatePayload();
-            Response<TaskResource> response = await client.UpdateAssetsAsync("<filter>", assetUpdatePayload);
+            Response<TaskResource> response = await client.UpdateAssetsAsync("<filter>");
         }
 
         [Test]
@@ -140,17 +139,10 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            AssetUpdatePayload assetUpdatePayload = new AssetUpdatePayload
+            Response<TaskResource> response = client.UpdateAssets("<filter>", state: AssetUpdateState.Candidate, externalId: "<externalId>", labels: new Dictionary<string, bool>
             {
-                State = AssetUpdateState.Candidate,
-                ExternalId = "<externalId>",
-                Labels =
-{
-["key"] = true
-},
-                Transfers = AssetUpdateTransfers.As,
-            };
-            Response<TaskResource> response = client.UpdateAssets("<filter>", assetUpdatePayload);
+                ["key"] = true
+            }, transfers: AssetUpdateTransfers.As);
         }
 
         [Test]
@@ -161,17 +153,10 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            AssetUpdatePayload assetUpdatePayload = new AssetUpdatePayload
+            Response<TaskResource> response = await client.UpdateAssetsAsync("<filter>", state: AssetUpdateState.Candidate, externalId: "<externalId>", labels: new Dictionary<string, bool>
             {
-                State = AssetUpdateState.Candidate,
-                ExternalId = "<externalId>",
-                Labels =
-{
-["key"] = true
-},
-                Transfers = AssetUpdateTransfers.As,
-            };
-            Response<TaskResource> response = await client.UpdateAssetsAsync("<filter>", assetUpdatePayload);
+                ["key"] = true
+            }, transfers: AssetUpdateTransfers.As);
         }
 
         [Test]
@@ -356,8 +341,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties());
-            Response<ValidateResult> response = client.ValidateDataConnection(dataConnectionPayload);
+            Response<ValidateResult> response = client.ValidateDataConnection("logAnalytics");
         }
 
         [Test]
@@ -368,8 +352,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties());
-            Response<ValidateResult> response = await client.ValidateDataConnectionAsync(dataConnectionPayload);
+            Response<ValidateResult> response = await client.ValidateDataConnectionAsync("logAnalytics");
         }
 
         [Test]
@@ -442,18 +425,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties
-            {
-                ApiKey = "<apiKey>",
-                WorkspaceId = "<workspaceId>",
-            })
-            {
-                Name = "<name>",
-                Content = DataConnectionContent.Assets,
-                Frequency = DataConnectionFrequency.Daily,
-                FrequencyOffset = 1234,
-            };
-            Response<ValidateResult> response = client.ValidateDataConnection(dataConnectionPayload);
+            Response<ValidateResult> response = client.ValidateDataConnection("logAnalytics", name: "<name>", content: DataConnectionContent.Assets, frequency: DataConnectionFrequency.Daily, frequencyOffset: 1234);
         }
 
         [Test]
@@ -464,18 +436,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties
-            {
-                ApiKey = "<apiKey>",
-                WorkspaceId = "<workspaceId>",
-            })
-            {
-                Name = "<name>",
-                Content = DataConnectionContent.Assets,
-                Frequency = DataConnectionFrequency.Daily,
-                FrequencyOffset = 1234,
-            };
-            Response<ValidateResult> response = await client.ValidateDataConnectionAsync(dataConnectionPayload);
+            Response<ValidateResult> response = await client.ValidateDataConnectionAsync("logAnalytics", name: "<name>", content: DataConnectionContent.Assets, frequency: DataConnectionFrequency.Daily, frequencyOffset: 1234);
         }
 
         [Test]
@@ -650,8 +611,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties());
-            Response<DataConnection> response = client.CreateOrReplaceDataConnection("<dataConnectionName>", dataConnectionPayload);
+            Response<DataConnection> response = client.CreateOrReplaceDataConnection("<dataConnectionName>", "logAnalytics");
         }
 
         [Test]
@@ -662,8 +622,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties());
-            Response<DataConnection> response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", dataConnectionPayload);
+            Response<DataConnection> response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", "logAnalytics");
         }
 
         [Test]
@@ -750,18 +709,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties
-            {
-                ApiKey = "<apiKey>",
-                WorkspaceId = "<workspaceId>",
-            })
-            {
-                Name = "<name>",
-                Content = DataConnectionContent.Assets,
-                Frequency = DataConnectionFrequency.Daily,
-                FrequencyOffset = 1234,
-            };
-            Response<DataConnection> response = client.CreateOrReplaceDataConnection("<dataConnectionName>", dataConnectionPayload);
+            Response<DataConnection> response = client.CreateOrReplaceDataConnection("<dataConnectionName>", "logAnalytics", name: "<name>", content: DataConnectionContent.Assets, frequency: DataConnectionFrequency.Daily, frequencyOffset: 1234);
         }
 
         [Test]
@@ -772,18 +720,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DataConnectionPayload dataConnectionPayload = new LogAnalyticsDataConnectionPayload(new LogAnalyticsDataConnectionProperties
-            {
-                ApiKey = "<apiKey>",
-                WorkspaceId = "<workspaceId>",
-            })
-            {
-                Name = "<name>",
-                Content = DataConnectionContent.Assets,
-                Frequency = DataConnectionFrequency.Daily,
-                FrequencyOffset = 1234,
-            };
-            Response<DataConnection> response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", dataConnectionPayload);
+            Response<DataConnection> response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", "logAnalytics", name: "<name>", content: DataConnectionContent.Assets, frequency: DataConnectionFrequency.Daily, frequencyOffset: 1234);
         }
 
         [Test]
@@ -876,8 +813,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload();
-            Response<ValidateResult> response = client.ValidateDiscoveryGroup(discoveryGroupPayload);
+            Response<ValidateResult> response = client.ValidateDiscoveryGroup();
         }
 
         [Test]
@@ -888,8 +824,7 @@ namespace Azure.Analytics.Defender.Easm.Samples
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload();
-            Response<ValidateResult> response = await client.ValidateDiscoveryGroupAsync(discoveryGroupPayload);
+            Response<ValidateResult> response = await client.ValidateDiscoveryGroupAsync();
         }
 
         [Test]
@@ -984,22 +919,17 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload
+            Response<ValidateResult> response = client.ValidateDiscoveryGroup(name: "<name>", description: "<description>", tier: "<tier>", frequencyMilliseconds: 1234L, seeds: new DiscoverySource[]
             {
-                Name = "<name>",
-                Description = "<description>",
-                Tier = "<tier>",
-                FrequencyMilliseconds = 1234L,
-                Seeds = {new DiscoverySource
+new DiscoverySource
 {
 Kind = DiscoverySourceKind.As,
 Name = "<name>",
-}},
-                Names = { "<names>" },
-                Excludes = { default },
-                TemplateId = "<templateId>",
-            };
-            Response<ValidateResult> response = client.ValidateDiscoveryGroup(discoveryGroupPayload);
+}
+            }, names: new string[] { "<names>" }, excludes: new DiscoverySource[]
+            {
+default
+            }, templateId: "<templateId>");
         }
 
         [Test]
@@ -1010,22 +940,17 @@ Name = "<name>",
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload
+            Response<ValidateResult> response = await client.ValidateDiscoveryGroupAsync(name: "<name>", description: "<description>", tier: "<tier>", frequencyMilliseconds: 1234L, seeds: new DiscoverySource[]
             {
-                Name = "<name>",
-                Description = "<description>",
-                Tier = "<tier>",
-                FrequencyMilliseconds = 1234L,
-                Seeds = {new DiscoverySource
+new DiscoverySource
 {
 Kind = DiscoverySourceKind.As,
 Name = "<name>",
-}},
-                Names = { "<names>" },
-                Excludes = { default },
-                TemplateId = "<templateId>",
-            };
-            Response<ValidateResult> response = await client.ValidateDiscoveryGroupAsync(discoveryGroupPayload);
+}
+            }, names: new string[] { "<names>" }, excludes: new DiscoverySource[]
+            {
+default
+            }, templateId: "<templateId>");
         }
 
         [Test]
@@ -1212,8 +1137,7 @@ Name = "<name>",
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload();
-            Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("<groupName>", discoveryGroupPayload);
+            Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("<groupName>");
         }
 
         [Test]
@@ -1224,8 +1148,7 @@ Name = "<name>",
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload();
-            Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", discoveryGroupPayload);
+            Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>");
         }
 
         [Test]
@@ -1358,22 +1281,17 @@ null
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload
+            Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("<groupName>", name: "<name>", description: "<description>", tier: "<tier>", frequencyMilliseconds: 1234L, seeds: new DiscoverySource[]
             {
-                Name = "<name>",
-                Description = "<description>",
-                Tier = "<tier>",
-                FrequencyMilliseconds = 1234L,
-                Seeds = {new DiscoverySource
+new DiscoverySource
 {
 Kind = DiscoverySourceKind.As,
 Name = "<name>",
-}},
-                Names = { "<names>" },
-                Excludes = { default },
-                TemplateId = "<templateId>",
-            };
-            Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("<groupName>", discoveryGroupPayload);
+}
+            }, names: new string[] { "<names>" }, excludes: new DiscoverySource[]
+            {
+default
+            }, templateId: "<templateId>");
         }
 
         [Test]
@@ -1384,22 +1302,17 @@ Name = "<name>",
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            DiscoveryGroupPayload discoveryGroupPayload = new DiscoveryGroupPayload
+            Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", name: "<name>", description: "<description>", tier: "<tier>", frequencyMilliseconds: 1234L, seeds: new DiscoverySource[]
             {
-                Name = "<name>",
-                Description = "<description>",
-                Tier = "<tier>",
-                FrequencyMilliseconds = 1234L,
-                Seeds = {new DiscoverySource
+new DiscoverySource
 {
 Kind = DiscoverySourceKind.As,
 Name = "<name>",
-}},
-                Names = { "<names>" },
-                Excludes = { default },
-                TemplateId = "<templateId>",
-            };
-            Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", discoveryGroupPayload);
+}
+            }, names: new string[] { "<names>" }, excludes: new DiscoverySource[]
+            {
+default
+            }, templateId: "<templateId>");
         }
 
         [Test]
@@ -1718,8 +1631,7 @@ Name = "<name>",
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            ReportAssetSnapshotPayload reportAssetSnapshotPayload = new ReportAssetSnapshotPayload();
-            Response<ReportAssetSnapshotResult> response = client.GetSnapshot(reportAssetSnapshotPayload);
+            Response<ReportAssetSnapshotResult> response = client.GetSnapshot();
         }
 
         [Test]
@@ -1730,8 +1642,7 @@ Name = "<name>",
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            ReportAssetSnapshotPayload reportAssetSnapshotPayload = new ReportAssetSnapshotPayload();
-            Response<ReportAssetSnapshotResult> response = await client.GetSnapshotAsync(reportAssetSnapshotPayload);
+            Response<ReportAssetSnapshotResult> response = await client.GetSnapshotAsync();
         }
 
         [Test]
@@ -1834,14 +1745,7 @@ Name = "<name>",
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            ReportAssetSnapshotPayload reportAssetSnapshotPayload = new ReportAssetSnapshotPayload
-            {
-                Metric = "<metric>",
-                LabelName = "<labelName>",
-                Size = 1234,
-                Page = 1234,
-            };
-            Response<ReportAssetSnapshotResult> response = client.GetSnapshot(reportAssetSnapshotPayload);
+            Response<ReportAssetSnapshotResult> response = client.GetSnapshot(metric: "<metric>", labelName: "<labelName>", size: 1234, page: 1234);
         }
 
         [Test]
@@ -1852,14 +1756,7 @@ Name = "<name>",
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            ReportAssetSnapshotPayload reportAssetSnapshotPayload = new ReportAssetSnapshotPayload
-            {
-                Metric = "<metric>",
-                LabelName = "<labelName>",
-                Size = 1234,
-                Page = 1234,
-            };
-            Response<ReportAssetSnapshotResult> response = await client.GetSnapshotAsync(reportAssetSnapshotPayload);
+            Response<ReportAssetSnapshotResult> response = await client.GetSnapshotAsync(metric: "<metric>", labelName: "<labelName>", size: 1234, page: 1234);
         }
 
         [Test]
@@ -1900,8 +1797,7 @@ Name = "<name>",
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            ReportAssetSummaryPayload reportAssetSummaryPayload = new ReportAssetSummaryPayload();
-            Response<ReportAssetSummaryResult> response = client.GetSummary(reportAssetSummaryPayload);
+            Response<ReportAssetSummaryResult> response = client.GetSummary();
         }
 
         [Test]
@@ -1912,8 +1808,7 @@ Name = "<name>",
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            ReportAssetSummaryPayload reportAssetSummaryPayload = new ReportAssetSummaryPayload();
-            Response<ReportAssetSummaryResult> response = await client.GetSummaryAsync(reportAssetSummaryPayload);
+            Response<ReportAssetSummaryResult> response = await client.GetSummaryAsync();
         }
 
         [Test]
@@ -2004,16 +1899,7 @@ Name = "<name>",
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            ReportAssetSummaryPayload reportAssetSummaryPayload = new ReportAssetSummaryPayload
-            {
-                MetricCategories = { "<metricCategories>" },
-                Metrics = { "<metrics>" },
-                Filters = { "<filters>" },
-                GroupBy = "<groupBy>",
-                SegmentBy = "<segmentBy>",
-                LabelName = "<labelName>",
-            };
-            Response<ReportAssetSummaryResult> response = client.GetSummary(reportAssetSummaryPayload);
+            Response<ReportAssetSummaryResult> response = client.GetSummary(metricCategories: new string[] { "<metricCategories>" }, metrics: new string[] { "<metrics>" }, filters: new string[] { "<filters>" }, groupBy: "<groupBy>", segmentBy: "<segmentBy>", labelName: "<labelName>");
         }
 
         [Test]
@@ -2024,16 +1910,7 @@ Name = "<name>",
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            ReportAssetSummaryPayload reportAssetSummaryPayload = new ReportAssetSummaryPayload
-            {
-                MetricCategories = { "<metricCategories>" },
-                Metrics = { "<metrics>" },
-                Filters = { "<filters>" },
-                GroupBy = "<groupBy>",
-                SegmentBy = "<segmentBy>",
-                LabelName = "<labelName>",
-            };
-            Response<ReportAssetSummaryResult> response = await client.GetSummaryAsync(reportAssetSummaryPayload);
+            Response<ReportAssetSummaryResult> response = await client.GetSummaryAsync(metricCategories: new string[] { "<metricCategories>" }, metrics: new string[] { "<metrics>" }, filters: new string[] { "<filters>" }, groupBy: "<groupBy>", segmentBy: "<segmentBy>", labelName: "<labelName>");
         }
 
         [Test]
@@ -2190,8 +2067,7 @@ Name = "<name>",
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            SavedFilterPayload savedFilterPayload = new SavedFilterPayload("<filter>", "<description>");
-            Response<SavedFilter> response = client.CreateOrReplaceSavedFilter("<filterName>", savedFilterPayload);
+            Response<SavedFilter> response = client.CreateOrReplaceSavedFilter("<filterName>", "<filter>", "<description>");
         }
 
         [Test]
@@ -2202,8 +2078,7 @@ Name = "<name>",
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            SavedFilterPayload savedFilterPayload = new SavedFilterPayload("<filter>", "<description>");
-            Response<SavedFilter> response = await client.CreateOrReplaceSavedFilterAsync("<filterName>", savedFilterPayload);
+            Response<SavedFilter> response = await client.CreateOrReplaceSavedFilterAsync("<filterName>", "<filter>", "<description>");
         }
 
         [Test]
@@ -2260,8 +2135,7 @@ Name = "<name>",
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            SavedFilterPayload savedFilterPayload = new SavedFilterPayload("<filter>", "<description>");
-            Response<SavedFilter> response = client.CreateOrReplaceSavedFilter("<filterName>", savedFilterPayload);
+            Response<SavedFilter> response = client.CreateOrReplaceSavedFilter("<filterName>", "<filter>", "<description>");
         }
 
         [Test]
@@ -2272,8 +2146,7 @@ Name = "<name>",
             TokenCredential credential = new DefaultAzureCredential();
             EasmClient client = new EasmClient(endpoint, credential);
 
-            SavedFilterPayload savedFilterPayload = new SavedFilterPayload("<filter>", "<description>");
-            Response<SavedFilter> response = await client.CreateOrReplaceSavedFilterAsync("<filterName>", savedFilterPayload);
+            Response<SavedFilter> response = await client.CreateOrReplaceSavedFilterAsync("<filterName>", "<filter>", "<description>");
         }
 
         [Test]
