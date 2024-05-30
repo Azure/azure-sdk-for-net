@@ -619,6 +619,9 @@
 # ServiceLabel: %Mobile Engagement
 # ServiceOwners:                                                   @kpiteira
 
+# PRLabel: %Mobile Network
+/sdk/mobilenetwork/     																					 @tompretty
+
 # PRLabel: %Monitor
 /sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
 
