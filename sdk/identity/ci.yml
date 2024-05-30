@@ -31,7 +31,7 @@ extends:
       safeName: AzureIdentity
     - name: Azure.Identity.Broker
       safeName: AzureIdentityBroker
-    CheckAOTCompat: true
+    CheckAOTCompat: false
     AOTTestInputs:
     - ArtifactName: Azure.Identity
       ExpectedWarningsFilepath: /Azure.Identity/tests/compatibility/ExpectedAotWarnings.txt

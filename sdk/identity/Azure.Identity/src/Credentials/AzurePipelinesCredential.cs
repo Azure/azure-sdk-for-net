@@ -19,6 +19,7 @@ namespace Azure.Identity
         internal readonly string[] AdditionallyAllowedTenantIds;
         internal string SystemAccessToken { get; }
         internal string TenantId { get; }
+        internal string ServiceConnectionId { get; }
         internal MsalConfidentialClient Client { get; }
         internal CredentialPipeline Pipeline { get; }
         internal TenantIdResolverBase TenantIdResolver { get; }
@@ -39,10 +40,11 @@ namespace Azure.Identity
         /// <param name="serviceConnectionId">The service connection Id for the service connection associated with the pipeline. If not provided, the credential will attempt to read the value from the AZURESUBSCRIPTION_SERVICE_CONNECTION_ID environment variable.</param>
         /// <param name="options">An instance of <see cref="AzurePipelinesCredentialOptions"/>.</param>
         /// <exception cref="ArgumentNullException">When <paramref name="systemAccessToken"/> is null.</exception>
-        public AzurePipelinesCredential(string systemAccessToken, string clientId = null, string tenantId = null, string serviceConnectionId  = null, AzurePipelinesCredentialOptions options = default)
+        public AzurePipelinesCredential(string systemAccessToken, string clientId = null, string tenantId = null, string serviceConnectionId = null, AzurePipelinesCredentialOptions options = default)
         {
             Argument.AssertNotNull(systemAccessToken, nameof(systemAccessToken));
             SystemAccessToken = systemAccessToken;
+            ServiceConnectionId = serviceConnectionId ?? options?.ServiceConnectionId;
 
             options ??= new AzurePipelinesCredentialOptions();
             TenantId = Validations.ValidateTenantId(tenantId ?? options.TenantId, nameof(tenantId));
@@ -88,7 +90,7 @@ namespace Azure.Identity
 
         internal HttpMessage CreateOidcRequestMessage(AzurePipelinesCredentialOptions options)
         {
-            string serviceConnectionId = options.ServiceConnectionId ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable AZURESUBSCRIPTION_SERVICE_CONNECTION_ID is not set.");
+            string serviceConnectionId = ServiceConnectionId ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: Either serviceConnectionId was not supplied to the credential or the environment variable AZURESUBSCRIPTION_SERVICE_CONNECTION_ID is not set.");
             string oidcRequestUri = options.OidcRequestUri ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_OIDCREQUESTURI is not set.");
             string systemToken = SystemAccessToken;
 
@@ -119,7 +121,16 @@ namespace Azure.Identity
                     }
                 }
             }
-            return oidcToken ?? throw new AuthenticationFailedException($"OIDC token not found in response.\n\nResponse= {message.Response.Content}");
+            if (oidcToken is null)
+            {
+                string error = $"OIDC token not found in response.";
+                if (message.Response.Status != 200)
+                {
+                    error = error + $"\n\nResponse= {message.Response.Content}";
+                }
+                throw new AuthenticationFailedException(error);
+            }
+            return oidcToken;
         }
     }
 }

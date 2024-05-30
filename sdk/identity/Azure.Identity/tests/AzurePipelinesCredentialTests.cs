@@ -105,6 +105,29 @@ namespace Azure.Identity.Tests
             }
         }
 
+        //[Test]
+        public void AzurePipelineCredentialReturnsErrorInformation()
+        {
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "SYSTEM_OIDCREQUESTURI", "mockCollectionUri" },
+            }))
+            {
+                var systemAccessToken = "mytoken";
+                var tenantId = "myTenantId";
+                var clientId = "myClientId";
+                var serviceConnectionId = "myConnectionId";
+
+                var mockTransport = new MockTransport(req => new MockResponse(200).WithContent(
+                            $"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"mytoken\" }}"));
+
+                var options = new AzurePipelinesCredentialOptions { Transport = mockTransport };
+                var cred = new AzurePipelinesCredential(systemAccessToken, clientId, tenantId, serviceConnectionId, options);
+
+                Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new[] { "scope" }), CancellationToken.None));
+            }
+        }
+
         [Test]
         public async Task AzurePipelineCredentialLiveTest_GetToken()
         {
