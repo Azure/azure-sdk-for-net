@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DatabaseMigrationsSqlDb_cancel</description>
+        /// <description>DatabaseMigrationsSqlDb_Cancel</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DatabaseMigrationsSqlDb_cancel</description>
+        /// <description>DatabaseMigrationsSqlDb_Cancel</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

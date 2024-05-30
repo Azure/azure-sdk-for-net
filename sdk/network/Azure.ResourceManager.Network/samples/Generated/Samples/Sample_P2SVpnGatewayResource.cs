@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network.Samples
         public async Task GetP2SVpnConnectionHealth_P2SVpnGatewayGetConnectionHealth()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/P2SVpnGatewayGetConnectionHealth.json
-            // this example is just showing the usage of "P2sVpnGateways_GetP2sVpnConnectionHealth" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "P2sVpnGateways_GetP2SVpnConnectionHealth" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Network.Samples
         public async Task GetP2SVpnConnectionHealthDetailed_P2SVpnGatewayGetConnectionHealthDetailed()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/P2SVpnGatewayGetConnectionHealthDetailed.json
-            // this example is just showing the usage of "P2sVpnGateways_GetP2sVpnConnectionHealthDetailed" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "P2sVpnGateways_GetP2SVpnConnectionHealthDetailed" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network.Samples
         public async Task DisconnectP2SVpnConnections_DisconnectVpnConnectionsFromP2sVpnGateway()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-11-01/examples/P2sVpnGatewaysDisconnectP2sVpnConnections.json
-            // this example is just showing the usage of "P2sVpnGateways_DisconnectP2sVpnConnections" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "P2sVpnGateways_DisconnectP2SVpnConnections" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
