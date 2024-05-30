@@ -619,9 +619,6 @@
 # ServiceLabel: %Mobile Engagement
 # ServiceOwners:                                                   @kpiteira
 
-# PRLabel: %Mobile Network
-/sdk/mobilenetwork/     																					 @tompretty
-
 # PRLabel: %Monitor
 /sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
 
@@ -968,6 +965,11 @@
 # ServiceLabel: %Nginx %Mgmt
 # ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
 
+# ServiceLabel: %Private Mobile Network %Mgmt
+# ServiceOwners:                                                   @sathiyan-sivathas @richardwhiuk
+
+# PRLabel: %Mobile Network
+/sdk/mobilenetwork/Azure.ResourceManager.*/												 @tompretty
 
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
