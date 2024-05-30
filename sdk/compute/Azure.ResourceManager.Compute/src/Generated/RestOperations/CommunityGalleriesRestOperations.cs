@@ -35,6 +35,20 @@ namespace Azure.ResourceManager.Compute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string publicGalleryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/communityGalleries/", false);
+            uri.AppendPath(publicGalleryName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string publicGalleryName)
         {
             var message = _pipeline.CreateMessage();

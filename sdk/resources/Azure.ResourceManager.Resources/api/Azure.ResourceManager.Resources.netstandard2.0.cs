@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Resources
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationDefinitionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationDefinitionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmApplicationDefinitionResource : Azure.ResourceManager.ArmResource
+    public partial class ArmApplicationDefinitionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmApplicationDefinitionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationDefinitionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ArmApplicationDefinitionResource() { }
@@ -104,10 +104,15 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ArmApplicationDefinitionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ArmApplicationDefinitionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ArmApplicationDefinitionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Resources.ArmApplicationDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmApplicationDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmApplicationDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.ArmApplicationDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationDefinitionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationDefinitionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.ArmApplicationDefinitionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.ArmApplicationDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.ArmApplicationDefinitionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.ArmApplicationDefinitionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ArmApplicationResource : Azure.ResourceManager.ArmResource
+    public partial class ArmApplicationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmApplicationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ArmApplicationResource() { }
@@ -126,6 +131,11 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ArmApplicationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ArmApplicationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ArmApplicationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Resources.ArmApplicationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmApplicationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmApplicationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.ArmApplicationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ArmApplicationResource> Update(Azure.ResourceManager.Resources.Models.ArmApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ArmApplicationResource>> UpdateAsync(Azure.ResourceManager.Resources.Models.ArmApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -158,7 +168,7 @@ namespace Azure.ResourceManager.Resources
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmDeploymentResource : Azure.ResourceManager.ArmResource
+    public partial class ArmDeploymentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmDeploymentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ArmDeploymentResource() { }
@@ -185,6 +195,11 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ArmDeploymentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ArmDeploymentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ArmDeploymentResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Resources.ArmDeploymentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmDeploymentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmDeploymentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.ArmDeploymentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.ArmDeploymentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.Models.ArmDeploymentContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.ArmDeploymentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.Models.ArmDeploymentContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult> Validate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.Models.ArmDeploymentContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -221,7 +236,7 @@ namespace Azure.ResourceManager.Resources
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentScriptData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentScriptData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmDeploymentScriptResource : Azure.ResourceManager.ArmResource
+    public partial class ArmDeploymentScriptResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmDeploymentScriptData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentScriptData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ArmDeploymentScriptResource() { }
@@ -241,6 +256,11 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ArmDeploymentScriptResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ArmDeploymentScriptResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ArmDeploymentScriptResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Resources.ArmDeploymentScriptData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmDeploymentScriptData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmDeploymentScriptData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.ArmDeploymentScriptData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentScriptData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentScriptData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentScriptData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ArmDeploymentScriptResource> Update(Azure.ResourceManager.Resources.Models.ArmDeploymentScriptPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ArmDeploymentScriptResource>> UpdateAsync(Azure.ResourceManager.Resources.Models.ArmDeploymentScriptPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -278,7 +298,7 @@ namespace Azure.ResourceManager.Resources
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.JitRequestData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.JitRequestData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class JitRequestResource : Azure.ResourceManager.ArmResource
+    public partial class JitRequestResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.JitRequestData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.JitRequestData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected JitRequestResource() { }
@@ -295,6 +315,11 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.JitRequestResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.JitRequestResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.JitRequestResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Resources.JitRequestData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.JitRequestData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.JitRequestData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.JitRequestData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.JitRequestData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.JitRequestData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.JitRequestData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.JitRequestResource> Update(Azure.ResourceManager.Resources.Models.JitRequestPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.JitRequestResource>> UpdateAsync(Azure.ResourceManager.Resources.Models.JitRequestPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -356,7 +381,7 @@ namespace Azure.ResourceManager.Resources
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ScriptLogData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ScriptLogData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScriptLogResource : Azure.ResourceManager.ArmResource
+    public partial class ScriptLogResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ScriptLogData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ScriptLogData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ScriptLogResource() { }
@@ -365,6 +390,11 @@ namespace Azure.ResourceManager.Resources
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scriptName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ScriptLogResource> Get(int? tail = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ScriptLogResource>> GetAsync(int? tail = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Resources.ScriptLogData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ScriptLogData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ScriptLogData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.ScriptLogData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ScriptLogData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ScriptLogData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ScriptLogData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TemplateSpecCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TemplateSpecResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpecResource>, System.Collections.IEnumerable
     {
@@ -398,7 +428,7 @@ namespace Azure.ResourceManager.Resources
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TemplateSpecResource : Azure.ResourceManager.ArmResource
+    public partial class TemplateSpecResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.TemplateSpecData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TemplateSpecResource() { }
@@ -418,6 +448,11 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpecResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Resources.TemplateSpecData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.TemplateSpecData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.TemplateSpecData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.TemplateSpecData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpecResource> Update(Azure.ResourceManager.Resources.Models.TemplateSpecPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecResource>> UpdateAsync(Azure.ResourceManager.Resources.Models.TemplateSpecPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -454,7 +489,7 @@ namespace Azure.ResourceManager.Resources
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TemplateSpecVersionResource : Azure.ResourceManager.ArmResource
+    public partial class TemplateSpecVersionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.TemplateSpecVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecVersionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TemplateSpecVersionResource() { }
@@ -471,6 +506,11 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Resources.TemplateSpecVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.TemplateSpecVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.TemplateSpecVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.TemplateSpecVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersionResource> Update(Azure.ResourceManager.Resources.Models.TemplateSpecVersionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersionResource>> UpdateAsync(Azure.ResourceManager.Resources.Models.TemplateSpecVersionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

@@ -1,9 +1,38 @@
 # Release History
 
-## 1.12.0-beta.1 (2024-04-17)
+## 1.12.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
 
 ### Other Changes
+
+## 1.11.3 (2024-05-07)
+
+### Bugs Fixed
+- Fixed a regression in `DefaultAzureCredential` probe request behavior for IMDS managed identity environments. [#43796](https://github.com/Azure/azure-sdk-for-net/issues/43796)
+
+## 1.12.0-beta.2 (2024-05-07)
+
+### Features Added
+- `ClientAssertionCredentialOptions` now supports `TokenCachePersistenceOptions` for configuring token cache persistence.
+- Added `AzurePipelinesCredential` for authenticating with Azure Pipelines service connections.
+
+### Bugs Fixed
+- Fixed a regression in `DefaultAzureCredential` probe request behavior for IMDS managed identity environments. [#43796](https://github.com/Azure/azure-sdk-for-net/issues/43796)
+
+## 1.12.0-beta.1 (2024-04-23)
+
+### Bugs Fixed
 - An experimental overload `Authenticate` method on `InteractiveBrowserCredential` now supports the experimental `PopTokenRequestContext` parameter.
+
+## 1.11.2 (2024-04-19)
+
+### Bugs Fixed
+- Fixed an issue which caused claims to be incorrectly added to confidential client credentials such as `DeviceCodeCredential` [#43468](https://github.com/Azure/azure-sdk-for-net/issues/43468)
 
 ## 1.11.1 (2024-04-16)
 

@@ -1017,7 +1017,7 @@ namespace Azure.ResourceManager.Kusto
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DataConnections_dataConnectionValidation</description>
+        /// <description>DataConnections_DataConnectionValidation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1063,7 +1063,7 @@ namespace Azure.ResourceManager.Kusto
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DataConnections_dataConnectionValidation</description>
+        /// <description>DataConnections_DataConnectionValidation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

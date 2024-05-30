@@ -368,6 +368,31 @@ namespace Azure.Storage.Files.Shares.Tests
             await share.DeleteAsync(false);
         }
 
+        /// <summary>
+        /// This test exists to ensure AuthenticationErrorDetail is being properly communicated to the customer.
+        /// </summary>
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        [Ignore("This test kept timing out, ignore it to pass CI. Tracking this in https://github.com/Azure/azure-sdk-for-net/issues/44249")]
+        public async Task CreateAsync_SasError()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+            Uri sasUri = service.GenerateAccountSasUri(AccountSasPermissions.All, GetUtcNow().AddDays(-1), AccountSasResourceTypes.All);
+            ShareServiceClient unauthorizedServiceClient = InstrumentClient(new ShareServiceClient(sasUri));
+            ShareClient share = InstrumentClient(unauthorizedServiceClient.GetShareClient(shareName));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                share.CreateAsync(),
+                e =>
+                {
+                    Assert.AreEqual("AuthenticationFailed", e.ErrorCode);
+                    Assert.IsTrue(e.Message.Contains("AuthenticationErrorDetail"));
+                });
+        }
+
         [RecordedTest]
         public async Task CreateAsync_WithAccountSas()
         {
@@ -493,6 +518,46 @@ namespace Azure.Storage.Files.Shares.Tests
                 Response<ShareProperties> response = await share.GetPropertiesAsync();
                 Assert.AreEqual(ShareProtocols.Nfs, response.Value.Protocols);
                 Assert.AreEqual(ShareRootSquash.AllSquash, response.Value.RootSquash);
+            }
+            finally
+            {
+                await share.DeleteAsync(false);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_02_04)]
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CreateAsync_EnableSnapshotVirtualDirectoryAccess(bool? enableSnapshotVirtualDirectoryAccess)
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                Protocols = ShareProtocols.Nfs,
+                EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess,
+            };
+
+            try
+            {
+                // Act
+                await share.CreateAsync(options);
+
+                // Assert
+                Response<ShareProperties> response = await share.GetPropertiesAsync();
+                Assert.AreEqual(ShareProtocols.Nfs, response.Value.Protocols);
+                if (enableSnapshotVirtualDirectoryAccess == true || enableSnapshotVirtualDirectoryAccess == null)
+                {
+                    Assert.IsTrue(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                }
+                else
+                {
+                    Assert.IsFalse(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                }
             }
             finally
             {
@@ -1499,6 +1564,52 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.SetPropertiesAsync(options),
                 e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_02_04)]
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SetPropertiesAsync_EnableSnapshotVirtualDirectoryAccess(bool? enableSnapshotVirtualDirectoryAccess)
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                Protocols = ShareProtocols.Nfs,
+            };
+
+            try
+            {
+                await share.CreateAsync(options);
+
+                ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
+                {
+                    EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess,
+                };
+
+                // Act
+                await share.SetPropertiesAsync(setPropertiesOptions);
+
+                // Assert
+                Response<ShareProperties> response = await share.GetPropertiesAsync();
+                Assert.AreEqual(ShareProtocols.Nfs, response.Value.Protocols);
+                if (enableSnapshotVirtualDirectoryAccess == true || enableSnapshotVirtualDirectoryAccess == null)
+                {
+                    Assert.IsTrue(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                }
+                else
+                {
+                    Assert.IsFalse(response.Value.EnableSnapshotVirtualDirectoryAccess);
+                }
+            }
+            finally
+            {
+                await share.DeleteAsync();
+            }
         }
 
         [RecordedTest]

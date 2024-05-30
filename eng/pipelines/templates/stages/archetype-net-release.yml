@@ -157,7 +157,9 @@ stages:
                       deploy:
                         steps:
                           - checkout: self
-                          - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+                            path: s  # Keep this in the same path it would be if it was only a single checkout
+                          - checkout: azure-sdk-build-tools
+                            path: azure-sdk-build-tools
                           - task: MSBuild@1
                             displayName: 'Upload Symbols for ${{artifact.name}}'
                             inputs:
@@ -231,7 +233,6 @@ stages:
                           - template: /eng/common/pipelines/templates/steps/publish-blobs.yml
                             parameters:
                               FolderForUpload: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}'
-                              BlobSASKey: '$(azure-sdk-docs-prod-sas)'
                               BlobName: '$(azure-sdk-docs-prod-blob-name)'
                               TargetLanguage: 'dotnet'
                               ArtifactLocation: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}'

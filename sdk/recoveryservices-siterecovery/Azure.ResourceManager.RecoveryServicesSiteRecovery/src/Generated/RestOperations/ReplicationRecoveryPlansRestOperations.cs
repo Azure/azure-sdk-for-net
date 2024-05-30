@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationRecoveryPlans", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var message = _pipeline.CreateMessage();
@@ -113,6 +128,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationRecoveryPlans/", false);
+            uri.AppendPath(recoveryPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName)
@@ -203,6 +234,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName, SiteRecoveryRecoveryPlanCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationRecoveryPlans/", false);
+            uri.AppendPath(recoveryPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName, SiteRecoveryRecoveryPlanCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -287,6 +334,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationRecoveryPlans/", false);
+            uri.AppendPath(recoveryPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName)
         {
             var message = _pipeline.CreateMessage();
@@ -360,6 +423,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName, SiteRecoveryRecoveryPlanPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationRecoveryPlans/", false);
+            uri.AppendPath(recoveryPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName, SiteRecoveryRecoveryPlanPatch patch)
@@ -446,6 +525,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
+        internal RequestUriBuilder CreateFailoverCancelRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationRecoveryPlans/", false);
+            uri.AppendPath(recoveryPlanName, true);
+            uri.AppendPath("/failoverCancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateFailoverCancelRequest(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName)
         {
             var message = _pipeline.CreateMessage();
@@ -523,6 +619,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
+        internal RequestUriBuilder CreateFailoverCommitRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationRecoveryPlans/", false);
+            uri.AppendPath(recoveryPlanName, true);
+            uri.AppendPath("/failoverCommit", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateFailoverCommitRequest(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName)
         {
             var message = _pipeline.CreateMessage();
@@ -598,6 +711,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePlannedFailoverRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName, RecoveryPlanPlannedFailoverContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationRecoveryPlans/", false);
+            uri.AppendPath(recoveryPlanName, true);
+            uri.AppendPath("/plannedFailover", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePlannedFailoverRequest(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName, RecoveryPlanPlannedFailoverContent content)
@@ -685,6 +815,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
+        internal RequestUriBuilder CreateReprotectRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationRecoveryPlans/", false);
+            uri.AppendPath(recoveryPlanName, true);
+            uri.AppendPath("/reProtect", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateReprotectRequest(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName)
         {
             var message = _pipeline.CreateMessage();
@@ -760,6 +907,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateTestFailoverRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName, RecoveryPlanTestFailoverContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationRecoveryPlans/", false);
+            uri.AppendPath(recoveryPlanName, true);
+            uri.AppendPath("/testFailover", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateTestFailoverRequest(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName, RecoveryPlanTestFailoverContent content)
@@ -847,6 +1011,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
+        internal RequestUriBuilder CreateTestFailoverCleanupRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName, RecoveryPlanTestFailoverCleanupContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationRecoveryPlans/", false);
+            uri.AppendPath(recoveryPlanName, true);
+            uri.AppendPath("/testFailoverCleanup", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateTestFailoverCleanupRequest(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName, RecoveryPlanTestFailoverCleanupContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -932,6 +1113,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
+        internal RequestUriBuilder CreateUnplannedFailoverRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName, RecoveryPlanUnplannedFailoverContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationRecoveryPlans/", false);
+            uri.AppendPath(recoveryPlanName, true);
+            uri.AppendPath("/unplannedFailover", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUnplannedFailoverRequest(string subscriptionId, string resourceGroupName, string resourceName, string recoveryPlanName, RecoveryPlanUnplannedFailoverContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -1015,6 +1213,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)

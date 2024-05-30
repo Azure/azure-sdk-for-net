@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Core.Shared;
 using Azure.Core.Tests;
 using Azure.Messaging.ServiceBus.Administration;
@@ -176,6 +175,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 }
                 await sender.SendMessagesAsync(batch);
                 AssertSendActivities(useSessions, sender, messages);
+
+                // delete a message
+                await receiver.DeleteMessagesAsync(1);
+                var deleteScope = _listener.AssertAndRemoveScope(DiagnosticProperty.DeleteActivityName);
+                AssertCommonTags(deleteScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
+
+                // purge all messages
+                await receiver.PurgeMessagesAsync();
+                var purgeScope = _listener.AssertAndRemoveScope(DiagnosticProperty.PurgeActivityName);
+                AssertCommonTags(purgeScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
             };
         }
 

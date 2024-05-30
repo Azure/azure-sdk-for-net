@@ -36,6 +36,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/scalingPlans/", false);
+            uri.AppendPath(scalingPlanName, true);
+            uri.AppendPath("/pooledSchedules/", false);
+            uri.AppendPath(scalingPlanScheduleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName)
         {
             var message = _pipeline.CreateMessage();
@@ -122,6 +138,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, ScalingPlanPooledScheduleData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/scalingPlans/", false);
+            uri.AppendPath(scalingPlanName, true);
+            uri.AppendPath("/pooledSchedules/", false);
+            uri.AppendPath(scalingPlanScheduleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, ScalingPlanPooledScheduleData data)
@@ -218,6 +250,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/scalingPlans/", false);
+            uri.AppendPath(scalingPlanName, true);
+            uri.AppendPath("/pooledSchedules/", false);
+            uri.AppendPath(scalingPlanScheduleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName)
         {
             var message = _pipeline.CreateMessage();
@@ -292,6 +340,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, ScalingPlanPooledSchedulePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/scalingPlans/", false);
+            uri.AppendPath(scalingPlanName, true);
+            uri.AppendPath("/pooledSchedules/", false);
+            uri.AppendPath(scalingPlanScheduleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, ScalingPlanPooledSchedulePatch patch)
@@ -384,6 +448,33 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize, bool? isDescending, int? initialSkip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/scalingPlans/", false);
+            uri.AppendPath(scalingPlanName, true);
+            uri.AppendPath("/pooledSchedules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", pageSize.Value, true);
+            }
+            if (isDescending != null)
+            {
+                uri.AppendQuery("isDescending", isDescending.Value, true);
+            }
+            if (initialSkip != null)
+            {
+                uri.AppendQuery("initialSkip", initialSkip.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize, bool? isDescending, int? initialSkip)
@@ -481,6 +572,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize, bool? isDescending, int? initialSkip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize, bool? isDescending, int? initialSkip)

@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerGroupName), out propertyOverride);
-            if (Optional.IsDefined(ContainerGroupName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  containerGroupName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerGroupName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  containerGroupName: ");
                     if (ContainerGroupName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

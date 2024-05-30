@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class RequestReportRecordContract : IUtf8JsonSerializable, IJsonModel<RequestReportRecordContract>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void SerializeBackendResponseCodeValue(Utf8JsonWriter writer)
+        private void SerializeBackendResponseCodeValue(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStringValue(BackendResponseCode);
         }

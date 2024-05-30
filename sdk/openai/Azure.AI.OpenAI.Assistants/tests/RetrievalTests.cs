@@ -29,7 +29,7 @@ public class RetrievalTests : AssistantsTestBase
         using (TestRecording.DisableRecordingScope disableBodyRecordingScope = Recording.DisableRequestBodyRecording())
         {
             Response<OpenAIFile> uploadFileResponse = await client.UploadFileAsync(
-                BinaryData.FromString("The number for the color 'red' is 1. The number for the color 'blue' is 2. The number for the color 'green' is 4."),
+                BinaryData.FromString("The number for the color 'red' is 1. The number for the color 'blue' is 2. The number for the color 'green' is 4.").ToStream(),
                 OpenAIFilePurpose.Assistants);
             AssertSuccessfulResponse(uploadFileResponse);
             EnsuredFileDeletions.Add((client, uploadFileResponse.Value.Id));

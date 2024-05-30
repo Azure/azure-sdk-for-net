@@ -204,11 +204,12 @@ namespace Azure.Storage.DataMovement
                         ServiceToServiceJobPart part;
                         try
                         {
+                            StorageResourceItem sourceItem = (StorageResourceItem)current;
                             part = await ServiceToServiceJobPart.CreateJobPartAsync(
                                 job: this,
                                 partNumber: partNumber,
-                                sourceResource: (StorageResourceItem)current,
-                                destinationResource: _destinationResourceContainer.GetStorageResourceReference(sourceName))
+                                sourceResource: sourceItem,
+                                destinationResource: _destinationResourceContainer.GetStorageResourceReference(sourceName, sourceItem.ResourceId))
                                 .ConfigureAwait(false);
                             AppendJobPart(part);
                         }

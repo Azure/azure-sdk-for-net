@@ -36,6 +36,20 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string applicationGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/applicationGroups/", false);
+            uri.AppendPath(applicationGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string applicationGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -116,6 +130,20 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string applicationGroupName, VirtualApplicationGroupData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/applicationGroups/", false);
+            uri.AppendPath(applicationGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string applicationGroupName, VirtualApplicationGroupData data)
@@ -206,6 +234,20 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string applicationGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/applicationGroups/", false);
+            uri.AppendPath(applicationGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string applicationGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -274,6 +316,20 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string applicationGroupName, VirtualApplicationGroupPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/applicationGroups/", false);
+            uri.AppendPath(applicationGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string applicationGroupName, VirtualApplicationGroupPatch patch)
@@ -360,6 +416,35 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, string filter, int? pageSize, bool? isDescending, int? initialSkip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/applicationGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", pageSize.Value, true);
+            }
+            if (isDescending != null)
+            {
+                uri.AppendQuery("isDescending", isDescending.Value, true);
+            }
+            if (initialSkip != null)
+            {
+                uri.AppendQuery("initialSkip", initialSkip.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, string filter, int? pageSize, bool? isDescending, int? initialSkip)
@@ -459,6 +544,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/applicationGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -530,6 +630,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string filter, int? pageSize, bool? isDescending, int? initialSkip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string filter, int? pageSize, bool? isDescending, int? initialSkip)
@@ -610,6 +718,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, string filter)

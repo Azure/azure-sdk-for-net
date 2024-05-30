@@ -26,7 +26,7 @@ namespace Azure.Identity
         internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
-        /// Protected constructor for mocking.
+        /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
         protected OnBehalfOfCredential()
         { }
@@ -192,7 +192,7 @@ namespace Azure.Identity
                     .AcquireTokenOnBehalfOfAsync(requestContext.Scopes, tenantId, _userAssertion, requestContext.Claims, requestContext.IsCaeEnabled, async, cancellationToken)
                     .ConfigureAwait(false);
 
-                return new AccessToken(result.AccessToken, result.ExpiresOn);
+                return result.ToAccessToken();
             }
             catch (Exception e)
             {

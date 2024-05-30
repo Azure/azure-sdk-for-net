@@ -155,15 +155,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectorId), out propertyOverride);
-            if (Optional.IsDefined(ConnectorId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ConnectorId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectorId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ConnectorId: ");
                     if (ConnectorId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -177,15 +178,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigDisplayName), out propertyOverride);
-            if (Optional.IsDefined(ConfigDisplayName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ConfigDisplayName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConfigDisplayName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ConfigDisplayName: ");
                     if (ConfigDisplayName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -199,30 +201,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDefault), out propertyOverride);
-            if (Optional.IsDefined(IsDefault) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  IsDefault: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDefault))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  IsDefault: ");
                     var boolValue = IsDefault.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  Id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  Id: ");
                     if (Id.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -236,15 +240,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigProperties), out propertyOverride);
-            if (Optional.IsDefined(ConfigProperties) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ConfigProperties: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConfigProperties))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ConfigProperties: ");
                     if (ConfigProperties.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -92,11 +92,13 @@
     "kusto",
     "lucene",
     "mgmt",
+    "miscs",
     "msal",
     "Mtls",
     "northcentralus",
     "nunit",
     "odata",
+    "oidc",
     "onco",
     "opinsights",
     "otel",
@@ -125,6 +127,7 @@
     "uninstrumented",
     "vcpus",
     "Vectorizable",
+    "Vectorize",
     "Vectorizer",
     "Vectorizers",
     "vhdx",
@@ -134,8 +137,7 @@
     "vnet",
     "westcentralus",
     "westus",
-    "xunit",
-    "miscs"
+    "xunit"
   ],
   "overrides": [
     {
@@ -172,6 +174,12 @@
       "words": [
         "dynatrace",
         "fqdns"
+      ]
+    },
+    {
+      "filename": "**/sdk/astronomer/**/*.cs",
+      "words": [
+        "astro"
       ]
     },
     {
@@ -252,7 +260,8 @@
         "ssdzrs",
         "dscp",
         "vmguest",
-        "vhdx"
+        "vhdx",
+        "Nvme"
       ]
     },
     {
@@ -449,7 +458,7 @@
         "Twilio",
         "Vertica",
         "Xero",
-		    "Soql"
+        "Soql"
       ]
     },
     {
@@ -868,15 +877,15 @@
     {
       "filename": "**/sdk/paloaltonetworks/**/*",
       "words": [
-      	"armid",
-      	"cpus",
-      	"eastus",
-      	"cloudngfw",
-      	"fqdnlists",
-      	"isvtestuklegacy",
-      	"liftr",
-      	"liftrpantestplan",
-      	"msal",
+        "armid",
+        "cpus",
+        "eastus",
+        "cloudngfw",
+        "fqdnlists",
+        "isvtestuklegacy",
+        "liftr",
+        "liftrpantestplan",
+        "msal",
         "ngfw",
         "panrsid",
         "palo",
@@ -935,7 +944,7 @@
     {
       "filename": "**/sdk/qumulo/**/*",
       "words": [
-      	"qumulo"
+        "qumulo"
       ]
     },
     {
@@ -1172,6 +1181,12 @@
       ]
     },
     {
+      "filename": "**/sdk/storageactions/**/*.cs",
+      "words": [
+        "undelete"
+      ]
+    },
+    {
       "filename": "**/sdk/storagecache/**/*.cs",
       "words": [
         "Clfs"
@@ -1336,7 +1351,7 @@
         "protobuf",
         "Ackable",
         "awps"
-        ]
+      ]
     },
     {
       "filename": "**/sdk/openai/**/*.cs",
