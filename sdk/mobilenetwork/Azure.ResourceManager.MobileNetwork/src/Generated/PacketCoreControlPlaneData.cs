@@ -102,8 +102,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="signaling"> Signaling configuration for the packet core. </param>
         /// <param name="interopSettings"> Settings to allow interoperability with third party components e.g. RANs and UEs. </param>
         /// <param name="homeNetworkPrivateKeysProvisioning"> The provisioning state of the secret containing private keys and keyIds for SUPI concealment. </param>
+        /// <param name="userConsent"> The user consent configuration for the packet core. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IList<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, IList<string> controlPlaneAccessVirtualIPv4Addresses, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, MobileNetworkEventHubConfiguration eventHub, SignalingConfiguration signaling, BinaryData interopSettings, HomeNetworkPrivateKeysProvisioning homeNetworkPrivateKeysProvisioning, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IList<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, IList<string> controlPlaneAccessVirtualIPv4Addresses, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, MobileNetworkEventHubConfiguration eventHub, SignalingConfiguration signaling, BinaryData interopSettings, HomeNetworkPrivateKeysProvisioning homeNetworkPrivateKeysProvisioning, UserConsentConfiguration userConsent, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             UserAssignedIdentity = userAssignedIdentity;
             ProvisioningState = provisioningState;
@@ -124,6 +125,7 @@ namespace Azure.ResourceManager.MobileNetwork
             Signaling = signaling;
             InteropSettings = interopSettings;
             HomeNetworkPrivateKeysProvisioning = homeNetworkPrivateKeysProvisioning;
+            UserConsent = userConsent;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -172,26 +174,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary> Configuration for sending packet core events to an Azure Event Hub. </summary>
         public MobileNetworkEventHubConfiguration EventHub { get; set; }
         /// <summary> Signaling configuration for the packet core. </summary>
-        internal SignalingConfiguration Signaling { get; set; }
-        /// <summary> The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute. </summary>
-        public int? NasRerouteMacroMmeGroupId
-        {
-            get => Signaling is null ? default : Signaling.NasRerouteMacroMmeGroupId;
-            set
-            {
-                if (value.HasValue)
-                {
-                    if (Signaling is null)
-                        Signaling = new SignalingConfiguration();
-                    Signaling.NasRerouteMacroMmeGroupId = value.Value;
-                }
-                else
-                {
-                    Signaling = null;
-                }
-            }
-        }
-
+        public SignalingConfiguration Signaling { get; set; }
         /// <summary>
         /// Settings to allow interoperability with third party components e.g. RANs and UEs.
         /// <para>
@@ -229,6 +212,20 @@ namespace Azure.ResourceManager.MobileNetwork
         public HomeNetworkPrivateKeysProvisioningState? HomeNetworkPrivateKeysProvisioningState
         {
             get => HomeNetworkPrivateKeysProvisioning?.State;
+        }
+
+        /// <summary> The user consent configuration for the packet core. </summary>
+        internal UserConsentConfiguration UserConsent { get; set; }
+        /// <summary> Allow Microsoft to access non-PII telemetry information from the packet core. </summary>
+        public bool? AllowSupportTelemetryAccess
+        {
+            get => UserConsent is null ? default : UserConsent.AllowSupportTelemetryAccess;
+            set
+            {
+                if (UserConsent is null)
+                    UserConsent = new UserConsentConfiguration();
+                UserConsent.AllowSupportTelemetryAccess = value;
+            }
         }
     }
 }

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    internal partial class SignalingConfiguration : IUtf8JsonSerializable, IJsonModel<SignalingConfiguration>
+    public partial class SignalingConfiguration : IUtf8JsonSerializable, IJsonModel<SignalingConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalingConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -30,6 +30,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 writer.WritePropertyName("nasReroute"u8);
                 writer.WriteObjectValue(NasReroute, options);
+            }
+            if (Optional.IsCollectionDefined(NasEncryption))
+            {
+                writer.WritePropertyName("nasEncryption"u8);
+                writer.WriteStartArray();
+                foreach (var item in NasEncryption)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,6 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             NASRerouteConfiguration nasReroute = default;
+            IList<NasEncryptionType> nasEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -83,13 +94,27 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     nasReroute = NASRerouteConfiguration.DeserializeNASRerouteConfiguration(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("nasEncryption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<NasEncryptionType> array = new List<NasEncryptionType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new NasEncryptionType(item.GetString()));
+                    }
+                    nasEncryption = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SignalingConfiguration(nasReroute, serializedAdditionalRawData);
+            return new SignalingConfiguration(nasReroute, nasEncryption ?? new ChangeTrackingList<NasEncryptionType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalingConfiguration>.Write(ModelReaderWriterOptions options)

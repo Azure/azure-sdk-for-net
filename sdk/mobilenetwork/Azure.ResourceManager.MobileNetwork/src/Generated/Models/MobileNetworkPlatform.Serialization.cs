@@ -56,6 +56,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WritePropertyName("obsoleteVersion"u8);
                 writer.WriteStringValue(ObsoleteVersion.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(HaUpgradesAvailable))
+            {
+                writer.WritePropertyName("haUpgradesAvailable"u8);
+                writer.WriteStartArray();
+                foreach (var item in HaUpgradesAvailable)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -100,6 +110,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             string maximumPlatformSoftwareVersion = default;
             MobileNetworkRecommendedVersion? recommendedVersion = default;
             MobileNetworkObsoleteVersion? obsoleteVersion = default;
+            IList<string> haUpgradesAvailable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,6 +161,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     obsoleteVersion = new MobileNetworkObsoleteVersion(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("haUpgradesAvailable"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    haUpgradesAvailable = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -163,6 +188,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 maximumPlatformSoftwareVersion,
                 recommendedVersion,
                 obsoleteVersion,
+                haUpgradesAvailable ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 

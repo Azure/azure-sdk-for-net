@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> Signaling configuration for the packet core. </summary>
-    internal partial class SignalingConfiguration
+    public partial class SignalingConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,14 +48,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of <see cref="SignalingConfiguration"/>. </summary>
         public SignalingConfiguration()
         {
+            NasEncryption = new ChangeTrackingList<NasEncryptionType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SignalingConfiguration"/>. </summary>
         /// <param name="nasReroute"> Configuration enabling 4G NAS reroute. </param>
+        /// <param name="nasEncryption"> An ordered list of NAS encryption algorithms, used to encrypt control plane traffic between the UE and packet core, in order from most to least preferred. If not specified, the packet core will use a built-in default ordering. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SignalingConfiguration(NASRerouteConfiguration nasReroute, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SignalingConfiguration(NASRerouteConfiguration nasReroute, IList<NasEncryptionType> nasEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NasReroute = nasReroute;
+            NasEncryption = nasEncryption;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -70,5 +73,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 NasReroute = value.HasValue ? new NASRerouteConfiguration(value.Value) : null;
             }
         }
+
+        /// <summary> An ordered list of NAS encryption algorithms, used to encrypt control plane traffic between the UE and packet core, in order from most to least preferred. If not specified, the packet core will use a built-in default ordering. </summary>
+        public IList<NasEncryptionType> NasEncryption { get; }
     }
 }

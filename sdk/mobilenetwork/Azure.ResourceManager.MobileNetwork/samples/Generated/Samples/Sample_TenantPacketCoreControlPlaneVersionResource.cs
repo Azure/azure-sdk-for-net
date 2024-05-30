@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPacketCoreControlPlaneVersion()
         {
-            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-02-01/examples/PacketCoreControlPlaneVersionGet.json
+            // Generated from example definition: specification/mobilenetwork/resource-manager/Microsoft.MobileNetwork/stable/2024-04-01/examples/PacketCoreControlPlaneVersionGet.json
             // this example is just showing the usage of "PacketCoreControlPlaneVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Samples
 
             // this example assumes you already have this TenantPacketCoreControlPlaneVersionResource created on azure
             // for more information of creating TenantPacketCoreControlPlaneVersionResource, please refer to the document of TenantPacketCoreControlPlaneVersionResource
-            string versionName = "PMN-4-11-1";
+            string versionName = "2404.0-1";
             ResourceIdentifier tenantPacketCoreControlPlaneVersionResourceId = TenantPacketCoreControlPlaneVersionResource.CreateResourceIdentifier(versionName);
             TenantPacketCoreControlPlaneVersionResource tenantPacketCoreControlPlaneVersion = client.GetTenantPacketCoreControlPlaneVersionResource(tenantPacketCoreControlPlaneVersionResourceId);
 

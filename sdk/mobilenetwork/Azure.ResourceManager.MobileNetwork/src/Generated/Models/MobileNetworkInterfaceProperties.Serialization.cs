@@ -46,6 +46,31 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WritePropertyName("ipv4Gateway"u8);
                 writer.WriteStringValue(IPv4Gateway);
             }
+            if (Optional.IsDefined(VlanId))
+            {
+                writer.WritePropertyName("vlanId"u8);
+                writer.WriteNumberValue(VlanId.Value);
+            }
+            if (Optional.IsCollectionDefined(IPv4AddressList))
+            {
+                writer.WritePropertyName("ipv4AddressList"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPv4AddressList)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(BfdIPv4Endpoints))
+            {
+                writer.WritePropertyName("bfdIpv4Endpoints"u8);
+                writer.WriteStartArray();
+                foreach (var item in BfdIPv4Endpoints)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,6 +113,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             string ipv4Address = default;
             string ipv4Subnet = default;
             string ipv4Gateway = default;
+            int? vlanId = default;
+            IList<string> ipv4AddressList = default;
+            IList<string> bfdIPv4Endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,13 +140,58 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     ipv4Gateway = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("vlanId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vlanId = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("ipv4AddressList"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    ipv4AddressList = array;
+                    continue;
+                }
+                if (property.NameEquals("bfdIpv4Endpoints"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    bfdIPv4Endpoints = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MobileNetworkInterfaceProperties(name, ipv4Address, ipv4Subnet, ipv4Gateway, serializedAdditionalRawData);
+            return new MobileNetworkInterfaceProperties(
+                name,
+                ipv4Address,
+                ipv4Subnet,
+                ipv4Gateway,
+                vlanId,
+                ipv4AddressList ?? new ChangeTrackingList<string>(),
+                bfdIPv4Endpoints ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkInterfaceProperties>.Write(ModelReaderWriterOptions options)

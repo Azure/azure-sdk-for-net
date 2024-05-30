@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: MobileNetwork
 namespace: Azure.ResourceManager.MobileNetwork
-require: https://github.com/Azure/azure-rest-api-specs/blob/812012235b51ef1edf0e99f6ce9741c2c4c9df9a/specification/mobilenetwork/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/45ed7d13be79760a39301ff85cc0937f017329de/specification/mobilenetwork/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
