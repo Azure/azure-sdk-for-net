@@ -1292,10 +1292,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = ServiceBusReceiver.MaxDeleteMessageCount * 3;
                 await SendMessagesAsync(client, scope.QueueName, messageCount);
 
+                // Delay a moment to ensure that the messages are available to
+                // read/delete.
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync();
 
-                Assert.AreEqual(numMessagesDeleted, messageCount);
+                Assert.AreEqual(messageCount, numMessagesDeleted);
 
                 // All messages should have been deleted.
                 var peekedMessage = receiver.PeekMessageAsync();
@@ -1313,7 +1317,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = ServiceBusReceiver.MaxDeleteMessageCount * 3;
                 await SendMessagesAsync(client, scope.QueueName, messageCount);
 
-                var targetDate = DateTime.UtcNow.AddSeconds(1);
+                // Delay a moment to ensure that the messages are available to
+                // read/delete.
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
+                // Mark the time for deleting.
+                var targetDate = DateTime.UtcNow;
 
                 // Wait a few seconds, then send a new message that should survive the purge.
                 await Task.Delay(TimeSpan.FromSeconds(15));
@@ -1324,7 +1333,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync(targetDate);
 
-                Assert.AreEqual(numMessagesDeleted, messageCount);
+                Assert.AreEqual(messageCount, numMessagesDeleted);
 
                 // All messages should have been deleted, except for our designated survivor.
                 var peekedMessage = receiver.PeekMessageAsync();
