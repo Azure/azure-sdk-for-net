@@ -1316,8 +1316,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await SendMessagesAsync(client, scope.QueueName, messageCount);
 
                 // Delay a moment to ensure that the messages are available to
-                // read/delete.
-                await Task.Delay(TimeSpan.FromSeconds(2));
+                // read/delete and lower the chance of being throttled.
+                await Task.Delay(TimeSpan.FromSeconds(5));
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync();
@@ -1341,13 +1341,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await SendMessagesAsync(client, scope.QueueName, messageCount);
 
                 // Delay a moment to ensure that the messages are available to
-                // read/delete.
-                await Task.Delay(TimeSpan.FromSeconds(2));
+                // read/delete and lower the chance of being throttled.
+                await Task.Delay(TimeSpan.FromSeconds(10));
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync();
 
-                Assert.AreEqual(messageCount, numMessagesDeleted);
+                //Assert.AreEqual(messageCount, numMessagesDeleted);
+                Assert.AreEqual(messageCount, numMessagesDeleted, $"Unexpected message count.  Namespace: [{client.FullyQualifiedNamespace}]  Queue: [{scope.QueueName}]  Time: [{ DateTimeOffset.UtcNow}]");
 
                 // All messages should have been deleted.
                 var peekedMessage = receiver.PeekMessageAsync();
@@ -1366,8 +1367,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await SendMessagesAsync(client, scope.QueueName, messageCount);
 
                 // Delay a moment to ensure that the messages are available to
-                // read/delete.
-                await Task.Delay(TimeSpan.FromSeconds(2));
+                // read/delete and lower the chance of being throttled.
+                await Task.Delay(TimeSpan.FromSeconds(10));
 
                 // Mark the time for deleting.
                 var targetDate = DateTime.UtcNow;
@@ -1381,7 +1382,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync(targetDate);
 
-                Assert.AreEqual(messageCount, numMessagesDeleted);
+                //Assert.AreEqual(messageCount, numMessagesDeleted);
+                Assert.AreEqual(messageCount, numMessagesDeleted, $"Unexpected message count.  Namespace: [{client.FullyQualifiedNamespace}]  Queue: [{scope.QueueName}]  Time: [{ DateTimeOffset.UtcNow}]");
 
                 // All messages should have been deleted, except for our designated survivor.
                 var peekedMessage = receiver.PeekMessageAsync();
