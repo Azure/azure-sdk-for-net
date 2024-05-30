@@ -87,6 +87,73 @@ namespace Azure.Compute.Batch.Tests.Integration
         }
 
         [RecordedTest]
+        public async Task PoolGetPoolUsageMetrics()
+        {
+            var client = CreateBatchClient();
+            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "PoolGetPoolUsageMetrics", isPlayBack());
+            var poolID = iaasWindowsPoolFixture.PoolId;
+
+            try
+            {
+                // create a pool to verify we have something to query for
+                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(0);
+
+                BatchPoolUsageMetrics exptedItem = null;
+                await foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetricsAsync())
+                {
+                    exptedItem = item;
+                }
+
+                // verify that some usage exists, we can't predict what usage that might be at the time of the test
+                Assert.NotNull(exptedItem);
+                Assert.IsNotEmpty(exptedItem.PoolId);
+            }
+            finally
+            {
+                await client.DeletePoolAsync(poolID);
+            }
+        }
+
+        [RecordedTest]
+        public async Task PoolRemoveNodes()
+        {
+            var client = CreateBatchClient();
+            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "PoolRemoveNodes", isPlayBack());
+            var poolID = iaasWindowsPoolFixture.PoolId;
+
+            try
+            {
+                // create a pool to verify we have something to query for
+                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(2);
+                BatchPool orginalPool = await client.GetPoolAsync(poolID);
+
+                string batchNodeID = "";
+                int nodeCount = 0;
+                await foreach (BatchNode item in client.GetNodesAsync(poolID))
+                {
+                    nodeCount++;
+                    batchNodeID = item.Id;
+                }
+
+                Assert.AreEqual(2, nodeCount);
+
+                BatchNodeRemoveContent content = new BatchNodeRemoveContent(new string[] { batchNodeID });
+                Response response = await client.RemoveNodesAsync(poolID, content);
+                Assert.AreEqual(202, response.Status);
+
+                BatchPool modfiedPool = await client.GetPoolAsync(poolID);
+
+                // verify that some usage exists, we can't predict what usage that might be at the time of the test
+                Assert.NotNull(modfiedPool);
+                Assert.AreEqual(AllocationState.Resizing, modfiedPool.AllocationState);
+            }
+            finally
+            {
+                await client.DeletePoolAsync(poolID);
+            }
+        }
+
+        [RecordedTest]
         public async Task AutoScale()
         {
             var client = CreateBatchClient();
@@ -108,7 +175,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 // verify autoscale settings
                 Assert.IsTrue(autoScalePool.EnableAutoScale);
-                Assert.AreEqual(autoScalePool.AutoScaleFormula,poolASFormulaOrig);
+                Assert.AreEqual(autoScalePool.AutoScaleFormula, poolASFormulaOrig);
 
                 // evaluate autoscale formula
                 BatchPoolEvaluateAutoScaleContent batchPoolEvaluateAutoScaleContent = new BatchPoolEvaluateAutoScaleContent(poolASFormulaNew);
@@ -166,6 +233,41 @@ namespace Azure.Compute.Batch.Tests.Integration
                 // stop resizing
                 response = await client.StopPoolResizeAsync(poolID);
                 Assert.AreEqual(202, response.Status);
+            }
+            finally
+            {
+                await client.DeletePoolAsync(poolID);
+            }
+        }
+
+        [RecordedTest]
+        public async Task ReplacePool()
+        {
+            var client = CreateBatchClient();
+            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "ReplacePool", isPlayBack());
+            var poolID = iaasWindowsPoolFixture.PoolId;
+
+            try
+            {
+                // create a pool to verify we have something to query for
+                BatchPool orginalPool = await iaasWindowsPoolFixture.CreatePoolAsync(0);
+
+                // replace pool
+                BatchApplicationPackageReference[] batchApplicationPackageReferences = new BatchApplicationPackageReference[] {
+                    new BatchApplicationPackageReference("dotnotsdkbatchapplication1")
+                    {
+                        Version = "1"
+                    }
+                };
+
+                MetadataItem[] metadataIems = new MetadataItem[] {
+                    new MetadataItem("name", "value")
+                };
+
+                BatchPoolReplaceContent replaceContent = new BatchPoolReplaceContent(batchApplicationPackageReferences, metadataIems);
+                Response response = await client.ReplacePoolPropertiesAsync(poolID, replaceContent);
+                BatchPool replacePool = await client.GetPoolAsync(poolID);
+                Assert.AreEqual(replacePool.ApplicationPackageReferences.First().ApplicationId, "dotnotsdkbatchapplication1");
             }
             finally
             {

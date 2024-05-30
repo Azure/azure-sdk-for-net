@@ -81,8 +81,87 @@ namespace Azure.Compute.Batch.Tests.Integration
             Assert.AreEqual(batchJobSchedule.JobSpecification.PoolInfo.AutoPoolSpecification.Pool.VirtualMachineConfiguration.ImageReference.Sku, "2019-datacenter-smalldisk");
 
             // update the job schedule
-            //await client.UpdateJobScheduleAsync
+            int jobCount = 0;
+            await foreach (BatchJob item in client.GetJobsFromSchedulesAsync("<jobScheduleId>"))
+            {
+                jobCount++;
+            }
+
+            Assert.AreEqual(1, jobCount);
             //await client.ReplaceJobScheduleAsync
+        }
+
+        [RecordedTest]
+        public async Task GetJobsFromSchedules()
+        {
+            var client = CreateBatchClient();
+            string jobScheduleId = "jobSchedule2";
+            BatchJobScheduleConfiguration schedule = new BatchJobScheduleConfiguration()
+            ;
+            // create a new pool
+            ImageReference imageReference = new ImageReference()
+            {
+                Publisher = "MicrosoftWindowsServer",
+                Offer = "WindowsServer",
+                Sku = "2019-datacenter-smalldisk",
+                Version = "latest"
+            };
+            VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.windows amd64");
+
+            BatchPoolSpecification batchPoolSpecification = new BatchPoolSpecification("STANDARD_D1_v2")
+            {
+                VirtualMachineConfiguration = virtualMachineConfiguration,
+                TargetDedicatedNodes = 1,
+            };
+            BatchAutoPoolSpecification autoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
+            {
+                KeepAlive = false,
+                Pool = batchPoolSpecification,
+            };
+            BatchPoolInfo poolInfo = new BatchPoolInfo()
+            {
+                AutoPoolSpecification = autoPoolSpecification,
+            };
+            BatchJobManagerTask batchJobManagerTask = new BatchJobManagerTask()
+            {
+                Id = "task1",
+                CommandLine = "cmd / c echo Hello World",
+                RequiredSlots = 1,
+            };
+            BatchJobSpecification jobSpecification = new BatchJobSpecification(poolInfo)
+            {
+                JobManagerTask = batchJobManagerTask,
+            };
+
+            BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent(jobScheduleId, schedule, jobSpecification);
+
+            try
+            {
+                Response response = await client.CreateJobScheduleAsync(jobSchedule);
+
+                // check to see if the job schedule exists
+                bool result = client.JobScheduleExists(jobScheduleId);
+                Assert.True(result);
+
+                // get the job schedule and verify
+                BatchJobSchedule batchJobSchedule = await client.GetJobScheduleAsync(jobScheduleId);
+                Assert.NotNull(batchJobSchedule);
+                Assert.AreEqual(batchJobSchedule.JobSpecification.PoolInfo.AutoPoolSpecification.Pool.VirtualMachineConfiguration.ImageReference.Sku, "2019-datacenter-smalldisk");
+
+                // update the job schedule
+                int jobCount = 0;
+                await foreach (BatchJob item in client.GetJobsFromSchedulesAsync(jobScheduleId))
+                {
+                    jobCount++;
+                }
+
+                Assert.AreEqual(1, jobCount);
+                //await client.ReplaceJobScheduleAsync
+            }
+            finally
+            {
+                await client.DeleteJobScheduleAsync(jobScheduleId);
+            }
         }
     }
 }
