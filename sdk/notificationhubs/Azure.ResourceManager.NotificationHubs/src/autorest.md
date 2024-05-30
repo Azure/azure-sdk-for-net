@@ -67,6 +67,10 @@ rename-mapping:
   ApnsCredential.properties.thumbprint: ThumbprintString
   MpnsCredential.properties.thumbprint: ThumbprintString
 
+parameter-rename-mapping:
+  NotificationHubs_DebugSend:
+    parameters: anyObject
+
 override-operation-name:
   NotificationHubs_CheckNotificationHubAvailability: CheckNotificationHubAvailability
   Namespaces_CheckAvailability: CheckNotificationHubNamespaceAvailability

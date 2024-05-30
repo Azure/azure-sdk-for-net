@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SAPSizingRecommendations</description>
+        /// <description>SapSizingRecommendations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SAPSizingRecommendations</description>
+        /// <description>SapSizingRecommendations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SAPSupportedSku</description>
+        /// <description>SapSupportedSku</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SAPSupportedSku</description>
+        /// <description>SapSupportedSku</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SAPDiskConfigurations</description>
+        /// <description>SapDiskConfigurations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SAPDiskConfigurations</description>
+        /// <description>SapDiskConfigurations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SAPAvailabilityZoneDetails</description>
+        /// <description>SapAvailabilityZoneDetails</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Workloads
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SAPAvailabilityZoneDetails</description>
+        /// <description>SapAvailabilityZoneDetails</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
