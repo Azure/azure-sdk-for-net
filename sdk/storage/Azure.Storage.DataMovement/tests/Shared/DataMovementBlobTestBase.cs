@@ -601,6 +601,7 @@ namespace Azure.Storage.DataMovement.Tests
 
                 Response<BlobDownloadInfo> sourceDownload = await sourceBlob.DownloadAsync(new HttpRange(startIndex, count));
                 Response<BlobDownloadInfo> destinationDownload = await destinationBlob.DownloadAsync(new HttpRange(startIndex, count));
+                Assert.AreEqual(sourceDownload.Value.BlobType, destinationDownload.Value.BlobType);
 
                 sourceStream.Seek(0, SeekOrigin.Begin);
                 await sourceDownload.Value.Content.CopyToAsync(sourceStream);
