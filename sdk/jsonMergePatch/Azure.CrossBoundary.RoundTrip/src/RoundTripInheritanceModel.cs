@@ -13,6 +13,8 @@ namespace Azure.CrossBoundary.RoundTrip
     /// <summary> The RoundTripInheritanceModel. </summary>
     public partial class RoundTripInheritanceModel : Azure.SameBoundary.RoundTrip.RoundTripBaseModel
     {
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RoundTripInheritanceModel"/>. </summary>
         /// <param name="baseProperty2"></param>
         public RoundTripInheritanceModel(int baseProperty2) : base(baseProperty2)
@@ -25,9 +27,10 @@ namespace Azure.CrossBoundary.RoundTrip
         /// <param name="baseProperty3"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="extendedProperty"></param>
-        internal RoundTripInheritanceModel(string baseProperty1, int baseProperty2, IDictionary<string, string> baseProperty3, IDictionary<string, BinaryData> serializedAdditionalRawData, string extendedProperty) : base(baseProperty1, baseProperty2, baseProperty3, serializedAdditionalRawData)
+        internal RoundTripInheritanceModel(string baseProperty1, int baseProperty2, IDictionary<string, string> baseProperty3, IDictionary<string, BinaryData> serializedAdditionalRawData, string extendedProperty) : base(baseProperty1, baseProperty2, baseProperty3, null)
         {
             _extendedProperty = extendedProperty;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="RoundTripInheritanceModel"/> for deserialization. </summary>

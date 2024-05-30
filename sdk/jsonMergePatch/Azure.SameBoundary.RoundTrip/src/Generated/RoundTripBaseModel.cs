@@ -137,5 +137,17 @@ namespace Azure.SameBoundary.RoundTrip
                     throw new NotSupportedException();
             }
         }
+
+        /// <summary> Placeholder. </summary>
+        public bool GetIsCleared(string name)
+        {
+            switch (name)
+            {
+                case nameof(BaseProperty3):
+                    return ((ChangeTrackingDictionary<string, string>)BaseProperty3).WasCleared();
+                default:
+                    throw new NotSupportedException();
+            }
+        }
     }
 }

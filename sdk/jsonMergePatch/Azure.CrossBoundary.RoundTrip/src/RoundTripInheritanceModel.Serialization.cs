@@ -19,23 +19,23 @@ namespace Azure.CrossBoundary.RoundTrip
 
         void IJsonModel<RoundTripInheritanceModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" || options.Format == "JMP" ? ((IPersistableModel<RoundTripInheritanceModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" || options.Format == "W2" || options.Format == "JMP" ? ((IPersistableModel<RoundTripInheritanceModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoundTripInheritanceModel)} does not support writing '{format}' format.");
             }
 
-            if (options.Format == "W")
+            if (options.Format == "W" || options.Format == "W2")
             {
                 WriteJson(writer, options);
             }
             else if (options.Format == "JMP")
             {
-                WritePatch(writer);
+                WritePatch(writer, options);
             }
         }
 
-        private void WritePatch(Utf8JsonWriter writer)
+        private void WritePatch(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (_extendedPrpertyChanged)
@@ -50,74 +50,7 @@ namespace Azure.CrossBoundary.RoundTrip
                     writer.WriteStringValue(ExtendedProperty);
                 }
             }
-            if (IsPropertyChanged(nameof(BaseProperty1)))
-            {
-                writer.WritePropertyName("baseProperty1"u8);
-                if (BaseProperty1 == null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    writer.WriteStringValue(BaseProperty1);
-                }
-            }
-            if (IsPropertyChanged(nameof(BaseProperty2)))
-            {
-                writer.WritePropertyName("baseProperty2"u8);
-                writer.WriteNumberValue(BaseProperty2);
-            }
-            // [Patch] Dictionary serialization is discussed in `InputDictionaryModel`
-            if (((ChangeTrackingDictionary<string, string>)BaseProperty3).WasCleared())
-            {
-                writer.WritePropertyName("baseProperty3"u8);
-                writer.WriteNullValue();
-            }
-            else
-            {
-                bool baseProperty3 = false;
-                foreach (var item in BaseProperty3)
-                {
-                    if (((ChangeTrackingDictionary<string, string>)BaseProperty3).IsKeyChanged(item.Key))
-                    {
-                        if (!baseProperty3)
-                        {
-                            writer.WritePropertyName("baseProperty3"u8);
-                            writer.WriteStartObject();
-                            baseProperty3 = true;
-                        }
-
-                        writer.WritePropertyName(item.Key);
-                        if (item.Value != null)
-                        {
-                            writer.WriteStringValue(item.Value);
-                        }
-                        else
-                        {
-                            writer.WriteNullValue();
-                        }
-                    }
-                }
-                foreach (var key in ((ChangeTrackingDictionary<string, string>)BaseProperty3).ChangedKeys ?? new List<string>())
-                {
-                    if (!BaseProperty3.ContainsKey(key))
-                    {
-                        if (!baseProperty3)
-                        {
-                            writer.WritePropertyName("baseProperty3"u8);
-                            writer.WriteStartObject();
-                            baseProperty3 = true;
-                        }
-
-                        writer.WritePropertyName(key);
-                        writer.WriteNullValue();
-                    }
-                }
-                if (baseProperty3)
-                {
-                    writer.WriteEndObject();
-                }
-            }
+            WriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -251,6 +184,7 @@ namespace Azure.CrossBoundary.RoundTrip
             switch (format)
             {
                 case "J":
+                case "W2":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRoundTripInheritanceModel(document.RootElement, options);

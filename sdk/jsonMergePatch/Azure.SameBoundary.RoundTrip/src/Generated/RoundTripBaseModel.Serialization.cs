@@ -17,7 +17,12 @@ namespace Azure.SameBoundary.RoundTrip
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoundTripBaseModel>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<RoundTripBaseModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RoundTripBaseModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => WriteCore(writer, options);
+
+        /// <summary> WriteCore method. </summary>
+#pragma warning disable AZC0014
+        protected void WriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+#pragma warning restore AZC0014
         {
             var format = options.Format == "W" || options.Format == "JMP" ? ((IPersistableModel<RoundTripBaseModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -31,11 +36,11 @@ namespace Azure.SameBoundary.RoundTrip
             }
             else if (options.Format == "JMP")
             {
-                WritePatch(writer);
+                WritePatch(writer, options);
             }
         }
 
-        private void WritePatch(Utf8JsonWriter writer)
+        private void WritePatch(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (_baseProperty1Changed)
@@ -55,7 +60,7 @@ namespace Azure.SameBoundary.RoundTrip
                 writer.WritePropertyName("baseProperty2"u8);
                 writer.WriteNumberValue(BaseProperty2);
             }
-            // BaseProperty3 serialization
+            ModelSerializationExtensions.WritePatchDictionary(writer, "baseProperty3"u8, BaseProperty3, (item) => writer.WriteStringValue(item));
             writer.WriteEndObject();
         }
 
