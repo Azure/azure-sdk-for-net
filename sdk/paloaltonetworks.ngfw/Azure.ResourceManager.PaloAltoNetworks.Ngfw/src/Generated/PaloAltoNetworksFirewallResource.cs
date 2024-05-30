@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firewalls_GetGlobalRulestack</description>
+        /// <description>Firewalls_getGlobalRulestack</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firewalls_GetGlobalRulestack</description>
+        /// <description>Firewalls_getGlobalRulestack</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firewalls_GetLogProfile</description>
+        /// <description>Firewalls_getLogProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firewalls_GetLogProfile</description>
+        /// <description>Firewalls_getLogProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firewalls_GetSupportInfo</description>
+        /// <description>Firewalls_getSupportInfo</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firewalls_GetSupportInfo</description>
+        /// <description>Firewalls_getSupportInfo</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firewalls_SaveLogProfile</description>
+        /// <description>Firewalls_saveLogProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Firewalls_SaveLogProfile</description>
+        /// <description>Firewalls_saveLogProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
