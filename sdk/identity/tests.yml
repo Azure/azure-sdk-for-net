@@ -18,3 +18,4 @@ extends:
           - $(sub-config-identity-test-resources)
     EnvVars:
         SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    UseFederatedAuth: true
