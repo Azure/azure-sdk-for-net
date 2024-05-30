@@ -58,6 +58,9 @@
 
 ## 1.10.4 (2023-11-13)
 
+### Breaking Changes
+- Added dependency to `WindowsForms` when targeting `netX.0-windows` instead of `netX.0`. An additional installation of .NET Desktop Runtime may be necessary. [#44232](https://github.com/Azure/azure-sdk-for-net/issues/44232)
+
 ### Other Changes
 - Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
 
