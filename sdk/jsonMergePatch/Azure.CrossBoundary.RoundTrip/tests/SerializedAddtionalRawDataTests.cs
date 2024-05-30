@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace Azure.CrossBoundary.RoundTrip.Tests
 {
+    // AdditionalRawData design is going to be changed, so ignore these tests.
     public class SerializedAddtionalRawDataTests
     {
         [Test]

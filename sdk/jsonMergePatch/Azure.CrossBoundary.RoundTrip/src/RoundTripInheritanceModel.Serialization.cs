@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.SameBoundary.RoundTrip;
 
 namespace Azure.CrossBoundary.RoundTrip
 {
@@ -19,25 +20,34 @@ namespace Azure.CrossBoundary.RoundTrip
 
         void IJsonModel<RoundTripInheritanceModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" || options.Format == "W2" || options.Format == "JMP" ? ((IPersistableModel<RoundTripInheritanceModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" || options.Format == "JMP" ? ((IPersistableModel<RoundTripBaseModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoundTripInheritanceModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RoundTripBaseModel)} does not support writing '{format}' format.");
             }
 
-            if (options.Format == "W" || options.Format == "W2")
+            writer.WriteStartObject();
+            WriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <summary> WriteCore method. </summary>
+#pragma warning disable AZC0014
+        protected override void WriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+#pragma warning restore AZC0014
+        {
+            if (options.Format == "W")
             {
-                WriteJson(writer, options);
+                WriteJsonCore(writer, options);
             }
             else if (options.Format == "JMP")
             {
-                WritePatch(writer, options);
+                WritePatchCore(writer, options);
             }
         }
 
-        private void WritePatch(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        private void WritePatchCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
             if (_extendedPrpertyChanged)
             {
                 writer.WritePropertyName("extendedProperty"u8);
@@ -50,13 +60,11 @@ namespace Azure.CrossBoundary.RoundTrip
                     writer.WriteStringValue(ExtendedProperty);
                 }
             }
-            WriteCore(writer, options);
-            writer.WriteEndObject();
+            base.WriteCore(writer, options);
         }
 
-        private void WriteJson(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        private void WriteJsonCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedProperty))
             {
                 writer.WritePropertyName("extendedProperty"u8);
@@ -95,7 +103,6 @@ namespace Azure.CrossBoundary.RoundTrip
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RoundTripInheritanceModel IJsonModel<RoundTripInheritanceModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

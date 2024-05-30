@@ -19,6 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="TestData\Empty.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripInheritance_AllPropertiesReceived.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\SerializedAddtionalRawData_Solution1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

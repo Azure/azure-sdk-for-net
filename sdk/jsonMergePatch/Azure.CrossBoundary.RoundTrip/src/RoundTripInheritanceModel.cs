@@ -13,6 +13,7 @@ namespace Azure.CrossBoundary.RoundTrip
     /// <summary> The RoundTripInheritanceModel. </summary>
     public partial class RoundTripInheritanceModel : Azure.SameBoundary.RoundTrip.RoundTripBaseModel
     {
+        // [Patch] AddtionalRawData is going to be changed, so this is just a palceholder to make compilation pass. We are not discussing addtional properties here.
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RoundTripInheritanceModel"/>. </summary>
