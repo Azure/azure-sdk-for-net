@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CheckAmlFSSubnets</description>
+        /// <description>checkAmlFSSubnets</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CheckAmlFSSubnets</description>
+        /// <description>checkAmlFSSubnets</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetRequiredAmlFSSubnetsSize</description>
+        /// <description>getRequiredAmlFSSubnetsSize</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetRequiredAmlFSSubnetsSize</description>
+        /// <description>getRequiredAmlFSSubnetsSize</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
