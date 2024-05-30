@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 input.Tags.Add(tag);
             }
-            return await UpdateAsync(waitUntil, input, cancellationToken).ConfigureAwait(false);
+            return await UpdateAsync(waitUntil, input, null, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// Updates a BackupVault resource belonging to a resource group. For example, updating tags for a resource.
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 input.Tags.Add(tag);
             }
-            return Update(waitUntil, input, cancellationToken);
+            return Update(waitUntil, input, null, cancellationToken);
         }
     }
 }
