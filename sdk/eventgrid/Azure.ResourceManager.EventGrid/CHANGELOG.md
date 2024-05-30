@@ -12,6 +12,17 @@
 
 ### Other Changes
 
+## 1.1.0-beta.5 (2024-06-01)
+
+### Features Added
+
+- Custom domain: put create / post validate / Patch update.
+- Get/POST full URL for namespace topic event subscription.
+- ExpirationTimeUtc for namespace topic eventsubscription
+- Add EventSubscriptionDestination to PushInfo
+- CustomJwtAuthentication
+- One on the NSP properties (subscriptions) returning list of class rather than list of string. 
+
 ## 1.1.0-beta.4 (2023-12-12)
 
 ### Features Added
