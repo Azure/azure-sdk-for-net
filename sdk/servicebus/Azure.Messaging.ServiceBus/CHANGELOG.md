@@ -8,7 +8,11 @@
 
 ### Bugs Fixed
 
+- Fixed an error that caused connection strings using host names without a scheme to fail parsing and be considered invalid.
+
 ### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.7, which contains a fix for decoding messages with a null format code as the body.
 
 ## 7.18.0-beta.1 (2024-05-08)
 

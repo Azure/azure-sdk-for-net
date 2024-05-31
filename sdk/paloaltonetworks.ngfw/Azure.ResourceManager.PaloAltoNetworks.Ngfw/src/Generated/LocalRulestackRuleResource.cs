@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRules_getCounters</description>
+        /// <description>LocalRules_GetCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRules_getCounters</description>
+        /// <description>LocalRules_GetCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRules_refreshCounters</description>
+        /// <description>LocalRules_RefreshCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRules_refreshCounters</description>
+        /// <description>LocalRules_RefreshCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRules_resetCounters</description>
+        /// <description>LocalRules_ResetCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LocalRules_resetCounters</description>
+        /// <description>LocalRules_ResetCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
