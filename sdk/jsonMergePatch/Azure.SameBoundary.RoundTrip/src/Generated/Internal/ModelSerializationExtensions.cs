@@ -195,6 +195,7 @@ namespace Azure.SameBoundary.RoundTrip
         public static void WritePatchDictionary<T>(Utf8JsonWriter writer, ReadOnlySpan<byte> propertyName, IDictionary<string, T> dictionary, Action<T> writeItem, Func<T, bool> additionalItemChangeCheck = null, Action additionalPropertyWrite = default)
         {
             // [Patch] If the dictionary is not ChangeTrackingDictionary, it must be assigned by user.
+            // [Patch] We could make sure the item in `IDictionary<string, string>` must be `ChangeTrackingDictionary<string, string>`. However, if the property is type of `IDictionary<string, IDictionary<string, string>>`, user could still assign a `Dictionary<string, string>` to it.
             if (dictionary != null && dictionary is not ChangeTrackingDictionary<string, T>)
             {
                 additionalPropertyWrite?.Invoke();
