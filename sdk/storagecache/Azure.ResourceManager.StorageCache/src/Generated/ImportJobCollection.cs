@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>importJobs_ListByAmlFilesystem</description>
+        /// <description>importJobs_ListByAmlFileSystem</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>importJobs_ListByAmlFilesystem</description>
+        /// <description>importJobs_ListByAmlFileSystem</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
