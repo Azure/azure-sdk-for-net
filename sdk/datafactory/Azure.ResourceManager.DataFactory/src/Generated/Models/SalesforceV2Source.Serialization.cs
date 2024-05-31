@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("SOQLQuery"u8);
                 JsonSerializer.Serialize(writer, SoqlQuery);
             }
+            if (Optional.IsDefined(Query))
+            {
+                writer.WritePropertyName("query"u8);
+                JsonSerializer.Serialize(writer, Query);
+            }
             if (Optional.IsDefined(IncludeDeletedObjects))
             {
                 writer.WritePropertyName("includeDeletedObjects"u8);
@@ -112,6 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> soqlQuery = default;
+            DataFactoryElement<string> query = default;
             DataFactoryElement<bool> includeDeletedObjects = default;
             DataFactoryElement<string> queryTimeout = default;
             BinaryData additionalColumns = default;
@@ -131,6 +137,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     soqlQuery = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("query"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    query = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("includeDeletedObjects"u8))
@@ -214,6 +229,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 queryTimeout,
                 additionalColumns,
                 soqlQuery,
+                query,
                 includeDeletedObjects);
         }
 

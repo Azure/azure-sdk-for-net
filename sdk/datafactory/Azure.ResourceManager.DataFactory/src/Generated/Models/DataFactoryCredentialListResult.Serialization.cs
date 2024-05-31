@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            IReadOnlyList<DataFactoryManagedIdentityCredentialData> value = default;
+            IReadOnlyList<CredentialResourceData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DataFactoryManagedIdentityCredentialData> array = new List<DataFactoryManagedIdentityCredentialData>();
+                    List<CredentialResourceData> array = new List<CredentialResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryManagedIdentityCredentialData.DeserializeDataFactoryManagedIdentityCredentialData(item, options));
+                        array.Add(CredentialResourceData.DeserializeCredentialResourceData(item, options));
                     }
                     value = array;
                     continue;

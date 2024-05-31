@@ -48,11 +48,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="ScriptActivityScriptBlock"/>. </summary>
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
-        /// <param name="scriptType"> The type of the query. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public ScriptActivityScriptBlock(DataFactoryElement<string> text, DataFactoryScriptType scriptType)
+        /// <param name="scriptType"> The type of the query. Please refer to the ScriptType for valid options. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="scriptType"/> is null. </exception>
+        public ScriptActivityScriptBlock(DataFactoryElement<string> text, DataFactoryElement<string> scriptType)
         {
             Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(scriptType, nameof(scriptType));
 
             Text = text;
             ScriptType = scriptType;
@@ -61,10 +62,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="ScriptActivityScriptBlock"/>. </summary>
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
-        /// <param name="scriptType"> The type of the query. Type: string. </param>
+        /// <param name="scriptType"> The type of the query. Please refer to the ScriptType for valid options. Type: string (or Expression with resultType string). </param>
         /// <param name="parameters"> Array of script parameters. Type: array. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptActivityScriptBlock(DataFactoryElement<string> text, DataFactoryScriptType scriptType, IList<ScriptActivityParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScriptActivityScriptBlock(DataFactoryElement<string> text, DataFactoryElement<string> scriptType, IList<ScriptActivityParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             ScriptType = scriptType;
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The query text. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Text { get; set; }
-        /// <summary> The type of the query. Type: string. </summary>
-        public DataFactoryScriptType ScriptType { get; set; }
+        /// <summary> The type of the query. Please refer to the ScriptType for valid options. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> ScriptType { get; set; }
         /// <summary> Array of script parameters. Type: array. </summary>
         public IList<ScriptActivityParameter> Parameters { get; }
     }

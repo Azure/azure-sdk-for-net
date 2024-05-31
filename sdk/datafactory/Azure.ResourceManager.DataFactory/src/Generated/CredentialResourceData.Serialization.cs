@@ -15,16 +15,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    public partial class DataFactoryManagedIdentityCredentialData : IUtf8JsonSerializable, IJsonModel<DataFactoryManagedIdentityCredentialData>
+    public partial class CredentialResourceData : IUtf8JsonSerializable, IJsonModel<CredentialResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryManagedIdentityCredentialData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CredentialResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DataFactoryManagedIdentityCredentialData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CredentialResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryManagedIdentityCredentialData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CredentialResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryManagedIdentityCredentialData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CredentialResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -73,19 +73,19 @@ namespace Azure.ResourceManager.DataFactory
             writer.WriteEndObject();
         }
 
-        DataFactoryManagedIdentityCredentialData IJsonModel<DataFactoryManagedIdentityCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CredentialResourceData IJsonModel<CredentialResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryManagedIdentityCredentialData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CredentialResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryManagedIdentityCredentialData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CredentialResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataFactoryManagedIdentityCredentialData(document.RootElement, options);
+            return DeserializeCredentialResourceData(document.RootElement, options);
         }
 
-        internal static DataFactoryManagedIdentityCredentialData DeserializeDataFactoryManagedIdentityCredentialData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CredentialResourceData DeserializeCredentialResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            DataFactoryManagedIdentityCredentialProperties properties = default;
+            DataFactoryCredential properties = default;
             ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataFactoryManagedIdentityCredentialProperties.DeserializeDataFactoryManagedIdentityCredentialProperties(property.Value, options);
+                    properties = DataFactoryCredential.DeserializeDataFactoryCredential(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataFactoryManagedIdentityCredentialData(
+            return new CredentialResourceData(
                 id,
                 name,
                 type,
@@ -157,35 +157,35 @@ namespace Azure.ResourceManager.DataFactory
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DataFactoryManagedIdentityCredentialData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CredentialResourceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryManagedIdentityCredentialData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CredentialResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryManagedIdentityCredentialData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CredentialResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DataFactoryManagedIdentityCredentialData IPersistableModel<DataFactoryManagedIdentityCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CredentialResourceData IPersistableModel<CredentialResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryManagedIdentityCredentialData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CredentialResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDataFactoryManagedIdentityCredentialData(document.RootElement, options);
+                        return DeserializeCredentialResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryManagedIdentityCredentialData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CredentialResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DataFactoryManagedIdentityCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CredentialResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

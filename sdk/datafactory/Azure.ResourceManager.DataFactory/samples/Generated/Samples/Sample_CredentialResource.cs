@@ -13,7 +13,7 @@ using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory.Samples
 {
-    public partial class Sample_DataFactoryManagedIdentityCredentialResource
+    public partial class Sample_CredentialResource
     {
         // Credentials_Create
         [NUnit.Framework.Test]
@@ -28,26 +28,26 @@ namespace Azure.ResourceManager.DataFactory.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DataFactoryManagedIdentityCredentialResource created on azure
-            // for more information of creating DataFactoryManagedIdentityCredentialResource, please refer to the document of DataFactoryManagedIdentityCredentialResource
+            // this example assumes you already have this CredentialResource created on azure
+            // for more information of creating CredentialResource, please refer to the document of CredentialResource
             string subscriptionId = "12345678-1234-1234-1234-12345678abc";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string credentialName = "exampleCredential";
-            ResourceIdentifier dataFactoryManagedIdentityCredentialResourceId = DataFactoryManagedIdentityCredentialResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName, credentialName);
-            DataFactoryManagedIdentityCredentialResource dataFactoryManagedIdentityCredential = client.GetDataFactoryManagedIdentityCredentialResource(dataFactoryManagedIdentityCredentialResourceId);
+            ResourceIdentifier credentialResourceId = CredentialResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName, credentialName);
+            CredentialResource credentialResource = client.GetCredentialResource(credentialResourceId);
 
             // invoke the operation
-            DataFactoryManagedIdentityCredentialData data = new DataFactoryManagedIdentityCredentialData(new DataFactoryManagedIdentityCredentialProperties()
+            CredentialResourceData data = new CredentialResourceData(new DataFactoryManagedIdentityCredentialProperties()
             {
                 ResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-12345678abc/resourcegroups/exampleResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleUami"),
             });
-            ArmOperation<DataFactoryManagedIdentityCredentialResource> lro = await dataFactoryManagedIdentityCredential.UpdateAsync(WaitUntil.Completed, data);
-            DataFactoryManagedIdentityCredentialResource result = lro.Value;
+            ArmOperation<CredentialResource> lro = await credentialResource.UpdateAsync(WaitUntil.Completed, data);
+            CredentialResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DataFactoryManagedIdentityCredentialData resourceData = result.Data;
+            CredentialResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -65,21 +65,21 @@ namespace Azure.ResourceManager.DataFactory.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DataFactoryManagedIdentityCredentialResource created on azure
-            // for more information of creating DataFactoryManagedIdentityCredentialResource, please refer to the document of DataFactoryManagedIdentityCredentialResource
+            // this example assumes you already have this CredentialResource created on azure
+            // for more information of creating CredentialResource, please refer to the document of CredentialResource
             string subscriptionId = "12345678-1234-1234-1234-12345678abc";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string credentialName = "exampleCredential";
-            ResourceIdentifier dataFactoryManagedIdentityCredentialResourceId = DataFactoryManagedIdentityCredentialResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName, credentialName);
-            DataFactoryManagedIdentityCredentialResource dataFactoryManagedIdentityCredential = client.GetDataFactoryManagedIdentityCredentialResource(dataFactoryManagedIdentityCredentialResourceId);
+            ResourceIdentifier credentialResourceId = CredentialResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName, credentialName);
+            CredentialResource credentialResource = client.GetCredentialResource(credentialResourceId);
 
             // invoke the operation
-            DataFactoryManagedIdentityCredentialResource result = await dataFactoryManagedIdentityCredential.GetAsync();
+            CredentialResource result = await credentialResource.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            DataFactoryManagedIdentityCredentialData resourceData = result.Data;
+            CredentialResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.DataFactory.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this DataFactoryManagedIdentityCredentialResource created on azure
-            // for more information of creating DataFactoryManagedIdentityCredentialResource, please refer to the document of DataFactoryManagedIdentityCredentialResource
+            // this example assumes you already have this CredentialResource created on azure
+            // for more information of creating CredentialResource, please refer to the document of CredentialResource
             string subscriptionId = "12345678-1234-1234-1234-12345678abc";
             string resourceGroupName = "exampleResourceGroup";
             string factoryName = "exampleFactoryName";
             string credentialName = "exampleCredential";
-            ResourceIdentifier dataFactoryManagedIdentityCredentialResourceId = DataFactoryManagedIdentityCredentialResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName, credentialName);
-            DataFactoryManagedIdentityCredentialResource dataFactoryManagedIdentityCredential = client.GetDataFactoryManagedIdentityCredentialResource(dataFactoryManagedIdentityCredentialResourceId);
+            ResourceIdentifier credentialResourceId = CredentialResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName, credentialName);
+            CredentialResource credentialResource = client.GetCredentialResource(credentialResourceId);
 
             // invoke the operation
-            await dataFactoryManagedIdentityCredential.DeleteAsync(WaitUntil.Completed);
+            await credentialResource.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
