@@ -43,6 +43,18 @@ steps:
   - template: /eng/common/TestResources/setup-environments.yml
 
   - ${{ if eq('true', parameters.UseFederatedAuth) }}:
+    - task: AzureCLI@2
+      displayName: Set OIDC variables
+      inputs:
+        azureSubscription: ${{ parameters.ServiceConnection }}
+        scriptType: pscore
+        scriptLocation: inlineScript
+        addSpnToEnvironment: true
+        inlineScript: |
+          Write-Host "##vso[task.setvariable variable=ARM_CLIENT_ID;issecret=true]$($env:servicePrincipalId)"
+          Write-Host "##vso[task.setvariable variable=ARM_TENANT_ID;issecret=true]$($env:tenantId)"
+          Write-Host "##vso[task.setvariable variable=ARM_OIDC_TOKEN;issecret=true]$($env:idToken)"
+
     - task: AzurePowerShell@5
       displayName: Deploy test resources
       env:
