@@ -10,7 +10,4 @@
   </PropertyGroup>
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
 
-  <ItemGroup>
-    <PackageReference Remove="*" />
-  </ItemGroup>
 </Project>
