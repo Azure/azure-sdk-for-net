@@ -41,11 +41,11 @@ namespace Azure.Maps.Search.Models
                 writer.WritePropertyName("countryRegion"u8);
                 writer.WriteStringValue(CountryRegion);
             }
-            if (Common.Optional.IsCollectionDefined(Bbox))
+            if (Common.Optional.IsCollectionDefined(BoundingBox))
             {
-                writer.WritePropertyName("bbox"u8);
+                writer.WritePropertyName("boundingBox"u8);
                 writer.WriteStartArray();
-                foreach (var item in Bbox)
+                foreach (var item in BoundingBox)
                 {
                     writer.WriteNumberValue(item);
                 }

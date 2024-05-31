@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of <see cref="GeocodingBatchRequestItem"/>. </summary>
         public GeocodingBatchRequestItem()
         {
-            Bbox = new ChangeTrackingList<double>();
+            BoundingBox = new ChangeTrackingList<double>();
             Coordinates = new ChangeTrackingList<double>();
         }
 
@@ -34,7 +34,7 @@ namespace Azure.Maps.Search.Models
         ///
         /// **If query is given, should not use this parameter.**
         /// </param>
-        /// <param name="bbox">
+        /// <param name="boundingBox">
         /// A rectangular area on the earth defined as a bounding box object. The sides of the rectangles are defined by longitude and latitude values. For more information, see Location and Area Types. When you specify this parameter, the geographical area is taken into account when computing the results of a location query.
         ///
         /// Example: [lon1, lat1, lon2, lat2]
@@ -66,14 +66,14 @@ namespace Azure.Maps.Search.Models
         ///
         /// **If query is given, should not use this parameter.**
         /// </param>
-        internal GeocodingBatchRequestItem(string optionalId, int? top, string query, string addressLine, string countryRegion, IList<double> bbox, string view, IList<double> coordinates, string adminDistrict, string adminDistrict2, string adminDistrict3, string locality, string postalCode)
+        internal GeocodingBatchRequestItem(string optionalId, int? top, string query, string addressLine, string countryRegion, IList<double> boundingBox, string view, IList<double> coordinates, string adminDistrict, string adminDistrict2, string adminDistrict3, string locality, string postalCode)
         {
             OptionalId = optionalId;
             Top = top;
             Query = query;
             AddressLine = addressLine;
             CountryRegion = countryRegion;
-            Bbox = bbox;
+            BoundingBox = boundingBox;
             View = view;
             Coordinates = coordinates;
             AdminDistrict = adminDistrict;

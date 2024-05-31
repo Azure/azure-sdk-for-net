@@ -35,7 +35,7 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Initializes a new instance of <see cref="Boundary"/>. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
-        /// <param name="bbox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <param name="geometry">
         /// A valid `GeoJSON` geometry object. The type must be one of the seven valid GeoJSON geometry types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1) for details.
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -48,7 +48,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="copyright"> The copyright string. </param>
         /// <param name="copyrightURL"> A URL that lists many of the data providers for Azure Maps and their related copyright information. </param>
         /// <param name="geometriesCopyright"> A collection of copyright information for each geometry of the Boundary object in the same order they appear. </param>
-        internal Boundary(GeoJsonObjectType type, IReadOnlyList<double> bbox, GeoJsonGeometry geometry, object properties, string id, string featureType, string name, string copyright, string copyrightURL, IReadOnlyList<GeometryCopyright> geometriesCopyright) : base(type, bbox, geometry, properties, id, featureType)
+        internal Boundary(GeoJsonObjectType type, IReadOnlyList<double> boundingBox, GeoJsonGeometry geometry, object properties, string id, string featureType, string name, string copyright, string copyrightURL, IReadOnlyList<GeometryCopyright> geometriesCopyright) : base(type, boundingBox, geometry, properties, id, featureType)
         {
             Name = name;
             Copyright = copyright;

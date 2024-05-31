@@ -37,7 +37,6 @@ namespace Azure.Maps.Search
         /// <summary> Initializes a new instance of MapsSearchClient. </summary>
         /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Search Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-
         public MapsSearchClient(AzureKeyCredential credential)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -138,7 +137,7 @@ namespace Azure.Maps.Search
         /// <param name="countryRegion">
         /// Signal for the geocoding result to an <see href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 Alpha-2 region/country code</see> that is specified e.g. FR./ If query is given, should not use this parameter.
         /// </param>
-        /// <param name="bbox">
+        /// <param name="boundingBox">
         /// A rectangular area on the earth defined as a bounding box object. The sides of the rectangles are defined by longitude and latitude values. When you specify this parameter, the geographical area is taken into account when computing the results of a location query.
         ///
         /// Example: lon1,lat1,lon2,lat2
@@ -165,13 +164,13 @@ namespace Azure.Maps.Search
         /// The postal code portion of an address. If query is given, should not use this parameter.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GeocodingResponse>> GetGeocodingAsync(string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> bbox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GeocodingResponse>> GetGeocodingAsync(string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> boundingBox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetGeocoding");
             scope.Start();
             try
             {
-                return await RestClient.GetGeocodingAsync(top, query, addressLine, countryRegion, bbox, view, coordinates, adminDistrict, adminDistrict2, adminDistrict3, locality, postalCode, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetGeocodingAsync(top, query, addressLine, countryRegion, boundingBox, view, coordinates, adminDistrict, adminDistrict2, adminDistrict3, locality, postalCode, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -193,7 +192,7 @@ namespace Azure.Maps.Search
         ///
         /// If query is given, should not use this parameter.
         /// </param>
-        /// <param name="bbox">
+        /// <param name="boundingBox">
         /// A rectangular area on the earth defined as a bounding box object. The sides of the rectangles are defined by longitude and latitude values. When you specify this parameter, the geographical area is taken into account when computing the results of a location query.
         ///
         /// Example: lon1,lat1,lon2,lat2
@@ -222,13 +221,13 @@ namespace Azure.Maps.Search
         /// The postal code portion of an address. If query is given, should not use this parameter.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GeocodingResponse> GetGeocoding(string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> bbox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Response<GeocodingResponse> GetGeocoding(string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> boundingBox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetGeocoding");
             scope.Start();
             try
             {
-                return RestClient.GetGeocoding(top, query, addressLine, countryRegion, bbox, view, coordinates, adminDistrict, adminDistrict2, adminDistrict3, locality, postalCode, cancellationToken);
+                return RestClient.GetGeocoding(top, query, addressLine, countryRegion, boundingBox, view, coordinates, adminDistrict, adminDistrict2, adminDistrict3, locality, postalCode, cancellationToken);
             }
             catch (Exception e)
             {
@@ -413,44 +412,13 @@ namespace Azure.Maps.Search
 
         /// <summary>
         ///
-        /// The Reverse Geocoding Batch API sends batches of queries to [Reverse Geocoding API](/rest/api/maps/search/get-reverse-geocoding) using just a single API call. The API allows caller to batch up to <c>100</c> queries.
+        /// The Reverse Geocoding Batch API sends batches of queries to <see href="/rest/api/maps/search/get-reverse-geocoding">Reverse Geocoding API</see> using just a single API call. The API allows caller to batch up to <c>100</c> queries.
         ///
-        /// ### Submit Synchronous Batch Request
-        /// The Synchronous API is recommended for lightweight batch requests. When the service receives a request, it will respond as soon as the batch items are calculated and there will be no possibility to retrieve the results later. The Synchronous API will return a timeout error (a 408 response) if the request takes longer than 60 seconds. The number of batch items is limited to <c>100</c> for this API.
-        /// ```
-        /// POST https://atlas.microsoft.com/reverseGeocode:batch?api-version=2023-06-01
-        /// ```
-        /// ### POST Body for Batch Request
-        /// To send the _reverse geocoding_ queries you will use a `POST` request where the request body will contain the `batchItems` array in `json` format and the `Content-Type` header will be set to `application/json`. Here's a sample request body containing 2 _reverse geocoding_ queries:
         ///
-        /// <code>
-        /// {
-        ///   "batchItems": [
-        ///     {
-        ///       "coordinates": [-122.128275, 47.639429],
-        ///       "resultTypes": ["Address", "PopulatedPlace"]
-        ///     },
-        ///     {
-        ///       "coordinates": [-122.341979399674, 47.6095253501216]
-        ///     }
-        ///   ]
-        /// }
-        ///</code>
-        ///
-        /// A _reverse geocoding_ batchItem object can accept any of the supported _reverse geocoding_ [URI parameters](/rest/api/maps/search/get-reverse-geocoding#uri-parameters).
+        /// A reverse geocoding batchItem object can accept any of the supported reverse geocoding <see href="/rest/api/maps/search/get-reverse-geocoding#uri-parameters">URI parameters</see>.
         ///
         ///
         /// The batch should contain at least <c>1</c> query.
-        ///
-        ///
-        /// ### Batch Response Model
-        /// The batch response contains a `summary` component that indicates the `totalRequests` that were part of the original batch request and `successfulRequests` i.e. queries which were executed successfully. The batch response also includes a `batchItems` array which contains a response for each and every query in the batch request. The `batchItems` will contain the results in the exact same order the original queries were sent in the batch request. Each item is of one of the following types:
-        ///
-        ///   - [`GeocodingResponse`](/rest/api/maps/search/get-reverse-geocoding#geocodingresponse) - If the query completed successfully.
-        ///
-        ///   - `Error` - If the query failed. The response will contain a `code` and a `message` in this case.
-        ///
-        ///
         ///
         /// </summary>
         /// <param name="reverseGeocodingBatchRequestBody"> The list of reverse geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
@@ -472,22 +440,12 @@ namespace Azure.Maps.Search
         }
 
         /// <summary>
-        /// The Reverse Geocoding Batch API sends batches of queries to [Reverse Geocoding API](/rest/api/maps/search/get-reverse-geocoding) using just a single API call. The API allows caller to batch up to <c>100</c> queries.
+        /// The Reverse Geocoding Batch API sends batches of queries to <see href="/rest/api/maps/search/get-reverse-geocoding">Reverse Geocoding API</see> using just a single API call. The API allows caller to batch up to <c>100</c> queries.
         ///
-        /// A _reverse geocoding_ batchItem object can accept any of the supported _reverse geocoding_ [URI parameters](/rest/api/maps/search/get-reverse-geocoding#uri-parameters).
+        /// A reverse geocoding batchItem object can accept any of the supported reverse geocoding  <see href="/rest/api/maps/search/get-reverse-geocoding#uri-parameters">URI parameters</see>.
         ///
         ///
         /// The batch should contain at least <c>1</c> query.
-        ///
-        ///
-        /// ### Batch Response Model
-        /// The batch response contains a `summary` component that indicates the `totalRequests` that were part of the original batch request and `successfulRequests` i.e. queries which were executed successfully. The batch response also includes a `batchItems` array which contains a response for each and every query in the batch request. The `batchItems` will contain the results in the exact same order the original queries were sent in the batch request. Each item is of one of the following types:
-        ///
-        ///   - [`GeocodingResponse`](/rest/api/maps/search/get-reverse-geocoding#geocodingresponse) - If the query completed successfully.
-        ///
-        ///   - `Error` - If the query failed. The response will contain a `code` and a `message` in this case.
-        ///
-        ///
         ///
         /// </summary>
         /// <param name="reverseGeocodingBatchRequestBody"> The list of reverse geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>

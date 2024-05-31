@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
+    [CodeGenSerialization(nameof(BoundingBox), "boundingBox")]
     public partial class GeocodingBatchRequestItem
     {
         /// <summary>
@@ -11,7 +13,7 @@ namespace Azure.Maps.Search.Models
         ///
         /// Example: [lon1, lat1, lon2, lat2]
         /// </summary>
-        public IList<double> Bbox { get; set; }
+        public IList<double> BoundingBox { get; set; }
 
         /// <summary> A point on the earth specified as a longitude and latitude. When you specify this parameter, the user’s location is taken into account and the results returned may be more relevant to the user. Example: [lon, lat]. </summary>
         public IList<double> Coordinates { get; set; }

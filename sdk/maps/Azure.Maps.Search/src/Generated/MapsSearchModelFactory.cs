@@ -30,13 +30,13 @@ namespace Azure.Maps.Search.Models
         /// <param name="id"> ID for feature returned. </param>
         /// <param name="properties"></param>
         /// <param name="geometry"> A valid `GeoJSON Point` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.2) for details. </param>
-        /// <param name="bbox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <returns> A new <see cref="Models.FeaturesItem"/> instance for mocking. </returns>
-        public static FeaturesItem FeaturesItem(FeatureTypeEnum? type = null, string id = null, FeaturesItemProperties properties = null, GeoJsonPoint geometry = null, IEnumerable<double> bbox = null)
+        public static FeaturesItem FeaturesItem(FeatureTypeEnum? type = null, string id = null, FeaturesItemProperties properties = null, GeoJsonPoint geometry = null, IEnumerable<double> boundingBox = null)
         {
-            bbox ??= new List<double>();
+            boundingBox ??= new List<double>();
 
-            return new FeaturesItem(type, id, properties, geometry, bbox?.ToList());
+            return new FeaturesItem(type, id, properties, geometry, boundingBox?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FeaturesItemProperties"/>. </summary>
@@ -162,37 +162,47 @@ namespace Azure.Maps.Search.Models
             return new GeocodePointsItem(geometry, calculationMethod, usageTypes?.ToList());
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.UnknownGeoJsonObject"/>. </summary>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <returns> A new <see cref="Models.UnknownGeoJsonObject"/> instance for mocking. </returns>
+        public static UnknownGeoJsonObject UnknownGeoJsonObject(IEnumerable<double> boundingBox = null)
+        {
+            boundingBox ??= new List<double>();
+
+            return new UnknownGeoJsonObject(new GeoJsonObjectType("Unknown"), boundingBox?.ToList());
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonPoint"/>. </summary>
-        /// <param name="bbox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <param name="coordinates"> A `Position` is an array of numbers with two or more elements. The first two elements are _longitude_ and _latitude_, precisely in that order. _Altitude/Elevation_ is an optional third element. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.1) for details. </param>
         /// <returns> A new <see cref="Models.GeoJsonPoint"/> instance for mocking. </returns>
-        public static GeoJsonPoint GeoJsonPoint(IEnumerable<double> bbox = null, IEnumerable<double> coordinates = null)
+        public static GeoJsonPoint GeoJsonPoint(IEnumerable<double> boundingBox = null, IEnumerable<double> coordinates = null)
         {
-            bbox ??= new List<double>();
+            boundingBox ??= new List<double>();
             coordinates ??= new List<double>();
 
-            return new GeoJsonPoint(GeoJsonObjectType.GeoJsonPoint, bbox?.ToList(), coordinates?.ToList());
+            return new GeoJsonPoint(GeoJsonObjectType.GeoJsonPoint, boundingBox?.ToList(), coordinates?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonGeometry"/>. </summary>
-        /// <param name="bbox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <returns> A new <see cref="Models.GeoJsonGeometry"/> instance for mocking. </returns>
-        public static GeoJsonGeometry GeoJsonGeometry(IEnumerable<double> bbox = null)
+        public static GeoJsonGeometry GeoJsonGeometry(IEnumerable<double> boundingBox = null)
         {
-            bbox ??= new List<double>();
+            boundingBox ??= new List<double>();
 
-            return new GeoJsonGeometry(new GeoJsonObjectType("GeoJsonGeometry"), bbox?.ToList());
+            return new GeoJsonGeometry(new GeoJsonObjectType("GeoJsonGeometry"), boundingBox?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonObject"/>. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
-        /// <param name="bbox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <returns> A new <see cref="Models.GeoJsonObject"/> instance for mocking. </returns>
-        public static GeoJsonObject GeoJsonObject(string type = null, IEnumerable<double> bbox = null)
+        public static GeoJsonObject GeoJsonObject(string type = null, IEnumerable<double> boundingBox = null)
         {
-            bbox ??= new List<double>();
+            boundingBox ??= new List<double>();
 
-            return new UnknownGeoJsonObject(type == null ? default : new GeoJsonObjectType(type), bbox?.ToList());
+            return new UnknownGeoJsonObject(type == null ? default : new GeoJsonObjectType(type), boundingBox?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonPointData"/>. </summary>
@@ -265,7 +275,7 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Boundary"/>. </summary>
-        /// <param name="bbox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <param name="geometry">
         /// A valid `GeoJSON` geometry object. The type must be one of the seven valid GeoJSON geometry types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1) for details.
         /// Please note <see cref="Models.GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -279,14 +289,14 @@ namespace Azure.Maps.Search.Models
         /// <param name="copyrightURL"> A URL that lists many of the data providers for Azure Maps and their related copyright information. </param>
         /// <param name="geometriesCopyright"> A collection of copyright information for each geometry of the Boundary object in the same order they appear. </param>
         /// <returns> A new <see cref="Models.Boundary"/> instance for mocking. </returns>
-        public static Boundary Boundary(IEnumerable<double> bbox = null, GeoJsonGeometry geometry = null, object properties = null, string id = null, string featureType = null, string name = null, string copyright = null, string copyrightURL = null, IEnumerable<GeometryCopyright> geometriesCopyright = null)
+        public static Boundary Boundary(IEnumerable<double> boundingBox = null, GeoJsonGeometry geometry = null, object properties = null, string id = null, string featureType = null, string name = null, string copyright = null, string copyrightURL = null, IEnumerable<GeometryCopyright> geometriesCopyright = null)
         {
-            bbox ??= new List<double>();
+            boundingBox ??= new List<double>();
             geometriesCopyright ??= new List<GeometryCopyright>();
 
             return new Boundary(
                 new GeoJsonObjectType("Boundary"),
-                bbox?.ToList(),
+                boundingBox?.ToList(),
                 geometry,
                 properties,
                 id,
@@ -298,7 +308,7 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonFeature"/>. </summary>
-        /// <param name="bbox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <param name="geometry">
         /// A valid `GeoJSON` geometry object. The type must be one of the seven valid GeoJSON geometry types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1) for details.
         /// Please note <see cref="Models.GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -308,13 +318,13 @@ namespace Azure.Maps.Search.Models
         /// <param name="id"> Identifier for the feature. </param>
         /// <param name="featureType"> The type of the feature. The value depends on the data model the current feature is part of. Some data models may have an empty value. </param>
         /// <returns> A new <see cref="Models.GeoJsonFeature"/> instance for mocking. </returns>
-        public static GeoJsonFeature GeoJsonFeature(IEnumerable<double> bbox = null, GeoJsonGeometry geometry = null, object properties = null, string id = null, string featureType = null)
+        public static GeoJsonFeature GeoJsonFeature(IEnumerable<double> boundingBox = null, GeoJsonGeometry geometry = null, object properties = null, string id = null, string featureType = null)
         {
-            bbox ??= new List<double>();
+            boundingBox ??= new List<double>();
 
             return new GeoJsonFeature(
                 GeoJsonObjectType.GeoJsonFeature,
-                bbox?.ToList(),
+                boundingBox?.ToList(),
                 geometry,
                 properties,
                 id,
@@ -359,15 +369,15 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonMultiPoint"/>. </summary>
-        /// <param name="bbox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <param name="coordinates"> Coordinates for the `GeoJson MultiPoint` geometry. </param>
         /// <returns> A new <see cref="Models.GeoJsonMultiPoint"/> instance for mocking. </returns>
-        public static GeoJsonMultiPoint GeoJsonMultiPoint(IEnumerable<double> bbox = null, IEnumerable<IList<double>> coordinates = null)
+        public static GeoJsonMultiPoint GeoJsonMultiPoint(IEnumerable<double> boundingBox = null, IEnumerable<IList<double>> coordinates = null)
         {
-            bbox ??= new List<double>();
+            boundingBox ??= new List<double>();
             coordinates ??= new List<IList<double>>();
 
-            return new GeoJsonMultiPoint(GeoJsonObjectType.GeoJsonMultiPoint, bbox?.ToList(), coordinates?.ToList());
+            return new GeoJsonMultiPoint(GeoJsonObjectType.GeoJsonMultiPoint, boundingBox?.ToList(), coordinates?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonMultiPointData"/>. </summary>
@@ -381,15 +391,15 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonLineString"/>. </summary>
-        /// <param name="bbox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <param name="coordinates"> Coordinates for the `GeoJson LineString` geometry. </param>
         /// <returns> A new <see cref="Models.GeoJsonLineString"/> instance for mocking. </returns>
-        public static GeoJsonLineString GeoJsonLineString(IEnumerable<double> bbox = null, IEnumerable<IList<double>> coordinates = null)
+        public static GeoJsonLineString GeoJsonLineString(IEnumerable<double> boundingBox = null, IEnumerable<IList<double>> coordinates = null)
         {
-            bbox ??= new List<double>();
+            boundingBox ??= new List<double>();
             coordinates ??= new List<IList<double>>();
 
-            return new GeoJsonLineString(GeoJsonObjectType.GeoJsonLineString, bbox?.ToList(), coordinates?.ToList());
+            return new GeoJsonLineString(GeoJsonObjectType.GeoJsonLineString, boundingBox?.ToList(), coordinates?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonLineStringData"/>. </summary>
@@ -403,15 +413,15 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonMultiLineString"/>. </summary>
-        /// <param name="bbox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <param name="coordinates"> Coordinates for the `GeoJson MultiLineString` geometry. </param>
         /// <returns> A new <see cref="Models.GeoJsonMultiLineString"/> instance for mocking. </returns>
-        public static GeoJsonMultiLineString GeoJsonMultiLineString(IEnumerable<double> bbox = null, IEnumerable<IList<IList<double>>> coordinates = null)
+        public static GeoJsonMultiLineString GeoJsonMultiLineString(IEnumerable<double> boundingBox = null, IEnumerable<IList<IList<double>>> coordinates = null)
         {
-            bbox ??= new List<double>();
+            boundingBox ??= new List<double>();
             coordinates ??= new List<IList<IList<double>>>();
 
-            return new GeoJsonMultiLineString(GeoJsonObjectType.GeoJsonMultiLineString, bbox?.ToList(), coordinates?.ToList());
+            return new GeoJsonMultiLineString(GeoJsonObjectType.GeoJsonMultiLineString, boundingBox?.ToList(), coordinates?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonMultiLineStringData"/>. </summary>
@@ -425,15 +435,15 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonPolygon"/>. </summary>
-        /// <param name="bbox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <param name="coordinates"> Coordinates for the `GeoJson Polygon` geometry type. </param>
         /// <returns> A new <see cref="Models.GeoJsonPolygon"/> instance for mocking. </returns>
-        public static GeoJsonPolygon GeoJsonPolygon(IEnumerable<double> bbox = null, IEnumerable<IList<IList<double>>> coordinates = null)
+        public static GeoJsonPolygon GeoJsonPolygon(IEnumerable<double> boundingBox = null, IEnumerable<IList<IList<double>>> coordinates = null)
         {
-            bbox ??= new List<double>();
+            boundingBox ??= new List<double>();
             coordinates ??= new List<IList<IList<double>>>();
 
-            return new GeoJsonPolygon(GeoJsonObjectType.GeoJsonPolygon, bbox?.ToList(), coordinates?.ToList());
+            return new GeoJsonPolygon(GeoJsonObjectType.GeoJsonPolygon, boundingBox?.ToList(), coordinates?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonPolygonData"/>. </summary>
@@ -447,15 +457,15 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonMultiPolygon"/>. </summary>
-        /// <param name="bbox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <param name="coordinates"> Contains a list of valid `GeoJSON Polygon` objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </param>
         /// <returns> A new <see cref="Models.GeoJsonMultiPolygon"/> instance for mocking. </returns>
-        public static GeoJsonMultiPolygon GeoJsonMultiPolygon(IEnumerable<double> bbox = null, IEnumerable<IList<IList<IList<double>>>> coordinates = null)
+        public static GeoJsonMultiPolygon GeoJsonMultiPolygon(IEnumerable<double> boundingBox = null, IEnumerable<IList<IList<IList<double>>>> coordinates = null)
         {
-            bbox ??= new List<double>();
+            boundingBox ??= new List<double>();
             coordinates ??= new List<IList<IList<IList<double>>>>();
 
-            return new GeoJsonMultiPolygon(GeoJsonObjectType.GeoJsonMultiPolygon, bbox?.ToList(), coordinates?.ToList());
+            return new GeoJsonMultiPolygon(GeoJsonObjectType.GeoJsonMultiPolygon, boundingBox?.ToList(), coordinates?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonMultiPolygonData"/>. </summary>
@@ -469,19 +479,19 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonGeometryCollection"/>. </summary>
-        /// <param name="bbox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <param name="geometries">
         /// Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude).
         /// Please note <see cref="Models.GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.GeoJsonGeometryCollection"/>, <see cref="Models.GeoJsonLineString"/>, <see cref="Models.GeoJsonMultiLineString"/>, <see cref="Models.GeoJsonMultiPoint"/>, <see cref="Models.GeoJsonMultiPolygon"/>, <see cref="Models.GeoJsonPoint"/> and <see cref="Models.GeoJsonPolygon"/>.
         /// </param>
         /// <returns> A new <see cref="Models.GeoJsonGeometryCollection"/> instance for mocking. </returns>
-        public static GeoJsonGeometryCollection GeoJsonGeometryCollection(IEnumerable<double> bbox = null, IEnumerable<GeoJsonGeometry> geometries = null)
+        public static GeoJsonGeometryCollection GeoJsonGeometryCollection(IEnumerable<double> boundingBox = null, IEnumerable<GeoJsonGeometry> geometries = null)
         {
-            bbox ??= new List<double>();
+            boundingBox ??= new List<double>();
             geometries ??= new List<GeoJsonGeometry>();
 
-            return new GeoJsonGeometryCollection(GeoJsonObjectType.GeoJsonGeometryCollection, bbox?.ToList(), geometries?.ToList());
+            return new GeoJsonGeometryCollection(GeoJsonObjectType.GeoJsonGeometryCollection, boundingBox?.ToList(), geometries?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonGeometryCollectionData"/>. </summary>
@@ -499,19 +509,19 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonFeatureCollection"/>. </summary>
-        /// <param name="bbox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <param name="features">
         /// Contains a list of valid `GeoJSON Feature` objects.
         /// Please note <see cref="Models.GeoJsonFeature"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.Boundary"/>.
         /// </param>
         /// <returns> A new <see cref="Models.GeoJsonFeatureCollection"/> instance for mocking. </returns>
-        public static GeoJsonFeatureCollection GeoJsonFeatureCollection(IEnumerable<double> bbox = null, IEnumerable<GeoJsonFeature> features = null)
+        public static GeoJsonFeatureCollection GeoJsonFeatureCollection(IEnumerable<double> boundingBox = null, IEnumerable<GeoJsonFeature> features = null)
         {
-            bbox ??= new List<double>();
+            boundingBox ??= new List<double>();
             features ??= new List<GeoJsonFeature>();
 
-            return new GeoJsonFeatureCollection(GeoJsonObjectType.GeoJsonFeatureCollection, bbox?.ToList(), features?.ToList());
+            return new GeoJsonFeatureCollection(GeoJsonObjectType.GeoJsonFeatureCollection, boundingBox?.ToList(), features?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoJsonFeatureCollectionData"/>. </summary>

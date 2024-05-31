@@ -11,7 +11,7 @@ using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class UnknownGeoJsonObject
+    public partial class UnknownGeoJsonObject
     {
         internal static UnknownGeoJsonObject DeserializeUnknownGeoJsonObject(JsonElement element)
         {
@@ -20,7 +20,7 @@ namespace Azure.Maps.Search.Models
                 return null;
             }
             GeoJsonObjectType type = "Unknown";
-            IReadOnlyList<double> bbox = default;
+            IReadOnlyList<double> boundingBox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -28,7 +28,7 @@ namespace Azure.Maps.Search.Models
                     type = new GeoJsonObjectType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("bbox"u8))
+                if (property.NameEquals("boundingBox"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,11 +39,11 @@ namespace Azure.Maps.Search.Models
                     {
                         array.Add(item.GetDouble());
                     }
-                    bbox = array;
+                    boundingBox = array;
                     continue;
                 }
             }
-            return new UnknownGeoJsonObject(type, bbox ?? new ChangeTrackingList<double>());
+            return new UnknownGeoJsonObject(type, boundingBox ?? new ChangeTrackingList<double>());
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

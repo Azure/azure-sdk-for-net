@@ -50,7 +50,7 @@ namespace Azure.Maps.Search
             _clientId = clientId;
         }
 
-        internal HttpMessage CreateGetGeocodingRequest(int? top, string query, string addressLine, string countryRegion, IEnumerable<double> bbox, string view, IEnumerable<double> coordinates, string adminDistrict, string adminDistrict2, string adminDistrict3, string locality, string postalCode)
+        internal HttpMessage CreateGetGeocodingRequest(int? top, string query, string addressLine, string countryRegion, IEnumerable<double> boundingBox, string view, IEnumerable<double> coordinates, string adminDistrict, string adminDistrict2, string adminDistrict3, string locality, string postalCode)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -75,9 +75,9 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("countryRegion", countryRegion, true);
             }
-            if (bbox != null && !(bbox is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+            if (boundingBox != null && !(boundingBox is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("bbox", bbox, ",", true);
+                uri.AppendQueryDelimited("boundingBox", boundingBox, ",", true);
             }
             if (view != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.Maps.Search
         ///
         /// **If query is given, should not use this parameter.**
         /// </param>
-        /// <param name="bbox">
+        /// <param name="boundingBox">
         /// A rectangular area on the earth defined as a bounding box object. The sides of the rectangles are defined by longitude and latitude values. When you specify this parameter, the geographical area is taken into account when computing the results of a location query.
         ///
         /// Example: lon1,lat1,lon2,lat2
@@ -176,9 +176,9 @@ namespace Azure.Maps.Search
         /// **If query is given, should not use this parameter.**
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<GeocodingResponse>> GetGeocodingAsync(int? top = null, string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> bbox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, CancellationToken cancellationToken = default)
+        public async Task<Response<GeocodingResponse>> GetGeocodingAsync(int? top = null, string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> boundingBox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetGeocodingRequest(top, query, addressLine, countryRegion, bbox, view, coordinates, adminDistrict, adminDistrict2, adminDistrict3, locality, postalCode);
+            using var message = CreateGetGeocodingRequest(top, query, addressLine, countryRegion, boundingBox, view, coordinates, adminDistrict, adminDistrict2, adminDistrict3, locality, postalCode);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -213,7 +213,7 @@ namespace Azure.Maps.Search
         ///
         /// **If query is given, should not use this parameter.**
         /// </param>
-        /// <param name="bbox">
+        /// <param name="boundingBox">
         /// A rectangular area on the earth defined as a bounding box object. The sides of the rectangles are defined by longitude and latitude values. When you specify this parameter, the geographical area is taken into account when computing the results of a location query.
         ///
         /// Example: lon1,lat1,lon2,lat2
@@ -250,9 +250,9 @@ namespace Azure.Maps.Search
         /// **If query is given, should not use this parameter.**
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<GeocodingResponse> GetGeocoding(int? top = null, string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> bbox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, CancellationToken cancellationToken = default)
+        public Response<GeocodingResponse> GetGeocoding(int? top = null, string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> boundingBox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetGeocodingRequest(top, query, addressLine, countryRegion, bbox, view, coordinates, adminDistrict, adminDistrict2, adminDistrict3, locality, postalCode);
+            using var message = CreateGetGeocodingRequest(top, query, addressLine, countryRegion, boundingBox, view, coordinates, adminDistrict, adminDistrict2, adminDistrict3, locality, postalCode);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

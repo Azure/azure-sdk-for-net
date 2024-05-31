@@ -28,9 +28,9 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonLineString"/>. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
-        /// <param name="bbox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
         /// <param name="coordinates"> Coordinates for the `GeoJson LineString` geometry. </param>
-        internal GeoJsonLineString(GeoJsonObjectType type, IReadOnlyList<double> bbox, IReadOnlyList<IList<double>> coordinates) : base(type, bbox)
+        internal GeoJsonLineString(GeoJsonObjectType type, IReadOnlyList<double> boundingBox, IReadOnlyList<IList<double>> coordinates) : base(type, boundingBox)
         {
             Coordinates = coordinates;
             Type = type;

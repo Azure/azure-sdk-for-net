@@ -22,7 +22,7 @@ namespace Azure.Maps.Search.Models
             Argument.AssertNotNull(geometry, nameof(geometry));
 
             Geometry = geometry;
-            Bbox = new ChangeTrackingList<double>();
+            BoundingBox = new ChangeTrackingList<double>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FeaturesItem"/>. </summary>
@@ -30,14 +30,14 @@ namespace Azure.Maps.Search.Models
         /// <param name="id"> ID for feature returned. </param>
         /// <param name="properties"></param>
         /// <param name="geometry"> A valid `GeoJSON Point` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.2) for details. </param>
-        /// <param name="bbox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
-        internal FeaturesItem(FeatureTypeEnum? type, string id, FeaturesItemProperties properties, GeoJsonPoint geometry, IReadOnlyList<double> bbox)
+        /// <param name="boundingBox"> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </param>
+        internal FeaturesItem(FeatureTypeEnum? type, string id, FeaturesItemProperties properties, GeoJsonPoint geometry, IReadOnlyList<double> boundingBox)
         {
             Type = type;
             Id = id;
             Properties = properties;
             Geometry = geometry;
-            Bbox = bbox;
+            BoundingBox = boundingBox;
         }
 
         /// <summary> The type of a feature must be Feature. </summary>
@@ -49,6 +49,6 @@ namespace Azure.Maps.Search.Models
         /// <summary> A valid `GeoJSON Point` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.2) for details. </summary>
         public GeoJsonPoint Geometry { get; }
         /// <summary> Bounding box. Projection used - EPSG:3857. Please refer to [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946#section-5) for details. </summary>
-        public IReadOnlyList<double> Bbox { get; }
+        public IReadOnlyList<double> BoundingBox { get; }
     }
 }
