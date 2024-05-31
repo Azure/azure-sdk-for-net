@@ -35,7 +35,7 @@ public class MockPageableClient
             lastResponse = result.GetRawResponse();
             values = ModelReaderWriter.Read<JsonModelList<MockJsonModel>>(lastResponse.Content)!;
             pageToken = pageNumber < pageContents.Length ? values[values.Count - 1].StringValue : null;
-            return PageResult<MockJsonModel>.Create(values, pageToken, lastResponse);
+            return PageResult<MockJsonModel>.Create(values, lastResponse, nextPageToken: pageToken);
         }
 
         async Task<PageResult<MockJsonModel>> nextPageFuncAsync(string? pageToken)
@@ -54,7 +54,7 @@ public class MockPageableClient
             lastResponse = result.GetRawResponse();
             values = ModelReaderWriter.Read<JsonModelList<MockJsonModel>>(lastResponse.Content)!;
             pageToken = pageNumber < pageContents.Length ? values[values.Count - 1].StringValue : null;
-            return PageResult<MockJsonModel>.Create(values, pageToken, lastResponse);
+            return PageResult<MockJsonModel>.Create(values, lastResponse, nextPageToken: pageToken);
         }
 
         return PageableResultHelpers.Create(firstPageFuncAsync, nextPageFuncAsync);
@@ -78,7 +78,7 @@ public class MockPageableClient
             lastResponse = result.GetRawResponse();
             values = ModelReaderWriter.Read<JsonModelList<MockJsonModel>>(lastResponse.Content)!;
             pageToken = pageNumber < pageContents.Length ? values[values.Count - 1].StringValue : null;
-            return PageResult<MockJsonModel>.Create(values, pageToken, lastResponse);
+            return PageResult<MockJsonModel>.Create(values, lastResponse, nextPageToken: pageToken);
         }
 
         PageResult<MockJsonModel> nextPageFunc(string? pageToken)
@@ -97,7 +97,7 @@ public class MockPageableClient
             lastResponse = result.GetRawResponse();
             values = ModelReaderWriter.Read<JsonModelList<MockJsonModel>>(lastResponse.Content)!;
             pageToken = pageNumber < pageContents.Length ? values[values.Count - 1].StringValue : null;
-            return PageResult<MockJsonModel>.Create(values, pageToken, lastResponse);
+            return PageResult<MockJsonModel>.Create(values, lastResponse, nextPageToken: pageToken);
         }
 
         return PageableResultHelpers.Create(firstPageFunc, nextPageFunc);

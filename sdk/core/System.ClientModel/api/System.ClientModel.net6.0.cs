@@ -163,8 +163,9 @@ namespace System.ClientModel.Primitives
     {
         internal PageResult() { }
         public string? NextPageToken { get { throw null; } }
+        public string? PreviousPageToken { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
-        public static System.ClientModel.Primitives.PageResult<T> Create(System.Collections.Generic.IReadOnlyList<T> values, string? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        public static System.ClientModel.Primitives.PageResult<T> Create(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.Primitives.PipelineResponse response, string? nextPageToken, string? previousPageToken = null) { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute
