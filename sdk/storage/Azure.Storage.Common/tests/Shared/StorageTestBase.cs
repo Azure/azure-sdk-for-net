@@ -40,11 +40,13 @@ namespace Azure.Storage.Test.Shared
         private const string CopySourceAuthorization = "x-ms-copy-source-authorization";
         private const string PreviousSnapshotUrl = "x-ms-previous-snapshot-url";
         private const string FileRenameSource = "x-ms-file-rename-source";
+        private const string SasVersion = "sv";
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode)
         {
             SanitizedQueryParameters.Add(SignatureQueryName);
+            IgnoredQueryParameters.Add(SasVersion);
 
 #if NETFRAMEWORK
             // Uri uses different escaping for some special characters between .NET Framework and Core. Because the Test Proxy runs on .NET
