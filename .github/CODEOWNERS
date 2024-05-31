@@ -711,7 +711,7 @@
 # ServiceLabel: %Network - Network Virtual Appliance
 # ServiceOwners:                                                   @nvasuppgithub
 
-# PRLabel: %Mobile Network
+# PRLabel: %Network - Mobile
 /sdk/mobilenetwork/Azure.ResourceManager.*/												 @Azure/private-5g-core
 
 # ServiceLabel: %Network - Private Mobile Network
