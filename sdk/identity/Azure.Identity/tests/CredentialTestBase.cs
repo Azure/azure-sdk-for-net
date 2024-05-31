@@ -333,6 +333,47 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [NonParallelizable]
+        public async Task TokenContainsRefreshOn()
+        {
+            // Skip test if the credential does not support disabling instance discovery
+            if (!typeof(ISupportsDisableInstanceDiscovery).IsAssignableFrom(typeof(TCredOptions)))
+            {
+                // Assert.Ignore($"{typeof(TCredOptions).Name} does not implement {nameof(ISupportsDisableInstanceDiscovery)}");
+            }
+
+            // Clear instance discovery cache
+            StaticCachesUtilities.ClearStaticMetadataProviderCache();
+
+            var token = Guid.NewGuid().ToString();
+            // Configure the transport
+            TransportConfig transportConfig = new()
+            {
+                TokenFactory = req => token
+            };
+            transportConfig.RequestValidator = req => transportConfig.CalledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
+            var factory = MockTokenTransportFactory(transportConfig);
+            var mockTransport = new MockTransport(factory);
+
+            var config = new CommonCredentialTestConfig()
+            {
+                TransportConfig = transportConfig,
+                Transport = mockTransport,
+                TenantId = TenantId,
+            };
+            var credential = GetTokenCredential(config);
+            if (!CredentialTestHelpers.IsMsalCredential(credential))
+            {
+                Assert.Ignore("EnableCAE tests do not apply to the non-MSAL credentials.");
+            }
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
+
+            Assert.AreEqual(token, actualToken.Token);
+            Assert.IsNotNull(actualToken.RefreshOn);
+        }
+
+        [Test]
         public async Task CachingOptionsAreRespected()
         {
             // Skip test if the credential does not support caching options
@@ -532,7 +573,7 @@ namespace Azure.Identity.Tests
                     }
                     else
                     {
-                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{transportConfig.TokenFactory?.Invoke(req) ?? Guid.NewGuid().ToString()}\" }}");
+                        response.SetContent($$"""{"token_type": "Bearer","expires_in": 9999,"ext_expires_in": 9999, "refresh_in": 9999,"access_token": "{{transportConfig.TokenFactory?.Invoke(req) ?? Guid.NewGuid().ToString()}}" }""");
                     }
                 }
                 else if (transportConfig.ResponseHandler != null)

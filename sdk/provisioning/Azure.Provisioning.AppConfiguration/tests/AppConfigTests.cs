@@ -20,6 +20,16 @@ namespace Azure.Provisioning.AppConfiguration.Tests
         {
             var infra = new TestInfrastructure();
             var appConfig = new AppConfigurationStore(infra, "standard");
+            appConfig.AssignProperty(a => a.DisableLocalAuth, new Parameter("disableLocalAuth", BicepType.Bool, defaultValue: false));
+            appConfig.AssignProperty(a => a.SoftDeleteRetentionInDays, new Parameter("retention", BicepType.Int, defaultValue: 5));
+            appConfig.AssignProperty(a => a.PrivateEndpointConnections,
+                new Parameter(
+                    "privateEndpointConnections",
+                    BicepType.Array,
+                    defaultValue: "[{ 'properties': { " + Environment.NewLine +
+                                  "'provisioningState': 'Succeeded'" + Environment.NewLine +
+                                  "'privateLinkServiceConnectionState': { 'status': 'Approved', 'description': 'Approved', 'actionsRequired': 'None' }" + Environment.NewLine +
+                                  " } }]"));
             appConfig.AssignRole(RoleDefinition.AppConfigurationDataOwner, Guid.Empty);
             infra.Build(GetOutputPath());
 

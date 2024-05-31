@@ -232,7 +232,7 @@ namespace Azure.Identity
                             async,
                             cancellationToken)
                             .ConfigureAwait(false);
-                        return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                        return scope.Succeeded(result.ToAccessToken());
                     }
                     catch (MsalUiRequiredException msalEx)
                     {
@@ -241,7 +241,7 @@ namespace Azure.Identity
                     }
                 }
                 result = await AuthenticateImplAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
-                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                return scope.Succeeded(result.ToAccessToken());
             }
             catch (Exception e)
             {

@@ -1,3 +1,15 @@
+@description('')
+param disableLocalAuth bool = false
+
+@description('')
+param retention int = 5
+
+@description('')
+param privateEndpointConnections array = [{ 'properties': { 
+'provisioningState': 'Succeeded'
+'privateLinkServiceConnectionState': { 'status': 'Approved', 'description': 'Approved', 'actionsRequired': 'None' }
+ } }]
+
 
 resource appConfigurationStore_6Q8NF0lPF 'Microsoft.AppConfiguration/configurationStores@2023-03-01' = {
   name: toLower(take('store${uniqueString(resourceGroup().id)}', 24))
@@ -6,6 +18,9 @@ resource appConfigurationStore_6Q8NF0lPF 'Microsoft.AppConfiguration/configurati
     name: 'standard'
   }
   properties: {
+    privateEndpointConnections: privateEndpointConnections
+    disableLocalAuth: disableLocalAuth
+    softDeleteRetentionInDays: retention
   }
 }
 

@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.2.3 (2024-05-07)
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
+
 ## 1.2.2 (2024-04-29)
 
 ### Features Added

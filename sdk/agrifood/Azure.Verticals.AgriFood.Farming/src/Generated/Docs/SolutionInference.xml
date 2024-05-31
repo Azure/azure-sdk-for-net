@@ -7,7 +7,7 @@ This sample shows how to call CancelAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -22,7 +22,7 @@ This sample shows how to call CancelAsync with all parameters and request conten
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -44,7 +44,7 @@ This sample shows how to call Cancel and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -59,7 +59,7 @@ This sample shows how to call Cancel with all parameters and request content and
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -81,7 +81,7 @@ This sample shows how to call FetchAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -96,7 +96,7 @@ This sample shows how to call FetchAsync with all parameters and request content
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -118,7 +118,7 @@ This sample shows how to call Fetch and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -133,7 +133,7 @@ This sample shows how to call Fetch with all parameters and request content and 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -155,7 +155,7 @@ This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -171,7 +171,7 @@ This sample shows how to call CreateOrUpdateAsync with all parameters and reques
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -194,7 +194,7 @@ This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -210,7 +210,7 @@ This sample shows how to call CreateOrUpdate with all parameters and request con
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient(apiVersion: "2022-11-01-preview");
+SolutionInference client = new FarmBeatsClient(endpoint, credential).GetSolutionInferenceClient();
 
 using RequestContent content = RequestContent.Create(new
 {

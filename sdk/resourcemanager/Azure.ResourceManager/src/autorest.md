@@ -72,25 +72,22 @@ directive:
   - from: types.json
     where: $.definitions.Resource
     transform: >
-      $["x-ms-mgmt-referenceType"] = true;
-      $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-ms-client-name"] = "ResourceData";
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
       $["x-csharp-usage"] = "model,input,output";
   - from: types.json
     where: $.definitions.TrackedResource
     transform: >
-      $["x-ms-mgmt-referenceType"] = true;
-      $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-ms-client-name"] = "TrackedResourceData";
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
       $["x-csharp-usage"] = "model,input,output";
   - from: types.json
     where: $.definitions.Plan
     transform: >
-      $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
@@ -98,7 +95,6 @@ directive:
   - from: types.json
     where: $.definitions.Sku
     transform: >
-      $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
@@ -106,7 +102,6 @@ directive:
   - from: types.json
     where: $.definitions.systemData
     transform: >
-      $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
@@ -119,7 +114,6 @@ directive:
   - from: types.json
     where: $.definitions.encryptionProperties
     transform: >
-      $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
@@ -127,7 +121,6 @@ directive:
   - from: types.json
     where: $.definitions.KeyVaultProperties
     transform: >
-      $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
@@ -140,8 +133,6 @@ directive:
   - from: types.json
     where: $.definitions.OperationStatusResult
     transform: >
-      $["x-ms-mgmt-propertyReferenceType"] = false;
-      $["x-ms-mgmt-typeReferenceType"] = true;
       $["x-csharp-formats"] = "json";
       $["x-csharp-usage"] = "model,input,output";
   - from: types.json
@@ -151,7 +142,6 @@ directive:
   - from: managedidentity.json
     where: $.definitions.SystemAssignedServiceIdentity
     transform: >
-      $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
@@ -160,7 +150,6 @@ directive:
   - from: managedidentity.json
     where: $.definitions.UserAssignedIdentity
     transform: >
-      $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
@@ -225,7 +214,7 @@ request-path-to-scope-resource-types:
     - resourceGroups
     - "*"
 operation-positions:
-  checkResourceName: collection
+  CheckResourceName: collection
 
 operation-groups-to-omit:
   - Deployments
@@ -302,6 +291,8 @@ rename-mapping:
   ResourceName: ResourceNameValidationContent
   ResourceName.type: ResourceType|resource-type
   ResourceNameStatus: ResourceNameValidationStatus
+  Resource: ResourceData
+  TrackedResource: TrackedResourceData
 
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
@@ -332,10 +323,6 @@ directive:
   - remove-operation: Providers_RegisterAtManagementGroupScope
   - remove-operation: Subscriptions_CheckZonePeers
   - remove-operation: AuthorizationOperations_List
-  - from: swagger-document
-    where: $.definitions.ExtendedLocation
-    transform: >
-      $["x-ms-mgmt-propertyReferenceType"] = true;
   # Deduplicate
   - from: subscriptions.json
     where: '$.paths["/providers/Microsoft.Resources/operations"].get'
@@ -593,10 +580,6 @@ directive:
       $.GenericResource.properties["changedTime"] = $.GenericResourceExpanded.properties["changedTime"];
       $.GenericResource.properties["provisioningState"] = $.GenericResourceExpanded.properties["provisioningState"];
       delete $.GenericResourceExpanded;
-#   - from: resources.json
-#     where: $.definitions['Provider']
-#     transform: >
-#       $["x-ms-mgmt-propertyReferenceType"] = true # not supported with ResourceData yet, use custom code first
   - from: locks.json
     where: $.definitions.ManagementLockObject
     transform: $["x-ms-client-name"] = "ManagementLock"
