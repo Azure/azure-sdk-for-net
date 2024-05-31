@@ -712,10 +712,10 @@
 # ServiceOwners:                                                   @nvasuppgithub
 
 # PRLabel: %Mobile Network
-/sdk/mobilenetwork/Azure.ResourceManager.*/												 @tompretty
+/sdk/mobilenetwork/Azure.ResourceManager.*/												 @Azure/private-5g-core
 
 # ServiceLabel: %Network - Private Mobile Network
-# ServiceOwners:                                                   @tompretty
+# ServiceOwners:                                                   @Azure/private-5g-core
 
 # ServiceLabel: %Network - Virtual WAN
 # ServiceOwners:                                                   @vwansuppgithub
