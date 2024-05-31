@@ -10,6 +10,11 @@ if ($null -ne $Env:AGENT_WORKFOLDER) {
   $workingFolder = $Env:AGENT_WORKFOLDER
 }
 
+# print out all the values of $DeploymentOutputs
+foreach ($key in $DeploymentOutputs.Keys) {
+  Write-Host "$key : $($DeploymentOutputs[$key])"
+}
+
 Write-Host "clientid"
 Write-Host $DeploymentOutputs['IDENTITY_CLIENT_ID']
 Write-Host "tenantid"
