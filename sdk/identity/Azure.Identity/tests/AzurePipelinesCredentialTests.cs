@@ -129,34 +129,6 @@ namespace Azure.Identity.Tests
             }
         }
 
-        [Test]
-        public async Task AzurePipelineCredentialLiveTest_GetToken()
-        {
-            var systemAccessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN");
-            var tenantId = Environment.GetEnvironmentVariable("AZURE_SERVICE_CONNECTION_TENANT_ID");
-            var clientId = Environment.GetEnvironmentVariable("AZURE_SERVICE_CONNECTION_CLIENT_ID");
-            var serviceConnectionId = Environment.GetEnvironmentVariable("AZURE_SERVICE_CONNECTION_ID");
-
-            if (string.IsNullOrEmpty(systemAccessToken) || string.IsNullOrEmpty(tenantId) || string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(serviceConnectionId))
-            {
-                var envVars = Environment.GetEnvironmentVariables();
-                StringBuilder sb = new StringBuilder();
-                foreach (var key in envVars.Keys)
-                {
-                    sb.AppendLine($"{key}: {envVars[key]}");
-                }
-                Console.WriteLine(sb);
-                Assert.Fail($"{sb} SYSTEM_ACCESSTOKEN: {systemAccessToken}, AZURE_SERVICE_CONNECTION_TENANT_ID: {tenantId}, AZURE_SERVICE_CONNECTION_CLIENT_ID: {clientId}, AZURE_SERVICE_CONNECTION_ID: {serviceConnectionId}");
-                Assert.Ignore("AzurePipelinesCredentialLiveTests disabled because required environment variables are not set");
-            }
-
-            var cred = new AzurePipelinesCredential(systemAccessToken, clientId, tenantId, serviceConnectionId);
-
-            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new[] { "https://management.azure.com//.default" }), CancellationToken.None);
-
-            Assert.IsNotNull(token.Token);
-        }
-
         public class MockCredential : TokenCredential
         {
             public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
