@@ -617,11 +617,11 @@ namespace Azure.ResourceManager.DataFactory
             return GetDataFactoryManagedVirtualNetworks().Get(managedVirtualNetworkName, ifNoneMatch, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataFactoryManagedIdentityCredentialResources in the DataFactory. </summary>
-        /// <returns> An object representing collection of DataFactoryManagedIdentityCredentialResources and their operations over a DataFactoryManagedIdentityCredentialResource. </returns>
-        public virtual DataFactoryManagedIdentityCredentialCollection GetDataFactoryManagedIdentityCredentials()
+        /// <summary> Gets a collection of CredentialResources in the DataFactory. </summary>
+        /// <returns> An object representing collection of CredentialResources and their operations over a CredentialResource. </returns>
+        public virtual CredentialResourceCollection GetCredentialResources()
         {
-            return GetCachedClient(client => new DataFactoryManagedIdentityCredentialCollection(client, Id));
+            return GetCachedClient(client => new CredentialResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedIdentityCredentialResource"/></description>
+        /// <description><see cref="CredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -651,9 +651,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataFactoryManagedIdentityCredentialResource>> GetDataFactoryManagedIdentityCredentialAsync(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CredentialResource>> GetCredentialResourceAsync(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await GetDataFactoryManagedIdentityCredentials().GetAsync(credentialName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            return await GetCredentialResources().GetAsync(credentialName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedIdentityCredentialResource"/></description>
+        /// <description><see cref="CredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -683,9 +683,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataFactoryManagedIdentityCredentialResource> GetDataFactoryManagedIdentityCredential(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<CredentialResource> GetCredentialResource(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return GetDataFactoryManagedIdentityCredentials().Get(credentialName, ifNoneMatch, cancellationToken);
+            return GetCredentialResources().Get(credentialName, ifNoneMatch, cancellationToken);
         }
 
         /// <summary> Gets a collection of DataFactoryPrivateEndpointConnectionResources in the DataFactory. </summary>

@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataFactoryManagedIdentityCredentialResource"/> and their operations.
-    /// Each <see cref="DataFactoryManagedIdentityCredentialResource"/> in the collection will belong to the same instance of <see cref="DataFactoryResource"/>.
-    /// To get a <see cref="DataFactoryManagedIdentityCredentialCollection"/> instance call the GetDataFactoryManagedIdentityCredentials method from an instance of <see cref="DataFactoryResource"/>.
+    /// A class representing a collection of <see cref="CredentialResource"/> and their operations.
+    /// Each <see cref="CredentialResource"/> in the collection will belong to the same instance of <see cref="DataFactoryResource"/>.
+    /// To get a <see cref="CredentialResourceCollection"/> instance call the GetCredentialResources method from an instance of <see cref="DataFactoryResource"/>.
     /// </summary>
-    public partial class DataFactoryManagedIdentityCredentialCollection : ArmCollection, IEnumerable<DataFactoryManagedIdentityCredentialResource>, IAsyncEnumerable<DataFactoryManagedIdentityCredentialResource>
+    public partial class CredentialResourceCollection : ArmCollection, IEnumerable<CredentialResource>, IAsyncEnumerable<CredentialResource>
     {
-        private readonly ClientDiagnostics _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics;
-        private readonly CredentialRestOperations _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient;
+        private readonly ClientDiagnostics _credentialResourceCredentialOperationsClientDiagnostics;
+        private readonly CredentialRestOperations _credentialResourceCredentialOperationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataFactoryManagedIdentityCredentialCollection"/> class for mocking. </summary>
-        protected DataFactoryManagedIdentityCredentialCollection()
+        /// <summary> Initializes a new instance of the <see cref="CredentialResourceCollection"/> class for mocking. </summary>
+        protected CredentialResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataFactoryManagedIdentityCredentialCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CredentialResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal DataFactoryManagedIdentityCredentialCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CredentialResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryManagedIdentityCredentialResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataFactoryManagedIdentityCredentialResource.ResourceType, out string dataFactoryManagedIdentityCredentialCredentialOperationsApiVersion);
-            _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient = new CredentialRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryManagedIdentityCredentialCredentialOperationsApiVersion);
+            _credentialResourceCredentialOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", CredentialResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CredentialResource.ResourceType, out string credentialResourceCredentialOperationsApiVersion);
+            _credentialResourceCredentialOperationsRestClient = new CredentialRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, credentialResourceCredentialOperationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedIdentityCredentialResource"/></description>
+        /// <description><see cref="CredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataFactoryManagedIdentityCredentialResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string credentialName, DataFactoryManagedIdentityCredentialData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CredentialResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string credentialName, CredentialResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics.CreateScope("DataFactoryManagedIdentityCredentialCollection.CreateOrUpdate");
+            using var scope = _credentialResourceCredentialOperationsClientDiagnostics.CreateScope("CredentialResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, data, ifMatch);
+                var response = await _credentialResourceCredentialOperationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var uri = _credentialResourceCredentialOperationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, data, ifMatch);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataFactoryArmOperation<DataFactoryManagedIdentityCredentialResource>(Response.FromValue(new DataFactoryManagedIdentityCredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new DataFactoryArmOperation<CredentialResource>(Response.FromValue(new CredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedIdentityCredentialResource"/></description>
+        /// <description><see cref="CredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,19 +131,19 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DataFactoryManagedIdentityCredentialResource> CreateOrUpdate(WaitUntil waitUntil, string credentialName, DataFactoryManagedIdentityCredentialData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CredentialResource> CreateOrUpdate(WaitUntil waitUntil, string credentialName, CredentialResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics.CreateScope("DataFactoryManagedIdentityCredentialCollection.CreateOrUpdate");
+            using var scope = _credentialResourceCredentialOperationsClientDiagnostics.CreateScope("CredentialResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, data, ifMatch, cancellationToken);
-                var uri = _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, data, ifMatch);
+                var response = _credentialResourceCredentialOperationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, data, ifMatch, cancellationToken);
+                var uri = _credentialResourceCredentialOperationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, data, ifMatch);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataFactoryArmOperation<DataFactoryManagedIdentityCredentialResource>(Response.FromValue(new DataFactoryManagedIdentityCredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new DataFactoryArmOperation<CredentialResource>(Response.FromValue(new CredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedIdentityCredentialResource"/></description>
+        /// <description><see cref="CredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,18 +181,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        public virtual async Task<Response<DataFactoryManagedIdentityCredentialResource>> GetAsync(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CredentialResource>> GetAsync(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
-            using var scope = _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics.CreateScope("DataFactoryManagedIdentityCredentialCollection.Get");
+            using var scope = _credentialResourceCredentialOperationsClientDiagnostics.CreateScope("CredentialResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _credentialResourceCredentialOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataFactoryManagedIdentityCredentialResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedIdentityCredentialResource"/></description>
+        /// <description><see cref="CredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,18 +227,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        public virtual Response<DataFactoryManagedIdentityCredentialResource> Get(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<CredentialResource> Get(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
-            using var scope = _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics.CreateScope("DataFactoryManagedIdentityCredentialCollection.Get");
+            using var scope = _credentialResourceCredentialOperationsClientDiagnostics.CreateScope("CredentialResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, ifNoneMatch, cancellationToken);
+                var response = _credentialResourceCredentialOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, ifNoneMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataFactoryManagedIdentityCredentialResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -264,17 +264,17 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedIdentityCredentialResource"/></description>
+        /// <description><see cref="CredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFactoryManagedIdentityCredentialResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataFactoryManagedIdentityCredentialResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CredentialResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CredentialResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataFactoryManagedIdentityCredentialResource(Client, DataFactoryManagedIdentityCredentialData.DeserializeDataFactoryManagedIdentityCredentialData(e)), _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics, Pipeline, "DataFactoryManagedIdentityCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _credentialResourceCredentialOperationsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _credentialResourceCredentialOperationsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CredentialResource(Client, CredentialResourceData.DeserializeCredentialResourceData(e)), _credentialResourceCredentialOperationsClientDiagnostics, Pipeline, "CredentialResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -294,17 +294,17 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedIdentityCredentialResource"/></description>
+        /// <description><see cref="CredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataFactoryManagedIdentityCredentialResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataFactoryManagedIdentityCredentialResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CredentialResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CredentialResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataFactoryManagedIdentityCredentialResource(Client, DataFactoryManagedIdentityCredentialData.DeserializeDataFactoryManagedIdentityCredentialData(e)), _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics, Pipeline, "DataFactoryManagedIdentityCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _credentialResourceCredentialOperationsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _credentialResourceCredentialOperationsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CredentialResource(Client, CredentialResourceData.DeserializeCredentialResourceData(e)), _credentialResourceCredentialOperationsClientDiagnostics, Pipeline, "CredentialResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedIdentityCredentialResource"/></description>
+        /// <description><see cref="CredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,11 +337,11 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
-            using var scope = _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics.CreateScope("DataFactoryManagedIdentityCredentialCollection.Exists");
+            using var scope = _credentialResourceCredentialOperationsClientDiagnostics.CreateScope("CredentialResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _credentialResourceCredentialOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedIdentityCredentialResource"/></description>
+        /// <description><see cref="CredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,11 +381,11 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
-            using var scope = _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics.CreateScope("DataFactoryManagedIdentityCredentialCollection.Exists");
+            using var scope = _credentialResourceCredentialOperationsClientDiagnostics.CreateScope("CredentialResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, ifNoneMatch, cancellationToken: cancellationToken);
+                var response = _credentialResourceCredentialOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, ifNoneMatch, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedIdentityCredentialResource"/></description>
+        /// <description><see cref="CredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -421,18 +421,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        public virtual async Task<NullableResponse<DataFactoryManagedIdentityCredentialResource>> GetIfExistsAsync(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<CredentialResource>> GetIfExistsAsync(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
-            using var scope = _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics.CreateScope("DataFactoryManagedIdentityCredentialCollection.GetIfExists");
+            using var scope = _credentialResourceCredentialOperationsClientDiagnostics.CreateScope("CredentialResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _credentialResourceCredentialOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<DataFactoryManagedIdentityCredentialResource>(response.GetRawResponse());
-                return Response.FromValue(new DataFactoryManagedIdentityCredentialResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<CredentialResource>(response.GetRawResponse());
+                return Response.FromValue(new CredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedIdentityCredentialResource"/></description>
+        /// <description><see cref="CredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,18 +467,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        public virtual NullableResponse<DataFactoryManagedIdentityCredentialResource> GetIfExists(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<CredentialResource> GetIfExists(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
-            using var scope = _dataFactoryManagedIdentityCredentialCredentialOperationsClientDiagnostics.CreateScope("DataFactoryManagedIdentityCredentialCollection.GetIfExists");
+            using var scope = _credentialResourceCredentialOperationsClientDiagnostics.CreateScope("CredentialResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, ifNoneMatch, cancellationToken: cancellationToken);
+                var response = _credentialResourceCredentialOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, ifNoneMatch, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<DataFactoryManagedIdentityCredentialResource>(response.GetRawResponse());
-                return Response.FromValue(new DataFactoryManagedIdentityCredentialResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<CredentialResource>(response.GetRawResponse());
+                return Response.FromValue(new CredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        IEnumerator<DataFactoryManagedIdentityCredentialResource> IEnumerable<DataFactoryManagedIdentityCredentialResource>.GetEnumerator()
+        IEnumerator<CredentialResource> IEnumerable<CredentialResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.DataFactory
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<DataFactoryManagedIdentityCredentialResource> IAsyncEnumerable<DataFactoryManagedIdentityCredentialResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CredentialResource> IAsyncEnumerable<CredentialResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

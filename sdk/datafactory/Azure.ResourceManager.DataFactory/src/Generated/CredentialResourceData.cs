@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A class representing the DataFactoryManagedIdentityCredential data model.
+    /// A class representing the CredentialResource data model.
     /// Credential resource type.
     /// </summary>
-    public partial class DataFactoryManagedIdentityCredentialData : ResourceData
+    public partial class CredentialResourceData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,38 +51,50 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedIdentityCredentialData"/>. </summary>
-        /// <param name="properties"> Managed Identity Credential properties. </param>
+        /// <summary> Initializes a new instance of <see cref="CredentialResourceData"/>. </summary>
+        /// <param name="properties">
+        /// Properties of credentials.
+        /// Please note <see cref="DataFactoryCredential"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactoryManagedIdentityCredentialProperties"/> and <see cref="ServicePrincipalCredential"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DataFactoryManagedIdentityCredentialData(DataFactoryManagedIdentityCredentialProperties properties)
+        public CredentialResourceData(DataFactoryCredential properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedIdentityCredentialData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CredentialResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Managed Identity Credential properties. </param>
+        /// <param name="properties">
+        /// Properties of credentials.
+        /// Please note <see cref="DataFactoryCredential"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactoryManagedIdentityCredentialProperties"/> and <see cref="ServicePrincipalCredential"/>.
+        /// </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryManagedIdentityCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryManagedIdentityCredentialProperties properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CredentialResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryCredential properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedIdentityCredentialData"/> for deserialization. </summary>
-        internal DataFactoryManagedIdentityCredentialData()
+        /// <summary> Initializes a new instance of <see cref="CredentialResourceData"/> for deserialization. </summary>
+        internal CredentialResourceData()
         {
         }
 
-        /// <summary> Managed Identity Credential properties. </summary>
-        public DataFactoryManagedIdentityCredentialProperties Properties { get; set; }
+        /// <summary>
+        /// Properties of credentials.
+        /// Please note <see cref="DataFactoryCredential"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactoryManagedIdentityCredentialProperties"/> and <see cref="ServicePrincipalCredential"/>.
+        /// </summary>
+        public DataFactoryCredential Properties { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
         public ETag? ETag { get; }
     }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             Method = method;
             Uri = uri;
-            Headers = new ChangeTrackingDictionary<string, DataFactoryElement<string>>();
+            Headers = new ChangeTrackingDictionary<string, BinaryData>();
             Datasets = new ChangeTrackingList<DatasetReference>();
             LinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
             ActivityType = "WebActivity";
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="datasets"> List of datasets passed to web endpoint. </param>
         /// <param name="linkedServices"> List of linked services passed to web endpoint. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
-        internal WebActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, WebActivityMethod method, DataFactoryElement<string> uri, IDictionary<string, DataFactoryElement<string>> headers, DataFactoryElement<string> body, WebActivityAuthentication authentication, bool? disableCertValidation, DataFactoryElement<string> httpRequestTimeout, bool? turnOffAsync, IList<DatasetReference> datasets, IList<DataFactoryLinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal WebActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, WebActivityMethod method, DataFactoryElement<string> uri, IDictionary<string, BinaryData> headers, DataFactoryElement<string> body, WebActivityAuthentication authentication, bool? disableCertValidation, DataFactoryElement<string> httpRequestTimeout, bool? turnOffAsync, IList<DatasetReference> datasets, IList<DataFactoryLinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Method = method;
             Uri = uri;
@@ -79,8 +79,37 @@ namespace Azure.ResourceManager.DataFactory.Models
         public WebActivityMethod Method { get; set; }
         /// <summary> Web activity target endpoint and path. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Uri { get; set; }
-        /// <summary> Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string). </summary>
-        public IDictionary<string, DataFactoryElement<string>> Headers { get; }
+        /// <summary>
+        /// Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string).
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IDictionary<string, BinaryData> Headers { get; }
         /// <summary> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Body { get; set; }
         /// <summary> Authentication method used for calling the endpoint. </summary>

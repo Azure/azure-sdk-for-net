@@ -1,14 +1,27 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2024-05-31)
 
 ### Features Added
 
+- Added new app model properties for SQL Server family connectors for Data Factory and Synapse.
+- Added query property for Salesforce V2.
+- Added lakehouse table dataset schema property.
+- Added credential property in DynamicsCrm for new feature.
+
 ### Breaking Changes
+- Removed UAMI and SAMI credentials since they will be resolved as ManagedIdentity.
 
 ### Bugs Fixed
+- Fixed headers schema issue.
+- Corrected Swagger definitions for SPN, UAMI, and SAMI credentials.
 
 ### Other Changes
+- Updated Python configuration.
+- Changed ScriptActivityScriptBlock type property to support parameterization.
+- Updated Swagger for ServiceNowV2 expression app model.
+- Removed redundant credential resources in the .NET SDK.
+
 
 ## 1.0.0 (2024-03-14)
 

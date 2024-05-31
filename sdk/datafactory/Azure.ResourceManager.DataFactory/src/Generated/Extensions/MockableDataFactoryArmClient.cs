@@ -143,15 +143,15 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryManagedIdentityCredentialResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryManagedIdentityCredentialResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryManagedIdentityCredentialResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CredentialResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CredentialResource.CreateResourceIdentifier" /> to create a <see cref="CredentialResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFactoryManagedIdentityCredentialResource"/> object. </returns>
-        public virtual DataFactoryManagedIdentityCredentialResource GetDataFactoryManagedIdentityCredentialResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CredentialResource"/> object. </returns>
+        public virtual CredentialResource GetCredentialResource(ResourceIdentifier id)
         {
-            DataFactoryManagedIdentityCredentialResource.ValidateResourceId(id);
-            return new DataFactoryManagedIdentityCredentialResource(Client, id);
+            CredentialResource.ValidateResourceId(id);
+            return new CredentialResource(Client, id);
         }
 
         /// <summary>
