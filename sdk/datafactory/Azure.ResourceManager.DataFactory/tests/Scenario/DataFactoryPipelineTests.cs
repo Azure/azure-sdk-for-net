@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryDatasetResource> CreateDefaultSqlServerDatasets(DataFactoryResource dataFactory, string linkedServiceName, string datasetName)
         {
-            DataFactoryLinkedServiceData lkSqlServer = new DataFactoryLinkedServiceData(new SqlServerLinkedService("Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;"));
+            DataFactoryLinkedServiceData lkSqlServer = new DataFactoryLinkedServiceData(new SqlServerLinkedService() { ConnectionString = "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;" });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSqlServer);
 
             if (string.IsNullOrEmpty(datasetName))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryDatasetResource> CreateDefaultSqlDWDatasets(DataFactoryResource dataFactory, string linkedServiceName, string datasetName)
         {
-            DataFactoryLinkedServiceData lkSqlDW = new DataFactoryLinkedServiceData(new AzureSqlDWLinkedService("Server=tcp:myServerAddress.database.windows.net,1433;Database=myDataBase;User ID=myUsername;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+            DataFactoryLinkedServiceData lkSqlDW = new DataFactoryLinkedServiceData(new AzureSqlDWLinkedService() { ConnectionString = "Server=tcp:myServerAddress.database.windows.net,1433;Database=myDataBase;User ID=myUsername;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSqlDW);
 
             DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSqlDWTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryDatasetResource> CreateDefaultAzureSqlDatabaseDataset(DataFactoryResource dataFactory, string linkedServiceName, string datasetName)
         {
-            DataFactoryLinkedServiceData lkSqlSource = new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService("Server=tcp:myServerAddress.database.windows.net,1433;Database=myDataBase;User ID=myUsername;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+            DataFactoryLinkedServiceData lkSqlSource = new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService() { ConnectionString = "Server=tcp:myServerAddress.database.windows.net,1433;Database=myDataBase;User ID=myUsername;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSqlSource);
 
             DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryDatasetResource> CreateDefaultAmazonRdsForSqlServerDataset(DataFactoryResource dataFactory, string linkedServiceName, string datasetName)
         {
-            DataFactoryLinkedServiceData lkAmazonRdsForSqlServer = new DataFactoryLinkedServiceData(new AmazonRdsForSqlServerLinkedService("integrated security=False;data source=TestServer;initial catalog=TestDB;user id=ais;Password=myPassword;"));
+            DataFactoryLinkedServiceData lkAmazonRdsForSqlServer = new DataFactoryLinkedServiceData(new AmazonRdsForSqlServerLinkedService() { ConnectionString = "integrated security=False;data source=TestServer;initial catalog=TestDB;user id=ais;Password=myPassword;" });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkAmazonRdsForSqlServer);
 
             DataFactoryDatasetData data = new DataFactoryDatasetData(new AmazonRdsForSqlServerTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
@@ -1250,7 +1250,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryDatasetResource> CreateDefaultSqlMIDataset(DataFactoryResource dataFactory, string linkedServiceName, string datasetName)
         {
-            DataFactoryLinkedServiceData lkSqlMI = new DataFactoryLinkedServiceData(new AzureSqlMILinkedService("integrated security=False;encrypt=True;connection timeout=30;data source=test-sqlmi.public.123456789012.database.windows.net,3342;initial catalog=TestDB;user id=fakekey"));
+            DataFactoryLinkedServiceData lkSqlMI = new DataFactoryLinkedServiceData(new AzureSqlMILinkedService() { ConnectionString = "integrated security=False;encrypt=True;connection timeout=30;data source=test-sqlmi.public.123456789012.database.windows.net,3342;initial catalog=TestDB;user id=fakekey" });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSqlMI);
 
             DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSqlMITableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
@@ -6936,7 +6936,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             ScriptBlockExecutionTimeout = "12:00:00",
                             Scripts =
                             {
-                                new ScriptActivityScriptBlock("@pipeline().parameters.query",DataFactoryScriptType.Query)
+                                new ScriptActivityScriptBlock("@pipeline().parameters.query","Query")
                             }
                         }
                     },

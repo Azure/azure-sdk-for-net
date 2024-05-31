@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
             var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceAKVName);
             var keyVaultReference = new DataFactoryKeyVaultSecret(store, "AzureSDKTest");
-            var service = new AzureSqlDatabaseLinkedService(DataFactoryElement<string>.FromKeyVaultSecret(keyVaultReference));
+            var service = new AzureSqlDatabaseLinkedService() { ConnectionString= DataFactoryElement<string>.FromKeyVaultSecret(keyVaultReference) };
             DataFactoryLinkedServiceData data1 = new DataFactoryLinkedServiceData(service);
             var linkedService = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(Azure.WaitUntil.Completed, linkedServiceAzureSQLName, data1);
             var response = linkedService.WaitForCompletionResponseAsync().Result.Content.ToString();

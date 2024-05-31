@@ -244,8 +244,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("sqlserver", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new SqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Database=myDataBase;"))
+                return new DataFactoryLinkedServiceData(new SqlServerLinkedService()
                 {
+                    ConnectionString= DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Database=myDataBase;"),
                     UserName = "WindowsAuthUserName",
                     Password = new DataFactorySecretString("fakepassword")
                 })
@@ -264,8 +265,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("amazon", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new SqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User ID=myUsername;Password=myPassword;"))
+                return new DataFactoryLinkedServiceData(new SqlServerLinkedService()
                 {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User ID=myUsername;Password=myPassword;"),
                     AlwaysEncryptedSettings = new SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType.UserAssignedManagedIdentity)
                     {
                         ServicePrincipalId = "fakeServicePrincipalKey",
@@ -287,7 +289,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("amazon", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new AmazonRdsForSqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User ID=myUsername;Password=myPassword;")))
+                return new DataFactoryLinkedServiceData(new AmazonRdsForSqlServerLinkedService() { ConnectionString= DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User ID=myUsername;Password=myPassword;") })
                 {
                     Properties =
                     {
@@ -303,8 +305,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("azuresql", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService(DataFactoryElement<string>.FromSecretString("Server=tcp:myServerAddress.database.windows.net,1433;Database=myDataBase;User ID=myUsername;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+                return new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService()
                 {
+                    ConnectionString= DataFactoryElement<string>.FromSecretString("Server=tcp:myServerAddress.database.windows.net,1433;Database=myDataBase;User ID=myUsername;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"),
                     AzureCloudType = "AzurePublic"
                 });
             });
@@ -316,8 +319,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("azuresql", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService(DataFactoryElement<string>.FromSecretString("Server=tcp:myServerAddress.database.windows.net,1433;Database=myDataBase;User ID=myUsername;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+                return new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService()
                 {
+                    ConnectionString= DataFactoryElement<string>.FromSecretString("Server=tcp:myServerAddress.database.windows.net,1433;Database=myDataBase;User ID=myUsername;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"),
                     AzureCloudType = "AzurePublic"
                 });
             });
@@ -329,8 +333,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("azuresql", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
+                return new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService()
                 {
+                    ConnectionString= DataFactoryElement<string>.FromSecretString("fakeConnString"),
                     Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "TestSecret")
                 });
             });
@@ -342,8 +347,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("azuresql", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new AzureSqlMILinkedService(DataFactoryElement<string>.FromSecretString("integrated security=False;encrypt=True;connection timeout=30;data source=test-sqlmi.public.123456789012.database.windows.net,3342;initial catalog=TestDB;"))
+                return new DataFactoryLinkedServiceData(new AzureSqlMILinkedService()
                 {
+                    ConnectionString= DataFactoryElement<string>.FromSecretString("integrated security=False;encrypt=True;connection timeout=30;data source=test-sqlmi.public.123456789012.database.windows.net,3342;initial catalog=TestDB;"),
                     ServicePrincipalId = "fakeSPID",
                     ServicePrincipalKey = new DataFactorySecretString("fakeSPKey"),
                     Tenant = "fakeTenant",
@@ -358,8 +364,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("sqldw", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new AzureSqlDWLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerName.database.windows.net;Database=myDatabaseName;User ID=myUsername@myServerName;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+                return new DataFactoryLinkedServiceData(new AzureSqlDWLinkedService()
                 {
+                    ConnectionString= DataFactoryElement<string>.FromSecretString("Server=myServerName.database.windows.net;Database=myDatabaseName;User ID=myUsername@myServerName;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"),
                     AzureCloudType = "AzurePublic"
                 });
             });
@@ -371,8 +378,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("sqldw", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new AzureSqlDWLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
+                return new DataFactoryLinkedServiceData(new AzureSqlDWLinkedService()
                 {
+                    ConnectionString= DataFactoryElement<string>.FromSecretString("fakeConnString"),
                     Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
                 });
             });
@@ -530,8 +538,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("sqlserver", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new SqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Database=myDataBase;Uid=myUsername;"))
+                return new DataFactoryLinkedServiceData(new SqlServerLinkedService()
                 {
+                    ConnectionString= DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Database=myDataBase;Uid=myUsername;"),
                     Password = new DataFactorySecretString("fakepassword"),
                     EncryptedCredential = "MyEncryptedCredentials"
                 })

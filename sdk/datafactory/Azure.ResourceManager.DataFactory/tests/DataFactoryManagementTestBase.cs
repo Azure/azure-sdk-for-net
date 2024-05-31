@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Tests
 
         protected async Task<DataFactoryLinkedServiceResource> CreateAzureDBLinkedService(DataFactoryResource dataFactory, string linkedServiceName, string connectionString)
         {
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService(DataFactoryElement<string>.FromSecretString(connectionString)));
+            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService() { ConnectionString= DataFactoryElement<string>.FromSecretString(connectionString) });
             var linkedService = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             return linkedService.Value;
         }

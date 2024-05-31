@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryLinkedServiceResource> CreateAzureSqlDatabaseLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
-            DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService("DefaultEndpointsProtocol=https;AccountName=testaccount;AccountKey=testkey;EndpointSuffix=core.windows.net") { });
+            DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new AzureSqlDWLinkedService() { ConnectionString = "DefaultEndpointsProtocol=https;AccountName=testaccount;AccountKey=testkey;EndpointSuffix=core.windows.net" });
             var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, linkedService);
             return result.Value;
         }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryLinkedServiceResource> CreateAzureSqlMILinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
-            DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new AzureSqlMILinkedService("DefaultEndpointsProtocol=https;AccountName=testaccount;AccountKey=testkey;EndpointSuffix=core.windows.net") { });
+            DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new AzureSqlMILinkedService() { ConnectionString = "\"DefaultEndpointsProtocol=https;AccountName=testaccount;AccountKey=testkey;EndpointSuffix=core.windows.net\"" });
             var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, linkedService);
             return result.Value;
         }
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryLinkedServiceResource> CreateAzureSqlDWLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
-            DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new AzureSqlDWLinkedService("DefaultEndpointsProtocol=https;AccountName=testaccount;AccountKey=testkey;EndpointSuffix=core.windows.net") { });
+            DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new AzureSqlDWLinkedService() { ConnectionString = "DefaultEndpointsProtocol=https;AccountName=testaccount;AccountKey=testkey;EndpointSuffix=core.windows.net" });
             var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, linkedService);
             return result.Value;
         }
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryLinkedServiceResource> CreateSqlServerLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
-            DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new SqlServerLinkedService("DefaultEndpointsProtocol=https;AccountName=testaccount;AccountKey=testkey;EndpointSuffix=core.windows.net") { });
+            DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new SqlServerLinkedService() { ConnectionString = "DefaultEndpointsProtocol=https;AccountName=testaccount;AccountKey=testkey;EndpointSuffix=core.windows.net" });
             var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, linkedService);
             return result.Value;
         }
@@ -1851,8 +1851,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         }
         private async Task<DataFactoryLinkedServiceResource> CreateAmazonRdsForSqlServerLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
-            DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new AmazonRdsForSqlServerLinkedService(DataFactoryElement<string>.FromSecretString("integrated security=False;data source=TestServer;initial catalog=TestDB;"))
+            DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new AmazonRdsForSqlServerLinkedService()
             {
+                ConnectionString = DataFactoryElement<string>.FromSecretString("integrated security=False;data source=TestServer;initial catalog=TestDB;"),
                 UserName = "WindowsAuthUserName",
                 Password = new DataFactorySecretString("fakepassword")
             });
