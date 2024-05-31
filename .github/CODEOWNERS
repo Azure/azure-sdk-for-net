@@ -711,6 +711,12 @@
 # ServiceLabel: %Network - Network Virtual Appliance
 # ServiceOwners:                                                   @nvasuppgithub
 
+# PRLabel: %Mobile Network
+/sdk/mobilenetwork/Azure.ResourceManager.*/												 @tompretty
+
+# ServiceLabel: %Network - Private Mobile Network
+# ServiceOwners:                                                   @tompretty
+
 # ServiceLabel: %Network - Virtual WAN
 # ServiceOwners:                                                   @vwansuppgithub
 
@@ -965,11 +971,6 @@
 # ServiceLabel: %Nginx %Mgmt
 # ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
 
-# ServiceLabel: %Private Mobile Network %Mgmt
-# ServiceOwners:                                                   @sathiyan-sivathas @richardwhiuk
-
-# PRLabel: %Mobile Network
-/sdk/mobilenetwork/Azure.ResourceManager.*/												 @tompretty
 
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
