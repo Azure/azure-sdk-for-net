@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The custom calling context which will be sent to the target. </summary>
+    /// <summary> The CustomCallingContext. </summary>
     internal partial class CustomCallingContextInternal
     {
         /// <summary> Initializes a new instance of <see cref="CustomCallingContextInternal"/>. </summary>
@@ -19,9 +19,9 @@ namespace Azure.Communication.CallAutomation
             SipHeaders = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Custom calling context VoiP headers. </summary>
+        /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> VoipHeaders { get; }
-        /// <summary> Custom calling context SIP headers. </summary>
+        /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> SipHeaders { get; }
     }
 }
