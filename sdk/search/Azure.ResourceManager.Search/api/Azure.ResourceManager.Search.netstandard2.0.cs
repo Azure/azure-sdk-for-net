@@ -453,6 +453,7 @@ namespace Azure.ResourceManager.Search.Models
         private readonly int _dummyPrimitive;
         public SearchBypass(string value) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchBypass AzurePortal { get { throw null; } }
+        public static Azure.ResourceManager.Search.Models.SearchBypass AzureServices { get { throw null; } }
         public static Azure.ResourceManager.Search.Models.SearchBypass None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Search.Models.SearchBypass other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
