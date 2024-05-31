@@ -9,7 +9,7 @@ $workingFolder = $webappRoot;
 if ($null -ne $Env:AGENT_WORKFOLDER) {
   $workingFolder = $Env:AGENT_WORKFOLDER
 }
-az login --service-principal -u $DeploymentOutputs['IDENTITY_CLIENT_ID'] --tenant $DeploymentOutputs['IDENTITY_TENANT_ID'] --allow-no-subscriptions --federated-token $env:ARM_OIDC_TOKEN
+az login --service-principal -u $env:AZURE_SERVICE_CONNECTION_CLIENT_ID --tenant $env:AZURE_SERVICE_CONNECTION_TENANT_ID --allow-no-subscriptions --federated-token $env:ARM_OIDC_TOKEN
 az account set --subscription $DeploymentOutputs['IDENTITY_SUBSCRIPTION_ID']
 
 # Deploy the webapp
