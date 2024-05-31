@@ -1068,6 +1068,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetFullUri_EventSubscriptionsGetFullUrlForResourceGroup()
         {
+
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/EventSubscriptions_GetFullUrlForResourceGroup.json
             // this example is just showing the usage of "EventSubscriptions_GetFullUrl" operation, for the dependent resources, they will have to be created separately.
 
@@ -1094,6 +1095,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetFullUri_EventSubscriptionsGetFullUrlForSubscription()
         {
+
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/EventSubscriptions_GetFullUrlForSubscription.json
             // this example is just showing the usage of "EventSubscriptions_GetFullUrl" operation, for the dependent resources, they will have to be created separately.
 

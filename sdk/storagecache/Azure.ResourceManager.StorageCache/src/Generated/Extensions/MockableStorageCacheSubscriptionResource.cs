@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>checkAmlFSSubnets</description>
+        /// <description>CheckAmlFSSubnets</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>checkAmlFSSubnets</description>
+        /// <description>CheckAmlFSSubnets</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>getRequiredAmlFSSubnetsSize</description>
+        /// <description>GetRequiredAmlFSSubnetsSize</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>getRequiredAmlFSSubnetsSize</description>
+        /// <description>GetRequiredAmlFSSubnetsSize</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

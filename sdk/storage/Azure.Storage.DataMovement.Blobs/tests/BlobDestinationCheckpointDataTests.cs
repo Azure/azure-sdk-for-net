@@ -35,7 +35,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private BlobDestinationCheckpointData CreatePreserveValues()
         {
             return new BlobDestinationCheckpointData(
-                DefaultBlobType,
+                default,
                 default,
                 default,
                 default,
@@ -49,7 +49,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private BlobDestinationCheckpointData CreateSetSampleValues()
         {
             return new BlobDestinationCheckpointData(
-                blobType: DefaultBlobType,
+                blobType: new(DefaultBlobType),
                 contentType: new(DefaultContentType),
                 contentEncoding: new(DefaultContentEncoding),
                 contentLanguage: new(DefaultContentLanguage),
@@ -82,7 +82,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobDestinationCheckpointData data = CreatePreserveValues();
 
             Assert.AreEqual(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion, data.Version);
-            Assert.AreEqual(DefaultBlobType, data.BlobType);
+            Assert.AreEqual(true, data.PreserveBlobType);
+            Assert.IsNull(data.BlobType);
             Assert.AreEqual(true, data.PreserveContentType);
             Assert.IsEmpty(data.ContentTypeBytes);
             Assert.AreEqual(true, data.PreserveContentEncoding);
@@ -211,7 +212,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private void VerifySampleValues(BlobDestinationCheckpointData data, int version)
         {
             Assert.AreEqual(version, data.Version);
-            Assert.AreEqual(DefaultBlobType, data.BlobType);
+            Assert.IsFalse(data.PreserveBlobType);
+            Assert.AreEqual(DefaultBlobType, data.BlobTypeValue);
             Assert.AreEqual(false, data.PreserveContentType);
             Assert.AreEqual(StringToByteArray(DefaultContentType), data.ContentTypeBytes);
             Assert.AreEqual(false, data.PreserveContentEncoding);
