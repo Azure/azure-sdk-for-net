@@ -78,6 +78,11 @@
     </NoWarn>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- 
+      .NET 8 now produces security warnings for nuget packages in dotnet restore. Keep these as warnings in T1 to avoid needing to update T1 library dependencies.
+      See: https://learn.microsoft.com/en-us/dotnet/core/compatibility/sdk/8.0/dotnet-restore-audit#recommended-action
+    -->
+    <WarningsNotAsErrors Condition="'$(IsClientLibrary)' != 'true'">NU1901;NU1902;NU1903;NU1904</WarningsNotAsErrors>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>symbols.nupkg</SymbolPackageFormat>
