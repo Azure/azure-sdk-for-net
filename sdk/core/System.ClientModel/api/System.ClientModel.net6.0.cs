@@ -16,8 +16,9 @@ namespace System.ClientModel
     public abstract partial class AsyncPageableCollection<T> : System.ClientModel.AsyncCollectionResult<T>
     {
         protected AsyncPageableCollection() { }
-        public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPagesAsync(string? pageToken = null);
+        public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPages(string? pageToken = null);
         public override System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.Primitives.PageResult<T>> GetPageAsync(string? pageToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public abstract partial class BinaryContent : System.IDisposable
     {
@@ -66,6 +67,7 @@ namespace System.ClientModel
         protected PageableCollection() { }
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPages(string? pageToken = null);
         public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
+        public virtual System.ClientModel.Primitives.PageResult<T> GetPage(string? pageToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace System.ClientModel.Primitives
@@ -162,6 +164,8 @@ namespace System.ClientModel.Primitives
     public partial class PageResult<T> : System.ClientModel.ClientResult
     {
         internal PageResult() { }
+        public string? FirstPageToken { get { throw null; } }
+        public string? LastPageToken { get { throw null; } }
         public string? NextPageToken { get { throw null; } }
         public string? PreviousPageToken { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }

@@ -48,10 +48,26 @@ public class PageResult<T> : ClientResult
 
     /// <summary>
     /// Gets a token that can be passed to <see cref="PageableCollection{T}.AsPages(string?)"/>
-    /// or <see cref="AsyncPageableCollection{T}.AsPagesAsync(string?)"/> to
+    /// or <see cref="AsyncPageableCollection{T}.AsPages(string?)"/> to
     /// obtain a collection of pages that starts at the previous page of values.
     /// May be <c>null</c> when no page preceeds the current page, or if the
-    /// service does not support providing this value.
+    /// service does not support providing this token.
     /// </summary>
     public string? PreviousPageToken { get; }
+
+    /// <summary>
+    /// Gets a token that can be passed to <see cref="PageableCollection{T}.AsPages(string?)"/>
+    /// or <see cref="AsyncPageableCollection{T}.AsPages(string?)"/> to
+    /// obtain a collection of pages that starts at the first page of values.
+    /// May be <c>null</c> if the service does not provide this token.
+    /// </summary>
+    public string? FirstPageToken { get; }
+
+    /// <summary>
+    /// Gets a token that can be passed to <see cref="PageableCollection{T}.AsPages(string?)"/>
+    /// or <see cref="AsyncPageableCollection{T}.AsPages(string?)"/> to
+    /// obtain a collection of pages that starts at the last page of values.
+    /// May be <c>null</c> if the service does not provide this token.
+    /// </summary>
+    public string? LastPageToken { get; }
 }

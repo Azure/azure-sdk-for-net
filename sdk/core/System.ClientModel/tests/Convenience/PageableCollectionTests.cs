@@ -178,7 +178,7 @@ public class PageableCollectionTests
 
         int pageCount = 0;
         int itemCount = 0;
-        await foreach (PageResult<MockJsonModel> page in models.AsPagesAsync())
+        await foreach (PageResult<MockJsonModel> page in models.AsPages())
         {
             foreach (MockJsonModel model in page.Values)
             {
@@ -238,6 +238,18 @@ public class PageableCollectionTests
     //}
 
     [Test]
+    public async Task CanGetLastPageAsync()
+    {
+        MockPageableClient client = new();
+        AsyncPageableCollection<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
+
+        PageResult<MockJsonModel> firstPage = await models.GetPageAsync();
+
+        PageResult<MockJsonModel>? lastPage = firstPage.LastPageToken is string lastPageToken ?
+            await models.GetPageAsync(lastPageToken) : default;
+    }
+
+    [Test]
     public async Task CanGetRawResponsesAsync()
     {
         MockPageableClient client = new();
@@ -245,7 +257,7 @@ public class PageableCollectionTests
 
         int pageCount = 0;
         int itemCount = 0;
-        await foreach (PageResult<MockJsonModel> page in models.AsPagesAsync())
+        await foreach (PageResult<MockJsonModel> page in models.AsPages())
         {
             foreach (MockJsonModel model in page.Values)
             {

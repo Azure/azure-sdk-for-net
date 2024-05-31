@@ -36,7 +36,29 @@ public abstract class AsyncPageableCollection<T> : AsyncCollectionResult<T>
     /// <returns>An async sequence of <see cref="PageResult{T}"/>, each holding
     /// the subset of collection values contained in a given service response.
     /// </returns>
-    public abstract IAsyncEnumerable<PageResult<T>> AsPagesAsync(string? pageToken = default);
+    public abstract IAsyncEnumerable<PageResult<T>> AsPages(string? pageToken = default);
+
+    /// <summary>
+    /// Return the <see cref="PageResult{T}"/> corresponding to the provided
+    /// <paramref name="pageToken"/>, or the first page of collection values if
+    /// <paramref name="pageToken"/> is <c>null</c>.
+    /// </summary>
+    /// <param name="pageToken">The page token indicating which page of
+    /// collection values to return.</param>
+    /// <param name="cancellationToken">TBD.</param>
+    /// <returns>The <see cref="PageResult{T}"/> corresponding to the provided
+    /// <paramref name="pageToken"/>, or the first page of collection values if
+    /// <paramref name="pageToken"/> is <c>null</c>.</returns>
+    public virtual async Task<PageResult<T>> GetPageAsync(string? pageToken = default, CancellationToken cancellationToken = default)
+    {
+        IAsyncEnumerable<PageResult<T>> pages = AsPages(pageToken);
+        await foreach (PageResult<T> page in pages.ConfigureAwait(false).WithCancellation(cancellationToken))
+        {
+            return page;
+        }
+
+        return PageResult<T>.Create(new List<T>().AsReadOnly(), null, GetRawResponse());
+    }
 
     /// <summary>
     /// Return an enumerator that iterates asynchronously through the collection
@@ -48,7 +70,7 @@ public abstract class AsyncPageableCollection<T> : AsyncCollectionResult<T>
     /// asynchronously through the collection values.</returns>
     public override async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
-        await foreach (PageResult<T> page in AsPagesAsync().ConfigureAwait(false).WithCancellation(cancellationToken))
+        await foreach (PageResult<T> page in AsPages().ConfigureAwait(false).WithCancellation(cancellationToken))
         {
             foreach (T value in page.Values)
             {

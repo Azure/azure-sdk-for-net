@@ -3,6 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace System.ClientModel;
 
@@ -34,6 +35,33 @@ public abstract class PageableCollection<T> : CollectionResult<T>
     /// subset of collection values contained in a given service response.
     /// </returns>
     public abstract IEnumerable<PageResult<T>> AsPages(string? pageToken = default);
+
+    /// <summary>
+    /// Return the <see cref="PageResult{T}"/> corresponding to the provided
+    /// <paramref name="pageToken"/>, or the first page of collection values if
+    /// <paramref name="pageToken"/> is <c>null</c>.
+    /// </summary>
+    /// <param name="pageToken">The page token indicating which page of
+    /// collection values to return.</param>
+    /// <param name="cancellationToken">TBD.</param>
+    /// <returns>The <see cref="PageResult{T}"/> corresponding to the provided
+    /// <paramref name="pageToken"/>, or the first page of collection values if
+    /// <paramref name="pageToken"/> is <c>null</c>.</returns>
+    public virtual PageResult<T> GetPage(string? pageToken = default, CancellationToken cancellationToken = default)
+    {
+        IEnumerable<PageResult<T>> pages = AsPages(pageToken);
+        foreach (PageResult<T> page in pages)
+        {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+
+            return page;
+        }
+
+        return PageResult<T>.Create(new List<T>().AsReadOnly(), null, GetRawResponse());
+    }
 
     /// <summary>
     /// Return an enumerator that iterates through the collection values. This
