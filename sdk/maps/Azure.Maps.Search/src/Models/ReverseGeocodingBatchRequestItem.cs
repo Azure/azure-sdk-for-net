@@ -14,13 +14,15 @@ namespace Azure.Maps.Search.Models
         /// Default value is all possible entities.
         /// A comma separated list of entity types selected from the following options.
         ///
-        /// - Address
-        /// - Neighborhood
-        /// - PopulatedPlace
-        /// - Postcode1
-        /// - AdminDivision1
-        /// - AdminDivision2
-        /// - CountryRegion
+        /// <list type="bullet">
+        /// <item>Address</item>
+        /// <item>Neighborhood</item>
+        /// <item>PopulatedPlace</item>
+        /// <item>Postcode1</item>
+        /// <item>AdminDivision1</item>
+        /// <item>AdminDivision2</item>
+        /// <item>CountryRegion</item>
+        /// </list>
         ///
         /// These entity types are ordered from the most specific entity to the least specific entity. When entities of more than one entity type are found, only the most specific entity is returned. For example, if you specify Address and AdminDistrict1 as entity types and entities were found for both types, only the Address entity information is returned in the response.
         /// </summary>

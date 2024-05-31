@@ -41,4 +41,24 @@ directive:
   where: $.securityDefinitions
   transform: |
     $["SharedKey"]["in"] = "header";
+- from: swagger-document
+  where: "$.definitions.GeocodingBatchRequestItem.properties.bbox"
+  transform: >
+    $["x-ms-client-name"] = "boundingBox";
+- from: swagger-document
+  where: '$.parameters.Bbox'
+  transform: >
+    $["name"] = "boundingBox";
+- from: swagger-document
+  where: "$.parameters.Bbox"
+  transform: >
+    $["x-ms-client-name"] = "BoundingBox";
+- from: swagger-document
+  where: "$.definitions.FeaturesItem.properties.bbox"
+  transform: >
+    $["x-ms-client-name"] = "boundingBox";
+- from: swagger-document
+  where: "$.definitions.GeoJsonObject.properties.bbox"
+  transform: >
+    $["x-ms-client-name"] = "boundingBox";
 ```
