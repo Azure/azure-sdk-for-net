@@ -30,13 +30,13 @@ public abstract class AsyncPageableCollection<T> : AsyncCollectionResult<T>
     /// enumerates the collection's pages instead of the collection's individual
     /// values. This may make multiple service requests.
     /// </summary>
-    /// <param name="continuationToken">A token indicating where the collection
+    /// <param name="pageToken">A token indicating where the collection
     /// of results returned from the service should begin. Passing <c>null</c>
     /// will start the collection at the first page of values.</param>
     /// <returns>An async sequence of <see cref="PageResult{T}"/>, each holding
     /// the subset of collection values contained in a given service response.
     /// </returns>
-    public abstract IAsyncEnumerable<PageResult<T>> AsPagesAsync(string? continuationToken = default);
+    public abstract IAsyncEnumerable<PageResult<T>> AsPagesAsync(string? pageToken = default);
 
     /// <summary>
     /// Return an enumerator that iterates asynchronously through the collection

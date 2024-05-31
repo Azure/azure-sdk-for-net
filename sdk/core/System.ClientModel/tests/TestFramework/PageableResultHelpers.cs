@@ -28,7 +28,7 @@ internal class PageableResultHelpers
             _nextPageFunc = nextPageFunc;
         }
 
-        public override async IAsyncEnumerable<PageResult<T>> AsPagesAsync(string? continuationToken = default)
+        public override async IAsyncEnumerable<PageResult<T>> AsPagesAsync(string? pageToken = default)
         {
             Func<string?, Task<PageResult<T>>>? pageFunc = _firstPageFunc;
 
@@ -39,13 +39,13 @@ internal class PageableResultHelpers
 
             do
             {
-                PageResult<T> page = await pageFunc(continuationToken).ConfigureAwait(false);
+                PageResult<T> page = await pageFunc(pageToken).ConfigureAwait(false);
                 SetRawResponse(page.GetRawResponse());
                 yield return page;
-                continuationToken = page.ContinuationToken;
+                pageToken = page.NextPageToken;
                 pageFunc = _nextPageFunc;
             }
-            while (!string.IsNullOrEmpty(continuationToken) && pageFunc != null);
+            while (!string.IsNullOrEmpty(pageToken) && pageFunc != null);
         }
     }
 
@@ -60,7 +60,7 @@ internal class PageableResultHelpers
             _nextPageFunc = nextPageFunc;
         }
 
-        public override IEnumerable<PageResult<T>> AsPages(string? continuationToken = default)
+        public override IEnumerable<PageResult<T>> AsPages(string? pageToken = default)
         {
             Func<string?, PageResult<T>>? pageFunc = _firstPageFunc;
 
@@ -71,13 +71,13 @@ internal class PageableResultHelpers
 
             do
             {
-                PageResult<T> page = pageFunc(continuationToken);
+                PageResult<T> page = pageFunc(pageToken);
                 SetRawResponse(page.GetRawResponse());
                 yield return page;
-                continuationToken = page.ContinuationToken;
+                pageToken = page.NextPageToken;
                 pageFunc = _nextPageFunc;
             }
-            while (!string.IsNullOrEmpty(continuationToken) && pageFunc != null);
+            while (!string.IsNullOrEmpty(pageToken) && pageFunc != null);
         }
     }
 }
