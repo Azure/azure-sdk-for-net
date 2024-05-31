@@ -18,7 +18,7 @@ public class MockPageableClient
     public int? RequestedPageSize { get; private set; }
 
     // mock convenience method - async
-    public virtual AsyncPageableCollection<MockJsonModel> GetModelsAsync(string[] pageContents)
+    public virtual AsyncPageableResult<MockJsonModel> GetModelsAsync(string[] pageContents)
     {
         PipelineResponse? lastResponse = default;
 
@@ -61,7 +61,7 @@ public class MockPageableClient
     }
 
     // mock convenience method - sync
-    public virtual PageableCollection<MockJsonModel> GetModels(string[] pageContents)
+    public virtual PageableResult<MockJsonModel> GetModels(string[] pageContents)
     {
         PipelineResponse? lastResponse = default;
 

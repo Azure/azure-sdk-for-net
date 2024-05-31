@@ -12,16 +12,16 @@ namespace System.ClientModel;
 /// Represents a collection of values returned from a cloud service operation
 /// sequentially over one or more calls to the service.
 /// </summary>
-public abstract class AsyncPageableCollection<T> : AsyncCollectionResult<T>
+public abstract class AsyncPageableResult<T> : AsyncCollectionResult<T>
 {
     /// <summary>
-    /// Create a new instance of <see cref="AsyncPageableCollection{T}"/>.
+    /// Create a new instance of <see cref="AsyncPageableResult{T}"/>.
     /// </summary>
     /// <remarks>This constructor does not take a <see cref="PipelineResponse"/>
     /// because derived types are expected to defer the first service call
     /// until the collection is enumerated using <c>await foreach</c>.
     /// </remarks>
-    protected AsyncPageableCollection() : base()
+    protected AsyncPageableResult() : base()
     {
     }
 

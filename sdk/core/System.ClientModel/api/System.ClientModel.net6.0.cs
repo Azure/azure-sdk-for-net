@@ -13,9 +13,9 @@ namespace System.ClientModel
         protected internal AsyncCollectionResult(System.ClientModel.Primitives.PipelineResponse response) { }
         public abstract System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
-    public abstract partial class AsyncPageableCollection<T> : System.ClientModel.AsyncCollectionResult<T>
+    public abstract partial class AsyncPageableResult<T> : System.ClientModel.AsyncCollectionResult<T>
     {
-        protected AsyncPageableCollection() { }
+        protected AsyncPageableResult() { }
         public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPages(string? pageToken = null);
         public override System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -61,9 +61,9 @@ namespace System.ClientModel
         public abstract System.Collections.Generic.IEnumerator<T> GetEnumerator();
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class PageableCollection<T> : System.ClientModel.CollectionResult<T>
+    public abstract partial class PageableResult<T> : System.ClientModel.CollectionResult<T>
     {
-        protected PageableCollection() { }
+        protected PageableResult() { }
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PageResult<T>> AsPages(string? pageToken = null);
         public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
     }

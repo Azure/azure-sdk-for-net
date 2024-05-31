@@ -39,7 +39,7 @@ public class PageableCollectionTests
     public void CanEnumerateValues()
     {
         MockPageableClient client = new();
-        PageableCollection<MockJsonModel> models = client.GetModels(MockPageContents);
+        PageableResult<MockJsonModel> models = client.GetModels(MockPageContents);
 
         int i = 0;
         foreach (MockJsonModel model in models)
@@ -57,7 +57,7 @@ public class PageableCollectionTests
     public void CanEnumeratePages()
     {
         MockPageableClient client = new();
-        PageableCollection<MockJsonModel> models = client.GetModels(MockPageContents);
+        PageableResult<MockJsonModel> models = client.GetModels(MockPageContents);
 
         int pageCount = 0;
         int itemCount = 0;
@@ -124,7 +124,7 @@ public class PageableCollectionTests
     public void CanGetRawResponses()
     {
         MockPageableClient client = new();
-        PageableCollection<MockJsonModel> models = client.GetModels(MockPageContents);
+        PageableResult<MockJsonModel> models = client.GetModels(MockPageContents);
 
         int pageCount = 0;
         int itemCount = 0;
@@ -156,7 +156,7 @@ public class PageableCollectionTests
     public async Task CanEnumerateValuesAsync()
     {
         MockPageableClient client = new();
-        AsyncPageableCollection<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
+        AsyncPageableResult<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
 
         int i = 0;
         await foreach (MockJsonModel model in models)
@@ -174,7 +174,7 @@ public class PageableCollectionTests
     public async Task CanEnumeratePagesAsync()
     {
         MockPageableClient client = new();
-        AsyncPageableCollection<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
+        AsyncPageableResult<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
 
         int pageCount = 0;
         int itemCount = 0;
@@ -241,7 +241,7 @@ public class PageableCollectionTests
     public async Task CanGetRawResponsesAsync()
     {
         MockPageableClient client = new();
-        AsyncPageableCollection<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
+        AsyncPageableResult<MockJsonModel> models = client.GetModelsAsync(MockPageContents);
 
         int pageCount = 0;
         int itemCount = 0;
