@@ -40,18 +40,9 @@ public class PageResult<T> : ClientResult
     public IReadOnlyList<T> Values { get; }
 
     /// <summary>
-    /// Gets the continuation token used to request the next
-    /// <see cref="PageResult{T}"/>.  May be <c>null</c> or empty when no values
-    /// remain to be returned from the collection.
+    /// Gets the token used to request the next <see cref="PageResult{T}"/>.
+    /// May be <c>null</c> or empty when no values remain to be returned from
+    /// the collection.
     /// </summary>
     public string? NextPageToken { get; }
-
-    /// <summary>
-    /// Gets a token that can be passed to <see cref="PageableCollection{T}.AsPages(string?)"/>
-    /// or <see cref="AsyncPageableCollection{T}.AsPagesAsync(string?)"/> to
-    /// obtain a collection of pages that starts at the previous page of values.
-    /// May be <c>null</c> when no page preceeds the current page, or if the
-    /// service does not support providing this value.
-    /// </summary>
-    public string? PreviousPageToken { get; }
 }

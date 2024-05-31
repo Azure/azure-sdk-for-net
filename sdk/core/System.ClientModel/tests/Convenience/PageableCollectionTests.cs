@@ -178,7 +178,7 @@ public class PageableCollectionTests
 
         int pageCount = 0;
         int itemCount = 0;
-        await foreach (PageResult<MockJsonModel> page in models.AsPagesAsync())
+        await foreach (PageResult<MockJsonModel> page in models.AsPages())
         {
             foreach (MockJsonModel model in page.Values)
             {
@@ -245,7 +245,7 @@ public class PageableCollectionTests
 
         int pageCount = 0;
         int itemCount = 0;
-        await foreach (PageResult<MockJsonModel> page in models.AsPagesAsync())
+        await foreach (PageResult<MockJsonModel> page in models.AsPages())
         {
             foreach (MockJsonModel model in page.Values)
             {

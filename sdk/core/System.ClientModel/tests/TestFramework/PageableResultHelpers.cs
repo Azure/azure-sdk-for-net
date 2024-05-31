@@ -28,7 +28,7 @@ internal class PageableResultHelpers
             _nextPageFunc = nextPageFunc;
         }
 
-        public override async IAsyncEnumerable<PageResult<T>> AsPagesAsync(string? pageToken = default)
+        public override async IAsyncEnumerable<PageResult<T>> AsPages(string? pageToken = default)
         {
             Func<string?, Task<PageResult<T>>>? pageFunc = _firstPageFunc;
 
