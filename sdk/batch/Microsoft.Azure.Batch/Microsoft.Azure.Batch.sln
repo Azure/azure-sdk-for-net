@@ -13,21 +13,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Batch.Commo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Batch.Unit.Tests", "tests\UnitTests\Microsoft.Azure.Batch.Unit.Tests.csproj", "{11F0374A-3609-4C9C-B57B-BB7876C76DA4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeGenerationLibrary", "tools\CodeGenerationLibrary\CodeGenerationLibrary.csproj", "{D15F9643-2956-499E-A94A-5171D5A47D9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeGenerationLibrary", "Tools\CodeGenerationLibrary\CodeGenerationLibrary.csproj", "{D15F9643-2956-499E-A94A-5171D5A47D9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObjectModelCodeGenerator", "tools\ObjectModelCodeGenerator\ObjectModelCodeGenerator.csproj", "{718237FC-37F8-4557-B2FB-70DF3255AAF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObjectModelCodeGenerator", "Tools\ObjectModelCodeGenerator\ObjectModelCodeGenerator.csproj", "{718237FC-37F8-4557-B2FB-70DF3255AAF5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyLayerParser", "tools\RoslynParser\ProxyLayerParser.csproj", "{403E2952-7152-4F52-B7FD-5BF8A4691B48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProxyLayerParser", "Tools\RoslynParser\ProxyLayerParser.csproj", "{403E2952-7152-4F52-B7FD-5BF8A4691B48}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BE03B84A-2236-4C21-99B9-E44276A73ECC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9B6E704C-0833-4CDE-BE2C-603A4087BAC9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{48070FB2-8BB9-4EE4-A8BD-413B2C2B8ED4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Rest.ClientRuntime.Azure.TestFramework", "..\..\mgmtcommon\TestFramework\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj", "{59DC628B-3D4D-4392-8409-67BF3E7912F5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Test.HttpRecorder", "..\..\mgmtcommon\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj", "{052924A0-46A5-4954-BEAF-C671587F3648}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

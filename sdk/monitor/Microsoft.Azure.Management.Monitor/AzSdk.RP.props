@@ -1,7 +1,0 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!--This file and it's contents are updated at build time moving or editing might result in build failure. Take due deligence while editing this file-->
-  <PropertyGroup>
-    <AzureApiTag>Insights_2018-03-01;Insights_2018-11-27-preview;insights_2019-03-01;insights_2017-04-01;insights_2015-04-01;insights_2016-03-01;insights_2017-05-01-preview;insights_2017-11-01-preview;insights_2018-01-01;insights_2017-12-01-preview;insights_2018-04-16;insights_2019-10-17-preview;insights_2021-04-01;insights_2021-09-01;insights_2022-02-01;insights_2022-06-01</AzureApiTag>
-    <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
-  </PropertyGroup>
-</Project>

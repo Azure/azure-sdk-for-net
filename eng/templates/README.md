@@ -1,6 +1,6 @@
 # DotNet project templates (DO NOT USE!)
 
-*  This document is for Track 2 .NET SDK (Azure.ResourceManager.XXX). Not for track 1 .NET SDK (Microsoft.Azure.Management.XXX)
+*  This document is for Track 2 .NET SDK (Azure.ResourceManager.XXX).
 
 ## Azure.ResourceManager SDK client library template
 

@@ -20,7 +20,7 @@
     <PackageReference Update="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.4.0]" />
-    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.18, 4.0.0)" />
+    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.19, 4.0.0)" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime" Version="[2.3.24, 3.0.0)" />
     <PackageReference Update="Microsoft.ServiceFabric.Data" Version="3.3.624" />
     <PackageReference Update="Microsoft.ServiceFabric.Services" Version="3.3.624" />
@@ -126,7 +126,7 @@
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
     <PackageReference Update="Azure.Storage.Common" Version="12.15.0" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.16.0" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.20.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.14.0" />
     <PackageReference Update="Azure.AI.OpenAI" Version="1.0.0-beta.16" />
     <PackageReference Update="Azure.ResourceManager" Version="1.11.1" />
@@ -265,7 +265,7 @@
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.4.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0-beta.4" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.13.1" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.20.0" />
     <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.8.0" />
     <PackageReference Update="BenchmarkDotNet" Version="0.13.4" />
     <PackageReference Update="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.4" />
@@ -299,7 +299,7 @@
     <PackageReference Update="Microsoft.Azure.Management.ResourceManager" Version="[1.6.0-preview, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.Management.ServiceBus" Version="2.1.0" />
     <PackageReference Update="Microsoft.Azure.Management.Sql" Version="1.22.0-preview" />
-    <PackageReference Update="Microsoft.Azure.Management.Storage" Version="13.0.0" />
+    <PackageReference Update="Microsoft.Azure.Management.Storage" Version="25.0.0" />
     <PackageReference Update="Microsoft.Azure.ResourceManager" Version="[1.1.0-preview]" />
     <PackageReference Update="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.Storage.Blob" Version="11.1.7" />

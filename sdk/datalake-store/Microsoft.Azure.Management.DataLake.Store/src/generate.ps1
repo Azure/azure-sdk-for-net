@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "datalake-store/resource-manager" -AutoRestVersion "v2"
