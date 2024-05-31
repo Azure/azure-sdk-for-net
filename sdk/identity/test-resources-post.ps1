@@ -9,6 +9,13 @@ $workingFolder = $webappRoot;
 if ($null -ne $Env:AGENT_WORKFOLDER) {
   $workingFolder = $Env:AGENT_WORKFOLDER
 }
+
+Write-Host "clientid"
+Write-Host $env:AZURE_SERVICE_CONNECTION_CLIENT_ID
+Write-Host "tenantid"
+Write-Host $env:AZURE_SERVICE_CONNECTION_TENANT_ID
+Write-Host "ARM_OIDC_TOKEN"
+Write-Host $env:ARM_OIDC_TOKEN
 az login --service-principal -u $env:AZURE_SERVICE_CONNECTION_CLIENT_ID --tenant $env:AZURE_SERVICE_CONNECTION_TENANT_ID --allow-no-subscriptions --federated-token $env:ARM_OIDC_TOKEN
 az account set --subscription $DeploymentOutputs['IDENTITY_SUBSCRIPTION_ID']
 
