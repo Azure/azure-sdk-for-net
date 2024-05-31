@@ -53,6 +53,11 @@ namespace Azure.ResourceManager.OracleDatabase.Tests
             return rg.GetCloudVmClusters();
         }
 
+        protected async Task<AutonomousDatabaseCollection> GetAutonomousDatabaseCollectionAsync(string resourceGroupName) {
+            ResourceGroupResource rg = await GetResourceGroupResourceAsync(resourceGroupName);
+            return rg.GetAutonomousDatabases();
+        }
+
         protected static CloudExadataInfrastructureData GetDefaultCloudExadataInfrastructureData(string exaInfraName) {
             return new CloudExadataInfrastructureData(AzureLocation.EastUS, new
             List<string>{ "2" }) {
