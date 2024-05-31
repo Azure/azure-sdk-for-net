@@ -885,7 +885,7 @@ namespace Azure.Health.Deidentification
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(name, true);
-            uri.AppendPath(":cancelJob", false);
+            uri.AppendPath(":cancel", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

@@ -3,14 +3,17 @@
 
 using System;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Identity;
 
 namespace Azure.Health.Deidentification.Tests
 {
     public class DeidentificationTestBase : RecordedTestBase<DeidentificationTestEnvironment>
     {
-        public DeidentificationTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public DeidentificationTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..location") { Value = DeidentificationTestEnvironment.FakeSASUri });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..nextLink") { Value = TestEnvironment.FakeNextLink });
         }
 
         protected DeidentificationClient GetDeidClient()
@@ -18,7 +21,7 @@ namespace Azure.Health.Deidentification.Tests
             return InstrumentClient(
                 new DeidentificationClient(
                     new Uri(TestEnvironment.Endpoint),
-                    new DefaultAzureCredential(),
+                    TestEnvironment.Credential,
                     InstrumentClientOptions(new DeidentificationClientOptions())
                 )
             );

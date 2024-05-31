@@ -15,6 +15,7 @@ namespace Azure.Health.Deidentification
     public static partial class HealthDeidentificationModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentificationJob"/>. </summary>
+        /// <param name="name"> The name of a job. </param>
         /// <param name="sourceLocation"> Storage location to perform the operation on. </param>
         /// <param name="targetLocation"> Target location to store output of operation. </param>
         /// <param name="dataType"> Data type of the input documents. </param>
@@ -33,9 +34,10 @@ namespace Azure.Health.Deidentification
         /// </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationJob"/> instance for mocking. </returns>
-        public static DeidentificationJob DeidentificationJob(SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, DocumentDataType dataType = default, OperationType operation = default, string redactionFormat = null, JobStatus status = default, ResponseError error = null, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, DateTimeOffset? lastUpdatedAt = null, JobSummary summary = null)
+        public static DeidentificationJob DeidentificationJob(string name = null, SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, DocumentDataType dataType = default, OperationType operation = default, string redactionFormat = null, JobStatus status = default, ResponseError error = null, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, DateTimeOffset? lastUpdatedAt = null, JobSummary summary = null)
         {
             return new DeidentificationJob(
+                name,
                 sourceLocation,
                 targetLocation,
                 dataType,

@@ -24,7 +24,6 @@ namespace Azure.Health.Deidentification.Tests
             DeidentificationClient client = GetDeidClient();
 
             string input = "Hello, my name is John Smith.";
-
             // TODO: Defaults should be set for these.
             DeidentificationContent content = new(input, DocumentDataType.PlainText, OperationType.Surrogate, StringIndexType.TextElementV8);
 

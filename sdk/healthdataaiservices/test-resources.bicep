@@ -87,7 +87,7 @@ var blobStorageSASUri = listAccountSAS(storageAccount.name, '2023-01-01', {
   signedResourceTypes: 'sco'
   signedPermission: 'rwlca'
   signedServices: 'b'
-  signedExpiry: dateTimeAdd(deploymentTime, 'PT1H')
+  signedExpiry: dateTimeAdd(deploymentTime, 'PT4H')
 }).accountSasToken
 
 var blobStorageConnectionString = 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${storageAccount.listKeys().keys[0].value}'

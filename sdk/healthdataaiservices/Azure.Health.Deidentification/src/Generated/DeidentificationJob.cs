@@ -63,6 +63,7 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationJob"/>. </summary>
+        /// <param name="name"> The name of a job. </param>
         /// <param name="sourceLocation"> Storage location to perform the operation on. </param>
         /// <param name="targetLocation"> Target location to store output of operation. </param>
         /// <param name="dataType"> Data type of the input documents. </param>
@@ -81,8 +82,9 @@ namespace Azure.Health.Deidentification
         /// </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationJob(SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, DocumentDataType dataType, OperationType operation, string redactionFormat, JobStatus status, ResponseError error, DateTimeOffset createdAt, DateTimeOffset? startedAt, DateTimeOffset? lastUpdatedAt, JobSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationJob(string name, SourceStorageLocation sourceLocation, TargetStorageLocation targetLocation, DocumentDataType dataType, OperationType operation, string redactionFormat, JobStatus status, ResponseError error, DateTimeOffset createdAt, DateTimeOffset? startedAt, DateTimeOffset? lastUpdatedAt, JobSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Name = name;
             SourceLocation = sourceLocation;
             TargetLocation = targetLocation;
             DataType = dataType;
@@ -102,6 +104,8 @@ namespace Azure.Health.Deidentification
         {
         }
 
+        /// <summary> The name of a job. </summary>
+        public string Name { get; }
         /// <summary> Storage location to perform the operation on. </summary>
         public SourceStorageLocation SourceLocation { get; set; }
         /// <summary> Target location to store output of operation. </summary>

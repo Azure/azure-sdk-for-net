@@ -26,6 +26,11 @@ namespace Azure.Health.Deidentification
             }
 
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             writer.WritePropertyName("sourceLocation"u8);
             writer.WriteObjectValue(SourceLocation, options);
             writer.WritePropertyName("targetLocation"u8);
@@ -107,6 +112,7 @@ namespace Azure.Health.Deidentification
             {
                 return null;
             }
+            string name = default;
             SourceStorageLocation sourceLocation = default;
             TargetStorageLocation targetLocation = default;
             DocumentDataType dataType = default;
@@ -122,6 +128,11 @@ namespace Azure.Health.Deidentification
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("sourceLocation"u8))
                 {
                     sourceLocation = SourceStorageLocation.DeserializeSourceStorageLocation(property.Value, options);
@@ -200,6 +211,7 @@ namespace Azure.Health.Deidentification
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new DeidentificationJob(
+                name,
                 sourceLocation,
                 targetLocation,
                 dataType,

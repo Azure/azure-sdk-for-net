@@ -30,15 +30,13 @@ namespace Azure.Health.Deidentification.Tests
         {
             DeidentificationClient client = GetDeidClient();
 
-            string jobName = "net-sdk-job-" + Recording.GenerateId();
+            string jobName = GenerateJobName();
             const string inputPrefix = "example_patient_1";
 
             DeidentificationJob job = new()
             {
                 SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), inputPrefix, new string[] { "*" }),
-                // TODO: Change prefix to outputPrefix
                 TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), OUTPUT_FOLDER),
-                // TODO: Default Arguments
                 DataType = DocumentDataType.PlainText,
                 Operation = OperationType.Surrogate
             };
@@ -46,6 +44,7 @@ namespace Azure.Health.Deidentification.Tests
             job = (await client.CreateJobAsync(WaitUntil.Started, jobName, job)).Value;
 
             Assert.IsNotNull(job);
+            Assert.AreEqual(jobName, job.Name);
             Assert.IsNotNull(job.CreatedAt);
             Assert.IsNotNull(job.LastUpdatedAt);
             Assert.IsNull(job.StartedAt);
@@ -54,9 +53,58 @@ namespace Azure.Health.Deidentification.Tests
             Assert.IsNull(job.RedactionFormat);
             Assert.IsNull(job.Summary);
             Assert.AreEqual(inputPrefix, job.SourceLocation.Prefix);
-            Assert.AreEqual(TestEnvironment.StorageAccountSASUri, job.SourceLocation.Location);
+            Assert.IsTrue(TestEnvironment.StorageAccountSASUri.StartsWith(job.SourceLocation.Location.ToString()));
             Assert.AreEqual(OUTPUT_FOLDER, job.TargetLocation.Prefix);
-            Assert.AreEqual(TestEnvironment.StorageAccountSASUri, job.TargetLocation.Location);
+            Assert.IsTrue(TestEnvironment.StorageAccountSASUri.StartsWith(job.TargetLocation.Location.ToString()));
+        }
+
+        [Test]
+        public async Task CreateThenList_JobExists_ContainsExpectedFields()
+        {
+            DeidentificationClient client = GetDeidClient();
+
+            string jobName = GenerateJobName();
+            const string inputPrefix = "example_patient_1";
+
+            DeidentificationJob job = new()
+            {
+                SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), inputPrefix, new string[] { "*" }),
+                TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), OUTPUT_FOLDER),
+                DataType = DocumentDataType.PlainText,
+                Operation = OperationType.Surrogate
+            };
+
+            job = (await client.CreateJobAsync(WaitUntil.Started, jobName, job)).Value;
+
+            // Test list jobs
+            var jobs = client.GetJobsAsync().GetAsyncEnumerator();
+
+            bool jobFound = false;
+            int jobsToLookThrough = 10;
+            while (await jobs.MoveNextAsync())
+            {
+                if (jobs.Current.Name == jobName)
+                {
+                    jobFound = true;
+                    Assert.IsNotNull(jobs.Current.CreatedAt);
+                    Assert.IsNotNull(jobs.Current.LastUpdatedAt);
+                    Assert.IsNull(jobs.Current.StartedAt);
+                    Assert.AreEqual(JobStatus.NotStarted, jobs.Current.Status);
+                    Assert.IsNull(jobs.Current.Error);
+                    Assert.IsNull(jobs.Current.RedactionFormat);
+                    Assert.IsNull(jobs.Current.Summary);
+                    Assert.AreEqual(inputPrefix, jobs.Current.SourceLocation.Prefix);
+                    Assert.IsTrue(TestEnvironment.StorageAccountSASUri.StartsWith(jobs.Current.SourceLocation.Location.ToString()));
+                    Assert.AreEqual(OUTPUT_FOLDER, jobs.Current.TargetLocation.Prefix);
+                    Assert.IsTrue(TestEnvironment.StorageAccountSASUri.StartsWith(jobs.Current.TargetLocation.Location.ToString()));
+                }
+
+                if (jobFound || --jobsToLookThrough <= 0)
+                {
+                    break;
+                }
+            }
+            Assert.IsTrue(jobFound, "Job not found in list of jobs.");
         }
 
         [Test]
@@ -64,26 +112,38 @@ namespace Azure.Health.Deidentification.Tests
         {
             DeidentificationClient client = GetDeidClient();
 
-            string jobName = "net-sdk-job-" + Recording.GenerateId();
+            string jobName = GenerateJobName();
             const string inputPrefix = "example_patient_1";
 
             DeidentificationJob job = new()
             {
                 SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), inputPrefix, new string[] { "*" }),
-                // TODO: Change prefix to outputPrefix
                 TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), OUTPUT_FOLDER),
-                // TODO: Default Arguments
                 DataType = DocumentDataType.PlainText,
                 Operation = OperationType.Surrogate
             };
 
             job = (await client.CreateJobAsync(WaitUntil.Completed, jobName, job)).Value;
+            job = await client.GetJobAsync(jobName);
 
             Assert.AreEqual(JobStatus.Succeeded, job.Status);
             Assert.IsNotNull(job.StartedAt);
             Assert.IsNotNull(job.Summary);
             Assert.AreEqual(2, job.Summary.Total);
             Assert.AreEqual(2, job.Summary.Successful);
+
+            // Check file reports.
+            var reports = client.GetJobFilesAsync(jobName).GetAsyncEnumerator();
+            int reportCount = 0;
+            while (await reports.MoveNextAsync())
+            {
+                reportCount++;
+                Assert.IsTrue(reports.Current.Input.Path.StartsWith(inputPrefix));
+                Assert.AreEqual(OperationState.Succeeded, reports.Current.Status);
+                Assert.IsTrue(reports.Current.Output.Path.StartsWith(OUTPUT_FOLDER));
+                Assert.IsTrue(reports.Current.Id.Length == 36); // Is Guid.
+            }
+            Assert.AreEqual(2, reportCount);
         }
 
         [Test]
@@ -91,27 +151,27 @@ namespace Azure.Health.Deidentification.Tests
         {
             DeidentificationClient client = GetDeidClient();
 
-            string jobName = "net-sdk-job-" + Recording.GenerateId();
+            string jobName = GenerateJobName();
             const string inputPrefix = "example_patient_1";
 
-            // TODO: Potentially swap DeidentificationJob with DeidentificationJob. Only action is deidentify
             DeidentificationJob job = new()
             {
                 SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), inputPrefix, new string[] { "*" }),
                 TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.StorageAccountSASUri), OUTPUT_FOLDER),
-                // TODO: Default Arguments
                 DataType = DocumentDataType.PlainText,
-                // TODO: Potentially add DeidentificationOperationType
                 Operation = OperationType.Surrogate
             };
 
-            // TODO: Bring up started langauge with SDK team
+            // TODO: Bring up started language with SDK team
             job = (await client.CreateJobAsync(WaitUntil.Started, jobName, job)).Value;
 
             do
             {
                 job = await client.GetJobAsync(jobName);
-                await Task.Delay(2000);
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await Task.Delay(2000);
+                }
             }
             while (job.Status == JobStatus.NotStarted);
 
@@ -124,6 +184,42 @@ namespace Azure.Health.Deidentification.Tests
             await client.DeleteJobAsync(jobName);
 
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetJobAsync(jobName));
+        }
+
+        [Test]
+        public async Task JobE2E_CannotAccessStorage_ThrowsExpectedException()
+        {
+            DeidentificationClient client = GetDeidClient();
+
+            string jobName = GenerateJobName();
+            const string inputPrefix = "example_patient_1";
+
+            string disfunctionalStorageUri = TestEnvironment.StorageAccountSASUri.Substring(0, TestEnvironment.StorageAccountSASUri.Length - 5);
+
+            DeidentificationJob job = new()
+            {
+                SourceLocation = new SourceStorageLocation(new Uri(disfunctionalStorageUri), inputPrefix, new string[] { "*" }),
+                TargetLocation = new TargetStorageLocation(new Uri(disfunctionalStorageUri), OUTPUT_FOLDER),
+                DataType = DocumentDataType.PlainText,
+                Operation = OperationType.Surrogate
+            };
+
+            Type expectedExceptionType = Mode == RecordedTestMode.Playback ? typeof(InvalidOperationException) : typeof(RequestFailedException);
+            Assert.ThrowsAsync(expectedExceptionType, async () => await client.CreateJobAsync(WaitUntil.Completed, jobName, job));
+            job = await client.GetJobAsync(jobName);
+
+            Assert.AreEqual(JobStatus.Failed, job.Status);
+            Assert.IsNotNull(job.Error);
+            Assert.AreEqual("JobValidationError", job.Error.Code);
+            Assert.IsTrue(job.Error.Message.Length > 10); // Arbitrary length choice.
+        }
+
+        private string GenerateJobName()
+        {
+            string netVersion = Environment.Version.ToString().Replace(".", "_");
+            netVersion = netVersion.Length > 7 ? netVersion.Substring(0, 7) : netVersion;
+            string jobName = "net-sdk-job-" + Recording.GenerateId() + "-" + netVersion;
+            return jobName;
         }
     }
 }

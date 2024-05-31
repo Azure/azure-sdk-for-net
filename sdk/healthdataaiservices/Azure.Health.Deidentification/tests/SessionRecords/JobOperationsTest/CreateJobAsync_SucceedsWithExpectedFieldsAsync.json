@@ -1,0 +1,70 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://localhost:5020/jobs/net-sdk-job-1578615526-7_0_20?api-version=2024-01-16-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "243",
+        "Content-Type": "application/json",
+        "traceparent": "00-0cb6e1f0317be527ef86ca5c2a5faf6f-864531306ee0be72-00",
+        "User-Agent": "azsdk-net-Health.Deidentification/1.0.0-alpha.20240531.1 (.NET 7.0.20; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sourceLocation": {
+          "location": "https://localhost/fakecontainer",
+          "prefix": "example_patient_1",
+          "extensions": [
+            "*"
+          ]
+        },
+        "targetLocation": {
+          "location": "https://localhost/fakecontainer",
+          "prefix": "_output"
+        },
+        "dataType": "PlainText",
+        "operation": "Surrogate"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-deprecated-versions": "1",
+        "api-supported-versions": "2024-01-16-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 31 May 2024 20:27:40 GMT",
+        "operation-id": "net-sdk-job-1578615526-7_0_20",
+        "operation-location": "https://localhost:5020/jobs/net-sdk-job-1578615526-7_0_20?api-version=2024-01-16-preview",
+        "Request-Context": "appId=cid-v1:21e9d617-e94e-4112-a988-f2432ba96e8f",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-id": "f12ef700-6349-4b45-8667-96eeb9479dee"
+      },
+      "ResponseBody": {
+        "name": "net-sdk-job-1578615526-7_0_20",
+        "status": "NotStarted",
+        "createdAt": "2024-05-31T20:27:40.1044225Z",
+        "lastUpdatedAt": "2024-05-31T20:27:40.1044225Z",
+        "sourceLocation": {
+          "extensions": [
+            "*"
+          ],
+          "location": "https://localhost/fakecontainer",
+          "prefix": "example_patient_1"
+        },
+        "targetLocation": {
+          "location": "https://localhost/fakecontainer",
+          "prefix": "_output"
+        },
+        "dataType": "Plaintext",
+        "operation": "Surrogate"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1114352615",
+    "STORAGE_ACCOUNT_SAS_URI": "https://localhost/fakecontainer"
+  }
+}

@@ -27,6 +27,7 @@ namespace Azure.Health.Deidentification.Samples
             Response response = client.GetJob("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
@@ -49,6 +50,7 @@ namespace Azure.Health.Deidentification.Samples
             Response response = await client.GetJobAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
@@ -93,6 +95,7 @@ namespace Azure.Health.Deidentification.Samples
             Response response = client.GetJob("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
@@ -127,6 +130,7 @@ namespace Azure.Health.Deidentification.Samples
             Response response = await client.GetJobAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
@@ -183,6 +187,7 @@ namespace Azure.Health.Deidentification.Samples
             Response response = client.CancelJob("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
@@ -205,6 +210,7 @@ namespace Azure.Health.Deidentification.Samples
             Response response = await client.CancelJobAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
@@ -249,6 +255,7 @@ namespace Azure.Health.Deidentification.Samples
             Response response = client.CancelJob("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
@@ -283,6 +290,7 @@ namespace Azure.Health.Deidentification.Samples
             Response response = await client.CancelJobAsync("<name>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
@@ -547,6 +555,7 @@ namespace Azure.Health.Deidentification.Samples
             foreach (BinaryData item in client.GetJobs(null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
                 Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
                 Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
@@ -570,6 +579,7 @@ namespace Azure.Health.Deidentification.Samples
             await foreach (BinaryData item in client.GetJobsAsync(null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
                 Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
                 Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
@@ -619,6 +629,7 @@ namespace Azure.Health.Deidentification.Samples
             foreach (BinaryData item in client.GetJobs(1234, "<continuationToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
                 Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
                 Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
@@ -654,6 +665,7 @@ namespace Azure.Health.Deidentification.Samples
             await foreach (BinaryData item in client.GetJobsAsync(1234, "<continuationToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
                 Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
                 Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
@@ -871,6 +883,7 @@ namespace Azure.Health.Deidentification.Samples
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
@@ -913,6 +926,7 @@ namespace Azure.Health.Deidentification.Samples
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
@@ -982,6 +996,7 @@ namespace Azure.Health.Deidentification.Samples
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
@@ -1037,6 +1052,7 @@ namespace Azure.Health.Deidentification.Samples
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("prefix").ToString());
             Console.WriteLine(result.GetProperty("sourceLocation").GetProperty("extensions")[0].ToString());
