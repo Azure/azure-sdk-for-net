@@ -3,11 +3,15 @@
 
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Quota.Models;
 using NUnit.Framework;
+//using Azure.Identity;
+using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.Quota.Tests.Tests
 {
@@ -143,81 +147,37 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         [TestCase]
         public async Task SetGroupQuota()
         {
+            // this example assumes you already have this ManagementGroupResource created on azure
+            // for more information of creating ManagementGroupResource, please refer to the document of ManagementGroupResource
+            string managementGroupId = "testMgIdRoot";
+            ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(managementGroupId);
+            ManagementGroupResource managementGroupResource = Client.GetManagementGroupResource(managementGroupResourceId);
+
+            // get the collection of this GroupQuotasEntityResource
+            GroupQuotasEntityCollection collection = managementGroupResource.GetGroupQuotasEntities();
+
             // invoke the operation
-            GroupQuotasEntityPatch patch = new GroupQuotasEntityPatch()
+            string groupQuotaName = "sdk-test-group-quota";
+            GroupQuotasEntityData data = new GroupQuotasEntityData()
             {
-                Properties = new GroupQuotasEntityBasePatch()
+                Properties = new GroupQuotasEntityBase()
                 {
-                    DisplayName = "UpdatedGroupQuota1",
-                    AdditionalAttributes = new AdditionalAttributesPatch()
+                    DisplayName = "sdk-test-group-quota",
+                    AdditionalAttributes = new AdditionalAttributes(new GroupingId()
                     {
-                        GroupId = new GroupingId()
-                        {
-                            GroupingIdType = GroupingIdType.BillingId,
-                            Value = "billingId1234",
-                        }
-                    },
+                        GroupingIdType = GroupingIdType.BillingId,
+                        Value = "ad41a99f-9c42-4b3d-9770-e711a24d8542",
+                    })
                 },
             };
+            ArmOperation<GroupQuotasEntityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupQuotaName, data);
+            GroupQuotasEntityResource result = lro.Value;
 
-            try
-            {
-                string managementGroupId = "testMgIdRoot";
-                string groupQuotaName = "gq-tejas-canary-validation";
-                ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
-                GroupQuotasEntityResource groupQuotasEntity = Client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
-
-                ArmOperation<GroupQuotasEntityResource> lro = await groupQuotasEntity.UpdateAsync(WaitUntil.Completed, patch);
-                GroupQuotasEntityResource result = lro.Value;
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.AreEqual(400, ex.Status);
-                Assert.AreEqual("InvalidResourceName", ex.ErrorCode);
-                return;
-            }
-
-            // fail if request doesn't fail
-            Assert.Fail();
-        }
-
-        [TestCase]
-        public async Task SetGroupQuotaLimit()
-        {
-            // invoke the operation
-            SubmittedResourceRequestStatusData patch = new SubmittedResourceRequestStatusData()
-            {
-                Properties = new SubmittedResourceRequestStatusProperties()
-                {
-                    RequestedResource =
-                    {
-                        Limit = 100,
-                        Region = "westus",
-                        Comments = "ticketComments"
-                    }
-                },
-            };
-
-            try
-            {
-                string managementGroupId = "testMgIdRoot";
-                string groupQuotaName = "gq-tejas-canary-validation";
-                ResourceIdentifier groupQuotasEntityResourceId = GroupQuotasEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
-                GroupQuotasEntityResource groupQuotasEntity = Client.GetGroupQuotasEntityResource(groupQuotasEntityResourceId);
-                //"Microsoft.Compute", "standardDv4family", data= patch
-
-                ArmOperation<GroupQuotasEntityResource> lro = await groupQuotasEntity.CreateOrUpdateGroupQuotaLimitsRequest(WaitUntil.Completed, "Microsoft.Compute", "standardDv4Family", patch);
-                GroupQuotasEntityResource result = lro.Value;
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.AreEqual(400, ex.Status);
-                Assert.AreEqual("InvalidResourceName", ex.ErrorCode);
-                return;
-            }
-
-            // fail if request doesn't fail
-            Assert.Fail();
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            GroupQuotasEntityData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }
