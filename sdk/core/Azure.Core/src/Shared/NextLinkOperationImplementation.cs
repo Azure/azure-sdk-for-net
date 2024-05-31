@@ -97,21 +97,26 @@ namespace Azure.Core
             AssertNotNull(rehydrationToken, nameof(rehydrationToken));
             AssertNotNull(pipeline, nameof(pipeline));
 
-            // TODO: Once we remove NextLinkOperationImplementation from internal shared and make it internal to Azure.Core only, we can access the internal members from RehydrationToken directly
-            var lroDetails = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json).ToObjectFromJson<Dictionary<string, string>>();
+            // TODO: Once we remove NextLinkOperationImplementation from internal shared and make it internal to Azure.Core only in https://github.com/Azure/azure-sdk-for-net/issues/43260
+            // We can access the internal members from RehydrationToken directly
+            var data = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json);
+            using var document = JsonDocument.Parse(data);
+            var lroDetails = document.RootElement;
 
-            var initialUri = GetContentFromRehydrationToken(lroDetails, "initialUri");
+            // We are sure that the following properties exists in the serialized rehydrationToken
+            var initialUri = lroDetails.GetProperty("initialUri").GetString();
             if (!Uri.TryCreate(initialUri, UriKind.Absolute, out var startRequestUri))
             {
                 throw new ArgumentException($"\"initialUri\" property on \"rehydrationToken\" is an invalid Uri", nameof(rehydrationToken));
             }
 
-            string nextRequestUri = GetContentFromRehydrationToken(lroDetails, "nextRequestUri");
-            string requestMethodStr = GetContentFromRehydrationToken(lroDetails, "requestMethod");
-            RequestMethod requestMethod = new RequestMethod(requestMethodStr);
-            string lastKnownLocation = GetContentFromRehydrationToken(lroDetails, "lastKnownLocation");
+            // We are sure that the following properties(apart from nullable lastKnownLocation) are not null as they are required in the rehydrationToken
+            string nextRequestUri = lroDetails.GetProperty("nextRequestUri").GetString()!;
+            string requestMethodStr = lroDetails.GetProperty("requestMethod").GetString()!;
+            RequestMethod requestMethod = new RequestMethod(requestMethodStr)!;
+            string? lastKnownLocation = lroDetails.GetProperty("lastKnownLocation").GetString();
 
-            string finalStateViaStr = GetContentFromRehydrationToken(lroDetails, "finalStateVia");
+            string finalStateViaStr = lroDetails.GetProperty("finalStateVia").GetString()!;
             OperationFinalStateVia finalStateVia;
             if (Enum.IsDefined(typeof(OperationFinalStateVia), finalStateViaStr))
             {
@@ -122,7 +127,7 @@ namespace Azure.Core
                 finalStateVia = OperationFinalStateVia.Location;
             }
 
-            string headerSourceStr = GetContentFromRehydrationToken(lroDetails, "headerSource");
+            string headerSourceStr = lroDetails.GetProperty("headerSource").GetString()!;
             HeaderSource headerSource;
             if (Enum.IsDefined(typeof(HeaderSource), headerSourceStr))
             {
@@ -134,16 +139,6 @@ namespace Azure.Core
             }
 
             return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, null, rehydrationToken.Id);
-        }
-
-        private static string GetContentFromRehydrationToken(Dictionary<string, string> lroDetails, string key)
-        {
-            if (!lroDetails.TryGetValue(key, out var nextRequestUri))
-            {
-                throw new ArgumentException($"\"{key}\" is missing from rehydrationToken");
-            }
-
-            return nextRequestUri;
         }
 
         private NextLinkOperationImplementation(
@@ -222,9 +217,16 @@ namespace Azure.Core
             string finalStateVia,
             string? operationId = null)
         {
-            var data = new BinaryData(new { version = RehydrationTokenVersion, id = operationId, requestMethod = requestMethod.ToString(), initialUri = startRequestUri.AbsoluteUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia });
+            // TODO: Once we remove NextLinkOperationImplementation from internal shared and make it internal to Azure.Core only in https://github.com/Azure/azure-sdk-for-net/issues/43260
+            // We can access the internal members from RehydrationToken directly
+            var json = $$"""
+            {"version":"{{RehydrationTokenVersion}}","id":{{ConstructStringValue(operationId)}},"requestMethod":"{{requestMethod}}","initialUri":"{{startRequestUri.AbsoluteUri}}","nextRequestUri":"{{nextRequestUri}}","headerSource":"{{headerSource}}","finalStateVia":"{{finalStateVia}}","lastKnownLocation":{{ConstructStringValue(lastKnownLocation)}}}
+            """;
+            var data = new BinaryData(json);
             return ModelReaderWriter.Read<RehydrationToken>(data);
         }
+
+        private static string? ConstructStringValue(string? value) => value is null ? "null" : $"\"{value}\"";
 
         public async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {

@@ -87,6 +87,10 @@ rename-mapping:
   ReplicationRegion: AllowedReplicationRegion
   ReplicationRegion.WestUs2: WestUS2
 
+parameter-rename-mapping:
+  NotificationHubs_DebugSend:
+    parameters: anyObject
+
 override-operation-name:
   NotificationHubs_CheckNotificationHubAvailability: CheckNotificationHubAvailability
   Namespaces_CheckAvailability: CheckNotificationHubNamespaceAvailability
