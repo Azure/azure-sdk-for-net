@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
         // Discovery Solutions using issue summary and service id.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task DiscoverSolutionsDiscoverySolutionNLPs_DiscoverySolutionsUsingIssueSummaryAndServiceId()
+        public async Task DiscoverSolutions_DiscoverySolutionsUsingIssueSummaryAndServiceId()
         {
             // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/DiscoverSolutionsAtTenantScope.json
             // this example is just showing the usage of "DiscoverySolutionNLP_DiscoverSolutions" operation, for the dependent resources, they will have to be created separately.
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             {
                 ServiceId = "0d0fcd2e-c4fd-4349-8497-200edb39s3ca",
             };
-            await foreach (SolutionNlpMetadata item in tenantResource.DiscoverSolutionsDiscoverySolutionNLPsAsync(content: content))
+            await foreach (SolutionNlpMetadata item in tenantResource.DiscoverSolutionsAsync(content: content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

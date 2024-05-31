@@ -51,6 +51,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  NLP: Nlp
 
 request-path-is-non-resource:
   - /providers/Microsoft.Help/selfHelp/{solutionId}
@@ -121,6 +122,8 @@ override-operation-name:
   CheckNameAvailability_CheckAvailability: CheckSelfHelpNameAvailability
   DiscoverySolution_List: GetSelfHelpDiscoverySolutions
   SolutionSelfHelp_Get: GetSelfHelpSolutionById
+  DiscoverySolutionNLP_DiscoverSolutionsBySubscription: DiscoverSolutions
+  DiscoverySolutionNLP_DiscoverSolutions: DiscoverSolutions
 
 directive:
   - from: help.json

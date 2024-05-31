@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableSelfHelpSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _discoverySolutionNLPClientDiagnostics;
-        private DiscoverySolutionNLPRestOperations _discoverySolutionNLPRestClient;
+        private ClientDiagnostics _discoverySolutionNlpClientDiagnostics;
+        private DiscoverySolutionNLPRestOperations _discoverySolutionNlpRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableSelfHelpSubscriptionResource"/> class for mocking. </summary>
         protected MockableSelfHelpSubscriptionResource()
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         {
         }
 
-        private ClientDiagnostics DiscoverySolutionNLPClientDiagnostics => _discoverySolutionNLPClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DiscoverySolutionNLPRestOperations DiscoverySolutionNLPRestClient => _discoverySolutionNLPRestClient ??= new DiscoverySolutionNLPRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DiscoverySolutionNLPClientDiagnostics => _discoverySolutionNlpClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DiscoverySolutionNLPRestOperations DiscoverySolutionNLPRestClient => _discoverySolutionNlpRestClient ??= new DiscoverySolutionNLPRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsBySubscriptionDiscoverySolutionNLPsAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPRestClient.CreateDiscoverSolutionsBySubscriptionRequest(Id.SubscriptionId, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPClientDiagnostics, Pipeline, "MockableSelfHelpSubscriptionResource.DiscoverSolutionsBySubscriptionDiscoverySolutionNLPs", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPClientDiagnostics, Pipeline, "MockableSelfHelpSubscriptionResource.DiscoverSolutions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SolutionNlpMetadata> DiscoverSolutionsBySubscriptionDiscoverySolutionNLPs(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SolutionNlpMetadata> DiscoverSolutions(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPRestClient.CreateDiscoverSolutionsBySubscriptionRequest(Id.SubscriptionId, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPClientDiagnostics, Pipeline, "MockableSelfHelpSubscriptionResource.DiscoverSolutionsBySubscriptionDiscoverySolutionNLPs", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPClientDiagnostics, Pipeline, "MockableSelfHelpSubscriptionResource.DiscoverSolutions", "value", null, cancellationToken);
         }
     }
 }
