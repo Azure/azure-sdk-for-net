@@ -959,7 +959,7 @@
 # ServiceLabel: %Network - Front Door %Mgmt
 # ServiceOwners:                                                   @ptnan7
 
-# PRLabel: %Network - Private Mobile Network
+# PRLabel: %Network - Mobile
 /sdk/mobilenetwork/Azure.ResourceManager.*/												 @Azure/private-5g-core
 
 # ServiceLabel: %Network - Private Mobile Network %Mgmt
