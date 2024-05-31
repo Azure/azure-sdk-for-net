@@ -37,10 +37,11 @@ namespace Azure.Communication.CallAutomation
         /// <param name="source"> The identifier of the source of the call. </param>
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
+        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
+        /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
-        /// <param name="mediaStreamingOptions"> Media Streaming Options. </param>
-        /// <param name="transcriptionOptions"> Transcription Options. </param>
-        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, MediaStreamingOptions mediaStreamingOptions, TranscriptionOptions transcriptionOptions)
+        /// <param name="customCallingContext"> Used by customer to send custom calling context to targets. </param>
+        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, CallIntelligenceOptionsInternal callIntelligenceOptions, CustomCallingContextInternal customCallingContext)
         {
             Targets = targets;
             SourceCallerIdNumber = sourceCallerIdNumber;
@@ -48,9 +49,10 @@ namespace Azure.Communication.CallAutomation
             Source = source;
             OperationContext = operationContext;
             CallbackUri = callbackUri;
+            MediaStreamingConfiguration = mediaStreamingConfiguration;
+            TranscriptionConfiguration = transcriptionConfiguration;
             CallIntelligenceOptions = callIntelligenceOptions;
-            MediaStreamingOptions = mediaStreamingOptions;
-            TranscriptionOptions = transcriptionOptions;
+            CustomCallingContext = customCallingContext;
         }
 
         /// <summary> The targets of the call. </summary>
@@ -68,11 +70,13 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
+        /// <summary> Media Streaming Configuration. </summary>
+        public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
+        /// <summary> Live Transcription Configuration. </summary>
+        public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
-        /// <summary> Media Streaming Options. </summary>
-        public MediaStreamingOptions MediaStreamingOptions { get; set; }
-        /// <summary> Transcription Options. </summary>
-        public TranscriptionOptions TranscriptionOptions { get; set; }
+        /// <summary> Used by customer to send custom calling context to targets. </summary>
+        public CustomCallingContextInternal CustomCallingContext { get; set; }
     }
 }
