@@ -9,5 +9,5 @@ extends:
     Repository: $(Build.Repository.Name)
     Prefix: net
     CIConventionOptions: ''
-    UPConventionOptions: '--variablegroups 13 58 76 56 93'
+    UPConventionOptions: '--variablegroups 13 58 76 93'
     TestsConventionOptions: '--variablegroups 64'
