@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.Samples;
-using Azure.Core.Shared;
 using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
@@ -683,26 +682,26 @@ namespace Azure.Core.Tests
                 return DelayGate.WaitForRelease(time);
             }
 
-            protected internal override void OnRequestSent(HttpMessage message)
+            protected override void OnRequestSent(HttpMessage message)
             {
                 OnRequestSentCalled = true;
                 base.OnRequestSent(message);
             }
 
-            protected internal override ValueTask OnRequestSentAsync(HttpMessage message)
+            protected override ValueTask OnRequestSentAsync(HttpMessage message)
             {
                 OnRequestSentCalled = true;
                 return base.OnRequestSentAsync(message);
             }
 
-            protected internal override bool ShouldRetry(HttpMessage message, Exception exception)
+            protected override bool ShouldRetry(HttpMessage message, Exception exception)
             {
                 LastException = exception;
                 ShouldRetryCalled = true;
                 return base.ShouldRetry(message, exception);
             }
 
-            protected internal override ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception exception)
+            protected override ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception exception)
             {
                 LastException = exception;
                 ShouldRetryCalled = true;

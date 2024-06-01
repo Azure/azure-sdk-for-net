@@ -40,16 +40,16 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override void Process(HttpMessage message)
         {
-            ProcessInternal(message, false).EnsureCompleted();
+            ProcessSyncOrAsync(message, false).EnsureCompleted();
         }
 
         /// <inheritdoc />
         public override async ValueTask ProcessAsync(HttpMessage message)
         {
-            await ProcessInternal(message, true).ConfigureAwait(false);
+            await ProcessSyncOrAsync(message, true).ConfigureAwait(false);
         }
 
-        private async ValueTask ProcessInternal(HttpMessage message, bool async)
+        private async ValueTask ProcessSyncOrAsync(HttpMessage message, bool async)
         {
             var request = CreateRequest(message.Request);
 
@@ -114,9 +114,7 @@ namespace Azure.Core.Pipeline
 
         /// <inheritdoc />
         public override Request CreateRequest()
-        {
-            return new HttpWebRequestTransportRequest();
-        }
+            => new HttpWebRequestTransportRequest();
     }
 #endif
 }

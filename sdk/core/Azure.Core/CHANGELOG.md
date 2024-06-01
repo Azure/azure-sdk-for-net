@@ -1,6 +1,6 @@
 # Release History
 
-## 1.40.0-beta.1 (Unreleased)
+## 2.0.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -11,6 +11,8 @@
 - Fix for operation id not set of incomplete long-running operation.
 
 ### Other Changes
+
+- Moved Azure.Core types to use functionality implemented in System.ClientModel library.
 
 ## 1.39.0 (2024-04-18)
 

@@ -40,6 +40,8 @@ namespace Azure.Core.Pipeline
         /// </summary>
         private readonly int _perRetryIndex;
 
+        private readonly TimeSpan _networkTimeout;
+
         /// <summary>
         /// Creates a new instance of <see cref="HttpPipeline"/> with the provided transport, policies and response classifier.
         /// </summary>
@@ -59,6 +61,7 @@ namespace Azure.Core.Pipeline
             policies.CopyTo(all, 0);
 
             _pipeline = all;
+            _networkTimeout = ClientOptions.DefaultNetworkTimeout;
         }
 
         internal HttpPipeline(
@@ -66,7 +69,8 @@ namespace Azure.Core.Pipeline
             int perCallIndex,
             int perRetryIndex,
             HttpPipelinePolicy[] pipeline,
-            ResponseClassifier responseClassifier)
+            ResponseClassifier responseClassifier,
+            TimeSpan? networkTimeout)
         {
             ResponseClassifier = responseClassifier ?? throw new ArgumentNullException(nameof(responseClassifier));
 
@@ -77,6 +81,9 @@ namespace Azure.Core.Pipeline
 
             _perCallIndex = perCallIndex;
             _perRetryIndex = perRetryIndex;
+
+            _networkTimeout = networkTimeout ?? ClientOptions.DefaultNetworkTimeout;
+
             _internallyConstructed = true;
         }
 
@@ -85,7 +92,11 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <returns>The request.</returns>
         public Request CreateRequest()
-            => _transport.CreateRequest();
+        {
+            Request request = _transport.CreateRequest();
+            request.NetworkTimeout = _networkTimeout;
+            return request;
+        }
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
@@ -109,12 +120,14 @@ namespace Azure.Core.Pipeline
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
         {
-            HttpMessage message = CreateMessage();
-            if (classifier != null)
+            Request request = CreateRequest();
+            HttpMessage message = new(request, classifier ?? ResponseClassifier);
+
+            if (context is not null)
             {
-                message.ResponseClassifier = classifier;
+                message.Apply(context);
             }
-            message.ApplyRequestContext(context, classifier);
+
             return message;
         }
 
@@ -131,8 +144,13 @@ namespace Azure.Core.Pipeline
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
         public ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
         {
-            message.CancellationToken = cancellationToken;
+            message.SetCancellationToken(cancellationToken);
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
+
+            // We must set NetworkTimeout here because the documentation for
+            // HttpMessage states that if a user sets this value to null, the
+            // pipeline will use the value set on ClientOptions.
+            message.NetworkTimeout ??= _networkTimeout;
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)
@@ -147,6 +165,7 @@ namespace Azure.Core.Pipeline
         {
             int length = _pipeline.Length + message.Policies!.Count;
             HttpPipelinePolicy[] policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+
             try
             {
                 ReadOnlyMemory<HttpPipelinePolicy> pipeline = CreateRequestPipeline(policies, message.Policies);
@@ -165,8 +184,9 @@ namespace Azure.Core.Pipeline
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         public void Send(HttpMessage message, CancellationToken cancellationToken)
         {
-            message.CancellationToken = cancellationToken;
+            message.SetCancellationToken(cancellationToken);
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
+            message.NetworkTimeout ??= _networkTimeout;
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)

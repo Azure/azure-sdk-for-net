@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 
 namespace Azure.Core
@@ -10,7 +13,7 @@ namespace Azure.Core
     /// A type that analyzes HTTP responses and exceptions and determines if they should be retried,
     /// and/or analyzes responses and determines if they should be treated as error responses.
     /// </summary>
-    public class ResponseClassifier
+    public class ResponseClassifier : PipelineMessageClassifier
     {
         internal static ResponseClassifier Shared { get; } = new();
 
@@ -19,18 +22,11 @@ namespace Azure.Core
         /// </summary>
         public virtual bool IsRetriableResponse(HttpMessage message)
         {
-            switch (message.Response.Status)
-            {
-                case 408: // Request Timeout
-                case 429: // Too Many Requests
-                case 500: // Internal Server Error
-                case 502: // Bad Gateway
-                case 503: // Service Unavailable
-                case 504: // Gateway Timeout
-                    return true;
-                default:
-                    return false;
-            }
+            bool classified = Default.TryClassify(message, exception: default, out bool isRetriable);
+
+            Debug.Assert(classified);
+
+            return isRetriable;
         }
 
         /// <summary>
@@ -47,9 +43,19 @@ namespace Azure.Core
         /// </summary>
         public virtual bool IsRetriable(HttpMessage message, Exception exception)
         {
+            if (exception is null)
+            {
+                return IsErrorResponse(message);
+            }
+
+            // In order to allow users to override IsRetriableException logic,
+            // we must call through to that rather than using the base type
+            // default implementation.
+
             return IsRetriableException(exception) ||
-                   // Retry non-user initiated cancellations
-                   (exception is OperationCanceledException && !message.CancellationToken.IsCancellationRequested);
+                // Retry non-user initiated cancellations
+                (exception is OperationCanceledException &&
+                !message.CancellationToken.IsCancellationRequested);
         }
 
         /// <summary>
@@ -57,8 +63,81 @@ namespace Azure.Core
         /// </summary>
         public virtual bool IsErrorResponse(HttpMessage message)
         {
-            var statusKind = message.Response.Status / 100;
-            return statusKind == 4 || statusKind == 5;
+            bool classified = Default.TryClassify(message, out bool isError);
+
+            Debug.Assert(classified);
+
+            return isError;
+        }
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public sealed override bool TryClassify(PipelineMessage message, out bool isError)
+        {
+            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
+
+            isError = IsErrorResponse(httpMessage);
+
+            return true;
+        }
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public sealed override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
+        {
+            HttpMessage httpMessage = HttpMessage.GetHttpMessage(message);
+
+            isRetriable = exception is null ?
+                IsRetriableResponse(httpMessage) :
+                IsRetriable(httpMessage, exception);
+
+            return true;
+        }
+
+        /// <summary>
+        /// This adapter adapts the System.ClientModel
+        /// <see cref="PipelineMessageClassifier"/> type to the Azure.Core
+        /// <see cref="ResponseClassifier"/> interface, so that it can be used
+        /// as though it were a ResponseClassifier in Azure.Core.
+        /// </summary>
+        internal sealed class PipelineMessageClassifierAdapter : ResponseClassifier
+        {
+            private readonly PipelineMessageClassifier _classifier;
+
+            public PipelineMessageClassifierAdapter(PipelineMessageClassifier classifier)
+            {
+                _classifier = classifier;
+            }
+
+            public override bool IsErrorResponse(HttpMessage message)
+            {
+                bool classified = _classifier.TryClassify(message, out bool isError);
+
+                Debug.Assert(classified);
+
+                return isError;
+            }
+
+            public override bool IsRetriable(HttpMessage message, Exception exception)
+            {
+                bool classified = _classifier.TryClassify(message, exception, out bool isRetriable);
+
+                Debug.Assert(classified);
+
+                return isRetriable;
+            }
+
+            public override bool IsRetriableException(Exception exception)
+                => base.IsRetriableException(exception);
+
+            public override bool IsRetriableResponse(HttpMessage message)
+            {
+                bool classified = _classifier.TryClassify(message, exception: default, out bool isRetriable);
+
+                Debug.Assert(classified);
+
+                return isRetriable;
+            }
         }
     }
 }
