@@ -64,8 +64,8 @@ public class PageResult<T> : ClientResult
     /// from a <see cref="PageableResult{T}"/>,
     /// <see cref="AsyncPageableResult{T}"/>, or a client method that returns
     /// one of these types.
-    /// May be <c>null</c> when no page preceeds the current page, or if the
-    /// service does not support providing this token.
+    /// May be <c>null</c> when no page preceeds the current page, or when no
+    /// token is available for the previous page.
     /// </summary>
     public string? PreviousPageToken { get; }
 }

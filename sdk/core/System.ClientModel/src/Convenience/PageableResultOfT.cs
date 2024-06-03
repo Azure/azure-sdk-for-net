@@ -27,12 +27,12 @@ public abstract class PageableResult<T> : CollectionResult<T>
     /// collection's pages instead of the collection's individual values. This
     /// may make multiple service requests.
     /// </summary>
-    /// <param name="pageToken">A token indicating which page should be the
-    /// first page in the collection of pages returned form this method.
-    /// Passing <c>null</c> will start the collection at the first page of
-    /// values.</param>
-    /// <returns>A sequence of <see cref="PageResult{T}"/> holding a subset of
-    /// collection values, starting at the page indicated by
+    /// <param name="pageToken">A token indicating the first page that
+    /// will be requested when the returned collection is enumerated.
+    /// Passing <c>null</c> cause the enumerable to make its first page request
+    /// for the first page of collection values.</param>
+    /// <returns>A sequence of <see cref="PageResult{T}"/> pages that each hold
+    /// a subset of collection values, and that starts at the page indicated by
     /// <paramref name="pageToken"/>.
     /// </returns>
     public abstract IEnumerable<PageResult<T>> AsPages(string? pageToken = default);
