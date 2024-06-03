@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmHybridComputeModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeLicense"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputeLicenseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="tenantId"> Describes the tenant id. </param>
         /// <param name="licenseType"> The type of the license resource. </param>
         /// <param name="licenseDetails"> Describes the properties of a License. </param>
-        /// <returns> A new <see cref="Models.HybridComputeLicense"/> instance for mocking. </returns>
-        public static HybridComputeLicense HybridComputeLicense(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = null, Guid? tenantId = null, HybridComputeLicenseType? licenseType = null, HybridComputeLicenseDetails licenseDetails = null)
+        /// <returns> A new <see cref="HybridCompute.HybridComputeLicenseData"/> instance for mocking. </returns>
+        public static HybridComputeLicenseData HybridComputeLicenseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = null, Guid? tenantId = null, HybridComputeLicenseType? licenseType = null, HybridComputeLicenseDetails licenseDetails = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new HybridComputeLicense(
+            return new HybridComputeLicenseData(
                 id,
                 name,
                 resourceType,
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="assignedLicense"> The assigned license resource. </param>
         /// <param name="licenseAssignmentState"> Describes the license assignment state (Assigned or NotAssigned). </param>
         /// <returns> A new <see cref="Models.LicenseProfileMachineInstanceViewEsuProperties"/> instance for mocking. </returns>
-        public static LicenseProfileMachineInstanceViewEsuProperties LicenseProfileMachineInstanceViewEsuProperties(Guid? assignedLicenseImmutableId = null, IEnumerable<EsuKey> esuKeys = null, EsuServerType? serverType = null, EsuEligibility? esuEligibility = null, EsuKeyState? esuKeyState = null, HybridComputeLicense assignedLicense = null, LicenseAssignmentState? licenseAssignmentState = null)
+        public static LicenseProfileMachineInstanceViewEsuProperties LicenseProfileMachineInstanceViewEsuProperties(Guid? assignedLicenseImmutableId = null, IEnumerable<EsuKey> esuKeys = null, EsuServerType? serverType = null, EsuEligibility? esuEligibility = null, EsuKeyState? esuKeyState = null, HybridComputeLicenseData assignedLicense = null, LicenseAssignmentState? licenseAssignmentState = null)
         {
             esuKeys ??= new List<EsuKey>();
 
