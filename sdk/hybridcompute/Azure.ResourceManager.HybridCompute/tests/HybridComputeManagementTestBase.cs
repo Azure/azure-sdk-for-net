@@ -24,15 +24,18 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         public HybridComputeMachineCollection collection { get; set; }
         public SubscriptionResource Subscription { get; set; }
         public HybridComputePrivateLinkScopeCollection scopeCollection { get; set; }
-        public string subscriptionId = "e6fe6705-4c9c-4b54-81d2-e455780e20b8";
-        public string resourceGroupName = "az-sdk-test";
+        public string subscriptionId = "b24cc8ee-df4f-48ac-94cf-46edf36b0fae";
+        public string resourceGroupName = "ytongtest";
         public string scopeName = "myPrivateLinkScope";
         public string machineName = "testmachine";
         public string extensionName = "CustomScriptExtension";
         // need to run private-endpoint-connection list and obtain from the 'name' property
         public string privateEndpointConnectionName = "pe-test.2a976c30-2ae8-48a4-9f25-d13236dfe849";
-
         public string runCommandName = "myRunCommand";
+        public string esuLicenseName = "myEsuLicense";
+        public string resourceGroupNameNSP = "adrielk_test";
+        public string privateLinkScopeNameNSP = "adrielScope";
+        public string perimeterName = "fd1289de-e8d3-4f76-8008-de297232dbf6.adrielScope-e1bf45b1-b9a1-4f8b-a76e-3607869aed94";
 
         protected HybridComputeManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -416,6 +419,109 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             }
 
             return runCommandCollection;
+        }
+
+        protected async Task<HybridComputeLicenseData> createEsuLicense()
+       {
+            HybridComputeLicenseCollection esuLicensecollection = resourceGroupResource.GetHybridComputeLicenses();
+
+            HybridComputeLicenseData data = new HybridComputeLicenseData(new AzureLocation("centraluseuap"))
+            {
+                LicenseType = "ESU",
+                LicenseDetails = new HybridComputeLicenseDetails()
+                {
+                    State = "Activated",
+                    Target = "Windows Server 2012",
+                    Edition = "Datacenter",
+                    LicenseCoreType = "pCore",
+                    Processors = 16,
+                },
+            };
+            ArmOperation<HybridComputeLicenseResource> lro = await esuLicensecollection.CreateOrUpdateAsync(WaitUntil.Completed, esuLicenseName, data);
+            HybridComputeLicenseResource result = lro.Value;
+
+            return result.Data;
+       }
+
+        protected async Task<HybridComputeLicenseData> getEsuLicense()
+       {
+            HybridComputeLicenseCollection esuLicensecollection = resourceGroupResource.GetHybridComputeLicenses();
+
+            HybridComputeLicenseResource result = await esuLicensecollection.GetAsync(esuLicenseName);
+
+            return result.Data;
+       }
+
+        protected async Task<HybridComputeLicenseCollection> getEsuLicenseCollection()
+       {
+            HybridComputeLicenseCollection esuLicensecollection = resourceGroupResource.GetHybridComputeLicenses();
+
+            await foreach (HybridComputeLicenseResource item in esuLicensecollection.GetAllAsync())
+            {
+                HybridComputeLicenseData resourceData = item.Data;
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+            return esuLicensecollection
+       }
+
+        protected async Task<HybridComputeLicenseData> updateEsuLicense()
+       {
+            ResourceIdentifier hybridComputeLicenseResourceId = HybridComputeLicenseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, esuLicenseName);
+            HybridComputeLicenseResource hybridComputeLicense = ArmClient.GetHybridComputeLicenseResource(hybridComputeLicenseResourceId);
+            
+            HybridComputeLicenseData data = new HybridComputeLicenseData(new AzureLocation("centraluseuap"))
+            {
+                LicenseType = "ESU",
+                LicenseDetails = new HybridComputeLicenseDetails()
+                {
+                    State = "Deactivated",
+                    Target = "Windows Server 2012",
+                    Edition = "Datacenter",
+                    LicenseCoreType = "pCore",
+                    Processors = 16,
+                },
+            };
+            ArmOperation<HybridComputeLicenseResource> lro = await hybridComputeLicense.UpdateAsync(WaitUntil.Completed, data);
+            HybridComputeLicenseResource result = lro.Value;
+
+            return result.Data;
+       }
+
+        protected async Task<NetworkSecurityPerimeterConfigurationCollection> getNSPCollection()
+       {
+            ResourceIdentifier hybridComputePrivateLinkScopeResourceId = HybridComputePrivateLinkScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupNameNSP, privateLinkScopeNameNSP);
+            HybridComputePrivateLinkScopeResource hybridComputePrivateLinkScope = ArmClient.GetHybridComputePrivateLinkScopeResource(hybridComputePrivateLinkScopeResourceId);
+
+            NetworkSecurityPerimeterConfigurationCollection nspCollection = hybridComputePrivateLinkScope.GetNetworkSecurityPerimeterConfigurations();
+
+            // invoke the operation and iterate over the result
+            await foreach (NetworkSecurityPerimeterConfigurationResource item in nspCollection.GetAllAsync())
+            {
+                NetworkSecurityPerimeterConfigurationData resourceData = item.Data;
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            return result.Data;
+       }
+
+        protected async Task<NetworkSecurityPerimeterConfigurationData> getNSP()
+       {
+            ResourceIdentifier networkSecurityPerimeterConfigurationResourceId = NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupNameNSP, privateLinkScopeNameNSP, perimeterName);
+            NetworkSecurityPerimeterConfigurationResource networkSecurityPerimeterConfiguration = ArmClient.GetNetworkSecurityPerimeterConfigurationResource(networkSecurityPerimeterConfigurationResourceId);
+
+            NetworkSecurityPerimeterConfigurationResource result = await networkSecurityPerimeterConfiguration.GetAsync();
+
+            return result.Data;
+       }
+
+        protected async Task deleteEsuLicense()
+        {
+            ResourceIdentifier hybridComputeLicenseResourceId = HybridComputeLicenseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, esuLicenseName);
+            HybridComputeLicenseResource hybridComputeLicense = ArmClient.GetHybridComputeLicenseResource(hybridComputeLicenseResourceId);
+
+            await hybridComputeLicense.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine($"Delete ESU License Succeeded");
         }
 
         protected async Task deleteRunCommand()
