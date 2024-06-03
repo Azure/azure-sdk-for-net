@@ -45,6 +45,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
 
         private AutonomousDatabaseData GetAutonomousDatabaseData() {
             return new AutonomousDatabaseData(AzureLocation.EastUS) {
+                DisplayName = _autonomousDatabaseName,
                 DataBaseType = DataBaseType.Regular,
                 DbWorkload = WorkloadType.DW,
                 DbVersion = "19c",
