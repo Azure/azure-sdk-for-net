@@ -653,39 +653,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Gateway"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="gatewayId"> A unique, immutable, identifier for the Gateway. </param>
-        /// <param name="gatewayType"> The type of the Gateway resource. </param>
-        /// <param name="gatewayEndpoint"> The endpoint fqdn for the Gateway. </param>
-        /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="Models.Gateway"/> instance for mocking. </returns>
-        public static Gateway Gateway(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridComputeProvisioningState? provisioningState = null, string gatewayId = null, GatewayType? gatewayType = null, string gatewayEndpoint = null, IEnumerable<string> allowedFeatures = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation location = default)
-        {
-            allowedFeatures ??= new List<string>();
-            tags ??= new Dictionary<string, string>();
-
-            return new Gateway(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState,
-                gatewayId,
-                gatewayType,
-                gatewayEndpoint,
-                allowedFeatures?.ToList(),
-                tags,
-                location,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputePrivateLinkScopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

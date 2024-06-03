@@ -273,7 +273,7 @@ directive:
   - remove-operation: Gateways_CreateOrUpdate
   - remove-operation: Gateways_Get
   - remove-operation: Gateways_ListByResourceGroup
-  - remove-operation: Gateway_ListBySubscription
+  - remove-operation: Gateways_ListBySubscription
   - remove-operation: Gateways_Delete
   - remove-operation: Gateways_Update
   - remove-operation: Settings_Update
