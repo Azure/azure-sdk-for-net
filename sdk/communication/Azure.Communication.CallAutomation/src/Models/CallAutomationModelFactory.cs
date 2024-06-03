@@ -416,7 +416,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.PlayCompleted"/> instance for mocking. </returns>
         public static PlayCompleted PlayCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new PlayCompleted(resultInformation, operationContext, callConnectionId, serverCallId, correlationId);
+            return new PlayCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
         /// <summary> Initializes a new instance of PlayFailed. </summary>
@@ -428,7 +428,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.PlayFailed"/> instance for mocking. </returns>
         public static PlayFailed PlayFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new PlayFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
+            return new PlayFailed(callConnectionId, serverCallId, correlationId, operationContext, operationContext);
         }
 
         /// <summary> Initializes a new instance of PlayCanceled. </summary>
@@ -439,7 +439,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.PlayCanceled"/> instance for mocking. </returns>
         public static PlayCanceled PlayCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
         {
-            return new PlayCanceled(operationContext, callConnectionId, serverCallId, correlationId);
+            return new PlayCanceled(callConnectionId, serverCallId, correlationId, operationContext);
         }
 
         /// <summary> Initializes a new instance of RecognizeCanceled. </summary>
