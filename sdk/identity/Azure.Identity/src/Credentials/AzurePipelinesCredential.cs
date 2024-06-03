@@ -34,7 +34,7 @@ namespace Azure.Identity
         /// <summary>
         /// Creates a new instance of the <see cref="AzurePipelinesCredential"/>.
         /// </summary>
-        /// <param name="systemAccessToken">The pipeline's System.AccessToken value.</param>
+        /// <param name="systemAccessToken">The pipeline's <see href="https://learn.microsoft.com/azure/devops/pipelines/build/variables?view=azure-devops%26tabs=yaml#systemaccesstoken">System.AccessToken</see> value.</param>
         /// <param name="clientId">The client ID for the service connection. If not provided, the credential will attempt to read the value from the AZURESUBSCRIPTION_CLIENT_ID environment variable.</param>
         /// <param name="tenantId">The tenant ID for the service connection. If not provided, the credential will attempt to read the value from the AZURESUBSCRIPTION_TENANT_ID environment variable.</param>
         /// <param name="serviceConnectionId">The service connection Id for the service connection associated with the pipeline. If not provided, the credential will attempt to read the value from the AZURESUBSCRIPTION_SERVICE_CONNECTION_ID environment variable.</param>
