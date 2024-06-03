@@ -2,8 +2,7 @@
 
 This example demonstrates authenticating the `SecretClient` using the `AzurePipelinesCredential` in an Azure Pipelines environment with [service connections](https://learn.microsoft.com/azure/devops/pipelines/library/service-endpoints).
 
-In the below sample, it is recommended to assign the value of the System.AccessToken to a secure variable in the Azure Pipelines environment.
-More information about the System.AccessToken can be found [here](https://learn.microsoft.com/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#systemaccesstoken).
+In the below sample, it is recommended to assign the value of [$(System.AccessToken)](https://learn.microsoft.com/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#systemaccesstoken) to a secure variable in the Azure Pipelines environment.
 
 ```C# Snippet:AzurePipelinesCredential_Example
 // Replace the following values with the actual values from the details for your service connection.
