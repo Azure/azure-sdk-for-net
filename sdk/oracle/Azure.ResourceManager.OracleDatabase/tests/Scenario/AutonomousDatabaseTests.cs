@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
 
         private AutonomousDatabaseData GetAutonomousDatabaseData() {
             return new AutonomousDatabaseData(AzureLocation.EastUS) {
-                DataBaseType = Models.DataBaseType.Regular,
-                DbWorkload = Models.WorkloadType.DW,
+                DataBaseType = DataBaseType.Regular,
+                DbWorkload = WorkloadType.DW,
                 DbVersion = "19c",
                 CpuCoreCount = 2,
                 DataStorageSizeInTbs = 1,
-                AdminPassword = "adminPassword",
+                AdminPassword = "NetSdkTestPass123",
                 LicenseModel = LicenseModel.LicenseIncluded,
                 SubnetId = new ResourceIdentifier(string.Format(SubnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName, DefaultSubnetName)),
                 VnetId = new ResourceIdentifier(string.Format(VnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName)),
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
 
             // Create
             Console.WriteLine("HERE: TestAutonomousDatabaseOperations Create");
-            _autonomousDatabaseName = Recording.GenerateAssetName("OFake_NetSdkTestAdbs");
+            _autonomousDatabaseName = Recording.GenerateAssetName("OFakeNetSdkTestAdbs");
             var createAutonomousDatabaseOperation = await _autonomousDatabaseCollection.CreateOrUpdateAsync(WaitUntil.Completed,
             _autonomousDatabaseName, GetAutonomousDatabaseData());
             await createAutonomousDatabaseOperation.WaitForCompletionAsync();
