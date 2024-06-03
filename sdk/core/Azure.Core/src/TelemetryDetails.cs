@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -88,7 +89,7 @@ namespace Azure.Core
                 version = version.Substring(0, hashSeparator);
             }
             runtimeInformation ??= new RuntimeInformationWrapper();
-            var platformInformation = EscapeProductInformation($"({runtimeInformation.FrameworkDescription}; {runtimeInformation.OSDescription})");
+            var platformInformation = WebUtility.HtmlEncode(EscapeProductInformation($"({runtimeInformation.FrameworkDescription}; {runtimeInformation.OSDescription})"));
 
             return applicationId != null
                 ? $"{applicationId} azsdk-net-{assemblyName}/{version} {platformInformation}"
