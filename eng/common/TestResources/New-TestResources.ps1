@@ -262,7 +262,7 @@ function MergeHashes([hashtable] $source, [psvariable] $dest)
 function BuildBicepFile([System.IO.FileSystemInfo] $file)
 {
     if (!(Get-Command bicep -ErrorAction Ignore)) {
-        Write-Error "A bicep file was found at '$($file.FullName)' but the Azure Bicep CLI is not installed. See https://aka.ms/install-bicep-pwsh"
+        Write-Error "A bicep file was found at '$($file.FullName)' but the Azure Bicep CLI is not installed. See aka.ms/bicep-install"
         throw
     }
 
@@ -758,6 +758,7 @@ try {
     if ($TestApplicationSecret -and $ServicePrincipalAuth) {
         $templateParameters.Add('testApplicationSecret', $TestApplicationSecret)
     }
+    # Only add subnets when running in an azure pipeline context
     if ($CI -and $Environment -eq 'AzureCloud') {
         $templateParameters.Add('azsdkPipelineSubnetList', $azsdkPipelineSubnets)
     }
@@ -838,6 +839,28 @@ try {
                                                                 -templateFile $templateFile `
                                                                 -environmentVariables $EnvironmentVariables
 
+        $storageAccounts = Retry { Get-AzResource -ResourceGroupName $ResourceGroupName -ResourceType "Microsoft.Storage/storageAccounts" }
+        # Add client IP to storage account when running as local user. Pipeline's have their own vnet with access
+        if ($storageAccounts) {
+            foreach ($account in $storageAccounts) {
+                $rules = Get-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -AccountName $account.Name
+                if ($rules -and $rules.DefaultAction -eq "Allow") {
+                    Write-Host "Restricting network rules in storage account '$($account.Name)' to deny access by default"
+                    Retry { Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -Name $account.Name -DefaultAction Deny }
+                    if ($CI) {
+                        Write-Host "Enabling access to '$($account.Name)' from pipeline subnets"
+                        foreach ($subnet in $azsdkPipelineSubnets) {
+                            Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -VirtualNetworkResourceId $subnet }
+                        }
+                    } else {
+                        Write-Host "Enabling access to '$($account.Name)' from client IP"
+                        $clientIp ??= Retry { Invoke-RestMethod -Uri 'https://icanhazip.com/' }  # cloudflare owned ip site
+                        Retry { Add-AzStorageAccountNetworkRule -ResourceGroupName $ResourceGroupName -Name $account.Name -IPAddressOrRange $clientIp | Out-Null }
+                    }
+                }
+            }
+        }
+
         $postDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath "$ResourceType-resources-post.ps1"
         if (Test-Path $postDeploymentScript) {
             Log "Invoking post-deployment script '$postDeploymentScript'"
@@ -852,7 +875,6 @@ try {
         Write-Host "Deleting ARM deployment as it may contain secrets. Deployed resources will not be affected."
         $null = $deployment | Remove-AzResourceGroupDeployment
     }
-
 } finally {
     $exitActions.Invoke()
 }
