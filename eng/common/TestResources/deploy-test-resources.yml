@@ -7,6 +7,7 @@ parameters:
   ServiceConnection: not-specified
   ResourceType: test
   UseFederatedAuth: false
+  SubscriptionConfigurationFilePath: ''
 
 
 # SubscriptionConfiguration will be splatted into the parameters of the test
@@ -54,9 +55,17 @@ steps:
         Inline: |
           eng/common/scripts/Import-AzModules.ps1
 
-          $subscriptionConfiguration = @'
-            ${{ parameters.SubscriptionConfiguration }}
+          if ('${{ parameters.SubscriptionConfigurationFilePath }}' -ne '') {
+            $subscriptionConfiguration = `
+              Get-Content '${{ parameters.SubscriptionConfigurationFilePath }}' `
+              | ConvertFrom-Json -AsHashtable;
+          } else {
+            # Multiline string termination ('@) needs to be at the beginning
+            # of the line
+            $subscriptionConfiguration = @'
+              ${{ parameters.SubscriptionConfiguration }}
           '@ | ConvertFrom-Json -AsHashtable;
+          }
 
           # The subscriptionConfiguration may have ArmTemplateParameters defined, so
           # pass those in via the ArmTemplateParameters flag, and handle any

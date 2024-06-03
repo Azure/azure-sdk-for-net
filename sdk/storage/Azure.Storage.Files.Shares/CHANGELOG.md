@@ -4,7 +4,6 @@
 - Added support for service version 2024-08-04.
 - Added more detailed messaging for authorization failure cases.
 - Added support for snapshot management on NFS shares.
-- Added more detailed messaging for file copy operations resulting in an error.
 
 ## 12.18.0 (2024-05-13)
 - Includes all features from 12.18.0-beta.1 and 12.18.0-beta.2.
