@@ -46,13 +46,18 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubGcmCredential"/>. </summary>
-        public NotificationHubGcmCredential()
+        /// <param name="gcmApiKey"> Gets or sets the Google API key. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gcmApiKey"/> is null. </exception>
+        public NotificationHubGcmCredential(string gcmApiKey)
         {
+            Argument.AssertNotNull(gcmApiKey, nameof(gcmApiKey));
+
+            GcmApiKey = gcmApiKey;
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubGcmCredential"/>. </summary>
-        /// <param name="gcmEndpoint"> The FCM legacy endpoint. Default value is 'https://fcm.googleapis.com/fcm/send'. </param>
-        /// <param name="gcmApiKey"> The Google API key. </param>
+        /// <param name="gcmEndpoint"> Gets or sets the GCM endpoint. </param>
+        /// <param name="gcmApiKey"> Gets or sets the Google API key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NotificationHubGcmCredential(Uri gcmEndpoint, string gcmApiKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +66,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The FCM legacy endpoint. Default value is 'https://fcm.googleapis.com/fcm/send'. </summary>
+        /// <summary> Gets or sets the GCM endpoint. </summary>
         public Uri GcmEndpoint { get; set; }
-        /// <summary> The Google API key. </summary>
+        /// <summary> Gets or sets the Google API key. </summary>
         public string GcmApiKey { get; set; }
     }
 }
