@@ -461,14 +461,14 @@ namespace Azure.ResourceManager.HybridCompute.Tests
                 HybridComputeLicenseData resourceData = item.Data;
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-            return esuLicensecollection
+            return esuLicensecollection;
        }
 
         protected async Task<HybridComputeLicenseData> updateEsuLicense()
        {
             ResourceIdentifier hybridComputeLicenseResourceId = HybridComputeLicenseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, esuLicenseName);
             HybridComputeLicenseResource hybridComputeLicense = ArmClient.GetHybridComputeLicenseResource(hybridComputeLicenseResourceId);
-            
+
             HybridComputeLicenseData data = new HybridComputeLicenseData(new AzureLocation("centraluseuap"))
             {
                 LicenseType = "ESU",
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             return result.Data;
        }
 
-        protected async Task<NetworkSecurityPerimeterConfigurationCollection> getNSPCollection()
+        protected async Task<NetworkSecurityPerimeterConfigurationCollection> getNspCollection()
        {
             ResourceIdentifier hybridComputePrivateLinkScopeResourceId = HybridComputePrivateLinkScopeResource.CreateResourceIdentifier(subscriptionId, resourceGroupNameNSP, privateLinkScopeNameNSP);
             HybridComputePrivateLinkScopeResource hybridComputePrivateLinkScope = ArmClient.GetHybridComputePrivateLinkScopeResource(hybridComputePrivateLinkScopeResourceId);
@@ -501,10 +501,10 @@ namespace Azure.ResourceManager.HybridCompute.Tests
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            return result.Data;
+            return nspCollection;
        }
 
-        protected async Task<NetworkSecurityPerimeterConfigurationData> getNSP()
+        protected async Task<NetworkSecurityPerimeterConfigurationData> getNsp()
        {
             ResourceIdentifier networkSecurityPerimeterConfigurationResourceId = NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupNameNSP, privateLinkScopeNameNSP, perimeterName);
             NetworkSecurityPerimeterConfigurationResource networkSecurityPerimeterConfiguration = ArmClient.GetNetworkSecurityPerimeterConfigurationResource(networkSecurityPerimeterConfigurationResourceId);
