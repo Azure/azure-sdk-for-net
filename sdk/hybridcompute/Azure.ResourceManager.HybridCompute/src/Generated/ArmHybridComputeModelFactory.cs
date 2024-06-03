@@ -54,9 +54,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="processors"> Describes the number of processors. </param>
         /// <param name="assignedLicenses"> Describes the number of assigned licenses. </param>
         /// <param name="immutableId"> Describes the immutable id. </param>
+        /// <param name="volumeLicenseDetails"> A list of volume license details. </param>
         /// <returns> A new <see cref="Models.HybridComputeLicenseDetails"/> instance for mocking. </returns>
-        public static HybridComputeLicenseDetails HybridComputeLicenseDetails(HybridComputeLicenseState? state = null, HybridComputeLicenseTarget? target = null, HybridComputeLicenseEdition? edition = null, LicenseCoreType? licenseCoreType = null, int? processors = null, int? assignedLicenses = null, string immutableId = null)
+        public static HybridComputeLicenseDetails HybridComputeLicenseDetails(HybridComputeLicenseState? state = null, HybridComputeLicenseTarget? target = null, HybridComputeLicenseEdition? edition = null, LicenseCoreType? licenseCoreType = null, int? processors = null, int? assignedLicenses = null, string immutableId = null, IEnumerable<VolumeLicenseDetails> volumeLicenseDetails = null)
         {
+            volumeLicenseDetails ??= new List<VolumeLicenseDetails>();
+
             return new HybridComputeLicenseDetails(
                 state,
                 target,
@@ -65,6 +68,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 processors,
                 assignedLicenses,
                 immutableId,
+                volumeLicenseDetails?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -320,7 +324,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.EsuKey"/>. </summary>
         /// <param name="sku"> SKU number. </param>
-        /// <param name="licenseStatus"> The current status of the license profile key. </param>
+        /// <param name="licenseStatus"> The current status of the license profile key. Represented by the same integer value that is presented on the machine itself when querying the license key status. </param>
         /// <returns> A new <see cref="Models.EsuKey"/> instance for mocking. </returns>
         public static EsuKey EsuKey(string sku = null, int? licenseStatus = null)
         {
@@ -649,6 +653,39 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.Gateway"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="gatewayId"> A unique, immutable, identifier for the Gateway. </param>
+        /// <param name="gatewayType"> The type of the Gateway resource. </param>
+        /// <param name="gatewayEndpoint"> The endpoint fqdn for the Gateway. </param>
+        /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="Models.Gateway"/> instance for mocking. </returns>
+        public static Gateway Gateway(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridComputeProvisioningState? provisioningState = null, string gatewayId = null, GatewayType? gatewayType = null, string gatewayEndpoint = null, IEnumerable<string> allowedFeatures = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation location = default)
+        {
+            allowedFeatures ??= new List<string>();
+            tags ??= new Dictionary<string, string>();
+
+            return new Gateway(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                gatewayId,
+                gatewayType,
+                gatewayEndpoint,
+                allowedFeatures?.ToList(),
+                tags,
+                location,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputePrivateLinkScopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -895,7 +932,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="diagnosticSettingsVersion"> Diagnostic settings version number. </param>
         /// <param name="enabledLogCategories"> Collection of enabled log categories for the profile. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterProfile"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterProfile NetworkSecurityPerimeterProfile(string name = null, string accessRulesVersion = null, IEnumerable<AccessRule> accessRules = null, string diagnosticSettingsVersion = null, IEnumerable<string> enabledLogCategories = null)
+        public static NetworkSecurityPerimeterProfile NetworkSecurityPerimeterProfile(string name = null, int? accessRulesVersion = null, IEnumerable<AccessRule> accessRules = null, int? diagnosticSettingsVersion = null, IEnumerable<string> enabledLogCategories = null)
         {
             accessRules ??= new List<AccessRule>();
             enabledLogCategories ??= new List<string>();

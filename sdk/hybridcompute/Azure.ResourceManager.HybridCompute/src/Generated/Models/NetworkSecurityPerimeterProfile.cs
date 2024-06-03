@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="diagnosticSettingsVersion"> Diagnostic settings version number. </param>
         /// <param name="enabledLogCategories"> Collection of enabled log categories for the profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterProfile(string name, string accessRulesVersion, IReadOnlyList<AccessRule> accessRules, string diagnosticSettingsVersion, IReadOnlyList<string> enabledLogCategories, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterProfile(string name, int? accessRulesVersion, IReadOnlyList<AccessRule> accessRules, int? diagnosticSettingsVersion, IReadOnlyList<string> enabledLogCategories, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Name of the resource. </summary>
         public string Name { get; }
         /// <summary> Access rules version number. </summary>
-        public string AccessRulesVersion { get; }
+        public int? AccessRulesVersion { get; }
         /// <summary> Collection of access rules for the profile. </summary>
         public IReadOnlyList<AccessRule> AccessRules { get; }
         /// <summary> Diagnostic settings version number. </summary>
-        public string DiagnosticSettingsVersion { get; }
+        public int? DiagnosticSettingsVersion { get; }
         /// <summary> Collection of enabled log categories for the profile. </summary>
         public IReadOnlyList<string> EnabledLogCategories { get; }
     }

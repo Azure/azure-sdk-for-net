@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary> ESU key. </summary>
-    public partial class EsuKey
+    /// <summary> The List license operation response. </summary>
+    internal partial class GatewaysListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +46,35 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EsuKey"/>. </summary>
-        internal EsuKey()
+        /// <summary> Initializes a new instance of <see cref="GatewaysListResult"/>. </summary>
+        /// <param name="value"> The list of Gateways. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal GatewaysListResult(IEnumerable<Gateway> value)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EsuKey"/>. </summary>
-        /// <param name="sku"> SKU number. </param>
-        /// <param name="licenseStatus"> The current status of the license profile key. Represented by the same integer value that is presented on the machine itself when querying the license key status. </param>
+        /// <summary> Initializes a new instance of <see cref="GatewaysListResult"/>. </summary>
+        /// <param name="value"> The list of Gateways. </param>
+        /// <param name="nextLink"> The URI to fetch the next page of Gateways. Call ListNext() with this URI to fetch the next page of Gateways. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EsuKey(string sku, int? licenseStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GatewaysListResult(IReadOnlyList<Gateway> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Sku = sku;
-            LicenseStatus = licenseStatus;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> SKU number. </summary>
-        public string Sku { get; }
-        /// <summary> The current status of the license profile key. Represented by the same integer value that is presented on the machine itself when querying the license key status. </summary>
-        public int? LicenseStatus { get; }
+        /// <summary> Initializes a new instance of <see cref="GatewaysListResult"/> for deserialization. </summary>
+        internal GatewaysListResult()
+        {
+        }
+
+        /// <summary> The list of Gateways. </summary>
+        public IReadOnlyList<Gateway> Value { get; }
+        /// <summary> The URI to fetch the next page of Gateways. Call ListNext() with this URI to fetch the next page of Gateways. </summary>
+        public string NextLink { get; }
     }
 }

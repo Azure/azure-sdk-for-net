@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (options.Format != "W" && Optional.IsDefined(AccessRulesVersion))
             {
                 writer.WritePropertyName("accessRulesVersion"u8);
-                writer.WriteStringValue(AccessRulesVersion);
+                writer.WriteNumberValue(AccessRulesVersion.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AccessRules))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (options.Format != "W" && Optional.IsDefined(DiagnosticSettingsVersion))
             {
                 writer.WritePropertyName("diagnosticSettingsVersion"u8);
-                writer.WriteStringValue(DiagnosticSettingsVersion);
+                writer.WriteNumberValue(DiagnosticSettingsVersion.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(EnabledLogCategories))
             {
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             string name = default;
-            string accessRulesVersion = default;
+            int? accessRulesVersion = default;
             IReadOnlyList<AccessRule> accessRules = default;
-            string diagnosticSettingsVersion = default;
+            int? diagnosticSettingsVersion = default;
             IReadOnlyList<string> enabledLogCategories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (property.NameEquals("accessRulesVersion"u8))
                 {
-                    accessRulesVersion = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accessRulesVersion = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("accessRules"u8))
@@ -134,7 +138,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (property.NameEquals("diagnosticSettingsVersion"u8))
                 {
-                    diagnosticSettingsVersion = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diagnosticSettingsVersion = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("enabledLogCategories"u8))

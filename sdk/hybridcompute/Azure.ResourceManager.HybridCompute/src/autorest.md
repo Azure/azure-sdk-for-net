@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: HybridCompute
 namespace: Azure.ResourceManager.HybridCompute
-require: https://github.com/Azure/azure-rest-api-specs/blob/f6278b35fb38d62aadb7a4327a876544d5d7e1e4/specification/hybridcompute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/5f0ca7e524c788be5f2b7e7488076dadba7b26ce/specification/hybridcompute/resource-manager/readme.md
 #tag: package-preview-2023-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -55,6 +55,9 @@ prepend-rp-prefix:
   - ServiceStatus
   - ServiceStatuses
   - WindowsParameters
+
+list-exception: 
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{baseProvider}/{baseResourceType}/{baseResourceName}/providers/Microsoft.HybridCompute/settings/{settingsResourceName}
 
 rename-mapping:
   AgentUpgrade.enableAutomaticUpgrade: IsAutomaticUpgradeEnabled
@@ -233,22 +236,6 @@ directive:
         }
       }
 
-  # change type of license status to be int - remove later 
-  - from : HybridCompute.json
-    where: $.definitions.EsuKey.properties
-    transform: >-
-      return {
-        "sku": {
-          "type": "string",
-          "description": "SKU number."
-        },
-        "licenseStatus": {
-          "type": "integer",
-          "format": "int32",
-          "description": "The current status of the license profile key."
-        }
-      }
-
   # remove cmdlets
   - where:
       subject: NetworkProfile
@@ -288,5 +275,15 @@ directive:
   # - remove-operation: NetworkSecurityPerimeterConfigurations_GetByPrivateLinkScope
   # - remove-operation: NetworkSecurityPerimeterConfigurations_ListByPrivateLinkScope
   - remove-operation: NetworkSecurityPerimeterConfigurations_ReconcileForPrivateLinkScope
+
+  # we will generate a seperate SDK for them
+  - remove-operation: Gateways_CreateOrUpdate
+  - remove-operation: Gateways_Get
+  - remove-operation: Gateways_ListByResourceGroup
+  - remove-operation: Gateways_Delete
+  - remove-operation: Gateways_Update
+  - remove-operation: Settings_Update
+  - remove-operation: Settings_Get
+  - remove-operation: Settings_Patch
 
 ```
