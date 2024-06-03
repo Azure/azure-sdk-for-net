@@ -89,8 +89,6 @@ namespace Azure.Health.Deidentification
         public DocumentDataType DataType { get; }
         /// <summary> Operation to perform on the input. </summary>
         public OperationType Operation { get; }
-        /// <summary> Requested Encoding of the tag response indices. </summary>
-        public StringIndexType StringIndexType { get; }
         /// <summary> Format of the redacted output. Only valid when OperationType is Redact. </summary>
         public string RedactionFormat { get; set; }
     }

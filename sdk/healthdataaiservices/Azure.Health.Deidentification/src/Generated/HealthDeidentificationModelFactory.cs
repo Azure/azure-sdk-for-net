@@ -79,24 +79,6 @@ namespace Azure.Health.Deidentification
             return new FileLocation(path, etag, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentificationContent"/>. </summary>
-        /// <param name="inputText"> Input text to deidentify. </param>
-        /// <param name="dataType"> Data type of the input. </param>
-        /// <param name="operation"> Operation to perform on the input. </param>
-        /// <param name="stringIndexType"> Requested Encoding of the tag response indices. </param>
-        /// <param name="redactionFormat"> Format of the redacted output. Only valid when OperationType is Redact. </param>
-        /// <returns> A new <see cref="Deidentification.DeidentificationContent"/> instance for mocking. </returns>
-        public static DeidentificationContent DeidentificationContent(string inputText = null, DocumentDataType dataType = default, OperationType operation = default, StringIndexType stringIndexType = default, string redactionFormat = null)
-        {
-            return new DeidentificationContent(
-                inputText,
-                dataType,
-                operation,
-                stringIndexType,
-                redactionFormat,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentificationResult"/>. </summary>
         /// <param name="outputText"> Output text after de-identifying. Not available for Tag Operation. </param>
         /// <param name="taggerResult"> Result of the tag operation. Only available for Tag Operation. </param>
