@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         public string machineName = "testmachine";
         public string extensionName = "CustomScriptExtension";
         // need to run private-endpoint-connection list and obtain from the 'name' property
-        public string privateEndpointConnectionName = "pe-test.2a976c30-2ae8-48a4-9f25-d13236dfe849";
+        public string privateEndpointConnectionName = "myprivateendpoint.ff32f930-e567-4782-bebd-e38ba513f954";
         public string runCommandName = "myRunCommand";
         public string esuLicenseName = "myEsuLicense";
         public string resourceGroupNameNSP = "adrielk_test";
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
                         VmGuestPatchClassificationWindow.Critical,VmGuestPatchClassificationWindow.Security
                         },
                     // The maximum published date for patches must be a DateTime value between last patch Tuesday and a week from today
-                    MaxPatchPublishOn = DateTimeOffset.Parse("2023-10-13T02:36:43.0539904+00:00"),
+                    MaxPatchPublishOn = DateTimeOffset.Parse("2024-05-30T02:36:43.0539904+00:00"),
                 },
             };
             ArmOperation<MachineInstallPatchesResult> lro = await hybridComputeMachine.InstallPatchesAsync(WaitUntil.Completed, content);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
             HybridComputeMachineExtensionCollection extensionCollection = hybridComputeMachine.GetHybridComputeMachineExtensions();
 
-            HybridComputeMachineExtensionData data = new HybridComputeMachineExtensionData(new AzureLocation("eastus2euap"))
+            HybridComputeMachineExtensionData data = new HybridComputeMachineExtensionData(new AzureLocation("centraluseuap"))
             {
                 Properties = new MachineExtensionProperties()
                 {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         {
             HybridComputePrivateLinkScopeCollection scopeCollection = resourceGroupResource.GetHybridComputePrivateLinkScopes();
 
-            HybridComputePrivateLinkScopeData data = new HybridComputePrivateLinkScopeData(new AzureLocation("eastus2euap"))
+            HybridComputePrivateLinkScopeData data = new HybridComputePrivateLinkScopeData(new AzureLocation("centraluseuap"))
             {
                 Properties = new HybridComputePrivateLinkScopeProperties()
                 {
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
             MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
 
-            MachineRunCommandData data = new MachineRunCommandData(new AzureLocation("eastus2euap"))
+            MachineRunCommandData data = new MachineRunCommandData(new AzureLocation("centraluseuap"))
             {
                 Source = new MachineRunCommandScriptSource()
                 {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             ResourceIdentifier machineRunCommandResourceId = MachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, runCommandName);
             MachineRunCommandResource machineRunCommand = ArmClient.GetMachineRunCommandResource(machineRunCommandResourceId);
 
-            MachineRunCommandData data = new MachineRunCommandData(new AzureLocation("eastus2euap"))
+            MachineRunCommandData data = new MachineRunCommandData(new AzureLocation("centraluseuap"))
             {
                 Source = new MachineRunCommandScriptSource()
                 {

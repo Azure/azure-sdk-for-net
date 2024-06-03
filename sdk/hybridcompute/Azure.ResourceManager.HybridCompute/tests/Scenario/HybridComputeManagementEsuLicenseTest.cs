@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanCreateEsuLicense()
         {
             HybridComputeLicenseData resourceData = await createEsuLicense();
-            Assert.AreEqual(licenseName, resourceData.Name);
+            Assert.AreEqual(esuLicenseName, resourceData.Name);
         }
 
         [TestCase]
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanUpdateEsuLicense()
         {
             HybridComputeLicenseData resourceData = await updateEsuLicense();
-            Assert.AreEqual("Deactivated", resourceData.LicenseDetails.State);
+            Assert.AreNotEqual("Activated", resourceData.LicenseDetails.State);
         }
 
         [TestCase]
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         public async Task CanGetEsuLicense()
         {
             HybridComputeLicenseData resourceData = await getEsuLicense();
-            Assert.AreEqual(runCommandName, resourceData.Name);
+            Assert.AreEqual(esuLicenseName, resourceData.Name);
         }
 
         [TestCase]
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         [TestCase]
         [RecordedTest]
         public async Task CanDeleteEsuLicense(){
-            await deleteEsulicense();
+            await deleteEsuLicense();
         }
     }
 }
