@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageCache.ImportJobData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCache.StorageCacheImportJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -177,13 +177,13 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="lastStartedOn"> The time the latest archive operation started. </param>
         /// <param name="totalErrors"> Number of errors in the import job. </param>
         /// <param name="totalConflicts"> Number of conflicts in the import job. </param>
-        /// <returns> A new <see cref="StorageCache.ImportJobData"/> instance for mocking. </returns>
-        public static ImportJobData ImportJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ImportJobProvisioningStateType? provisioningState = null, IEnumerable<string> importPrefixes = null, ConflictResolutionMode? conflictResolutionMode = null, int? maximumErrors = null, ImportStatusType? state = null, string statusMessage = null, long? totalBlobsWalked = null, long? blobsWalkedPerSecond = null, long? totalBlobsImported = null, long? blobsImportedPerSecond = null, DateTimeOffset? lastCompletionOn = null, DateTimeOffset? lastStartedOn = null, int? totalErrors = null, int? totalConflicts = null)
+        /// <returns> A new <see cref="StorageCache.StorageCacheImportJobData"/> instance for mocking. </returns>
+        public static StorageCacheImportJobData StorageCacheImportJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ImportJobProvisioningStateType? provisioningState = null, IEnumerable<string> importPrefixes = null, ConflictResolutionMode? conflictResolutionMode = null, int? maximumErrors = null, ImportStatusType? state = null, string statusMessage = null, long? totalBlobsWalked = null, long? blobsWalkedPerSecond = null, long? totalBlobsImported = null, long? blobsImportedPerSecond = null, DateTimeOffset? lastCompletionOn = null, DateTimeOffset? lastStartedOn = null, int? totalErrors = null, int? totalConflicts = null)
         {
             tags ??= new Dictionary<string, string>();
             importPrefixes ??= new List<string>();
 
-            return new ImportJobData(
+            return new StorageCacheImportJobData(
                 id,
                 name,
                 resourceType,

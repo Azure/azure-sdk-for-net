@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> An import job update instance. </summary>
-    public partial class ImportJobPatch
+    public partial class StorageCacheImportJobPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ImportJobPatch"/>. </summary>
-        public ImportJobPatch()
+        /// <summary> Initializes a new instance of <see cref="StorageCacheImportJobPatch"/>. </summary>
+        public StorageCacheImportJobPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImportJobPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheImportJobPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImportJobPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageCacheImportJobPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;

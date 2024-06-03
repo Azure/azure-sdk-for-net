@@ -75,6 +75,9 @@ rename-mapping:
   BlobNfsTarget.verificationTimer: VerificationDelayInSeconds
   BlobNfsTarget.writeBackTimer: WriteBackDelayInSeconds
 
+prepend-rp-prefix:
+  - ImportJob
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'

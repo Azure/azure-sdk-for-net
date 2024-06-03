@@ -15,16 +15,16 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    public partial class ImportJobData : IUtf8JsonSerializable, IJsonModel<ImportJobData>
+    public partial class StorageCacheImportJobData : IUtf8JsonSerializable, IJsonModel<StorageCacheImportJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImportJobData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCacheImportJobData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ImportJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageCacheImportJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportJobData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheImportJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportJobData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheImportJobData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -160,19 +160,19 @@ namespace Azure.ResourceManager.StorageCache
             writer.WriteEndObject();
         }
 
-        ImportJobData IJsonModel<ImportJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StorageCacheImportJobData IJsonModel<StorageCacheImportJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportJobData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheImportJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportJobData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheImportJobData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImportJobData(document.RootElement, options);
+            return DeserializeStorageCacheImportJobData(document.RootElement, options);
         }
 
-        internal static ImportJobData DeserializeImportJobData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static StorageCacheImportJobData DeserializeStorageCacheImportJobData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.StorageCache
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ImportJobData(
+            return new StorageCacheImportJobData(
                 id,
                 name,
                 type,
@@ -428,35 +428,35 @@ namespace Azure.ResourceManager.StorageCache
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ImportJobData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<StorageCacheImportJobData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportJobData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheImportJobData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImportJobData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheImportJobData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ImportJobData IPersistableModel<ImportJobData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        StorageCacheImportJobData IPersistableModel<StorageCacheImportJobData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportJobData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheImportJobData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeImportJobData(document.RootElement, options);
+                        return DeserializeStorageCacheImportJobData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImportJobData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheImportJobData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ImportJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageCacheImportJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

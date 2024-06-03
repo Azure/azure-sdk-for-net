@@ -13,7 +13,7 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache.Samples
 {
-    public partial class Sample_ImportJobCollection
+    public partial class Sample_StorageCacheImportJobCollection
     {
         // importJobs_Get
         [NUnit.Framework.Test]
@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.StorageCache.Samples
             ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
             AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
-            // get the collection of this ImportJobResource
-            ImportJobCollection collection = amlFileSystem.GetImportJobs();
+            // get the collection of this StorageCacheImportJobResource
+            StorageCacheImportJobCollection collection = amlFileSystem.GetStorageCacheImportJobs();
 
             // invoke the operation
             string importJobName = "job1";
-            ImportJobResource result = await collection.GetAsync(importJobName);
+            StorageCacheImportJobResource result = await collection.GetAsync(importJobName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ImportJobData resourceData = result.Data;
+            StorageCacheImportJobData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.StorageCache.Samples
             ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
             AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
-            // get the collection of this ImportJobResource
-            ImportJobCollection collection = amlFileSystem.GetImportJobs();
+            // get the collection of this StorageCacheImportJobResource
+            StorageCacheImportJobCollection collection = amlFileSystem.GetStorageCacheImportJobs();
 
             // invoke the operation
             string importJobName = "job1";
@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.StorageCache.Samples
             ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
             AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
-            // get the collection of this ImportJobResource
-            ImportJobCollection collection = amlFileSystem.GetImportJobs();
+            // get the collection of this StorageCacheImportJobResource
+            StorageCacheImportJobCollection collection = amlFileSystem.GetStorageCacheImportJobs();
 
             // invoke the operation
             string importJobName = "job1";
-            NullableResponse<ImportJobResource> response = await collection.GetIfExistsAsync(importJobName);
-            ImportJobResource result = response.HasValue ? response.Value : null;
+            NullableResponse<StorageCacheImportJobResource> response = await collection.GetIfExistsAsync(importJobName);
+            StorageCacheImportJobResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ImportJobData resourceData = result.Data;
+                StorageCacheImportJobData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.StorageCache.Samples
             ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
             AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
-            // get the collection of this ImportJobResource
-            ImportJobCollection collection = amlFileSystem.GetImportJobs();
+            // get the collection of this StorageCacheImportJobResource
+            StorageCacheImportJobCollection collection = amlFileSystem.GetStorageCacheImportJobs();
 
             // invoke the operation
             string importJobName = "job1";
-            ImportJobData data = new ImportJobData(new AzureLocation("eastus"))
+            StorageCacheImportJobData data = new StorageCacheImportJobData(new AzureLocation("eastus"))
             {
                 ImportPrefixes =
 {
@@ -163,12 +163,12 @@ namespace Azure.ResourceManager.StorageCache.Samples
 ["Dept"] = "ContosoAds",
 },
             };
-            ArmOperation<ImportJobResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, importJobName, data);
-            ImportJobResource result = lro.Value;
+            ArmOperation<StorageCacheImportJobResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, importJobName, data);
+            StorageCacheImportJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ImportJobData resourceData = result.Data;
+            StorageCacheImportJobData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -194,15 +194,15 @@ namespace Azure.ResourceManager.StorageCache.Samples
             ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
             AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
-            // get the collection of this ImportJobResource
-            ImportJobCollection collection = amlFileSystem.GetImportJobs();
+            // get the collection of this StorageCacheImportJobResource
+            StorageCacheImportJobCollection collection = amlFileSystem.GetStorageCacheImportJobs();
 
             // invoke the operation and iterate over the result
-            await foreach (ImportJobResource item in collection.GetAllAsync())
+            await foreach (StorageCacheImportJobResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ImportJobData resourceData = item.Data;
+                StorageCacheImportJobData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

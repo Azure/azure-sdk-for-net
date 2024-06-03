@@ -13,7 +13,7 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache.Samples
 {
-    public partial class Sample_ImportJobResource
+    public partial class Sample_StorageCacheImportJobResource
     {
         // importJobs_Delete
         [NUnit.Framework.Test]
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.StorageCache.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ImportJobResource created on azure
-            // for more information of creating ImportJobResource, please refer to the document of ImportJobResource
+            // this example assumes you already have this StorageCacheImportJobResource created on azure
+            // for more information of creating StorageCacheImportJobResource, please refer to the document of StorageCacheImportJobResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "scgroup";
             string amlFileSystemName = "fs1";
             string importJobName = "job1";
-            ResourceIdentifier importJobResourceId = ImportJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName, importJobName);
-            ImportJobResource importJob = client.GetImportJobResource(importJobResourceId);
+            ResourceIdentifier storageCacheImportJobResourceId = StorageCacheImportJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName, importJobName);
+            StorageCacheImportJobResource storageCacheImportJob = client.GetStorageCacheImportJobResource(storageCacheImportJobResourceId);
 
             // invoke the operation
-            await importJob.DeleteAsync(WaitUntil.Completed);
+            await storageCacheImportJob.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -56,21 +56,21 @@ namespace Azure.ResourceManager.StorageCache.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ImportJobResource created on azure
-            // for more information of creating ImportJobResource, please refer to the document of ImportJobResource
+            // this example assumes you already have this StorageCacheImportJobResource created on azure
+            // for more information of creating StorageCacheImportJobResource, please refer to the document of StorageCacheImportJobResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "scgroup";
             string amlFileSystemName = "fs1";
             string importJobName = "job1";
-            ResourceIdentifier importJobResourceId = ImportJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName, importJobName);
-            ImportJobResource importJob = client.GetImportJobResource(importJobResourceId);
+            ResourceIdentifier storageCacheImportJobResourceId = StorageCacheImportJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName, importJobName);
+            StorageCacheImportJobResource storageCacheImportJob = client.GetStorageCacheImportJobResource(storageCacheImportJobResourceId);
 
             // invoke the operation
-            ImportJobResource result = await importJob.GetAsync();
+            StorageCacheImportJobResource result = await storageCacheImportJob.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ImportJobData resourceData = result.Data;
+            StorageCacheImportJobData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -88,29 +88,29 @@ namespace Azure.ResourceManager.StorageCache.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ImportJobResource created on azure
-            // for more information of creating ImportJobResource, please refer to the document of ImportJobResource
+            // this example assumes you already have this StorageCacheImportJobResource created on azure
+            // for more information of creating StorageCacheImportJobResource, please refer to the document of StorageCacheImportJobResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "scgroup";
             string amlFileSystemName = "fs1";
             string importJobName = "job1";
-            ResourceIdentifier importJobResourceId = ImportJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName, importJobName);
-            ImportJobResource importJob = client.GetImportJobResource(importJobResourceId);
+            ResourceIdentifier storageCacheImportJobResourceId = StorageCacheImportJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName, importJobName);
+            StorageCacheImportJobResource storageCacheImportJob = client.GetStorageCacheImportJobResource(storageCacheImportJobResourceId);
 
             // invoke the operation
-            ImportJobPatch patch = new ImportJobPatch()
+            StorageCacheImportJobPatch patch = new StorageCacheImportJobPatch()
             {
                 Tags =
 {
 ["Dept"] = "ContosoAds",
 },
             };
-            ArmOperation<ImportJobResource> lro = await importJob.UpdateAsync(WaitUntil.Completed, patch);
-            ImportJobResource result = lro.Value;
+            ArmOperation<StorageCacheImportJobResource> lro = await storageCacheImportJob.UpdateAsync(WaitUntil.Completed, patch);
+            StorageCacheImportJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ImportJobData resourceData = result.Data;
+            StorageCacheImportJobData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
                 resourceGroupName: resourceGroupName,
                 amlFileSystemName: amlFSName);
             var amlFS = this.Client.GetAmlFileSystemResource(storageCacheResourceId);
-            var importJobs = amlFS.GetImportJobs().GetAllAsync();
+            var importJobs = amlFS.GetStorageCacheImportJobs().GetAllAsync();
             await foreach (var job in importJobs)
             {
                 await job.DeleteAsync(WaitUntil.Completed);
@@ -223,17 +223,17 @@ namespace Azure.ResourceManager.StorageCache.Tests
                 Assert.AreEqual(actual.Data.Zones[i], expected.Zones[i]);
         }
 
-        protected async Task<ImportJobResource> CreateOrUpdateImportJob(AmlFileSystemResource amlFS, string name = null, bool verifyResult = false)
+        protected async Task<StorageCacheImportJobResource> CreateOrUpdateImportJob(AmlFileSystemResource amlFS, string name = null, bool verifyResult = false)
         {
-            ImportJobCollection importJobCollectionVar = amlFS.GetImportJobs();
+            StorageCacheImportJobCollection importJobCollectionVar = amlFS.GetStorageCacheImportJobs();
             string importJobName = name ?? Recording.GenerateAssetName("testjob");
-            ImportJobData dataVar = new ImportJobData(this.DefaultLocation)
+            StorageCacheImportJobData dataVar = new StorageCacheImportJobData(this.DefaultLocation)
             {
                 ImportPrefixes = { "/path1", "/path2" },
                 MaximumErrors = 2,
                 ConflictResolutionMode = ConflictResolutionMode.Fail
             };
-            ArmOperation<ImportJobResource> lro = await importJobCollectionVar.CreateOrUpdateAsync(
+            ArmOperation<StorageCacheImportJobResource> lro = await importJobCollectionVar.CreateOrUpdateAsync(
                 waitUntil: WaitUntil.Completed,
                 importJobName: importJobName,
                 data: dataVar);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
             return lro.Value;
         }
 
-        protected void VerifyImportJob(ImportJobResource actual, ImportJobData expected)
+        protected void VerifyImportJob(StorageCacheImportJobResource actual, StorageCacheImportJobData expected)
         {
             for (int i = 0; i < actual.Data.ImportPrefixes.Count; i++)
                 Assert.AreEqual(actual.Data.ImportPrefixes[i], expected.ImportPrefixes[i]);

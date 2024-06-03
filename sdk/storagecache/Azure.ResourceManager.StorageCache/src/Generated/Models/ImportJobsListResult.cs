@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of <see cref="ImportJobsListResult"/>. </summary>
         internal ImportJobsListResult()
         {
-            Value = new ChangeTrackingList<ImportJobData>();
+            Value = new ChangeTrackingList<StorageCacheImportJobData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ImportJobsListResult"/>. </summary>
         /// <param name="nextLink"> URL to get the next set of import job list results, if there are any. </param>
         /// <param name="value"> List of import jobs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImportJobsListResult(string nextLink, IReadOnlyList<ImportJobData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImportJobsListResult(string nextLink, IReadOnlyList<StorageCacheImportJobData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> URL to get the next set of import job list results, if there are any. </summary>
         public string NextLink { get; }
         /// <summary> List of import jobs. </summary>
-        public IReadOnlyList<ImportJobData> Value { get; }
+        public IReadOnlyList<StorageCacheImportJobData> Value { get; }
     }
 }

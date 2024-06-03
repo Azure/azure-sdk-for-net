@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
         public async Task CreateOrUpdate()
         {
             string name = Recording.GenerateAssetName("testamlFS");
-            ImportJobResource importJobResource = await this.CreateOrUpdateImportJob(DefaultAmlFS, name, verifyResult: true);
+            StorageCacheImportJobResource importJobResource = await this.CreateOrUpdateImportJob(DefaultAmlFS, name, verifyResult: true);
         }
 
         [TestCase]
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
         public async Task Get()
         {
             string job = "jobTest";
-            ImportJobResource importJobResource = await this.CreateOrUpdateImportJob(DefaultAmlFS, name: job);
-            ImportJobResource result = await this.DefaultAmlFS.GetImportJobs().GetAsync(job);
+            StorageCacheImportJobResource importJobResource = await this.CreateOrUpdateImportJob(DefaultAmlFS, name: job);
+            StorageCacheImportJobResource result = await this.DefaultAmlFS.GetStorageCacheImportJobs().GetAsync(job);
 
             this.VerifyImportJob(result, importJobResource.Data);
         }
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
         public async Task Exists()
         {
             string name = Recording.GenerateAssetName("testImportJob");
-            await AzureResourceTestHelper.TestExists<ImportJobResource>(
+            await AzureResourceTestHelper.TestExists<StorageCacheImportJobResource>(
                 async () => await this.CreateOrUpdateImportJob(DefaultAmlFS, name),
-                async () => await this.DefaultAmlFS.GetImportJobs().ExistsAsync(name));
+                async () => await this.DefaultAmlFS.GetStorageCacheImportJobs().ExistsAsync(name));
         }
     }
 }

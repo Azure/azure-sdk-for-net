@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<ImportJobData> value = default;
+            IReadOnlyList<StorageCacheImportJobData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    List<ImportJobData> array = new List<ImportJobData>();
+                    List<StorageCacheImportJobData> array = new List<StorageCacheImportJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImportJobData.DeserializeImportJobData(item, options));
+                        array.Add(StorageCacheImportJobData.DeserializeStorageCacheImportJobData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ImportJobsListResult(nextLink, value ?? new ChangeTrackingList<ImportJobData>(), serializedAdditionalRawData);
+            return new ImportJobsListResult(nextLink, value ?? new ChangeTrackingList<StorageCacheImportJobData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImportJobsListResult>.Write(ModelReaderWriterOptions options)

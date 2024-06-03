@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ImportJobData>> GetAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageCacheImportJobData>> GetAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -187,13 +187,13 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        ImportJobData value = default;
+                        StorageCacheImportJobData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ImportJobData.DeserializeImportJobData(document.RootElement);
+                        value = StorageCacheImportJobData.DeserializeStorageCacheImportJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ImportJobData)null, message.Response);
+                    return Response.FromValue((StorageCacheImportJobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ImportJobData> Get(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, CancellationToken cancellationToken = default)
+        public Response<StorageCacheImportJobData> Get(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -220,19 +220,19 @@ namespace Azure.ResourceManager.StorageCache
             {
                 case 200:
                     {
-                        ImportJobData value = default;
+                        StorageCacheImportJobData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ImportJobData.DeserializeImportJobData(document.RootElement);
+                        value = StorageCacheImportJobData.DeserializeStorageCacheImportJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ImportJobData)null, message.Response);
+                    return Response.FromValue((StorageCacheImportJobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, ImportJobData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, StorageCacheImportJobData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.StorageCache
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, ImportJobData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, StorageCacheImportJobData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/>, <paramref name="importJobName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, ImportJobData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, StorageCacheImportJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/>, <paramref name="importJobName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, ImportJobData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, StorageCacheImportJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, ImportJobPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, StorageCacheImportJobPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.StorageCache
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, ImportJobPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, StorageCacheImportJobPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/>, <paramref name="importJobName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, ImportJobPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, StorageCacheImportJobPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/>, <paramref name="importJobName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="amlFileSystemName"/> or <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, ImportJobPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string amlFileSystemName, string importJobName, StorageCacheImportJobPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

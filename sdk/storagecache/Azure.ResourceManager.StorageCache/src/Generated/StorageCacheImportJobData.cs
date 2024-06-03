@@ -14,10 +14,10 @@ using Azure.ResourceManager.StorageCache.Models;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
-    /// A class representing the ImportJob data model.
+    /// A class representing the StorageCacheImportJob data model.
     /// An import job instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md
     /// </summary>
-    public partial class ImportJobData : TrackedResourceData
+    public partial class StorageCacheImportJobData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.StorageCache
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ImportJobData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheImportJobData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public ImportJobData(AzureLocation location) : base(location)
+        public StorageCacheImportJobData(AzureLocation location) : base(location)
         {
             ImportPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImportJobData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheImportJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="totalErrors"> Number of errors in the import job. </param>
         /// <param name="totalConflicts"> Number of conflicts in the import job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImportJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ImportJobProvisioningStateType? provisioningState, IList<string> importPrefixes, ConflictResolutionMode? conflictResolutionMode, int? maximumErrors, ImportStatusType? state, string statusMessage, long? totalBlobsWalked, long? blobsWalkedPerSecond, long? totalBlobsImported, long? blobsImportedPerSecond, DateTimeOffset? lastCompletionOn, DateTimeOffset? lastStartedOn, int? totalErrors, int? totalConflicts, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageCacheImportJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ImportJobProvisioningStateType? provisioningState, IList<string> importPrefixes, ConflictResolutionMode? conflictResolutionMode, int? maximumErrors, ImportStatusType? state, string statusMessage, long? totalBlobsWalked, long? blobsWalkedPerSecond, long? totalBlobsImported, long? blobsImportedPerSecond, DateTimeOffset? lastCompletionOn, DateTimeOffset? lastStartedOn, int? totalErrors, int? totalConflicts, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             ImportPrefixes = importPrefixes;
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.StorageCache
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImportJobData"/> for deserialization. </summary>
-        internal ImportJobData()
+        /// <summary> Initializes a new instance of <see cref="StorageCacheImportJobData"/> for deserialization. </summary>
+        internal StorageCacheImportJobData()
         {
         }
 

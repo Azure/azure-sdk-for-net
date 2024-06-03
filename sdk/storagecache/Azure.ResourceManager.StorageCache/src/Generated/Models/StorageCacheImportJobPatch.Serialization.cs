@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class ImportJobPatch : IUtf8JsonSerializable, IJsonModel<ImportJobPatch>
+    public partial class StorageCacheImportJobPatch : IUtf8JsonSerializable, IJsonModel<StorageCacheImportJobPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImportJobPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCacheImportJobPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ImportJobPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageCacheImportJobPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportJobPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheImportJobPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportJobPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheImportJobPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteEndObject();
         }
 
-        ImportJobPatch IJsonModel<ImportJobPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StorageCacheImportJobPatch IJsonModel<StorageCacheImportJobPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportJobPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheImportJobPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportJobPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheImportJobPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImportJobPatch(document.RootElement, options);
+            return DeserializeStorageCacheImportJobPatch(document.RootElement, options);
         }
 
-        internal static ImportJobPatch DeserializeImportJobPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static StorageCacheImportJobPatch DeserializeStorageCacheImportJobPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -100,38 +100,38 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ImportJobPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new StorageCacheImportJobPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ImportJobPatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<StorageCacheImportJobPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportJobPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheImportJobPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImportJobPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheImportJobPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ImportJobPatch IPersistableModel<ImportJobPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        StorageCacheImportJobPatch IPersistableModel<StorageCacheImportJobPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportJobPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheImportJobPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeImportJobPatch(document.RootElement, options);
+                        return DeserializeStorageCacheImportJobPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImportJobPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheImportJobPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ImportJobPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageCacheImportJobPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

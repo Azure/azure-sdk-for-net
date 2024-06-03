@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.StorageCache
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ImportJobResources in the AmlFileSystem. </summary>
-        /// <returns> An object representing collection of ImportJobResources and their operations over a ImportJobResource. </returns>
-        public virtual ImportJobCollection GetImportJobs()
+        /// <summary> Gets a collection of StorageCacheImportJobResources in the AmlFileSystem. </summary>
+        /// <returns> An object representing collection of StorageCacheImportJobResources and their operations over a StorageCacheImportJobResource. </returns>
+        public virtual StorageCacheImportJobCollection GetStorageCacheImportJobs()
         {
-            return GetCachedClient(client => new ImportJobCollection(client, Id));
+            return GetCachedClient(client => new StorageCacheImportJobCollection(client, Id));
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ImportJobResource"/></description>
+        /// <description><see cref="StorageCacheImportJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="importJobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ImportJobResource>> GetImportJobAsync(string importJobName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageCacheImportJobResource>> GetStorageCacheImportJobAsync(string importJobName, CancellationToken cancellationToken = default)
         {
-            return await GetImportJobs().GetAsync(importJobName, cancellationToken).ConfigureAwait(false);
+            return await GetStorageCacheImportJobs().GetAsync(importJobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ImportJobResource"/></description>
+        /// <description><see cref="StorageCacheImportJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="importJobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ImportJobResource> GetImportJob(string importJobName, CancellationToken cancellationToken = default)
+        public virtual Response<StorageCacheImportJobResource> GetStorageCacheImportJob(string importJobName, CancellationToken cancellationToken = default)
         {
-            return GetImportJobs().Get(importJobName, cancellationToken);
+            return GetStorageCacheImportJobs().Get(importJobName, cancellationToken);
         }
 
         /// <summary>

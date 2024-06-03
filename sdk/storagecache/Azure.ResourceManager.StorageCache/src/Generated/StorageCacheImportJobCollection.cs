@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ImportJobResource"/> and their operations.
-    /// Each <see cref="ImportJobResource"/> in the collection will belong to the same instance of <see cref="AmlFileSystemResource"/>.
-    /// To get an <see cref="ImportJobCollection"/> instance call the GetImportJobs method from an instance of <see cref="AmlFileSystemResource"/>.
+    /// A class representing a collection of <see cref="StorageCacheImportJobResource"/> and their operations.
+    /// Each <see cref="StorageCacheImportJobResource"/> in the collection will belong to the same instance of <see cref="AmlFileSystemResource"/>.
+    /// To get a <see cref="StorageCacheImportJobCollection"/> instance call the GetStorageCacheImportJobs method from an instance of <see cref="AmlFileSystemResource"/>.
     /// </summary>
-    public partial class ImportJobCollection : ArmCollection, IEnumerable<ImportJobResource>, IAsyncEnumerable<ImportJobResource>
+    public partial class StorageCacheImportJobCollection : ArmCollection, IEnumerable<StorageCacheImportJobResource>, IAsyncEnumerable<StorageCacheImportJobResource>
     {
-        private readonly ClientDiagnostics _importJobimportJobsClientDiagnostics;
-        private readonly ImportJobsRestOperations _importJobimportJobsRestClient;
+        private readonly ClientDiagnostics _storageCacheImportJobimportJobsClientDiagnostics;
+        private readonly ImportJobsRestOperations _storageCacheImportJobimportJobsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ImportJobCollection"/> class for mocking. </summary>
-        protected ImportJobCollection()
+        /// <summary> Initializes a new instance of the <see cref="StorageCacheImportJobCollection"/> class for mocking. </summary>
+        protected StorageCacheImportJobCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ImportJobCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageCacheImportJobCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ImportJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal StorageCacheImportJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _importJobimportJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ImportJobResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ImportJobResource.ResourceType, out string importJobimportJobsApiVersion);
-            _importJobimportJobsRestClient = new ImportJobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, importJobimportJobsApiVersion);
+            _storageCacheImportJobimportJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", StorageCacheImportJobResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(StorageCacheImportJobResource.ResourceType, out string storageCacheImportJobimportJobsApiVersion);
+            _storageCacheImportJobimportJobsRestClient = new ImportJobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageCacheImportJobimportJobsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ImportJobResource"/></description>
+        /// <description><see cref="StorageCacheImportJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="importJobName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ImportJobResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string importJobName, ImportJobData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StorageCacheImportJobResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string importJobName, StorageCacheImportJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _importJobimportJobsClientDiagnostics.CreateScope("ImportJobCollection.CreateOrUpdate");
+            using var scope = _storageCacheImportJobimportJobsClientDiagnostics.CreateScope("StorageCacheImportJobCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _importJobimportJobsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation<ImportJobResource>(new ImportJobOperationSource(Client), _importJobimportJobsClientDiagnostics, Pipeline, _importJobimportJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _storageCacheImportJobimportJobsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageCacheArmOperation<StorageCacheImportJobResource>(new StorageCacheImportJobOperationSource(Client), _storageCacheImportJobimportJobsClientDiagnostics, Pipeline, _storageCacheImportJobimportJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ImportJobResource"/></description>
+        /// <description><see cref="StorageCacheImportJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="importJobName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ImportJobResource> CreateOrUpdate(WaitUntil waitUntil, string importJobName, ImportJobData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StorageCacheImportJobResource> CreateOrUpdate(WaitUntil waitUntil, string importJobName, StorageCacheImportJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _importJobimportJobsClientDiagnostics.CreateScope("ImportJobCollection.CreateOrUpdate");
+            using var scope = _storageCacheImportJobimportJobsClientDiagnostics.CreateScope("StorageCacheImportJobCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _importJobimportJobsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, data, cancellationToken);
-                var operation = new StorageCacheArmOperation<ImportJobResource>(new ImportJobOperationSource(Client), _importJobimportJobsClientDiagnostics, Pipeline, _importJobimportJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _storageCacheImportJobimportJobsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, data, cancellationToken);
+                var operation = new StorageCacheArmOperation<StorageCacheImportJobResource>(new StorageCacheImportJobOperationSource(Client), _storageCacheImportJobimportJobsClientDiagnostics, Pipeline, _storageCacheImportJobimportJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ImportJobResource"/></description>
+        /// <description><see cref="StorageCacheImportJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="importJobName"/> is null. </exception>
-        public virtual async Task<Response<ImportJobResource>> GetAsync(string importJobName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageCacheImportJobResource>> GetAsync(string importJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
 
-            using var scope = _importJobimportJobsClientDiagnostics.CreateScope("ImportJobCollection.Get");
+            using var scope = _storageCacheImportJobimportJobsClientDiagnostics.CreateScope("StorageCacheImportJobCollection.Get");
             scope.Start();
             try
             {
-                var response = await _importJobimportJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, cancellationToken).ConfigureAwait(false);
+                var response = await _storageCacheImportJobimportJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ImportJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageCacheImportJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ImportJobResource"/></description>
+        /// <description><see cref="StorageCacheImportJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="importJobName"/> is null. </exception>
-        public virtual Response<ImportJobResource> Get(string importJobName, CancellationToken cancellationToken = default)
+        public virtual Response<StorageCacheImportJobResource> Get(string importJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
 
-            using var scope = _importJobimportJobsClientDiagnostics.CreateScope("ImportJobCollection.Get");
+            using var scope = _storageCacheImportJobimportJobsClientDiagnostics.CreateScope("StorageCacheImportJobCollection.Get");
             scope.Start();
             try
             {
-                var response = _importJobimportJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, cancellationToken);
+                var response = _storageCacheImportJobimportJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ImportJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StorageCacheImportJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,17 +256,17 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ImportJobResource"/></description>
+        /// <description><see cref="StorageCacheImportJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ImportJobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ImportJobResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StorageCacheImportJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageCacheImportJobResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _importJobimportJobsRestClient.CreateListByAmlFileSystemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _importJobimportJobsRestClient.CreateListByAmlFileSystemNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ImportJobResource(Client, ImportJobData.DeserializeImportJobData(e)), _importJobimportJobsClientDiagnostics, Pipeline, "ImportJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageCacheImportJobimportJobsRestClient.CreateListByAmlFileSystemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageCacheImportJobimportJobsRestClient.CreateListByAmlFileSystemNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageCacheImportJobResource(Client, StorageCacheImportJobData.DeserializeStorageCacheImportJobData(e)), _storageCacheImportJobimportJobsClientDiagnostics, Pipeline, "StorageCacheImportJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ImportJobResource"/></description>
+        /// <description><see cref="StorageCacheImportJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ImportJobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ImportJobResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StorageCacheImportJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageCacheImportJobResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _importJobimportJobsRestClient.CreateListByAmlFileSystemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _importJobimportJobsRestClient.CreateListByAmlFileSystemNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ImportJobResource(Client, ImportJobData.DeserializeImportJobData(e)), _importJobimportJobsClientDiagnostics, Pipeline, "ImportJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageCacheImportJobimportJobsRestClient.CreateListByAmlFileSystemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageCacheImportJobimportJobsRestClient.CreateListByAmlFileSystemNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageCacheImportJobResource(Client, StorageCacheImportJobData.DeserializeStorageCacheImportJobData(e)), _storageCacheImportJobimportJobsClientDiagnostics, Pipeline, "StorageCacheImportJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ImportJobResource"/></description>
+        /// <description><see cref="StorageCacheImportJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.StorageCache
         {
             Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
 
-            using var scope = _importJobimportJobsClientDiagnostics.CreateScope("ImportJobCollection.Exists");
+            using var scope = _storageCacheImportJobimportJobsClientDiagnostics.CreateScope("StorageCacheImportJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _importJobimportJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _storageCacheImportJobimportJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ImportJobResource"/></description>
+        /// <description><see cref="StorageCacheImportJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.StorageCache
         {
             Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
 
-            using var scope = _importJobimportJobsClientDiagnostics.CreateScope("ImportJobCollection.Exists");
+            using var scope = _storageCacheImportJobimportJobsClientDiagnostics.CreateScope("StorageCacheImportJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = _importJobimportJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, cancellationToken: cancellationToken);
+                var response = _storageCacheImportJobimportJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ImportJobResource"/></description>
+        /// <description><see cref="StorageCacheImportJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,18 +410,18 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="importJobName"/> is null. </exception>
-        public virtual async Task<NullableResponse<ImportJobResource>> GetIfExistsAsync(string importJobName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<StorageCacheImportJobResource>> GetIfExistsAsync(string importJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
 
-            using var scope = _importJobimportJobsClientDiagnostics.CreateScope("ImportJobCollection.GetIfExists");
+            using var scope = _storageCacheImportJobimportJobsClientDiagnostics.CreateScope("StorageCacheImportJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _importJobimportJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _storageCacheImportJobimportJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<ImportJobResource>(response.GetRawResponse());
-                return Response.FromValue(new ImportJobResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<StorageCacheImportJobResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageCacheImportJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ImportJobResource"/></description>
+        /// <description><see cref="StorageCacheImportJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -455,18 +455,18 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="importJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="importJobName"/> is null. </exception>
-        public virtual NullableResponse<ImportJobResource> GetIfExists(string importJobName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<StorageCacheImportJobResource> GetIfExists(string importJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(importJobName, nameof(importJobName));
 
-            using var scope = _importJobimportJobsClientDiagnostics.CreateScope("ImportJobCollection.GetIfExists");
+            using var scope = _storageCacheImportJobimportJobsClientDiagnostics.CreateScope("StorageCacheImportJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _importJobimportJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, cancellationToken: cancellationToken);
+                var response = _storageCacheImportJobimportJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<ImportJobResource>(response.GetRawResponse());
-                return Response.FromValue(new ImportJobResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<StorageCacheImportJobResource>(response.GetRawResponse());
+                return Response.FromValue(new StorageCacheImportJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        IEnumerator<ImportJobResource> IEnumerable<ImportJobResource>.GetEnumerator()
+        IEnumerator<StorageCacheImportJobResource> IEnumerable<StorageCacheImportJobResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.StorageCache
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ImportJobResource> IAsyncEnumerable<ImportJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<StorageCacheImportJobResource> IAsyncEnumerable<StorageCacheImportJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
