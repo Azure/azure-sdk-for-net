@@ -16,21 +16,6 @@ namespace Azure.Identity
         internal MsalConfidentialClient MsalClient { get; set; }
 
         /// <summary>
-        /// The Id of the Service Connection authorized for this task.
-        /// </summary>
-        internal string ServiceConnectionId { get; set; } = Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_SERVICE_CONNECTION_ID");
-
-        /// <summary>
-        /// The Tenant Id of the Service Connection authorized for this task.
-        /// </summary>
-        internal string TenantId { get; set; } = Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_TENANT_ID");
-
-        /// <summary>
-        /// The Client Id of the Service Connection authorized for this task.
-        /// </summary>
-        internal string ClientId { get; set; } = Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_CLIENT_ID");
-
-        /// <summary>
         /// The URI of the OIDC request endpoint.
         /// </summary>
         internal string OidcRequestUri { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_OIDCREQUESTURI");
