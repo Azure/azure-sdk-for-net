@@ -24,6 +24,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("storeSettings"u8);
                 writer.WriteObjectValue(StoreSettings);
             }
+            if (Optional.IsDefined(FormatSettings))
+            {
+                writer.WritePropertyName("formatSettings"u8);
+                writer.WriteObjectValue(FormatSettings);
+            }
             if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
@@ -61,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             StoreReadSettings storeSettings = default;
+            ParquetReadSettings formatSettings = default;
             object additionalColumns = default;
             string type = default;
             object sourceRetryCount = default;
@@ -77,6 +83,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("formatSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    formatSettings = ParquetReadSettings.DeserializeParquetReadSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"u8))
@@ -130,6 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 maxConcurrentConnections,
                 additionalProperties,
                 storeSettings,
+                formatSettings,
                 additionalColumns);
         }
 
