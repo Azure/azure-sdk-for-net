@@ -38,12 +38,13 @@ namespace Azure.Monitor.Query
             options ??= new MetricsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
-            // check audience here add ./default
-            var scope = "https://metrics.monitor.azure.com/.default";
+
+            var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? MetricsClientAudience.AzurePublicCloud : options.Audience)}";
+            var scopes = new List<string> { authorizationScope };
             Endpoint = endpoint;
 
             var pipeline = HttpPipelineBuilder.Build(options,
-                new BearerTokenAuthenticationPolicy(credential, scope));
+                new BearerTokenAuthenticationPolicy(credential, scopes));
 
             _metricBatchClient = new MetricsBatchRestClient(_clientDiagnostics, pipeline, endpoint);
         }

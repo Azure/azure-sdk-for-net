@@ -78,17 +78,17 @@ namespace Azure.Monitor.Query.Tests
 
             if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
             {
-                return MetricsClientAudience.AzurePublicCloud;
+                return MetricsClientAudience.AzurePublicCloud.ToString();
             }
 
             if (authorityHost == AzureAuthorityHosts.AzureChina)
             {
-                return MetricsClientAudience.AzureChina;
+                return MetricsClientAudience.AzureChina.ToString();
             }
 
             if (authorityHost == AzureAuthorityHosts.AzureGovernment)
             {
-                return MetricsClientAudience.AzureGovernment;
+                return MetricsClientAudience.AzureGovernment.ToString();
             }
 
             throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");

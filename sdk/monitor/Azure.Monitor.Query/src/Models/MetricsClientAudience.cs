@@ -23,9 +23,9 @@ namespace Azure.Monitor.Query
             _value = value;
         }
 
-        private const string AzureChinaValue = "https://metrics.monitor.azure.cn";
-        private const string AzureGovernmentValue = "https://metrics.monitor.azure.us";
-        private const string AzurePublicCloudValue = "https://metrics.monitor.azure.com";
+        private const string AzureChinaValue = "https://metrics.monitor.azure.cn//.default";
+        private const string AzureGovernmentValue = "https://metrics.monitor.azure.us//.default";
+        private const string AzurePublicCloudValue = "https://metrics.monitor.azure.com//.default";
 
         /// <summary> Azure China. </summary>
         public static MetricsClientAudience AzureChina { get; } = new MetricsClientAudience(AzureChinaValue);

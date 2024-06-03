@@ -329,30 +329,26 @@ namespace Azure.Monitor.Query.Tests
         [RecordedTest]
         public async Task MetricsQueryResourcesAsync()
         {
-            // MetricsQueryResources endpoint currently exists only for Azure Public Cloud, so we do not want to run this test when we are in other clouds
-            if (TestEnvironment.GetMetricsAudience() == MetricsQueryAudience.AzurePublicCloud)
+            MetricsClient client = CreateMetricsClient();
+
+            var resourceId = TestEnvironment.StorageAccountId;
+
+            Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+                resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
+                metricNames: new List<string> { "Ingress" },
+                metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
+
+            MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
+            Assert.AreEqual(1, metricsQueryResults.Values.Count);
+            Assert.AreEqual(TestEnvironment.StorageAccountId + "/providers/Microsoft.Insights/metrics/Ingress", metricsQueryResults.Values[0].Metrics[0].Id);
+            Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
+            for (int i = 0; i < metricsQueryResults.Values.Count; i++)
             {
-                MetricsClient client = CreateMetricsClient();
-
-                var resourceId = TestEnvironment.StorageAccountId;
-
-                Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
-                    resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
-                    metricNames: new List<string> { "Ingress" },
-                    metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
-
-                MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
-                Assert.AreEqual(1, metricsQueryResults.Values.Count);
-                Assert.AreEqual(TestEnvironment.StorageAccountId + "/providers/Microsoft.Insights/metrics/Ingress", metricsQueryResults.Values[0].Metrics[0].Id);
-                Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
-                for (int i = 0; i < metricsQueryResults.Values.Count; i++)
+                foreach (MetricResult value in metricsQueryResults.Values[i].Metrics)
                 {
-                    foreach (MetricResult value in metricsQueryResults.Values[i].Metrics)
+                    for (int j = 0; j < value.TimeSeries.Count; j++)
                     {
-                        for (int j = 0; j < value.TimeSeries.Count; j++)
-                        {
-                            Assert.GreaterOrEqual(value.TimeSeries[j].Values[i].Total, 0);
-                        }
+                        Assert.GreaterOrEqual(value.TimeSeries[j].Values[i].Total, 0);
                     }
                 }
             }
@@ -362,17 +358,13 @@ namespace Azure.Monitor.Query.Tests
         [SyncOnly]
         public void MetricsQueryResourcesInvalid()
         {
-            // MetricsBatch endpoint currently exists only for Azure Public Cloud, so we do not want to run this test when we are in other clouds
-            if (TestEnvironment.GetMetricsAudience() == MetricsQueryAudience.AzurePublicCloud)
-            {
-                MetricsClient client = CreateMetricsClient();
+            MetricsClient client = CreateMetricsClient();
 
-                Assert.Throws<ArgumentException>(() =>
-                    client.QueryResources(
-                    resourceIds: new List<ResourceIdentifier>(),
-                    metricNames: new List<string> { "Ingress" },
-                    metricNamespace: "Microsoft.Storage/storageAccounts"));
-            }
+            Assert.Throws<ArgumentException>(() =>
+                client.QueryResources(
+                resourceIds: new List<ResourceIdentifier>(),
+                metricNames: new List<string> { "Ingress" },
+                metricNamespace: "Microsoft.Storage/storageAccounts"));
         }
     }
 }
