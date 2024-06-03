@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-03-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-03-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-03-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-03-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-03-31-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-03-31-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-03-31-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-03-31-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-03-31-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-03-preview</description>
+        /// <description>2024-03-31-preview</description>
         /// </item>
         /// </list>
         /// </summary>

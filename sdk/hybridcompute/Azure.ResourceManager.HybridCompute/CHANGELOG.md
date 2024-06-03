@@ -4,11 +4,8 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Add esu license operations for hybrid machine 
+- Add network sevurity perimeter operations for hybrid machine 
 
 ## 1.0.0-beta.8 (2024-05-07)
 

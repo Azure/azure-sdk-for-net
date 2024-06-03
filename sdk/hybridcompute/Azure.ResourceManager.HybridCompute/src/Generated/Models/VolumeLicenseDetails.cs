@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary> ESU key. </summary>
-    public partial class EsuKey
+    /// <summary> The VolumeLicenseDetails. </summary>
+    public partial class VolumeLicenseDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,25 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EsuKey"/>. </summary>
-        internal EsuKey()
+        /// <summary> Initializes a new instance of <see cref="VolumeLicenseDetails"/>. </summary>
+        public VolumeLicenseDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EsuKey"/>. </summary>
-        /// <param name="sku"> SKU number. </param>
-        /// <param name="licenseStatus"> The current status of the license profile key. Represented by the same integer value that is presented on the machine itself when querying the license key status. </param>
+        /// <summary> Initializes a new instance of <see cref="VolumeLicenseDetails"/>. </summary>
+        /// <param name="programYear"> Describes the program year the volume license is for. </param>
+        /// <param name="invoiceId"> The invoice id for the volume license. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EsuKey(string sku, int? licenseStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VolumeLicenseDetails(ProgramYear? programYear, string invoiceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Sku = sku;
-            LicenseStatus = licenseStatus;
+            ProgramYear = programYear;
+            InvoiceId = invoiceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> SKU number. </summary>
-        public string Sku { get; }
-        /// <summary> The current status of the license profile key. Represented by the same integer value that is presented on the machine itself when querying the license key status. </summary>
-        public int? LicenseStatus { get; }
+        /// <summary> Describes the program year the volume license is for. </summary>
+        public ProgramYear? ProgramYear { get; set; }
+        /// <summary> The invoice id for the volume license. </summary>
+        public string InvoiceId { get; set; }
     }
 }
