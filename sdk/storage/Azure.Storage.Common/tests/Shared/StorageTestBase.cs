@@ -60,6 +60,12 @@ namespace Azure.Storage.Test.Shared
                 Regex = "(?:[?&](sv)=)(?<date>[^&\\\"\\s\\n,\\\\]+)",
                 GroupForReplace = "date"
             });
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(FileRenameSource)
+            {
+                Value = "sanitized-value",
+                Regex = "(?:[?&](sv)=)(?<date>[^&\\\"\\s\\n,\\\\]+)",
+                GroupForReplace = "date"
+            });
 
 #if NETFRAMEWORK
             // Uri uses different escaping for some special characters between .NET Framework and Core. Because the Test Proxy runs on .NET
