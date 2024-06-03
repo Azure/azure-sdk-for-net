@@ -17,6 +17,7 @@ using Azure.Storage.Tests.Shared;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 using Azure.Core.TestFramework.Models;
+using Newtonsoft.Json.Linq;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -47,6 +48,18 @@ namespace Azure.Storage.Test.Shared
         {
             SanitizedQueryParameters.Add(SignatureQueryName);
             IgnoredQueryParameters.Add(SasVersion);
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(CopySourceName)
+            {
+                Value = "sanitized-value",
+                Regex = "(?:[?&](sv)=)(?<date>[^&\\\"\\s\\n,\\\\]+)",
+                GroupForReplace = "date"
+            });
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(RenameSource)
+            {
+                Value = "sanitized-value",
+                Regex = "(?:[?&](sv)=)(?<date>[^&\\\"\\s\\n,\\\\]+)",
+                GroupForReplace = "date"
+            });
 
 #if NETFRAMEWORK
             // Uri uses different escaping for some special characters between .NET Framework and Core. Because the Test Proxy runs on .NET
