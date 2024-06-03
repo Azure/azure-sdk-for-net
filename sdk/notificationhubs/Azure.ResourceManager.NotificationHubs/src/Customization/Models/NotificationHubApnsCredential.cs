@@ -8,6 +8,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 {
     public partial class NotificationHubApnsCredential
     {
+        /// <summary> Initializes a new instance of <see cref="NotificationHubApnsCredential"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NotificationHubApnsCredential()
+        {
+        }
+
         /// <summary>
         /// The APNS certificate thumbprint. Specify if using Certificate Authentication Mode.
         /// <para>
