@@ -9,22 +9,30 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.HybridCompute.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    internal class HybridComputeLicenseOperationSource : IOperationSource<HybridComputeLicense>
+    internal class HybridComputeLicenseOperationSource : IOperationSource<HybridComputeLicenseResource>
     {
-        HybridComputeLicense IOperationSource<HybridComputeLicense>.CreateResult(Response response, CancellationToken cancellationToken)
+        private readonly ArmClient _client;
+
+        internal HybridComputeLicenseOperationSource(ArmClient client)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            return HybridComputeLicense.DeserializeHybridComputeLicense(document.RootElement);
+            _client = client;
         }
 
-        async ValueTask<HybridComputeLicense> IOperationSource<HybridComputeLicense>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        HybridComputeLicenseResource IOperationSource<HybridComputeLicenseResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using var document = JsonDocument.Parse(response.ContentStream);
+            var data = HybridComputeLicenseData.DeserializeHybridComputeLicenseData(document.RootElement);
+            return new HybridComputeLicenseResource(_client, data);
+        }
+
+        async ValueTask<HybridComputeLicenseResource> IOperationSource<HybridComputeLicenseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return HybridComputeLicense.DeserializeHybridComputeLicense(document.RootElement);
+            var data = HybridComputeLicenseData.DeserializeHybridComputeLicenseData(document.RootElement);
+            return new HybridComputeLicenseResource(_client, data);
         }
     }
 }
