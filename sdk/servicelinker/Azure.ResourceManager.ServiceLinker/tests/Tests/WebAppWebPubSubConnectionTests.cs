@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
     {
         public WebAppWebPubSubConnectionTests() : base(true)
         {
-            BodyKeySanitizers.Add(new Core.TestFramework.Models.BodyKeySanitizer("Sanitized") { JsonPath = "$..value", Regex = "AccessKey=.*" });
+            BodyKeySanitizers.Add(new Core.TestFramework.Models.BodyKeySanitizer("$..value") { Regex = "AccessKey=.*" });
         }
 
         [SetUp]

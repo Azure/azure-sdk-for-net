@@ -1,14 +1,16 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0 (2024-06-03)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded api-version tag from 'package-2023-05' to 'package-2024-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/cb1185d9961b7dabe002fdb4c3a28c07d130e47e/specification/storagecache/resource-manager/readme.md
+    - Adding import jobs resource type.
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.39.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.12.0
 
 ## 1.3.0-beta.1 (2024-02-01)
 

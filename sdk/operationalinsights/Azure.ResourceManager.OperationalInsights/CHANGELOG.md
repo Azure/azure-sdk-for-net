@@ -7,7 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-
+- Fix [BUG] Wrong request during the LRO of OperationaIInsights - Cluster - PUT #40606
 ### Other Changes
 
 ## 1.2.2 (2024-05-07)

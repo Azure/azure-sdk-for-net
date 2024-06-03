@@ -98,7 +98,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
             foreach (string fileName in fileNames)
             {
-                StorageResourceItem resource = containerResource.GetStorageResourceReference(fileName);
+                StorageResourceItem resource = containerResource.GetStorageResourceReference(fileName, default);
                 // Assert
                 await resource.GetPropertiesAsync().ConfigureAwait(false);
             }
@@ -130,7 +130,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
             foreach (string fileName in fileNames)
             {
-                StorageResourceItem resource = containerResource.GetStorageResourceReference(fileName);
+                StorageResourceItem resource = containerResource.GetStorageResourceReference(fileName, default);
                 // Assert
                 await resource.GetPropertiesAsync().ConfigureAwait(false);
             }

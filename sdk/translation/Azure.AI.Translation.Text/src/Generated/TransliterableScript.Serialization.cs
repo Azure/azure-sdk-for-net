@@ -28,7 +28,7 @@ namespace Azure.AI.Translation.Text
             writer.WriteStartObject();
             writer.WritePropertyName("toScripts"u8);
             writer.WriteStartArray();
-            foreach (var item in ToScripts)
+            foreach (var item in TargetLanguageScripts)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -40,7 +40,7 @@ namespace Azure.AI.Translation.Text
             writer.WritePropertyName("nativeName"u8);
             writer.WriteStringValue(NativeName);
             writer.WritePropertyName("dir"u8);
-            writer.WriteStringValue(Dir);
+            writer.WriteStringValue(Directionality.ToSerialString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -79,21 +79,21 @@ namespace Azure.AI.Translation.Text
             {
                 return null;
             }
-            IReadOnlyList<CommonScriptModel> toScripts = default;
+            IReadOnlyList<LanguageScript> toScripts = default;
             string code = default;
             string name = default;
             string nativeName = default;
-            string dir = default;
+            LanguageDirectionality dir = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("toScripts"u8))
                 {
-                    List<CommonScriptModel> array = new List<CommonScriptModel>();
+                    List<LanguageScript> array = new List<LanguageScript>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeCommonScriptModel(item, options));
+                        array.Add(DeserializeLanguageScript(item, options));
                     }
                     toScripts = array;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.AI.Translation.Text
                 }
                 if (property.NameEquals("dir"u8))
                 {
-                    dir = property.Value.GetString();
+                    dir = property.Value.GetString().ToLanguageDirectionality();
                     continue;
                 }
                 if (options.Format != "W")

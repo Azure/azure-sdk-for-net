@@ -1,7 +1,6 @@
 {
  "$id": "1",
  "Name": "Azure.Communication.MessagesService",
- "Description": "Azure Communication Messages Service",
  "ApiVersions": [
   "2024-02-01"
  ],
@@ -1582,7 +1581,12 @@
    "Protocol": {
     "$id": "179"
    },
-   "Creatable": true
+   "Creatable": true,
+   "Parameters": [
+    {
+     "$ref": "140"
+    }
+   ]
   },
   {
    "$id": "180",
@@ -1760,7 +1764,12 @@
    "Protocol": {
     "$id": "197"
    },
-   "Creatable": true
+   "Creatable": true,
+   "Parameters": [
+    {
+     "$ref": "140"
+    }
+   ]
   }
  ],
  "Auth": {

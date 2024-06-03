@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fix for operation id not set of incomplete long-running operation.
+
 ### Other Changes
 
 ## 1.39.0 (2024-04-18)

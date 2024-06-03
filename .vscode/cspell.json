@@ -846,7 +846,8 @@
       "filename": "**/sdk/notificationhubs/**/*.cs",
       "words": [
         "availiable",
-        "mpns"
+        "mpns",
+        "xiaomi"
       ]
     },
     {
@@ -1173,6 +1174,12 @@
         "Rehydrated",
         "Undelete",
         "Aadkerb"
+      ]
+    },
+    {
+      "filename": "**/sdk/storageactions/**/*.cs",
+      "words": [
+        "undelete"
       ]
     },
     {
