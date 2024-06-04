@@ -84,11 +84,17 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AzurePipelineCredentialWorksInChainedCredential()
         {
-            var chainedCred = new ChainedTokenCredential(new AzurePipelinesCredential("mytoken", "myClientId", "myTenantId", "myConnectionId"), new MockCredential());
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "SYSTEM_OIDCREQUESTURI", null },
+            }))
+            {
+                var chainedCred = new ChainedTokenCredential(new AzurePipelinesCredential("mytoken", "myClientId", "myTenantId", "myConnectionId"), new MockCredential());
 
-            AccessToken token = await chainedCred.GetTokenAsync(new TokenRequestContext(new[] { "scope" }), CancellationToken.None);
+                AccessToken token = await chainedCred.GetTokenAsync(new TokenRequestContext(new[] { "scope" }), CancellationToken.None);
 
-            Assert.AreEqual("mockToken", token.Token);
+                Assert.AreEqual("mockToken", token.Token);
+            }
         }
 
         [Test]
