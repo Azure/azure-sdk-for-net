@@ -7,7 +7,7 @@ extends:
       - task: AzureCLI@2
         displayName: Set OIDC variables
         inputs:
-          azureSubscription: ${{ parameters.ServiceConnection }}
+          azureSubscription: azure-sdk-tests
           scriptType: pscore
           scriptLocation: inlineScript
           addSpnToEnvironment: true
