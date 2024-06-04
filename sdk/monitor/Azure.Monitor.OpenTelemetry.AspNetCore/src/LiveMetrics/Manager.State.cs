@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Runtime.CompilerServices;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
 using OpenTelemetry;
 
@@ -57,6 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             _shutdownEvent.Dispose();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetPingIntervalFromService(int? milliseconds)
         {
             if (milliseconds.HasValue)
