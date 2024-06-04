@@ -2,15 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text;
 using Azure.Core.Pipeline;
 
