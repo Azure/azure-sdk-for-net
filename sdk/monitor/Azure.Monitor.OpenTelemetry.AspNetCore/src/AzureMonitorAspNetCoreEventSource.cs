@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics.Tracing;
-using System.Net;
 using System.Runtime.CompilerServices;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
