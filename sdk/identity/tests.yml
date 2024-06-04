@@ -12,6 +12,7 @@ extends:
           scriptLocation: inlineScript
           addSpnToEnvironment: true
           inlineScript: |
+            Write-Host "Env token length: $(($env:idToken).Length)"
             Write-Host "##vso[task.setvariable variable=ARM_CLIENT_ID;issecret=true]$($env:servicePrincipalId)"
             Write-Host "##vso[task.setvariable variable=ARM_TENANT_ID;issecret=true]$($env:tenantId)"
             Write-Host "##vso[task.setvariable variable=ARM_OIDC_TOKEN;issecret=true]$($env:idToken)"
