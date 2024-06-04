@@ -21,21 +21,21 @@ namespace Azure.Provisioning.PostgreSql
         /// Creates a new instance of the <see cref="PostgreSqlFlexibleServerConfiguration"/> class.
         /// </summary>
         /// <param name="scope">The scope.</param>
-        /// <param name="value">The value.</param>
-        /// <param name="source">The source.</param>
-        /// <param name="configPropertyName">The config property name.</param>
+        /// <param name="propertyName">The config property name.</param>
+        /// <param name="propertyValue">The value.</param>
+        /// <param name="propertySource">The source.</param>
         /// <param name="parent">The parent.</param>
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         public PostgreSqlFlexibleServerConfiguration(
             IConstruct scope,
-            string value,
-            string source = "user-override",
-            string configPropertyName = "azure.extensions",
+            string propertyName,
+            string propertyValue,
+            string propertySource = "user-override",
             PostgreSqlFlexibleServer? parent = null,
             string name = "config",
             string version = PostgreSqlFlexibleServer.DefaultVersion)
-            : this(scope, parent, name, ResourceTypeName, version, (_) => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerConfigurationData(name: configPropertyName, value: value, source: source))
+            : this(scope, parent, name, ResourceTypeName, version, (_) => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerConfigurationData(name: propertyName, value: propertyValue, source: propertySource))
         {
         }
 

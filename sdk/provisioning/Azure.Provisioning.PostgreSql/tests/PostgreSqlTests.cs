@@ -91,7 +91,11 @@ namespace Azure.Provisioning.PostgreSql.Tests
                 administratorLogin: adminLogin,
                 administratorPassword: adminPassword);
 
-            _ = new PostgreSqlFlexibleServerConfiguration(infrastructure, "VECTOR", parent: server);
+            _ = new PostgreSqlFlexibleServerConfiguration(
+                infrastructure,
+                "azure.extensions",
+                "VECTOR",
+                parent: server);
 
             infrastructure.Build(GetOutputPath());
 
