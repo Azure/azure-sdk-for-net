@@ -5056,7 +5056,7 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.SiteAuthSettingsV2Data"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteAuthSettingsV2"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -5067,10 +5067,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="login"> The configuration settings of the login flow of users using App Service Authentication/Authorization. </param>
         /// <param name="httpSettings"> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.SiteAuthSettingsV2Data"/> instance for mocking. </returns>
-        public static SiteAuthSettingsV2Data SiteAuthSettingsV2Data(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AuthPlatform platform = null, GlobalValidation globalValidation = null, AppServiceIdentityProviders identityProviders = null, WebAppLoginInfo login = null, AppServiceHttpSettings httpSettings = null, string kind = null)
+        /// <returns> A new <see cref="Models.SiteAuthSettingsV2"/> instance for mocking. </returns>
+        public static SiteAuthSettingsV2 SiteAuthSettingsV2(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AuthPlatform platform = null, GlobalValidation globalValidation = null, AppServiceIdentityProviders identityProviders = null, WebAppLoginInfo login = null, AppServiceHttpSettings httpSettings = null, string kind = null)
         {
-            return new SiteAuthSettingsV2Data(
+            return new SiteAuthSettingsV2(
                 id,
                 name,
                 resourceType,

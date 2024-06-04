@@ -11,21 +11,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteAuthSettingsV2Data : IUtf8JsonSerializable, IJsonModel<SiteAuthSettingsV2Data>
+    public partial class SiteAuthSettingsV2 : IUtf8JsonSerializable, IJsonModel<SiteAuthSettingsV2>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteAuthSettingsV2Data>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteAuthSettingsV2>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SiteAuthSettingsV2Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SiteAuthSettingsV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettingsV2Data>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettingsV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteAuthSettingsV2Data)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteAuthSettingsV2)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -100,19 +99,19 @@ namespace Azure.ResourceManager.AppService
             writer.WriteEndObject();
         }
 
-        SiteAuthSettingsV2Data IJsonModel<SiteAuthSettingsV2Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SiteAuthSettingsV2 IJsonModel<SiteAuthSettingsV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettingsV2Data>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettingsV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteAuthSettingsV2Data)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteAuthSettingsV2)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSiteAuthSettingsV2Data(document.RootElement, options);
+            return DeserializeSiteAuthSettingsV2(document.RootElement, options);
         }
 
-        internal static SiteAuthSettingsV2Data DeserializeSiteAuthSettingsV2Data(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SiteAuthSettingsV2 DeserializeSiteAuthSettingsV2(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -226,7 +225,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SiteAuthSettingsV2Data(
+            return new SiteAuthSettingsV2(
                 id,
                 name,
                 type,
@@ -409,9 +408,9 @@ namespace Azure.ResourceManager.AppService
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<SiteAuthSettingsV2Data>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SiteAuthSettingsV2>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettingsV2Data>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettingsV2>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -420,26 +419,26 @@ namespace Azure.ResourceManager.AppService
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteAuthSettingsV2Data)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteAuthSettingsV2)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SiteAuthSettingsV2Data IPersistableModel<SiteAuthSettingsV2Data>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SiteAuthSettingsV2 IPersistableModel<SiteAuthSettingsV2>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettingsV2Data>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettingsV2>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSiteAuthSettingsV2Data(document.RootElement, options);
+                        return DeserializeSiteAuthSettingsV2(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteAuthSettingsV2Data)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteAuthSettingsV2)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SiteAuthSettingsV2Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SiteAuthSettingsV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

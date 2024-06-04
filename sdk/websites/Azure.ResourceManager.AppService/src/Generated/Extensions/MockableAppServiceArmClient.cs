@@ -1391,18 +1391,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteAuthSettingsV2Resource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteAuthSettingsV2Resource.CreateResourceIdentifier" /> to create a <see cref="SiteAuthSettingsV2Resource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteAuthSettingsV2Resource"/> object. </returns>
-        public virtual SiteAuthSettingsV2Resource GetSiteAuthSettingsV2Resource(ResourceIdentifier id)
-        {
-            SiteAuthSettingsV2Resource.ValidateResourceId(id);
-            return new SiteAuthSettingsV2Resource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="MigrateMySqlStatusResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MigrateMySqlStatusResource.CreateResourceIdentifier" /> to create a <see cref="MigrateMySqlStatusResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

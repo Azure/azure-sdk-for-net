@@ -8,16 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// A class representing the SiteAuthSettingsV2 data model.
-    /// Configuration settings for the Azure App Service Authentication / Authorization V2 feature.
-    /// </summary>
-    public partial class SiteAuthSettingsV2Data : ResourceData
+    /// <summary> Configuration settings for the Azure App Service Authentication / Authorization V2 feature. </summary>
+    public partial class SiteAuthSettingsV2 : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +47,12 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SiteAuthSettingsV2Data"/>. </summary>
-        public SiteAuthSettingsV2Data()
+        /// <summary> Initializes a new instance of <see cref="SiteAuthSettingsV2"/>. </summary>
+        public SiteAuthSettingsV2()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SiteAuthSettingsV2Data"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteAuthSettingsV2"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -68,7 +64,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="httpSettings"> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteAuthSettingsV2Data(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AuthPlatform platform, GlobalValidation globalValidation, AppServiceIdentityProviders identityProviders, WebAppLoginInfo login, AppServiceHttpSettings httpSettings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SiteAuthSettingsV2(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AuthPlatform platform, GlobalValidation globalValidation, AppServiceIdentityProviders identityProviders, WebAppLoginInfo login, AppServiceHttpSettings httpSettings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Platform = platform;
             GlobalValidation = globalValidation;

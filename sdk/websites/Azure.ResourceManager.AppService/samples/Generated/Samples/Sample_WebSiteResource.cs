@@ -432,13 +432,9 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
             // invoke the operation
-            SiteAuthSettingsV2Resource result = await webSite.GetAuthSettingsV2WithoutSecretsAsync();
+            SiteAuthSettingsV2 result = await webSite.GetAuthSettingsV2WithoutSecretsAsync();
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SiteAuthSettingsV2Data resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Update Auth Settings V2
@@ -463,7 +459,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
             // invoke the operation
-            SiteAuthSettingsV2Data data = new SiteAuthSettingsV2Data()
+            SiteAuthSettingsV2 siteAuthSettingsV2 = new SiteAuthSettingsV2()
             {
                 Platform = new AuthPlatform()
                 {
@@ -536,13 +532,9 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
                     },
                 },
             };
-            SiteAuthSettingsV2Resource result = await webSite.UpdateAuthSettingsV2Async(data);
+            SiteAuthSettingsV2 result = await webSite.UpdateAuthSettingsV2Async(siteAuthSettingsV2);
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SiteAuthSettingsV2Data resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // List Auth Settings V2
@@ -567,13 +559,9 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
             // invoke the operation
-            SiteAuthSettingsV2Resource result = await webSite.GetAuthSettingsV2Async();
+            SiteAuthSettingsV2 result = await webSite.GetAuthSettingsV2Async();
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SiteAuthSettingsV2Data resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Update Azure Storage Accounts

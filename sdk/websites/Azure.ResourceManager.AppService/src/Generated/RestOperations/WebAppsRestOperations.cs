@@ -2427,7 +2427,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteAuthSettingsV2Data>> GetAuthSettingsV2WithoutSecretsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteAuthSettingsV2>> GetAuthSettingsV2WithoutSecretsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2439,9 +2439,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2456,7 +2456,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteAuthSettingsV2Data> GetAuthSettingsV2WithoutSecrets(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<SiteAuthSettingsV2> GetAuthSettingsV2WithoutSecrets(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2468,9 +2468,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2478,7 +2478,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal RequestUriBuilder CreateUpdateAuthSettingsV2RequestUri(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2Data data)
+        internal RequestUriBuilder CreateUpdateAuthSettingsV2RequestUri(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2493,7 +2493,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateUpdateAuthSettingsV2Request(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2Data data)
+        internal HttpMessage CreateUpdateAuthSettingsV2Request(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2512,7 +2512,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(siteAuthSettingsV2, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -2522,26 +2522,26 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
-        /// <param name="data"> Auth settings associated with web app. </param>
+        /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteAuthSettingsV2"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteAuthSettingsV2Data>> UpdateAuthSettingsV2Async(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2Data data, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteAuthSettingsV2>> UpdateAuthSettingsV2Async(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(siteAuthSettingsV2, nameof(siteAuthSettingsV2));
 
-            using var message = CreateUpdateAuthSettingsV2Request(subscriptionId, resourceGroupName, name, data);
+            using var message = CreateUpdateAuthSettingsV2Request(subscriptionId, resourceGroupName, name, siteAuthSettingsV2);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2553,26 +2553,26 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
-        /// <param name="data"> Auth settings associated with web app. </param>
+        /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="siteAuthSettingsV2"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteAuthSettingsV2Data> UpdateAuthSettingsV2(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2Data data, CancellationToken cancellationToken = default)
+        public Response<SiteAuthSettingsV2> UpdateAuthSettingsV2(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(siteAuthSettingsV2, nameof(siteAuthSettingsV2));
 
-            using var message = CreateUpdateAuthSettingsV2Request(subscriptionId, resourceGroupName, name, data);
+            using var message = CreateUpdateAuthSettingsV2Request(subscriptionId, resourceGroupName, name, siteAuthSettingsV2);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2623,7 +2623,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteAuthSettingsV2Data>> GetAuthSettingsV2Async(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteAuthSettingsV2>> GetAuthSettingsV2Async(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2635,9 +2635,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2652,7 +2652,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteAuthSettingsV2Data> GetAuthSettingsV2(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<SiteAuthSettingsV2> GetAuthSettingsV2(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2664,9 +2664,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -19898,7 +19898,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteAuthSettingsV2Data>> GetAuthSettingsV2WithoutSecretsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteAuthSettingsV2>> GetAuthSettingsV2WithoutSecretsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19911,13 +19911,11 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((SiteAuthSettingsV2Data)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -19931,7 +19929,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteAuthSettingsV2Data> GetAuthSettingsV2WithoutSecretsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<SiteAuthSettingsV2> GetAuthSettingsV2WithoutSecretsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19944,19 +19942,17 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((SiteAuthSettingsV2Data)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateUpdateAuthSettingsV2SlotRequestUri(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2Data data)
+        internal RequestUriBuilder CreateUpdateAuthSettingsV2SlotRequestUri(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2 siteAuthSettingsV2)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -19973,7 +19969,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateUpdateAuthSettingsV2SlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2Data data)
+        internal HttpMessage CreateUpdateAuthSettingsV2SlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2 siteAuthSettingsV2)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -19994,7 +19990,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(siteAuthSettingsV2, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -20005,27 +20001,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
-        /// <param name="data"> Auth settings associated with web app. </param>
+        /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteAuthSettingsV2"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteAuthSettingsV2Data>> UpdateAuthSettingsV2SlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2Data data, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteAuthSettingsV2>> UpdateAuthSettingsV2SlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(siteAuthSettingsV2, nameof(siteAuthSettingsV2));
 
-            using var message = CreateUpdateAuthSettingsV2SlotRequest(subscriptionId, resourceGroupName, name, slot, data);
+            using var message = CreateUpdateAuthSettingsV2SlotRequest(subscriptionId, resourceGroupName, name, slot, siteAuthSettingsV2);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -20038,27 +20034,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
-        /// <param name="data"> Auth settings associated with web app. </param>
+        /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="siteAuthSettingsV2"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteAuthSettingsV2Data> UpdateAuthSettingsV2Slot(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2Data data, CancellationToken cancellationToken = default)
+        public Response<SiteAuthSettingsV2> UpdateAuthSettingsV2Slot(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(siteAuthSettingsV2, nameof(siteAuthSettingsV2));
 
-            using var message = CreateUpdateAuthSettingsV2SlotRequest(subscriptionId, resourceGroupName, name, slot, data);
+            using var message = CreateUpdateAuthSettingsV2SlotRequest(subscriptionId, resourceGroupName, name, slot, siteAuthSettingsV2);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -20114,7 +20110,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteAuthSettingsV2Data>> GetAuthSettingsV2SlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteAuthSettingsV2>> GetAuthSettingsV2SlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -20127,9 +20123,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -20145,7 +20141,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteAuthSettingsV2Data> GetAuthSettingsV2Slot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<SiteAuthSettingsV2> GetAuthSettingsV2Slot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -20158,9 +20154,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        SiteAuthSettingsV2Data value = default;
+                        SiteAuthSettingsV2 value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SiteAuthSettingsV2Data.DeserializeSiteAuthSettingsV2Data(document.RootElement);
+                        value = SiteAuthSettingsV2.DeserializeSiteAuthSettingsV2(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
