@@ -17,6 +17,10 @@ namespace Azure.Provisioning.PostgreSql
         protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
         public Azure.Provisioning.PostgreSql.PostgreSqlConnectionString GetConnectionString(Azure.Provisioning.Parameter administratorLogin, Azure.Provisioning.Parameter administratorPassword) { throw null; }
     }
+    public partial class PostgreSqlFlexibleServerConfiguration : Azure.Provisioning.Resource<Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerConfigurationData>
+    {
+        public PostgreSqlFlexibleServerConfiguration(Azure.Provisioning.IConstruct scope, string propertyName, string propertyValue, string propertySource = "user-override", Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer? parent = null, string name = "config", string version = "2023-03-01-preview") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerConfigurationData>), default(bool)) { }
+    }
     public partial class PostgreSqlFlexibleServerDatabase : Azure.Provisioning.Resource<Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerDatabaseData>
     {
         public PostgreSqlFlexibleServerDatabase(Azure.Provisioning.IConstruct scope, Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer? parent = null, string name = "db", string version = "2023-03-01-preview") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerDatabaseData>), default(bool)) { }
