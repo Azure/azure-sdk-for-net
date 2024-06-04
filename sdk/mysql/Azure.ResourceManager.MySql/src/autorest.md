@@ -192,6 +192,8 @@ output-folder: $(this-folder)/MySqlFlexibleServers/Generated
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: false
+  skipped-operations:
+  - OperationProgress_Get
 modelerfour:
   flatten-payloads: false
 
@@ -311,8 +313,7 @@ rename-mapping:
   MaintenanceProvisioningState: MySqlFlexibleServerMaintenanceProvisioningState
   BackupType: MySqlFlexibleServerBackupType
   ProvisioningState: MySqlFlexibleServerBackupProvisioningState
-  ObjectType.BackupAndExportResponse: MySqlFlexibleServerBackupAndExportResult
-  ObjectType.ImportFromStorageResponse: MySqlFlexibleServerImportFromStorageResult
+  ObjectType: MySqlFlexibleServerOperationType
 
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
@@ -321,7 +322,6 @@ override-operation-name:
   BackupAndExport_ValidateBackup: ValidateBackup
 
 directive:
-  - remove-operation: OperationProgress_Get
   - from: FlexibleServers.json
     where: $.definitions
     transform: >
@@ -329,7 +329,11 @@ directive:
       $.MySQLServerIdentity.properties.userAssignedIdentities.additionalProperties['$ref'] = '#/definitions/UserAssignedIdentity';
       delete $.MySQLServerIdentity.properties.userAssignedIdentities.additionalProperties.items;
       $.ServerProperties.properties.privateEndpointConnections.items['$ref'] = '../../../../../../common-types/resource-management/v5/privatelinks.json#/definitions/PrivateEndpointConnection';
-
+  # An abstract model should not be flatten
+- from: common-types.json
+    where: $.definitions.OperationProgressResult
+    transform: >
+      $.properties.properties['x-ms-client-flatten'] = false;
   # Add a new mode for update operation
   - from: Configurations.json
     where: $.definitions

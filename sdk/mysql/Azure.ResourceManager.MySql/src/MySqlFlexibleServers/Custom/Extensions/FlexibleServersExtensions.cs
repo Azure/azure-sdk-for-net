@@ -9,10 +9,13 @@ using System.Threading;
 using System;
 using Azure.Core;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     [CodeGenType("MySqlFlexibleServersExtensions")]
+    [CodeGenSuppress("GetOperationProgres", typeof(SubscriptionResource), typeof(AzureLocation), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetOperationProgresAsync", typeof(SubscriptionResource),  typeof(AzureLocation), typeof(string), typeof(CancellationToken))]
     public static partial class FlexibleServersExtensions
     {
         /// <summary>
