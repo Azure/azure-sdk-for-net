@@ -913,7 +913,7 @@
 /**/*Management*/                                                  @archerzz @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Mgmt
-/**/Azure.ResourceManager*/                                        @archerzz @ArcturusZhang @ArthurMa1978 @bicep-admins
+/**/Azure.ResourceManager*/                                        @archerzz @ArcturusZhang @ArthurMa1978
 
 # -----------------------------------------------------------------
 # IMPORTANT NOTE:
@@ -925,6 +925,10 @@
 # -----------------------------------------------------------------
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
+
+# ServiceLabel: %Mgmt
+/sdk/resources/Azure.ResourceManager.Resources/**
+# AzureSdkOwners:                                                  @azure/arm-sdk-owners
 
 # PRLabel: %Astronomer
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
